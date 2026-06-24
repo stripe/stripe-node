@@ -163,49 +163,45 @@ export interface SettlementAllocationIntent {
   /**
    * SettlementAllocationIntent status.
    */
-  status: V2.Payments.SettlementAllocationIntent.Status;
+  status: SettlementAllocationIntent.Status;
 
   /**
    * Status details for a SettlementAllocationIntent in `errored` state.
    */
-  status_details?: V2.Payments.SettlementAllocationIntent.StatusDetails;
+  status_details?: SettlementAllocationIntent.StatusDetails;
 }
-export namespace V2 {
-  export namespace Payments {
-    export namespace SettlementAllocationIntent {
-      export type Status =
-        | 'canceled'
-        | 'errored'
-        | 'matched'
-        | 'pending'
-        | 'settled'
-        | 'submitted';
+export namespace SettlementAllocationIntent {
+  export type Status =
+    | 'canceled'
+    | 'errored'
+    | 'matched'
+    | 'pending'
+    | 'settled'
+    | 'submitted';
 
-      export interface StatusDetails {
-        /**
-         * Hash that provides additional information regarding the reason behind a `errored` SettlementAllocationIntent status. It is only present when the SettlementAllocationIntent status is `errored`.
-         */
-        errored?: StatusDetails.Errored;
-      }
+  export interface StatusDetails {
+    /**
+     * Hash that provides additional information regarding the reason behind a `errored` SettlementAllocationIntent status. It is only present when the SettlementAllocationIntent status is `errored`.
+     */
+    errored?: StatusDetails.Errored;
+  }
 
-      export namespace StatusDetails {
-        export interface Errored {
-          /**
-           * Stripe doc link to debug the issue.
-           */
-          doc_url?: string;
+  export namespace StatusDetails {
+    export interface Errored {
+      /**
+       * Stripe doc link to debug the issue.
+       */
+      doc_url?: string;
 
-          /**
-           * User Message detailing the reason code and possible resolution .
-           */
-          message: string;
+      /**
+       * User Message detailing the reason code and possible resolution .
+       */
+      message: string;
 
-          /**
-           * Open Enum. The `errored` status reason.
-           */
-          reason_code: 'amount_mismatch';
-        }
-      }
+      /**
+       * Open Enum. The `errored` status reason.
+       */
+      reason_code: 'amount_mismatch';
     }
   }
 }

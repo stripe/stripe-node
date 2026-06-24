@@ -136,14 +136,10 @@ export interface PricingPlan {
   /**
    * The tax behavior for Stripe Tax — whether the pricing plan price includes or excludes tax.
    */
-  tax_behavior: V2.Billing.PricingPlan.TaxBehavior;
+  tax_behavior: PricingPlan.TaxBehavior;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace PricingPlan {
-      export type TaxBehavior = 'exclusive' | 'inclusive';
-    }
-  }
+export namespace PricingPlan {
+  export type TaxBehavior = 'exclusive' | 'inclusive';
 }
 export namespace V2 {
   export namespace Billing {

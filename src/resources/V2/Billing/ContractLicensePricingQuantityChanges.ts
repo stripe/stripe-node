@@ -30,7 +30,7 @@ export interface ContractLicensePricingQuantityChange {
   /**
    * The type of the license pricing.
    */
-  license_pricing_type: V2.Billing.ContractLicensePricingQuantityChange.LicensePricingType;
+  license_pricing_type: ContractLicensePricingQuantityChange.LicensePricingType;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -47,10 +47,6 @@ export interface ContractLicensePricingQuantityChange {
    */
   quantity: number;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace ContractLicensePricingQuantityChange {
-      export type LicensePricingType = 'license_fee' | 'price';
-    }
-  }
+export namespace ContractLicensePricingQuantityChange {
+  export type LicensePricingType = 'license_fee' | 'price';
 }

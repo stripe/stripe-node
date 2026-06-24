@@ -20,7 +20,7 @@ export interface MetricQueryResult {
   /**
    * An array of timeseries data rows.
    */
-  data: Array<V2.Data.Analytics.MetricQueryResult.Data>;
+  data: Array<MetricQueryResult.Data>;
 
   /**
    * Whether this query was run in live mode.
@@ -42,58 +42,52 @@ export interface MetricQueryResult {
    */
   refreshed_at: string;
 }
-export namespace V2 {
+export namespace MetricQueryResult {
+  export interface Data {
+    /**
+     * A hash of dimension type to dimension instance, if group_by was specified.
+     */
+    dimensions: {
+      [key: string]: string;
+    };
+
+    /**
+     * A unique identifier for this row.
+     */
+    id: string;
+
+    /**
+     * Array of metric values returned from this query.
+     */
+    results: Array<Data.Result>;
+
+    /**
+     * Timestamp denoting the start of this time bucket.
+     */
+    timestamp: string;
+  }
+
   export namespace Data {
-    export namespace Analytics {
-      export namespace MetricQueryResult {
-        export interface Data {
-          /**
-           * A hash of dimension type to dimension instance, if group_by was specified.
-           */
-          dimensions: {
-            [key: string]: string;
-          };
+    export interface Result {
+      /**
+       * If this is a monetary metric, the currency it is returned in. Otherwise null.
+       */
+      currency?: string;
 
-          /**
-           * A unique identifier for this row.
-           */
-          id: string;
+      /**
+       * The ID of this metric.
+       */
+      metric: string;
 
-          /**
-           * Array of metric values returned from this query.
-           */
-          results: Array<Data.Result>;
+      /**
+       * The common name of this metric.
+       */
+      name: string;
 
-          /**
-           * Timestamp denoting the start of this time bucket.
-           */
-          timestamp: string;
-        }
-
-        export namespace Data {
-          export interface Result {
-            /**
-             * If this is a monetary metric, the currency it is returned in. Otherwise null.
-             */
-            currency?: string;
-
-            /**
-             * The ID of this metric.
-             */
-            metric: string;
-
-            /**
-             * The common name of this metric.
-             */
-            name: string;
-
-            /**
-             * The numeric value of this metric.
-             */
-            value: bigint;
-          }
-        }
-      }
+      /**
+       * The numeric value of this metric.
+       */
+      value: bigint;
     }
   }
 }

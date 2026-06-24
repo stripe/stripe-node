@@ -36,7 +36,7 @@ export interface TransactionLineItem {
   /**
    * The address of the location where this line item's event or service takes place. Depending on the [tax code](https://docs.stripe.com/tax/tax-codes), providing a performance location is required, optional, or not supported. Use this to provide the address inline without pre-creating a [TaxLocation](https://docs.stripe.com/api/tax/location) object. Can't be used with `performance_location`.
    */
-  performance_location_details?: Tax.TransactionLineItem.PerformanceLocationDetails | null;
+  performance_location_details?: TransactionLineItem.PerformanceLocationDetails | null;
 
   /**
    * The ID of an existing [Product](https://docs.stripe.com/api/products/object).
@@ -73,22 +73,16 @@ export interface TransactionLineItem {
    */
   type: TransactionLineItem.Type;
 }
-export namespace Tax {
-  export namespace TransactionLineItem {
-    export interface PerformanceLocationDetails {
-      address: Address;
-    }
+export namespace TransactionLineItem {
+  export interface PerformanceLocationDetails {
+    address: Address;
+  }
 
-    export interface Reversal {
-      /**
-       * The `id` of the line item to reverse in the original transaction.
-       */
-      original_line_item: string;
-    }
-
-    export type TaxBehavior = 'exclusive' | 'inclusive';
-
-    export type Type = 'reversal' | 'transaction';
+  export interface Reversal {
+    /**
+     * The `id` of the line item to reverse in the original transaction.
+     */
+    original_line_item: string;
   }
 
   export type TaxBehavior = 'exclusive' | 'inclusive';

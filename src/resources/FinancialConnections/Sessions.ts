@@ -67,16 +67,16 @@ export interface Session {
   /**
    * Settings for the Hosted UI mode.
    */
-  hosted?: FinancialConnections.Session.Hosted | null;
+  hosted?: Session.Hosted | null;
 
-  limits?: FinancialConnections.Session.Limits;
+  limits?: Session.Limits;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
 
-  manual_entry?: FinancialConnections.Session.ManualEntry;
+  manual_entry?: Session.ManualEntry;
 
   /**
    * Permissions requested for accounts collected during this session.
@@ -88,9 +88,9 @@ export interface Session {
    */
   prefetch: Array<Session.Prefetch> | null;
 
-  relink_options?: FinancialConnections.Session.RelinkOptions;
+  relink_options?: Session.RelinkOptions;
 
-  relink_result?: FinancialConnections.Session.RelinkResult;
+  relink_result?: Session.RelinkResult;
 
   /**
    * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -100,14 +100,14 @@ export interface Session {
   /**
    * The current state of the session.
    */
-  status?: FinancialConnections.Session.Status;
+  status?: Session.Status;
 
-  status_details?: FinancialConnections.Session.StatusDetails;
+  status_details?: Session.StatusDetails;
 
   /**
    * The UI mode for this session.
    */
-  ui_mode?: FinancialConnections.Session.UiMode;
+  ui_mode?: Session.UiMode;
 
   /**
    * The hosted URL for this Session. Redirect customers to this URL to take them to the hosted authentication flow. This value is only present when the Session is active and the `ui_mode` is `hosted`.
@@ -140,119 +140,118 @@ export namespace Session {
      */
     account_subcategories: Array<Filters.AccountSubcategory> | null;
 
-      /**
-       * List of countries from which to filter accounts.
-       */
-      countries: Array<string> | null;
+    /**
+     * List of countries from which to filter accounts.
+     */
+    countries: Array<string> | null;
 
-      /**
-       * Stripe ID of the institution with which the customer should be directed to log in.
-       */
-      institution?: string;
-    }
+    /**
+     * Stripe ID of the institution with which the customer should be directed to log in.
+     */
+    institution?: string;
+  }
 
-    export interface Hosted {
-      /**
-       * How the user enters the hosted flow. You can only use the values `email` and `url` if you provide `relink_options`.
-       */
-      delivery_method?: Hosted.DeliveryMethod;
+  export interface Hosted {
+    /**
+     * How the user enters the hosted flow. You can only use the values `email` and `url` if you provide `relink_options`.
+     */
+    delivery_method?: Hosted.DeliveryMethod;
 
-      /**
-       * The URL to redirect your customer back to after they link their accounts or cancel this Session. This parameter is required if `ui_mode` is `hosted`.
-       */
-      return_url: string | null;
-    }
+    /**
+     * The URL to redirect your customer back to after they link their accounts or cancel this Session. This parameter is required if `ui_mode` is `hosted`.
+     */
+    return_url: string | null;
+  }
 
-    export interface Limits {
-      /**
-       * The number of accounts that can be linked in this Session.
-       */
-      accounts: number;
-    }
+  export interface Limits {
+    /**
+     * The number of accounts that can be linked in this Session.
+     */
+    accounts: number;
+  }
 
-    export interface ManualEntry {}
+  export interface ManualEntry {}
 
-    export type Permission =
-      | 'balances'
-      | 'ownership'
-      | 'payment_method'
-      | 'transactions';
+  export type Permission =
+    | 'balances'
+    | 'ownership'
+    | 'payment_method'
+    | 'transactions';
 
-    export type Prefetch =
-      | 'balances'
-      | 'inferred_balances'
-      | 'ownership'
-      | 'transactions';
+  export type Prefetch =
+    | 'balances'
+    | 'inferred_balances'
+    | 'ownership'
+    | 'transactions';
 
-    export interface RelinkOptions {
-      /**
-       * Requires the end user to repair this specific account during the authentication flow instead of connecting a different one.
-       */
-      account?: string | null;
+  export interface RelinkOptions {
+    /**
+     * Requires the end user to repair this specific account during the authentication flow instead of connecting a different one.
+     */
+    account?: string | null;
 
-      /**
-       * The authorization to relink in the Session.
-       */
-      authorization: string;
-    }
+    /**
+     * The authorization to relink in the Session.
+     */
+    authorization: string;
+  }
 
-    export interface RelinkResult {
-      /**
-       * The account relinked in the Session. Only present if `relink_options[account]` is set and relink is successful.
-       */
-      account: string | null;
+  export interface RelinkResult {
+    /**
+     * The account relinked in the Session. Only present if `relink_options[account]` is set and relink is successful.
+     */
+    account: string | null;
 
-      /**
-       * The authorization relinked in the Session. Only present if relink is successful.
-       */
-      authorization: string | null;
+    /**
+     * The authorization relinked in the Session. Only present if relink is successful.
+     */
+    authorization: string | null;
 
-      /**
-       * Reason for why relink failed. One of `no_authorization`, `no_account`, or `other`.
-       */
-      failure_reason: RelinkResult.FailureReason | null;
-    }
+    /**
+     * Reason for why relink failed. One of `no_authorization`, `no_account`, or `other`.
+     */
+    failure_reason: RelinkResult.FailureReason | null;
+  }
 
-    export type Status = 'cancelled' | 'failed' | 'pending' | 'succeeded';
+  export type Status = 'cancelled' | 'failed' | 'pending' | 'succeeded';
 
-    export interface StatusDetails {
-      cancelled?: StatusDetails.Cancelled;
-    }
+  export interface StatusDetails {
+    cancelled?: StatusDetails.Cancelled;
+  }
 
-    export type UiMode = 'hosted' | 'modal';
+  export type UiMode = 'hosted' | 'modal';
 
   export namespace AccountHolder {
     export type Type = 'account' | 'customer';
   }
 
-    export namespace Filters {
-      export type AccountSubcategory =
-        | 'checking'
-        | 'credit_card'
-        | 'line_of_credit'
-        | 'mortgage'
-        | 'savings';
+  export namespace Filters {
+    export type AccountSubcategory =
+      | 'checking'
+      | 'credit_card'
+      | 'line_of_credit'
+      | 'mortgage'
+      | 'savings';
+  }
+
+  export namespace Hosted {
+    export type DeliveryMethod = 'email' | 'url';
+  }
+
+  export namespace RelinkResult {
+    export type FailureReason = 'no_account' | 'no_authorization' | 'other';
+  }
+
+  export namespace StatusDetails {
+    export interface Cancelled {
+      /**
+       * The reason for the Session being cancelled.
+       */
+      reason: Cancelled.Reason;
     }
 
-    export namespace Hosted {
-      export type DeliveryMethod = 'email' | 'url';
-    }
-
-    export namespace RelinkResult {
-      export type FailureReason = 'no_account' | 'no_authorization' | 'other';
-    }
-
-    export namespace StatusDetails {
-      export interface Cancelled {
-        /**
-         * The reason for the Session being cancelled.
-         */
-        reason: Cancelled.Reason;
-      }
-
-      export namespace Cancelled {
-        export type Reason = 'custom_manual_entry' | 'other';
-      }
+    export namespace Cancelled {
+      export type Reason = 'custom_manual_entry' | 'other';
     }
   }
 }

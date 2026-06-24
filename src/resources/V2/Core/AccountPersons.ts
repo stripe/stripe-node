@@ -461,498 +461,7 @@ export namespace AccountPerson {
         /**
          * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
-        given_name?: string;
-
-        /**
-         * The purpose or type of the additional name.
-         */
-        purpose: AdditionalName.Purpose;
-
-        /**
-         * The individual's last or family name.
-         */
-        surname?: string;
-      }
-
-      export interface AdditionalTermsOfService {
-        /**
-         * Stripe terms of service agreement.
-         */
-        account?: AdditionalTermsOfService.Account;
-      }
-
-      export interface Address {
-        /**
-         * City, district, suburb, town, or village.
-         */
-        city?: string;
-
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country?: string;
-
-        /**
-         * Address line 1 (e.g., street, PO Box, or company name).
-         */
-        line1?: string;
-
-        /**
-         * Address line 2 (e.g., apartment, suite, unit, or building).
-         */
-        line2?: string;
-
-        /**
-         * ZIP or postal code.
-         */
-        postal_code?: string;
-
-        /**
-         * State, county, province, or region.
-         */
-        state?: string;
-
-        /**
-         * Town or district.
-         */
-        town?: string;
-      }
-
-      export interface DateOfBirth {
-        /**
-         * The day of birth, between 1 and 31.
-         */
-        day: number;
-
-        /**
-         * The month of birth, between 1 and 12.
-         */
-        month: number;
-
-        /**
-         * The four-digit year of birth.
-         */
-        year: number;
-      }
-
-      export interface Documents {
-        /**
-         * One or more documents that demonstrate proof that this person is authorized to represent the company.
-         */
-        company_authorization?: Documents.CompanyAuthorization;
-
-        /**
-         * One or more documents showing the person's passport page with photo and personal data.
-         */
-        passport?: Documents.Passport;
-
-        /**
-         * An identifying document showing the person's name, either a passport or local ID card.
-         */
-        primary_verification?: Documents.PrimaryVerification;
-
-        /**
-         * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
-         */
-        secondary_verification?: Documents.SecondaryVerification;
-
-        /**
-         * One or more documents showing the person's visa required for living in the country where they are residing.
-         */
-        visa?: Documents.Visa;
-      }
-
-      export interface IdNumber {
-        /**
-         * The ID number type of an individual.
-         */
-        type: IdNumber.Type;
-      }
-
-      export type LegalGender = 'female' | 'male';
-
-      export type PoliticalExposure = 'existing' | 'none';
-
-      export interface Relationship {
-        /**
-         * Whether the individual is an authorizer of the Account's identity.
-         */
-        authorizer?: boolean;
-
-        /**
-         * Whether the individual is a director of the Account's identity. Directors are typically members of the governing board of the company or are responsible for making sure that the company meets its regulatory obligations.
-         */
-        director?: boolean;
-
-        /**
-         * Whether the individual has significant responsibility to control, manage, or direct the organization.
-         */
-        executive?: boolean;
-
-        /**
-         * Whether the individual is the legal guardian of the Account's representative.
-         */
-        legal_guardian?: boolean;
-
-        /**
-         * Whether the individual is an owner of the Account's identity.
-         */
-        owner?: boolean;
-
-        /**
-         * The percentage of the Account's identity that the individual owns.
-         */
-        percent_ownership?: Decimal;
-
-        /**
-         * Whether the individual is authorized as the primary representative of the Account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.
-         */
-        representative?: boolean;
-
-        /**
-         * The individual's title (e.g., CEO, Support Engineer).
-         */
-        title?: string;
-      }
-
-      export interface ScriptAddresses {
-        /**
-         * Kana Address.
-         */
-        kana?: ScriptAddresses.Kana;
-
-        /**
-         * Kanji Address.
-         */
-        kanji?: ScriptAddresses.Kanji;
-      }
-
-      export interface ScriptNames {
-        /**
-         * Persons name in kana script.
-         */
-        kana?: ScriptNames.Kana;
-
-        /**
-         * Persons name in kanji script.
-         */
-        kanji?: ScriptNames.Kanji;
-      }
-
-      export namespace AdditionalName {
-        export type Purpose = 'alias' | 'maiden';
-      }
-
-      export namespace AdditionalTermsOfService {
-        export interface Account {
-          /**
-           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-           */
-          date?: string;
-
-          /**
-           * The IP address from which the Account's representative accepted the terms of service.
-           */
-          ip?: string;
-
-          /**
-           * The user agent of the browser from which the Account's representative accepted the terms of service.
-           */
-          user_agent?: string;
-        }
-      }
-
-      export namespace Documents {
-        export interface CompanyAuthorization {
-          /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-           */
-          files: Array<string>;
-
-          /**
-           * The format of the document. Currently supports `files` only.
-           */
-          type: 'files';
-        }
-
-        export interface Passport {
-          /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-           */
-          files: Array<string>;
-
-          /**
-           * The format of the document. Currently supports `files` only.
-           */
-          type: 'files';
-        }
-
-        export interface PrimaryVerification {
-          /**
-           * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens for the front and back of the verification document.
-           */
-          front_back: PrimaryVerification.FrontBack;
-
-          /**
-           * The format of the verification document. Currently supports `front_back` only.
-           */
-          type: 'front_back';
-        }
-
-        export interface SecondaryVerification {
-          /**
-           * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens for the front and back of the verification document.
-           */
-          front_back: SecondaryVerification.FrontBack;
-
-          /**
-           * The format of the verification document. Currently supports `front_back` only.
-           */
-          type: 'front_back';
-        }
-
-        export interface Visa {
-          /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-           */
-          files: Array<string>;
-
-          /**
-           * The format of the document. Currently supports `files` only.
-           */
-          type: 'files';
-        }
-
-        export namespace PrimaryVerification {
-          export interface FrontBack {
-            /**
-             * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-             */
-            back?: string;
-
-            /**
-             * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-             */
-            front: string;
-          }
-        }
-
-        export namespace SecondaryVerification {
-          export interface FrontBack {
-            /**
-             * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-             */
-            back?: string;
-
-            /**
-             * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-             */
-            front: string;
-          }
-        }
-      }
-
-      export namespace IdNumber {
-        export type Type =
-          | 'ae_eid'
-          | 'ao_nif'
-          | 'ar_cuil'
-          | 'ar_dni'
-          | 'at_stn'
-          | 'az_tin'
-          | 'bd_brc'
-          | 'bd_etin'
-          | 'bd_nid'
-          | 'be_nrn'
-          | 'bg_ucn'
-          | 'bm_pp'
-          | 'bn_nric'
-          | 'bo_ci'
-          | 'br_cpf'
-          | 'bt_cid'
-          | 'ca_sin'
-          | 'ch_oasi'
-          | 'cl_rut'
-          | 'cn_pp'
-          | 'co_nuip'
-          | 'cr_ci'
-          | 'cr_cpf'
-          | 'cr_dimex'
-          | 'cr_nite'
-          | 'cy_tic'
-          | 'cz_rc'
-          | 'de_stn'
-          | 'dk_cpr'
-          | 'do_cie'
-          | 'do_rcn'
-          | 'ec_ci'
-          | 'ee_ik'
-          | 'eg_tin'
-          | 'es_nif'
-          | 'fi_hetu'
-          | 'fr_nir'
-          | 'gb_nino'
-          | 'gh_pin'
-          | 'gr_afm'
-          | 'gt_nit'
-          | 'gy_tin'
-          | 'hk_id'
-          | 'hn_rtn'
-          | 'hr_oib'
-          | 'hu_ad'
-          | 'id_nik'
-          | 'ie_ppsn'
-          | 'is_kt'
-          | 'it_cf'
-          | 'jm_trn'
-          | 'jo_pin'
-          | 'jp_inc'
-          | 'ke_pin'
-          | 'ky_pp'
-          | 'kz_iin'
-          | 'li_peid'
-          | 'lk_nic'
-          | 'lt_ak'
-          | 'lu_nif'
-          | 'lv_pk'
-          | 'mo_bir'
-          | 'mt_nic'
-          | 'mv_tin'
-          | 'mx_rfc'
-          | 'my_nric'
-          | 'mz_nuit'
-          | 'ng_nin'
-          | 'nl_bsn'
-          | 'no_nin'
-          | 'nz_ird'
-          | 'pa_ruc'
-          | 'pe_dni'
-          | 'ph_tin'
-          | 'pk_cnic'
-          | 'pk_snic'
-          | 'pl_pesel'
-          | 'pt_nif'
-          | 'py_ruc'
-          | 'ro_cnp'
-          | 'sa_tin'
-          | 'se_pin'
-          | 'sg_fin'
-          | 'sg_nric'
-          | 'si_pin'
-          | 'sk_dic'
-          | 'sv_nit'
-          | 'th_lc'
-          | 'th_pin'
-          | 'tr_tin'
-          | 'us_itin'
-          | 'us_itin_last_4'
-          | 'us_ssn'
-          | 'us_ssn_last_4'
-          | 'uy_dni'
-          | 'vg_pp'
-          | 'za_id';
-      }
-
-      export namespace ScriptAddresses {
-        export interface Kana {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city?: string;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country?: string;
-
-          /**
-           * Address line 1 (e.g., street, PO Box, or company name).
-           */
-          line1?: string;
-
-          /**
-           * Address line 2 (e.g., apartment, suite, unit, or building).
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string;
-
-          /**
-           * State, county, province, or region.
-           */
-          state?: string;
-
-          /**
-           * Town or district.
-           */
-          town?: string;
-        }
-
-        export interface Kanji {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city?: string;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country?: string;
-
-          /**
-           * Address line 1 (e.g., street, PO Box, or company name).
-           */
-          line1?: string;
-
-          /**
-           * Address line 2 (e.g., apartment, suite, unit, or building).
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string;
-
-          /**
-           * State, county, province, or region.
-           */
-          state?: string;
-
-          /**
-           * Town or district.
-           */
-          town?: string;
-        }
-      }
-
-      export namespace ScriptNames {
-        export interface Kana {
-          /**
-           * The person's first or given name.
-           */
-          given_name?: string;
-
-          /**
-           * The person's last or family name.
-           */
-          surname?: string;
-        }
-
-        export interface Kanji {
-          /**
-           * The person's first or given name.
-           */
-          given_name?: string;
-
-          /**
-           * The person's last or family name.
-           */
-          surname?: string;
-        }
+        front: string;
       }
     }
   }
@@ -970,8 +479,11 @@ export namespace AccountPerson {
       | 'bd_nid'
       | 'be_nrn'
       | 'bg_ucn'
+      | 'bm_pp'
       | 'bn_nric'
+      | 'bo_ci'
       | 'br_cpf'
+      | 'bt_cid'
       | 'ca_sin'
       | 'ch_oasi'
       | 'cl_rut'
@@ -989,26 +501,37 @@ export namespace AccountPerson {
       | 'do_rcn'
       | 'ec_ci'
       | 'ee_ik'
+      | 'eg_tin'
       | 'es_nif'
       | 'fi_hetu'
       | 'fr_nir'
       | 'gb_nino'
+      | 'gh_pin'
       | 'gr_afm'
       | 'gt_nit'
+      | 'gy_tin'
       | 'hk_id'
+      | 'hn_rtn'
       | 'hr_oib'
       | 'hu_ad'
       | 'id_nik'
       | 'ie_ppsn'
       | 'is_kt'
       | 'it_cf'
+      | 'jm_trn'
+      | 'jo_pin'
       | 'jp_inc'
       | 'ke_pin'
+      | 'ky_pp'
       | 'kz_iin'
       | 'li_peid'
+      | 'lk_nic'
       | 'lt_ak'
       | 'lu_nif'
       | 'lv_pk'
+      | 'mo_bir'
+      | 'mt_nic'
+      | 'mv_tin'
       | 'mx_rfc'
       | 'my_nric'
       | 'mz_nuit'
@@ -1016,17 +539,22 @@ export namespace AccountPerson {
       | 'nl_bsn'
       | 'no_nin'
       | 'nz_ird'
+      | 'pa_ruc'
       | 'pe_dni'
+      | 'ph_tin'
       | 'pk_cnic'
       | 'pk_snic'
       | 'pl_pesel'
       | 'pt_nif'
+      | 'py_ruc'
       | 'ro_cnp'
       | 'sa_tin'
       | 'se_pin'
       | 'sg_fin'
       | 'sg_nric'
+      | 'si_pin'
       | 'sk_dic'
+      | 'sv_nit'
       | 'th_lc'
       | 'th_pin'
       | 'tr_tin'
@@ -1035,6 +563,7 @@ export namespace AccountPerson {
       | 'us_ssn'
       | 'us_ssn_last_4'
       | 'uy_dni'
+      | 'vg_pp'
       | 'za_id';
   }
 

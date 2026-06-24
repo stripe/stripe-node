@@ -82,7 +82,7 @@ export interface InboundTransfer {
   /**
    * A nested object containing information about the origin of the InboundTransfer.
    */
-  from: V2.MoneyManagement.InboundTransfer.From;
+  from: InboundTransfer.From;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -97,154 +97,150 @@ export interface InboundTransfer {
   /**
    * A nested object containing information about the destination of the InboundTransfer.
    */
-  to: V2.MoneyManagement.InboundTransfer.To;
+  to: InboundTransfer.To;
 
   /**
    * A list of history objects, representing changes in the state of the InboundTransfer.
    */
-  transfer_history: Array<V2.MoneyManagement.InboundTransfer.TransferHistory>;
+  transfer_history: Array<InboundTransfer.TransferHistory>;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace InboundTransfer {
-      export interface From {
-        /**
-         * The amount in specified currency that was debited from the Payment Method.
-         */
-        debited: V2Amount;
+export namespace InboundTransfer {
+  export interface From {
+    /**
+     * The amount in specified currency that was debited from the Payment Method.
+     */
+    debited: V2Amount;
 
-        /**
-         * The Payment Method object used to create the InboundTransfer.
-         */
-        payment_method: From.PaymentMethod;
-      }
+    /**
+     * The Payment Method object used to create the InboundTransfer.
+     */
+    payment_method: From.PaymentMethod;
+  }
 
-      export interface To {
-        /**
-         * The amount by which the FinancialAccount balance is credited.
-         */
-        credited: V2Amount;
+  export interface To {
+    /**
+     * The amount by which the FinancialAccount balance is credited.
+     */
+    credited: V2Amount;
 
-        /**
-         * The FinancialAccount that funds will land in.
-         */
-        financial_account: string;
-      }
+    /**
+     * The FinancialAccount that funds will land in.
+     */
+    financial_account: string;
+  }
 
-      export interface TransferHistory {
-        /**
-         * The history entry for a failed InboundTransfer.
-         */
-        bank_debit_failed?: TransferHistory.BankDebitFailed;
+  export interface TransferHistory {
+    /**
+     * The history entry for a failed InboundTransfer.
+     */
+    bank_debit_failed?: TransferHistory.BankDebitFailed;
 
-        /**
-         * The history entry for a processing InboundTransfer.
-         */
-        bank_debit_processing?: TransferHistory.BankDebitProcessing;
+    /**
+     * The history entry for a processing InboundTransfer.
+     */
+    bank_debit_processing?: TransferHistory.BankDebitProcessing;
 
-        /**
-         * The history entry for a queued InboundTransfer.
-         */
-        bank_debit_queued?: TransferHistory.BankDebitQueued;
+    /**
+     * The history entry for a queued InboundTransfer.
+     */
+    bank_debit_queued?: TransferHistory.BankDebitQueued;
 
-        /**
-         * The history entry for a returned InboundTransfer.
-         */
-        bank_debit_returned?: TransferHistory.BankDebitReturned;
+    /**
+     * The history entry for a returned InboundTransfer.
+     */
+    bank_debit_returned?: TransferHistory.BankDebitReturned;
 
-        /**
-         * The history entry for a succeeded InboundTransfer.
-         */
-        bank_debit_succeeded?: TransferHistory.BankDebitSucceeded;
+    /**
+     * The history entry for a succeeded InboundTransfer.
+     */
+    bank_debit_succeeded?: TransferHistory.BankDebitSucceeded;
 
-        /**
-         * Creation time of the HistoryEntry in RFC 3339 format and UTC.
-         */
-        created: string;
+    /**
+     * Creation time of the HistoryEntry in RFC 3339 format and UTC.
+     */
+    created: string;
 
-        /**
-         * Effective at time of the HistoryEntry in RFC 3339 format and UTC.
-         */
-        effective_at: string;
+    /**
+     * Effective at time of the HistoryEntry in RFC 3339 format and UTC.
+     */
+    effective_at: string;
 
-        /**
-         * A unique ID for the HistoryEntry.
-         */
-        id: string;
+    /**
+     * A unique ID for the HistoryEntry.
+     */
+    id: string;
 
-        /**
-         * Open Enum. The Level of the HistoryEntry.
-         */
-        level: TransferHistory.Level;
+    /**
+     * Open Enum. The Level of the HistoryEntry.
+     */
+    level: TransferHistory.Level;
 
-        /**
-         * Open Enum. The type of the HistoryEntry.
-         */
-        type: TransferHistory.Type;
-      }
+    /**
+     * Open Enum. The type of the HistoryEntry.
+     */
+    type: TransferHistory.Type;
+  }
 
-      export namespace From {
-        export interface PaymentMethod {
-          /**
-           * The type of object this destination represents. For a us bank account, we expect us_bank_account.
-           */
-          type: string;
+  export namespace From {
+    export interface PaymentMethod {
+      /**
+       * The type of object this destination represents. For a us bank account, we expect us_bank_account.
+       */
+      type: string;
 
-          /**
-           * The destination US bank account identifier. eg "usba_***".
-           */
-          us_bank_account?: string;
-        }
-      }
+      /**
+       * The destination US bank account identifier. eg "usba_***".
+       */
+      us_bank_account?: string;
+    }
+  }
 
-      export namespace TransferHistory {
-        export interface BankDebitFailed {
-          /**
-           * Open Enum. The return reason for the failed InboundTransfer.
-           */
-          failure_reason: BankDebitFailed.FailureReason;
-        }
+  export namespace TransferHistory {
+    export interface BankDebitFailed {
+      /**
+       * Open Enum. The return reason for the failed InboundTransfer.
+       */
+      failure_reason: BankDebitFailed.FailureReason;
+    }
 
-        export interface BankDebitProcessing {}
+    export interface BankDebitProcessing {}
 
-        export interface BankDebitQueued {}
+    export interface BankDebitQueued {}
 
-        export interface BankDebitReturned {
-          /**
-           * Open Enum. The return reason for the returned InboundTransfer.
-           */
-          return_reason: BankDebitReturned.ReturnReason;
-        }
+    export interface BankDebitReturned {
+      /**
+       * Open Enum. The return reason for the returned InboundTransfer.
+       */
+      return_reason: BankDebitReturned.ReturnReason;
+    }
 
-        export interface BankDebitSucceeded {}
+    export interface BankDebitSucceeded {}
 
-        export type Level = 'canonical' | 'debug';
+    export type Level = 'canonical' | 'debug';
 
-        export type Type =
-          | 'bank_debit_failed'
-          | 'bank_debit_processing'
-          | 'bank_debit_queued'
-          | 'bank_debit_returned'
-          | 'bank_debit_succeeded';
+    export type Type =
+      | 'bank_debit_failed'
+      | 'bank_debit_processing'
+      | 'bank_debit_queued'
+      | 'bank_debit_returned'
+      | 'bank_debit_succeeded';
 
-        export namespace BankDebitFailed {
-          export type FailureReason =
-            | 'bank_account_closed'
-            | 'bank_account_not_found'
-            | 'bank_debit_could_not_be_processed'
-            | 'bank_debit_not_authorized'
-            | 'insufficient_funds';
-        }
+    export namespace BankDebitFailed {
+      export type FailureReason =
+        | 'bank_account_closed'
+        | 'bank_account_not_found'
+        | 'bank_debit_could_not_be_processed'
+        | 'bank_debit_not_authorized'
+        | 'insufficient_funds';
+    }
 
-        export namespace BankDebitReturned {
-          export type ReturnReason =
-            | 'bank_account_closed'
-            | 'bank_account_not_found'
-            | 'bank_debit_could_not_be_processed'
-            | 'bank_debit_not_authorized'
-            | 'insufficient_funds';
-        }
-      }
+    export namespace BankDebitReturned {
+      export type ReturnReason =
+        | 'bank_account_closed'
+        | 'bank_account_not_found'
+        | 'bank_debit_could_not_be_processed'
+        | 'bank_debit_not_authorized'
+        | 'insufficient_funds';
     }
   }
 }

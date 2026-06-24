@@ -114,7 +114,7 @@ export interface Dispute {
   /**
    * Array of onchain crypto transactions linked to this resource.
    */
-  crypto_transactions?: Array<Issuing.Dispute.CryptoTransaction> | null;
+  crypto_transactions?: Array<Dispute.CryptoTransaction> | null;
 
   /**
    * The currency the `transaction` was made in.
@@ -141,12 +141,12 @@ export interface Dispute {
   /**
    * Incoming information from the card network for this dispute. Includes the acquiring merchant's initial response, pre-arbitration submission, and pre-arbitration response to the dispute.
    */
-  network_lifecycle?: Issuing.Dispute.NetworkLifecycle | null;
+  network_lifecycle?: Dispute.NetworkLifecycle | null;
 
   /**
    * Provisional credit details for this dispute.
    */
-  provisional_credit?: Issuing.Dispute.ProvisionalCredit | null;
+  provisional_credit?: Dispute.ProvisionalCredit | null;
 
   /**
    * Current status of the dispute.
@@ -163,27 +163,26 @@ export interface Dispute {
    */
   treasury?: Dispute.Treasury | null;
 }
-export namespace Issuing {
-  export namespace Dispute {
-    export interface CryptoTransaction {
-      /**
-       * The confirmed crypto transaction details when `type` is `crypto_transaction_confirmed`; otherwise null.
-       */
-      crypto_transaction_confirmed: CryptoTransaction.CryptoTransactionConfirmed | null;
+export namespace Dispute {
+  export interface CryptoTransaction {
+    /**
+     * The confirmed crypto transaction details when `type` is `crypto_transaction_confirmed`; otherwise null.
+     */
+    crypto_transaction_confirmed: CryptoTransaction.CryptoTransactionConfirmed | null;
 
-      /**
-       * The failed crypto transaction details when `type` is `crypto_transaction_failed`; otherwise null.
-       */
-      crypto_transaction_failed: CryptoTransaction.CryptoTransactionFailed | null;
+    /**
+     * The failed crypto transaction details when `type` is `crypto_transaction_failed`; otherwise null.
+     */
+    crypto_transaction_failed: CryptoTransaction.CryptoTransactionFailed | null;
 
-      /**
-       * The crypto transaction variant for this array entry.
-       */
-      type: string;
-    }
+    /**
+     * The crypto transaction variant for this array entry.
+     */
+    type: string;
+  }
 
-    export interface Evidence {
-      canceled?: Evidence.Canceled;
+  export interface Evidence {
+    canceled?: Evidence.Canceled;
 
     duplicate?: Evidence.Duplicate;
 
@@ -227,6 +226,50 @@ export namespace Issuing {
     | 'transaction_qualifies_for_visa_easy_payment_service'
     | 'transaction_unattended';
 
+  export interface NetworkLifecycle {
+    /**
+     * Information related to the acquiring merchant's initial response to this dispute.
+     */
+    dispute_response: NetworkLifecycle.DisputeResponse | null;
+
+    /**
+     * Information related to the acquiring merchant's pre-arbitration response for this dispute.
+     */
+    pre_arbitration_response: NetworkLifecycle.PreArbitrationResponse | null;
+
+    /**
+     * Information related to the acquiring merchant's pre-arbitration submission for this dispute.
+     */
+    pre_arbitration_submission: NetworkLifecycle.PreArbitrationSubmission | null;
+  }
+
+  export interface ProvisionalCredit {
+    /**
+     * The time by which the platform must grant a provisional credit to the consumer.
+     */
+    grant_deadline: number | null;
+
+    /**
+     * The time at which the platform reported granting the provisional credit.
+     */
+    granted_at: number | null;
+
+    /**
+     * The earliest time after which the platform can revoke the provisional credit.
+     */
+    revocable_after: number | null;
+
+    /**
+     * The time at which the platform reported revoking the provisional credit.
+     */
+    revoked_at: number | null;
+
+    /**
+     * The status of the provisional credit obligation.
+     */
+    status: ProvisionalCredit.Status;
+  }
+
   export type Status = 'expired' | 'lost' | 'submitted' | 'unsubmitted' | 'won';
 
   export interface Treasury {
@@ -239,6 +282,155 @@ export namespace Issuing {
      * The Treasury [ReceivedDebit](https://docs.stripe.com/api/treasury/received_debits) that is being disputed.
      */
     received_debit: string;
+  }
+
+  export namespace CryptoTransaction {
+    export interface CryptoTransactionConfirmed {
+      /**
+       * The crypto amount for the confirmed transaction.
+       */
+      amount: string;
+
+      /**
+       * The upcharged MCC amount, if one was applied.
+       */
+      amount_mcc_upcharged: string | null;
+
+      /**
+       * The blockchain network for the confirmed transaction.
+       */
+      chain: string;
+
+      /**
+       * When the transaction was confirmed onchain.
+       */
+      confirmed_at: number;
+
+      /**
+       * The currency of the crypto transaction amount.
+       */
+      currency: string;
+
+      /**
+       * Fees associated with the transaction.
+       */
+      fees: Array<CryptoTransactionConfirmed.Fee>;
+
+      /**
+       * The source wallet address for the transaction.
+       */
+      from_address: string;
+
+      /**
+       * Memo metadata attached to the transaction, if present.
+       */
+      memo: string | null;
+
+      /**
+       * The destination wallet address for the transaction.
+       */
+      to_address: string;
+
+      /**
+       * The blockchain transaction hash.
+       */
+      transaction_hash: string;
+    }
+
+    export interface CryptoTransactionFailed {
+      /**
+       * The crypto amount for the failed transaction.
+       */
+      amount: string;
+
+      /**
+       * The upcharged MCC amount, if one was applied.
+       */
+      amount_mcc_upcharged: string | null;
+
+      /**
+       * The blockchain network for the failed transaction.
+       */
+      chain: string;
+
+      /**
+       * The currency of the crypto transaction amount.
+       */
+      currency: string;
+
+      /**
+       * When the transaction failed.
+       */
+      failed_at: number;
+
+      /**
+       * The reason the transaction failed.
+       */
+      failure_reason: string;
+
+      /**
+       * Fees associated with the transaction.
+       */
+      fees: Array<CryptoTransactionFailed.Fee>;
+
+      /**
+       * The source wallet address for the attempted transaction.
+       */
+      from_address: string;
+
+      /**
+       * Memo metadata attached to the transaction, if present.
+       */
+      memo: string | null;
+
+      /**
+       * The destination wallet address for the attempted transaction when one exists.
+       */
+      to_address: string | null;
+
+      /**
+       * The blockchain transaction hash when one exists.
+       */
+      transaction_hash: string | null;
+    }
+
+    export namespace CryptoTransactionConfirmed {
+      export interface Fee {
+        /**
+         * The fee amount.
+         */
+        amount: string;
+
+        /**
+         * The fee currency.
+         */
+        currency: string;
+
+        /**
+         * The fee type.
+         */
+        type: string;
+      }
+    }
+
+    export namespace CryptoTransactionFailed {
+      export interface Fee {
+        /**
+         * The fee amount.
+         */
+        amount: string;
+
+        /**
+         * The fee currency.
+         */
+        currency: string;
+
+        /**
+         * The fee type.
+         */
+        type: string;
+      }
+    }
   }
 
   export namespace Evidence {
@@ -441,58 +633,7 @@ export namespace Issuing {
       | 'other'
       | 'service_not_as_described';
 
-    export interface NetworkLifecycle {
-      /**
-       * Information related to the acquiring merchant's initial response to this dispute.
-       */
-      dispute_response: NetworkLifecycle.DisputeResponse | null;
-
-      /**
-       * Information related to the acquiring merchant's pre-arbitration response for this dispute.
-       */
-      pre_arbitration_response: NetworkLifecycle.PreArbitrationResponse | null;
-
-      /**
-       * Information related to the acquiring merchant's pre-arbitration submission for this dispute.
-       */
-      pre_arbitration_submission: NetworkLifecycle.PreArbitrationSubmission | null;
-    }
-
-    export interface ProvisionalCredit {
-      /**
-       * The time by which the platform must grant a provisional credit to the consumer.
-       */
-      grant_deadline: number | null;
-
-      /**
-       * The time at which the platform reported granting the provisional credit.
-       */
-      granted_at: number | null;
-
-      /**
-       * The earliest time after which the platform can revoke the provisional credit.
-       */
-      revocable_after: number | null;
-
-      /**
-       * The time at which the platform reported revoking the provisional credit.
-       */
-      revoked_at: number | null;
-
-      /**
-       * The status of the provisional credit obligation.
-       */
-      status: ProvisionalCredit.Status;
-    }
-
-    export type Status =
-      | 'expired'
-      | 'lost'
-      | 'submitted'
-      | 'unsubmitted'
-      | 'won';
-
-    export interface Treasury {
+    export interface ServiceNotAsDescribed {
       /**
        * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
        */
@@ -519,161 +660,8 @@ export namespace Issuing {
       received_at: number | null;
     }
 
-    export namespace CryptoTransaction {
-      export interface CryptoTransactionConfirmed {
-        /**
-         * The crypto amount for the confirmed transaction.
-         */
-        amount: string;
-
-        /**
-         * The upcharged MCC amount, if one was applied.
-         */
-        amount_mcc_upcharged: string | null;
-
-        /**
-         * The blockchain network for the confirmed transaction.
-         */
-        chain: string;
-
-        /**
-         * When the transaction was confirmed onchain.
-         */
-        confirmed_at: number;
-
-        /**
-         * The currency of the crypto transaction amount.
-         */
-        currency: string;
-
-        /**
-         * Fees associated with the transaction.
-         */
-        fees: Array<CryptoTransactionConfirmed.Fee>;
-
-        /**
-         * The source wallet address for the transaction.
-         */
-        from_address: string;
-
-        /**
-         * Memo metadata attached to the transaction, if present.
-         */
-        memo: string | null;
-
-        /**
-         * The destination wallet address for the transaction.
-         */
-        to_address: string;
-
-        /**
-         * The blockchain transaction hash.
-         */
-        transaction_hash: string;
-      }
-
-      export interface CryptoTransactionFailed {
-        /**
-         * The crypto amount for the failed transaction.
-         */
-        amount: string;
-
-        /**
-         * The upcharged MCC amount, if one was applied.
-         */
-        amount_mcc_upcharged: string | null;
-
-        /**
-         * The blockchain network for the failed transaction.
-         */
-        chain: string;
-
-        /**
-         * The currency of the crypto transaction amount.
-         */
-        currency: string;
-
-        /**
-         * When the transaction failed.
-         */
-        failed_at: number;
-
-        /**
-         * The reason the transaction failed.
-         */
-        failure_reason: string;
-
-        /**
-         * Fees associated with the transaction.
-         */
-        fees: Array<CryptoTransactionFailed.Fee>;
-
-        /**
-         * The source wallet address for the attempted transaction.
-         */
-        from_address: string;
-
-        /**
-         * Memo metadata attached to the transaction, if present.
-         */
-        memo: string | null;
-
-        /**
-         * The destination wallet address for the attempted transaction when one exists.
-         */
-        to_address: string | null;
-
-        /**
-         * The blockchain transaction hash when one exists.
-         */
-        transaction_hash: string | null;
-      }
-
-      export namespace CryptoTransactionConfirmed {
-        export interface Fee {
-          /**
-           * The fee amount.
-           */
-          amount: string;
-
-          /**
-           * The fee currency.
-           */
-          currency: string;
-
-          /**
-           * The fee type.
-           */
-          type: string;
-        }
-      }
-
-      export namespace CryptoTransactionFailed {
-        export interface Fee {
-          /**
-           * The fee amount.
-           */
-          amount: string;
-
-          /**
-           * The fee currency.
-           */
-          currency: string;
-
-          /**
-           * The fee type.
-           */
-          type: string;
-        }
-      }
-    }
-
-    export namespace Evidence {
-      export interface Canceled {
-        /**
-         * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
-         */
-        additional_documentation: string | File | null;
+    export namespace Canceled {
+      export type ProductType = 'merchandise' | 'service';
 
       export type ReturnStatus = 'merchant_rejected' | 'successful';
     }
@@ -689,56 +677,56 @@ export namespace Issuing {
     export namespace Other {
       export type ProductType = 'merchandise' | 'service';
     }
+  }
 
-    export namespace NetworkLifecycle {
-      export interface DisputeResponse {
-        /**
-         * Error message if processing the acquiring merchant's initial dispute response failed.
-         */
-        error: string | null;
+  export namespace NetworkLifecycle {
+    export interface DisputeResponse {
+      /**
+       * Error message if processing the acquiring merchant's initial dispute response failed.
+       */
+      error: string | null;
 
-        /**
-         * Array of [File](https://docs.stripe.com/api/files) ids containing evidence the acquiring merchant provided in support of their initial dispute response.
-         */
-        merchant_evidence_files: Array<string> | null;
-      }
-
-      export interface PreArbitrationResponse {
-        /**
-         * Error message if processing the acquiring merchant's pre-arbitration response failed.
-         */
-        error: string | null;
-
-        /**
-         * Array of [File](https://docs.stripe.com/api/files) ids containing evidence the acquiring merchant provided with their pre-arbitration response.
-         */
-        merchant_evidence_files: Array<string> | null;
-      }
-
-      export interface PreArbitrationSubmission {
-        /**
-         * Error message if processing the acquiring merchant's pre-arbitration submission failed.
-         */
-        error: string | null;
-
-        /**
-         * Array of [File](https://docs.stripe.com/api/files) ids containing evidence the acquiring merchant provided with their pre-arbitration submission.
-         */
-        merchant_evidence_files: Array<string> | null;
-      }
+      /**
+       * Array of [File](https://docs.stripe.com/api/files) ids containing evidence the acquiring merchant provided in support of their initial dispute response.
+       */
+      merchant_evidence_files: Array<string> | null;
     }
 
-    export namespace ProvisionalCredit {
-      export type Status =
-        | 'delinquent'
-        | 'granted'
-        | 'not_required'
-        | 'permanent'
-        | 'required'
-        | 'revocable'
-        | 'revocation_notice_period'
-        | 'revoked';
+    export interface PreArbitrationResponse {
+      /**
+       * Error message if processing the acquiring merchant's pre-arbitration response failed.
+       */
+      error: string | null;
+
+      /**
+       * Array of [File](https://docs.stripe.com/api/files) ids containing evidence the acquiring merchant provided with their pre-arbitration response.
+       */
+      merchant_evidence_files: Array<string> | null;
     }
+
+    export interface PreArbitrationSubmission {
+      /**
+       * Error message if processing the acquiring merchant's pre-arbitration submission failed.
+       */
+      error: string | null;
+
+      /**
+       * Array of [File](https://docs.stripe.com/api/files) ids containing evidence the acquiring merchant provided with their pre-arbitration submission.
+       */
+      merchant_evidence_files: Array<string> | null;
+    }
+  }
+
+  export namespace ProvisionalCredit {
+    export type Status =
+      | 'delinquent'
+      | 'granted'
+      | 'not_required'
+      | 'permanent'
+      | 'required'
+      | 'revocable'
+      | 'revocation_notice_period'
+      | 'revoked';
   }
 }
 export namespace Issuing {

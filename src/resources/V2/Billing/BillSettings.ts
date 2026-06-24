@@ -87,7 +87,7 @@ export interface BillSetting {
   /**
    * Settings related to calculating a bill.
    */
-  calculation?: V2.Billing.BillSetting.Calculation;
+  calculation?: BillSetting.Calculation;
 
   /**
    * Timestamp of when the object was created.
@@ -102,7 +102,7 @@ export interface BillSetting {
   /**
    * Settings related to invoice behavior.
    */
-  invoice?: V2.Billing.BillSetting.Invoice;
+  invoice?: BillSetting.Invoice;
 
   /**
    * The ID of the invoice rendering template to be used when generating invoices.
@@ -132,54 +132,50 @@ export interface BillSetting {
    */
   lookup_key?: string;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace BillSetting {
-      export interface Calculation {
-        /**
-         * Settings for calculating tax.
-         */
-        tax?: Calculation.Tax;
-      }
+export namespace BillSetting {
+  export interface Calculation {
+    /**
+     * Settings for calculating tax.
+     */
+    tax?: Calculation.Tax;
+  }
 
-      export interface Invoice {
-        /**
-         * The amount of time until the invoice is overdue for payment.
-         */
-        time_until_due?: Invoice.TimeUntilDue;
-      }
+  export interface Invoice {
+    /**
+     * The amount of time until the invoice is overdue for payment.
+     */
+    time_until_due?: Invoice.TimeUntilDue;
+  }
 
-      export namespace Calculation {
-        export interface Tax {
-          /**
-           * Determines if tax is calculated automatically based on a PTC or manually based on rules defined by the business. Defaults to "manual".
-           */
-          type: Tax.Type;
-        }
+  export namespace Calculation {
+    export interface Tax {
+      /**
+       * Determines if tax is calculated automatically based on a PTC or manually based on rules defined by the business. Defaults to "manual".
+       */
+      type: Tax.Type;
+    }
 
-        export namespace Tax {
-          export type Type = 'automatic' | 'manual';
-        }
-      }
+    export namespace Tax {
+      export type Type = 'automatic' | 'manual';
+    }
+  }
 
-      export namespace Invoice {
-        export interface TimeUntilDue {
-          /**
-           * The interval unit for the time until due.
-           */
-          interval: TimeUntilDue.Interval;
+  export namespace Invoice {
+    export interface TimeUntilDue {
+      /**
+       * The interval unit for the time until due.
+       */
+      interval: TimeUntilDue.Interval;
 
-          /**
-           * The number of interval units. For example, if interval=day and interval_count=30,
-           * the invoice is due in 30 days.
-           */
-          interval_count: number;
-        }
+      /**
+       * The number of interval units. For example, if interval=day and interval_count=30,
+       * the invoice is due in 30 days.
+       */
+      interval_count: number;
+    }
 
-        export namespace TimeUntilDue {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
-        }
-      }
+    export namespace TimeUntilDue {
+      export type Interval = 'day' | 'month' | 'week' | 'year';
     }
   }
 }

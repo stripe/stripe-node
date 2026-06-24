@@ -101,12 +101,12 @@ export interface RateCardSubscription {
   /**
    * The payment status of a Rate Card Subscription.
    */
-  collection_status?: V2.Billing.RateCardSubscription.CollectionStatus;
+  collection_status?: RateCardSubscription.CollectionStatus;
 
   /**
    * The collection status transitions of the Rate Card Subscription.
    */
-  collection_status_transitions?: V2.Billing.RateCardSubscription.CollectionStatusTransitions;
+  collection_status_transitions?: RateCardSubscription.CollectionStatusTransitions;
 
   /**
    * Timestamp of when the object was created.
@@ -136,88 +136,80 @@ export interface RateCardSubscription {
   /**
    * The servicing status of a Rate Card Subscription.
    */
-  servicing_status?: V2.Billing.RateCardSubscription.ServicingStatus;
+  servicing_status?: RateCardSubscription.ServicingStatus;
 
   /**
    * The servicing status transitions of the Rate Card Subscription.
    */
-  servicing_status_transitions?: V2.Billing.RateCardSubscription.ServicingStatusTransitions;
+  servicing_status_transitions?: RateCardSubscription.ServicingStatusTransitions;
 
   /**
    * The ID of the Test Clock, if any.
    */
   test_clock?: string;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace RateCardSubscription {
-      export type CollectionStatus =
-        | 'awaiting_customer_action'
-        | 'current'
-        | 'past_due'
-        | 'paused'
-        | 'unpaid';
+export namespace RateCardSubscription {
+  export type CollectionStatus =
+    | 'awaiting_customer_action'
+    | 'current'
+    | 'past_due'
+    | 'paused'
+    | 'unpaid';
 
-      export interface CollectionStatusTransitions {
-        /**
-         * When the collection status transitioned to awaiting customer action.
-         */
-        awaiting_customer_action_at?: string;
+  export interface CollectionStatusTransitions {
+    /**
+     * When the collection status transitioned to awaiting customer action.
+     */
+    awaiting_customer_action_at?: string;
 
-        /**
-         * When the collection status transitioned to current.
-         */
-        current_at?: string;
+    /**
+     * When the collection status transitioned to current.
+     */
+    current_at?: string;
 
-        /**
-         * When the collection status transitioned to past due.
-         */
-        past_due_at?: string;
+    /**
+     * When the collection status transitioned to past due.
+     */
+    past_due_at?: string;
 
-        /**
-         * When the collection status transitioned to paused.
-         */
-        paused_at?: string;
+    /**
+     * When the collection status transitioned to paused.
+     */
+    paused_at?: string;
 
-        /**
-         * When the collection status transitioned to unpaid.
-         */
-        unpaid_at?: string;
-      }
+    /**
+     * When the collection status transitioned to unpaid.
+     */
+    unpaid_at?: string;
+  }
 
-      export type ServicingStatus =
-        | 'active'
-        | 'canceled'
-        | 'paused'
-        | 'pending';
+  export type ServicingStatus = 'active' | 'canceled' | 'paused' | 'pending';
 
-      export interface ServicingStatusTransitions {
-        /**
-         * When the servicing status transitioned to activated.
-         */
-        activated_at?: string;
+  export interface ServicingStatusTransitions {
+    /**
+     * When the servicing status transitioned to activated.
+     */
+    activated_at?: string;
 
-        /**
-         * When the servicing status transitioned to canceled.
-         */
-        canceled_at?: string;
+    /**
+     * When the servicing status transitioned to canceled.
+     */
+    canceled_at?: string;
 
-        /**
-         * When the servicing status transitioned to paused.
-         */
-        paused_at?: string;
+    /**
+     * When the servicing status transitioned to paused.
+     */
+    paused_at?: string;
 
-        /**
-         * When the servicing is scheduled to transition to activate.
-         */
-        will_activate_at?: string;
+    /**
+     * When the servicing is scheduled to transition to activate.
+     */
+    will_activate_at?: string;
 
-        /**
-         * When the servicing is scheduled to cancel.
-         */
-        will_cancel_at?: string;
-      }
-    }
+    /**
+     * When the servicing is scheduled to cancel.
+     */
+    will_cancel_at?: string;
   }
 }
 export namespace V2 {

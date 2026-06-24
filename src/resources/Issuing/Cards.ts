@@ -1361,6 +1361,11 @@ export namespace Card {
        * Reason the card is ineligible for Apple Pay
        */
       ineligible_reason: ApplePay.IneligibleReason | null;
+
+      /**
+       * Unique identifier for the card in Apple Pay
+       */
+      primary_account_identifier?: string | null;
     }
 
     export interface GooglePay {
@@ -1369,16 +1374,16 @@ export namespace Card {
        */
       eligible: boolean;
 
-        /**
-         * Reason the card is ineligible for Apple Pay
-         */
-        ineligible_reason: ApplePay.IneligibleReason | null;
+      /**
+       * Reason the card is ineligible for Google Pay
+       */
+      ineligible_reason: GooglePay.IneligibleReason | null;
 
-        /**
-         * Unique identifier for the card in Apple Pay
-         */
-        primary_account_identifier?: string | null;
-      }
+      /**
+       * Unique identifier for the card in Google Pay
+       */
+      primary_account_identifier?: string | null;
+    }
 
     export namespace ApplePay {
       export type IneligibleReason =
@@ -1387,30 +1392,11 @@ export namespace Card {
         | 'unsupported_region';
     }
 
-        /**
-         * Reason the card is ineligible for Google Pay
-         */
-        ineligible_reason: GooglePay.IneligibleReason | null;
-
-        /**
-         * Unique identifier for the card in Google Pay
-         */
-        primary_account_identifier?: string | null;
-      }
-
-      export namespace ApplePay {
-        export type IneligibleReason =
-          | 'missing_agreement'
-          | 'missing_cardholder_contact'
-          | 'unsupported_region';
-      }
-
-      export namespace GooglePay {
-        export type IneligibleReason =
-          | 'missing_agreement'
-          | 'missing_cardholder_contact'
-          | 'unsupported_region';
-      }
+    export namespace GooglePay {
+      export type IneligibleReason =
+        | 'missing_agreement'
+        | 'missing_cardholder_contact'
+        | 'unsupported_region';
     }
   }
 }

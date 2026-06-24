@@ -108,7 +108,7 @@ export interface OneTimeItem {
   /**
    * Stripe Tax details.
    */
-  tax_details?: V2.Billing.OneTimeItem.TaxDetails;
+  tax_details?: OneTimeItem.TaxDetails;
 
   /**
    * The unit to use when displaying prices for this one-time item. For example, set this field
@@ -117,16 +117,12 @@ export interface OneTimeItem {
    */
   unit_label?: string;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace OneTimeItem {
-      export interface TaxDetails {
-        /**
-         * Product tax code (PTC).
-         */
-        tax_code: string;
-      }
-    }
+export namespace OneTimeItem {
+  export interface TaxDetails {
+    /**
+     * Product tax code (PTC).
+     */
+    tax_code: string;
   }
 }
 export namespace V2 {

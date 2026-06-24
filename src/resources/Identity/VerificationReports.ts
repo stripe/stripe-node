@@ -115,6 +115,11 @@ export namespace VerificationReport {
     address: Address | null;
 
     /**
+     * If document was not verified due to extracted data being on the blocklist, this is the token of the BlocklistEntry that blocked it
+     */
+    blocked_by_entry?: string | BlocklistEntry | null;
+
+    /**
      * Date of birth as it appears in the document.
      */
     dob?: Document.Dob | null;
@@ -186,6 +191,11 @@ export namespace VerificationReport {
   }
 
   export interface Email {
+    /**
+     * Additional email verification details
+     */
+    details?: Email.Details;
+
     /**
      * Email to be verified.
      */
@@ -264,6 +274,11 @@ export namespace VerificationReport {
 
   export interface Selfie {
     /**
+     * If selfie was not verified due to being on the blocklist, this is the token of the BlocklistEntry that blocked it
+     */
+    blocked_by_entry?: string | BlocklistEntry | null;
+
+    /**
      * ID of the [File](https://docs.stripe.com/api/files) holding the image of the identity document used in this check.
      */
     document: string | null;
@@ -284,7 +299,7 @@ export namespace VerificationReport {
     status: Selfie.Status;
   }
 
-  export type Type = 'document' | 'id_number' | 'verification_flow';
+  export type Type = 'document' | 'email' | 'id_number' | 'verification_flow';
 
   export namespace Document {
     export interface Dob {
@@ -365,6 +380,23 @@ export namespace VerificationReport {
   }
 
   export namespace Email {
+    export interface Details {
+      /**
+       * Number of days from the time when the email domain was first observed to the time of verification.
+       */
+      days_since_domain_creation?: number;
+
+      /**
+       * Number of days from the time when the email address was first observed to the time of verification.
+       */
+      days_since_ownership_started?: number;
+
+      /**
+       * Two-letter ISO 3166-1 alpha-2 country code of the email domain's country.
+       */
+      domain_country?: string;
+    }
+
     export interface Error {
       /**
        * A short machine-readable string giving the reason for the verification failure.
@@ -436,12 +468,7 @@ export namespace VerificationReport {
       allowed_types?: Array<Document.AllowedType>;
 
       /**
-       * If document was not verified due to extracted data being on the blocklist, this is the token of the BlocklistEntry that blocked it
-       */
-      blocked_by_entry?: string | BlocklistEntry | null;
-
-      /**
-       * Date of birth as it appears in the document.
+       * Collect an ID number and perform an [ID number check](https://docs.stripe.com/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
        */
       require_id_number?: boolean;
 
@@ -456,116 +483,7 @@ export namespace VerificationReport {
       require_matching_selfie?: boolean;
     }
 
-    export interface Email {
-      /**
-       * Additional email verification details
-       */
-      details?: Email.Details;
-
-      /**
-       * Email to be verified.
-       */
-      email: string | null;
-
-      /**
-       * Details on the verification error. Present when status is `unverified`.
-       */
-      error: Email.Error | null;
-
-      /**
-       * Status of this `email` check.
-       */
-      status: Email.Status;
-    }
-
-    export interface IdNumber {
-      /**
-       * Date of birth.
-       */
-      dob?: IdNumber.Dob | null;
-
-      /**
-       * Details on the verification error. Present when status is `unverified`.
-       */
-      error: IdNumber.Error | null;
-
-      /**
-       * First name.
-       */
-      first_name: string | null;
-
-      /**
-       * ID number. When `id_number_type` is `us_ssn`, only the last 4 digits are present.
-       */
-      id_number?: string | null;
-
-      /**
-       * Type of ID number.
-       */
-      id_number_type: IdNumber.IdNumberType | null;
-
-      /**
-       * Last name.
-       */
-      last_name: string | null;
-
-      /**
-       * Status of this `id_number` check.
-       */
-      status: IdNumber.Status;
-    }
-
-    export interface Options {
-      document?: Options.Document;
-
-      id_number?: Options.IdNumber;
-    }
-
-    export interface Phone {
-      /**
-       * Details on the verification error. Present when status is `unverified`.
-       */
-      error: Phone.Error | null;
-
-      /**
-       * Phone to be verified.
-       */
-      phone: string | null;
-
-      /**
-       * Status of this `phone` check.
-       */
-      status: Phone.Status;
-    }
-
-    export interface Selfie {
-      /**
-       * If selfie was not verified due to being on the blocklist, this is the token of the BlocklistEntry that blocked it
-       */
-      blocked_by_entry?: string | BlocklistEntry | null;
-
-      /**
-       * ID of the [File](https://docs.stripe.com/api/files) holding the image of the identity document used in this check.
-       */
-      document: string | null;
-
-      /**
-       * Details on the verification error. Present when status is `unverified`.
-       */
-      error: Selfie.Error | null;
-
-      /**
-       * ID of the [File](https://docs.stripe.com/api/files) holding the image of the selfie used in this check.
-       */
-      selfie: string | null;
-
-      /**
-       * Status of this `selfie` check.
-       */
-      status: Selfie.Status;
-    }
-
-    export type Type = 'document' | 'email' | 'id_number' | 'verification_flow';
+    export interface IdNumber {}
 
     export namespace Document {
       export type AllowedType = 'driving_license' | 'id_card' | 'passport';
@@ -585,29 +503,7 @@ export namespace VerificationReport {
       reason: string | null;
     }
 
-    export namespace Email {
-      export interface Details {
-        /**
-         * Number of days from the time when the email domain was first observed to the time of verification.
-         */
-        days_since_domain_creation?: number;
-
-        /**
-         * Number of days from the time when the email address was first observed to the time of verification.
-         */
-        days_since_ownership_started?: number;
-
-        /**
-         * Two-letter ISO 3166-1 alpha-2 country code of the email domain's country.
-         */
-        domain_country?: string;
-      }
-
-      export interface Error {
-        /**
-         * A short machine-readable string giving the reason for the verification failure.
-         */
-        code: Error.Code | null;
+    export type Status = 'unverified' | 'verified';
 
     export namespace Error {
       export type Code =

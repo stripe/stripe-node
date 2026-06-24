@@ -31,7 +31,7 @@ export interface PayoutMethodsBankAccountSpec {
    * The list of specs by country.
    */
   countries: {
-    [key: string]: V2.MoneyManagement.PayoutMethodsBankAccountSpec.Countries;
+    [key: string]: PayoutMethodsBankAccountSpec.Countries;
   };
 
   /**
@@ -39,72 +39,68 @@ export interface PayoutMethodsBankAccountSpec {
    */
   livemode: boolean;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace PayoutMethodsBankAccountSpec {
-      export interface Countries {
+export namespace PayoutMethodsBankAccountSpec {
+  export interface Countries {
+    /**
+     * The list of fields for a country, along with associated information.
+     */
+    fields: Array<Countries.Field>;
+  }
+
+  export namespace Countries {
+    export interface Field {
+      /**
+       * The currencies supported by the corresponding credentials for bank accounts in the specified country.
+       */
+      currencies?: Array<string>;
+
+      /**
+       * The local name of the field.
+       */
+      local_name: string;
+
+      /**
+       * The human readable local name of the field.
+       */
+      local_name_human: Field.LocalNameHuman;
+
+      /**
+       * The maximum length of the field.
+       */
+      max_length: number;
+
+      /**
+       * THe minimum length of the field.
+       */
+      min_length: number;
+
+      /**
+       * The placeholder value of the field.
+       */
+      placeholder: string;
+
+      /**
+       * The stripe name of the field.
+       */
+      stripe_name: string;
+
+      /**
+       * The validation regex of the field.
+       */
+      validation_regex: string;
+    }
+
+    export namespace Field {
+      export interface LocalNameHuman {
         /**
-         * The list of fields for a country, along with associated information.
+         * The default content of the localizable string.
          */
-        fields: Array<Countries.Field>;
-      }
+        content: string;
 
-      export namespace Countries {
-        export interface Field {
-          /**
-           * The currencies supported by the corresponding credentials for bank accounts in the specified country.
-           */
-          currencies?: Array<string>;
-
-          /**
-           * The local name of the field.
-           */
-          local_name: string;
-
-          /**
-           * The human readable local name of the field.
-           */
-          local_name_human: Field.LocalNameHuman;
-
-          /**
-           * The maximum length of the field.
-           */
-          max_length: number;
-
-          /**
-           * THe minimum length of the field.
-           */
-          min_length: number;
-
-          /**
-           * The placeholder value of the field.
-           */
-          placeholder: string;
-
-          /**
-           * The stripe name of the field.
-           */
-          stripe_name: string;
-
-          /**
-           * The validation regex of the field.
-           */
-          validation_regex: string;
-        }
-
-        export namespace Field {
-          export interface LocalNameHuman {
-            /**
-             * The default content of the localizable string.
-             */
-            content: string;
-
-            /**
-             * A unique key representing the instance of this localizable string.
-             */
-            localization_key: string;
-          }
-        }
+        /**
+         * A unique key representing the instance of this localizable string.
+         */
+        localization_key: string;
       }
     }
   }

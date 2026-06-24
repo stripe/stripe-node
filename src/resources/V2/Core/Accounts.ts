@@ -8335,17 +8335,20 @@ export interface Account {
    */
   requirements?: Account.Requirements;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace Account {
-      export type AppliedConfiguration =
-        | 'card_creator'
-        | 'customer'
-        | 'merchant'
-        | 'recipient'
-        | 'storer';
+export namespace Account {
+  export type AppliedConfiguration =
+    | 'card_creator'
+    | 'customer'
+    | 'merchant'
+    | 'recipient'
+    | 'storer';
 
   export interface Configuration {
+    /**
+     * The CardCreator Configuration allows the Account to create and issue cards to users.
+     */
+    card_creator?: Configuration.CardCreator;
+
     /**
      * The Customer Configuration allows the Account to be used in inbound payment flows (i.e. customer-facing payment and billing flows).
      */
@@ -8360,6 +8363,11 @@ export namespace V2 {
      * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
      */
     recipient?: Configuration.Recipient;
+
+    /**
+     * The Storer Configuration allows the Account to store and move funds using stored-value FinancialAccounts.
+     */
+    storer?: Configuration.Storer;
   }
 
   export type Dashboard = 'express' | 'full' | 'none';
@@ -8384,6 +8392,11 @@ export namespace V2 {
      * Default responsibilities held by either Stripe or the platform.
      */
     responsibilities: Defaults.Responsibilities;
+
+    /**
+     * The Account's local timezone. A list of possible time zone values is maintained at the [IANA Time Zone Database](https://www.iana.org/time-zones).
+     */
+    timezone?: string;
   }
 
   export interface FutureRequirements {
@@ -8443,6 +8456,18 @@ export namespace V2 {
   }
 
   export namespace Configuration {
+    export interface CardCreator {
+      /**
+       * Indicates whether the card_creator configuration is active. You can deactivate or reactivate the card_creator configuration by updating this property. Deactivating the configuration by setting this value to false will unrequest all capabilities within the configuration. It will not delete any of the configuration's other properties.
+       */
+      applied: boolean;
+
+      /**
+       * Capabilities that have been requested on the CardCreator Configuration.
+       */
+      capabilities?: CardCreator.Capabilities;
+    }
+
     export interface Customer {
       /**
        * Indicates whether the customer configuration is active. You can deactivate or reactivate the customer configuration by updating this property. Deactivating the configuration by setting this value to false will unrequest all capabilities within the configuration. It will not delete any of the configuration's other properties.
@@ -8522,6 +8547,11 @@ export namespace V2 {
       sepa_debit_payments?: Merchant.SepaDebitPayments;
 
       /**
+       * Settings for Smart Disputes automatic response feature.
+       */
+      smart_disputes?: Merchant.SmartDisputes;
+
+      /**
        * Statement descriptor.
        */
       statement_descriptor?: Merchant.StatementDescriptor;
@@ -8542,17 +8572,1371 @@ export namespace V2 {
        * Capabilities that have been requested on the Recipient Configuration.
        */
       capabilities?: Recipient.Capabilities;
+
+      /**
+       * The payout method to be used as a default outbound destination. This will allow the PayoutMethod to be omitted on OutboundPayments made through the dashboard or APIs.
+       */
+      default_outbound_destination?: Recipient.DefaultOutboundDestination;
+    }
+
+    export interface Storer {
+      /**
+       * Indicates whether the storer configuration is active. You cannot deactivate (or reactivate) the storer configuration by updating this property.
+       */
+      applied: boolean;
+
+      /**
+       * Capabilities that have been requested on the Storer Configuration.
+       */
+      capabilities?: Storer.Capabilities;
+
+      /**
+       * List of high-risk activities the business is involved in.
+       */
+      high_risk_activities?: Array<Storer.HighRiskActivity>;
+
+      /**
+       * Description of the high-risk activities the business offers.
+       */
+      high_risk_activities_description?: string;
+
+      /**
+       * Description of the money services offered by the business.
+       */
+      money_services_description?: string;
+
+      /**
+       * Indicates whether the business operates in any prohibited countries.
+       */
+      operates_in_prohibited_countries?: boolean;
+
+      /**
+       * Does the business participate in any regulated activity.
+       */
+      participates_in_regulated_activity?: boolean;
+
+      /**
+       * Primary purpose of the stored funds.
+       */
+      purpose_of_funds?: Storer.PurposeOfFunds;
+
+      /**
+       * Description of the purpose of the stored funds.
+       */
+      purpose_of_funds_description?: string;
+
+      /**
+       * Details of the regulated activity if the business participates in one.
+       */
+      regulated_activity?: Storer.RegulatedActivity;
+
+      /**
+       * The source of funds for the business, e.g. profits, income, venture capital, etc.
+       */
+      source_of_funds?: Storer.SourceOfFunds;
+
+      /**
+       * Description of the source of funds for the business' account.
+       */
+      source_of_funds_description?: string;
+    }
+
+    export namespace CardCreator {
+      export interface Capabilities {
+        /**
+         * Can create cards for commercial issuing use cases.
+         */
+        commercial?: Capabilities.Commercial;
+
+        /**
+         * Can create cards for consumer issuing use cases.
+         */
+        consumer?: Capabilities.Consumer;
+      }
+
+      export namespace Capabilities {
+        export interface Commercial {
+          /**
+           * Can create commercial issuing cards with Celtic as BIN sponsor.
+           */
+          celtic?: Commercial.Celtic;
+
+          /**
+           * Can create commercial issuing cards with Cross River Bank as BIN sponsor.
+           */
+          cross_river_bank?: Commercial.CrossRiverBank;
+
+          /**
+           * Can create commercial issuing cards with Fifth Third as a BIN sponsor.
+           */
+          fifth_third?: Commercial.FifthThird;
+
+          /**
+           * Can create commercial issuing cards with Lead as a BIN sponsor.
+           */
+          lead?: Commercial.Lead;
+
+          /**
+           * Can create commercial issuing cards with Stripe as a BIN sponsor.
+           */
+          stripe?: Commercial.Stripe;
+        }
+
+        export interface Consumer {
+          /**
+           * Can create consumer issuing cards with Celtic as BIN sponsor.
+           */
+          celtic?: Consumer.Celtic;
+
+          /**
+           * Can create consumer issuing cards with Cross River Bank as BIN sponsor.
+           */
+          cross_river_bank?: Consumer.CrossRiverBank;
+
+          /**
+           * Can create consumer issuing cards with Lead as BIN sponsor.
+           */
+          lead?: Consumer.Lead;
+        }
+
+        export namespace Commercial {
+          export interface Celtic {
+            /**
+             * Can create commercial issuing charge cards with Celtic as BIN sponsor.
+             */
+            charge_card?: Celtic.ChargeCard;
+
+            /**
+             * Can create commercial issuing spend cards with Celtic as BIN sponsor.
+             */
+            spend_card?: Celtic.SpendCard;
+          }
+
+          export interface CrossRiverBank {
+            /**
+             * Can create commercial issuing charge cards with Cross River Bank as BIN sponsor.
+             */
+            charge_card?: CrossRiverBank.ChargeCard;
+
+            /**
+             * Can create commercial issuing prepaid cards with Cross River Bank as BIN sponsor.
+             */
+            prepaid_card?: CrossRiverBank.PrepaidCard;
+
+            /**
+             * Can create commercial issuing spend cards with Cross River Bank as BIN sponsor.
+             */
+            spend_card?: CrossRiverBank.SpendCard;
+          }
+
+          export interface FifthThird {
+            /**
+             * Can create commercial issuing charge cards with Fifth Third Bank as BIN sponsor.
+             */
+            charge_card?: FifthThird.ChargeCard;
+          }
+
+          export interface Lead {
+            /**
+             * Can create commercial Global(cross border) issuing prepaid cards with Lead as BIN sponsor.
+             */
+            prepaid_card?: Lead.PrepaidCard;
+          }
+
+          export interface Stripe {
+            /**
+             * Can create commercial issuing charge cards with Stripe as BIN sponsor.
+             */
+            charge_card?: Stripe.ChargeCard;
+
+            /**
+             * Can create commercial issuing prepaid cards with Stripe as BIN sponsor.
+             */
+            prepaid_card?: Stripe.PrepaidCard;
+          }
+
+          export namespace Celtic {
+            export interface ChargeCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: ChargeCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: ChargeCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<ChargeCard.StatusDetail>;
+            }
+
+            export interface SpendCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: SpendCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: SpendCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<SpendCard.StatusDetail>;
+            }
+
+            export namespace ChargeCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace SpendCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+
+          export namespace CrossRiverBank {
+            export interface ChargeCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: ChargeCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: ChargeCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<ChargeCard.StatusDetail>;
+            }
+
+            export interface PrepaidCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: PrepaidCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: PrepaidCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<PrepaidCard.StatusDetail>;
+            }
+
+            export interface SpendCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: SpendCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: SpendCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<SpendCard.StatusDetail>;
+            }
+
+            export namespace ChargeCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace PrepaidCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace SpendCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+
+          export namespace FifthThird {
+            export interface ChargeCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: ChargeCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: ChargeCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<ChargeCard.StatusDetail>;
+            }
+
+            export namespace ChargeCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+
+          export namespace Lead {
+            export interface PrepaidCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: PrepaidCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: PrepaidCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<PrepaidCard.StatusDetail>;
+            }
+
+            export namespace PrepaidCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+
+          export namespace Stripe {
+            export interface ChargeCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: ChargeCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: ChargeCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<ChargeCard.StatusDetail>;
+            }
+
+            export interface PrepaidCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: PrepaidCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: PrepaidCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<PrepaidCard.StatusDetail>;
+            }
+
+            export namespace ChargeCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace PrepaidCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+        }
+
+        export namespace Consumer {
+          export interface Celtic {
+            /**
+             * Can create consumer issuing charge cards with Celtic as BIN sponsor.
+             */
+            revolving_credit_card?: Celtic.RevolvingCreditCard;
+          }
+
+          export interface CrossRiverBank {
+            /**
+             * Can create consumer issuing prepaid cards with Cross River Bank as BIN sponsor.
+             */
+            prepaid_card?: CrossRiverBank.PrepaidCard;
+          }
+
+          export interface Lead {
+            /**
+             * Can create consumer issuing debit cards with Lead as BIN sponsor.
+             */
+            debit_card?: Lead.DebitCard;
+
+            /**
+             * Can create consumer issuing prepaid cards with Lead as BIN sponsor.
+             */
+            prepaid_card?: Lead.PrepaidCard;
+          }
+
+          export namespace Celtic {
+            export interface RevolvingCreditCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: RevolvingCreditCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: RevolvingCreditCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<RevolvingCreditCard.StatusDetail>;
+            }
+
+            export namespace RevolvingCreditCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+
+          export namespace CrossRiverBank {
+            export interface PrepaidCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: PrepaidCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: PrepaidCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<PrepaidCard.StatusDetail>;
+            }
+
+            export namespace PrepaidCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+
+          export namespace Lead {
+            export interface DebitCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: DebitCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: DebitCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<DebitCard.StatusDetail>;
+            }
+
+            export interface PrepaidCard {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: PrepaidCard.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: PrepaidCard.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<PrepaidCard.StatusDetail>;
+            }
+
+            export namespace DebitCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace PrepaidCard {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+        }
+      }
     }
 
     export namespace Customer {
       export interface AutomaticIndirectTax {
         /**
-         * The CardCreator Configuration allows the Account to create and issue cards to users.
-         */
-        card_creator?: Configuration.CardCreator;
-
-        /**
-         * The Customer Configuration allows the Account to be used in inbound payment flows (i.e. customer-facing payment and billing flows).
+         * The customer account's tax exemption status: `none`, `exempt`, or `reverse`. When `reverse`, invoice and receipt PDFs include "Reverse charge".
          */
         exempt?: AutomaticIndirectTax.Exempt;
 
@@ -8564,12 +9948,12 @@ export namespace V2 {
         /**
          * The customer account's identified tax location, derived from `location_source`. Only rendered if the `automatic_indirect_tax` feature is requested and `active`.
          */
-        recipient?: Configuration.Recipient;
+        location?: AutomaticIndirectTax.Location;
 
         /**
-         * The Storer Configuration allows the Account to store and move funds using stored-value FinancialAccounts.
+         * Data source used to identify the customer account's tax location. Defaults to `identity_address`. Used for automatic indirect tax calculation.
          */
-        storer?: Configuration.Storer;
+        location_source?: AutomaticIndirectTax.LocationSource;
       }
 
       export interface Billing {
@@ -8581,22 +9965,7 @@ export namespace V2 {
         /**
          * Default invoice settings for the customer account.
          */
-        locales?: Array<Defaults.Locale>;
-
-        /**
-         * Account profile information.
-         */
-        profile?: Defaults.Profile;
-
-        /**
-         * Default responsibilities held by either Stripe or the platform.
-         */
-        responsibilities: Defaults.Responsibilities;
-
-        /**
-         * The Account's local timezone. A list of possible time zone values is maintained at the [IANA Time Zone Database](https://www.iana.org/time-zones).
-         */
-        timezone?: string;
+        invoice?: Billing.Invoice;
       }
 
       export interface Capabilities {
@@ -8645,20 +10014,8 @@ export namespace V2 {
           | 'shipping_address';
       }
 
-      export namespace Configuration {
-        export interface CardCreator {
-          /**
-           * Indicates whether the card_creator configuration is active. You can deactivate or reactivate the card_creator configuration by updating this property. Deactivating the configuration by setting this value to false will unrequest all capabilities within the configuration. It will not delete any of the configuration's other properties.
-           */
-          applied: boolean;
-
-          /**
-           * Capabilities that have been requested on the CardCreator Configuration.
-           */
-          capabilities?: CardCreator.Capabilities;
-        }
-
-        export interface Customer {
+      export namespace Billing {
+        export interface Invoice {
           /**
            * The list of up to 4 default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
            */
@@ -8685,1441 +10042,8 @@ export namespace V2 {
           rendering?: Invoice.Rendering;
         }
 
-        export interface Merchant {
-          /**
-           * Indicates whether the merchant configuration is active. You can deactivate or reactivate the merchant configuration by updating this property. Deactivating the configuration by setting this value to false doesn't delete the configuration's properties.
-           */
-          applied: boolean;
-
-          /**
-           * Settings for Bacs Direct Debit payments.
-           */
-          bacs_debit_payments?: Merchant.BacsDebitPayments;
-
-          /**
-           * Settings used to apply the merchant's branding to email receipts, invoices, Checkout, and other products.
-           */
-          branding?: Merchant.Branding;
-
-          /**
-           * Capabilities that have been requested on the Merchant Configuration.
-           */
-          capabilities?: Merchant.Capabilities;
-
-          /**
-           * Card payments settings.
-           */
-          card_payments?: Merchant.CardPayments;
-
-          /**
-           * Settings specific to Konbini payments on the account.
-           */
-          konbini_payments?: Merchant.KonbiniPayments;
-
-          /**
-           * The Merchant Category Code (MCC) for the merchant. MCCs classify businesses based on the goods or services they provide.
-           */
-          mcc?: string;
-
-          /**
-           * Settings for the default text that appears on statements for language variations.
-           */
-          script_statement_descriptor?: Merchant.ScriptStatementDescriptor;
-
-          /**
-           * Settings for SEPA Direct Debit payments.
-           */
-          sepa_debit_payments?: Merchant.SepaDebitPayments;
-
-          /**
-           * Settings for Smart Disputes automatic response feature.
-           */
-          smart_disputes?: Merchant.SmartDisputes;
-
-          /**
-           * Statement descriptor.
-           */
-          statement_descriptor?: Merchant.StatementDescriptor;
-
-          /**
-           * Publicly available contact information for sending support issues to.
-           */
-          support?: Merchant.Support;
-        }
-
-        export interface Recipient {
-          /**
-           * Indicates whether the recipient configuration is active. You can deactivate or reactivate the recipient configuration by updating this property. Deactivating the configuration by setting this value to false  unrequest all capabilities within the configuration. It will not delete any of the configuration's other properties.
-           */
-          applied: boolean;
-
-          /**
-           * Capabilities that have been requested on the Recipient Configuration.
-           */
-          capabilities?: Recipient.Capabilities;
-
-          /**
-           * The payout method to be used as a default outbound destination. This will allow the PayoutMethod to be omitted on OutboundPayments made through the dashboard or APIs.
-           */
-          default_outbound_destination?: Recipient.DefaultOutboundDestination;
-        }
-
-        export interface Storer {
-          /**
-           * Indicates whether the storer configuration is active. You cannot deactivate (or reactivate) the storer configuration by updating this property.
-           */
-          applied: boolean;
-
-          /**
-           * Capabilities that have been requested on the Storer Configuration.
-           */
-          capabilities?: Storer.Capabilities;
-
-          /**
-           * List of high-risk activities the business is involved in.
-           */
-          high_risk_activities?: Array<Storer.HighRiskActivity>;
-
-          /**
-           * Description of the high-risk activities the business offers.
-           */
-          high_risk_activities_description?: string;
-
-          /**
-           * Description of the money services offered by the business.
-           */
-          money_services_description?: string;
-
-          /**
-           * Indicates whether the business operates in any prohibited countries.
-           */
-          operates_in_prohibited_countries?: boolean;
-
-          /**
-           * Does the business participate in any regulated activity.
-           */
-          participates_in_regulated_activity?: boolean;
-
-          /**
-           * Primary purpose of the stored funds.
-           */
-          purpose_of_funds?: Storer.PurposeOfFunds;
-
-          /**
-           * Description of the purpose of the stored funds.
-           */
-          purpose_of_funds_description?: string;
-
-          /**
-           * Details of the regulated activity if the business participates in one.
-           */
-          regulated_activity?: Storer.RegulatedActivity;
-
-          /**
-           * The source of funds for the business, e.g. profits, income, venture capital, etc.
-           */
-          source_of_funds?: Storer.SourceOfFunds;
-
-          /**
-           * Description of the source of funds for the business' account.
-           */
-          source_of_funds_description?: string;
-        }
-
-        export namespace CardCreator {
-          export interface Capabilities {
-            /**
-             * Can create cards for commercial issuing use cases.
-             */
-            commercial?: Capabilities.Commercial;
-
-            /**
-             * Can create cards for consumer issuing use cases.
-             */
-            consumer?: Capabilities.Consumer;
-          }
-
-          export namespace Capabilities {
-            export interface Commercial {
-              /**
-               * Can create commercial issuing cards with Celtic as BIN sponsor.
-               */
-              celtic?: Commercial.Celtic;
-
-              /**
-               * Can create commercial issuing cards with Cross River Bank as BIN sponsor.
-               */
-              cross_river_bank?: Commercial.CrossRiverBank;
-
-              /**
-               * Can create commercial issuing cards with Fifth Third as a BIN sponsor.
-               */
-              fifth_third?: Commercial.FifthThird;
-
-              /**
-               * Can create commercial issuing cards with Lead as a BIN sponsor.
-               */
-              lead?: Commercial.Lead;
-
-              /**
-               * Can create commercial issuing cards with Stripe as a BIN sponsor.
-               */
-              stripe?: Commercial.Stripe;
-            }
-
-            export interface Consumer {
-              /**
-               * Can create consumer issuing cards with Celtic as BIN sponsor.
-               */
-              celtic?: Consumer.Celtic;
-
-              /**
-               * Can create consumer issuing cards with Cross River Bank as BIN sponsor.
-               */
-              cross_river_bank?: Consumer.CrossRiverBank;
-
-              /**
-               * Can create consumer issuing cards with Lead as BIN sponsor.
-               */
-              lead?: Consumer.Lead;
-            }
-
-            export namespace Commercial {
-              export interface Celtic {
-                /**
-                 * Can create commercial issuing charge cards with Celtic as BIN sponsor.
-                 */
-                charge_card?: Celtic.ChargeCard;
-
-                /**
-                 * Can create commercial issuing spend cards with Celtic as BIN sponsor.
-                 */
-                spend_card?: Celtic.SpendCard;
-              }
-
-              export interface CrossRiverBank {
-                /**
-                 * Can create commercial issuing charge cards with Cross River Bank as BIN sponsor.
-                 */
-                charge_card?: CrossRiverBank.ChargeCard;
-
-                /**
-                 * Can create commercial issuing prepaid cards with Cross River Bank as BIN sponsor.
-                 */
-                prepaid_card?: CrossRiverBank.PrepaidCard;
-
-                /**
-                 * Can create commercial issuing spend cards with Cross River Bank as BIN sponsor.
-                 */
-                spend_card?: CrossRiverBank.SpendCard;
-              }
-
-              export interface FifthThird {
-                /**
-                 * Can create commercial issuing charge cards with Fifth Third Bank as BIN sponsor.
-                 */
-                charge_card?: FifthThird.ChargeCard;
-              }
-
-              export interface Lead {
-                /**
-                 * Can create commercial Global(cross border) issuing prepaid cards with Lead as BIN sponsor.
-                 */
-                prepaid_card?: Lead.PrepaidCard;
-              }
-
-              export interface Stripe {
-                /**
-                 * Can create commercial issuing charge cards with Stripe as BIN sponsor.
-                 */
-                charge_card?: Stripe.ChargeCard;
-
-                /**
-                 * Can create commercial issuing prepaid cards with Stripe as BIN sponsor.
-                 */
-                prepaid_card?: Stripe.PrepaidCard;
-              }
-
-              export namespace Celtic {
-                export interface ChargeCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: ChargeCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: ChargeCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<ChargeCard.StatusDetail>;
-                }
-
-                export interface SpendCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: SpendCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: SpendCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<SpendCard.StatusDetail>;
-                }
-
-                export namespace ChargeCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-
-                export namespace SpendCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-              }
-
-              export namespace CrossRiverBank {
-                export interface ChargeCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: ChargeCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: ChargeCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<ChargeCard.StatusDetail>;
-                }
-
-                export interface PrepaidCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: PrepaidCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: PrepaidCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<PrepaidCard.StatusDetail>;
-                }
-
-                export interface SpendCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: SpendCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: SpendCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<SpendCard.StatusDetail>;
-                }
-
-                export namespace ChargeCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-
-                export namespace PrepaidCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-
-                export namespace SpendCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-              }
-
-              export namespace FifthThird {
-                export interface ChargeCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: ChargeCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: ChargeCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<ChargeCard.StatusDetail>;
-                }
-
-                export namespace ChargeCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-              }
-
-              export namespace Lead {
-                export interface PrepaidCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: PrepaidCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: PrepaidCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<PrepaidCard.StatusDetail>;
-                }
-
-                export namespace PrepaidCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-              }
-
-              export namespace Stripe {
-                export interface ChargeCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: ChargeCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: ChargeCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<ChargeCard.StatusDetail>;
-                }
-
-                export interface PrepaidCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: PrepaidCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: PrepaidCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<PrepaidCard.StatusDetail>;
-                }
-
-                export namespace ChargeCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-
-                export namespace PrepaidCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-              }
-            }
-
-            export namespace Consumer {
-              export interface Celtic {
-                /**
-                 * Can create consumer issuing charge cards with Celtic as BIN sponsor.
-                 */
-                revolving_credit_card?: Celtic.RevolvingCreditCard;
-              }
-
-              export interface CrossRiverBank {
-                /**
-                 * Can create consumer issuing prepaid cards with Cross River Bank as BIN sponsor.
-                 */
-                prepaid_card?: CrossRiverBank.PrepaidCard;
-              }
-
-              export interface Lead {
-                /**
-                 * Can create consumer issuing debit cards with Lead as BIN sponsor.
-                 */
-                debit_card?: Lead.DebitCard;
-
-                /**
-                 * Can create consumer issuing prepaid cards with Lead as BIN sponsor.
-                 */
-                prepaid_card?: Lead.PrepaidCard;
-              }
-
-              export namespace Celtic {
-                export interface RevolvingCreditCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: RevolvingCreditCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: RevolvingCreditCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<RevolvingCreditCard.StatusDetail>;
-                }
-
-                export namespace RevolvingCreditCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-              }
-
-              export namespace CrossRiverBank {
-                export interface PrepaidCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: PrepaidCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: PrepaidCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<PrepaidCard.StatusDetail>;
-                }
-
-                export namespace PrepaidCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-              }
-
-              export namespace Lead {
-                export interface DebitCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: DebitCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: DebitCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<DebitCard.StatusDetail>;
-                }
-
-                export interface PrepaidCard {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: PrepaidCard.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: PrepaidCard.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<PrepaidCard.StatusDetail>;
-                }
-
-                export namespace DebitCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-
-                export namespace PrepaidCard {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        export namespace Customer {
-          export interface AutomaticIndirectTax {
+        export namespace Invoice {
+          export interface CustomField {
             /**
              * The name of the custom field. This may be up to 40 characters.
              */
@@ -10143,7146 +10067,21 @@ export namespace V2 {
             template?: string;
           }
 
-          export interface Capabilities {
-            /**
-             * Generates requirements for enabling automatic indirect tax calculation on this customer's invoices or subscriptions. Recommended to request this capability if planning to enable automatic tax calculation on this customer's invoices or subscriptions.
-             */
-            automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
-          }
-
-          export interface Shipping {
-            /**
-             * Customer shipping address.
-             */
-            address?: Shipping.Address;
-
-            /**
-             * Customer name.
-             */
-            name?: string;
-
-            /**
-             * Customer phone (including extension).
-             */
-            phone?: string;
-          }
-
-          export namespace AutomaticIndirectTax {
-            export type Exempt = 'exempt' | 'none' | 'reverse';
-
-            export interface Location {
-              /**
-               * The identified tax country of the customer.
-               */
-              country?: string;
-
-              /**
-               * The identified tax state, county, province, or region of the customer.
-               */
-              state?: string;
-            }
-
-            export type LocationSource =
-              | 'identity_address'
-              | 'ip_address'
-              | 'payment_method'
-              | 'shipping_address';
-          }
-
-          export namespace Billing {
-            export interface Invoice {
-              /**
-               * The list of up to 4 default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
-               */
-              custom_fields: Array<Invoice.CustomField>;
-
-              /**
-               * Default invoice footer.
-               */
-              footer?: string;
-
-              /**
-               * Sequence number to use on the customer account's next invoice. Defaults to 1.
-               */
-              next_sequence?: number;
-
-              /**
-               * Prefix used to generate unique invoice numbers. Must be 3-12 uppercase letters or numbers.
-               */
-              prefix?: string;
-
-              /**
-               * Default invoice PDF rendering options.
-               */
-              rendering?: Invoice.Rendering;
-            }
-
-            export namespace Invoice {
-              export interface CustomField {
-                /**
-                 * The name of the custom field. This may be up to 40 characters.
-                 */
-                name: string;
-
-                /**
-                 * The value of the custom field. This may be up to 140 characters. When updating, pass an empty string to remove previously-defined values.
-                 */
-                value: string;
-              }
-
-              export interface Rendering {
-                /**
-                 * Indicates whether displayed line item prices and amounts on invoice PDFs include inclusive tax amounts. Must be either `include_inclusive_tax` or `exclude_tax`.
-                 */
-                amount_tax_display?: Rendering.AmountTaxDisplay;
-
-                /**
-                 * ID of the invoice rendering template to use for future invoices.
-                 */
-                template?: string;
-              }
-
-              export namespace Rendering {
-                export type AmountTaxDisplay =
-                  | 'exclude_tax'
-                  | 'include_inclusive_tax';
-              }
-            }
-          }
-
-          export namespace Capabilities {
-            export interface AutomaticIndirectTax {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: AutomaticIndirectTax.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: AutomaticIndirectTax.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<AutomaticIndirectTax.StatusDetail>;
-            }
-
-            export namespace AutomaticIndirectTax {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-          }
-
-          export namespace Shipping {
-            export interface Address {
-              /**
-               * City, district, suburb, town, or village.
-               */
-              city?: string;
-
-              /**
-               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-               */
-              country?: string;
-
-              /**
-               * Address line 1 (e.g., street, PO Box, or company name).
-               */
-              line1?: string;
-
-              /**
-               * Address line 2 (e.g., apartment, suite, unit, or building).
-               */
-              line2?: string;
-
-              /**
-               * ZIP or postal code.
-               */
-              postal_code?: string;
-
-              /**
-               * State, county, province, or region.
-               */
-              state?: string;
-            }
-          }
-        }
-
-        export namespace Merchant {
-          export interface BacsDebitPayments {
-            /**
-             * Display name for Bacs Direct Debit payments.
-             */
-            display_name?: string;
-
-            /**
-             * Service User Number (SUN) for Bacs Direct Debit payments.
-             */
-            service_user_number?: string;
-          }
-
-          export interface Branding {
-            /**
-             * ID of a [file upload](https://docs.stripe.com/api/persons/update#create_file): An icon for the merchant. Must be square and at least 128px x 128px.
-             */
-            icon?: string;
-
-            /**
-             * ID of a [file upload](https://docs.stripe.com/api/persons/update#create_file): A logo for the merchant that will be used in Checkout instead of the icon and without the merchant's name next to it if provided. Must be at least 128px x 128px.
-             */
-            logo?: string;
-
-            /**
-             * A CSS hex color value representing the primary branding color for the merchant.
-             */
-            primary_color?: string;
-
-            /**
-             * A CSS hex color value representing the secondary branding color for the merchant.
-             */
-            secondary_color?: string;
-          }
-
-          export interface Capabilities {
-            /**
-             * Allow the merchant to process ACH debit payments.
-             */
-            ach_debit_payments?: Capabilities.AchDebitPayments;
-
-            /**
-             * Allow the merchant to process ACSS debit payments.
-             */
-            acss_debit_payments?: Capabilities.AcssDebitPayments;
-
-            /**
-             * Allow the merchant to process Affirm payments.
-             */
-            affirm_payments?: Capabilities.AffirmPayments;
-
-            /**
-             * Allow the merchant to process Afterpay/Clearpay payments.
-             */
-            afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
-
-            /**
-             * Allow the merchant to process Alma payments.
-             */
-            alma_payments?: Capabilities.AlmaPayments;
-
-            /**
-             * Allow the merchant to process Amazon Pay payments.
-             */
-            amazon_pay_payments?: Capabilities.AmazonPayPayments;
-
-            /**
-             * Allow the merchant to process Australian BECS Direct Debit payments.
-             */
-            au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
-
-            /**
-             * Allow the merchant to process BACS Direct Debit payments.
-             */
-            bacs_debit_payments?: Capabilities.BacsDebitPayments;
-
-            /**
-             * Allow the merchant to process Bancontact payments.
-             */
-            bancontact_payments?: Capabilities.BancontactPayments;
-
-            /**
-             * Allow the merchant to process BLIK payments.
-             */
-            blik_payments?: Capabilities.BlikPayments;
-
-            /**
-             * Allow the merchant to process Boleto payments.
-             */
-            boleto_payments?: Capabilities.BoletoPayments;
-
-            /**
-             * Allow the merchant to collect card payments.
-             */
-            card_payments?: Capabilities.CardPayments;
-
-            /**
-             * Allow the merchant to process Cartes Bancaires payments.
-             */
-            cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
-
-            /**
-             * Allow the merchant to process Cash App payments.
-             */
-            cashapp_payments?: Capabilities.CashappPayments;
-
-            /**
-             * Allow the merchant to process EPS payments.
-             */
-            eps_payments?: Capabilities.EpsPayments;
-
-            /**
-             * Allow the merchant to process FPX payments.
-             */
-            fpx_payments?: Capabilities.FpxPayments;
-
-            /**
-             * Allow the merchant to process UK bank transfer payments.
-             */
-            gb_bank_transfer_payments?: Capabilities.GbBankTransferPayments;
-
-            /**
-             * Allow the merchant to process GrabPay payments.
-             */
-            grabpay_payments?: Capabilities.GrabpayPayments;
-
-            /**
-             * Allow the merchant to process iDEAL payments.
-             */
-            ideal_payments?: Capabilities.IdealPayments;
-
-            /**
-             * Allow the merchant to process JCB card payments.
-             */
-            jcb_payments?: Capabilities.JcbPayments;
-
-            /**
-             * Allow the merchant to process Japanese bank transfer payments.
-             */
-            jp_bank_transfer_payments?: Capabilities.JpBankTransferPayments;
-
-            /**
-             * Allow the merchant to process Kakao Pay payments.
-             */
-            kakao_pay_payments?: Capabilities.KakaoPayPayments;
-
-            /**
-             * Allow the merchant to process Klarna payments.
-             */
-            klarna_payments?: Capabilities.KlarnaPayments;
-
-            /**
-             * Allow the merchant to process Konbini convenience store payments.
-             */
-            konbini_payments?: Capabilities.KonbiniPayments;
-
-            /**
-             * Allow the merchant to process Korean card payments.
-             */
-            kr_card_payments?: Capabilities.KrCardPayments;
-
-            /**
-             * Allow the merchant to process Link payments.
-             */
-            link_payments?: Capabilities.LinkPayments;
-
-            /**
-             * Allow the merchant to process MobilePay payments.
-             */
-            mobilepay_payments?: Capabilities.MobilepayPayments;
-
-            /**
-             * Allow the merchant to process Multibanco payments.
-             */
-            multibanco_payments?: Capabilities.MultibancoPayments;
-
-            /**
-             * Allow the merchant to process Mexican bank transfer payments.
-             */
-            mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
-
-            /**
-             * Allow the merchant to process Naver Pay payments.
-             */
-            naver_pay_payments?: Capabilities.NaverPayPayments;
-
-            /**
-             * Allow the merchant to process OXXO payments.
-             */
-            oxxo_payments?: Capabilities.OxxoPayments;
-
-            /**
-             * Allow the merchant to process Przelewy24 (P24) payments.
-             */
-            p24_payments?: Capabilities.P24Payments;
-
-            /**
-             * Allow the merchant to process Pay by Bank payments.
-             */
-            pay_by_bank_payments?: Capabilities.PayByBankPayments;
-
-            /**
-             * Allow the merchant to process PAYCO payments.
-             */
-            payco_payments?: Capabilities.PaycoPayments;
-
-            /**
-             * Allow the merchant to process PayNow payments.
-             */
-            paynow_payments?: Capabilities.PaynowPayments;
-
-            /**
-             * Allow the merchant to process PromptPay payments.
-             */
-            promptpay_payments?: Capabilities.PromptpayPayments;
-
-            /**
-             * Allow the merchant to process Revolut Pay payments.
-             */
-            revolut_pay_payments?: Capabilities.RevolutPayPayments;
-
-            /**
-             * Allow the merchant to process Samsung Pay payments.
-             */
-            samsung_pay_payments?: Capabilities.SamsungPayPayments;
-
-            /**
-             * Allow the merchant to process SEPA bank transfer payments.
-             */
-            sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
-
-            /**
-             * Allow the merchant to process SEPA Direct Debit payments.
-             */
-            sepa_debit_payments?: Capabilities.SepaDebitPayments;
-
-            /**
-             * Capabilities that enable the merchant to manage their Stripe Balance (/v1/balance).
-             */
-            stripe_balance?: Capabilities.StripeBalance;
-
-            /**
-             * Allow the merchant to process Swish payments.
-             */
-            swish_payments?: Capabilities.SwishPayments;
-
-            /**
-             * Allow the merchant to process TWINT payments.
-             */
-            twint_payments?: Capabilities.TwintPayments;
-
-            /**
-             * Allow the merchant to process US bank transfer payments.
-             */
-            us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
-
-            /**
-             * Allow the merchant to process Zip payments.
-             */
-            zip_payments?: Capabilities.ZipPayments;
-          }
-
-          export interface CardPayments {
-            /**
-             * Automatically declines certain charge types regardless of whether the card issuer accepted or declined the charge.
-             */
-            decline_on?: CardPayments.DeclineOn;
-          }
-
-          export interface KonbiniPayments {
-            /**
-             * Support for Konbini payments.
-             */
-            support?: KonbiniPayments.Support;
-          }
-
-          export interface ScriptStatementDescriptor {
-            /**
-             * The Kana variation of statement_descriptor used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
-             */
-            kana?: ScriptStatementDescriptor.Kana;
-
-            /**
-             * The Kanji variation of statement_descriptor used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
-             */
-            kanji?: ScriptStatementDescriptor.Kanji;
-          }
-
-          export interface SepaDebitPayments {
-            /**
-             * Creditor ID for SEPA Direct Debit payments.
-             */
-            creditor_id?: string;
-          }
-
-          export interface SmartDisputes {
-            /**
-             * Settings for Smart Disputes auto_respond.
-             */
-            auto_respond?: SmartDisputes.AutoRespond;
-          }
-
-          export interface StatementDescriptor {
-            /**
-             * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a statement_descriptor_prefix, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the statement_descriptor text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
-             */
-            descriptor?: string;
-
-            /**
-             * Default text that appears on statements for card charges outside of Japan, prefixing any dynamic statement_descriptor_suffix specified on the charge. To maximize space for the dynamic part of the descriptor, keep this text short. If you don't specify this value, statement_descriptor is used as the prefix. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
-             */
-            prefix?: string;
-          }
-
-          export interface Support {
-            /**
-             * A publicly available mailing address for sending support issues to.
-             */
-            address?: Support.Address;
-
-            /**
-             * A publicly available email address for sending support issues to.
-             */
-            email?: string;
-
-            /**
-             * A publicly available phone number to call with support issues.
-             */
-            phone?: string;
-
-            /**
-             * A publicly available website for handling support issues.
-             */
-            url?: string;
-          }
-
-          export namespace Capabilities {
-            export interface AchDebitPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: AchDebitPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: AchDebitPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<AchDebitPayments.StatusDetail>;
-            }
-
-            export interface AcssDebitPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: AcssDebitPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: AcssDebitPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<AcssDebitPayments.StatusDetail>;
-            }
-
-            export interface AffirmPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: AffirmPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: AffirmPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<AffirmPayments.StatusDetail>;
-            }
-
-            export interface AfterpayClearpayPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: AfterpayClearpayPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: AfterpayClearpayPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<AfterpayClearpayPayments.StatusDetail>;
-            }
-
-            export interface AlmaPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: AlmaPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: AlmaPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<AlmaPayments.StatusDetail>;
-            }
-
-            export interface AmazonPayPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: AmazonPayPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: AmazonPayPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<AmazonPayPayments.StatusDetail>;
-            }
-
-            export interface AuBecsDebitPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: AuBecsDebitPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: AuBecsDebitPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<AuBecsDebitPayments.StatusDetail>;
-            }
-
-            export interface BacsDebitPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: BacsDebitPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: BacsDebitPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<BacsDebitPayments.StatusDetail>;
-            }
-
-            export interface BancontactPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: BancontactPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: BancontactPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<BancontactPayments.StatusDetail>;
-            }
-
-            export interface BlikPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: BlikPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: BlikPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<BlikPayments.StatusDetail>;
-            }
-
-            export interface BoletoPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: BoletoPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: BoletoPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<BoletoPayments.StatusDetail>;
-            }
-
-            export interface CardPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: CardPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: CardPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<CardPayments.StatusDetail>;
-            }
-
-            export interface CartesBancairesPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: CartesBancairesPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: CartesBancairesPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<CartesBancairesPayments.StatusDetail>;
-            }
-
-            export interface CashappPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: CashappPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: CashappPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<CashappPayments.StatusDetail>;
-            }
-
-            export interface EpsPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: EpsPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: EpsPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<EpsPayments.StatusDetail>;
-            }
-
-            export interface FpxPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: FpxPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: FpxPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<FpxPayments.StatusDetail>;
-            }
-
-            export interface GbBankTransferPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: GbBankTransferPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: GbBankTransferPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<GbBankTransferPayments.StatusDetail>;
-            }
-
-            export interface GrabpayPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: GrabpayPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: GrabpayPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<GrabpayPayments.StatusDetail>;
-            }
-
-            export interface IdealPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: IdealPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: IdealPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<IdealPayments.StatusDetail>;
-            }
-
-            export interface JcbPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: JcbPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: JcbPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<JcbPayments.StatusDetail>;
-            }
-
-            export interface JpBankTransferPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: JpBankTransferPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: JpBankTransferPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<JpBankTransferPayments.StatusDetail>;
-            }
-
-            export interface KakaoPayPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: KakaoPayPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: KakaoPayPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<KakaoPayPayments.StatusDetail>;
-            }
-
-            export interface KlarnaPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: KlarnaPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: KlarnaPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<KlarnaPayments.StatusDetail>;
-            }
-
-            export interface KonbiniPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: KonbiniPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: KonbiniPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<KonbiniPayments.StatusDetail>;
-            }
-
-            export interface KrCardPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: KrCardPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: KrCardPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<KrCardPayments.StatusDetail>;
-            }
-
-            export interface LinkPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: LinkPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: LinkPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<LinkPayments.StatusDetail>;
-            }
-
-            export interface MobilepayPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: MobilepayPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: MobilepayPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<MobilepayPayments.StatusDetail>;
-            }
-
-            export interface MultibancoPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: MultibancoPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: MultibancoPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<MultibancoPayments.StatusDetail>;
-            }
-
-            export interface MxBankTransferPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: MxBankTransferPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: MxBankTransferPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<MxBankTransferPayments.StatusDetail>;
-            }
-
-            export interface NaverPayPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: NaverPayPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: NaverPayPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<NaverPayPayments.StatusDetail>;
-            }
-
-            export interface OxxoPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: OxxoPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: OxxoPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<OxxoPayments.StatusDetail>;
-            }
-
-            export interface P24Payments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: P24Payments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: P24Payments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<P24Payments.StatusDetail>;
-            }
-
-            export interface PayByBankPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: PayByBankPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: PayByBankPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<PayByBankPayments.StatusDetail>;
-            }
-
-            export interface PaycoPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: PaycoPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: PaycoPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<PaycoPayments.StatusDetail>;
-            }
-
-            export interface PaynowPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: PaynowPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: PaynowPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<PaynowPayments.StatusDetail>;
-            }
-
-            export interface PromptpayPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: PromptpayPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: PromptpayPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<PromptpayPayments.StatusDetail>;
-            }
-
-            export interface RevolutPayPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: RevolutPayPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: RevolutPayPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<RevolutPayPayments.StatusDetail>;
-            }
-
-            export interface SamsungPayPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: SamsungPayPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: SamsungPayPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<SamsungPayPayments.StatusDetail>;
-            }
-
-            export interface SepaBankTransferPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: SepaBankTransferPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: SepaBankTransferPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<SepaBankTransferPayments.StatusDetail>;
-            }
-
-            export interface SepaDebitPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: SepaDebitPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: SepaDebitPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<SepaDebitPayments.StatusDetail>;
-            }
-
-            export interface StripeBalance {
-              /**
-               * Enables this Account to complete payouts from their Stripe Balance (/v1/balance).
-               */
-              payouts?: StripeBalance.Payouts;
-            }
-
-            export interface SwishPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: SwishPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: SwishPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<SwishPayments.StatusDetail>;
-            }
-
-            export interface TwintPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: TwintPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: TwintPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<TwintPayments.StatusDetail>;
-            }
-
-            export interface UsBankTransferPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: UsBankTransferPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: UsBankTransferPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<UsBankTransferPayments.StatusDetail>;
-            }
-
-            export interface ZipPayments {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: ZipPayments.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: ZipPayments.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<ZipPayments.StatusDetail>;
-            }
-
-            export namespace AchDebitPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace AcssDebitPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace AffirmPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace AfterpayClearpayPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace AlmaPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace AmazonPayPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace AuBecsDebitPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace BacsDebitPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace BancontactPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace BlikPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace BoletoPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace CardPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace CartesBancairesPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace CashappPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace EpsPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace FpxPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace GbBankTransferPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace GrabpayPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace IdealPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace JcbPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace JpBankTransferPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace KakaoPayPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace KlarnaPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace KonbiniPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace KrCardPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace LinkPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace MobilepayPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace MultibancoPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace MxBankTransferPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace NaverPayPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace OxxoPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace P24Payments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace PayByBankPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace PaycoPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace PaynowPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace PromptpayPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace RevolutPayPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace SamsungPayPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace SepaBankTransferPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace SepaDebitPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace StripeBalance {
-              export interface Payouts {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: Payouts.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: Payouts.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<Payouts.StatusDetail>;
-              }
-
-              export namespace Payouts {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-            }
-
-            export namespace SwishPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace TwintPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace UsBankTransferPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace ZipPayments {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-          }
-
-          export namespace CardPayments {
-            export interface DeclineOn {
-              /**
-               * Whether Stripe automatically declines charges with an incorrect ZIP or postal code. This setting only applies when a ZIP or postal code is provided and they fail bank verification.
-               */
-              avs_failure?: boolean;
-
-              /**
-               * Whether Stripe automatically declines charges with an incorrect CVC. This setting only applies when a CVC is provided and it fails bank verification.
-               */
-              cvc_failure?: boolean;
-            }
-          }
-
-          export namespace KonbiniPayments {
-            export interface Support {
-              /**
-               * Support email address for Konbini payments.
-               */
-              email?: string;
-
-              /**
-               * Support hours for Konbini payments.
-               */
-              hours?: Support.Hours;
-
-              /**
-               * Support phone number for Konbini payments.
-               */
-              phone?: string;
-            }
-
-            export namespace Support {
-              export interface Hours {
-                /**
-                 * Support hours end time (JST time of day) for in `HH:MM` format.
-                 */
-                end_time?: string;
-
-                /**
-                 * Support hours start time (JST time of day) for in `HH:MM` format.
-                 */
-                start_time?: string;
-              }
-            }
-          }
-
-          export namespace ScriptStatementDescriptor {
-            export interface Kana {
-              /**
-               * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a statement_descriptor_prefix, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the statement_descriptor text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
-               */
-              descriptor?: string;
-
-              /**
-               * Default text that appears on statements for card charges outside of Japan, prefixing any dynamic statement_descriptor_suffix specified on the charge. To maximize space for the dynamic part of the descriptor, keep this text short. If you don't specify this value, statement_descriptor is used as the prefix. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
-               */
-              prefix?: string;
-            }
-
-            export interface Kanji {
-              /**
-               * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a statement_descriptor_prefix, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the statement_descriptor text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
-               */
-              descriptor?: string;
-
-              /**
-               * Default text that appears on statements for card charges outside of Japan, prefixing any dynamic statement_descriptor_suffix specified on the charge. To maximize space for the dynamic part of the descriptor, keep this text short. If you don't specify this value, statement_descriptor is used as the prefix. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
-               */
-              prefix?: string;
-            }
-          }
-
-          export namespace SmartDisputes {
-            export interface AutoRespond {
-              /**
-               * The preference for automatic dispute responses.
-               */
-              preference?: AutoRespond.Preference;
-
-              /**
-               * The effective value for automatic dispute responses.
-               */
-              value?: AutoRespond.Value;
-            }
-
-            export namespace AutoRespond {
-              export type Preference = 'inherit' | 'off' | 'on';
-
-              export type Value = 'off' | 'on';
-            }
-          }
-
-          export namespace Support {
-            export interface Address {
-              /**
-               * City, district, suburb, town, or village.
-               */
-              city?: string;
-
-              /**
-               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-               */
-              country?: string;
-
-              /**
-               * Address line 1 (e.g., street, PO Box, or company name).
-               */
-              line1?: string;
-
-              /**
-               * Address line 2 (e.g., apartment, suite, unit, or building).
-               */
-              line2?: string;
-
-              /**
-               * ZIP or postal code.
-               */
-              postal_code?: string;
-
-              /**
-               * State, county, province, or region.
-               */
-              state?: string;
-
-              /**
-               * Town or district.
-               */
-              town?: string;
-            }
-          }
-        }
-
-        export namespace Recipient {
-          export interface Capabilities {
-            /**
-             * Capabilities that enable OutboundPayments to a bank account linked to this Account.
-             */
-            bank_accounts?: Capabilities.BankAccounts;
-
-            /**
-             * Enables this Account to receive OutboundPayments to a linked debit card.
-             */
-            cards?: Capabilities.Cards;
-
-            /**
-             * Enables this Account to receive OutboundPayments to a linked crypto wallet.
-             */
-            crypto_wallets?: Capabilities.CryptoWallets;
-
-            /**
-             * Capabilities that enable OutboundPayments via paper check.
-             */
-            paper_checks?: Capabilities.PaperChecks;
-
-            /**
-             * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
-             */
-            stripe_balance?: Capabilities.StripeBalance;
-          }
-
-          export interface DefaultOutboundDestination {
-            /**
-             * The payout method ID of the default outbound destination.
-             */
-            id: string;
-
-            /**
-             * Closed Enum. The payout method type of the default outbound destination.
-             */
-            type: DefaultOutboundDestination.Type;
-          }
-
-          export namespace Capabilities {
-            export interface BankAccounts {
-              /**
-               * Enables this Account to receive OutboundPayments to linked bank accounts over real time rails.
-               */
-              instant?: BankAccounts.Instant;
-
-              /**
-               * Enables this Account to receive OutboundPayments to linked bank accounts over local networks.
-               */
-              local?: BankAccounts.Local;
-
-              /**
-               * Enables this Account to receive OutboundPayments to linked bank accounts over wire.
-               */
-              wire?: BankAccounts.Wire;
-            }
-
-            export interface Cards {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: Cards.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: Cards.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<Cards.StatusDetail>;
-            }
-
-            export interface CryptoWallets {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: CryptoWallets.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: CryptoWallets.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<CryptoWallets.StatusDetail>;
-            }
-
-            export interface PaperChecks {
-              /**
-               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-               */
-              protections: PaperChecks.Protections;
-
-              /**
-               * The status of the Capability.
-               */
-              status: PaperChecks.Status;
-
-              /**
-               * Additional details about the capability's status. This value is empty when `status` is `active`.
-               */
-              status_details: Array<PaperChecks.StatusDetail>;
-            }
-
-            export interface StripeBalance {
-              /**
-               * Enables this Account to complete payouts from their Stripe Balance (/v1/balance).
-               */
-              payouts?: StripeBalance.Payouts;
-
-              /**
-               * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
-               */
-              stripe_transfers?: StripeBalance.StripeTransfers;
-            }
-
-            export namespace BankAccounts {
-              export interface Instant {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: Instant.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: Instant.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<Instant.StatusDetail>;
-              }
-
-              export interface Local {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: Local.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: Local.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<Local.StatusDetail>;
-              }
-
-              export interface Wire {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: Wire.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: Wire.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<Wire.StatusDetail>;
-              }
-
-              export namespace Instant {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace Local {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace Wire {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-            }
-
-            export namespace Cards {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace CryptoWallets {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace PaperChecks {
-              export interface Protections {
-                /**
-                 * Protection details for PSP migration.
-                 */
-                psp_migration: Protections.PspMigration;
-              }
-
-              export type Status =
-                | 'active'
-                | 'pending'
-                | 'restricted'
-                | 'unsupported';
-
-              export interface StatusDetail {
-                /**
-                 * Machine-readable code explaining the reason for the Capability to be in its current status.
-                 */
-                code: StatusDetail.Code;
-
-                /**
-                 * Machine-readable code explaining how to make the Capability active.
-                 */
-                resolution: StatusDetail.Resolution;
-              }
-
-              export namespace Protections {
-                export interface PspMigration {
-                  /**
-                   * The time until which the protection will expire, as a Unix timestamp.
-                   */
-                  expires_at?: bigint;
-
-                  /**
-                   * The time at which the protection was requested, as a Unix timestamp.
-                   */
-                  requested_at: bigint;
-
-                  /**
-                   * The current status of the protection.
-                   */
-                  status: PspMigration.Status;
-                }
-
-                export namespace PspMigration {
-                  export type Status =
-                    | 'active'
-                    | 'disrupted'
-                    | 'expired'
-                    | 'inactive';
-                }
-              }
-
-              export namespace StatusDetail {
-                export type Code =
-                  | 'determining_status'
-                  | 'requirements_past_due'
-                  | 'requirements_pending_verification'
-                  | 'restricted_other'
-                  | 'unsupported_business'
-                  | 'unsupported_country'
-                  | 'unsupported_entity_type';
-
-                export type Resolution =
-                  | 'contact_stripe'
-                  | 'no_resolution'
-                  | 'provide_info';
-              }
-            }
-
-            export namespace StripeBalance {
-              export interface Payouts {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: Payouts.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: Payouts.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<Payouts.StatusDetail>;
-              }
-
-              export interface StripeTransfers {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: StripeTransfers.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: StripeTransfers.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<StripeTransfers.StatusDetail>;
-              }
-
-              export namespace Payouts {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace StripeTransfers {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-            }
-          }
-
-          export namespace DefaultOutboundDestination {
-            export type Type =
-              | 'ae_bank_account'
-              | 'ag_bank_account'
-              | 'al_bank_account'
-              | 'am_bank_account'
-              | 'ao_bank_account'
-              | 'ar_bank_account'
-              | 'at_bank_account'
-              | 'au_bank_account'
-              | 'az_bank_account'
-              | 'ba_bank_account'
-              | 'bd_bank_account'
-              | 'be_bank_account'
-              | 'bg_bank_account'
-              | 'bh_bank_account'
-              | 'bj_bank_account'
-              | 'bn_bank_account'
-              | 'bo_bank_account'
-              | 'br_bank_account'
-              | 'bs_bank_account'
-              | 'bt_bank_account'
-              | 'bw_bank_account'
-              | 'card'
-              | 'ca_bank_account'
-              | 'ch_bank_account'
-              | 'ci_bank_account'
-              | 'cl_bank_account'
-              | 'cn_bank_account'
-              | 'co_bank_account'
-              | 'crypto_wallet'
-              | 'cr_bank_account'
-              | 'cy_bank_account'
-              | 'cz_bank_account'
-              | 'de_bank_account'
-              | 'dk_bank_account'
-              | 'do_bank_account'
-              | 'dz_bank_account'
-              | 'ec_bank_account'
-              | 'ee_bank_account'
-              | 'eg_bank_account'
-              | 'es_bank_account'
-              | 'et_bank_account'
-              | 'fi_bank_account'
-              | 'fr_bank_account'
-              | 'ga_bank_account'
-              | 'gb_bank_account'
-              | 'gh_bank_account'
-              | 'gi_bank_account'
-              | 'gm_bank_account'
-              | 'gr_bank_account'
-              | 'gt_bank_account'
-              | 'gy_bank_account'
-              | 'hk_bank_account'
-              | 'hn_bank_account'
-              | 'hr_bank_account'
-              | 'hu_bank_account'
-              | 'id_bank_account'
-              | 'ie_bank_account'
-              | 'il_bank_account'
-              | 'in_bank_account'
-              | 'is_bank_account'
-              | 'it_bank_account'
-              | 'jm_bank_account'
-              | 'jo_bank_account'
-              | 'jp_bank_account'
-              | 'ke_bank_account'
-              | 'kh_bank_account'
-              | 'kr_bank_account'
-              | 'kw_bank_account'
-              | 'kz_bank_account'
-              | 'la_bank_account'
-              | 'lc_bank_account'
-              | 'li_bank_account'
-              | 'lk_bank_account'
-              | 'lt_bank_account'
-              | 'lu_bank_account'
-              | 'lv_bank_account'
-              | 'ma_bank_account'
-              | 'mc_bank_account'
-              | 'md_bank_account'
-              | 'mg_bank_account'
-              | 'mk_bank_account'
-              | 'mn_bank_account'
-              | 'mo_bank_account'
-              | 'mt_bank_account'
-              | 'mu_bank_account'
-              | 'mx_bank_account'
-              | 'my_bank_account'
-              | 'mz_bank_account'
-              | 'na_bank_account'
-              | 'ne_bank_account'
-              | 'ng_bank_account'
-              | 'ni_bank_account'
-              | 'nl_bank_account'
-              | 'no_bank_account'
-              | 'nz_bank_account'
-              | 'om_bank_account'
-              | 'pa_bank_account'
-              | 'pe_bank_account'
-              | 'ph_bank_account'
-              | 'pk_bank_account'
-              | 'pl_bank_account'
-              | 'pt_bank_account'
-              | 'py_bank_account'
-              | 'qa_bank_account'
-              | 'ro_bank_account'
-              | 'rs_bank_account'
-              | 'rw_bank_account'
-              | 'sa_bank_account'
-              | 'se_bank_account'
-              | 'sg_bank_account'
-              | 'si_bank_account'
-              | 'sk_bank_account'
-              | 'sm_bank_account'
-              | 'sn_bank_account'
-              | 'sv_bank_account'
-              | 'th_bank_account'
-              | 'tn_bank_account'
-              | 'tr_bank_account'
-              | 'tt_bank_account'
-              | 'tw_bank_account'
-              | 'tz_bank_account'
-              | 'us_bank_account'
-              | 'uy_bank_account'
-              | 'uz_bank_account'
-              | 'vn_bank_account'
-              | 'za_bank_account';
-          }
-        }
-
-        export namespace Storer {
-          export interface Capabilities {
-            /**
-             * Hash containing capabilities related to consumer financial accounts.
-             */
-            consumer?: Capabilities.Consumer;
-
-            /**
-             * Can provision a financial address to credit/debit a FinancialAccount.
-             */
-            financial_addresses?: Capabilities.FinancialAddresses;
-
-            /**
-             * Can hold storage-type funds on Stripe.
-             */
-            holds_currencies?: Capabilities.HoldsCurrencies;
-
-            /**
-             * Hash containing capabilities related to InboundTransfers.
-             */
-            inbound_transfers?: Capabilities.InboundTransfers;
-
-            /**
-             * Hash containing capabilities related to [OutboundPayments](https://docs.stripe.com/api/treasury/outbound_payments?api-version=preview).
-             */
-            outbound_payments?: Capabilities.OutboundPayments;
-
-            /**
-             * Hash containing capabilities related to [OutboundTransfers](https://docs.stripe.com/api/treasury/outbound_transfers?api-version=preview).
-             */
-            outbound_transfers?: Capabilities.OutboundTransfers;
-          }
-
-          export type HighRiskActivity =
-            | 'adult_entertainment'
-            | 'gambling'
-            | 'hold_client_funds'
-            | 'investment_services'
-            | 'lending_banking'
-            | 'marijuana_or_related_services'
-            | 'money_services'
-            | 'nicotine_tobacco_or_related_services'
-            | 'none'
-            | 'operate_foreign_exchange_virtual_currencies_brokerage_otc'
-            | 'pharmaceuticals'
-            | 'precious_metals_precious_stones_jewelry'
-            | 'safe_deposit_box_rentals'
-            | 'third_party_payment_processing'
-            | 'weapons_firearms_and_explosives';
-
-          export type PurposeOfFunds =
-            | 'charitable_donations'
-            | 'ecommerce_retail_payments'
-            | 'investment_purposes'
-            | 'other'
-            | 'payments_to_friends_or_family_abroad'
-            | 'payroll'
-            | 'personal_or_living_expenses'
-            | 'protect_wealth'
-            | 'purchase_goods_and_services'
-            | 'receive_payments_for_goods_and_services'
-            | 'tax_optimization'
-            | 'third_party_money_transmission'
-            | 'treasury_management';
-
-          export interface RegulatedActivity {
-            /**
-             * A detailed description of the regulated activities the business is licensed to conduct.
-             */
-            description?: string;
-
-            /**
-             * The license number or registration number assigned by the business's primary regulator.
-             */
-            license_number?: string;
-
-            /**
-             * The country of the primary regulatory authority that oversees the business's regulated activities.
-             */
-            primary_regulatory_authority_country?: string;
-
-            /**
-             * The name of the primary regulatory authority that oversees the business's regulated activities.
-             */
-            primary_regulatory_authority_name?: string;
-          }
-
-          export type SourceOfFunds =
-            | 'business_loans'
-            | 'grants'
-            | 'inter_company_funds'
-            | 'investment_proceeds'
-            | 'legal_settlement'
-            | 'owners_capital'
-            | 'pension_retirement'
-            | 'sales_of_assets'
-            | 'sales_of_goods_and_services'
-            | 'tax_refund'
-            | 'third_party_funds'
-            | 'treasury_reserves';
-
-          export namespace Capabilities {
-            export interface Consumer {
-              /**
-               * Can hold storage-type funds on Stripe consumer FAs in USD.
-               */
-              holds_currencies?: Consumer.HoldsCurrencies;
-            }
-
-            export interface FinancialAddresses {
-              /**
-               * Can provision a bank-account like financial address (VBAN) to credit/debit a FinancialAccount.
-               */
-              bank_accounts?: FinancialAddresses.BankAccounts;
-
-              /**
-               * Can provision a crypto wallet like financial address to credit a FinancialAccount.
-               */
-              crypto_wallets?: FinancialAddresses.CryptoWallets;
-            }
-
-            export interface HoldsCurrencies {
-              /**
-               * Can hold storage-type funds on Stripe in EUR.
-               */
-              eur?: HoldsCurrencies.Eur;
-
-              /**
-               * Can hold storage-type funds on Stripe in GBP.
-               */
-              gbp?: HoldsCurrencies.Gbp;
-
-              /**
-               * Can hold storage-type funds on Stripe in USD.
-               */
-              usd?: HoldsCurrencies.Usd;
-
-              /**
-               * Can hold storage-type funds on Stripe in USDC.
-               */
-              usdc?: HoldsCurrencies.Usdc;
-            }
-
-            export interface InboundTransfers {
-              /**
-               * Can pull funds into a FinancialAccount from an external bank account owned by the user.
-               */
-              bank_accounts?: InboundTransfers.BankAccounts;
-            }
-
-            export interface OutboundPayments {
-              /**
-               * Can send funds from a FinancialAccount to a bank account owned by a different entity.
-               */
-              bank_accounts?: OutboundPayments.BankAccounts;
-
-              /**
-               * Can send funds from a FinancialAccount to a debit card owned by a different entity.
-               */
-              cards?: OutboundPayments.Cards;
-
-              /**
-               * Can send funds from a FinancialAccount to a crypto wallet owned by a different entity.
-               */
-              crypto_wallets?: OutboundPayments.CryptoWallets;
-
-              /**
-               * Can send funds from a FinancialAccount to a FinancialAccount owned by a different entity.
-               */
-              financial_accounts?: OutboundPayments.FinancialAccounts;
-
-              /**
-               * Can send funds from a FinancialAccount to someone else via paper check.
-               */
-              paper_checks?: OutboundPayments.PaperChecks;
-            }
-
-            export interface OutboundTransfers {
-              /**
-               * Can send funds from a FinancialAccount to a bank account belonging to the same user.
-               */
-              bank_accounts?: OutboundTransfers.BankAccounts;
-
-              /**
-               * Can send funds from a FinancialAccount to a crypto wallet belonging to the same user.
-               */
-              crypto_wallets?: OutboundTransfers.CryptoWallets;
-
-              /**
-               * Can send funds from a FinancialAccount to another FinancialAccount belonging to the same user.
-               */
-              financial_accounts?: OutboundTransfers.FinancialAccounts;
-            }
-
-            export namespace Consumer {
-              export interface HoldsCurrencies {
-                /**
-                 * Can hold storage-type funds on Stripe consumer FAs in USD.
-                 */
-                usd?: HoldsCurrencies.Usd;
-              }
-
-              export namespace HoldsCurrencies {
-                export interface Usd {
-                  /**
-                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                   */
-                  protections: Usd.Protections;
-
-                  /**
-                   * The status of the Capability.
-                   */
-                  status: Usd.Status;
-
-                  /**
-                   * Additional details about the capability's status. This value is empty when `status` is `active`.
-                   */
-                  status_details: Array<Usd.StatusDetail>;
-                }
-
-                export namespace Usd {
-                  export interface Protections {
-                    /**
-                     * Protection details for PSP migration.
-                     */
-                    psp_migration: Protections.PspMigration;
-                  }
-
-                  export type Status =
-                    | 'active'
-                    | 'pending'
-                    | 'restricted'
-                    | 'unsupported';
-
-                  export interface StatusDetail {
-                    /**
-                     * Machine-readable code explaining the reason for the Capability to be in its current status.
-                     */
-                    code: StatusDetail.Code;
-
-                    /**
-                     * Machine-readable code explaining how to make the Capability active.
-                     */
-                    resolution: StatusDetail.Resolution;
-                  }
-
-                  export namespace Protections {
-                    export interface PspMigration {
-                      /**
-                       * The time until which the protection will expire, as a Unix timestamp.
-                       */
-                      expires_at?: bigint;
-
-                      /**
-                       * The time at which the protection was requested, as a Unix timestamp.
-                       */
-                      requested_at: bigint;
-
-                      /**
-                       * The current status of the protection.
-                       */
-                      status: PspMigration.Status;
-                    }
-
-                    export namespace PspMigration {
-                      export type Status =
-                        | 'active'
-                        | 'disrupted'
-                        | 'expired'
-                        | 'inactive';
-                    }
-                  }
-
-                  export namespace StatusDetail {
-                    export type Code =
-                      | 'determining_status'
-                      | 'requirements_past_due'
-                      | 'requirements_pending_verification'
-                      | 'restricted_other'
-                      | 'unsupported_business'
-                      | 'unsupported_country'
-                      | 'unsupported_entity_type';
-
-                    export type Resolution =
-                      | 'contact_stripe'
-                      | 'no_resolution'
-                      | 'provide_info';
-                  }
-                }
-              }
-            }
-
-            export namespace FinancialAddresses {
-              export interface BankAccounts {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: BankAccounts.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: BankAccounts.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<BankAccounts.StatusDetail>;
-              }
-
-              export interface CryptoWallets {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: CryptoWallets.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: CryptoWallets.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<CryptoWallets.StatusDetail>;
-              }
-
-              export namespace BankAccounts {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace CryptoWallets {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-            }
-
-            export namespace HoldsCurrencies {
-              export interface Eur {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: Eur.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: Eur.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<Eur.StatusDetail>;
-              }
-
-              export interface Gbp {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: Gbp.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: Gbp.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<Gbp.StatusDetail>;
-              }
-
-              export interface Usd {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: Usd.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: Usd.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<Usd.StatusDetail>;
-              }
-
-              export interface Usdc {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: Usdc.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: Usdc.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<Usdc.StatusDetail>;
-              }
-
-              export namespace Eur {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace Gbp {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace Usd {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace Usdc {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-            }
-
-            export namespace InboundTransfers {
-              export interface BankAccounts {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: BankAccounts.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: BankAccounts.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<BankAccounts.StatusDetail>;
-              }
-
-              export namespace BankAccounts {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-            }
-
-            export namespace OutboundPayments {
-              export interface BankAccounts {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: BankAccounts.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: BankAccounts.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<BankAccounts.StatusDetail>;
-              }
-
-              export interface Cards {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: Cards.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: Cards.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<Cards.StatusDetail>;
-              }
-
-              export interface CryptoWallets {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: CryptoWallets.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: CryptoWallets.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<CryptoWallets.StatusDetail>;
-              }
-
-              export interface FinancialAccounts {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: FinancialAccounts.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: FinancialAccounts.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<FinancialAccounts.StatusDetail>;
-              }
-
-              export interface PaperChecks {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: PaperChecks.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: PaperChecks.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<PaperChecks.StatusDetail>;
-              }
-
-              export namespace BankAccounts {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace Cards {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace CryptoWallets {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace FinancialAccounts {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace PaperChecks {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-            }
-
-            export namespace OutboundTransfers {
-              export interface BankAccounts {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: BankAccounts.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: BankAccounts.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<BankAccounts.StatusDetail>;
-              }
-
-              export interface CryptoWallets {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: CryptoWallets.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: CryptoWallets.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<CryptoWallets.StatusDetail>;
-              }
-
-              export interface FinancialAccounts {
-                /**
-                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
-                 */
-                protections: FinancialAccounts.Protections;
-
-                /**
-                 * The status of the Capability.
-                 */
-                status: FinancialAccounts.Status;
-
-                /**
-                 * Additional details about the capability's status. This value is empty when `status` is `active`.
-                 */
-                status_details: Array<FinancialAccounts.StatusDetail>;
-              }
-
-              export namespace BankAccounts {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace CryptoWallets {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-
-              export namespace FinancialAccounts {
-                export interface Protections {
-                  /**
-                   * Protection details for PSP migration.
-                   */
-                  psp_migration: Protections.PspMigration;
-                }
-
-                export type Status =
-                  | 'active'
-                  | 'pending'
-                  | 'restricted'
-                  | 'unsupported';
-
-                export interface StatusDetail {
-                  /**
-                   * Machine-readable code explaining the reason for the Capability to be in its current status.
-                   */
-                  code: StatusDetail.Code;
-
-                  /**
-                   * Machine-readable code explaining how to make the Capability active.
-                   */
-                  resolution: StatusDetail.Resolution;
-                }
-
-                export namespace Protections {
-                  export interface PspMigration {
-                    /**
-                     * The time until which the protection will expire, as a Unix timestamp.
-                     */
-                    expires_at?: bigint;
-
-                    /**
-                     * The time at which the protection was requested, as a Unix timestamp.
-                     */
-                    requested_at: bigint;
-
-                    /**
-                     * The current status of the protection.
-                     */
-                    status: PspMigration.Status;
-                  }
-
-                  export namespace PspMigration {
-                    export type Status =
-                      | 'active'
-                      | 'disrupted'
-                      | 'expired'
-                      | 'inactive';
-                  }
-                }
-
-                export namespace StatusDetail {
-                  export type Code =
-                    | 'determining_status'
-                    | 'requirements_past_due'
-                    | 'requirements_pending_verification'
-                    | 'restricted_other'
-                    | 'unsupported_business'
-                    | 'unsupported_country'
-                    | 'unsupported_entity_type';
-
-                  export type Resolution =
-                    | 'contact_stripe'
-                    | 'no_resolution'
-                    | 'provide_info';
-                }
-              }
-            }
+          export namespace Rendering {
+            export type AmountTaxDisplay =
+              | 'exclude_tax'
+              | 'include_inclusive_tax';
           }
         }
       }
 
       export namespace Capabilities {
         export interface AutomaticIndirectTax {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: AutomaticIndirectTax.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -17295,85 +10094,20 @@ export namespace V2 {
         }
 
         export namespace AutomaticIndirectTax {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
             | 'restricted'
             | 'unsupported';
 
-          /**
-           * A value indicating the responsibility for losses on this account.
-           */
-          losses_collector?: Responsibilities.LossesCollector;
-
-          /**
-           * A value indicating responsibility for collecting requirements on this account.
-           */
-          requirements_collector: Responsibilities.RequirementsCollector;
-        }
-
-        export namespace Responsibilities {
-          export type FeesCollector =
-            | 'application'
-            | 'application_custom'
-            | 'application_express'
-            | 'stripe';
-
-          export type LossesCollector = 'application' | 'stripe';
-
-          export type RequirementsCollector = 'application' | 'stripe';
-        }
-      }
-
-      export namespace FutureRequirements {
-        export interface Entry {
-          /**
-           * Indicates whether the platform or Stripe is currently responsible for taking action on the requirement. Value can be `user` or `stripe`.
-           */
-          awaiting_action_from: Entry.AwaitingActionFrom;
-
-          /**
-           * Machine-readable string describing the requirement.
-           */
-          description: string;
-
-          /**
-           * Descriptions of why the requirement must be collected, or why the collected information isn't satisfactory to Stripe.
-           */
-          errors: Array<Entry.Error>;
-
-          /**
-           * A hash describing the impact of not collecting the requirement, or Stripe not being able to verify the collected information.
-           */
-          impact: Entry.Impact;
-
-          /**
-           * The soonest point when the account will be impacted by not providing the requirement.
-           */
-          minimum_deadline: Entry.MinimumDeadline;
-
-          /**
-           * A reference to the location of the requirement.
-           */
-          reference?: Entry.Reference;
-
-          /**
-           * A list of reasons why Stripe is collecting the requirement.
-           */
-          requested_reasons: Array<Entry.RequestedReason>;
-        }
-
-        export interface Summary {
-          /**
-           * The soonest date and time a requirement on the Account will become `past due`. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
-           */
-          minimum_deadline?: Summary.MinimumDeadline;
-        }
-
-        export namespace Entry {
-          export type AwaitingActionFrom = 'stripe' | 'user';
-
-          export interface Error {
+          export interface StatusDetail {
             /**
              * Machine-readable code explaining the reason for the Capability to be in its current status.
              */
@@ -17383,6 +10117,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -17395,162 +10156,10 @@ export namespace V2 {
               | 'unsupported_country'
               | 'unsupported_entity_type';
 
-          export namespace Impact {
-            export interface RestrictsCapability {
-              /**
-               * The name of the Capability which will be restricted.
-               */
-              capability: RestrictsCapability.Capability;
-
-              /**
-               * The configuration which specifies the Capability which will be restricted.
-               */
-              configuration: RestrictsCapability.Configuration;
-
-              /**
-               * Details about when in the account lifecycle the requirement must be collected by the avoid the Capability restriction.
-               */
-              deadline: RestrictsCapability.Deadline;
-            }
-
-            export namespace RestrictsCapability {
-              export type Capability =
-                | 'ach_debit_payments'
-                | 'acss_debit_payments'
-                | 'affirm_payments'
-                | 'afterpay_clearpay_payments'
-                | 'alma_payments'
-                | 'amazon_pay_payments'
-                | 'automatic_indirect_tax'
-                | 'au_becs_debit_payments'
-                | 'bacs_debit_payments'
-                | 'bancontact_payments'
-                | 'bank_accounts.instant'
-                | 'bank_accounts.local'
-                | 'bank_accounts.wire'
-                | 'blik_payments'
-                | 'boleto_payments'
-                | 'cards'
-                | 'card_payments'
-                | 'cartes_bancaires_payments'
-                | 'cashapp_payments'
-                | 'commercial.celtic.charge_card'
-                | 'commercial.celtic.spend_card'
-                | 'commercial.cross_river_bank.charge_card'
-                | 'commercial.cross_river_bank.prepaid_card'
-                | 'commercial.cross_river_bank.spend_card'
-                | 'commercial.fifth_third.charge_card'
-                | 'commercial.lead.prepaid_card'
-                | 'commercial.stripe.charge_card'
-                | 'commercial.stripe.prepaid_card'
-                | 'consumer.celtic.revolving_credit_card'
-                | 'consumer.cross_river_bank.prepaid_card'
-                | 'consumer.holds_currencies.usd'
-                | 'consumer.lead.debit_card'
-                | 'consumer.lead.prepaid_card'
-                | 'crypto_wallets'
-                | 'eps_payments'
-                | 'financial_addresses.bank_accounts'
-                | 'fpx_payments'
-                | 'gb_bank_transfer_payments'
-                | 'grabpay_payments'
-                | 'holds_currencies.eur'
-                | 'holds_currencies.gbp'
-                | 'holds_currencies.usd'
-                | 'ideal_payments'
-                | 'inbound_transfers.financial_accounts'
-                | 'jcb_payments'
-                | 'jp_bank_transfer_payments'
-                | 'kakao_pay_payments'
-                | 'klarna_payments'
-                | 'konbini_payments'
-                | 'kr_card_payments'
-                | 'link_payments'
-                | 'mobilepay_payments'
-                | 'multibanco_payments'
-                | 'mx_bank_transfer_payments'
-                | 'naver_pay_payments'
-                | 'outbound_payments.bank_accounts'
-                | 'outbound_payments.cards'
-                | 'outbound_payments.financial_accounts'
-                | 'outbound_payments.paper_checks'
-                | 'outbound_transfers.bank_accounts'
-                | 'outbound_transfers.financial_accounts'
-                | 'oxxo_payments'
-                | 'p24_payments'
-                | 'paper_checks'
-                | 'payco_payments'
-                | 'paynow_payments'
-                | 'pay_by_bank_payments'
-                | 'promptpay_payments'
-                | 'revolut_pay_payments'
-                | 'samsung_pay_payments'
-                | 'sepa_bank_transfer_payments'
-                | 'sepa_debit_payments'
-                | 'stripe_balance.payouts'
-                | 'stripe_balance.stripe_transfers'
-                | 'swish_payments'
-                | 'twint_payments'
-                | 'us_bank_transfer_payments'
-                | 'zip_payments';
-
-              export type Configuration =
-                | 'card_creator'
-                | 'customer'
-                | 'merchant'
-                | 'recipient'
-                | 'storer';
-
-              export interface Deadline {
-                /**
-                 * The current status of the requirement's impact.
-                 */
-                status: Deadline.Status;
-              }
-
-              export namespace Deadline {
-                export type Status =
-                  | 'currently_due'
-                  | 'eventually_due'
-                  | 'past_due';
-              }
-            }
-          }
-
-          export namespace MinimumDeadline {
-            export type Status =
-              | 'currently_due'
-              | 'eventually_due'
-              | 'past_due';
-          }
-
-          export namespace Reference {
-            export type Type = 'inquiry' | 'payment_method' | 'person';
-          }
-
-          export namespace RequestedReason {
-            export type Code = 'routine_onboarding' | 'routine_verification';
-          }
-        }
-
-        export namespace Summary {
-          export interface MinimumDeadline {
-            /**
-             * The current strictest status of all requirements on the Account.
-             */
-            status: MinimumDeadline.Status;
-
-            /**
-             * The soonest RFC3339 date & time UTC value a requirement can impact the Account.
-             */
-            time?: string;
-          }
-
-          export namespace MinimumDeadline {
-            export type Status =
-              | 'currently_due'
-              | 'eventually_due'
-              | 'past_due';
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
           }
         }
       }
@@ -17885,6 +10494,13 @@ export namespace V2 {
         creditor_id?: string;
       }
 
+      export interface SmartDisputes {
+        /**
+         * Settings for Smart Disputes auto_respond.
+         */
+        auto_respond?: SmartDisputes.AutoRespond;
+      }
+
       export interface StatementDescriptor {
         /**
          * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a statement_descriptor_prefix, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the statement_descriptor text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
@@ -17922,6 +10538,11 @@ export namespace V2 {
       export namespace Capabilities {
         export interface AchDebitPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: AchDebitPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: AchDebitPayments.Status;
@@ -17934,6 +10555,11 @@ export namespace V2 {
 
         export interface AcssDebitPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: AcssDebitPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: AcssDebitPayments.Status;
@@ -17941,65 +10567,15 @@ export namespace V2 {
           /**
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
-          annual_revenue?: BusinessDetails.AnnualRevenue;
-
-          /**
-           * A detailed description of the business's compliance and anti-money laundering controls and practices.
-           */
-          compliance_screening_description?: string;
-
-          /**
-           * Documents that may be submitted to satisfy various informational requests.
-           */
-          documents?: BusinessDetails.Documents;
-
-          /**
-           * Estimated maximum number of workers currently engaged by the business (including employees, contractors, and vendors).
-           */
-          estimated_worker_count?: number;
-
-          /**
-           * The provided ID numbers of a business entity.
-           */
-          id_numbers?: Array<BusinessDetails.IdNumber>;
-
-          /**
-           * An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
-           */
-          monthly_estimated_revenue?: BusinessDetails.MonthlyEstimatedRevenue;
-
-          /**
-           * The company's phone number (used for verification).
-           */
-          phone?: string;
-
-          /**
-           * The business legal name.
-           */
-          registered_name?: string;
-
-          /**
-           * When the business was incorporated or registered.
-           */
-          registration_date?: BusinessDetails.RegistrationDate;
-
-          /**
-           * The business registration address of the business entity in non latin script.
-           */
-          script_addresses?: BusinessDetails.ScriptAddresses;
-
-          /**
-           * The business legal name in non latin script.
-           */
-          script_names?: BusinessDetails.ScriptNames;
-
-          /**
-           * The category identifying the legal structure of the business.
-           */
-          structure?: BusinessDetails.Structure;
+          status_details: Array<AcssDebitPayments.StatusDetail>;
         }
 
         export interface AffirmPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: AffirmPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18013,6 +10589,11 @@ export namespace V2 {
 
         export interface AfterpayClearpayPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: AfterpayClearpayPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: AfterpayClearpayPayments.Status;
@@ -18024,6 +10605,11 @@ export namespace V2 {
         }
 
         export interface AlmaPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: AlmaPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18037,6 +10623,11 @@ export namespace V2 {
 
         export interface AmazonPayPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: AmazonPayPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: AmazonPayPayments.Status;
@@ -18048,6 +10639,11 @@ export namespace V2 {
         }
 
         export interface AuBecsDebitPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: AuBecsDebitPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18061,6 +10657,11 @@ export namespace V2 {
 
         export interface BacsDebitPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: BacsDebitPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: BacsDebitPayments.Status;
@@ -18072,6 +10673,11 @@ export namespace V2 {
         }
 
         export interface BancontactPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: BancontactPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18085,6 +10691,11 @@ export namespace V2 {
 
         export interface BlikPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: BlikPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: BlikPayments.Status;
@@ -18096,6 +10707,11 @@ export namespace V2 {
         }
 
         export interface BoletoPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: BoletoPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18109,6 +10725,11 @@ export namespace V2 {
 
         export interface CardPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: CardPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: CardPayments.Status;
@@ -18120,6 +10741,11 @@ export namespace V2 {
         }
 
         export interface CartesBancairesPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: CartesBancairesPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18133,6 +10759,11 @@ export namespace V2 {
 
         export interface CashappPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: CashappPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: CashappPayments.Status;
@@ -18144,6 +10775,11 @@ export namespace V2 {
         }
 
         export interface EpsPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: EpsPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18157,6 +10793,11 @@ export namespace V2 {
 
         export interface FpxPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: FpxPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: FpxPayments.Status;
@@ -18168,6 +10809,11 @@ export namespace V2 {
         }
 
         export interface GbBankTransferPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: GbBankTransferPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18181,6 +10827,11 @@ export namespace V2 {
 
         export interface GrabpayPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: GrabpayPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: GrabpayPayments.Status;
@@ -18192,6 +10843,11 @@ export namespace V2 {
         }
 
         export interface IdealPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: IdealPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18205,6 +10861,11 @@ export namespace V2 {
 
         export interface JcbPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: JcbPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: JcbPayments.Status;
@@ -18216,6 +10877,11 @@ export namespace V2 {
         }
 
         export interface JpBankTransferPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: JpBankTransferPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18229,6 +10895,11 @@ export namespace V2 {
 
         export interface KakaoPayPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: KakaoPayPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: KakaoPayPayments.Status;
@@ -18240,6 +10911,11 @@ export namespace V2 {
         }
 
         export interface KlarnaPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: KlarnaPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18253,6 +10929,11 @@ export namespace V2 {
 
         export interface KonbiniPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: KonbiniPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: KonbiniPayments.Status;
@@ -18264,6 +10945,11 @@ export namespace V2 {
         }
 
         export interface KrCardPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: KrCardPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18277,6 +10963,11 @@ export namespace V2 {
 
         export interface LinkPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: LinkPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: LinkPayments.Status;
@@ -18288,6 +10979,11 @@ export namespace V2 {
         }
 
         export interface MobilepayPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: MobilepayPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18301,6 +10997,11 @@ export namespace V2 {
 
         export interface MultibancoPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: MultibancoPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: MultibancoPayments.Status;
@@ -18312,6 +11013,11 @@ export namespace V2 {
         }
 
         export interface MxBankTransferPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: MxBankTransferPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18325,6 +11031,11 @@ export namespace V2 {
 
         export interface NaverPayPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: NaverPayPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: NaverPayPayments.Status;
@@ -18336,6 +11047,11 @@ export namespace V2 {
         }
 
         export interface OxxoPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: OxxoPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18349,6 +11065,11 @@ export namespace V2 {
 
         export interface P24Payments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: P24Payments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: P24Payments.Status;
@@ -18360,6 +11081,11 @@ export namespace V2 {
         }
 
         export interface PayByBankPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: PayByBankPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18373,6 +11099,11 @@ export namespace V2 {
 
         export interface PaycoPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: PaycoPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: PaycoPayments.Status;
@@ -18384,6 +11115,11 @@ export namespace V2 {
         }
 
         export interface PaynowPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: PaynowPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18397,6 +11133,11 @@ export namespace V2 {
 
         export interface PromptpayPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: PromptpayPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: PromptpayPayments.Status;
@@ -18408,6 +11149,11 @@ export namespace V2 {
         }
 
         export interface RevolutPayPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: RevolutPayPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18421,6 +11167,11 @@ export namespace V2 {
 
         export interface SamsungPayPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: SamsungPayPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: SamsungPayPayments.Status;
@@ -18433,6 +11184,11 @@ export namespace V2 {
 
         export interface SepaBankTransferPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: SepaBankTransferPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: SepaBankTransferPayments.Status;
@@ -18444,6 +11200,11 @@ export namespace V2 {
         }
 
         export interface SepaDebitPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: SepaDebitPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18464,6 +11225,11 @@ export namespace V2 {
 
         export interface SwishPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: SwishPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: SwishPayments.Status;
@@ -18475,6 +11241,11 @@ export namespace V2 {
         }
 
         export interface TwintPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: TwintPayments.Protections;
+
           /**
            * The status of the Capability.
            */
@@ -18488,6 +11259,11 @@ export namespace V2 {
 
         export interface UsBankTransferPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: UsBankTransferPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: UsBankTransferPayments.Status;
@@ -18500,6 +11276,11 @@ export namespace V2 {
 
         export interface ZipPayments {
           /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: ZipPayments.Protections;
+
+          /**
            * The status of the Capability.
            */
           status: ZipPayments.Status;
@@ -18511,6 +11292,13 @@ export namespace V2 {
         }
 
         export namespace AchDebitPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18527,6 +11315,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18547,6 +11362,13 @@ export namespace V2 {
         }
 
         export namespace AcssDebitPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18563,6 +11385,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18583,6 +11432,13 @@ export namespace V2 {
         }
 
         export namespace AffirmPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18599,6 +11455,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18619,6 +11502,13 @@ export namespace V2 {
         }
 
         export namespace AfterpayClearpayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18635,6 +11525,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18655,6 +11572,13 @@ export namespace V2 {
         }
 
         export namespace AlmaPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18671,6 +11595,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18691,6 +11642,13 @@ export namespace V2 {
         }
 
         export namespace AmazonPayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18707,6 +11665,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18727,6 +11712,13 @@ export namespace V2 {
         }
 
         export namespace AuBecsDebitPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18743,6 +11735,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18763,6 +11782,13 @@ export namespace V2 {
         }
 
         export namespace BacsDebitPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18779,6 +11805,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18799,6 +11852,13 @@ export namespace V2 {
         }
 
         export namespace BancontactPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18815,6 +11875,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18835,6 +11922,13 @@ export namespace V2 {
         }
 
         export namespace BlikPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18851,6 +11945,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18871,6 +11992,13 @@ export namespace V2 {
         }
 
         export namespace BoletoPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18887,6 +12015,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18907,6 +12062,13 @@ export namespace V2 {
         }
 
         export namespace CardPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18923,6 +12085,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18943,6 +12132,13 @@ export namespace V2 {
         }
 
         export namespace CartesBancairesPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18959,6 +12155,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -18979,6 +12202,13 @@ export namespace V2 {
         }
 
         export namespace CashappPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -18995,6 +12225,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19015,6 +12272,13 @@ export namespace V2 {
         }
 
         export namespace EpsPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19031,6 +12295,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19051,6 +12342,13 @@ export namespace V2 {
         }
 
         export namespace FpxPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19067,6 +12365,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19087,6 +12412,13 @@ export namespace V2 {
         }
 
         export namespace GbBankTransferPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19103,6 +12435,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19123,6 +12482,13 @@ export namespace V2 {
         }
 
         export namespace GrabpayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19139,6 +12505,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19159,6 +12552,13 @@ export namespace V2 {
         }
 
         export namespace IdealPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19175,6 +12575,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19195,6 +12622,13 @@ export namespace V2 {
         }
 
         export namespace JcbPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19211,6 +12645,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19231,6 +12692,13 @@ export namespace V2 {
         }
 
         export namespace JpBankTransferPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19247,6 +12715,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19267,6 +12762,13 @@ export namespace V2 {
         }
 
         export namespace KakaoPayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19283,6 +12785,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19303,6 +12832,13 @@ export namespace V2 {
         }
 
         export namespace KlarnaPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19319,6 +12855,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19339,6 +12902,13 @@ export namespace V2 {
         }
 
         export namespace KonbiniPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19355,6 +12925,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19375,6 +12972,13 @@ export namespace V2 {
         }
 
         export namespace KrCardPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19391,6 +12995,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19411,6 +13042,13 @@ export namespace V2 {
         }
 
         export namespace LinkPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19427,6 +13065,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19447,6 +13112,13 @@ export namespace V2 {
         }
 
         export namespace MobilepayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19463,6 +13135,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19483,6 +13182,13 @@ export namespace V2 {
         }
 
         export namespace MultibancoPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19499,6 +13205,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19519,6 +13252,13 @@ export namespace V2 {
         }
 
         export namespace MxBankTransferPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19535,6 +13275,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19555,6 +13322,13 @@ export namespace V2 {
         }
 
         export namespace NaverPayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19571,6 +13345,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19591,6 +13392,13 @@ export namespace V2 {
         }
 
         export namespace OxxoPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19607,6 +13415,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19627,6 +13462,13 @@ export namespace V2 {
         }
 
         export namespace P24Payments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19643,6 +13485,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19663,6 +13532,13 @@ export namespace V2 {
         }
 
         export namespace PayByBankPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19679,6 +13555,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19699,6 +13602,13 @@ export namespace V2 {
         }
 
         export namespace PaycoPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19715,6 +13625,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19735,6 +13672,13 @@ export namespace V2 {
         }
 
         export namespace PaynowPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19751,6 +13695,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19771,6 +13742,13 @@ export namespace V2 {
         }
 
         export namespace PromptpayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19787,6 +13765,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19807,6 +13812,13 @@ export namespace V2 {
         }
 
         export namespace RevolutPayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19823,6 +13835,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19843,6 +13882,13 @@ export namespace V2 {
         }
 
         export namespace SamsungPayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19859,6 +13905,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19879,6 +13952,13 @@ export namespace V2 {
         }
 
         export namespace SepaBankTransferPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19895,6 +13975,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19915,6 +14022,13 @@ export namespace V2 {
         }
 
         export namespace SepaDebitPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -19931,6 +14045,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -19953,6 +14094,11 @@ export namespace V2 {
         export namespace StripeBalance {
           export interface Payouts {
             /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: Payouts.Protections;
+
+            /**
              * The status of the Capability.
              */
             status: Payouts.Status;
@@ -19964,6 +14110,13 @@ export namespace V2 {
           }
 
           export namespace Payouts {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
             export type Status =
               | 'active'
               | 'pending'
@@ -19980,6 +14133,33 @@ export namespace V2 {
                * Machine-readable code explaining how to make the Capability active.
                */
               resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
             }
 
             export namespace StatusDetail {
@@ -20001,6 +14181,13 @@ export namespace V2 {
         }
 
         export namespace SwishPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -20017,6 +14204,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -20037,6 +14251,13 @@ export namespace V2 {
         }
 
         export namespace TwintPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -20053,6 +14274,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -20073,6 +14321,13 @@ export namespace V2 {
         }
 
         export namespace UsBankTransferPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -20089,6 +14344,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -20109,6 +14391,13 @@ export namespace V2 {
         }
 
         export namespace ZipPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
           export type Status =
             | 'active'
             | 'pending'
@@ -20125,6 +14414,33 @@ export namespace V2 {
              * Machine-readable code explaining how to make the Capability active.
              */
             resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
           }
 
           export namespace StatusDetail {
@@ -20187,2506 +14503,7 @@ export namespace V2 {
             /**
              * Support hours start time (JST time of day) for in `HH:MM` format.
              */
-            ip?: string;
-
-            /**
-             * The user agent of the browser from which the director attestation was made.
-             */
-            user_agent?: string;
-          }
-
-          export interface OwnershipDeclaration {
-            /**
-             * The time marking when the beneficial owner attestation was made. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-             */
-            date?: string;
-
-            /**
-             * The IP address from which the beneficial owner attestation was made.
-             */
-            ip?: string;
-
-            /**
-             * The user agent of the browser from which the beneficial owner attestation was made.
-             */
-            user_agent?: string;
-          }
-
-          export interface PersonsProvided {
-            /**
-             * Whether the company's directors have been provided. Set this Boolean to true after creating all the company's directors with the [Persons API](https://docs.stripe.com/api/v2/core/accounts/createperson).
-             */
-            directors?: boolean;
-
-            /**
-             * Whether the company's executives have been provided. Set this Boolean to true after creating all the company's executives with the [Persons API](https://docs.stripe.com/api/v2/core/accounts/createperson).
-             */
-            executives?: boolean;
-
-            /**
-             * Whether the company's owners have been provided. Set this Boolean to true after creating all the company's owners with the [Persons API](https://docs.stripe.com/api/v2/core/accounts/createperson).
-             */
-            owners?: boolean;
-
-            /**
-             * Reason for why the company is exempt from providing ownership information.
-             */
-            ownership_exemption_reason?: PersonsProvided.OwnershipExemptionReason;
-          }
-
-          export interface RepresentativeDeclaration {
-            /**
-             * The time marking when the representative attestation was made. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-             */
-            date?: string;
-
-            /**
-             * The IP address from which the representative attestation was made.
-             */
-            ip?: string;
-
-            /**
-             * The user agent of the browser from which the representative attestation was made.
-             */
-            user_agent?: string;
-          }
-
-          export interface TermsOfService {
-            /**
-             * Details on the Account's acceptance of the [Stripe Services Agreement](https://docs.stripe.com/connect/updating-accounts#tos-acceptance).
-             */
-            account?: TermsOfService.Account;
-
-            /**
-             * Details on the Account's acceptance of Issuing-specific terms of service.
-             */
-            card_creator?: TermsOfService.CardCreator;
-
-            /**
-             * Details on the Account's acceptance of Consumer-privacy-disclosures-specific terms of service.
-             */
-            consumer_privacy_disclosures?: TermsOfService.ConsumerPrivacyDisclosures;
-
-            /**
-             * Details on the Account's acceptance of Consumer-storer-specific terms of service.
-             */
-            consumer_storer?: TermsOfService.ConsumerStorer;
-
-            /**
-             * Details on the Account's acceptance of Crypto-storer-specific terms of service.
-             */
-            crypto_storer?: TermsOfService.CryptoStorer;
-
-            /**
-             * Details on the Account's acceptance of Treasury-specific terms of service.
-             */
-            storer?: TermsOfService.Storer;
-          }
-
-          export namespace PersonsProvided {
-            export type OwnershipExemptionReason =
-              | 'qualified_entity_exceeds_ownership_threshold'
-              | 'qualifies_as_financial_institution';
-          }
-
-          export namespace TermsOfService {
-            export interface Account {
-              /**
-               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-               */
-              date?: string;
-
-              /**
-               * The IP address from which the Account's representative accepted the terms of service.
-               */
-              ip?: string;
-
-              /**
-               * The user agent of the browser from which the Account's representative accepted the terms of service.
-               */
-              user_agent?: string;
-            }
-
-            export interface CardCreator {
-              /**
-               * Terms of service acceptances to create cards for commercial issuing use cases.
-               */
-              commercial?: CardCreator.Commercial;
-
-              /**
-               * Terms of service acceptances to create cards for consumer issuing use cases.
-               */
-              consumer?: CardCreator.Consumer;
-            }
-
-            export interface ConsumerPrivacyDisclosures {
-              /**
-               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-               */
-              date?: string;
-
-              /**
-               * The IP address from which the Account's representative accepted the terms of service.
-               */
-              ip?: string;
-
-              /**
-               * The user agent of the browser from which the Account's representative accepted the terms of service.
-               */
-              user_agent?: string;
-            }
-
-            export interface ConsumerStorer {
-              /**
-               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-               */
-              date?: string;
-
-              /**
-               * The IP address from which the Account's representative accepted the terms of service.
-               */
-              ip?: string;
-
-              /**
-               * The user agent of the browser from which the Account's representative accepted the terms of service.
-               */
-              user_agent?: string;
-            }
-
-            export interface CryptoStorer {
-              /**
-               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-               */
-              date?: string;
-
-              /**
-               * The IP address from which the Account's representative accepted the terms of service.
-               */
-              ip?: string;
-
-              /**
-               * The user agent of the browser from which the Account's representative accepted the terms of service.
-               */
-              user_agent?: string;
-            }
-
-            export interface Storer {
-              /**
-               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-               */
-              date?: string;
-
-              /**
-               * The IP address from which the Account's representative accepted the terms of service.
-               */
-              ip?: string;
-
-              /**
-               * The user agent of the browser from which the Account's representative accepted the terms of service.
-               */
-              user_agent?: string;
-            }
-
-            export namespace CardCreator {
-              export interface Commercial {
-                /**
-                 * Terms of service acceptances for Stripe commercial card issuing.
-                 */
-                account_holder?: Commercial.AccountHolder;
-
-                /**
-                 * Terms of service acceptances for commercial issuing cards with Celtic as BIN sponsor.
-                 */
-                celtic?: Commercial.Celtic;
-
-                /**
-                 * Terms of service acceptances for commercial issuing cards with Cross River Bank as BIN sponsor.
-                 */
-                cross_river_bank?: Commercial.CrossRiverBank;
-
-                /**
-                 * Terms of service acceptances for commercial issuing cards with Fifth Third as BIN sponsor.
-                 */
-                fifth_third?: Commercial.FifthThird;
-
-                /**
-                 * Terms of service acceptances for Stripe commercial card Global issuing.
-                 */
-                global_account_holder?: Commercial.GlobalAccountHolder;
-
-                /**
-                 * Terms of service acceptances for commercial issuing cards with Lead as BIN sponsor.
-                 */
-                lead?: Commercial.Lead;
-              }
-
-              export interface Consumer {
-                /**
-                 * Terms of service acceptances for Stripe commercial card issuing.
-                 */
-                account_holder?: Consumer.AccountHolder;
-
-                /**
-                 * Terms of service acceptances for commercial issuing cards with Celtic as BIN sponsor.
-                 */
-                celtic?: Consumer.Celtic;
-
-                /**
-                 * Terms of service acceptances for consumer issuing cards with Cross River Bank as BIN sponsor.
-                 */
-                cross_river_bank?: Consumer.CrossRiverBank;
-
-                /**
-                 * Terms of service acceptances for Stripe commercial card Global issuing.
-                 */
-                global_account_holder?: Consumer.GlobalAccountHolder;
-
-                /**
-                 * Terms of service acceptances for commercial issuing cards with Lead as BIN sponsor.
-                 */
-                lead?: Consumer.Lead;
-              }
-
-              export namespace Commercial {
-                export interface AccountHolder {
-                  /**
-                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                   */
-                  date?: string;
-
-                  /**
-                   * The IP address from which the Account's representative accepted the terms of service.
-                   */
-                  ip?: string;
-
-                  /**
-                   * The URL to the service agreement the Account's representative accepted.
-                   */
-                  url?: string;
-
-                  /**
-                   * The user agent of the browser from which the Account's representative accepted the terms of service.
-                   */
-                  user_agent?: string;
-                }
-
-                export interface Celtic {
-                  /**
-                   * Terms of service acceptances for commercial issuing Apple Pay cards with Celtic as BIN sponsor.
-                   */
-                  apple_pay?: Celtic.ApplePay;
-
-                  /**
-                   * Terms of service acceptances for commercial issuing charge cards with Celtic as BIN sponsor.
-                   */
-                  charge_card?: Celtic.ChargeCard;
-
-                  /**
-                   * Terms of service acceptances for commercial issuing spend cards with Celtic as BIN sponsor.
-                   */
-                  spend_card?: Celtic.SpendCard;
-                }
-
-                export interface CrossRiverBank {
-                  /**
-                   * Terms of service acceptances for commercial issuing Apple Pay cards with Cross River Bank as BIN sponsor.
-                   */
-                  apple_pay?: CrossRiverBank.ApplePay;
-
-                  /**
-                   * Terms of service acceptances for commercial issuing charge cards with Cross River Bank as BIN sponsor.
-                   */
-                  charge_card?: CrossRiverBank.ChargeCard;
-
-                  /**
-                   * Terms of service acceptances for commercial issuing prepaid cards with Cross River Bank as BIN sponsor.
-                   */
-                  prepaid_card?: CrossRiverBank.PrepaidCard;
-
-                  /**
-                   * Terms of service acceptances for commercial issuing spend cards with Cross River Bank as BIN sponsor.
-                   */
-                  spend_card?: CrossRiverBank.SpendCard;
-                }
-
-                export interface FifthThird {
-                  /**
-                   * Bank terms of service acceptance for commercial issuing charge cards with Fifth Third as BIN sponsor.
-                   */
-                  bank_terms?: FifthThird.BankTerms;
-
-                  /**
-                   * Platform terms of service acceptance for commercial issuing charge cards with Fifth Third as BIN sponsor.
-                   */
-                  platform?: FifthThird.Platform;
-                }
-
-                export interface GlobalAccountHolder {
-                  /**
-                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                   */
-                  date?: string;
-
-                  /**
-                   * The IP address from which the Account's representative accepted the terms of service.
-                   */
-                  ip?: string;
-
-                  /**
-                   * The URL to the service agreement the Account's representative accepted.
-                   */
-                  url?: string;
-
-                  /**
-                   * The user agent of the browser from which the Account's representative accepted the terms of service.
-                   */
-                  user_agent?: string;
-                }
-
-                export interface Lead {
-                  /**
-                   * Terms of service acceptances for commercial issuing Apple Pay cards with Celtic as BIN sponsor.
-                   */
-                  apple_pay?: Lead.ApplePay;
-
-                  /**
-                   * Terms of service acceptances for commercial issuing Global prepaid cards with Lead as BIN sponsor.
-                   */
-                  prepaid_card?: Lead.PrepaidCard;
-                }
-
-                export namespace Celtic {
-                  export interface ApplePay {
-                    /**
-                     * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                     */
-                    date?: string;
-
-                    /**
-                     * The IP address from which the Account's representative accepted the terms of service.
-                     */
-                    ip?: string;
-
-                    /**
-                     * The URL to the service agreement the Account's representative accepted.
-                     */
-                    url?: string;
-
-                    /**
-                     * The user agent of the browser from which the Account's representative accepted the terms of service.
-                     */
-                    user_agent?: string;
-                  }
-
-                  export interface ChargeCard {
-                    /**
-                     * Bank terms of service acceptance for commercial issuing charge cards with Celtic as BIN sponsor.
-                     */
-                    bank_terms?: ChargeCard.BankTerms;
-
-                    /**
-                     * Platform terms of service acceptance for commercial issuing charge cards with Celtic as BIN sponsor.
-                     */
-                    platform?: ChargeCard.Platform;
-                  }
-
-                  export interface SpendCard {
-                    /**
-                     * Bank terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
-                     */
-                    bank_terms?: SpendCard.BankTerms;
-
-                    /**
-                     * Financial disclosures terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
-                     */
-                    financing_disclosures?: SpendCard.FinancingDisclosures;
-
-                    /**
-                     * Platform terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
-                     */
-                    platform?: SpendCard.Platform;
-                  }
-
-                  export namespace ChargeCard {
-                    export interface BankTerms {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface Platform {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-                  }
-
-                  export namespace SpendCard {
-                    export interface BankTerms {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface FinancingDisclosures {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface Platform {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-                  }
-                }
-
-                export namespace CrossRiverBank {
-                  export interface ApplePay {
-                    /**
-                     * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                     */
-                    date?: string;
-
-                    /**
-                     * The IP address from which the Account's representative accepted the terms of service.
-                     */
-                    ip?: string;
-
-                    /**
-                     * The URL to the service agreement the Account's representative accepted.
-                     */
-                    url?: string;
-
-                    /**
-                     * The user agent of the browser from which the Account's representative accepted the terms of service.
-                     */
-                    user_agent?: string;
-                  }
-
-                  export interface ChargeCard {
-                    /**
-                     * Bank terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
-                     */
-                    bank_terms?: ChargeCard.BankTerms;
-
-                    /**
-                     * Financial disclosures terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
-                     */
-                    financing_disclosures?: ChargeCard.FinancingDisclosures;
-
-                    /**
-                     * Platform terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
-                     */
-                    platform?: ChargeCard.Platform;
-                  }
-
-                  export interface PrepaidCard {
-                    /**
-                     * Bank terms of service acceptance for commercial Global issuing prepaid cards with Cross River Bank as BIN sponsor.
-                     */
-                    bank_terms?: PrepaidCard.BankTerms;
-
-                    /**
-                     * Platform terms of service acceptance for commercial Global issuing prepaid cards with Cross River Bank as BIN sponsor.
-                     */
-                    platform?: PrepaidCard.Platform;
-                  }
-
-                  export interface SpendCard {
-                    /**
-                     * Bank terms of service acceptance for commercial issuing spend cards with Cross River Bank as BIN sponsor.
-                     */
-                    bank_terms?: SpendCard.BankTerms;
-
-                    /**
-                     * Financial disclosures terms of service acceptance for commercial issuing spend cards with Cross River Bank as BIN sponsor.
-                     */
-                    financing_disclosures?: SpendCard.FinancingDisclosures;
-                  }
-
-                  export namespace ChargeCard {
-                    export interface BankTerms {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface FinancingDisclosures {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface Platform {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-                  }
-
-                  export namespace PrepaidCard {
-                    export interface BankTerms {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface Platform {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-                  }
-
-                  export namespace SpendCard {
-                    export interface BankTerms {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface FinancingDisclosures {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-                  }
-                }
-
-                export namespace FifthThird {
-                  export interface BankTerms {
-                    /**
-                     * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                     */
-                    date?: string;
-
-                    /**
-                     * The IP address from which the Account's representative accepted the terms of service.
-                     */
-                    ip?: string;
-
-                    /**
-                     * The URL to the service agreement the Account's representative accepted.
-                     */
-                    url?: string;
-
-                    /**
-                     * The user agent of the browser from which the Account's representative accepted the terms of service.
-                     */
-                    user_agent?: string;
-                  }
-
-                  export interface Platform {
-                    /**
-                     * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                     */
-                    date?: string;
-
-                    /**
-                     * The IP address from which the Account's representative accepted the terms of service.
-                     */
-                    ip?: string;
-
-                    /**
-                     * The URL to the service agreement the Account's representative accepted.
-                     */
-                    url?: string;
-
-                    /**
-                     * The user agent of the browser from which the Account's representative accepted the terms of service.
-                     */
-                    user_agent?: string;
-                  }
-                }
-
-                export namespace Lead {
-                  export interface ApplePay {
-                    /**
-                     * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                     */
-                    date?: string;
-
-                    /**
-                     * The IP address from which the Account's representative accepted the terms of service.
-                     */
-                    ip?: string;
-
-                    /**
-                     * The URL to the service agreement the Account's representative accepted.
-                     */
-                    url?: string;
-
-                    /**
-                     * The user agent of the browser from which the Account's representative accepted the terms of service.
-                     */
-                    user_agent?: string;
-                  }
-
-                  export interface PrepaidCard {
-                    /**
-                     * Bank terms of service acceptance for commercial Global issuing prepaid cards with Lead as BIN sponsor.
-                     */
-                    bank_terms?: PrepaidCard.BankTerms;
-
-                    /**
-                     * Platform terms of service acceptance for commercial Global issuing prepaid cards with Lead as BIN sponsor.
-                     */
-                    platform?: PrepaidCard.Platform;
-                  }
-
-                  export namespace PrepaidCard {
-                    export interface BankTerms {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface Platform {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-                  }
-                }
-              }
-
-              export namespace Consumer {
-                export interface AccountHolder {
-                  /**
-                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                   */
-                  date?: string;
-
-                  /**
-                   * The IP address from which the Account's representative accepted the terms of service.
-                   */
-                  ip?: string;
-
-                  /**
-                   * The URL to the service agreement the Account's representative accepted.
-                   */
-                  url?: string;
-
-                  /**
-                   * The user agent of the browser from which the Account's representative accepted the terms of service.
-                   */
-                  user_agent?: string;
-                }
-
-                export interface Celtic {
-                  /**
-                   * Terms of service acceptances for commercial issuing Apple Pay cards with Celtic as BIN sponsor.
-                   */
-                  apple_pay?: Celtic.ApplePay;
-
-                  /**
-                   * Terms of service acceptances for commercial issuing revolving credit cards with Celtic as BIN sponsor.
-                   */
-                  revolving_credit_card?: Celtic.RevolvingCreditCard;
-                }
-
-                export interface CrossRiverBank {
-                  /**
-                   * Terms of service acceptances for consumer issuing prepaid cards with Cross River Bank as BIN sponsor.
-                   */
-                  prepaid_card?: CrossRiverBank.PrepaidCard;
-                }
-
-                export interface GlobalAccountHolder {
-                  /**
-                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                   */
-                  date?: string;
-
-                  /**
-                   * The IP address from which the Account's representative accepted the terms of service.
-                   */
-                  ip?: string;
-
-                  /**
-                   * The URL to the service agreement the Account's representative accepted.
-                   */
-                  url?: string;
-
-                  /**
-                   * The user agent of the browser from which the Account's representative accepted the terms of service.
-                   */
-                  user_agent?: string;
-                }
-
-                export interface Lead {
-                  /**
-                   * Terms of service acceptances for commercial issuing Apple Pay cards with Lead as BIN sponsor.
-                   */
-                  apple_pay?: Lead.ApplePay;
-
-                  /**
-                   * Terms of service acceptances for consumer issuing debit cards with Lead as BIN sponsor.
-                   */
-                  debit_card?: Lead.DebitCard;
-
-                  /**
-                   * Terms of service acceptances for commercial issuing revolving credit cards with Lead as BIN sponsor.
-                   */
-                  prepaid_card?: Lead.PrepaidCard;
-                }
-
-                export namespace Celtic {
-                  export interface ApplePay {
-                    /**
-                     * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                     */
-                    date?: string;
-
-                    /**
-                     * The IP address from which the Account's representative accepted the terms of service.
-                     */
-                    ip?: string;
-
-                    /**
-                     * The URL to the service agreement the Account's representative accepted.
-                     */
-                    url?: string;
-
-                    /**
-                     * The user agent of the browser from which the Account's representative accepted the terms of service.
-                     */
-                    user_agent?: string;
-                  }
-
-                  export interface RevolvingCreditCard {
-                    /**
-                     * Bank terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
-                     */
-                    bank_terms?: RevolvingCreditCard.BankTerms;
-
-                    /**
-                     * Financial disclosures terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
-                     */
-                    financing_disclosures?: RevolvingCreditCard.FinancingDisclosures;
-
-                    /**
-                     * Platform terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
-                     */
-                    platform?: RevolvingCreditCard.Platform;
-                  }
-
-                  export namespace RevolvingCreditCard {
-                    export interface BankTerms {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface FinancingDisclosures {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface Platform {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-                  }
-                }
-
-                export namespace CrossRiverBank {
-                  export interface PrepaidCard {
-                    /**
-                     * Bank terms of service acceptance for consumer issuing prepaid cards with Cross River Bank as BIN sponsor.
-                     */
-                    bank_terms?: PrepaidCard.BankTerms;
-
-                    /**
-                     * Financial disclosures terms of service acceptance for consumer issuing prepaid cards with Cross River Bank as BIN sponsor.
-                     */
-                    financing_disclosures?: PrepaidCard.FinancingDisclosures;
-
-                    /**
-                     * Platform terms of service acceptance for consumer issuing prepaid cards with Cross River Bank as BIN sponsor.
-                     */
-                    platform?: PrepaidCard.Platform;
-                  }
-
-                  export namespace PrepaidCard {
-                    export interface BankTerms {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface FinancingDisclosures {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface Platform {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-                  }
-                }
-
-                export namespace Lead {
-                  export interface ApplePay {
-                    /**
-                     * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                     */
-                    date?: string;
-
-                    /**
-                     * The IP address from which the Account's representative accepted the terms of service.
-                     */
-                    ip?: string;
-
-                    /**
-                     * The URL to the service agreement the Account's representative accepted.
-                     */
-                    url?: string;
-
-                    /**
-                     * The user agent of the browser from which the Account's representative accepted the terms of service.
-                     */
-                    user_agent?: string;
-                  }
-
-                  export interface DebitCard {
-                    /**
-                     * Bank terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
-                     */
-                    bank_terms?: DebitCard.BankTerms;
-
-                    /**
-                     * Financial disclosures terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
-                     */
-                    financing_disclosures?: DebitCard.FinancingDisclosures;
-
-                    /**
-                     * Platform terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
-                     */
-                    platform?: DebitCard.Platform;
-                  }
-
-                  export interface PrepaidCard {
-                    /**
-                     * Bank terms of service acceptance for consumer issuing prepaid cards with Lead as BIN sponsor.
-                     */
-                    bank_terms?: PrepaidCard.BankTerms;
-
-                    /**
-                     * Financial disclosures terms of service acceptance for consumer issuing prepaid cards with Lead as BIN sponsor.
-                     */
-                    financing_disclosures?: PrepaidCard.FinancingDisclosures;
-
-                    /**
-                     * Platform terms of service acceptance for consumer issuing prepaid cards with Lead as BIN sponsor.
-                     */
-                    platform?: PrepaidCard.Platform;
-                  }
-
-                  export namespace DebitCard {
-                    export interface BankTerms {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface FinancingDisclosures {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface Platform {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-                  }
-
-                  export namespace PrepaidCard {
-                    export interface BankTerms {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface FinancingDisclosures {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-
-                    export interface Platform {
-                      /**
-                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                       */
-                      date?: string;
-
-                      /**
-                       * The IP address from which the Account's representative accepted the terms of service.
-                       */
-                      ip?: string;
-
-                      /**
-                       * The URL to the service agreement the Account's representative accepted.
-                       */
-                      url?: string;
-
-                      /**
-                       * The user agent of the browser from which the Account's representative accepted the terms of service.
-                       */
-                      user_agent?: string;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        export namespace BusinessDetails {
-          export interface Address {
-            /**
-             * City, district, suburb, town, or village.
-             */
-            city?: string;
-
-            /**
-             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-             */
-            country?: string;
-
-            /**
-             * Address line 1 (e.g., street, PO Box, or company name).
-             */
-            line1?: string;
-
-            /**
-             * Address line 2 (e.g., apartment, suite, unit, or building).
-             */
-            line2?: string;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string;
-
-            /**
-             * State, county, province, or region.
-             */
-            state?: string;
-
-            /**
-             * Town or district.
-             */
-            town?: string;
-          }
-
-          export interface AnnualRevenue {
-            /**
-             * Annual revenue amount in minor currency units (for example, '123' for 1.23 USD).
-             */
-            amount?: V2Amount;
-
-            /**
-             * The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of December, 2023.
-             */
-            fiscal_year_end?: string;
-          }
-
-          export interface Documents {
-            /**
-             * One or more documents that support the Bank account ownership verification requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a check.
-             */
-            bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
-
-            /**
-             * One or more documents that demonstrate proof of a company's license to operate.
-             */
-            company_license?: Documents.CompanyLicense;
-
-            /**
-             * One or more documents showing the company's Memorandum of Association.
-             */
-            company_memorandum_of_association?: Documents.CompanyMemorandumOfAssociation;
-
-            /**
-             * Certain countries only: One or more documents showing the ministerial decree legalizing the company's establishment.
-             */
-            company_ministerial_decree?: Documents.CompanyMinisterialDecree;
-
-            /**
-             * One or more documents that demonstrate proof of a company's registration with the appropriate local authorities.
-             */
-            company_registration_verification?: Documents.CompanyRegistrationVerification;
-
-            /**
-             * One or more documents that demonstrate proof of a company's tax ID.
-             */
-            company_tax_id_verification?: Documents.CompanyTaxIdVerification;
-
-            /**
-             * A document verifying the business.
-             */
-            primary_verification?: Documents.PrimaryVerification;
-
-            /**
-             * One or more documents that demonstrate proof of address.
-             */
-            proof_of_address?: Documents.ProofOfAddress;
-
-            /**
-             * One or more documents showing the company's proof of registration with the national business registry.
-             */
-            proof_of_registration?: Documents.ProofOfRegistration;
-
-            /**
-             * One or more documents that demonstrate proof of ultimate beneficial ownership.
-             */
-            proof_of_ultimate_beneficial_ownership?: Documents.ProofOfUltimateBeneficialOwnership;
-          }
-
-          export interface IdNumber {
-            /**
-             * The registrar of the ID number (Only valid for DE ID number types).
-             */
-            registrar?: string;
-
-            /**
-             * Open Enum. The ID number type of a business entity.
-             */
-            type: IdNumber.Type;
-          }
-
-          export interface MonthlyEstimatedRevenue {
-            /**
-             * Estimated monthly revenue amount in minor currency units (for example, '123' for 1.23 USD).
-             */
-            amount?: V2Amount;
-          }
-
-          export interface RegistrationDate {
-            /**
-             * The day of registration, between 1 and 31.
-             */
-            day: number;
-
-            /**
-             * The month of registration, between 1 and 12.
-             */
-            month: number;
-
-            /**
-             * The four-digit year of registration.
-             */
-            year: number;
-          }
-
-          export interface ScriptAddresses {
-            /**
-             * Kana Address.
-             */
-            kana?: ScriptAddresses.Kana;
-
-            /**
-             * Kanji Address.
-             */
-            kanji?: ScriptAddresses.Kanji;
-          }
-
-          export interface ScriptNames {
-            /**
-             * Kana name.
-             */
-            kana?: ScriptNames.Kana;
-
-            /**
-             * Kanji name.
-             */
-            kanji?: ScriptNames.Kanji;
-          }
-
-          export type Structure =
-            | 'cooperative'
-            | 'free_zone_establishment'
-            | 'free_zone_llc'
-            | 'governmental_unit'
-            | 'government_instrumentality'
-            | 'incorporated_association'
-            | 'incorporated_non_profit'
-            | 'incorporated_partnership'
-            | 'limited_liability_partnership'
-            | 'llc'
-            | 'multi_member_llc'
-            | 'private_company'
-            | 'private_corporation'
-            | 'private_partnership'
-            | 'public_company'
-            | 'public_corporation'
-            | 'public_listed_corporation'
-            | 'public_partnership'
-            | 'registered_charity'
-            | 'single_member_llc'
-            | 'sole_establishment'
-            | 'sole_proprietorship'
-            | 'tax_exempt_government_instrumentality'
-            | 'trust'
-            | 'unincorporated_association'
-            | 'unincorporated_non_profit'
-            | 'unincorporated_partnership';
-
-          export namespace Documents {
-            export interface BankAccountOwnershipVerification {
-              /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-               */
-              files: Array<string>;
-
-              /**
-               * The format of the document. Currently supports `files` only.
-               */
-              type: 'files';
-            }
-
-            export interface CompanyLicense {
-              /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-               */
-              files: Array<string>;
-
-              /**
-               * The format of the document. Currently supports `files` only.
-               */
-              type: 'files';
-            }
-
-            export interface CompanyMemorandumOfAssociation {
-              /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-               */
-              files: Array<string>;
-
-              /**
-               * The format of the document. Currently supports `files` only.
-               */
-              type: 'files';
-            }
-
-            export interface CompanyMinisterialDecree {
-              /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-               */
-              files: Array<string>;
-
-              /**
-               * The format of the document. Currently supports `files` only.
-               */
-              type: 'files';
-            }
-
-            export interface CompanyRegistrationVerification {
-              /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-               */
-              files: Array<string>;
-
-              /**
-               * The format of the document. Currently supports `files` only.
-               */
-              type: 'files';
-            }
-
-            export interface CompanyTaxIdVerification {
-              /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-               */
-              files: Array<string>;
-
-              /**
-               * The format of the document. Currently supports `files` only.
-               */
-              type: 'files';
-            }
-
-            export interface PrimaryVerification {
-              /**
-               * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens for the front and back of the verification document.
-               */
-              front_back: PrimaryVerification.FrontBack;
-
-              /**
-               * The format of the verification document. Currently supports `front_back` only.
-               */
-              type: 'front_back';
-            }
-
-            export interface ProofOfAddress {
-              /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-               */
-              files: Array<string>;
-
-              /**
-               * The format of the document. Currently supports `files` only.
-               */
-              type: 'files';
-            }
-
-            export interface ProofOfRegistration {
-              /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-               */
-              files: Array<string>;
-
-              /**
-               * Person that is signing the document.
-               */
-              signer?: ProofOfRegistration.Signer;
-
-              /**
-               * The format of the document. Currently supports `files` only.
-               */
-              type: 'files';
-            }
-
-            export interface ProofOfUltimateBeneficialOwnership {
-              /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-               */
-              files: Array<string>;
-
-              /**
-               * Person that is signing the document.
-               */
-              signer?: ProofOfUltimateBeneficialOwnership.Signer;
-
-              /**
-               * The format of the document. Currently supports `files` only.
-               */
-              type: 'files';
-            }
-
-            export namespace PrimaryVerification {
-              export interface FrontBack {
-                /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-                 */
-                back?: string;
-
-                /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-                 */
-                front: string;
-              }
-            }
-
-            export namespace ProofOfRegistration {
-              export interface Signer {
-                /**
-                 * Person signing the document.
-                 */
-                person: string;
-              }
-            }
-
-            export namespace ProofOfUltimateBeneficialOwnership {
-              export interface Signer {
-                /**
-                 * Person signing the document.
-                 */
-                person: string;
-              }
-            }
-          }
-
-          export namespace IdNumber {
-            export type Type =
-              | 'ae_crn'
-              | 'ae_vat'
-              | 'ao_nif'
-              | 'ar_cuit'
-              | 'at_fn'
-              | 'at_stn'
-              | 'at_vat'
-              | 'au_abn'
-              | 'au_acn'
-              | 'au_in'
-              | 'az_tin'
-              | 'bd_etin'
-              | 'be_cbe'
-              | 'be_vat'
-              | 'bg_uic'
-              | 'bg_vat'
-              | 'bm_crn'
-              | 'bo_tin'
-              | 'br_cnpj'
-              | 'bt_tpn'
-              | 'ca_cn'
-              | 'ca_crarr'
-              | 'ca_gst_hst'
-              | 'ca_neq'
-              | 'ca_rid'
-              | 'ch_chid'
-              | 'ch_uid'
-              | 'co_nit'
-              | 'cr_cpj'
-              | 'cr_nite'
-              | 'cy_he'
-              | 'cy_tic'
-              | 'cy_vat'
-              | 'cz_ico'
-              | 'cz_vat'
-              | 'de_hrn'
-              | 'de_stn'
-              | 'de_vat'
-              | 'dk_cvr'
-              | 'dk_vat'
-              | 'do_rcn'
-              | 'ec_ruc'
-              | 'ee_rk'
-              | 'ee_vat'
-              | 'eg_tin'
-              | 'es_cif'
-              | 'es_vat'
-              | 'fi_vat'
-              | 'fi_yt'
-              | 'fr_rna'
-              | 'fr_siren'
-              | 'fr_vat'
-              | 'gb_crn'
-              | 'gb_vat'
-              | 'gh_tin'
-              | 'gi_crn'
-              | 'gr_afm'
-              | 'gr_gemi'
-              | 'gr_vat'
-              | 'gt_nit'
-              | 'gy_tin'
-              | 'hk_br'
-              | 'hk_cr'
-              | 'hn_rtn'
-              | 'hr_mbs'
-              | 'hr_oib'
-              | 'hr_vat'
-              | 'hu_cjs'
-              | 'hu_tin'
-              | 'hu_vat'
-              | 'ie_crn'
-              | 'ie_trn'
-              | 'ie_vat'
-              | 'it_rea'
-              | 'it_vat'
-              | 'jm_trn'
-              | 'jo_crn'
-              | 'jp_cn'
-              | 'ke_pin'
-              | 'ky_crn'
-              | 'kz_bin'
-              | 'li_uid'
-              | 'lk_tin'
-              | 'lt_ccrn'
-              | 'lt_vat'
-              | 'lu_nif'
-              | 'lu_rcs'
-              | 'lu_vat'
-              | 'lv_urn'
-              | 'lv_vat'
-              | 'mo_tin'
-              | 'mt_crn'
-              | 'mt_tin'
-              | 'mt_vat'
-              | 'mv_tin'
-              | 'mx_rfc'
-              | 'my_brn'
-              | 'my_coid'
-              | 'my_itn'
-              | 'my_sst'
-              | 'mz_nuit'
-              | 'ng_tin'
-              | 'nl_kvk'
-              | 'nl_rsin'
-              | 'nl_vat'
-              | 'no_orgnr'
-              | 'nz_bn'
-              | 'nz_ird'
-              | 'pa_ruc'
-              | 'pe_ruc'
-              | 'ph_tin'
-              | 'pk_ntn'
-              | 'pl_nip'
-              | 'pl_regon'
-              | 'pl_vat'
-              | 'pt_vat'
-              | 'py_ruc'
-              | 'ro_cui'
-              | 'ro_orc'
-              | 'ro_vat'
-              | 'sa_crn'
-              | 'sa_tin'
-              | 'se_orgnr'
-              | 'se_vat'
-              | 'sg_uen'
-              | 'si_msp'
-              | 'si_tin'
-              | 'si_vat'
-              | 'sk_dic'
-              | 'sk_ico'
-              | 'sk_vat'
-              | 'sl_tin'
-              | 'sv_nit'
-              | 'th_crn'
-              | 'th_prn'
-              | 'th_tin'
-              | 'us_ein'
-              | 'uy_ruc'
-              | 'vg_cn'
-              | 'za_tin';
-          }
-
-          export namespace ScriptAddresses {
-            export interface Kana {
-              /**
-               * City, district, suburb, town, or village.
-               */
-              city?: string;
-
-              /**
-               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-               */
-              country?: string;
-
-              /**
-               * Address line 1 (e.g., street, PO Box, or company name).
-               */
-              line1?: string;
-
-              /**
-               * Address line 2 (e.g., apartment, suite, unit, or building).
-               */
-              line2?: string;
-
-              /**
-               * ZIP or postal code.
-               */
-              postal_code?: string;
-
-              /**
-               * State, county, province, or region.
-               */
-              state?: string;
-
-              /**
-               * Town or district.
-               */
-              town?: string;
-            }
-
-            export interface Kanji {
-              /**
-               * City, district, suburb, town, or village.
-               */
-              city?: string;
-
-              /**
-               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-               */
-              country?: string;
-
-              /**
-               * Address line 1 (e.g., street, PO Box, or company name).
-               */
-              line1?: string;
-
-              /**
-               * Address line 2 (e.g., apartment, suite, unit, or building).
-               */
-              line2?: string;
-
-              /**
-               * ZIP or postal code.
-               */
-              postal_code?: string;
-
-              /**
-               * State, county, province, or region.
-               */
-              state?: string;
-
-              /**
-               * Town or district.
-               */
-              town?: string;
-            }
-          }
-
-          export namespace ScriptNames {
-            export interface Kana {
-              /**
-               * Registered name of the business.
-               */
-              registered_name?: string;
-            }
-
-            export interface Kanji {
-              /**
-               * Registered name of the business.
-               */
-              registered_name?: string;
-            }
-          }
-        }
-
-        export namespace Individual {
-          export interface AdditionalAddress {
-            /**
-             * City, district, suburb, town, or village.
-             */
-            city?: string;
-
-            /**
-             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-             */
-            country?: string;
-
-            /**
-             * Address line 1 (e.g., street, PO Box, or company name).
-             */
-            line1?: string;
-
-            /**
-             * Address line 2 (e.g., apartment, suite, unit, or building).
-             */
-            line2?: string;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string;
-
-            /**
-             * Purpose of additional address.
-             */
-            purpose: 'registered';
-
-            /**
-             * State, county, province, or region.
-             */
-            state?: string;
-
-            /**
-             * Town or district.
-             */
-            town?: string;
-          }
-
-          export interface AdditionalName {
-            /**
-             * The individual's full name.
-             */
-            full_name?: string;
-
-            /**
-             * The individual's first or given name.
-             */
-            given_name?: string;
-
-            /**
-             * The purpose or type of the additional name.
-             */
-            purpose: AdditionalName.Purpose;
-
-            /**
-             * The individual's last or family name.
-             */
-            surname?: string;
-          }
-
-          export interface AdditionalTermsOfService {
-            /**
-             * Stripe terms of service agreement.
-             */
-            account?: AdditionalTermsOfService.Account;
-          }
-
-          export interface Address {
-            /**
-             * City, district, suburb, town, or village.
-             */
-            city?: string;
-
-            /**
-             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-             */
-            country?: string;
-
-            /**
-             * Address line 1 (e.g., street, PO Box, or company name).
-             */
-            line1?: string;
-
-            /**
-             * Address line 2 (e.g., apartment, suite, unit, or building).
-             */
-            line2?: string;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string;
-
-            /**
-             * State, county, province, or region.
-             */
-            state?: string;
-
-            /**
-             * Town or district.
-             */
-            town?: string;
-          }
-
-          export interface DateOfBirth {
-            /**
-             * The day of birth, between 1 and 31.
-             */
-            day: number;
-
-            /**
-             * The month of birth, between 1 and 12.
-             */
-            month: number;
-
-            /**
-             * The four-digit year of birth.
-             */
-            year: number;
-          }
-
-          export interface Documents {
-            /**
-             * One or more documents that demonstrate proof that this person is authorized to represent the company.
-             */
-            company_authorization?: Documents.CompanyAuthorization;
-
-            /**
-             * One or more documents showing the person's passport page with photo and personal data.
-             */
-            passport?: Documents.Passport;
-
-            /**
-             * An identifying document showing the person's name, either a passport or local ID card.
-             */
-            primary_verification?: Documents.PrimaryVerification;
-
-            /**
-             * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
-             */
-            secondary_verification?: Documents.SecondaryVerification;
-
-            /**
-             * One or more documents showing the person's visa required for living in the country where they are residing.
-             */
-            visa?: Documents.Visa;
-          }
-
-          export interface IdNumber {
-            /**
-             * The ID number type of an individual.
-             */
-            type: IdNumber.Type;
-          }
-
-          export type LegalGender = 'female' | 'male';
-
-          export type PoliticalExposure = 'existing' | 'none';
-
-          export interface Relationship {
-            /**
-             * Whether the individual is an authorizer of the Account's identity.
-             */
-            authorizer?: boolean;
-
-            /**
-             * Whether the individual is a director of the Account's identity. Directors are typically members of the governing board of the company or are responsible for making sure that the company meets its regulatory obligations.
-             */
-            director?: boolean;
-
-            /**
-             * Whether the individual has significant responsibility to control, manage, or direct the organization.
-             */
-            executive?: boolean;
-
-            /**
-             * Whether the individual is the legal guardian of the Account's representative.
-             */
-            legal_guardian?: boolean;
-
-            /**
-             * Whether the individual is an owner of the Account's identity.
-             */
-            owner?: boolean;
-
-            /**
-             * The percentage of the Account's identity that the individual owns.
-             */
-            percent_ownership?: Decimal;
-
-            /**
-             * Whether the individual is authorized as the primary representative of the Account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.
-             */
-            representative?: boolean;
-
-            /**
-             * The individual's title (e.g., CEO, Support Engineer).
-             */
-            title?: string;
-          }
-
-          export interface ScriptAddresses {
-            /**
-             * Kana Address.
-             */
-            kana?: ScriptAddresses.Kana;
-
-            /**
-             * Kanji Address.
-             */
-            kanji?: ScriptAddresses.Kanji;
-          }
-
-          export interface ScriptNames {
-            /**
-             * Persons name in kana script.
-             */
-            kana?: ScriptNames.Kana;
-
-            /**
-             * Persons name in kanji script.
-             */
-            kanji?: ScriptNames.Kanji;
-          }
-
-          export namespace AdditionalName {
-            export type Purpose = 'alias' | 'maiden';
-          }
-
-          export namespace AdditionalTermsOfService {
-            export interface Account {
-              /**
-               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-               */
-              date?: string;
-
-              /**
-               * The IP address from which the Account's representative accepted the terms of service.
-               */
-              ip?: string;
-
-              /**
-               * The user agent of the browser from which the Account's representative accepted the terms of service.
-               */
-              user_agent?: string;
-            }
-          }
-
-          export namespace Documents {
-            export interface CompanyAuthorization {
-              /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-               */
-              files: Array<string>;
-
-              /**
-               * The format of the document. Currently supports `files` only.
-               */
-              type: 'files';
-            }
-
-            export interface Passport {
-              /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-               */
-              files: Array<string>;
-
-              /**
-               * The format of the document. Currently supports `files` only.
-               */
-              type: 'files';
-            }
-
-            export interface PrimaryVerification {
-              /**
-               * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens for the front and back of the verification document.
-               */
-              front_back: PrimaryVerification.FrontBack;
-
-              /**
-               * The format of the verification document. Currently supports `front_back` only.
-               */
-              type: 'front_back';
-            }
-
-            export interface SecondaryVerification {
-              /**
-               * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens for the front and back of the verification document.
-               */
-              front_back: SecondaryVerification.FrontBack;
-
-              /**
-               * The format of the verification document. Currently supports `front_back` only.
-               */
-              type: 'front_back';
-            }
-
-            export interface Visa {
-              /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
-               */
-              files: Array<string>;
-
-              /**
-               * The format of the document. Currently supports `files` only.
-               */
-              type: 'files';
-            }
-
-            export namespace PrimaryVerification {
-              export interface FrontBack {
-                /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-                 */
-                back?: string;
-
-                /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-                 */
-                front: string;
-              }
-            }
-
-            export namespace SecondaryVerification {
-              export interface FrontBack {
-                /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-                 */
-                back?: string;
-
-                /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-                 */
-                front: string;
-              }
-            }
-          }
-
-          export namespace IdNumber {
-            export type Type =
-              | 'ae_eid'
-              | 'ao_nif'
-              | 'ar_cuil'
-              | 'ar_dni'
-              | 'at_stn'
-              | 'az_tin'
-              | 'bd_brc'
-              | 'bd_etin'
-              | 'bd_nid'
-              | 'be_nrn'
-              | 'bg_ucn'
-              | 'bm_pp'
-              | 'bn_nric'
-              | 'bo_ci'
-              | 'br_cpf'
-              | 'bt_cid'
-              | 'ca_sin'
-              | 'ch_oasi'
-              | 'cl_rut'
-              | 'cn_pp'
-              | 'co_nuip'
-              | 'cr_ci'
-              | 'cr_cpf'
-              | 'cr_dimex'
-              | 'cr_nite'
-              | 'cy_tic'
-              | 'cz_rc'
-              | 'de_stn'
-              | 'dk_cpr'
-              | 'do_cie'
-              | 'do_rcn'
-              | 'ec_ci'
-              | 'ee_ik'
-              | 'eg_tin'
-              | 'es_nif'
-              | 'fi_hetu'
-              | 'fr_nir'
-              | 'gb_nino'
-              | 'gh_pin'
-              | 'gr_afm'
-              | 'gt_nit'
-              | 'gy_tin'
-              | 'hk_id'
-              | 'hn_rtn'
-              | 'hr_oib'
-              | 'hu_ad'
-              | 'id_nik'
-              | 'ie_ppsn'
-              | 'is_kt'
-              | 'it_cf'
-              | 'jm_trn'
-              | 'jo_pin'
-              | 'jp_inc'
-              | 'ke_pin'
-              | 'ky_pp'
-              | 'kz_iin'
-              | 'li_peid'
-              | 'lk_nic'
-              | 'lt_ak'
-              | 'lu_nif'
-              | 'lv_pk'
-              | 'mo_bir'
-              | 'mt_nic'
-              | 'mv_tin'
-              | 'mx_rfc'
-              | 'my_nric'
-              | 'mz_nuit'
-              | 'ng_nin'
-              | 'nl_bsn'
-              | 'no_nin'
-              | 'nz_ird'
-              | 'pa_ruc'
-              | 'pe_dni'
-              | 'ph_tin'
-              | 'pk_cnic'
-              | 'pk_snic'
-              | 'pl_pesel'
-              | 'pt_nif'
-              | 'py_ruc'
-              | 'ro_cnp'
-              | 'sa_tin'
-              | 'se_pin'
-              | 'sg_fin'
-              | 'sg_nric'
-              | 'si_pin'
-              | 'sk_dic'
-              | 'sv_nit'
-              | 'th_lc'
-              | 'th_pin'
-              | 'tr_tin'
-              | 'us_itin'
-              | 'us_itin_last_4'
-              | 'us_ssn'
-              | 'us_ssn_last_4'
-              | 'uy_dni'
-              | 'vg_pp'
-              | 'za_id';
-          }
-
-          export namespace ScriptAddresses {
-            export interface Kana {
-              /**
-               * City, district, suburb, town, or village.
-               */
-              city?: string;
-
-              /**
-               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-               */
-              country?: string;
-
-              /**
-               * Address line 1 (e.g., street, PO Box, or company name).
-               */
-              line1?: string;
-
-              /**
-               * Address line 2 (e.g., apartment, suite, unit, or building).
-               */
-              line2?: string;
-
-              /**
-               * ZIP or postal code.
-               */
-              postal_code?: string;
-
-              /**
-               * State, county, province, or region.
-               */
-              state?: string;
-
-              /**
-               * Town or district.
-               */
-              town?: string;
-            }
-
-            export interface Kanji {
-              /**
-               * City, district, suburb, town, or village.
-               */
-              city?: string;
-
-              /**
-               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-               */
-              country?: string;
-
-              /**
-               * Address line 1 (e.g., street, PO Box, or company name).
-               */
-              line1?: string;
-
-              /**
-               * Address line 2 (e.g., apartment, suite, unit, or building).
-               */
-              line2?: string;
-
-              /**
-               * ZIP or postal code.
-               */
-              postal_code?: string;
-
-              /**
-               * State, county, province, or region.
-               */
-              state?: string;
-
-              /**
-               * Town or district.
-               */
-              town?: string;
-            }
-          }
-
-          export namespace ScriptNames {
-            export interface Kana {
-              /**
-               * The person's first or given name.
-               */
-              given_name?: string;
-
-              /**
-               * The person's last or family name.
-               */
-              surname?: string;
-            }
-
-            export interface Kanji {
-              /**
-               * The person's first or given name.
-               */
-              given_name?: string;
-
-              /**
-               * The person's last or family name.
-               */
-              surname?: string;
-            }
+            start_time?: string;
           }
         }
       }
@@ -22714,6 +14531,26 @@ export namespace V2 {
            * Default text that appears on statements for card charges outside of Japan, prefixing any dynamic statement_descriptor_suffix specified on the charge. To maximize space for the dynamic part of the descriptor, keep this text short. If you don't specify this value, statement_descriptor is used as the prefix. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
            */
           prefix?: string;
+        }
+      }
+
+      export namespace SmartDisputes {
+        export interface AutoRespond {
+          /**
+           * The preference for automatic dispute responses.
+           */
+          preference?: AutoRespond.Preference;
+
+          /**
+           * The effective value for automatic dispute responses.
+           */
+          value?: AutoRespond.Value;
+        }
+
+        export namespace AutoRespond {
+          export type Preference = 'inherit' | 'off' | 'on';
+
+          export type Value = 'off' | 'on';
         }
       }
 
@@ -22760,12 +14597,112 @@ export namespace V2 {
     export namespace Recipient {
       export interface Capabilities {
         /**
+         * Capabilities that enable OutboundPayments to a bank account linked to this Account.
+         */
+        bank_accounts?: Capabilities.BankAccounts;
+
+        /**
+         * Enables this Account to receive OutboundPayments to a linked debit card.
+         */
+        cards?: Capabilities.Cards;
+
+        /**
+         * Enables this Account to receive OutboundPayments to a linked crypto wallet.
+         */
+        crypto_wallets?: Capabilities.CryptoWallets;
+
+        /**
+         * Capabilities that enable OutboundPayments via paper check.
+         */
+        paper_checks?: Capabilities.PaperChecks;
+
+        /**
          * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
          */
         stripe_balance?: Capabilities.StripeBalance;
       }
 
+      export interface DefaultOutboundDestination {
+        /**
+         * The payout method ID of the default outbound destination.
+         */
+        id: string;
+
+        /**
+         * Closed Enum. The payout method type of the default outbound destination.
+         */
+        type: DefaultOutboundDestination.Type;
+      }
+
       export namespace Capabilities {
+        export interface BankAccounts {
+          /**
+           * Enables this Account to receive OutboundPayments to linked bank accounts over real time rails.
+           */
+          instant?: BankAccounts.Instant;
+
+          /**
+           * Enables this Account to receive OutboundPayments to linked bank accounts over local networks.
+           */
+          local?: BankAccounts.Local;
+
+          /**
+           * Enables this Account to receive OutboundPayments to linked bank accounts over wire.
+           */
+          wire?: BankAccounts.Wire;
+        }
+
+        export interface Cards {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: Cards.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: Cards.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<Cards.StatusDetail>;
+        }
+
+        export interface CryptoWallets {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: CryptoWallets.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: CryptoWallets.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<CryptoWallets.StatusDetail>;
+        }
+
+        export interface PaperChecks {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: PaperChecks.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: PaperChecks.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<PaperChecks.StatusDetail>;
+        }
+
         export interface StripeBalance {
           /**
            * Enables this Account to complete payouts from their Stripe Balance (/v1/balance).
@@ -22778,32 +14715,66 @@ export namespace V2 {
           stripe_transfers?: StripeBalance.StripeTransfers;
         }
 
-        export namespace StripeBalance {
-          export interface Payouts {
+        export namespace BankAccounts {
+          export interface Instant {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: Instant.Protections;
+
             /**
              * The status of the Capability.
              */
-            status: Payouts.Status;
+            status: Instant.Status;
 
             /**
              * Additional details about the capability's status. This value is empty when `status` is `active`.
              */
-            status_details: Array<Payouts.StatusDetail>;
+            status_details: Array<Instant.StatusDetail>;
           }
 
-          export interface StripeTransfers {
+          export interface Local {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: Local.Protections;
+
             /**
              * The status of the Capability.
              */
-            status: StripeTransfers.Status;
+            status: Local.Status;
 
             /**
              * Additional details about the capability's status. This value is empty when `status` is `active`.
              */
-            status_details: Array<StripeTransfers.StatusDetail>;
+            status_details: Array<Local.StatusDetail>;
           }
 
-          export namespace Payouts {
+          export interface Wire {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: Wire.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: Wire.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Wire.StatusDetail>;
+          }
+
+          export namespace Instant {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
             export type Status =
               | 'active'
               | 'pending'
@@ -22820,6 +14791,489 @@ export namespace V2 {
                * Machine-readable code explaining how to make the Capability active.
                */
               resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Local {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Wire {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+        }
+
+        export namespace Cards {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace CryptoWallets {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace PaperChecks {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace StripeBalance {
+          export interface Payouts {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: Payouts.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: Payouts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Payouts.StatusDetail>;
+          }
+
+          export interface StripeTransfers {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: StripeTransfers.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: StripeTransfers.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<StripeTransfers.StatusDetail>;
+          }
+
+          export namespace Payouts {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
             }
 
             export namespace StatusDetail {
@@ -22840,6 +15294,13 @@ export namespace V2 {
           }
 
           export namespace StripeTransfers {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
             export type Status =
               | 'active'
               | 'pending'
@@ -22856,6 +15317,1772 @@ export namespace V2 {
                * Machine-readable code explaining how to make the Capability active.
                */
               resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+        }
+      }
+
+      export namespace DefaultOutboundDestination {
+        export type Type =
+          | 'ae_bank_account'
+          | 'ag_bank_account'
+          | 'al_bank_account'
+          | 'am_bank_account'
+          | 'ao_bank_account'
+          | 'ar_bank_account'
+          | 'at_bank_account'
+          | 'au_bank_account'
+          | 'az_bank_account'
+          | 'ba_bank_account'
+          | 'bd_bank_account'
+          | 'be_bank_account'
+          | 'bg_bank_account'
+          | 'bh_bank_account'
+          | 'bj_bank_account'
+          | 'bn_bank_account'
+          | 'bo_bank_account'
+          | 'br_bank_account'
+          | 'bs_bank_account'
+          | 'bt_bank_account'
+          | 'bw_bank_account'
+          | 'card'
+          | 'ca_bank_account'
+          | 'ch_bank_account'
+          | 'ci_bank_account'
+          | 'cl_bank_account'
+          | 'cn_bank_account'
+          | 'co_bank_account'
+          | 'crypto_wallet'
+          | 'cr_bank_account'
+          | 'cy_bank_account'
+          | 'cz_bank_account'
+          | 'de_bank_account'
+          | 'dk_bank_account'
+          | 'do_bank_account'
+          | 'dz_bank_account'
+          | 'ec_bank_account'
+          | 'ee_bank_account'
+          | 'eg_bank_account'
+          | 'es_bank_account'
+          | 'et_bank_account'
+          | 'fi_bank_account'
+          | 'fr_bank_account'
+          | 'ga_bank_account'
+          | 'gb_bank_account'
+          | 'gh_bank_account'
+          | 'gi_bank_account'
+          | 'gm_bank_account'
+          | 'gr_bank_account'
+          | 'gt_bank_account'
+          | 'gy_bank_account'
+          | 'hk_bank_account'
+          | 'hn_bank_account'
+          | 'hr_bank_account'
+          | 'hu_bank_account'
+          | 'id_bank_account'
+          | 'ie_bank_account'
+          | 'il_bank_account'
+          | 'in_bank_account'
+          | 'is_bank_account'
+          | 'it_bank_account'
+          | 'jm_bank_account'
+          | 'jo_bank_account'
+          | 'jp_bank_account'
+          | 'ke_bank_account'
+          | 'kh_bank_account'
+          | 'kr_bank_account'
+          | 'kw_bank_account'
+          | 'kz_bank_account'
+          | 'la_bank_account'
+          | 'lc_bank_account'
+          | 'li_bank_account'
+          | 'lk_bank_account'
+          | 'lt_bank_account'
+          | 'lu_bank_account'
+          | 'lv_bank_account'
+          | 'ma_bank_account'
+          | 'mc_bank_account'
+          | 'md_bank_account'
+          | 'mg_bank_account'
+          | 'mk_bank_account'
+          | 'mn_bank_account'
+          | 'mo_bank_account'
+          | 'mt_bank_account'
+          | 'mu_bank_account'
+          | 'mx_bank_account'
+          | 'my_bank_account'
+          | 'mz_bank_account'
+          | 'na_bank_account'
+          | 'ne_bank_account'
+          | 'ng_bank_account'
+          | 'ni_bank_account'
+          | 'nl_bank_account'
+          | 'no_bank_account'
+          | 'nz_bank_account'
+          | 'om_bank_account'
+          | 'pa_bank_account'
+          | 'pe_bank_account'
+          | 'ph_bank_account'
+          | 'pk_bank_account'
+          | 'pl_bank_account'
+          | 'pt_bank_account'
+          | 'py_bank_account'
+          | 'qa_bank_account'
+          | 'ro_bank_account'
+          | 'rs_bank_account'
+          | 'rw_bank_account'
+          | 'sa_bank_account'
+          | 'se_bank_account'
+          | 'sg_bank_account'
+          | 'si_bank_account'
+          | 'sk_bank_account'
+          | 'sm_bank_account'
+          | 'sn_bank_account'
+          | 'sv_bank_account'
+          | 'th_bank_account'
+          | 'tn_bank_account'
+          | 'tr_bank_account'
+          | 'tt_bank_account'
+          | 'tw_bank_account'
+          | 'tz_bank_account'
+          | 'us_bank_account'
+          | 'uy_bank_account'
+          | 'uz_bank_account'
+          | 'vn_bank_account'
+          | 'za_bank_account';
+      }
+    }
+
+    export namespace Storer {
+      export interface Capabilities {
+        /**
+         * Hash containing capabilities related to consumer financial accounts.
+         */
+        consumer?: Capabilities.Consumer;
+
+        /**
+         * Can provision a financial address to credit/debit a FinancialAccount.
+         */
+        financial_addresses?: Capabilities.FinancialAddresses;
+
+        /**
+         * Can hold storage-type funds on Stripe.
+         */
+        holds_currencies?: Capabilities.HoldsCurrencies;
+
+        /**
+         * Hash containing capabilities related to InboundTransfers.
+         */
+        inbound_transfers?: Capabilities.InboundTransfers;
+
+        /**
+         * Hash containing capabilities related to [OutboundPayments](https://docs.stripe.com/api/treasury/outbound_payments?api-version=preview).
+         */
+        outbound_payments?: Capabilities.OutboundPayments;
+
+        /**
+         * Hash containing capabilities related to [OutboundTransfers](https://docs.stripe.com/api/treasury/outbound_transfers?api-version=preview).
+         */
+        outbound_transfers?: Capabilities.OutboundTransfers;
+      }
+
+      export type HighRiskActivity =
+        | 'adult_entertainment'
+        | 'gambling'
+        | 'hold_client_funds'
+        | 'investment_services'
+        | 'lending_banking'
+        | 'marijuana_or_related_services'
+        | 'money_services'
+        | 'nicotine_tobacco_or_related_services'
+        | 'none'
+        | 'operate_foreign_exchange_virtual_currencies_brokerage_otc'
+        | 'pharmaceuticals'
+        | 'precious_metals_precious_stones_jewelry'
+        | 'safe_deposit_box_rentals'
+        | 'third_party_payment_processing'
+        | 'weapons_firearms_and_explosives';
+
+      export type PurposeOfFunds =
+        | 'charitable_donations'
+        | 'ecommerce_retail_payments'
+        | 'investment_purposes'
+        | 'other'
+        | 'payments_to_friends_or_family_abroad'
+        | 'payroll'
+        | 'personal_or_living_expenses'
+        | 'protect_wealth'
+        | 'purchase_goods_and_services'
+        | 'receive_payments_for_goods_and_services'
+        | 'tax_optimization'
+        | 'third_party_money_transmission'
+        | 'treasury_management';
+
+      export interface RegulatedActivity {
+        /**
+         * A detailed description of the regulated activities the business is licensed to conduct.
+         */
+        description?: string;
+
+        /**
+         * The license number or registration number assigned by the business's primary regulator.
+         */
+        license_number?: string;
+
+        /**
+         * The country of the primary regulatory authority that oversees the business's regulated activities.
+         */
+        primary_regulatory_authority_country?: string;
+
+        /**
+         * The name of the primary regulatory authority that oversees the business's regulated activities.
+         */
+        primary_regulatory_authority_name?: string;
+      }
+
+      export type SourceOfFunds =
+        | 'business_loans'
+        | 'grants'
+        | 'inter_company_funds'
+        | 'investment_proceeds'
+        | 'legal_settlement'
+        | 'owners_capital'
+        | 'pension_retirement'
+        | 'sales_of_assets'
+        | 'sales_of_goods_and_services'
+        | 'tax_refund'
+        | 'third_party_funds'
+        | 'treasury_reserves';
+
+      export namespace Capabilities {
+        export interface Consumer {
+          /**
+           * Can hold storage-type funds on Stripe consumer FAs in USD.
+           */
+          holds_currencies?: Consumer.HoldsCurrencies;
+        }
+
+        export interface FinancialAddresses {
+          /**
+           * Can provision a bank-account like financial address (VBAN) to credit/debit a FinancialAccount.
+           */
+          bank_accounts?: FinancialAddresses.BankAccounts;
+
+          /**
+           * Can provision a crypto wallet like financial address to credit a FinancialAccount.
+           */
+          crypto_wallets?: FinancialAddresses.CryptoWallets;
+        }
+
+        export interface HoldsCurrencies {
+          /**
+           * Can hold storage-type funds on Stripe in EUR.
+           */
+          eur?: HoldsCurrencies.Eur;
+
+          /**
+           * Can hold storage-type funds on Stripe in GBP.
+           */
+          gbp?: HoldsCurrencies.Gbp;
+
+          /**
+           * Can hold storage-type funds on Stripe in USD.
+           */
+          usd?: HoldsCurrencies.Usd;
+
+          /**
+           * Can hold storage-type funds on Stripe in USDC.
+           */
+          usdc?: HoldsCurrencies.Usdc;
+        }
+
+        export interface InboundTransfers {
+          /**
+           * Can pull funds into a FinancialAccount from an external bank account owned by the user.
+           */
+          bank_accounts?: InboundTransfers.BankAccounts;
+        }
+
+        export interface OutboundPayments {
+          /**
+           * Can send funds from a FinancialAccount to a bank account owned by a different entity.
+           */
+          bank_accounts?: OutboundPayments.BankAccounts;
+
+          /**
+           * Can send funds from a FinancialAccount to a debit card owned by a different entity.
+           */
+          cards?: OutboundPayments.Cards;
+
+          /**
+           * Can send funds from a FinancialAccount to a crypto wallet owned by a different entity.
+           */
+          crypto_wallets?: OutboundPayments.CryptoWallets;
+
+          /**
+           * Can send funds from a FinancialAccount to a FinancialAccount owned by a different entity.
+           */
+          financial_accounts?: OutboundPayments.FinancialAccounts;
+
+          /**
+           * Can send funds from a FinancialAccount to someone else via paper check.
+           */
+          paper_checks?: OutboundPayments.PaperChecks;
+        }
+
+        export interface OutboundTransfers {
+          /**
+           * Can send funds from a FinancialAccount to a bank account belonging to the same user.
+           */
+          bank_accounts?: OutboundTransfers.BankAccounts;
+
+          /**
+           * Can send funds from a FinancialAccount to a crypto wallet belonging to the same user.
+           */
+          crypto_wallets?: OutboundTransfers.CryptoWallets;
+
+          /**
+           * Can send funds from a FinancialAccount to another FinancialAccount belonging to the same user.
+           */
+          financial_accounts?: OutboundTransfers.FinancialAccounts;
+        }
+
+        export namespace Consumer {
+          export interface HoldsCurrencies {
+            /**
+             * Can hold storage-type funds on Stripe consumer FAs in USD.
+             */
+            usd?: HoldsCurrencies.Usd;
+          }
+
+          export namespace HoldsCurrencies {
+            export interface Usd {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Usd.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Usd.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Usd.StatusDetail>;
+            }
+
+            export namespace Usd {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+        }
+
+        export namespace FinancialAddresses {
+          export interface BankAccounts {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: BankAccounts.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: BankAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<BankAccounts.StatusDetail>;
+          }
+
+          export interface CryptoWallets {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: CryptoWallets.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: CryptoWallets.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<CryptoWallets.StatusDetail>;
+          }
+
+          export namespace BankAccounts {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace CryptoWallets {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+        }
+
+        export namespace HoldsCurrencies {
+          export interface Eur {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: Eur.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: Eur.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Eur.StatusDetail>;
+          }
+
+          export interface Gbp {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: Gbp.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: Gbp.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Gbp.StatusDetail>;
+          }
+
+          export interface Usd {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: Usd.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: Usd.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Usd.StatusDetail>;
+          }
+
+          export interface Usdc {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: Usdc.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: Usdc.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Usdc.StatusDetail>;
+          }
+
+          export namespace Eur {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Gbp {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Usd {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Usdc {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+        }
+
+        export namespace InboundTransfers {
+          export interface BankAccounts {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: BankAccounts.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: BankAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<BankAccounts.StatusDetail>;
+          }
+
+          export namespace BankAccounts {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+        }
+
+        export namespace OutboundPayments {
+          export interface BankAccounts {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: BankAccounts.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: BankAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<BankAccounts.StatusDetail>;
+          }
+
+          export interface Cards {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: Cards.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: Cards.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Cards.StatusDetail>;
+          }
+
+          export interface CryptoWallets {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: CryptoWallets.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: CryptoWallets.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<CryptoWallets.StatusDetail>;
+          }
+
+          export interface FinancialAccounts {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: FinancialAccounts.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: FinancialAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<FinancialAccounts.StatusDetail>;
+          }
+
+          export interface PaperChecks {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: PaperChecks.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: PaperChecks.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<PaperChecks.StatusDetail>;
+          }
+
+          export namespace BankAccounts {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Cards {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace CryptoWallets {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace FinancialAccounts {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace PaperChecks {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+        }
+
+        export namespace OutboundTransfers {
+          export interface BankAccounts {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: BankAccounts.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: BankAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<BankAccounts.StatusDetail>;
+          }
+
+          export interface CryptoWallets {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: CryptoWallets.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: CryptoWallets.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<CryptoWallets.StatusDetail>;
+          }
+
+          export interface FinancialAccounts {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: FinancialAccounts.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: FinancialAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<FinancialAccounts.StatusDetail>;
+          }
+
+          export namespace BankAccounts {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace CryptoWallets {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace FinancialAccounts {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
             }
 
             export namespace StatusDetail {
@@ -22990,7 +17217,7 @@ export namespace V2 {
       fees_collector?: Responsibilities.FeesCollector;
 
       /**
-       * A value indicating responsibility for collecting requirements on this account.
+       * A value indicating the responsibility for losses on this account.
        */
       losses_collector?: Responsibilities.LossesCollector;
 
@@ -23242,6 +17469,7 @@ export namespace V2 {
             | 'au_becs_debit_payments'
             | 'bacs_debit_payments'
             | 'bancontact_payments'
+            | 'bank_accounts.instant'
             | 'bank_accounts.local'
             | 'bank_accounts.wire'
             | 'blik_payments'
@@ -23250,11 +17478,31 @@ export namespace V2 {
             | 'card_payments'
             | 'cartes_bancaires_payments'
             | 'cashapp_payments'
+            | 'commercial.celtic.charge_card'
+            | 'commercial.celtic.spend_card'
+            | 'commercial.cross_river_bank.charge_card'
+            | 'commercial.cross_river_bank.prepaid_card'
+            | 'commercial.cross_river_bank.spend_card'
+            | 'commercial.fifth_third.charge_card'
+            | 'commercial.lead.prepaid_card'
+            | 'commercial.stripe.charge_card'
+            | 'commercial.stripe.prepaid_card'
+            | 'consumer.celtic.revolving_credit_card'
+            | 'consumer.cross_river_bank.prepaid_card'
+            | 'consumer.holds_currencies.usd'
+            | 'consumer.lead.debit_card'
+            | 'consumer.lead.prepaid_card'
+            | 'crypto_wallets'
             | 'eps_payments'
+            | 'financial_addresses.bank_accounts'
             | 'fpx_payments'
             | 'gb_bank_transfer_payments'
             | 'grabpay_payments'
+            | 'holds_currencies.eur'
+            | 'holds_currencies.gbp'
+            | 'holds_currencies.usd'
             | 'ideal_payments'
+            | 'inbound_transfers.financial_accounts'
             | 'jcb_payments'
             | 'jp_bank_transfer_payments'
             | 'kakao_pay_payments'
@@ -23266,8 +17514,15 @@ export namespace V2 {
             | 'multibanco_payments'
             | 'mx_bank_transfer_payments'
             | 'naver_pay_payments'
+            | 'outbound_payments.bank_accounts'
+            | 'outbound_payments.cards'
+            | 'outbound_payments.financial_accounts'
+            | 'outbound_payments.paper_checks'
+            | 'outbound_transfers.bank_accounts'
+            | 'outbound_transfers.financial_accounts'
             | 'oxxo_payments'
             | 'p24_payments'
+            | 'paper_checks'
             | 'payco_payments'
             | 'paynow_payments'
             | 'pay_by_bank_payments'
@@ -23283,7 +17538,12 @@ export namespace V2 {
             | 'us_bank_transfer_payments'
             | 'zip_payments';
 
-          export type Configuration = 'customer' | 'merchant' | 'recipient';
+          export type Configuration =
+            | 'card_creator'
+            | 'customer'
+            | 'merchant'
+            | 'recipient'
+            | 'storer';
 
           export interface Deadline {
             /**
@@ -23292,283 +17552,7 @@ export namespace V2 {
             status: Deadline.Status;
           }
 
-          export interface Reference {
-            /**
-             * If `inquiry` is the type, the inquiry token.
-             */
-            inquiry?: string;
-
-            /**
-             * If `resource` is the type, the resource token.
-             */
-            resource?: string;
-
-            /**
-             * The type of the reference. If the type is "inquiry", the inquiry token can be found in the "inquiry" field.
-             * Otherwise the type is an API resource, the token for which can be found in the "resource" field.
-             */
-            type: Reference.Type;
-          }
-
-          export interface RequestedReason {
-            /**
-             * Machine-readable description of Stripe's reason for collecting the requirement.
-             */
-            code: RequestedReason.Code;
-          }
-
-          export namespace Error {
-            export type Code =
-              | 'invalid_address_city_state_postal_code'
-              | 'invalid_address_highway_contract_box'
-              | 'invalid_address_private_mailbox'
-              | 'invalid_business_profile_name'
-              | 'invalid_business_profile_name_denylisted'
-              | 'invalid_company_name_denylisted'
-              | 'invalid_dob_age_over_maximum'
-              | 'invalid_dob_age_under_18'
-              | 'invalid_dob_age_under_minimum'
-              | 'invalid_product_description_length'
-              | 'invalid_product_description_url_match'
-              | 'invalid_representative_country'
-              | 'invalid_statement_descriptor_business_mismatch'
-              | 'invalid_statement_descriptor_denylisted'
-              | 'invalid_statement_descriptor_length'
-              | 'invalid_statement_descriptor_prefix_denylisted'
-              | 'invalid_statement_descriptor_prefix_mismatch'
-              | 'invalid_street_address'
-              | 'invalid_tax_id'
-              | 'invalid_tax_id_format'
-              | 'invalid_tos_acceptance'
-              | 'invalid_url_denylisted'
-              | 'invalid_url_format'
-              | 'invalid_url_website_business_information_mismatch'
-              | 'invalid_url_website_empty'
-              | 'invalid_url_website_inaccessible'
-              | 'invalid_url_website_inaccessible_geoblocked'
-              | 'invalid_url_website_inaccessible_password_protected'
-              | 'invalid_url_website_incomplete'
-              | 'invalid_url_website_incomplete_cancellation_policy'
-              | 'invalid_url_website_incomplete_customer_service_details'
-              | 'invalid_url_website_incomplete_legal_restrictions'
-              | 'invalid_url_website_incomplete_refund_policy'
-              | 'invalid_url_website_incomplete_return_policy'
-              | 'invalid_url_website_incomplete_terms_and_conditions'
-              | 'invalid_url_website_incomplete_under_construction'
-              | 'invalid_url_website_other'
-              | 'invalid_url_web_presence_detected'
-              | 'invalid_value_other'
-              | 'unresolvable_ip_address'
-              | 'unresolvable_postal_code'
-              | 'verification_directors_mismatch'
-              | 'verification_document_address_mismatch'
-              | 'verification_document_address_missing'
-              | 'verification_document_corrupt'
-              | 'verification_document_country_not_supported'
-              | 'verification_document_directors_mismatch'
-              | 'verification_document_dob_mismatch'
-              | 'verification_document_duplicate_type'
-              | 'verification_document_expired'
-              | 'verification_document_failed_copy'
-              | 'verification_document_failed_greyscale'
-              | 'verification_document_failed_other'
-              | 'verification_document_failed_test_mode'
-              | 'verification_document_fraudulent'
-              | 'verification_document_id_number_mismatch'
-              | 'verification_document_id_number_missing'
-              | 'verification_document_incomplete'
-              | 'verification_document_invalid'
-              | 'verification_document_issue_or_expiry_date_missing'
-              | 'verification_document_manipulated'
-              | 'verification_document_missing_back'
-              | 'verification_document_missing_front'
-              | 'verification_document_name_mismatch'
-              | 'verification_document_name_missing'
-              | 'verification_document_nationality_mismatch'
-              | 'verification_document_not_readable'
-              | 'verification_document_not_signed'
-              | 'verification_document_not_uploaded'
-              | 'verification_document_photo_mismatch'
-              | 'verification_document_too_large'
-              | 'verification_document_type_not_supported'
-              | 'verification_extraneous_directors'
-              | 'verification_failed_address_match'
-              | 'verification_failed_business_iec_number'
-              | 'verification_failed_document_match'
-              | 'verification_failed_id_number_match'
-              | 'verification_failed_keyed_identity'
-              | 'verification_failed_keyed_match'
-              | 'verification_failed_name_match'
-              | 'verification_failed_other'
-              | 'verification_failed_representative_authority'
-              | 'verification_failed_residential_address'
-              | 'verification_failed_tax_id_match'
-              | 'verification_failed_tax_id_not_issued'
-              | 'verification_missing_directors'
-              | 'verification_missing_executives'
-              | 'verification_missing_owners'
-              | 'verification_requires_additional_memorandum_of_associations'
-              | 'verification_requires_additional_proof_of_registration'
-              | 'verification_selfie_document_missing_photo'
-              | 'verification_selfie_face_mismatch'
-              | 'verification_selfie_manipulated'
-              | 'verification_selfie_unverified_other'
-              | 'verification_supportability'
-              | 'verification_token_stale';
-          }
-
-          export namespace Impact {
-            export interface RestrictsCapability {
-              /**
-               * The name of the Capability which will be restricted.
-               */
-              capability: RestrictsCapability.Capability;
-
-              /**
-               * The configuration which specifies the Capability which will be restricted.
-               */
-              configuration: RestrictsCapability.Configuration;
-
-              /**
-               * Details about when in the account lifecycle the requirement must be collected by the avoid the Capability restriction.
-               */
-              deadline: RestrictsCapability.Deadline;
-            }
-
-            export namespace RestrictsCapability {
-              export type Capability =
-                | 'ach_debit_payments'
-                | 'acss_debit_payments'
-                | 'affirm_payments'
-                | 'afterpay_clearpay_payments'
-                | 'alma_payments'
-                | 'amazon_pay_payments'
-                | 'automatic_indirect_tax'
-                | 'au_becs_debit_payments'
-                | 'bacs_debit_payments'
-                | 'bancontact_payments'
-                | 'bank_accounts.instant'
-                | 'bank_accounts.local'
-                | 'bank_accounts.wire'
-                | 'blik_payments'
-                | 'boleto_payments'
-                | 'cards'
-                | 'card_payments'
-                | 'cartes_bancaires_payments'
-                | 'cashapp_payments'
-                | 'commercial.celtic.charge_card'
-                | 'commercial.celtic.spend_card'
-                | 'commercial.cross_river_bank.charge_card'
-                | 'commercial.cross_river_bank.prepaid_card'
-                | 'commercial.cross_river_bank.spend_card'
-                | 'commercial.fifth_third.charge_card'
-                | 'commercial.lead.prepaid_card'
-                | 'commercial.stripe.charge_card'
-                | 'commercial.stripe.prepaid_card'
-                | 'consumer.celtic.revolving_credit_card'
-                | 'consumer.cross_river_bank.prepaid_card'
-                | 'consumer.holds_currencies.usd'
-                | 'consumer.lead.debit_card'
-                | 'consumer.lead.prepaid_card'
-                | 'crypto_wallets'
-                | 'eps_payments'
-                | 'financial_addresses.bank_accounts'
-                | 'fpx_payments'
-                | 'gb_bank_transfer_payments'
-                | 'grabpay_payments'
-                | 'holds_currencies.eur'
-                | 'holds_currencies.gbp'
-                | 'holds_currencies.usd'
-                | 'ideal_payments'
-                | 'inbound_transfers.financial_accounts'
-                | 'jcb_payments'
-                | 'jp_bank_transfer_payments'
-                | 'kakao_pay_payments'
-                | 'klarna_payments'
-                | 'konbini_payments'
-                | 'kr_card_payments'
-                | 'link_payments'
-                | 'mobilepay_payments'
-                | 'multibanco_payments'
-                | 'mx_bank_transfer_payments'
-                | 'naver_pay_payments'
-                | 'outbound_payments.bank_accounts'
-                | 'outbound_payments.cards'
-                | 'outbound_payments.financial_accounts'
-                | 'outbound_payments.paper_checks'
-                | 'outbound_transfers.bank_accounts'
-                | 'outbound_transfers.financial_accounts'
-                | 'oxxo_payments'
-                | 'p24_payments'
-                | 'paper_checks'
-                | 'payco_payments'
-                | 'paynow_payments'
-                | 'pay_by_bank_payments'
-                | 'promptpay_payments'
-                | 'revolut_pay_payments'
-                | 'samsung_pay_payments'
-                | 'sepa_bank_transfer_payments'
-                | 'sepa_debit_payments'
-                | 'stripe_balance.payouts'
-                | 'stripe_balance.stripe_transfers'
-                | 'swish_payments'
-                | 'twint_payments'
-                | 'us_bank_transfer_payments'
-                | 'zip_payments';
-
-              export type Configuration =
-                | 'card_creator'
-                | 'customer'
-                | 'merchant'
-                | 'recipient'
-                | 'storer';
-
-              export interface Deadline {
-                /**
-                 * The current status of the requirement's impact.
-                 */
-                status: Deadline.Status;
-              }
-
-              export namespace Deadline {
-                export type Status =
-                  | 'currently_due'
-                  | 'eventually_due'
-                  | 'past_due';
-              }
-            }
-          }
-
-          export namespace MinimumDeadline {
-            export type Status =
-              | 'currently_due'
-              | 'eventually_due'
-              | 'past_due';
-          }
-
-          export namespace Reference {
-            export type Type = 'inquiry' | 'payment_method' | 'person';
-          }
-
-          export namespace RequestedReason {
-            export type Code = 'routine_onboarding' | 'routine_verification';
-          }
-        }
-
-        export namespace Summary {
-          export interface MinimumDeadline {
-            /**
-             * The current strictest status of all requirements on the Account.
-             */
-            status: MinimumDeadline.Status;
-
-            /**
-             * The soonest RFC3339 date & time UTC value a requirement can impact the Account.
-             */
-            time?: string;
-          }
-
-          export namespace MinimumDeadline {
+          export namespace Deadline {
             export type Status =
               | 'currently_due'
               | 'eventually_due'
@@ -23647,6 +17631,11 @@ export namespace V2 {
        * The business gross annual revenue for its preceding fiscal year.
        */
       annual_revenue?: BusinessDetails.AnnualRevenue;
+
+      /**
+       * A detailed description of the business's compliance and anti-money laundering controls and practices.
+       */
+      compliance_screening_description?: string;
 
       /**
        * Documents that may be submitted to satisfy various informational requests.
@@ -23901,6 +17890,31 @@ export namespace V2 {
          * Details on the Account's acceptance of the [Stripe Services Agreement](https://docs.stripe.com/connect/updating-accounts#tos-acceptance).
          */
         account?: TermsOfService.Account;
+
+        /**
+         * Details on the Account's acceptance of Issuing-specific terms of service.
+         */
+        card_creator?: TermsOfService.CardCreator;
+
+        /**
+         * Details on the Account's acceptance of Consumer-privacy-disclosures-specific terms of service.
+         */
+        consumer_privacy_disclosures?: TermsOfService.ConsumerPrivacyDisclosures;
+
+        /**
+         * Details on the Account's acceptance of Consumer-storer-specific terms of service.
+         */
+        consumer_storer?: TermsOfService.ConsumerStorer;
+
+        /**
+         * Details on the Account's acceptance of Crypto-storer-specific terms of service.
+         */
+        crypto_storer?: TermsOfService.CryptoStorer;
+
+        /**
+         * Details on the Account's acceptance of Treasury-specific terms of service.
+         */
+        storer?: TermsOfService.Storer;
       }
 
       export namespace PersonsProvided {
@@ -23925,6 +17939,1248 @@ export namespace V2 {
            * The user agent of the browser from which the Account's representative accepted the terms of service.
            */
           user_agent?: string;
+        }
+
+        export interface CardCreator {
+          /**
+           * Terms of service acceptances to create cards for commercial issuing use cases.
+           */
+          commercial?: CardCreator.Commercial;
+
+          /**
+           * Terms of service acceptances to create cards for consumer issuing use cases.
+           */
+          consumer?: CardCreator.Consumer;
+        }
+
+        export interface ConsumerPrivacyDisclosures {
+          /**
+           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+           */
+          date?: string;
+
+          /**
+           * The IP address from which the Account's representative accepted the terms of service.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the Account's representative accepted the terms of service.
+           */
+          user_agent?: string;
+        }
+
+        export interface ConsumerStorer {
+          /**
+           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+           */
+          date?: string;
+
+          /**
+           * The IP address from which the Account's representative accepted the terms of service.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the Account's representative accepted the terms of service.
+           */
+          user_agent?: string;
+        }
+
+        export interface CryptoStorer {
+          /**
+           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+           */
+          date?: string;
+
+          /**
+           * The IP address from which the Account's representative accepted the terms of service.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the Account's representative accepted the terms of service.
+           */
+          user_agent?: string;
+        }
+
+        export interface Storer {
+          /**
+           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+           */
+          date?: string;
+
+          /**
+           * The IP address from which the Account's representative accepted the terms of service.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the Account's representative accepted the terms of service.
+           */
+          user_agent?: string;
+        }
+
+        export namespace CardCreator {
+          export interface Commercial {
+            /**
+             * Terms of service acceptances for Stripe commercial card issuing.
+             */
+            account_holder?: Commercial.AccountHolder;
+
+            /**
+             * Terms of service acceptances for commercial issuing cards with Celtic as BIN sponsor.
+             */
+            celtic?: Commercial.Celtic;
+
+            /**
+             * Terms of service acceptances for commercial issuing cards with Cross River Bank as BIN sponsor.
+             */
+            cross_river_bank?: Commercial.CrossRiverBank;
+
+            /**
+             * Terms of service acceptances for commercial issuing cards with Fifth Third as BIN sponsor.
+             */
+            fifth_third?: Commercial.FifthThird;
+
+            /**
+             * Terms of service acceptances for Stripe commercial card Global issuing.
+             */
+            global_account_holder?: Commercial.GlobalAccountHolder;
+
+            /**
+             * Terms of service acceptances for commercial issuing cards with Lead as BIN sponsor.
+             */
+            lead?: Commercial.Lead;
+          }
+
+          export interface Consumer {
+            /**
+             * Terms of service acceptances for Stripe commercial card issuing.
+             */
+            account_holder?: Consumer.AccountHolder;
+
+            /**
+             * Terms of service acceptances for commercial issuing cards with Celtic as BIN sponsor.
+             */
+            celtic?: Consumer.Celtic;
+
+            /**
+             * Terms of service acceptances for consumer issuing cards with Cross River Bank as BIN sponsor.
+             */
+            cross_river_bank?: Consumer.CrossRiverBank;
+
+            /**
+             * Terms of service acceptances for Stripe commercial card Global issuing.
+             */
+            global_account_holder?: Consumer.GlobalAccountHolder;
+
+            /**
+             * Terms of service acceptances for commercial issuing cards with Lead as BIN sponsor.
+             */
+            lead?: Consumer.Lead;
+          }
+
+          export namespace Commercial {
+            export interface AccountHolder {
+              /**
+               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+               */
+              date?: string;
+
+              /**
+               * The IP address from which the Account's representative accepted the terms of service.
+               */
+              ip?: string;
+
+              /**
+               * The URL to the service agreement the Account's representative accepted.
+               */
+              url?: string;
+
+              /**
+               * The user agent of the browser from which the Account's representative accepted the terms of service.
+               */
+              user_agent?: string;
+            }
+
+            export interface Celtic {
+              /**
+               * Terms of service acceptances for commercial issuing Apple Pay cards with Celtic as BIN sponsor.
+               */
+              apple_pay?: Celtic.ApplePay;
+
+              /**
+               * Terms of service acceptances for commercial issuing charge cards with Celtic as BIN sponsor.
+               */
+              charge_card?: Celtic.ChargeCard;
+
+              /**
+               * Terms of service acceptances for commercial issuing spend cards with Celtic as BIN sponsor.
+               */
+              spend_card?: Celtic.SpendCard;
+            }
+
+            export interface CrossRiverBank {
+              /**
+               * Terms of service acceptances for commercial issuing Apple Pay cards with Cross River Bank as BIN sponsor.
+               */
+              apple_pay?: CrossRiverBank.ApplePay;
+
+              /**
+               * Terms of service acceptances for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+               */
+              charge_card?: CrossRiverBank.ChargeCard;
+
+              /**
+               * Terms of service acceptances for commercial issuing prepaid cards with Cross River Bank as BIN sponsor.
+               */
+              prepaid_card?: CrossRiverBank.PrepaidCard;
+
+              /**
+               * Terms of service acceptances for commercial issuing spend cards with Cross River Bank as BIN sponsor.
+               */
+              spend_card?: CrossRiverBank.SpendCard;
+            }
+
+            export interface FifthThird {
+              /**
+               * Bank terms of service acceptance for commercial issuing charge cards with Fifth Third as BIN sponsor.
+               */
+              bank_terms?: FifthThird.BankTerms;
+
+              /**
+               * Platform terms of service acceptance for commercial issuing charge cards with Fifth Third as BIN sponsor.
+               */
+              platform?: FifthThird.Platform;
+            }
+
+            export interface GlobalAccountHolder {
+              /**
+               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+               */
+              date?: string;
+
+              /**
+               * The IP address from which the Account's representative accepted the terms of service.
+               */
+              ip?: string;
+
+              /**
+               * The URL to the service agreement the Account's representative accepted.
+               */
+              url?: string;
+
+              /**
+               * The user agent of the browser from which the Account's representative accepted the terms of service.
+               */
+              user_agent?: string;
+            }
+
+            export interface Lead {
+              /**
+               * Terms of service acceptances for commercial issuing Apple Pay cards with Celtic as BIN sponsor.
+               */
+              apple_pay?: Lead.ApplePay;
+
+              /**
+               * Terms of service acceptances for commercial issuing Global prepaid cards with Lead as BIN sponsor.
+               */
+              prepaid_card?: Lead.PrepaidCard;
+            }
+
+            export namespace Celtic {
+              export interface ApplePay {
+                /**
+                 * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                 */
+                date?: string;
+
+                /**
+                 * The IP address from which the Account's representative accepted the terms of service.
+                 */
+                ip?: string;
+
+                /**
+                 * The URL to the service agreement the Account's representative accepted.
+                 */
+                url?: string;
+
+                /**
+                 * The user agent of the browser from which the Account's representative accepted the terms of service.
+                 */
+                user_agent?: string;
+              }
+
+              export interface ChargeCard {
+                /**
+                 * Bank terms of service acceptance for commercial issuing charge cards with Celtic as BIN sponsor.
+                 */
+                bank_terms?: ChargeCard.BankTerms;
+
+                /**
+                 * Platform terms of service acceptance for commercial issuing charge cards with Celtic as BIN sponsor.
+                 */
+                platform?: ChargeCard.Platform;
+              }
+
+              export interface SpendCard {
+                /**
+                 * Bank terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                 */
+                bank_terms?: SpendCard.BankTerms;
+
+                /**
+                 * Financial disclosures terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                 */
+                financing_disclosures?: SpendCard.FinancingDisclosures;
+
+                /**
+                 * Platform terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                 */
+                platform?: SpendCard.Platform;
+              }
+
+              export namespace ChargeCard {
+                export interface BankTerms {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface Platform {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+              }
+
+              export namespace SpendCard {
+                export interface BankTerms {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface FinancingDisclosures {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface Platform {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+              }
+            }
+
+            export namespace CrossRiverBank {
+              export interface ApplePay {
+                /**
+                 * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                 */
+                date?: string;
+
+                /**
+                 * The IP address from which the Account's representative accepted the terms of service.
+                 */
+                ip?: string;
+
+                /**
+                 * The URL to the service agreement the Account's representative accepted.
+                 */
+                url?: string;
+
+                /**
+                 * The user agent of the browser from which the Account's representative accepted the terms of service.
+                 */
+                user_agent?: string;
+              }
+
+              export interface ChargeCard {
+                /**
+                 * Bank terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                 */
+                bank_terms?: ChargeCard.BankTerms;
+
+                /**
+                 * Financial disclosures terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                 */
+                financing_disclosures?: ChargeCard.FinancingDisclosures;
+
+                /**
+                 * Platform terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                 */
+                platform?: ChargeCard.Platform;
+              }
+
+              export interface PrepaidCard {
+                /**
+                 * Bank terms of service acceptance for commercial Global issuing prepaid cards with Cross River Bank as BIN sponsor.
+                 */
+                bank_terms?: PrepaidCard.BankTerms;
+
+                /**
+                 * Platform terms of service acceptance for commercial Global issuing prepaid cards with Cross River Bank as BIN sponsor.
+                 */
+                platform?: PrepaidCard.Platform;
+              }
+
+              export interface SpendCard {
+                /**
+                 * Bank terms of service acceptance for commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                 */
+                bank_terms?: SpendCard.BankTerms;
+
+                /**
+                 * Financial disclosures terms of service acceptance for commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                 */
+                financing_disclosures?: SpendCard.FinancingDisclosures;
+              }
+
+              export namespace ChargeCard {
+                export interface BankTerms {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface FinancingDisclosures {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface Platform {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+              }
+
+              export namespace PrepaidCard {
+                export interface BankTerms {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface Platform {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+              }
+
+              export namespace SpendCard {
+                export interface BankTerms {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface FinancingDisclosures {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+              }
+            }
+
+            export namespace FifthThird {
+              export interface BankTerms {
+                /**
+                 * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                 */
+                date?: string;
+
+                /**
+                 * The IP address from which the Account's representative accepted the terms of service.
+                 */
+                ip?: string;
+
+                /**
+                 * The URL to the service agreement the Account's representative accepted.
+                 */
+                url?: string;
+
+                /**
+                 * The user agent of the browser from which the Account's representative accepted the terms of service.
+                 */
+                user_agent?: string;
+              }
+
+              export interface Platform {
+                /**
+                 * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                 */
+                date?: string;
+
+                /**
+                 * The IP address from which the Account's representative accepted the terms of service.
+                 */
+                ip?: string;
+
+                /**
+                 * The URL to the service agreement the Account's representative accepted.
+                 */
+                url?: string;
+
+                /**
+                 * The user agent of the browser from which the Account's representative accepted the terms of service.
+                 */
+                user_agent?: string;
+              }
+            }
+
+            export namespace Lead {
+              export interface ApplePay {
+                /**
+                 * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                 */
+                date?: string;
+
+                /**
+                 * The IP address from which the Account's representative accepted the terms of service.
+                 */
+                ip?: string;
+
+                /**
+                 * The URL to the service agreement the Account's representative accepted.
+                 */
+                url?: string;
+
+                /**
+                 * The user agent of the browser from which the Account's representative accepted the terms of service.
+                 */
+                user_agent?: string;
+              }
+
+              export interface PrepaidCard {
+                /**
+                 * Bank terms of service acceptance for commercial Global issuing prepaid cards with Lead as BIN sponsor.
+                 */
+                bank_terms?: PrepaidCard.BankTerms;
+
+                /**
+                 * Platform terms of service acceptance for commercial Global issuing prepaid cards with Lead as BIN sponsor.
+                 */
+                platform?: PrepaidCard.Platform;
+              }
+
+              export namespace PrepaidCard {
+                export interface BankTerms {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface Platform {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+              }
+            }
+          }
+
+          export namespace Consumer {
+            export interface AccountHolder {
+              /**
+               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+               */
+              date?: string;
+
+              /**
+               * The IP address from which the Account's representative accepted the terms of service.
+               */
+              ip?: string;
+
+              /**
+               * The URL to the service agreement the Account's representative accepted.
+               */
+              url?: string;
+
+              /**
+               * The user agent of the browser from which the Account's representative accepted the terms of service.
+               */
+              user_agent?: string;
+            }
+
+            export interface Celtic {
+              /**
+               * Terms of service acceptances for commercial issuing Apple Pay cards with Celtic as BIN sponsor.
+               */
+              apple_pay?: Celtic.ApplePay;
+
+              /**
+               * Terms of service acceptances for commercial issuing revolving credit cards with Celtic as BIN sponsor.
+               */
+              revolving_credit_card?: Celtic.RevolvingCreditCard;
+            }
+
+            export interface CrossRiverBank {
+              /**
+               * Terms of service acceptances for consumer issuing prepaid cards with Cross River Bank as BIN sponsor.
+               */
+              prepaid_card?: CrossRiverBank.PrepaidCard;
+            }
+
+            export interface GlobalAccountHolder {
+              /**
+               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+               */
+              date?: string;
+
+              /**
+               * The IP address from which the Account's representative accepted the terms of service.
+               */
+              ip?: string;
+
+              /**
+               * The URL to the service agreement the Account's representative accepted.
+               */
+              url?: string;
+
+              /**
+               * The user agent of the browser from which the Account's representative accepted the terms of service.
+               */
+              user_agent?: string;
+            }
+
+            export interface Lead {
+              /**
+               * Terms of service acceptances for commercial issuing Apple Pay cards with Lead as BIN sponsor.
+               */
+              apple_pay?: Lead.ApplePay;
+
+              /**
+               * Terms of service acceptances for consumer issuing debit cards with Lead as BIN sponsor.
+               */
+              debit_card?: Lead.DebitCard;
+
+              /**
+               * Terms of service acceptances for commercial issuing revolving credit cards with Lead as BIN sponsor.
+               */
+              prepaid_card?: Lead.PrepaidCard;
+            }
+
+            export namespace Celtic {
+              export interface ApplePay {
+                /**
+                 * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                 */
+                date?: string;
+
+                /**
+                 * The IP address from which the Account's representative accepted the terms of service.
+                 */
+                ip?: string;
+
+                /**
+                 * The URL to the service agreement the Account's representative accepted.
+                 */
+                url?: string;
+
+                /**
+                 * The user agent of the browser from which the Account's representative accepted the terms of service.
+                 */
+                user_agent?: string;
+              }
+
+              export interface RevolvingCreditCard {
+                /**
+                 * Bank terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                 */
+                bank_terms?: RevolvingCreditCard.BankTerms;
+
+                /**
+                 * Financial disclosures terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                 */
+                financing_disclosures?: RevolvingCreditCard.FinancingDisclosures;
+
+                /**
+                 * Platform terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                 */
+                platform?: RevolvingCreditCard.Platform;
+              }
+
+              export namespace RevolvingCreditCard {
+                export interface BankTerms {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface FinancingDisclosures {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface Platform {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+              }
+            }
+
+            export namespace CrossRiverBank {
+              export interface PrepaidCard {
+                /**
+                 * Bank terms of service acceptance for consumer issuing prepaid cards with Cross River Bank as BIN sponsor.
+                 */
+                bank_terms?: PrepaidCard.BankTerms;
+
+                /**
+                 * Financial disclosures terms of service acceptance for consumer issuing prepaid cards with Cross River Bank as BIN sponsor.
+                 */
+                financing_disclosures?: PrepaidCard.FinancingDisclosures;
+
+                /**
+                 * Platform terms of service acceptance for consumer issuing prepaid cards with Cross River Bank as BIN sponsor.
+                 */
+                platform?: PrepaidCard.Platform;
+              }
+
+              export namespace PrepaidCard {
+                export interface BankTerms {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface FinancingDisclosures {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface Platform {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+              }
+            }
+
+            export namespace Lead {
+              export interface ApplePay {
+                /**
+                 * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                 */
+                date?: string;
+
+                /**
+                 * The IP address from which the Account's representative accepted the terms of service.
+                 */
+                ip?: string;
+
+                /**
+                 * The URL to the service agreement the Account's representative accepted.
+                 */
+                url?: string;
+
+                /**
+                 * The user agent of the browser from which the Account's representative accepted the terms of service.
+                 */
+                user_agent?: string;
+              }
+
+              export interface DebitCard {
+                /**
+                 * Bank terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
+                 */
+                bank_terms?: DebitCard.BankTerms;
+
+                /**
+                 * Financial disclosures terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
+                 */
+                financing_disclosures?: DebitCard.FinancingDisclosures;
+
+                /**
+                 * Platform terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
+                 */
+                platform?: DebitCard.Platform;
+              }
+
+              export interface PrepaidCard {
+                /**
+                 * Bank terms of service acceptance for consumer issuing prepaid cards with Lead as BIN sponsor.
+                 */
+                bank_terms?: PrepaidCard.BankTerms;
+
+                /**
+                 * Financial disclosures terms of service acceptance for consumer issuing prepaid cards with Lead as BIN sponsor.
+                 */
+                financing_disclosures?: PrepaidCard.FinancingDisclosures;
+
+                /**
+                 * Platform terms of service acceptance for consumer issuing prepaid cards with Lead as BIN sponsor.
+                 */
+                platform?: PrepaidCard.Platform;
+              }
+
+              export namespace DebitCard {
+                export interface BankTerms {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface FinancingDisclosures {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface Platform {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+              }
+
+              export namespace PrepaidCard {
+                export interface BankTerms {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface FinancingDisclosures {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                export interface Platform {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The URL to the service agreement the Account's representative accepted.
+                   */
+                  url?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -24302,7 +19558,10 @@ export namespace V2 {
           | 'be_vat'
           | 'bg_uic'
           | 'bg_vat'
+          | 'bm_crn'
+          | 'bo_tin'
           | 'br_cnpj'
+          | 'bt_tpn'
           | 'ca_cn'
           | 'ca_crarr'
           | 'ca_gst_hst'
@@ -24310,6 +19569,7 @@ export namespace V2 {
           | 'ca_rid'
           | 'ch_chid'
           | 'ch_uid'
+          | 'co_nit'
           | 'cr_cpj'
           | 'cr_nite'
           | 'cy_he'
@@ -24323,8 +19583,10 @@ export namespace V2 {
           | 'dk_cvr'
           | 'dk_vat'
           | 'do_rcn'
+          | 'ec_ruc'
           | 'ee_rk'
           | 'ee_vat'
+          | 'eg_tin'
           | 'es_cif'
           | 'es_vat'
           | 'fi_vat'
@@ -24334,13 +19596,16 @@ export namespace V2 {
           | 'fr_vat'
           | 'gb_crn'
           | 'gb_vat'
+          | 'gh_tin'
           | 'gi_crn'
           | 'gr_afm'
           | 'gr_gemi'
           | 'gr_vat'
           | 'gt_nit'
+          | 'gy_tin'
           | 'hk_br'
           | 'hk_cr'
+          | 'hn_rtn'
           | 'hr_mbs'
           | 'hr_oib'
           | 'hr_vat'
@@ -24352,9 +19617,14 @@ export namespace V2 {
           | 'ie_vat'
           | 'it_rea'
           | 'it_vat'
+          | 'jm_trn'
+          | 'jo_crn'
           | 'jp_cn'
+          | 'ke_pin'
+          | 'ky_crn'
           | 'kz_bin'
           | 'li_uid'
+          | 'lk_tin'
           | 'lt_ccrn'
           | 'lt_vat'
           | 'lu_nif'
@@ -24362,27 +19632,33 @@ export namespace V2 {
           | 'lu_vat'
           | 'lv_urn'
           | 'lv_vat'
+          | 'mo_tin'
           | 'mt_crn'
           | 'mt_tin'
           | 'mt_vat'
+          | 'mv_tin'
           | 'mx_rfc'
           | 'my_brn'
           | 'my_coid'
           | 'my_itn'
           | 'my_sst'
           | 'mz_nuit'
+          | 'ng_tin'
           | 'nl_kvk'
           | 'nl_rsin'
           | 'nl_vat'
           | 'no_orgnr'
           | 'nz_bn'
           | 'nz_ird'
+          | 'pa_ruc'
           | 'pe_ruc'
+          | 'ph_tin'
           | 'pk_ntn'
           | 'pl_nip'
           | 'pl_regon'
           | 'pl_vat'
           | 'pt_vat'
+          | 'py_ruc'
           | 'ro_cui'
           | 'ro_orc'
           | 'ro_vat'
@@ -24397,10 +19673,15 @@ export namespace V2 {
           | 'sk_dic'
           | 'sk_ico'
           | 'sk_vat'
+          | 'sl_tin'
+          | 'sv_nit'
           | 'th_crn'
           | 'th_prn'
           | 'th_tin'
-          | 'us_ein';
+          | 'us_ein'
+          | 'uy_ruc'
+          | 'vg_cn'
+          | 'za_tin';
       }
 
       export namespace ScriptAddresses {
@@ -24852,8 +20133,11 @@ export namespace V2 {
           | 'bd_nid'
           | 'be_nrn'
           | 'bg_ucn'
+          | 'bm_pp'
           | 'bn_nric'
+          | 'bo_ci'
           | 'br_cpf'
+          | 'bt_cid'
           | 'ca_sin'
           | 'ch_oasi'
           | 'cl_rut'
@@ -24871,26 +20155,37 @@ export namespace V2 {
           | 'do_rcn'
           | 'ec_ci'
           | 'ee_ik'
+          | 'eg_tin'
           | 'es_nif'
           | 'fi_hetu'
           | 'fr_nir'
           | 'gb_nino'
+          | 'gh_pin'
           | 'gr_afm'
           | 'gt_nit'
+          | 'gy_tin'
           | 'hk_id'
+          | 'hn_rtn'
           | 'hr_oib'
           | 'hu_ad'
           | 'id_nik'
           | 'ie_ppsn'
           | 'is_kt'
           | 'it_cf'
+          | 'jm_trn'
+          | 'jo_pin'
           | 'jp_inc'
           | 'ke_pin'
+          | 'ky_pp'
           | 'kz_iin'
           | 'li_peid'
+          | 'lk_nic'
           | 'lt_ak'
           | 'lu_nif'
           | 'lv_pk'
+          | 'mo_bir'
+          | 'mt_nic'
+          | 'mv_tin'
           | 'mx_rfc'
           | 'my_nric'
           | 'mz_nuit'
@@ -24898,17 +20193,22 @@ export namespace V2 {
           | 'nl_bsn'
           | 'no_nin'
           | 'nz_ird'
+          | 'pa_ruc'
           | 'pe_dni'
+          | 'ph_tin'
           | 'pk_cnic'
           | 'pk_snic'
           | 'pl_pesel'
           | 'pt_nif'
+          | 'py_ruc'
           | 'ro_cnp'
           | 'sa_tin'
           | 'se_pin'
           | 'sg_fin'
           | 'sg_nric'
+          | 'si_pin'
           | 'sk_dic'
+          | 'sv_nit'
           | 'th_lc'
           | 'th_pin'
           | 'tr_tin'
@@ -24917,6 +20217,7 @@ export namespace V2 {
           | 'us_ssn'
           | 'us_ssn_last_4'
           | 'uy_dni'
+          | 'vg_pp'
           | 'za_id';
       }
 
@@ -25253,6 +20554,7 @@ export namespace V2 {
             | 'au_becs_debit_payments'
             | 'bacs_debit_payments'
             | 'bancontact_payments'
+            | 'bank_accounts.instant'
             | 'bank_accounts.local'
             | 'bank_accounts.wire'
             | 'blik_payments'
@@ -25261,11 +20563,31 @@ export namespace V2 {
             | 'card_payments'
             | 'cartes_bancaires_payments'
             | 'cashapp_payments'
+            | 'commercial.celtic.charge_card'
+            | 'commercial.celtic.spend_card'
+            | 'commercial.cross_river_bank.charge_card'
+            | 'commercial.cross_river_bank.prepaid_card'
+            | 'commercial.cross_river_bank.spend_card'
+            | 'commercial.fifth_third.charge_card'
+            | 'commercial.lead.prepaid_card'
+            | 'commercial.stripe.charge_card'
+            | 'commercial.stripe.prepaid_card'
+            | 'consumer.celtic.revolving_credit_card'
+            | 'consumer.cross_river_bank.prepaid_card'
+            | 'consumer.holds_currencies.usd'
+            | 'consumer.lead.debit_card'
+            | 'consumer.lead.prepaid_card'
+            | 'crypto_wallets'
             | 'eps_payments'
+            | 'financial_addresses.bank_accounts'
             | 'fpx_payments'
             | 'gb_bank_transfer_payments'
             | 'grabpay_payments'
+            | 'holds_currencies.eur'
+            | 'holds_currencies.gbp'
+            | 'holds_currencies.usd'
             | 'ideal_payments'
+            | 'inbound_transfers.financial_accounts'
             | 'jcb_payments'
             | 'jp_bank_transfer_payments'
             | 'kakao_pay_payments'
@@ -25277,8 +20599,15 @@ export namespace V2 {
             | 'multibanco_payments'
             | 'mx_bank_transfer_payments'
             | 'naver_pay_payments'
+            | 'outbound_payments.bank_accounts'
+            | 'outbound_payments.cards'
+            | 'outbound_payments.financial_accounts'
+            | 'outbound_payments.paper_checks'
+            | 'outbound_transfers.bank_accounts'
+            | 'outbound_transfers.financial_accounts'
             | 'oxxo_payments'
             | 'p24_payments'
+            | 'paper_checks'
             | 'payco_payments'
             | 'paynow_payments'
             | 'pay_by_bank_payments'
@@ -25294,7 +20623,12 @@ export namespace V2 {
             | 'us_bank_transfer_payments'
             | 'zip_payments';
 
-          export type Configuration = 'customer' | 'merchant' | 'recipient';
+          export type Configuration =
+            | 'card_creator'
+            | 'customer'
+            | 'merchant'
+            | 'recipient'
+            | 'storer';
 
           export interface Deadline {
             /**

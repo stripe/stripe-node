@@ -90,24 +90,22 @@ export interface PayoutMethod {
   /**
    * The alternative reference for this payout method, if it's a projected payout method.
    */
-  alternative_reference?: V2.MoneyManagement.PayoutMethod.AlternativeReference;
+  alternative_reference?: PayoutMethod.AlternativeReference;
 
   /**
    * A set of available payout speeds for this payout method.
    */
-  available_payout_speeds: Array<
-    V2.MoneyManagement.PayoutMethod.AvailablePayoutSpeed
-  >;
+  available_payout_speeds: Array<PayoutMethod.AvailablePayoutSpeed>;
 
   /**
    * The PayoutMethodBankAccount object details.
    */
-  bank_account?: V2.MoneyManagement.PayoutMethod.BankAccount;
+  bank_account?: PayoutMethod.BankAccount;
 
   /**
    * The PayoutMethodCard object details.
    */
-  card?: V2.MoneyManagement.PayoutMethod.Card;
+  card?: PayoutMethod.Card;
 
   /**
    * Created timestamp.
@@ -117,7 +115,7 @@ export interface PayoutMethod {
   /**
    * The PayoutMethodCryptoWallet object details.
    */
-  crypto_wallet?: V2.MoneyManagement.PayoutMethod.CryptoWallet;
+  crypto_wallet?: PayoutMethod.CryptoWallet;
 
   /**
    * ID of the underlying active OutboundSetupIntent object, if any.
@@ -138,189 +136,185 @@ export interface PayoutMethod {
   /**
    * Closed Enum. The type of payout method.
    */
-  type: V2.MoneyManagement.PayoutMethod.Type;
+  type: PayoutMethod.Type;
 
   /**
    * Indicates whether the payout method has met the necessary requirements for outbound money movement.
    */
-  usage_status: V2.MoneyManagement.PayoutMethod.UsageStatus;
+  usage_status: PayoutMethod.UsageStatus;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace PayoutMethod {
-      export interface AlternativeReference {
-        /**
-         * The ID of the alternative resource being referenced.
-         */
-        id: string;
+export namespace PayoutMethod {
+  export interface AlternativeReference {
+    /**
+     * The ID of the alternative resource being referenced.
+     */
+    id: string;
 
-        /**
-         * The type of the alternative reference (e.g., external_account for V1 external accounts).
-         */
-        type: AlternativeReference.Type;
-      }
+    /**
+     * The type of the alternative reference (e.g., external_account for V1 external accounts).
+     */
+    type: AlternativeReference.Type;
+  }
 
-      export type AvailablePayoutSpeed = 'instant' | 'standard';
+  export type AvailablePayoutSpeed = 'instant' | 'standard';
 
-      export interface BankAccount {
-        /**
-         * Whether this PayoutMethodBankAccount object was archived. PayoutMethodBankAccount objects can be archived through
-         * the /archive API, and they will not be automatically archived by Stripe. Archived PayoutMethodBankAccount objects
-         * cannot be used as payout methods and will not appear in the payout method list.
-         */
-        archived: boolean;
+  export interface BankAccount {
+    /**
+     * Whether this PayoutMethodBankAccount object was archived. PayoutMethodBankAccount objects can be archived through
+     * the /archive API, and they will not be automatically archived by Stripe. Archived PayoutMethodBankAccount objects
+     * cannot be used as payout methods and will not appear in the payout method list.
+     */
+    archived: boolean;
 
-        /**
-         * The type of bank account (checking or savings).
-         */
-        bank_account_type: BankAccount.BankAccountType;
+    /**
+     * The type of bank account (checking or savings).
+     */
+    bank_account_type: BankAccount.BankAccountType;
 
-        /**
-         * The name of the bank this bank account is in. This field is populated automatically by Stripe.
-         */
-        bank_name: string;
+    /**
+     * The name of the bank this bank account is in. This field is populated automatically by Stripe.
+     */
+    bank_name: string;
 
-        /**
-         * The branch number of the bank account, if present.
-         */
-        branch_number?: string;
+    /**
+     * The branch number of the bank account, if present.
+     */
+    branch_number?: string;
 
-        /**
-         * The country code of the bank account.
-         */
-        country: string;
+    /**
+     * The country code of the bank account.
+     */
+    country: string;
 
-        /**
-         * List of enabled flows for this bank account (wire or local).
-         */
-        enabled_delivery_options: Array<string>;
+    /**
+     * List of enabled flows for this bank account (wire or local).
+     */
+    enabled_delivery_options: Array<string>;
 
-        /**
-         * The ID of the Financial Connections Account used to create the bank account.
-         */
-        financial_connections_account?: string;
+    /**
+     * The ID of the Financial Connections Account used to create the bank account.
+     */
+    financial_connections_account?: string;
 
-        /**
-         * The last 4 digits of the account number.
-         */
-        last4: string;
+    /**
+     * The last 4 digits of the account number.
+     */
+    last4: string;
 
-        /**
-         * The routing number of the bank account, if present.
-         */
-        routing_number?: string;
+    /**
+     * The routing number of the bank account, if present.
+     */
+    routing_number?: string;
 
-        /**
-         * The list of currencies supported by this bank account.
-         */
-        supported_currencies: Array<string>;
+    /**
+     * The list of currencies supported by this bank account.
+     */
+    supported_currencies: Array<string>;
 
-        /**
-         * The swift code of the bank or financial institution.
-         */
-        swift_code?: string;
-      }
+    /**
+     * The swift code of the bank or financial institution.
+     */
+    swift_code?: string;
+  }
 
-      export interface Card {
-        /**
-         * Whether the PayoutMethodCard object was archived. PayoutMethodCard objects can be archived through
-         * the /archive API, and they will not be automatically archived by Stripe. Archived PayoutMethodCard objects
-         * cannot be used as payout methods and will not appear in the payout method list.
-         */
-        archived: boolean;
+  export interface Card {
+    /**
+     * Whether the PayoutMethodCard object was archived. PayoutMethodCard objects can be archived through
+     * the /archive API, and they will not be automatically archived by Stripe. Archived PayoutMethodCard objects
+     * cannot be used as payout methods and will not appear in the payout method list.
+     */
+    archived: boolean;
 
-        /**
-         * The month the card expires.
-         */
-        exp_month: string;
+    /**
+     * The month the card expires.
+     */
+    exp_month: string;
 
-        /**
-         * The year the card expires.
-         */
-        exp_year: string;
+    /**
+     * The year the card expires.
+     */
+    exp_year: string;
 
-        /**
-         * Uniquely identifies this particular card number. You can use this attribute to check whether two
-         * recipients who've signed up with you are using the same card number, for example.
-         */
-        fingerprint: string;
+    /**
+     * Uniquely identifies this particular card number. You can use this attribute to check whether two
+     * recipients who've signed up with you are using the same card number, for example.
+     */
+    fingerprint: string;
 
-        /**
-         * The last 4 digits of the card number.
-         */
-        last4: string;
+    /**
+     * The last 4 digits of the card number.
+     */
+    last4: string;
 
-        /**
-         * The list of currencies supported by this bank account.
-         */
-        supported_currencies: Array<string>;
-      }
+    /**
+     * The list of currencies supported by this bank account.
+     */
+    supported_currencies: Array<string>;
+  }
 
-      export interface CryptoWallet {
-        /**
-         * Destination wallet address.
-         */
-        address: string;
+  export interface CryptoWallet {
+    /**
+     * Destination wallet address.
+     */
+    address: string;
 
-        /**
-         * Whether the crypto wallet was archived. Crypto wallets can be archived through the /archive API,
-         * and they will not be automatically archived by Stripe. Archived crypto wallets cannot be used as
-         * payout method and will not appear in the payout method list.
-         */
-        archived: boolean;
+    /**
+     * Whether the crypto wallet was archived. Crypto wallets can be archived through the /archive API,
+     * and they will not be automatically archived by Stripe. Archived crypto wallets cannot be used as
+     * payout method and will not appear in the payout method list.
+     */
+    archived: boolean;
 
-        /**
-         * Optional field, required if network supports memos (only "stellar" currently).
-         */
-        memo?: string;
+    /**
+     * Optional field, required if network supports memos (only "stellar" currently).
+     */
+    memo?: string;
 
-        /**
-         * Which rail is being used to make an outbound money movement to this wallet.
-         */
-        network: CryptoWallet.Network;
-      }
+    /**
+     * Which rail is being used to make an outbound money movement to this wallet.
+     */
+    network: CryptoWallet.Network;
+  }
 
-      export type Type = 'bank_account' | 'card' | 'crypto_wallet';
+  export type Type = 'bank_account' | 'card' | 'crypto_wallet';
 
-      export interface UsageStatus {
-        /**
-         * Payments status - used when sending OutboundPayments (sending funds to recipients).
-         */
-        payments: UsageStatus.Payments;
+  export interface UsageStatus {
+    /**
+     * Payments status - used when sending OutboundPayments (sending funds to recipients).
+     */
+    payments: UsageStatus.Payments;
 
-        /**
-         * Transfers status - used when making an OutboundTransfer (sending funds to yourself).
-         */
-        transfers: UsageStatus.Transfers;
-      }
+    /**
+     * Transfers status - used when making an OutboundTransfer (sending funds to yourself).
+     */
+    transfers: UsageStatus.Transfers;
+  }
 
-      export namespace AlternativeReference {
-        export type Type = 'external_account' | 'payment_method';
-      }
+  export namespace AlternativeReference {
+    export type Type = 'external_account' | 'payment_method';
+  }
 
-      export namespace BankAccount {
-        export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
-      }
+  export namespace BankAccount {
+    export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
+  }
 
-      export namespace CryptoWallet {
-        export type Network =
-          | 'arbitrum'
-          | 'avalanche_c_chain'
-          | 'base'
-          | 'ethereum'
-          | 'optimism'
-          | 'polygon'
-          | 'solana'
-          | 'stellar'
-          | 'tempo';
-      }
+  export namespace CryptoWallet {
+    export type Network =
+      | 'arbitrum'
+      | 'avalanche_c_chain'
+      | 'base'
+      | 'ethereum'
+      | 'optimism'
+      | 'polygon'
+      | 'solana'
+      | 'stellar'
+      | 'tempo';
+  }
 
-      export namespace UsageStatus {
-        export type Payments = 'eligible' | 'invalid' | 'requires_action';
+  export namespace UsageStatus {
+    export type Payments = 'eligible' | 'invalid' | 'requires_action';
 
-        export type Transfers = 'eligible' | 'invalid' | 'requires_action';
-      }
-    }
+    export type Transfers = 'eligible' | 'invalid' | 'requires_action';
   }
 }
 export namespace V2 {

@@ -132,7 +132,7 @@ export interface OffSessionPayment {
   /**
    * Provides industry-specific information about the amount.
    */
-  amount_details?: V2.Payments.OffSessionPayment.AmountDetails;
+  amount_details?: OffSessionPayment.AmountDetails;
 
   /**
    * The “presentment amount” to be collected from the customer.
@@ -147,12 +147,12 @@ export interface OffSessionPayment {
   /**
    * The frequency of the underlying payment.
    */
-  cadence: V2.Payments.OffSessionPayment.Cadence;
+  cadence: OffSessionPayment.Cadence;
 
   /**
    * Details about the capture configuration for the OffSessionPayment.
    */
-  capture?: V2.Payments.OffSessionPayment.Capture;
+  capture?: OffSessionPayment.Capture;
 
   /**
    * Creation time of the OffSessionPayment. Represented as a RFC 3339 date & time UTC
@@ -173,7 +173,7 @@ export interface OffSessionPayment {
   /**
    * The reason why the OffSessionPayment failed.
    */
-  failure_reason?: V2.Payments.OffSessionPayment.FailureReason;
+  failure_reason?: OffSessionPayment.FailureReason;
 
   /**
    * The payment error encountered in the previous attempt to authorize the payment.
@@ -206,7 +206,7 @@ export interface OffSessionPayment {
   /**
    * Provides industry-specific information about the payment.
    */
-  payment_details?: V2.Payments.OffSessionPayment.PaymentDetails;
+  payment_details?: OffSessionPayment.PaymentDetails;
 
   /**
    * ID of the payment method used in this OffSessionPayment.
@@ -221,12 +221,12 @@ export interface OffSessionPayment {
   /**
    * Details about the payments orchestration configuration.
    */
-  payments_orchestration: V2.Payments.OffSessionPayment.PaymentsOrchestration;
+  payments_orchestration: OffSessionPayment.PaymentsOrchestration;
 
   /**
    * Details about the OffSessionPayment retries.
    */
-  retry_details: V2.Payments.OffSessionPayment.RetryDetails;
+  retry_details: OffSessionPayment.RetryDetails;
 
   /**
    * Text that appears on the customer's statement as the statement descriptor for a
@@ -247,7 +247,7 @@ export interface OffSessionPayment {
    * Status of this OffSessionPayment, one of `pending`, `pending_retry`, `processing`,
    * `failed`, `canceled`, `requires_capture`, or `succeeded`.
    */
-  status: V2.Payments.OffSessionPayment.Status;
+  status: OffSessionPayment.Status;
 
   /**
    * Test clock that can be used to advance the retry attempts in a sandbox.
@@ -257,233 +257,225 @@ export interface OffSessionPayment {
   /**
    * The data that automatically creates a Transfer after the payment finalizes. Learn more about the use case for [connected accounts](https://docs.stripe.com/payments/connected-accounts).
    */
-  transfer_data?: V2.Payments.OffSessionPayment.TransferData;
+  transfer_data?: OffSessionPayment.TransferData;
 }
-export namespace V2 {
-  export namespace Payments {
-    export namespace OffSessionPayment {
-      export interface AmountDetails {
+export namespace OffSessionPayment {
+  export interface AmountDetails {
+    /**
+     * The amount the total transaction was discounted for.
+     */
+    discount_amount?: number;
+
+    /**
+     * Contains information about the error that occurred when validating the current amount details.
+     * This field populates when the amount details has a validation error that wasn't enforced because the [enforce_arithmetic_validation](https://docs.corp.stripe.com/api/payment_intents/create#create_payment_intent-amount_details-enforce_arithmetic_validation) parameter was set to `false`.
+     */
+    error?: AmountDetails.Error;
+
+    /**
+     * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+     */
+    line_items: Array<AmountDetails.LineItem>;
+
+    /**
+     * Contains information about the shipping portion of the amount.
+     */
+    shipping?: AmountDetails.Shipping;
+
+    /**
+     * Contains information about the tax portion of the amount.
+     */
+    tax?: AmountDetails.Tax;
+  }
+
+  export type Cadence = 'recurring' | 'unscheduled';
+
+  export interface Capture {
+    /**
+     * The timestamp when this payment is no longer eligible to be captured.
+     */
+    capture_before?: string;
+
+    /**
+     * The method to use to capture the payment.
+     */
+    capture_method: Capture.CaptureMethod;
+  }
+
+  export type FailureReason =
+    | 'authorization_expired'
+    | 'exceeded_retry_window'
+    | 'no_valid_payment_method'
+    | 'rejected_by_partner'
+    | 'retries_exhausted';
+
+  export interface PaymentDetails {
+    /**
+     * A unique value to identify the customer. This field is applicable only for card payments. For card payments, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+     */
+    customer_reference?: string;
+
+    /**
+     * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+     * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+     */
+    order_reference?: string;
+  }
+
+  export interface PaymentsOrchestration {
+    /**
+     * True when you want to enable payments orchestration for this off-session payment. False otherwise.
+     */
+    enabled: boolean;
+  }
+
+  export interface RetryDetails {
+    /**
+     * Number of authorization attempts so far.
+     */
+    attempts: number;
+
+    /**
+     * The pre-configured retry policy to use for the payment.
+     */
+    retry_policy?: string;
+
+    /**
+     * Indicates the strategy for how you want Stripe to retry the payment.
+     */
+    retry_strategy: RetryDetails.RetryStrategy;
+
+    /**
+     * The timestamp when this payment is no longer eligible to be retried. When this timestamp is reached, the payment will be marked as failed.
+     */
+    retry_until?: string;
+  }
+
+  export type Status =
+    | 'canceled'
+    | 'failed'
+    | 'paused'
+    | 'pending'
+    | 'pending_retry'
+    | 'processing'
+    | 'requires_capture'
+    | 'succeeded';
+
+  export interface TransferData {
+    /**
+     * The amount transferred to the destination account. This transfer will occur
+     * automatically after the payment succeeds. If no amount is specified, by default
+     * the entire payment amount is transferred to the destination account. The amount
+     * must be less than or equal to the
+     * [amount_requested](https://docs.stripe.com/api/v2/off-session-payments/object?api-version=2025-05-28.preview#v2_off_session_payment_object-amount_requested),
+     * and must be a positive integer representing how much to transfer in the smallest
+     * currency unit (e.g., 100 cents to charge $1.00).
+     */
+    amount?: number;
+
+    /**
+     * The account (if any) that the payment is attributed to for tax reporting, and
+     * where funds from the payment are transferred to after payment success.
+     */
+    destination: string;
+  }
+
+  export namespace AmountDetails {
+    export interface Error {
+      /**
+       * The code of the error that occurred when validating the current amount details.
+       */
+      code?: Error.Code;
+
+      /**
+       * A message providing more details about the error.
+       */
+      message?: string;
+    }
+
+    export interface LineItem {
+      /**
+       * The amount an item was discounted for. Positive integer.
+       */
+      discount_amount?: number;
+
+      /**
+       * Unique identifier of the product. At most 12 characters long.
+       */
+      product_code?: string;
+
+      /**
+       * Name of the product. At most 100 characters long.
+       */
+      product_name: string;
+
+      /**
+       * Number of items of the product. Positive integer.
+       */
+      quantity: number;
+
+      /**
+       * Contains information about the tax on the item.
+       */
+      tax?: LineItem.Tax;
+
+      /**
+       * Cost of the product. Non-negative integer.
+       */
+      unit_cost: number;
+
+      /**
+       * Unit of measure for the product. At most 12 characters long.
+       */
+      unit_of_measure?: string;
+    }
+
+    export interface Shipping {
+      /**
+       * Portion of the amount that is for shipping.
+       */
+      amount?: number;
+
+      /**
+       * The postal code that represents the shipping source.
+       */
+      from_postal_code?: string;
+
+      /**
+       * The postal code that represents the shipping destination.
+       */
+      to_postal_code?: string;
+    }
+
+    export interface Tax {
+      /**
+       * Total portion of the amount that is for tax.
+       */
+      total_tax_amount?: number;
+    }
+
+    export namespace Error {
+      export type Code =
+        | 'amount_details_amount_mismatch'
+        | 'amount_details_amount_greater_than_tax_shipping_discount';
+    }
+
+    export namespace LineItem {
+      export interface Tax {
         /**
-         * The amount the total transaction was discounted for.
+         * Total portion of the amount that is for tax.
          */
-        discount_amount?: number;
-
-        /**
-         * Contains information about the error that occurred when validating the current amount details.
-         * This field populates when the amount details has a validation error that wasn't enforced because the [enforce_arithmetic_validation](https://docs.corp.stripe.com/api/payment_intents/create#create_payment_intent-amount_details-enforce_arithmetic_validation) parameter was set to `false`.
-         */
-        error?: AmountDetails.Error;
-
-        /**
-         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
-         */
-        line_items: Array<AmountDetails.LineItem>;
-
-        /**
-         * Contains information about the shipping portion of the amount.
-         */
-        shipping?: AmountDetails.Shipping;
-
-        /**
-         * Contains information about the tax portion of the amount.
-         */
-        tax?: AmountDetails.Tax;
-      }
-
-      export type Cadence = 'recurring' | 'unscheduled';
-
-      export interface Capture {
-        /**
-         * The timestamp when this payment is no longer eligible to be captured.
-         */
-        capture_before?: string;
-
-        /**
-         * The method to use to capture the payment.
-         */
-        capture_method: Capture.CaptureMethod;
-      }
-
-      export type FailureReason =
-        | 'authorization_expired'
-        | 'exceeded_retry_window'
-        | 'no_valid_payment_method'
-        | 'rejected_by_partner'
-        | 'retries_exhausted';
-
-      export interface PaymentDetails {
-        /**
-         * A unique value to identify the customer. This field is applicable only for card payments. For card payments, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
-         */
-        customer_reference?: string;
-
-        /**
-         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
-         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
-         */
-        order_reference?: string;
-      }
-
-      export interface PaymentsOrchestration {
-        /**
-         * True when you want to enable payments orchestration for this off-session payment. False otherwise.
-         */
-        enabled: boolean;
-      }
-
-      export interface RetryDetails {
-        /**
-         * Number of authorization attempts so far.
-         */
-        attempts: number;
-
-        /**
-         * The pre-configured retry policy to use for the payment.
-         */
-        retry_policy?: string;
-
-        /**
-         * Indicates the strategy for how you want Stripe to retry the payment.
-         */
-        retry_strategy: RetryDetails.RetryStrategy;
-
-        /**
-         * The timestamp when this payment is no longer eligible to be retried. When this timestamp is reached, the payment will be marked as failed.
-         */
-        retry_until?: string;
-      }
-
-      export type Status =
-        | 'canceled'
-        | 'failed'
-        | 'paused'
-        | 'pending'
-        | 'pending_retry'
-        | 'processing'
-        | 'requires_capture'
-        | 'succeeded';
-
-      export interface TransferData {
-        /**
-         * The amount transferred to the destination account. This transfer will occur
-         * automatically after the payment succeeds. If no amount is specified, by default
-         * the entire payment amount is transferred to the destination account. The amount
-         * must be less than or equal to the
-         * [amount_requested](https://docs.stripe.com/api/v2/off-session-payments/object?api-version=2025-05-28.preview#v2_off_session_payment_object-amount_requested),
-         * and must be a positive integer representing how much to transfer in the smallest
-         * currency unit (e.g., 100 cents to charge $1.00).
-         */
-        amount?: number;
-
-        /**
-         * The account (if any) that the payment is attributed to for tax reporting, and
-         * where funds from the payment are transferred to after payment success.
-         */
-        destination: string;
-      }
-
-      export namespace AmountDetails {
-        export interface Error {
-          /**
-           * The code of the error that occurred when validating the current amount details.
-           */
-          code?: Error.Code;
-
-          /**
-           * A message providing more details about the error.
-           */
-          message?: string;
-        }
-
-        export interface LineItem {
-          /**
-           * The amount an item was discounted for. Positive integer.
-           */
-          discount_amount?: number;
-
-          /**
-           * Unique identifier of the product. At most 12 characters long.
-           */
-          product_code?: string;
-
-          /**
-           * Name of the product. At most 100 characters long.
-           */
-          product_name: string;
-
-          /**
-           * Number of items of the product. Positive integer.
-           */
-          quantity: number;
-
-          /**
-           * Contains information about the tax on the item.
-           */
-          tax?: LineItem.Tax;
-
-          /**
-           * Cost of the product. Non-negative integer.
-           */
-          unit_cost: number;
-
-          /**
-           * Unit of measure for the product. At most 12 characters long.
-           */
-          unit_of_measure?: string;
-        }
-
-        export interface Shipping {
-          /**
-           * Portion of the amount that is for shipping.
-           */
-          amount?: number;
-
-          /**
-           * The postal code that represents the shipping source.
-           */
-          from_postal_code?: string;
-
-          /**
-           * The postal code that represents the shipping destination.
-           */
-          to_postal_code?: string;
-        }
-
-        export interface Tax {
-          /**
-           * Total portion of the amount that is for tax.
-           */
-          total_tax_amount?: number;
-        }
-
-        export namespace Error {
-          export type Code =
-            | 'amount_details_amount_mismatch'
-            | 'amount_details_amount_greater_than_tax_shipping_discount';
-        }
-
-        export namespace LineItem {
-          export interface Tax {
-            /**
-             * Total portion of the amount that is for tax.
-             */
-            total_tax_amount?: number;
-          }
-        }
-      }
-
-      export namespace Capture {
-        export type CaptureMethod = 'automatic' | 'manual';
-      }
-
-      export namespace RetryDetails {
-        export type RetryStrategy =
-          | 'heuristic'
-          | 'none'
-          | 'scheduled'
-          | 'smart';
+        total_tax_amount?: number;
       }
     }
+  }
+
+  export namespace Capture {
+    export type CaptureMethod = 'automatic' | 'manual';
+  }
+
+  export namespace RetryDetails {
+    export type RetryStrategy = 'heuristic' | 'none' | 'scheduled' | 'smart';
   }
 }
 export namespace V2 {

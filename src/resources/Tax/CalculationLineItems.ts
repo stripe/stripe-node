@@ -41,7 +41,7 @@ export interface CalculationLineItem {
   /**
    * The address of the location where this line item's event or service takes place. Depending on the [tax code](https://docs.stripe.com/tax/tax-codes), providing a performance location is required, optional, or not supported. Use this to provide the address inline without pre-creating a [TaxLocation](https://docs.stripe.com/api/tax/location) object. Can't be used with `performance_location`.
    */
-  performance_location_details?: Tax.CalculationLineItem.PerformanceLocationDetails | null;
+  performance_location_details?: CalculationLineItem.PerformanceLocationDetails | null;
 
   /**
    * The ID of an existing [Product](https://docs.stripe.com/api/products/object).
@@ -73,13 +73,12 @@ export interface CalculationLineItem {
    */
   tax_code: string;
 }
-export namespace Tax {
-  export namespace CalculationLineItem {
-    export interface PerformanceLocationDetails {
-      address: Address;
-    }
+export namespace CalculationLineItem {
+  export interface PerformanceLocationDetails {
+    address: Address;
+  }
 
-    export type TaxBehavior = 'exclusive' | 'inclusive';
+  export type TaxBehavior = 'exclusive' | 'inclusive';
 
   export interface TaxBreakdown {
     /**
@@ -133,7 +132,7 @@ export namespace Tax {
       state: string | null;
     }
 
-    export type Sourcing = 'destination' | 'origin';
+    export type Sourcing = 'destination' | 'origin' | 'performance';
 
     export interface TaxRateDetails {
       /**
@@ -152,74 +151,51 @@ export namespace Tax {
       tax_type: TaxRateDetails.TaxType;
     }
 
-      export type Sourcing = 'destination' | 'origin' | 'performance';
+    export type TaxabilityReason =
+      | 'customer_exempt'
+      | 'not_collecting'
+      | 'not_subject_to_tax'
+      | 'not_supported'
+      | 'portion_product_exempt'
+      | 'portion_reduced_rated'
+      | 'portion_standard_rated'
+      | 'product_exempt'
+      | 'product_exempt_holiday'
+      | 'proportionally_rated'
+      | 'reduced_rated'
+      | 'reverse_charge'
+      | 'standard_rated'
+      | 'taxable_basis_reduced'
+      | 'zero_rated';
 
     export namespace Jurisdiction {
       export type Level = 'city' | 'country' | 'county' | 'district' | 'state';
     }
 
-        /**
-         * The tax rate percentage as a string. For example, 8.5% is represented as "8.5".
-         */
-        percentage_decimal: string;
-
-        /**
-         * The tax type, such as `vat` or `sales_tax`.
-         */
-        tax_type: TaxRateDetails.TaxType;
-      }
-
-      export type TaxabilityReason =
-        | 'customer_exempt'
-        | 'not_collecting'
-        | 'not_subject_to_tax'
-        | 'not_supported'
-        | 'portion_product_exempt'
-        | 'portion_reduced_rated'
-        | 'portion_standard_rated'
-        | 'product_exempt'
-        | 'product_exempt_holiday'
-        | 'proportionally_rated'
-        | 'reduced_rated'
-        | 'reverse_charge'
-        | 'standard_rated'
-        | 'taxable_basis_reduced'
-        | 'zero_rated';
-
-      export namespace Jurisdiction {
-        export type Level =
-          | 'city'
-          | 'country'
-          | 'county'
-          | 'district'
-          | 'state';
-      }
-
-      export namespace TaxRateDetails {
-        export type TaxType =
-          | 'admissions_tax'
-          | 'amusement_tax'
-          | 'attendance_tax'
-          | 'communications_tax'
-          | 'entertainment_tax'
-          | 'gross_receipts_tax'
-          | 'gst'
-          | 'hospitality_tax'
-          | 'hst'
-          | 'igst'
-          | 'jct'
-          | 'lease_tax'
-          | 'luxury_tax'
-          | 'pst'
-          | 'qst'
-          | 'resort_tax'
-          | 'retail_delivery_fee'
-          | 'rst'
-          | 'sales_tax'
-          | 'service_tax'
-          | 'tourism_tax'
-          | 'vat';
-      }
+    export namespace TaxRateDetails {
+      export type TaxType =
+        | 'admissions_tax'
+        | 'amusement_tax'
+        | 'attendance_tax'
+        | 'communications_tax'
+        | 'entertainment_tax'
+        | 'gross_receipts_tax'
+        | 'gst'
+        | 'hospitality_tax'
+        | 'hst'
+        | 'igst'
+        | 'jct'
+        | 'lease_tax'
+        | 'luxury_tax'
+        | 'pst'
+        | 'qst'
+        | 'resort_tax'
+        | 'retail_delivery_fee'
+        | 'rst'
+        | 'sales_tax'
+        | 'service_tax'
+        | 'tourism_tax'
+        | 'vat';
     }
   }
 }

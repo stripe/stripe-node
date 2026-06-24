@@ -374,7 +374,7 @@ export interface Transaction {
   /**
    * Array of onchain crypto transactions linked to this resource.
    */
-  crypto_transactions?: Array<Issuing.Transaction.CryptoTransaction> | null;
+  crypto_transactions?: Array<Transaction.CryptoTransaction> | null;
 
   /**
    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -456,6 +456,23 @@ export namespace Transaction {
     cashback_amount: number | null;
   }
 
+  export interface CryptoTransaction {
+    /**
+     * The confirmed crypto transaction details when `type` is `crypto_transaction_confirmed`; otherwise null.
+     */
+    crypto_transaction_confirmed: CryptoTransaction.CryptoTransactionConfirmed | null;
+
+    /**
+     * The failed crypto transaction details when `type` is `crypto_transaction_failed`; otherwise null.
+     */
+    crypto_transaction_failed: CryptoTransaction.CryptoTransactionFailed | null;
+
+    /**
+     * The crypto transaction variant for this array entry.
+     */
+    type: string;
+  }
+
   export interface MerchantData {
     /**
      * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
@@ -488,6 +505,11 @@ export namespace Transaction {
     network_id: string;
 
     /**
+     * The identifier of the payment facilitator (PayFac) that processed this authorization, as assigned by the card network. Null when the transaction was not processed through a PayFac.
+     */
+    payment_facilitator_id?: string | null;
+
+    /**
      * Postal code where the seller is located
      */
     postal_code: string | null;
@@ -496,6 +518,11 @@ export namespace Transaction {
      * State where the seller is located
      */
     state: string | null;
+
+    /**
+     * The identifier of the sub-merchant involved in this authorization, as assigned by the payment facilitator. Null when the transaction was not processed through a PayFac or when no sub-merchant ID was provided.
+     */
+    sub_merchant_id?: string | null;
 
     /**
      * The seller's tax identification number. Currently populated for French merchants only.
@@ -578,6 +605,155 @@ export namespace Transaction {
 
   export type Wallet = 'apple_pay' | 'google_pay' | 'samsung_pay';
 
+  export namespace CryptoTransaction {
+    export interface CryptoTransactionConfirmed {
+      /**
+       * The crypto amount for the confirmed transaction.
+       */
+      amount: string;
+
+      /**
+       * The upcharged MCC amount, if one was applied.
+       */
+      amount_mcc_upcharged: string | null;
+
+      /**
+       * The blockchain network for the confirmed transaction.
+       */
+      chain: string;
+
+      /**
+       * When the transaction was confirmed onchain.
+       */
+      confirmed_at: number;
+
+      /**
+       * The currency of the crypto transaction amount.
+       */
+      currency: string;
+
+      /**
+       * Fees associated with the transaction.
+       */
+      fees: Array<CryptoTransactionConfirmed.Fee>;
+
+      /**
+       * The source wallet address for the transaction.
+       */
+      from_address: string;
+
+      /**
+       * Memo metadata attached to the transaction, if present.
+       */
+      memo: string | null;
+
+      /**
+       * The destination wallet address for the transaction.
+       */
+      to_address: string;
+
+      /**
+       * The blockchain transaction hash.
+       */
+      transaction_hash: string;
+    }
+
+    export interface CryptoTransactionFailed {
+      /**
+       * The crypto amount for the failed transaction.
+       */
+      amount: string;
+
+      /**
+       * The upcharged MCC amount, if one was applied.
+       */
+      amount_mcc_upcharged: string | null;
+
+      /**
+       * The blockchain network for the failed transaction.
+       */
+      chain: string;
+
+      /**
+       * The currency of the crypto transaction amount.
+       */
+      currency: string;
+
+      /**
+       * When the transaction failed.
+       */
+      failed_at: number;
+
+      /**
+       * The reason the transaction failed.
+       */
+      failure_reason: string;
+
+      /**
+       * Fees associated with the transaction.
+       */
+      fees: Array<CryptoTransactionFailed.Fee>;
+
+      /**
+       * The source wallet address for the attempted transaction.
+       */
+      from_address: string;
+
+      /**
+       * Memo metadata attached to the transaction, if present.
+       */
+      memo: string | null;
+
+      /**
+       * The destination wallet address for the attempted transaction when one exists.
+       */
+      to_address: string | null;
+
+      /**
+       * The blockchain transaction hash when one exists.
+       */
+      transaction_hash: string | null;
+    }
+
+    export namespace CryptoTransactionConfirmed {
+      export interface Fee {
+        /**
+         * The fee amount.
+         */
+        amount: string;
+
+        /**
+         * The fee currency.
+         */
+        currency: string;
+
+        /**
+         * The fee type.
+         */
+        type: string;
+      }
+    }
+
+    export namespace CryptoTransactionFailed {
+      export interface Fee {
+        /**
+         * The fee amount.
+         */
+        amount: string;
+
+        /**
+         * The fee currency.
+         */
+        currency: string;
+
+        /**
+         * The fee type.
+         */
+        type: string;
+      }
+    }
+  }
+
   export namespace PurchaseDetails {
     export interface Fleet {
       /**
@@ -601,24 +777,7 @@ export namespace Transaction {
       service_type: string | null;
     }
 
-    export interface CryptoTransaction {
-      /**
-       * The confirmed crypto transaction details when `type` is `crypto_transaction_confirmed`; otherwise null.
-       */
-      crypto_transaction_confirmed: CryptoTransaction.CryptoTransactionConfirmed | null;
-
-      /**
-       * The failed crypto transaction details when `type` is `crypto_transaction_failed`; otherwise null.
-       */
-      crypto_transaction_failed: CryptoTransaction.CryptoTransactionFailed | null;
-
-      /**
-       * The crypto transaction variant for this array entry.
-       */
-      type: string;
-    }
-
-    export interface MerchantData {
+    export interface Flight {
       /**
        * The time that the flight departed.
        */
@@ -642,47 +801,7 @@ export namespace Transaction {
       /**
        * The travel agency that issued the ticket.
        */
-      name: string | null;
-
-      /**
-       * Identifier assigned to the seller by the card network. Different card networks may assign different network_id fields to the same merchant.
-       */
-      network_id: string;
-
-      /**
-       * The identifier of the payment facilitator (PayFac) that processed this authorization, as assigned by the card network. Null when the transaction was not processed through a PayFac.
-       */
-      payment_facilitator_id?: string | null;
-
-      /**
-       * Postal code where the seller is located
-       */
-      postal_code: string | null;
-
-      /**
-       * State where the seller is located
-       */
-      state: string | null;
-
-      /**
-       * The identifier of the sub-merchant involved in this authorization, as assigned by the payment facilitator. Null when the transaction was not processed through a PayFac or when no sub-merchant ID was provided.
-       */
-      sub_merchant_id?: string | null;
-
-      /**
-       * The seller's tax identification number. Currently populated for French merchants only.
-       */
-      tax_id: string | null;
-
-      /**
-       * An ID assigned by the seller to the location of the sale.
-       */
-      terminal_id: string | null;
-
-      /**
-       * URL provided by the merchant on a 3DS request
-       */
-      url: string | null;
+      travel_agency: string | null;
     }
 
     export interface Fuel {
@@ -746,161 +865,8 @@ export namespace Transaction {
       unit_cost: number | null;
     }
 
-    export type Type = 'capture' | 'refund';
-
-    export type Wallet = 'apple_pay' | 'google_pay' | 'samsung_pay';
-
-    export namespace CryptoTransaction {
-      export interface CryptoTransactionConfirmed {
-        /**
-         * The crypto amount for the confirmed transaction.
-         */
-        amount: string;
-
-        /**
-         * The upcharged MCC amount, if one was applied.
-         */
-        amount_mcc_upcharged: string | null;
-
-        /**
-         * The blockchain network for the confirmed transaction.
-         */
-        chain: string;
-
-        /**
-         * When the transaction was confirmed onchain.
-         */
-        confirmed_at: number;
-
-        /**
-         * The currency of the crypto transaction amount.
-         */
-        currency: string;
-
-        /**
-         * Fees associated with the transaction.
-         */
-        fees: Array<CryptoTransactionConfirmed.Fee>;
-
-        /**
-         * The source wallet address for the transaction.
-         */
-        from_address: string;
-
-        /**
-         * Memo metadata attached to the transaction, if present.
-         */
-        memo: string | null;
-
-        /**
-         * The destination wallet address for the transaction.
-         */
-        to_address: string;
-
-        /**
-         * The blockchain transaction hash.
-         */
-        transaction_hash: string;
-      }
-
-      export interface CryptoTransactionFailed {
-        /**
-         * The crypto amount for the failed transaction.
-         */
-        amount: string;
-
-        /**
-         * The upcharged MCC amount, if one was applied.
-         */
-        amount_mcc_upcharged: string | null;
-
-        /**
-         * The blockchain network for the failed transaction.
-         */
-        chain: string;
-
-        /**
-         * The currency of the crypto transaction amount.
-         */
-        currency: string;
-
-        /**
-         * When the transaction failed.
-         */
-        failed_at: number;
-
-        /**
-         * The reason the transaction failed.
-         */
-        failure_reason: string;
-
-        /**
-         * Fees associated with the transaction.
-         */
-        fees: Array<CryptoTransactionFailed.Fee>;
-
-        /**
-         * The source wallet address for the attempted transaction.
-         */
-        from_address: string;
-
-        /**
-         * Memo metadata attached to the transaction, if present.
-         */
-        memo: string | null;
-
-        /**
-         * The destination wallet address for the attempted transaction when one exists.
-         */
-        to_address: string | null;
-
-        /**
-         * The blockchain transaction hash when one exists.
-         */
-        transaction_hash: string | null;
-      }
-
-      export namespace CryptoTransactionConfirmed {
-        export interface Fee {
-          /**
-           * The fee amount.
-           */
-          amount: string;
-
-          /**
-           * The fee currency.
-           */
-          currency: string;
-
-          /**
-           * The fee type.
-           */
-          type: string;
-        }
-      }
-
-      export namespace CryptoTransactionFailed {
-        export interface Fee {
-          /**
-           * The fee amount.
-           */
-          amount: string;
-
-          /**
-           * The fee currency.
-           */
-          currency: string;
-
-          /**
-           * The fee type.
-           */
-          type: string;
-        }
-      }
-    }
-
-    export namespace PurchaseDetails {
-      export interface Fleet {
+    export namespace Fleet {
+      export interface CardholderPromptData {
         /**
          * Driver ID.
          */

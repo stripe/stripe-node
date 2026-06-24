@@ -83,7 +83,7 @@ export interface CurrencyConversion {
   /**
    * The from block containing what was debited.
    */
-  from: V2.MoneyManagement.CurrencyConversion.From;
+  from: CurrencyConversion.From;
 
   /**
    * If the CurrencyConversion was performed in livemode or not.
@@ -93,25 +93,21 @@ export interface CurrencyConversion {
   /**
    * The to block containing what was credited.
    */
-  to: V2.MoneyManagement.CurrencyConversion.To;
+  to: CurrencyConversion.To;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace CurrencyConversion {
-      export interface From {
-        /**
-         * Amount object.
-         */
-        amount: V2Amount;
-      }
+export namespace CurrencyConversion {
+  export interface From {
+    /**
+     * Amount object.
+     */
+    amount: V2Amount;
+  }
 
-      export interface To {
-        /**
-         * Amount object.
-         */
-        amount: V2Amount;
-      }
-    }
+  export interface To {
+    /**
+     * Amount object.
+     */
+    amount: V2Amount;
   }
 }
 export namespace V2 {

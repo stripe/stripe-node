@@ -73,12 +73,12 @@ export interface CustomerEvaluation {
   /**
    * The type of evaluation event.
    */
-  event_type: Radar.CustomerEvaluation.EventType;
+  event_type: CustomerEvaluation.EventType;
 
   /**
    * A list of events that have been reported on this customer evaluation.
    */
-  events: Array<Radar.CustomerEvaluation.Event> | null;
+  events: Array<CustomerEvaluation.Event> | null;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -88,115 +88,113 @@ export interface CustomerEvaluation {
   /**
    * A hash of signal objects providing Radar's evaluation of the customer.
    */
-  signals: Radar.CustomerEvaluation.Signals | null;
+  signals: CustomerEvaluation.Signals | null;
 
   /**
    * The outcome status reported for this evaluation: allowed, restricted, or blocked.
    */
   status?: string;
 }
-export namespace Radar {
-  export namespace CustomerEvaluation {
-    export type EventType = 'login' | 'registration';
+export namespace CustomerEvaluation {
+  export type EventType = 'login' | 'registration';
 
-    export interface Event {
-      /**
-       * Data about a failed login event.
-       */
-      login_failed?: Event.LoginFailed;
+  export interface Event {
+    /**
+     * Data about a failed login event.
+     */
+    login_failed?: Event.LoginFailed;
 
-      /**
-       * Time at which the event occurred. Measured in seconds since the Unix epoch.
-       */
-      occurred_at: number;
+    /**
+     * Time at which the event occurred. Measured in seconds since the Unix epoch.
+     */
+    occurred_at: number;
 
-      /**
-       * Data about a failed registration event.
-       */
-      registration_failed?: Event.RegistrationFailed;
+    /**
+     * Data about a failed registration event.
+     */
+    registration_failed?: Event.RegistrationFailed;
 
+    /**
+     * The type of event that occurred.
+     */
+    type: string;
+  }
+
+  export interface Signals {
+    account_sharing?: Signals.AccountSharing;
+
+    multi_accounting?: Signals.MultiAccounting;
+  }
+
+  export namespace Event {
+    export interface LoginFailed {
       /**
-       * The type of event that occurred.
+       * The reason why this login failed.
        */
-      type: string;
+      reason: string;
     }
 
-    export interface Signals {
-      account_sharing?: Signals.AccountSharing;
+    export interface RegistrationFailed {
+      /**
+       * The reason why this registration failed.
+       */
+      reason: string;
+    }
+  }
 
-      multi_accounting?: Signals.MultiAccounting;
+  export namespace Signals {
+    export interface AccountSharing {
+      /**
+       * Time at which the signal was evaluated. Measured in seconds since the Unix epoch.
+       */
+      evaluated_at: number;
+
+      /**
+       * The risk level for this signal.
+       */
+      risk_level?: AccountSharing.RiskLevel;
+
+      /**
+       * Score for this signal (between 0.0 and 100.0).
+       */
+      score: number;
     }
 
-    export namespace Event {
-      export interface LoginFailed {
-        /**
-         * The reason why this login failed.
-         */
-        reason: string;
-      }
+    export interface MultiAccounting {
+      /**
+       * Time at which the signal was evaluated. Measured in seconds since the Unix epoch.
+       */
+      evaluated_at: number;
 
-      export interface RegistrationFailed {
-        /**
-         * The reason why this registration failed.
-         */
-        reason: string;
-      }
+      /**
+       * The risk level for this signal.
+       */
+      risk_level?: MultiAccounting.RiskLevel;
+
+      /**
+       * Score for this signal (between 0.0 and 100.0).
+       */
+      score: number;
     }
 
-    export namespace Signals {
-      export interface AccountSharing {
-        /**
-         * Time at which the signal was evaluated. Measured in seconds since the Unix epoch.
-         */
-        evaluated_at: number;
+    export namespace AccountSharing {
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'not_assessed'
+        | 'unknown';
+    }
 
-        /**
-         * The risk level for this signal.
-         */
-        risk_level?: AccountSharing.RiskLevel;
-
-        /**
-         * Score for this signal (between 0.0 and 100.0).
-         */
-        score: number;
-      }
-
-      export interface MultiAccounting {
-        /**
-         * Time at which the signal was evaluated. Measured in seconds since the Unix epoch.
-         */
-        evaluated_at: number;
-
-        /**
-         * The risk level for this signal.
-         */
-        risk_level?: MultiAccounting.RiskLevel;
-
-        /**
-         * Score for this signal (between 0.0 and 100.0).
-         */
-        score: number;
-      }
-
-      export namespace AccountSharing {
-        export type RiskLevel =
-          | 'elevated'
-          | 'highest'
-          | 'low'
-          | 'normal'
-          | 'not_assessed'
-          | 'unknown';
-      }
-
-      export namespace MultiAccounting {
-        export type RiskLevel =
-          | 'elevated'
-          | 'highest'
-          | 'low'
-          | 'normal'
-          | 'not_assessed'
-          | 'unknown';
-      }
+    export namespace MultiAccounting {
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'not_assessed'
+        | 'unknown';
     }
   }
 }

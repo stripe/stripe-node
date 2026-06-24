@@ -146,7 +146,7 @@ export interface OutboundTransfer {
   /**
    * Details about the network used for the OutboundTransfer.
    */
-  network_details?: Treasury.OutboundTransfer.NetworkDetails | null;
+  network_details?: OutboundTransfer.NetworkDetails | null;
 
   /**
    * Details about a returned OutboundTransfer. Only set when the status is `returned`.
@@ -187,6 +187,18 @@ export namespace OutboundTransfer {
     type: DestinationPaymentMethodDetails.Type;
 
     us_bank_account?: DestinationPaymentMethodDetails.UsBankAccount;
+  }
+
+  export interface NetworkDetails {
+    /**
+     * Details about an ACH transaction.
+     */
+    ach?: NetworkDetails.Ach | null;
+
+    /**
+     * The type of flow that originated the OutboundTransfer.
+     */
+    type: 'ach';
   }
 
   export interface ReturnedDetails {
@@ -256,19 +268,7 @@ export namespace OutboundTransfer {
       name: string | null;
     }
 
-    export interface NetworkDetails {
-      /**
-       * Details about an ACH transaction.
-       */
-      ach?: NetworkDetails.Ach | null;
-
-      /**
-       * The type of flow that originated the OutboundTransfer.
-       */
-      type: 'ach';
-    }
-
-    export interface ReturnedDetails {
+    export interface FinancialAccount {
       /**
        * Token of the FinancialAccount.
        */
@@ -333,6 +333,15 @@ export namespace OutboundTransfer {
     }
   }
 
+  export namespace NetworkDetails {
+    export interface Ach {
+      /**
+       * ACH Addenda record
+       */
+      addenda: string | null;
+    }
+  }
+
   export namespace ReturnedDetails {
     export type Code =
       | 'account_closed'
@@ -368,138 +377,10 @@ export namespace OutboundTransfer {
        */
       imad: string | null;
 
-      us_domestic_wire?: TrackingDetails.UsDomesticWire;
-    }
-
-    export namespace DestinationPaymentMethodDetails {
-      export interface BillingDetails {
-        address: Address;
-
-        /**
-         * Email address.
-         */
-        email: string | null;
-
-        /**
-         * Full name.
-         */
-        name: string | null;
-      }
-
-      export interface FinancialAccount {
-        /**
-         * Token of the FinancialAccount.
-         */
-        id: string;
-
-        /**
-         * The rails used to send funds.
-         */
-        network: 'stripe';
-      }
-
-      export type Type = 'financial_account' | 'us_bank_account';
-
-      export interface UsBankAccount {
-        /**
-         * Account holder type: individual or company.
-         */
-        account_holder_type: UsBankAccount.AccountHolderType | null;
-
-        /**
-         * Account type: checkings or savings. Defaults to checking if omitted.
-         */
-        account_type: UsBankAccount.AccountType | null;
-
-        /**
-         * Name of the bank associated with the bank account.
-         */
-        bank_name: string | null;
-
-        /**
-         * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
-         */
-        fingerprint: string | null;
-
-        /**
-         * Last four digits of the bank account number.
-         */
-        last4: string | null;
-
-        /**
-         * ID of the mandate used to make this payment.
-         */
-        mandate?: string | Mandate;
-
-        /**
-         * The network rails used. See the [docs](https://docs.stripe.com/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
-         */
-        network: UsBankAccount.Network;
-
-        /**
-         * Routing number of the bank account.
-         */
-        routing_number: string | null;
-      }
-
-      export namespace UsBankAccount {
-        export type AccountHolderType = 'company' | 'individual';
-
-        export type AccountType = 'checking' | 'savings';
-
-        export type Network = 'ach' | 'us_domestic_wire';
-      }
-    }
-
-    export namespace NetworkDetails {
-      export interface Ach {
-        /**
-         * ACH Addenda record
-         */
-        addenda: string | null;
-      }
-    }
-
-    export namespace ReturnedDetails {
-      export type Code =
-        | 'account_closed'
-        | 'account_frozen'
-        | 'bank_account_restricted'
-        | 'bank_ownership_changed'
-        | 'declined'
-        | 'incorrect_account_holder_name'
-        | 'invalid_account_number'
-        | 'invalid_currency'
-        | 'no_account'
-        | 'other';
-    }
-
-    export namespace TrackingDetails {
-      export interface Ach {
-        /**
-         * ACH trace ID of the OutboundTransfer for transfers sent over the `ach` network.
-         */
-        trace_id: string;
-      }
-
-      export type Type = 'ach' | 'us_domestic_wire';
-
-      export interface UsDomesticWire {
-        /**
-         * CHIPS System Sequence Number (SSN) of the OutboundTransfer for transfers sent over the `us_domestic_wire` network.
-         */
-        chips: string | null;
-
-        /**
-         * IMAD of the OutboundTransfer for transfers sent over the `us_domestic_wire` network.
-         */
-        imad: string | null;
-
-        /**
-         * OMAD of the OutboundTransfer for transfers sent over the `us_domestic_wire` network.
-         */
-        omad: string | null;
-      }
+      /**
+       * OMAD of the OutboundTransfer for transfers sent over the `us_domestic_wire` network.
+       */
+      omad: string | null;
     }
   }
 }

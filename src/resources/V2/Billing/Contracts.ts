@@ -435,12 +435,12 @@ export interface Contract {
   /**
    * The billing settings for the contract.
    */
-  billing_settings?: V2.Billing.Contract.BillingSettings;
+  billing_settings?: Contract.BillingSettings;
 
   /**
    * The contract line details of the contract. Only populated when `contract_line_details` is passed in the `include` parameter.
    */
-  contract_line_details: Array<V2.Billing.Contract.ContractLineDetail>;
+  contract_line_details: Array<Contract.ContractLineDetail>;
 
   /**
    * A unique user-provided contract number e.g. C-2026-0001.
@@ -450,7 +450,7 @@ export interface Contract {
   /**
    * The computed total value of all contract lines.
    */
-  contract_value_details: V2.Billing.Contract.ContractValueDetails;
+  contract_value_details: Contract.ContractValueDetails;
 
   /**
    * Timestamp of when the object was created.
@@ -470,7 +470,7 @@ export interface Contract {
   /**
    * The license quantities of the contract. Only populated when `license_quantities` is passed in the `include` parameter.
    */
-  license_quantities: Array<V2.Billing.Contract.LicenseQuantity>;
+  license_quantities: Array<Contract.LicenseQuantity>;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -485,856 +485,850 @@ export interface Contract {
   /**
    * The one-time fees of the contract. Only populated when `one_time_fees` is passed in the `include` parameter.
    */
-  one_time_fees?: Array<V2.Billing.Contract.OneTimeFee>;
+  one_time_fees?: Array<Contract.OneTimeFee>;
 
   /**
    * The pricing lines of the contract. Only populated when `pricing_lines` is passed in the `include` parameter.
    */
-  pricing_lines: Array<V2.Billing.Contract.PricingLine>;
+  pricing_lines: Array<Contract.PricingLine>;
 
   /**
    * The pricing overrides of the contract. Only populated when `pricing_overrides` is passed in the `include` parameter.
    */
-  pricing_overrides: Array<V2.Billing.Contract.PricingOverride>;
+  pricing_overrides: Array<Contract.PricingOverride>;
 
   /**
    * The current status of the contract.
    */
-  status: V2.Billing.Contract.Status;
+  status: Contract.Status;
 
   /**
    * Information about the contract status transitions.
    */
-  status_details: V2.Billing.Contract.StatusDetails;
+  status_details: Contract.StatusDetails;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace Contract {
-      export interface BillingSettings {
+export namespace Contract {
+  export interface BillingSettings {
+    /**
+     * Billing settings details for the contract.
+     */
+    contract_billing_details?: BillingSettings.ContractBillingDetails;
+  }
+
+  export interface ContractLineDetail {
+    /**
+     * The ID of the contract line.
+     */
+    contract_line: string;
+
+    /**
+     * The computed value details for the contract line.
+     */
+    contract_line_value_details: ContractLineDetail.ContractLineValueDetails;
+
+    /**
+     * Timestamp of when the object was created.
+     */
+    created: string;
+
+    /**
+     * Timestamp to indicate when the contract line ends.
+     */
+    ends_at: ContractLineDetail.EndsAt;
+
+    /**
+     * Set of key-value pairs that you can attach to an object.
+     */
+    metadata?: Metadata;
+
+    /**
+     * List of overrides applied to the contract line.
+     */
+    overrides: Array<ContractLineDetail.Override>;
+
+    /**
+     * The pricing configuration for the contract line.
+     */
+    pricing: ContractLineDetail.Pricing;
+
+    /**
+     * Timestamp to indicate when the contract line starts.
+     */
+    starts_at: ContractLineDetail.StartsAt;
+  }
+
+  export interface ContractValueDetails {
+    /**
+     * The total value represented as a decimal string in minor currency units.
+     */
+    total: string;
+  }
+
+  export interface LicenseQuantity {
+    /**
+     * The ID of the license pricing.
+     */
+    license_pricing_id: string;
+
+    /**
+     * The type of the license pricing.
+     */
+    license_pricing_type: LicenseQuantity.LicensePricingType;
+
+    /**
+     * The ID of the pricing line associated with this license quantity.
+     */
+    pricing_line: string;
+
+    /**
+     * The current quantity of the license.
+     */
+    quantity: number;
+  }
+
+  export interface OneTimeFee {
+    /**
+     * The resolved bill schedule for the fee.
+     */
+    bill_schedule: Array<OneTimeFee.BillSchedule>;
+
+    /**
+     * The type of billable item that this fee references.
+     */
+    billable_item_type: 'product';
+
+    /**
+     * Details for a product billable target. Set when `billable_item_type` is `product`.
+     */
+    product_details?: OneTimeFee.ProductDetails;
+  }
+
+  export interface PricingLine {
+    /**
+     * Resolved timestamp when the pricing line ends.
+     */
+    ends_at: PricingLine.EndsAt;
+
+    /**
+     * The user-provided lookup key for the pricing line.
+     */
+    lookup_key?: string;
+
+    /**
+     * Set of key-value pairs that you can attach to an object.
+     */
+    metadata?: Metadata;
+
+    /**
+     * The pricing configuration for the pricing line.
+     */
+    pricing: PricingLine.Pricing;
+
+    /**
+     * The ID of the pricing line.
+     */
+    pricing_line: string;
+
+    /**
+     * Resolved timestamp when the pricing line starts.
+     */
+    starts_at: PricingLine.StartsAt;
+  }
+
+  export interface PricingOverride {
+    /**
+     * Resolved timestamp when the pricing override ends.
+     */
+    ends_at: PricingOverride.EndsAt;
+
+    /**
+     * The user-provided lookup key for the pricing override.
+     */
+    lookup_key?: string;
+
+    /**
+     * Details for a multiplier override.
+     */
+    multiplier?: PricingOverride.Multiplier;
+
+    /**
+     * Details for an overwrite_price override.
+     */
+    overwrite_price?: PricingOverride.OverwritePrice;
+
+    /**
+     * The ID of the pricing override.
+     */
+    pricing_override: string;
+
+    /**
+     * The priority of this override relative to others. Lower number = higher priority.
+     */
+    priority: number;
+
+    /**
+     * Resolved timestamp when the pricing override starts.
+     */
+    starts_at: PricingOverride.StartsAt;
+
+    /**
+     * The type of pricing override.
+     */
+    type: PricingOverride.Type;
+  }
+
+  export type Status = 'active' | 'canceled' | 'draft' | 'ended';
+
+  export interface StatusDetails {
+    /**
+     * Details of the active contract status.
+     */
+    active?: StatusDetails.Active;
+
+    /**
+     * Details of the canceled contract status.
+     */
+    canceled?: StatusDetails.Canceled;
+  }
+
+  export namespace BillingSettings {
+    export interface ContractBillingDetails {
+      /**
+       * The bill settings details.
+       */
+      bill_settings_details?: ContractBillingDetails.BillSettingsDetails;
+
+      /**
+       * The billing profile details.
+       */
+      billing_profile_details: ContractBillingDetails.BillingProfileDetails;
+
+      /**
+       * The collection settings details.
+       */
+      collection_settings_details: ContractBillingDetails.CollectionSettingsDetails;
+    }
+
+    export namespace ContractBillingDetails {
+      export interface BillSettingsDetails {
         /**
-         * Billing settings details for the contract.
+         * Calculation settings.
          */
-        contract_billing_details?: BillingSettings.ContractBillingDetails;
+        calculation?: BillSettingsDetails.Calculation;
+
+        /**
+         * Invoice settings.
+         */
+        invoice?: BillSettingsDetails.Invoice;
       }
 
-      export interface ContractLineDetail {
+      export interface BillingProfileDetails {
         /**
-         * The ID of the contract line.
+         * The customer who pays for the contract invoice.
          */
-        contract_line: string;
+        customer: string;
 
         /**
-         * The computed value details for the contract line.
+         * The default payment method for the contract.
          */
-        contract_line_value_details: ContractLineDetail.ContractLineValueDetails;
-
-        /**
-         * Timestamp of when the object was created.
-         */
-        created: string;
-
-        /**
-         * Timestamp to indicate when the contract line ends.
-         */
-        ends_at: ContractLineDetail.EndsAt;
-
-        /**
-         * Set of key-value pairs that you can attach to an object.
-         */
-        metadata?: Metadata;
-
-        /**
-         * List of overrides applied to the contract line.
-         */
-        overrides: Array<ContractLineDetail.Override>;
-
-        /**
-         * The pricing configuration for the contract line.
-         */
-        pricing: ContractLineDetail.Pricing;
-
-        /**
-         * Timestamp to indicate when the contract line starts.
-         */
-        starts_at: ContractLineDetail.StartsAt;
+        default_payment_method?: string;
       }
 
-      export interface ContractValueDetails {
+      export interface CollectionSettingsDetails {
         /**
-         * The total value represented as a decimal string in minor currency units.
+         * The collection method.
          */
-        total: string;
+        collection_method: CollectionSettingsDetails.CollectionMethod;
+
+        /**
+         * The payment method configuration.
+         */
+        payment_method_configuration?: string;
       }
 
-      export interface LicenseQuantity {
-        /**
-         * The ID of the license pricing.
-         */
-        license_pricing_id: string;
-
-        /**
-         * The type of the license pricing.
-         */
-        license_pricing_type: LicenseQuantity.LicensePricingType;
-
-        /**
-         * The ID of the pricing line associated with this license quantity.
-         */
-        pricing_line: string;
-
-        /**
-         * The current quantity of the license.
-         */
-        quantity: number;
-      }
-
-      export interface OneTimeFee {
-        /**
-         * The resolved bill schedule for the fee.
-         */
-        bill_schedule: Array<OneTimeFee.BillSchedule>;
-
-        /**
-         * The type of billable item that this fee references.
-         */
-        billable_item_type: 'product';
-
-        /**
-         * Details for a product billable target. Set when `billable_item_type` is `product`.
-         */
-        product_details?: OneTimeFee.ProductDetails;
-      }
-
-      export interface PricingLine {
-        /**
-         * Resolved timestamp when the pricing line ends.
-         */
-        ends_at: PricingLine.EndsAt;
-
-        /**
-         * The user-provided lookup key for the pricing line.
-         */
-        lookup_key?: string;
-
-        /**
-         * Set of key-value pairs that you can attach to an object.
-         */
-        metadata?: Metadata;
-
-        /**
-         * The pricing configuration for the pricing line.
-         */
-        pricing: PricingLine.Pricing;
-
-        /**
-         * The ID of the pricing line.
-         */
-        pricing_line: string;
-
-        /**
-         * Resolved timestamp when the pricing line starts.
-         */
-        starts_at: PricingLine.StartsAt;
-      }
-
-      export interface PricingOverride {
-        /**
-         * Resolved timestamp when the pricing override ends.
-         */
-        ends_at: PricingOverride.EndsAt;
-
-        /**
-         * The user-provided lookup key for the pricing override.
-         */
-        lookup_key?: string;
-
-        /**
-         * Details for a multiplier override.
-         */
-        multiplier?: PricingOverride.Multiplier;
-
-        /**
-         * Details for an overwrite_price override.
-         */
-        overwrite_price?: PricingOverride.OverwritePrice;
-
-        /**
-         * The ID of the pricing override.
-         */
-        pricing_override: string;
-
-        /**
-         * The priority of this override relative to others. Lower number = higher priority.
-         */
-        priority: number;
-
-        /**
-         * Resolved timestamp when the pricing override starts.
-         */
-        starts_at: PricingOverride.StartsAt;
-
-        /**
-         * The type of pricing override.
-         */
-        type: PricingOverride.Type;
-      }
-
-      export type Status = 'active' | 'canceled' | 'draft' | 'ended';
-
-      export interface StatusDetails {
-        /**
-         * Details of the active contract status.
-         */
-        active?: StatusDetails.Active;
-
-        /**
-         * Details of the canceled contract status.
-         */
-        canceled?: StatusDetails.Canceled;
-      }
-
-      export namespace BillingSettings {
-        export interface ContractBillingDetails {
+      export namespace BillSettingsDetails {
+        export interface Calculation {
           /**
-           * The bill settings details.
+           * Tax calculation settings.
            */
-          bill_settings_details?: ContractBillingDetails.BillSettingsDetails;
-
-          /**
-           * The billing profile details.
-           */
-          billing_profile_details: ContractBillingDetails.BillingProfileDetails;
-
-          /**
-           * The collection settings details.
-           */
-          collection_settings_details: ContractBillingDetails.CollectionSettingsDetails;
+          tax?: Calculation.Tax;
         }
 
-        export namespace ContractBillingDetails {
-          export interface BillSettingsDetails {
-            /**
-             * Calculation settings.
-             */
-            calculation?: BillSettingsDetails.Calculation;
+        export interface Invoice {
+          /**
+           * The number of time units before the invoice is past due.
+           */
+          time_until_due?: Invoice.TimeUntilDue;
+        }
 
+        export namespace Calculation {
+          export interface Tax {
             /**
-             * Invoice settings.
+             * The type of tax calculation.
              */
-            invoice?: BillSettingsDetails.Invoice;
+            type: Tax.Type;
           }
 
-          export interface BillingProfileDetails {
+          export namespace Tax {
+            export type Type = 'automatic' | 'manual';
+          }
+        }
+
+        export namespace Invoice {
+          export interface TimeUntilDue {
             /**
-             * The customer who pays for the contract invoice.
+             * The interval unit.
              */
-            customer: string;
+            interval: TimeUntilDue.Interval;
 
             /**
-             * The default payment method for the contract.
+             * The number of intervals.
              */
-            default_payment_method?: string;
+            interval_count: number;
           }
 
-          export interface CollectionSettingsDetails {
+          export namespace TimeUntilDue {
+            export type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+        }
+      }
+
+      export namespace CollectionSettingsDetails {
+        export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+      }
+    }
+  }
+
+  export namespace ContractLineDetail {
+    export interface ContractLineValueDetails {
+      /**
+       * Computed sum of all licensed fees. Represented as a decimal string in minor currency units.
+       */
+      total: string;
+    }
+
+    export interface EndsAt {
+      /**
+       * The timestamp when the item ends.
+       */
+      timestamp: string;
+    }
+
+    export interface Override {
+      /**
+       * Timestamp to indicate when the override ends.
+       */
+      ends_at: Override.EndsAt;
+
+      /**
+       * Service action override details.
+       */
+      service_action?: Override.ServiceAction;
+
+      /**
+       * Timestamp to indicate when the override starts.
+       */
+      starts_at: Override.StartsAt;
+
+      /**
+       * The type of the override.
+       */
+      type: 'service_action';
+    }
+
+    export interface Pricing {}
+
+    export interface StartsAt {
+      /**
+       * The timestamp when the item starts.
+       */
+      timestamp: string;
+    }
+
+    export namespace Override {
+      export interface EndsAt {
+        /**
+         * The timestamp when the item ends.
+         */
+        timestamp: string;
+      }
+
+      export interface ServiceAction {
+        /**
+         * Parameters for adding a new service action.
+         */
+        add?: ServiceAction.Add;
+
+        /**
+         * Parameters for replacing an existing service action.
+         */
+        replace?: ServiceAction.Replace;
+
+        /**
+         * The type of service action override.
+         */
+        type: ServiceAction.Type;
+      }
+
+      export interface StartsAt {
+        /**
+         * The timestamp when the item starts.
+         */
+        timestamp: string;
+      }
+
+      export namespace ServiceAction {
+        export interface Add {
+          /**
+           * Details for the credit grant. Required if `type` is `credit_grant`.
+           */
+          credit_grant?: Add.CreditGrant;
+
+          /**
+           * The interval for assessing service.
+           */
+          service_interval: Add.ServiceInterval;
+
+          /**
+           * The length of the interval for assessing service.
+           */
+          service_interval_count: number;
+
+          /**
+           * The type of the service action.
+           */
+          type: 'credit_grant';
+        }
+
+        export interface Replace {
+          /**
+           * Details for the credit grant. Required if `type` is `credit_grant`.
+           */
+          credit_grant?: Replace.CreditGrant;
+
+          /**
+           * The ID of the service action to replace.
+           */
+          id?: string;
+
+          /**
+           * The lookup key for the service action to replace.
+           */
+          lookup_key?: string;
+
+          /**
+           * The interval for assessing service.
+           */
+          service_interval: Replace.ServiceInterval;
+
+          /**
+           * The length of the interval for assessing service.
+           */
+          service_interval_count: number;
+
+          /**
+           * The type of the service action.
+           */
+          type: 'credit_grant';
+        }
+
+        export type Type = 'add' | 'replace';
+
+        export namespace Add {
+          export interface CreditGrant {
             /**
-             * The collection method.
+             * The amount of the credit grant.
              */
-            collection_method: CollectionSettingsDetails.CollectionMethod;
+            amount: CreditGrant.Amount;
 
             /**
-             * The payment method configuration.
+             * Defines the scope where the credit grant is applicable.
              */
-            payment_method_configuration?: string;
+            applicability_config: CreditGrant.ApplicabilityConfig;
+
+            /**
+             * The category of the credit grant.
+             */
+            category?: CreditGrant.Category;
+
+            /**
+             * The expiry configuration for the credit grant.
+             */
+            expiry_config: CreditGrant.ExpiryConfig;
+
+            /**
+             * A descriptive name.
+             */
+            name: string;
+
+            /**
+             * The desired priority for applying this credit grant. The highest priority is 0 and the lowest is 100.
+             */
+            priority?: number;
           }
 
-          export namespace BillSettingsDetails {
-            export interface Calculation {
+          export type ServiceInterval = 'day' | 'month' | 'week' | 'year';
+
+          export namespace CreditGrant {
+            export interface Amount {
               /**
-               * Tax calculation settings.
+               * The monetary amount of the credit grant. Required if `type` is `monetary`.
                */
-              tax?: Calculation.Tax;
+              monetary?: V2Amount;
+
+              /**
+               * The type of the credit grant amount.
+               */
+              type: 'monetary';
             }
 
-            export interface Invoice {
+            export interface ApplicabilityConfig {
               /**
-               * The number of time units before the invoice is past due.
+               * The applicability scope of the credit grant.
                */
-              time_until_due?: Invoice.TimeUntilDue;
+              scope: ApplicabilityConfig.Scope;
             }
 
-            export namespace Calculation {
-              export interface Tax {
-                /**
-                 * The type of tax calculation.
-                 */
-                type: Tax.Type;
-              }
+            export type Category = 'paid' | 'promotional';
 
-              export namespace Tax {
-                export type Type = 'automatic' | 'manual';
-              }
+            export interface ExpiryConfig {
+              /**
+               * The type of the expiry configuration.
+               */
+              type: 'end_of_service_period';
             }
 
-            export namespace Invoice {
-              export interface TimeUntilDue {
+            export namespace ApplicabilityConfig {
+              export interface Scope {
                 /**
-                 * The interval unit.
+                 * The billable items to apply the credit grant to.
                  */
-                interval: TimeUntilDue.Interval;
-
-                /**
-                 * The number of intervals.
-                 */
-                interval_count: number;
-              }
-
-              export namespace TimeUntilDue {
-                export type Interval = 'day' | 'month' | 'week' | 'year';
-              }
-            }
-          }
-
-          export namespace CollectionSettingsDetails {
-            export type CollectionMethod =
-              | 'charge_automatically'
-              | 'send_invoice';
-          }
-        }
-      }
-
-      export namespace ContractLineDetail {
-        export interface ContractLineValueDetails {
-          /**
-           * Computed sum of all licensed fees. Represented as a decimal string in minor currency units.
-           */
-          total: string;
-        }
-
-        export interface EndsAt {
-          /**
-           * The timestamp when the item ends.
-           */
-          timestamp: string;
-        }
-
-        export interface Override {
-          /**
-           * Timestamp to indicate when the override ends.
-           */
-          ends_at: Override.EndsAt;
-
-          /**
-           * Service action override details.
-           */
-          service_action?: Override.ServiceAction;
-
-          /**
-           * Timestamp to indicate when the override starts.
-           */
-          starts_at: Override.StartsAt;
-
-          /**
-           * The type of the override.
-           */
-          type: 'service_action';
-        }
-
-        export interface Pricing {}
-
-        export interface StartsAt {
-          /**
-           * The timestamp when the item starts.
-           */
-          timestamp: string;
-        }
-
-        export namespace Override {
-          export interface EndsAt {
-            /**
-             * The timestamp when the item ends.
-             */
-            timestamp: string;
-          }
-
-          export interface ServiceAction {
-            /**
-             * Parameters for adding a new service action.
-             */
-            add?: ServiceAction.Add;
-
-            /**
-             * Parameters for replacing an existing service action.
-             */
-            replace?: ServiceAction.Replace;
-
-            /**
-             * The type of service action override.
-             */
-            type: ServiceAction.Type;
-          }
-
-          export interface StartsAt {
-            /**
-             * The timestamp when the item starts.
-             */
-            timestamp: string;
-          }
-
-          export namespace ServiceAction {
-            export interface Add {
-              /**
-               * Details for the credit grant. Required if `type` is `credit_grant`.
-               */
-              credit_grant?: Add.CreditGrant;
-
-              /**
-               * The interval for assessing service.
-               */
-              service_interval: Add.ServiceInterval;
-
-              /**
-               * The length of the interval for assessing service.
-               */
-              service_interval_count: number;
-
-              /**
-               * The type of the service action.
-               */
-              type: 'credit_grant';
-            }
-
-            export interface Replace {
-              /**
-               * Details for the credit grant. Required if `type` is `credit_grant`.
-               */
-              credit_grant?: Replace.CreditGrant;
-
-              /**
-               * The ID of the service action to replace.
-               */
-              id?: string;
-
-              /**
-               * The lookup key for the service action to replace.
-               */
-              lookup_key?: string;
-
-              /**
-               * The interval for assessing service.
-               */
-              service_interval: Replace.ServiceInterval;
-
-              /**
-               * The length of the interval for assessing service.
-               */
-              service_interval_count: number;
-
-              /**
-               * The type of the service action.
-               */
-              type: 'credit_grant';
-            }
-
-            export type Type = 'add' | 'replace';
-
-            export namespace Add {
-              export interface CreditGrant {
-                /**
-                 * The amount of the credit grant.
-                 */
-                amount: CreditGrant.Amount;
+                billable_items?: Array<string>;
 
                 /**
-                 * Defines the scope where the credit grant is applicable.
+                 * The price type that credit grants can apply to.
                  */
-                applicability_config: CreditGrant.ApplicabilityConfig;
-
-                /**
-                 * The category of the credit grant.
-                 */
-                category?: CreditGrant.Category;
-
-                /**
-                 * The expiry configuration for the credit grant.
-                 */
-                expiry_config: CreditGrant.ExpiryConfig;
-
-                /**
-                 * A descriptive name.
-                 */
-                name: string;
-
-                /**
-                 * The desired priority for applying this credit grant. The highest priority is 0 and the lowest is 100.
-                 */
-                priority?: number;
-              }
-
-              export type ServiceInterval = 'day' | 'month' | 'week' | 'year';
-
-              export namespace CreditGrant {
-                export interface Amount {
-                  /**
-                   * The monetary amount of the credit grant. Required if `type` is `monetary`.
-                   */
-                  monetary?: V2Amount;
-
-                  /**
-                   * The type of the credit grant amount.
-                   */
-                  type: 'monetary';
-                }
-
-                export interface ApplicabilityConfig {
-                  /**
-                   * The applicability scope of the credit grant.
-                   */
-                  scope: ApplicabilityConfig.Scope;
-                }
-
-                export type Category = 'paid' | 'promotional';
-
-                export interface ExpiryConfig {
-                  /**
-                   * The type of the expiry configuration.
-                   */
-                  type: 'end_of_service_period';
-                }
-
-                export namespace ApplicabilityConfig {
-                  export interface Scope {
-                    /**
-                     * The billable items to apply the credit grant to.
-                     */
-                    billable_items?: Array<string>;
-
-                    /**
-                     * The price type that credit grants can apply to.
-                     */
-                    price_type?: 'metered';
-                  }
-                }
-              }
-            }
-
-            export namespace Replace {
-              export interface CreditGrant {
-                /**
-                 * The amount of the credit grant.
-                 */
-                amount: CreditGrant.Amount;
-
-                /**
-                 * Defines the scope where the credit grant is applicable.
-                 */
-                applicability_config: CreditGrant.ApplicabilityConfig;
-
-                /**
-                 * The category of the credit grant.
-                 */
-                category?: CreditGrant.Category;
-
-                /**
-                 * The expiry configuration for the credit grant.
-                 */
-                expiry_config: CreditGrant.ExpiryConfig;
-
-                /**
-                 * A descriptive name.
-                 */
-                name: string;
-
-                /**
-                 * The desired priority for applying this credit grant. The highest priority is 0 and the lowest is 100.
-                 */
-                priority?: number;
-              }
-
-              export type ServiceInterval = 'day' | 'month' | 'week' | 'year';
-
-              export namespace CreditGrant {
-                export interface Amount {
-                  /**
-                   * The monetary amount of the credit grant. Required if `type` is `monetary`.
-                   */
-                  monetary?: V2Amount;
-
-                  /**
-                   * The type of the credit grant amount.
-                   */
-                  type: 'monetary';
-                }
-
-                export interface ApplicabilityConfig {
-                  /**
-                   * The applicability scope of the credit grant.
-                   */
-                  scope: ApplicabilityConfig.Scope;
-                }
-
-                export type Category = 'paid' | 'promotional';
-
-                export interface ExpiryConfig {
-                  /**
-                   * The type of the expiry configuration.
-                   */
-                  type: 'end_of_service_period';
-                }
-
-                export namespace ApplicabilityConfig {
-                  export interface Scope {
-                    /**
-                     * The billable items to apply the credit grant to.
-                     */
-                    billable_items?: Array<string>;
-
-                    /**
-                     * The price type that credit grants can apply to.
-                     */
-                    price_type?: 'metered';
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-
-      export namespace LicenseQuantity {
-        export type LicensePricingType = 'license_fee' | 'price';
-      }
-
-      export namespace OneTimeFee {
-        export interface BillSchedule {
-          /**
-           * When this entry will be billed.
-           */
-          bill_at: BillSchedule.BillAt;
-
-          /**
-           * The amount to bill for this entry, in the smallest currency unit.
-           */
-          value: bigint;
-        }
-
-        export interface ProductDetails {
-          /**
-           * The ID of the v1 Product.
-           */
-          product: string;
-        }
-
-        export namespace BillSchedule {
-          export interface BillAt {
-            /**
-             * The datetime at which the entry will be billed. Set when `type` is `datetime`.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of the bill_at.
-             */
-            type: BillAt.Type;
-          }
-
-          export namespace BillAt {
-            export type Type = 'contract_start' | 'datetime';
-          }
-        }
-      }
-
-      export namespace PricingLine {
-        export interface EndsAt {
-          /**
-           * The timestamp when the item ends.
-           */
-          timestamp: string;
-        }
-
-        export interface Pricing {
-          /**
-           * V1 price details. Present when `type` is `price`.
-           */
-          price_details?: Pricing.PriceDetails;
-
-          /**
-           * The type of pricing.
-           */
-          type: 'price';
-        }
-
-        export interface StartsAt {
-          /**
-           * The timestamp when the item starts.
-           */
-          timestamp: string;
-        }
-
-        export namespace Pricing {
-          export interface PriceDetails {
-            /**
-             * The ID of the V1 price.
-             */
-            price: string;
-          }
-        }
-      }
-
-      export namespace PricingOverride {
-        export interface EndsAt {
-          /**
-           * The timestamp when the item ends.
-           */
-          timestamp: string;
-        }
-
-        export interface Multiplier {
-          /**
-           * Criteria determining which rates the multiplier applies to.
-           */
-          criteria: Array<Multiplier.Criterion>;
-
-          /**
-           * The multiplier factor, represented as a decimal string. e.g. "0.8" for a 20% reduction.
-           */
-          factor: string;
-        }
-
-        export interface OverwritePrice {
-          /**
-           * The ID of the V1 price to overwrite.
-           */
-          price: string;
-
-          /**
-           * Defines whether the tiered price should be graduated or volume-based.
-           */
-          tiering_mode?: OverwritePrice.TieringMode;
-
-          /**
-           * Each element represents a pricing tier.
-           */
-          tiers: Array<OverwritePrice.Tier>;
-
-          /**
-           * The per-unit amount to be charged, represented as a decimal string in minor currency units.
-           */
-          unit_amount?: string;
-        }
-
-        export interface StartsAt {
-          /**
-           * The timestamp when the item starts.
-           */
-          timestamp: string;
-        }
-
-        export type Type = 'multiplier' | 'overwrite_price';
-
-        export namespace Multiplier {
-          export interface Criterion {
-            /**
-             * Filter by billable item IDs.
-             */
-            billable_item_ids: Array<string>;
-
-            /**
-             * Filter by billable item lookup keys.
-             */
-            billable_item_lookup_keys: Array<string>;
-
-            /**
-             * Filter by billable item type.
-             */
-            billable_item_types: Array<Criterion.BillableItemType>;
-
-            /**
-             * Filter by metadata conditions.
-             */
-            metadata_conditions: Array<Criterion.MetadataCondition>;
-
-            /**
-             * Filter by rate card IDs. Only applicable for `multiplier` overrides.
-             */
-            rate_card_ids: Array<string>;
-
-            /**
-             * Whether to include or exclude items matching these criteria.
-             */
-            type: Criterion.Type;
-          }
-
-          export namespace Criterion {
-            export type BillableItemType = 'licensed' | 'metered';
-
-            export interface MetadataCondition {
-              /**
-               * All of these key-value conditions must match.
-               */
-              all_of: Array<MetadataCondition.AllOf>;
-            }
-
-            export type Type = 'exclude' | 'include';
-
-            export namespace MetadataCondition {
-              export interface AllOf {
-                /**
-                 * The metadata key.
-                 */
-                key: string;
-
-                /**
-                 * The metadata value.
-                 */
-                value: string;
+                price_type?: 'metered';
               }
             }
           }
         }
 
-        export namespace OverwritePrice {
-          export type TieringMode = 'graduated' | 'volume';
-
-          export interface Tier {
+        export namespace Replace {
+          export interface CreditGrant {
             /**
-             * Price for the entire tier, represented as a decimal string in minor currency units.
+             * The amount of the credit grant.
              */
-            flat_amount?: string;
+            amount: CreditGrant.Amount;
 
             /**
-             * Per-unit price for units included in this tier, represented as a decimal string in minor currency units.
+             * Defines the scope where the credit grant is applicable.
              */
-            unit_amount?: string;
+            applicability_config: CreditGrant.ApplicabilityConfig;
 
             /**
-             * Up to and including this quantity will be contained in the tier.
+             * The category of the credit grant.
              */
-            up_to_decimal?: Decimal;
+            category?: CreditGrant.Category;
 
             /**
-             * No upper bound to this tier.
+             * The expiry configuration for the credit grant.
              */
-            up_to_inf?: 'inf';
+            expiry_config: CreditGrant.ExpiryConfig;
+
+            /**
+             * A descriptive name.
+             */
+            name: string;
+
+            /**
+             * The desired priority for applying this credit grant. The highest priority is 0 and the lowest is 100.
+             */
+            priority?: number;
+          }
+
+          export type ServiceInterval = 'day' | 'month' | 'week' | 'year';
+
+          export namespace CreditGrant {
+            export interface Amount {
+              /**
+               * The monetary amount of the credit grant. Required if `type` is `monetary`.
+               */
+              monetary?: V2Amount;
+
+              /**
+               * The type of the credit grant amount.
+               */
+              type: 'monetary';
+            }
+
+            export interface ApplicabilityConfig {
+              /**
+               * The applicability scope of the credit grant.
+               */
+              scope: ApplicabilityConfig.Scope;
+            }
+
+            export type Category = 'paid' | 'promotional';
+
+            export interface ExpiryConfig {
+              /**
+               * The type of the expiry configuration.
+               */
+              type: 'end_of_service_period';
+            }
+
+            export namespace ApplicabilityConfig {
+              export interface Scope {
+                /**
+                 * The billable items to apply the credit grant to.
+                 */
+                billable_items?: Array<string>;
+
+                /**
+                 * The price type that credit grants can apply to.
+                 */
+                price_type?: 'metered';
+              }
+            }
           }
         }
       }
+    }
+  }
 
-      export namespace StatusDetails {
-        export interface Active {
+  export namespace LicenseQuantity {
+    export type LicensePricingType = 'license_fee' | 'price';
+  }
+
+  export namespace OneTimeFee {
+    export interface BillSchedule {
+      /**
+       * When this entry will be billed.
+       */
+      bill_at: BillSchedule.BillAt;
+
+      /**
+       * The amount to bill for this entry, in the smallest currency unit.
+       */
+      value: bigint;
+    }
+
+    export interface ProductDetails {
+      /**
+       * The ID of the v1 Product.
+       */
+      product: string;
+    }
+
+    export namespace BillSchedule {
+      export interface BillAt {
+        /**
+         * The datetime at which the entry will be billed. Set when `type` is `datetime`.
+         */
+        timestamp?: string;
+
+        /**
+         * The type of the bill_at.
+         */
+        type: BillAt.Type;
+      }
+
+      export namespace BillAt {
+        export type Type = 'contract_start' | 'datetime';
+      }
+    }
+  }
+
+  export namespace PricingLine {
+    export interface EndsAt {
+      /**
+       * The timestamp when the item ends.
+       */
+      timestamp: string;
+    }
+
+    export interface Pricing {
+      /**
+       * V1 price details. Present when `type` is `price`.
+       */
+      price_details?: Pricing.PriceDetails;
+
+      /**
+       * The type of pricing.
+       */
+      type: 'price';
+    }
+
+    export interface StartsAt {
+      /**
+       * The timestamp when the item starts.
+       */
+      timestamp: string;
+    }
+
+    export namespace Pricing {
+      export interface PriceDetails {
+        /**
+         * The ID of the V1 price.
+         */
+        price: string;
+      }
+    }
+  }
+
+  export namespace PricingOverride {
+    export interface EndsAt {
+      /**
+       * The timestamp when the item ends.
+       */
+      timestamp: string;
+    }
+
+    export interface Multiplier {
+      /**
+       * Criteria determining which rates the multiplier applies to.
+       */
+      criteria: Array<Multiplier.Criterion>;
+
+      /**
+       * The multiplier factor, represented as a decimal string. e.g. "0.8" for a 20% reduction.
+       */
+      factor: string;
+    }
+
+    export interface OverwritePrice {
+      /**
+       * The ID of the V1 price to overwrite.
+       */
+      price: string;
+
+      /**
+       * Defines whether the tiered price should be graduated or volume-based.
+       */
+      tiering_mode?: OverwritePrice.TieringMode;
+
+      /**
+       * Each element represents a pricing tier.
+       */
+      tiers: Array<OverwritePrice.Tier>;
+
+      /**
+       * The per-unit amount to be charged, represented as a decimal string in minor currency units.
+       */
+      unit_amount?: string;
+    }
+
+    export interface StartsAt {
+      /**
+       * The timestamp when the item starts.
+       */
+      timestamp: string;
+    }
+
+    export type Type = 'multiplier' | 'overwrite_price';
+
+    export namespace Multiplier {
+      export interface Criterion {
+        /**
+         * Filter by billable item IDs.
+         */
+        billable_item_ids: Array<string>;
+
+        /**
+         * Filter by billable item lookup keys.
+         */
+        billable_item_lookup_keys: Array<string>;
+
+        /**
+         * Filter by billable item type.
+         */
+        billable_item_types: Array<Criterion.BillableItemType>;
+
+        /**
+         * Filter by metadata conditions.
+         */
+        metadata_conditions: Array<Criterion.MetadataCondition>;
+
+        /**
+         * Filter by rate card IDs. Only applicable for `multiplier` overrides.
+         */
+        rate_card_ids: Array<string>;
+
+        /**
+         * Whether to include or exclude items matching these criteria.
+         */
+        type: Criterion.Type;
+      }
+
+      export namespace Criterion {
+        export type BillableItemType = 'licensed' | 'metered';
+
+        export interface MetadataCondition {
           /**
-           * The timestamp when the contract was activated.
+           * All of these key-value conditions must match.
            */
-          activated_at: string;
+          all_of: Array<MetadataCondition.AllOf>;
         }
 
-        export interface Canceled {
-          /**
-           * The timestamp when the contract was canceled.
-           */
-          canceled_at: string;
+        export type Type = 'exclude' | 'include';
+
+        export namespace MetadataCondition {
+          export interface AllOf {
+            /**
+             * The metadata key.
+             */
+            key: string;
+
+            /**
+             * The metadata value.
+             */
+            value: string;
+          }
         }
       }
+    }
+
+    export namespace OverwritePrice {
+      export type TieringMode = 'graduated' | 'volume';
+
+      export interface Tier {
+        /**
+         * Price for the entire tier, represented as a decimal string in minor currency units.
+         */
+        flat_amount?: string;
+
+        /**
+         * Per-unit price for units included in this tier, represented as a decimal string in minor currency units.
+         */
+        unit_amount?: string;
+
+        /**
+         * Up to and including this quantity will be contained in the tier.
+         */
+        up_to_decimal?: Decimal;
+
+        /**
+         * No upper bound to this tier.
+         */
+        up_to_inf?: 'inf';
+      }
+    }
+  }
+
+  export namespace StatusDetails {
+    export interface Active {
+      /**
+       * The timestamp when the contract was activated.
+       */
+      activated_at: string;
+    }
+
+    export interface Canceled {
+      /**
+       * The timestamp when the contract was canceled.
+       */
+      canceled_at: string;
     }
   }
 }

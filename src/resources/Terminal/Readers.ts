@@ -546,6 +546,11 @@ export namespace Reader {
 
     export interface CollectPaymentMethod {
       /**
+       * Account the payment intent belongs to.
+       */
+      account?: string;
+
+      /**
        * Represents a per-transaction override of a reader configuration
        */
       collect_config?: CollectPaymentMethod.CollectConfig;
@@ -566,6 +571,11 @@ export namespace Reader {
     }
 
     export interface ConfirmPaymentIntent {
+      /**
+       * Account the payment intent belongs to.
+       */
+      account?: string;
+
       /**
        * Represents a per-transaction override of a reader configuration
        */
@@ -590,6 +600,11 @@ export namespace Reader {
     }
 
     export interface ProcessPaymentIntent {
+      /**
+       * Account the payment intent belongs to.
+       */
+      account?: string;
+
       /**
        * Most recent PaymentIntent processed by the reader.
        */
@@ -620,6 +635,11 @@ export namespace Reader {
 
     export interface RefundPayment {
       /**
+       * Account the payment intent belongs to.
+       */
+      account?: string;
+
+      /**
        * The amount being refunded.
        */
       amount?: number;
@@ -649,16 +669,10 @@ export namespace Reader {
        */
       refund?: string | Refund;
 
-      export interface CollectPaymentMethod {
-        /**
-         * Account the payment intent belongs to.
-         */
-        account?: string;
-
-        /**
-         * Represents a per-transaction override of a reader configuration
-         */
-        collect_config?: CollectPaymentMethod.CollectConfig;
+      /**
+       * Boolean indicating whether the application fee should be refunded when refunding this charge. If a full charge refund is given, the full application fee will be refunded. Otherwise, the application fee will be refunded in an amount proportional to the amount of the charge refunded. An application fee can be refunded only by the application that created the charge.
+       */
+      refund_application_fee?: boolean;
 
       /**
        * Represents a per-transaction override of a reader configuration
@@ -671,16 +685,11 @@ export namespace Reader {
       reverse_transfer?: boolean;
     }
 
-      export interface ConfirmPaymentIntent {
-        /**
-         * Account the payment intent belongs to.
-         */
-        account?: string;
-
-        /**
-         * Represents a per-transaction override of a reader configuration
-         */
-        confirm_config?: ConfirmPaymentIntent.ConfirmConfig;
+    export interface SetReaderDisplay {
+      /**
+       * Cart object to be displayed by the reader, including line items, amounts, and currency.
+       */
+      cart: SetReaderDisplay.Cart | null;
 
       /**
        * Type of information to be displayed by the reader. Only `cart` is currently supported.
@@ -700,105 +709,203 @@ export namespace Reader {
       | 'refund_payment'
       | 'set_reader_display';
 
-      export interface ProcessPaymentIntent {
-        /**
-         * Account the payment intent belongs to.
-         */
-        account?: string;
-
-        /**
-         * Most recent PaymentIntent processed by the reader.
-         */
-        payment_intent: string | PaymentIntent;
-
-        /**
-         * Represents a per-transaction override of a reader configuration
-         */
-        process_config?: ProcessPaymentIntent.ProcessConfig;
-      }
-
-      export interface ProcessSetupIntent {
-        /**
-         * ID of a card PaymentMethod generated from the card_present PaymentMethod that may be attached to a Customer for future transactions. Only present if it was possible to generate a card PaymentMethod.
-         */
-        generated_card?: string;
-
-        /**
-         * Represents a per-setup override of a reader configuration
-         */
-        process_config?: ProcessSetupIntent.ProcessConfig;
-
-        /**
-         * Most recent SetupIntent processed by the reader.
-         */
-        setup_intent: string | SetupIntent;
-      }
-
-      export interface RefundPayment {
-        /**
-         * Account the payment intent belongs to.
-         */
-        account?: string;
-
-        /**
-         * The amount being refunded.
-         */
-        amount?: number;
-
-        /**
-         * Charge that is being refunded.
-         */
-        charge?: string | Charge;
-
-        /**
-         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-         */
-        metadata?: Metadata;
-
-        /**
-         * Payment intent that is being refunded.
-         */
-        payment_intent?: string | PaymentIntent;
-
-        /**
-         * The reason for the refund.
-         */
-        reason?: RefundPayment.Reason;
-
-        /**
-         * Unique identifier for the refund object.
-         */
-        refund?: string | Refund;
-
-        /**
-         * Boolean indicating whether the application fee should be refunded when refunding this charge. If a full charge refund is given, the full application fee will be refunded. Otherwise, the application fee will be refunded in an amount proportional to the amount of the charge refunded. An application fee can be refunded only by the application that created the charge.
-         */
-        refund_application_fee?: boolean;
-
-        /**
-         * Represents a per-transaction override of a reader configuration
-         */
-        refund_payment_config?: RefundPayment.RefundPaymentConfig;
-
-        /**
-         * Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount). A transfer can be reversed only by the application that created the charge.
-         */
-        reverse_transfer?: boolean;
-      }
-
-      export interface SetReaderDisplay {
-        /**
-         * Cart object to be displayed by the reader, including line items, amounts, and currency.
-         */
-        cart: SetReaderDisplay.Cart | null;
-
-        /**
-         * Type of information to be displayed by the reader. Only `cart` is currently supported.
-         */
-        type: 'cart';
-      }
-
-      export type Status = 'failed' | 'in_progress' | 'succeeded';
+    export namespace ApiError {
+      export type Code =
+        | 'account_closed'
+        | 'account_country_invalid_address'
+        | 'account_error_country_change_requires_additional_steps'
+        | 'account_information_mismatch'
+        | 'account_invalid'
+        | 'account_number_invalid'
+        | 'account_token_required_for_v2_account'
+        | 'acss_debit_session_incomplete'
+        | 'action_blocked'
+        | 'alipay_upgrade_required'
+        | 'amount_too_large'
+        | 'amount_too_small'
+        | 'api_key_expired'
+        | 'application_fees_not_allowed'
+        | 'approval_required'
+        | 'authentication_required'
+        | 'balance_insufficient'
+        | 'balance_invalid_parameter'
+        | 'bank_account_bad_routing_numbers'
+        | 'bank_account_declined'
+        | 'bank_account_exists'
+        | 'bank_account_restricted'
+        | 'bank_account_unusable'
+        | 'bank_account_unverified'
+        | 'bank_account_verification_failed'
+        | 'billing_invalid_mandate'
+        | 'bitcoin_upgrade_required'
+        | 'capture_charge_authorization_expired'
+        | 'capture_unauthorized_payment'
+        | 'card_decline_rate_limit_exceeded'
+        | 'card_declined'
+        | 'cardholder_phone_number_required'
+        | 'charge_already_captured'
+        | 'charge_already_refunded'
+        | 'charge_disputed'
+        | 'charge_exceeds_source_limit'
+        | 'charge_exceeds_transaction_limit'
+        | 'charge_expired_for_capture'
+        | 'charge_invalid_parameter'
+        | 'charge_not_refundable'
+        | 'clearing_code_unsupported'
+        | 'country_code_invalid'
+        | 'country_unsupported'
+        | 'coupon_expired'
+        | 'customer_max_payment_methods'
+        | 'customer_max_subscriptions'
+        | 'customer_session_expired'
+        | 'customer_tax_location_invalid'
+        | 'debit_not_authorized'
+        | 'email_invalid'
+        | 'expired_card'
+        | 'financial_connections_account_inactive'
+        | 'financial_connections_account_pending_account_numbers'
+        | 'financial_connections_account_unavailable_account_numbers'
+        | 'financial_connections_institution_unavailable'
+        | 'financial_connections_no_successful_transaction_refresh'
+        | 'forwarding_api_inactive'
+        | 'forwarding_api_invalid_parameter'
+        | 'forwarding_api_retryable_upstream_error'
+        | 'forwarding_api_upstream_connection_error'
+        | 'forwarding_api_upstream_connection_timeout'
+        | 'forwarding_api_upstream_error'
+        | 'idempotency_key_in_use'
+        | 'incorrect_address'
+        | 'incorrect_cvc'
+        | 'incorrect_number'
+        | 'incorrect_zip'
+        | 'india_recurring_payment_mandate_canceled'
+        | 'instant_payouts_config_disabled'
+        | 'instant_payouts_currency_disabled'
+        | 'instant_payouts_limit_exceeded'
+        | 'instant_payouts_unsupported'
+        | 'insufficient_funds'
+        | 'intent_invalid_state'
+        | 'intent_verification_method_missing'
+        | 'invalid_card_type'
+        | 'invalid_characters'
+        | 'invalid_charge_amount'
+        | 'invalid_cvc'
+        | 'invalid_expiry_month'
+        | 'invalid_expiry_year'
+        | 'invalid_mandate_reference_prefix_format'
+        | 'invalid_number'
+        | 'invalid_source_usage'
+        | 'invalid_tax_location'
+        | 'invoice_no_customer_line_items'
+        | 'invoice_no_payment_method_types'
+        | 'invoice_no_subscription_line_items'
+        | 'invoice_not_editable'
+        | 'invoice_on_behalf_of_not_editable'
+        | 'invoice_payment_intent_requires_action'
+        | 'invoice_upcoming_none'
+        | 'livemode_mismatch'
+        | 'lock_timeout'
+        | 'missing'
+        | 'no_account'
+        | 'not_allowed_on_standard_account'
+        | 'out_of_inventory'
+        | 'ownership_declaration_not_allowed'
+        | 'parameter_invalid_empty'
+        | 'parameter_invalid_integer'
+        | 'parameter_invalid_string_blank'
+        | 'parameter_invalid_string_empty'
+        | 'parameter_missing'
+        | 'parameter_unknown'
+        | 'parameters_exclusive'
+        | 'payment_intent_action_required'
+        | 'payment_intent_authentication_failure'
+        | 'payment_intent_incompatible_payment_method'
+        | 'payment_intent_invalid_parameter'
+        | 'payment_intent_konbini_rejected_confirmation_number'
+        | 'payment_intent_mandate_invalid'
+        | 'payment_intent_payment_attempt_expired'
+        | 'payment_intent_payment_attempt_failed'
+        | 'payment_intent_rate_limit_exceeded'
+        | 'payment_intent_unexpected_state'
+        | 'payment_method_bank_account_already_verified'
+        | 'payment_method_bank_account_blocked'
+        | 'payment_method_billing_details_address_missing'
+        | 'payment_method_configuration_failures'
+        | 'payment_method_currency_mismatch'
+        | 'payment_method_customer_decline'
+        | 'payment_method_invalid_parameter'
+        | 'payment_method_invalid_parameter_testmode'
+        | 'payment_method_microdeposit_failed'
+        | 'payment_method_microdeposit_processing_error'
+        | 'payment_method_microdeposit_verification_amounts_invalid'
+        | 'payment_method_microdeposit_verification_amounts_mismatch'
+        | 'payment_method_microdeposit_verification_attempts_exceeded'
+        | 'payment_method_microdeposit_verification_descriptor_code_mismatch'
+        | 'payment_method_microdeposit_verification_timeout'
+        | 'payment_method_not_available'
+        | 'payment_method_provider_decline'
+        | 'payment_method_provider_timeout'
+        | 'payment_method_unactivated'
+        | 'payment_method_unexpected_state'
+        | 'payment_method_unsupported_type'
+        | 'payout_reconciliation_not_ready'
+        | 'payouts_limit_exceeded'
+        | 'payouts_not_allowed'
+        | 'platform_account_required'
+        | 'platform_api_key_expired'
+        | 'postal_code_invalid'
+        | 'processing_error'
+        | 'product_inactive'
+        | 'progressive_onboarding_limit_exceeded'
+        | 'rate_limit'
+        | 'refer_to_customer'
+        | 'refund_disputed_payment'
+        | 'request_blocked'
+        | 'resource_already_exists'
+        | 'resource_missing'
+        | 'return_intent_already_processed'
+        | 'routing_number_invalid'
+        | 'secret_key_required'
+        | 'sensitive_data_access_expired'
+        | 'sepa_unsupported_account'
+        | 'service_period_coupon_with_metered_tiered_item_unsupported'
+        | 'setup_attempt_failed'
+        | 'setup_intent_authentication_failure'
+        | 'setup_intent_invalid_parameter'
+        | 'setup_intent_mandate_invalid'
+        | 'setup_intent_mobile_wallet_unsupported'
+        | 'setup_intent_setup_attempt_expired'
+        | 'setup_intent_unexpected_state'
+        | 'shipping_address_invalid'
+        | 'shipping_calculation_failed'
+        | 'siret_invalid'
+        | 'sku_inactive'
+        | 'state_unsupported'
+        | 'status_transition_invalid'
+        | 'storer_capability_missing'
+        | 'storer_capability_not_active'
+        | 'stripe_tax_inactive'
+        | 'tax_id_invalid'
+        | 'tax_id_prohibited'
+        | 'taxes_calculation_failed'
+        | 'terminal_location_country_unsupported'
+        | 'terminal_reader_busy'
+        | 'terminal_reader_collected_data_invalid'
+        | 'terminal_reader_hardware_fault'
+        | 'terminal_reader_invalid_location_for_activation'
+        | 'terminal_reader_invalid_location_for_payment'
+        | 'terminal_reader_offline'
+        | 'terminal_reader_timeout'
+        | 'testmode_charges_only'
+        | 'tls_version_unsupported'
+        | 'token_already_used'
+        | 'token_card_network_invalid'
+        | 'token_in_use'
+        | 'transfer_source_balance_parameters_mismatch'
+        | 'transfers_not_allowed'
+        | 'url_invalid'
+        | 'v2_account_disconnection_unsupported'
+        | 'v2_account_missing_configuration';
 
       export type Type =
         | 'api_error'
@@ -807,203 +914,12 @@ export namespace Reader {
         | 'invalid_request_error';
     }
 
-      export namespace ApiError {
-        export type Code =
-          | 'account_closed'
-          | 'account_country_invalid_address'
-          | 'account_error_country_change_requires_additional_steps'
-          | 'account_information_mismatch'
-          | 'account_invalid'
-          | 'account_number_invalid'
-          | 'account_token_required_for_v2_account'
-          | 'acss_debit_session_incomplete'
-          | 'action_blocked'
-          | 'alipay_upgrade_required'
-          | 'amount_too_large'
-          | 'amount_too_small'
-          | 'api_key_expired'
-          | 'application_fees_not_allowed'
-          | 'approval_required'
-          | 'authentication_required'
-          | 'balance_insufficient'
-          | 'balance_invalid_parameter'
-          | 'bank_account_bad_routing_numbers'
-          | 'bank_account_declined'
-          | 'bank_account_exists'
-          | 'bank_account_restricted'
-          | 'bank_account_unusable'
-          | 'bank_account_unverified'
-          | 'bank_account_verification_failed'
-          | 'billing_invalid_mandate'
-          | 'bitcoin_upgrade_required'
-          | 'capture_charge_authorization_expired'
-          | 'capture_unauthorized_payment'
-          | 'card_decline_rate_limit_exceeded'
-          | 'card_declined'
-          | 'cardholder_phone_number_required'
-          | 'charge_already_captured'
-          | 'charge_already_refunded'
-          | 'charge_disputed'
-          | 'charge_exceeds_source_limit'
-          | 'charge_exceeds_transaction_limit'
-          | 'charge_expired_for_capture'
-          | 'charge_invalid_parameter'
-          | 'charge_not_refundable'
-          | 'clearing_code_unsupported'
-          | 'country_code_invalid'
-          | 'country_unsupported'
-          | 'coupon_expired'
-          | 'customer_max_payment_methods'
-          | 'customer_max_subscriptions'
-          | 'customer_session_expired'
-          | 'customer_tax_location_invalid'
-          | 'debit_not_authorized'
-          | 'email_invalid'
-          | 'expired_card'
-          | 'financial_connections_account_inactive'
-          | 'financial_connections_account_pending_account_numbers'
-          | 'financial_connections_account_unavailable_account_numbers'
-          | 'financial_connections_institution_unavailable'
-          | 'financial_connections_no_successful_transaction_refresh'
-          | 'forwarding_api_inactive'
-          | 'forwarding_api_invalid_parameter'
-          | 'forwarding_api_retryable_upstream_error'
-          | 'forwarding_api_upstream_connection_error'
-          | 'forwarding_api_upstream_connection_timeout'
-          | 'forwarding_api_upstream_error'
-          | 'idempotency_key_in_use'
-          | 'incorrect_address'
-          | 'incorrect_cvc'
-          | 'incorrect_number'
-          | 'incorrect_zip'
-          | 'india_recurring_payment_mandate_canceled'
-          | 'instant_payouts_config_disabled'
-          | 'instant_payouts_currency_disabled'
-          | 'instant_payouts_limit_exceeded'
-          | 'instant_payouts_unsupported'
-          | 'insufficient_funds'
-          | 'intent_invalid_state'
-          | 'intent_verification_method_missing'
-          | 'invalid_card_type'
-          | 'invalid_characters'
-          | 'invalid_charge_amount'
-          | 'invalid_cvc'
-          | 'invalid_expiry_month'
-          | 'invalid_expiry_year'
-          | 'invalid_mandate_reference_prefix_format'
-          | 'invalid_number'
-          | 'invalid_source_usage'
-          | 'invalid_tax_location'
-          | 'invoice_no_customer_line_items'
-          | 'invoice_no_payment_method_types'
-          | 'invoice_no_subscription_line_items'
-          | 'invoice_not_editable'
-          | 'invoice_on_behalf_of_not_editable'
-          | 'invoice_payment_intent_requires_action'
-          | 'invoice_upcoming_none'
-          | 'livemode_mismatch'
-          | 'lock_timeout'
-          | 'missing'
-          | 'no_account'
-          | 'not_allowed_on_standard_account'
-          | 'out_of_inventory'
-          | 'ownership_declaration_not_allowed'
-          | 'parameter_invalid_empty'
-          | 'parameter_invalid_integer'
-          | 'parameter_invalid_string_blank'
-          | 'parameter_invalid_string_empty'
-          | 'parameter_missing'
-          | 'parameter_unknown'
-          | 'parameters_exclusive'
-          | 'payment_intent_action_required'
-          | 'payment_intent_authentication_failure'
-          | 'payment_intent_incompatible_payment_method'
-          | 'payment_intent_invalid_parameter'
-          | 'payment_intent_konbini_rejected_confirmation_number'
-          | 'payment_intent_mandate_invalid'
-          | 'payment_intent_payment_attempt_expired'
-          | 'payment_intent_payment_attempt_failed'
-          | 'payment_intent_rate_limit_exceeded'
-          | 'payment_intent_unexpected_state'
-          | 'payment_method_bank_account_already_verified'
-          | 'payment_method_bank_account_blocked'
-          | 'payment_method_billing_details_address_missing'
-          | 'payment_method_configuration_failures'
-          | 'payment_method_currency_mismatch'
-          | 'payment_method_customer_decline'
-          | 'payment_method_invalid_parameter'
-          | 'payment_method_invalid_parameter_testmode'
-          | 'payment_method_microdeposit_failed'
-          | 'payment_method_microdeposit_processing_error'
-          | 'payment_method_microdeposit_verification_amounts_invalid'
-          | 'payment_method_microdeposit_verification_amounts_mismatch'
-          | 'payment_method_microdeposit_verification_attempts_exceeded'
-          | 'payment_method_microdeposit_verification_descriptor_code_mismatch'
-          | 'payment_method_microdeposit_verification_timeout'
-          | 'payment_method_not_available'
-          | 'payment_method_provider_decline'
-          | 'payment_method_provider_timeout'
-          | 'payment_method_unactivated'
-          | 'payment_method_unexpected_state'
-          | 'payment_method_unsupported_type'
-          | 'payout_reconciliation_not_ready'
-          | 'payouts_limit_exceeded'
-          | 'payouts_not_allowed'
-          | 'platform_account_required'
-          | 'platform_api_key_expired'
-          | 'postal_code_invalid'
-          | 'processing_error'
-          | 'product_inactive'
-          | 'progressive_onboarding_limit_exceeded'
-          | 'rate_limit'
-          | 'refer_to_customer'
-          | 'refund_disputed_payment'
-          | 'request_blocked'
-          | 'resource_already_exists'
-          | 'resource_missing'
-          | 'return_intent_already_processed'
-          | 'routing_number_invalid'
-          | 'secret_key_required'
-          | 'sensitive_data_access_expired'
-          | 'sepa_unsupported_account'
-          | 'service_period_coupon_with_metered_tiered_item_unsupported'
-          | 'setup_attempt_failed'
-          | 'setup_intent_authentication_failure'
-          | 'setup_intent_invalid_parameter'
-          | 'setup_intent_mandate_invalid'
-          | 'setup_intent_mobile_wallet_unsupported'
-          | 'setup_intent_setup_attempt_expired'
-          | 'setup_intent_unexpected_state'
-          | 'shipping_address_invalid'
-          | 'shipping_calculation_failed'
-          | 'siret_invalid'
-          | 'sku_inactive'
-          | 'state_unsupported'
-          | 'status_transition_invalid'
-          | 'storer_capability_missing'
-          | 'storer_capability_not_active'
-          | 'stripe_tax_inactive'
-          | 'tax_id_invalid'
-          | 'tax_id_prohibited'
-          | 'taxes_calculation_failed'
-          | 'terminal_location_country_unsupported'
-          | 'terminal_reader_busy'
-          | 'terminal_reader_collected_data_invalid'
-          | 'terminal_reader_hardware_fault'
-          | 'terminal_reader_invalid_location_for_activation'
-          | 'terminal_reader_invalid_location_for_payment'
-          | 'terminal_reader_offline'
-          | 'terminal_reader_timeout'
-          | 'testmode_charges_only'
-          | 'tls_version_unsupported'
-          | 'token_already_used'
-          | 'token_card_network_invalid'
-          | 'token_in_use'
-          | 'transfer_source_balance_parameters_mismatch'
-          | 'transfers_not_allowed'
-          | 'url_invalid'
-          | 'v2_account_disconnection_unsupported'
-          | 'v2_account_missing_configuration';
+    export namespace CollectInputs {
+      export interface Input {
+        /**
+         * Default text of input being collected.
+         */
+        custom_text: Input.CustomText | null;
 
         /**
          * Information about a email being collected using a reader

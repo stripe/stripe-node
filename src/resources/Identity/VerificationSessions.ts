@@ -297,7 +297,7 @@ export namespace VerificationSession {
     | 'requires_input'
     | 'verified';
 
-  export type Type = 'document' | 'id_number' | 'verification_flow';
+  export type Type = 'document' | 'email' | 'id_number' | 'verification_flow';
 
   export interface VerifiedOutputs {
     /**
@@ -437,7 +437,9 @@ export namespace VerificationSession {
     export namespace Matching {
       export type Dob = 'none' | 'similar';
 
-    export type Type = 'document' | 'email' | 'id_number' | 'verification_flow';
+      export type Name = 'none' | 'similar';
+    }
+  }
 
   export namespace Redaction {
     export type Status = 'processing' | 'redacted';

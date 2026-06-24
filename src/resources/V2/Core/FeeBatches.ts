@@ -45,22 +45,22 @@ export interface FeeBatch {
   /**
    * Adjustments applied to this batch.
    */
-  adjustments?: V2.Core.FeeBatch.Adjustments;
+  adjustments?: FeeBatch.Adjustments;
 
   /**
    * The total fee amount billed in this batch.
    */
-  amount: V2.Core.FeeBatch.Amount;
+  amount: FeeBatch.Amount;
 
   /**
    * The entity that collected this batch.
    */
-  collected_by: V2.Core.FeeBatch.CollectedBy;
+  collected_by: FeeBatch.CollectedBy;
 
   /**
    * The money movement records associated with collecting this batch.
    */
-  collection_records: Array<V2.Core.FeeBatch.CollectionRecord>;
+  collection_records: Array<FeeBatch.CollectionRecord>;
 
   /**
    * Timestamp of when this batch was created.
@@ -75,28 +75,149 @@ export interface FeeBatch {
   /**
    * The current state of this batch.
    */
-  status: V2.Core.FeeBatch.Status;
+  status: FeeBatch.Status;
 
   /**
    * Timestamps for each status transition.
    */
-  status_transitions: V2.Core.FeeBatch.StatusTransitions;
+  status_transitions: FeeBatch.StatusTransitions;
 
   /**
    * The tax amount included in this batch.
    */
-  tax?: V2.Core.FeeBatch.Tax;
+  tax?: FeeBatch.Tax;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace FeeBatch {
-      export interface Adjustments {
-        /**
-         * The amount of tax adjusted for this batch.
-         */
-        tax_adjustment?: Adjustments.TaxAdjustment;
-      }
+export namespace FeeBatch {
+  export interface Adjustments {
+    /**
+     * The amount of tax adjusted for this batch.
+     */
+    tax_adjustment?: Adjustments.TaxAdjustment;
+  }
 
+  export interface Amount {
+    /**
+     * A lowercase alpha3 currency code like "usd"
+     * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+     */
+    currency: string;
+
+    /**
+     * In major units like "1.23" for 1.23 USD
+     * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+     */
+    value: string;
+  }
+
+  export interface CollectedBy {
+    /**
+     * The type of entity that collected this batch.
+     */
+    type: CollectedBy.Type;
+  }
+
+  export interface CollectionRecord {
+    /**
+     * The fee amount collected via this record.
+     */
+    amount: CollectionRecord.Amount;
+
+    /**
+     * The ID of the associated v1 balance transaction.
+     */
+    balance_transaction?: string;
+
+    /**
+     * The ID of the associated credit transaction.
+     */
+    credit_transaction?: string;
+
+    /**
+     * The ID of the associated v2 money management transaction.
+     */
+    money_management_transaction?: string;
+
+    /**
+     * The ID of the associated accounts-receivable invoice.
+     */
+    payable_invoice?: string;
+
+    /**
+     * The tax amount collected via this record.
+     */
+    tax?: CollectionRecord.Tax;
+
+    /**
+     * The type of money movement object.
+     */
+    type: CollectionRecord.Type;
+  }
+
+  export type Status = 'billed' | 'pending';
+
+  export interface StatusTransitions {
+    /**
+     * Timestamp of when the batch transitioned to BILLED, if applicable.
+     */
+    billed_at?: string;
+  }
+
+  export interface Tax {
+    /**
+     * The tax amount included in this batch.
+     */
+    amount: Tax.Amount;
+  }
+
+  export namespace Adjustments {
+    export interface TaxAdjustment {
+      /**
+       * A lowercase alpha3 currency code like "usd"
+       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       */
+      currency: string;
+
+      /**
+       * In major units like "1.23" for 1.23 USD
+       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       */
+      value: string;
+    }
+  }
+
+  export namespace CollectedBy {
+    export type Type = 'application' | 'network' | 'stripe';
+  }
+
+  export namespace CollectionRecord {
+    export interface Amount {
+      /**
+       * A lowercase alpha3 currency code like "usd"
+       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       */
+      currency: string;
+
+      /**
+       * In major units like "1.23" for 1.23 USD
+       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       */
+      value: string;
+    }
+
+    export interface Tax {
+      /**
+       * The tax amount collected via this record.
+       */
+      amount: Tax.Amount;
+    }
+
+    export type Type =
+      | 'balance_transaction'
+      | 'credit_transaction'
+      | 'money_management_transaction'
+      | 'payable_invoice';
+
+    export namespace Tax {
       export interface Amount {
         /**
          * A lowercase alpha3 currency code like "usd"
@@ -110,147 +231,22 @@ export namespace V2 {
          */
         value: string;
       }
+    }
+  }
 
-      export interface CollectedBy {
-        /**
-         * The type of entity that collected this batch.
-         */
-        type: CollectedBy.Type;
-      }
+  export namespace Tax {
+    export interface Amount {
+      /**
+       * A lowercase alpha3 currency code like "usd"
+       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       */
+      currency: string;
 
-      export interface CollectionRecord {
-        /**
-         * The fee amount collected via this record.
-         */
-        amount: CollectionRecord.Amount;
-
-        /**
-         * The ID of the associated v1 balance transaction.
-         */
-        balance_transaction?: string;
-
-        /**
-         * The ID of the associated credit transaction.
-         */
-        credit_transaction?: string;
-
-        /**
-         * The ID of the associated v2 money management transaction.
-         */
-        money_management_transaction?: string;
-
-        /**
-         * The ID of the associated accounts-receivable invoice.
-         */
-        payable_invoice?: string;
-
-        /**
-         * The tax amount collected via this record.
-         */
-        tax?: CollectionRecord.Tax;
-
-        /**
-         * The type of money movement object.
-         */
-        type: CollectionRecord.Type;
-      }
-
-      export type Status = 'billed' | 'pending';
-
-      export interface StatusTransitions {
-        /**
-         * Timestamp of when the batch transitioned to BILLED, if applicable.
-         */
-        billed_at?: string;
-      }
-
-      export interface Tax {
-        /**
-         * The tax amount included in this batch.
-         */
-        amount: Tax.Amount;
-      }
-
-      export namespace Adjustments {
-        export interface TaxAdjustment {
-          /**
-           * A lowercase alpha3 currency code like "usd"
-           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
-           */
-          currency: string;
-
-          /**
-           * In major units like "1.23" for 1.23 USD
-           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
-           */
-          value: string;
-        }
-      }
-
-      export namespace CollectedBy {
-        export type Type = 'application' | 'network' | 'stripe';
-      }
-
-      export namespace CollectionRecord {
-        export interface Amount {
-          /**
-           * A lowercase alpha3 currency code like "usd"
-           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
-           */
-          currency: string;
-
-          /**
-           * In major units like "1.23" for 1.23 USD
-           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
-           */
-          value: string;
-        }
-
-        export interface Tax {
-          /**
-           * The tax amount collected via this record.
-           */
-          amount: Tax.Amount;
-        }
-
-        export type Type =
-          | 'balance_transaction'
-          | 'credit_transaction'
-          | 'money_management_transaction'
-          | 'payable_invoice';
-
-        export namespace Tax {
-          export interface Amount {
-            /**
-             * A lowercase alpha3 currency code like "usd"
-             * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
-             */
-            currency: string;
-
-            /**
-             * In major units like "1.23" for 1.23 USD
-             * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
-             */
-            value: string;
-          }
-        }
-      }
-
-      export namespace Tax {
-        export interface Amount {
-          /**
-           * A lowercase alpha3 currency code like "usd"
-           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
-           */
-          currency: string;
-
-          /**
-           * In major units like "1.23" for 1.23 USD
-           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
-           */
-          value: string;
-        }
-      }
+      /**
+       * In major units like "1.23" for 1.23 USD
+       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       */
+      value: string;
     }
   }
 }

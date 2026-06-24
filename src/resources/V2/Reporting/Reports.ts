@@ -48,86 +48,82 @@ export interface Report {
    * name, description, whether it is required, and any validations performed.
    */
   parameters: {
-    [key: string]: V2.Reporting.Report.Parameters;
+    [key: string]: Report.Parameters;
   };
 }
-export namespace V2 {
-  export namespace Reporting {
-    export namespace Report {
-      export interface Parameters {
+export namespace Report {
+  export interface Parameters {
+    /**
+     * For array parameters, provides details about the array elements.
+     */
+    array_details?: Parameters.ArrayDetails;
+
+    /**
+     * Explains the purpose and usage of the parameter.
+     */
+    description: string;
+
+    /**
+     * For enum parameters, provides the list of allowed values.
+     */
+    enum_details?: Parameters.EnumDetails;
+
+    /**
+     * Indicates whether the parameter must be provided.
+     */
+    required: boolean;
+
+    /**
+     * For timestamp parameters, specifies the allowed date range.
+     */
+    timestamp_details?: Parameters.TimestampDetails;
+
+    /**
+     * The data type of the parameter.
+     */
+    type: Parameters.Type;
+  }
+
+  export namespace Parameters {
+    export interface ArrayDetails {
+      /**
+       * Data type of the elements in the array.
+       */
+      element_type: 'enum';
+
+      /**
+       * Details about enum elements in the array.
+       */
+      enum_details?: ArrayDetails.EnumDetails;
+    }
+
+    export interface EnumDetails {
+      /**
+       * Allowed values of the enum.
+       */
+      allowed_values: Array<string>;
+    }
+
+    export interface TimestampDetails {
+      /**
+       * Maximum permitted timestamp which can be requested.
+       */
+      max: string;
+
+      /**
+       * Minimum permitted timestamp which can be requested.
+       */
+      min: string;
+    }
+
+    export type Type = 'array' | 'enum' | 'string' | 'timestamp';
+
+    export namespace ArrayDetails {
+      export interface EnumDetails {
         /**
-         * For array parameters, provides details about the array elements.
+         * Allowed values of the enum.
          */
-        array_details?: Parameters.ArrayDetails;
-
-        /**
-         * Explains the purpose and usage of the parameter.
-         */
-        description: string;
-
-        /**
-         * For enum parameters, provides the list of allowed values.
-         */
-        enum_details?: Parameters.EnumDetails;
-
-        /**
-         * Indicates whether the parameter must be provided.
-         */
-        required: boolean;
-
-        /**
-         * For timestamp parameters, specifies the allowed date range.
-         */
-        timestamp_details?: Parameters.TimestampDetails;
-
-        /**
-         * The data type of the parameter.
-         */
-        type: Parameters.Type;
-      }
-
-      export namespace Parameters {
-        export interface ArrayDetails {
-          /**
-           * Data type of the elements in the array.
-           */
-          element_type: 'enum';
-
-          /**
-           * Details about enum elements in the array.
-           */
-          enum_details?: ArrayDetails.EnumDetails;
-        }
-
-        export interface EnumDetails {
-          /**
-           * Allowed values of the enum.
-           */
-          allowed_values: Array<string>;
-        }
-
-        export interface TimestampDetails {
-          /**
-           * Maximum permitted timestamp which can be requested.
-           */
-          max: string;
-
-          /**
-           * Minimum permitted timestamp which can be requested.
-           */
-          min: string;
-        }
-
-        export type Type = 'array' | 'enum' | 'string' | 'timestamp';
-
-        export namespace ArrayDetails {
-          export interface EnumDetails {
-            /**
-             * Allowed values of the enum.
-             */
-            allowed_values: Array<string>;
-          }
-        }
+        allowed_values: Array<string>;
       }
     }
   }

@@ -31,9 +31,9 @@ export interface TrialOffer {
    */
   object: 'product_catalog.trial_offer';
 
-  duration: ProductCatalog.TrialOffer.Duration;
+  duration: TrialOffer.Duration;
 
-  end_behavior: ProductCatalog.TrialOffer.EndBehavior;
+  end_behavior: TrialOffer.EndBehavior;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -50,44 +50,42 @@ export interface TrialOffer {
    */
   price: string | Price;
 }
-export namespace ProductCatalog {
-  export namespace TrialOffer {
-    export interface Duration {
-      relative?: Duration.Relative;
+export namespace TrialOffer {
+  export interface Duration {
+    relative?: Duration.Relative;
 
+    /**
+     * The type of trial offer duration.
+     */
+    type: Duration.Type;
+  }
+
+  export interface EndBehavior {
+    transition: EndBehavior.Transition;
+
+    /**
+     * The type of behavior when the trial offer ends.
+     */
+    type: 'transition';
+  }
+
+  export namespace Duration {
+    export interface Relative {
       /**
-       * The type of trial offer duration.
+       * The number of iterations of the price's interval for this trial offer.
        */
-      type: Duration.Type;
+      iterations: number;
     }
 
-    export interface EndBehavior {
-      transition: EndBehavior.Transition;
+    export type Type = 'relative' | 'timestamp';
+  }
 
+  export namespace EndBehavior {
+    export interface Transition {
       /**
-       * The type of behavior when the trial offer ends.
+       * The new price to use at the end of the trial offer period.
        */
-      type: 'transition';
-    }
-
-    export namespace Duration {
-      export interface Relative {
-        /**
-         * The number of iterations of the price's interval for this trial offer.
-         */
-        iterations: number;
-      }
-
-      export type Type = 'relative' | 'timestamp';
-    }
-
-    export namespace EndBehavior {
-      export interface Transition {
-        /**
-         * The new price to use at the end of the trial offer period.
-         */
-        price: string | Price;
-      }
+      price: string | Price;
     }
   }
 }

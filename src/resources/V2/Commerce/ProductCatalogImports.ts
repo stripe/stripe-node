@@ -43,10 +43,8 @@ export interface ProductCatalogImport {
    */
   status_details?: ProductCatalogImport.StatusDetails;
 }
-export namespace V2 {
-  export namespace Commerce {
-    export namespace ProductCatalogImport {
-      export type FeedType = 'inventory' | 'pricing' | 'product' | 'promotion';
+export namespace ProductCatalogImport {
+  export type FeedType = 'inventory' | 'pricing' | 'product' | 'promotion';
 
   export type Status =
     | 'awaiting_upload'

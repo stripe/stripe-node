@@ -82,19 +82,18 @@ export interface PaymentEvaluation {
    */
   signals: PaymentEvaluation.Signals;
 }
-export namespace Radar {
-  export namespace PaymentEvaluation {
-    export interface ClientDeviceMetadataDetails {
-      /**
-       * Direct client device attributes such as IP address and user agent. Use this as an alternative to radar_session when a Radar Session isn't available.
-       */
-      data?: ClientDeviceMetadataDetails.Data | null;
+export namespace PaymentEvaluation {
+  export interface ClientDeviceMetadataDetails {
+    /**
+     * Direct client device attributes such as IP address and user agent. Use this as an alternative to radar_session when a Radar Session isn't available.
+     */
+    data?: ClientDeviceMetadataDetails.Data | null;
 
-      /**
-       * ID for the Radar Session associated with the payment evaluation. A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
-       */
-      radar_session: string | null;
-    }
+    /**
+     * ID for the Radar Session associated with the payment evaluation. A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+     */
+    radar_session: string | null;
+  }
 
   export interface CustomerDetails {
     /**
@@ -233,6 +232,39 @@ export namespace Radar {
     fraudulent_payment: Signals.FraudulentPayment;
   }
 
+  export namespace ClientDeviceMetadataDetails {
+    export interface Data {
+      /**
+       * The IP address of the client device.
+       */
+      ip: string;
+
+      /**
+       * Pasted fields from the checkout flow.
+       */
+      pasted_fields: Array<Data.PastedField> | null;
+
+      /**
+       * The referrer of the client device.
+       */
+      referrer: string | null;
+
+      /**
+       * The time on page in milliseconds.
+       */
+      time_on_page_ms: number | null;
+
+      /**
+       * The user agent of the client device.
+       */
+      user_agent: string;
+    }
+
+    export namespace Data {
+      export type PastedField = 'cvc' | 'exp' | 'number' | 'other' | 'zip';
+    }
+  }
+
   export namespace Event {
     export interface DisputeOpened {
       /**
@@ -258,45 +290,11 @@ export namespace Radar {
       fraud_type: EarlyFraudWarningReceived.FraudType;
     }
 
-    export namespace ClientDeviceMetadataDetails {
-      export interface Data {
-        /**
-         * The IP address of the client device.
-         */
-        ip: string;
-
-        /**
-         * Pasted fields from the checkout flow.
-         */
-        pasted_fields: Array<Data.PastedField> | null;
-
-        /**
-         * The referrer of the client device.
-         */
-        referrer: string | null;
-
-        /**
-         * The time on page in milliseconds.
-         */
-        time_on_page_ms: number | null;
-
-        /**
-         * The user agent of the client device.
-         */
-        user_agent: string;
-      }
-
-      export namespace Data {
-        export type PastedField = 'cvc' | 'exp' | 'number' | 'other' | 'zip';
-      }
-    }
-
-    export namespace Event {
-      export interface DisputeOpened {
-        /**
-         * Amount to dispute for this payment. A positive integer representing how much to charge in [the smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (for example, 100 cents to charge 1.00 USD or 100 to charge 100 Yen, a zero-decimal currency).
-         */
-        amount: number;
+    export interface Refunded {
+      /**
+       * Amount refunded for this payment. A positive integer representing how much to charge in [the smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (for example, 100 cents to charge 1.00 USD or 100 to charge 100 Yen, a zero-decimal currency).
+       */
+      amount: number;
 
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).

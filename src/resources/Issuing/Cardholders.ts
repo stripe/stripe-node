@@ -190,7 +190,15 @@ export namespace Cardholder {
     verification: Individual.Verification | null;
   }
 
-  export type PreferredLocale = 'de' | 'en' | 'es' | 'fr' | 'it';
+  export type PreferredLocale =
+    | 'da'
+    | 'de'
+    | 'en'
+    | 'es'
+    | 'fr'
+    | 'it'
+    | 'pl'
+    | 'sv';
 
   export interface Requirements {
     /**
@@ -282,80 +290,8 @@ export namespace Cardholder {
       document: Verification.Document | null;
     }
 
-    export type PreferredLocale =
-      | 'da'
-      | 'de'
-      | 'en'
-      | 'es'
-      | 'fr'
-      | 'it'
-      | 'pl'
-      | 'sv';
-
-    export interface Requirements {
-      /**
-       * If `disabled_reason` is present, all cards will decline authorizations with `cardholder_verification_required` reason.
-       */
-      disabled_reason: Requirements.DisabledReason | null;
-
-      /**
-       * Array of fields that need to be collected in order to verify and re-enable the cardholder.
-       */
-      past_due: Array<Requirements.PastDue> | null;
-    }
-
-    export interface SpendingControls {
-      /**
-       * Array of card presence statuses from which authorizations will be allowed. Possible options are `present`, `not_present`. All other statuses will be blocked. Cannot be set with `blocked_card_presences`. Provide an empty value to unset this control.
-       */
-      allowed_card_presences: Array<
-        SpendingControls.AllowedCardPresence
-      > | null;
-
-      /**
-       * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
-       */
-      allowed_categories: Array<SpendingControls.AllowedCategory> | null;
-
-      /**
-       * Array of strings containing representing countries from which authorizations will be allowed. Authorizations from merchants in all other countries will be declined. Country codes should be ISO 3166 alpha-2 country codes (e.g. `US`). Cannot be set with `blocked_merchant_countries`. Provide an empty value to unset this control.
-       */
-      allowed_merchant_countries: Array<string> | null;
-
-      /**
-       * Array of card presence statuses from which authorizations will be declined. Possible options are `present`, `not_present`. Cannot be set with `allowed_card_presences`. Provide an empty value to unset this control.
-       */
-      blocked_card_presences: Array<
-        SpendingControls.BlockedCardPresence
-      > | null;
-
-      /**
-       * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
-       */
-      blocked_categories: Array<SpendingControls.BlockedCategory> | null;
-
-      /**
-       * Array of strings containing representing countries from which authorizations will be declined. Country codes should be ISO 3166 alpha-2 country codes (e.g. `US`). Cannot be set with `allowed_merchant_countries`. Provide an empty value to unset this control.
-       */
-      blocked_merchant_countries: Array<string> | null;
-
-      /**
-       * Limit spending with amount-based rules that apply across this cardholder's cards.
-       */
-      spending_limits: Array<SpendingControls.SpendingLimit> | null;
-
-      /**
-       * Currency of the amounts within `spending_limits`.
-       */
-      spending_limits_currency: string | null;
-    }
-
-    export type Status = 'active' | 'blocked' | 'inactive';
-
-    export type Type = 'company' | 'individual';
-
-    export namespace Individual {
-      export interface CardIssuing {
+    export namespace CardIssuing {
+      export interface UserTermsAcceptance {
         /**
          * The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
          */

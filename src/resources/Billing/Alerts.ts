@@ -422,12 +422,12 @@ export interface Alert {
   /**
    * Defines the type of the alert.
    */
-  alert_type: Billing.Alert.AlertType;
+  alert_type: Alert.AlertType;
 
   /**
    * Encapsulates configuration of the alert to monitor billing credit balance.
    */
-  credit_balance_threshold?: Billing.Alert.CreditBalanceThreshold | null;
+  credit_balance_threshold?: Alert.CreditBalanceThreshold | null;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -437,7 +437,7 @@ export interface Alert {
   /**
    * Encapsulates the alert's configuration to monitor spend on pricing plan subscriptions.
    */
-  spend_threshold?: Billing.Alert.SpendThreshold | null;
+  spend_threshold?: Alert.SpendThreshold | null;
 
   /**
    * Status of the alert. This can be active, inactive or archived.
@@ -454,45 +454,44 @@ export interface Alert {
    */
   usage_threshold: Alert.UsageThreshold | null;
 }
-export namespace Billing {
-  export namespace Alert {
-    export type AlertType =
-      | 'credit_balance_threshold'
-      | 'spend_threshold'
-      | 'usage_threshold';
+export namespace Alert {
+  export type AlertType =
+    | 'credit_balance_threshold'
+    | 'spend_threshold'
+    | 'usage_threshold';
 
-    export interface CreditBalanceThreshold {
-      /**
-       * The filters allow limiting the scope of this credit balance alert. You must specify only a customer filter at this time.
-       */
-      filters: Array<CreditBalanceThreshold.Filter> | null;
+  export interface CreditBalanceThreshold {
+    /**
+     * The filters allow limiting the scope of this credit balance alert. You must specify only a customer filter at this time.
+     */
+    filters: Array<CreditBalanceThreshold.Filter> | null;
 
-      lte: CreditBalanceThreshold.Lte;
-    }
+    lte: CreditBalanceThreshold.Lte;
+  }
 
-    export interface SpendThreshold {
-      /**
-       * Defines the period over which spend is aggregated.
-       */
-      aggregation_period: 'billing';
+  export interface SpendThreshold {
+    /**
+     * Defines the period over which spend is aggregated.
+     */
+    aggregation_period: 'billing';
 
-      /**
-       * Filters to scope the spend calculation.
-       */
-      filters: SpendThreshold.Filters | null;
+    /**
+     * Filters to scope the spend calculation.
+     */
+    filters: SpendThreshold.Filters | null;
 
-      /**
-       * Defines the granularity of spend aggregation.
-       */
-      group_by: SpendThreshold.GroupBy | null;
+    /**
+     * Defines the granularity of spend aggregation.
+     */
+    group_by: SpendThreshold.GroupBy | null;
 
-      /**
-       * The threshold value configuration for a spend threshold alert.
-       */
-      gte: SpendThreshold.Gte;
-    }
+    /**
+     * The threshold value configuration for a spend threshold alert.
+     */
+    gte: SpendThreshold.Gte;
+  }
 
-    export type Status = 'active' | 'archived' | 'inactive';
+  export type Status = 'active' | 'archived' | 'inactive';
 
   export interface UsageThreshold {
     /**
@@ -516,6 +515,210 @@ export namespace Billing {
     recurrence: 'one_time';
   }
 
+  export namespace CreditBalanceThreshold {
+    export interface Filter {
+      /**
+       * Limit the scope of the alert to this customer ID
+       */
+      customer: string | Customer | null;
+
+      type: Filter.Type;
+    }
+
+    export interface Lte {
+      /**
+       * The type of this balance. We currently only support `monetary` amounts.
+       */
+      balance_type: Lte.BalanceType;
+
+      /**
+       * The custom pricing unit amount.
+       */
+      custom_pricing_unit?: Lte.CustomPricingUnit | null;
+
+      /**
+       * The monetary amount.
+       */
+      monetary: Lte.Monetary | null;
+    }
+
+    export namespace Filter {
+      export type Type = 'customer' | 'tenant';
+    }
+
+    export namespace Lte {
+      export type BalanceType = 'custom_pricing_unit' | 'monetary';
+
+      export interface CustomPricingUnit {
+        /**
+         * The custom pricing unit object.
+         */
+        custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
+
+        /**
+         * Unique identifier for the object.
+         */
+        id: string;
+
+        /**
+         * A positive decimal string representing the amount.
+         */
+        value: Decimal;
+      }
+
+      export interface Monetary {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * A positive integer representing the amount.
+         */
+        value: number;
+      }
+
+      export namespace CustomPricingUnit {
+        export interface CustomPricingUnitDetails {
+          /**
+           * Time at which the object was created. Measured in seconds since the Unix epoch.
+           */
+          created: number;
+
+          /**
+           * The name of the custom pricing unit.
+           */
+          display_name: string;
+
+          /**
+           * Unique identifier for the object.
+           */
+          id: string;
+
+          /**
+           * A lookup key for the custom pricing unit.
+           */
+          lookup_key: string | null;
+
+          /**
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           */
+          metadata: Metadata;
+
+          /**
+           * The status of the custom pricing unit.
+           */
+          status: string;
+        }
+      }
+    }
+  }
+
+  export namespace SpendThreshold {
+    export interface Filters {
+      /**
+       * Filter by billing cadence ID.
+       */
+      billing_cadence: string | null;
+
+      /**
+       * Filter by pricing plan ID.
+       */
+      pricing_plan: string | null;
+
+      /**
+       * Filter by pricing plan subscription ID.
+       */
+      pricing_plan_subscription: string | null;
+    }
+
+    export type GroupBy = 'billing_cadence' | 'pricing_plan_subscription';
+
+    export interface Gte {
+      /**
+       * The monetary amount. Present when type is `amount`.
+       */
+      amount: Gte.Amount | null;
+
+      /**
+       * The custom pricing unit amount. Present when type is `custom_pricing_unit`.
+       */
+      custom_pricing_unit: Gte.CustomPricingUnit | null;
+
+      /**
+       * The type of the threshold amount.
+       */
+      type: Gte.Type;
+    }
+
+    export namespace Gte {
+      export interface Amount {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * A positive integer representing the amount.
+         */
+        value: number;
+      }
+
+      export interface CustomPricingUnit {
+        /**
+         * The custom pricing unit object.
+         */
+        custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
+
+        /**
+         * Unique identifier for the object.
+         */
+        id: string;
+
+        /**
+         * A positive decimal string representing the amount.
+         */
+        value: Decimal;
+      }
+
+      export type Type = 'amount' | 'custom_pricing_unit';
+
+      export namespace CustomPricingUnit {
+        export interface CustomPricingUnitDetails {
+          /**
+           * Time at which the object was created. Measured in seconds since the Unix epoch.
+           */
+          created: number;
+
+          /**
+           * The name of the custom pricing unit.
+           */
+          display_name: string;
+
+          /**
+           * Unique identifier for the object.
+           */
+          id: string;
+
+          /**
+           * A lookup key for the custom pricing unit.
+           */
+          lookup_key: string | null;
+
+          /**
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           */
+          metadata: Metadata;
+
+          /**
+           * The status of the custom pricing unit.
+           */
+          status: string;
+        }
+      }
+    }
+  }
+
   export namespace UsageThreshold {
     export interface Filter {
       /**
@@ -523,235 +726,7 @@ export namespace Billing {
        */
       customer: string | Customer | null;
 
-      /**
-       * The value at which this alert will trigger.
-       */
-      gte: number;
-
-      /**
-       * The [Billing Meter](https://docs.stripe.com/api/billing/meter) ID whose usage is monitored.
-       */
-      meter: string | Meter;
-
-      /**
-       * Defines how the alert will behave.
-       */
-      recurrence: 'one_time';
-    }
-
-    export namespace CreditBalanceThreshold {
-      export interface Filter {
-        /**
-         * Limit the scope of the alert to this customer ID
-         */
-        customer: string | Customer | null;
-
-        type: Filter.Type;
-      }
-
-      export interface Lte {
-        /**
-         * The type of this balance. We currently only support `monetary` amounts.
-         */
-        balance_type: Lte.BalanceType;
-
-        /**
-         * The custom pricing unit amount.
-         */
-        custom_pricing_unit?: Lte.CustomPricingUnit | null;
-
-        /**
-         * The monetary amount.
-         */
-        monetary: Lte.Monetary | null;
-      }
-
-      export namespace Filter {
-        export type Type = 'customer' | 'tenant';
-      }
-
-      export namespace Lte {
-        export type BalanceType = 'custom_pricing_unit' | 'monetary';
-
-        export interface CustomPricingUnit {
-          /**
-           * The custom pricing unit object.
-           */
-          custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
-
-          /**
-           * Unique identifier for the object.
-           */
-          id: string;
-
-          /**
-           * A positive decimal string representing the amount.
-           */
-          value: Decimal;
-        }
-
-        export interface Monetary {
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
-
-          /**
-           * A positive integer representing the amount.
-           */
-          value: number;
-        }
-
-        export namespace CustomPricingUnit {
-          export interface CustomPricingUnitDetails {
-            /**
-             * Time at which the object was created. Measured in seconds since the Unix epoch.
-             */
-            created: number;
-
-            /**
-             * The name of the custom pricing unit.
-             */
-            display_name: string;
-
-            /**
-             * Unique identifier for the object.
-             */
-            id: string;
-
-            /**
-             * A lookup key for the custom pricing unit.
-             */
-            lookup_key: string | null;
-
-            /**
-             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-             */
-            metadata: Metadata;
-
-            /**
-             * The status of the custom pricing unit.
-             */
-            status: string;
-          }
-        }
-      }
-    }
-
-    export namespace SpendThreshold {
-      export interface Filters {
-        /**
-         * Filter by billing cadence ID.
-         */
-        billing_cadence: string | null;
-
-        /**
-         * Filter by pricing plan ID.
-         */
-        pricing_plan: string | null;
-
-        /**
-         * Filter by pricing plan subscription ID.
-         */
-        pricing_plan_subscription: string | null;
-      }
-
-      export type GroupBy = 'billing_cadence' | 'pricing_plan_subscription';
-
-      export interface Gte {
-        /**
-         * The monetary amount. Present when type is `amount`.
-         */
-        amount: Gte.Amount | null;
-
-        /**
-         * The custom pricing unit amount. Present when type is `custom_pricing_unit`.
-         */
-        custom_pricing_unit: Gte.CustomPricingUnit | null;
-
-        /**
-         * The type of the threshold amount.
-         */
-        type: Gte.Type;
-      }
-
-      export namespace Gte {
-        export interface Amount {
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
-
-          /**
-           * A positive integer representing the amount.
-           */
-          value: number;
-        }
-
-        export interface CustomPricingUnit {
-          /**
-           * The custom pricing unit object.
-           */
-          custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
-
-          /**
-           * Unique identifier for the object.
-           */
-          id: string;
-
-          /**
-           * A positive decimal string representing the amount.
-           */
-          value: Decimal;
-        }
-
-        export type Type = 'amount' | 'custom_pricing_unit';
-
-        export namespace CustomPricingUnit {
-          export interface CustomPricingUnitDetails {
-            /**
-             * Time at which the object was created. Measured in seconds since the Unix epoch.
-             */
-            created: number;
-
-            /**
-             * The name of the custom pricing unit.
-             */
-            display_name: string;
-
-            /**
-             * Unique identifier for the object.
-             */
-            id: string;
-
-            /**
-             * A lookup key for the custom pricing unit.
-             */
-            lookup_key: string | null;
-
-            /**
-             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-             */
-            metadata: Metadata;
-
-            /**
-             * The status of the custom pricing unit.
-             */
-            status: string;
-          }
-        }
-      }
-    }
-
-    export namespace UsageThreshold {
-      export interface Filter {
-        /**
-         * Limit the scope of the alert to this customer ID
-         */
-        customer: string | Customer | null;
-
-        type: 'customer';
-      }
+      type: 'customer';
     }
   }
 }

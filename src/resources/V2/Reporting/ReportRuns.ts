@@ -99,138 +99,134 @@ export interface ReportRun {
   /**
    * The parameters used to customize the generation of the report.
    */
-  report_parameters: V2.Reporting.ReportRun.ReportParameters;
+  report_parameters: ReportRun.ReportParameters;
 
   /**
    * Details how to retrieve the results of a successfully completed `ReportRun`.
    */
-  result?: V2.Reporting.ReportRun.Result;
+  result?: ReportRun.Result;
 
   /**
    * The options specified for customizing the output file of the `ReportRun`.
    */
-  result_options?: V2.Reporting.ReportRun.ResultOptions;
+  result_options?: ReportRun.ResultOptions;
 
   /**
    * The current status of the `ReportRun`.
    */
-  status: V2.Reporting.ReportRun.Status;
+  status: ReportRun.Status;
 
   /**
    * Additional details about the current state of the `ReportRun`. The field is currently only populated when a `ReportRun`
    * is in the `failed` state, providing more information about why the report failed to generate successfully.
    */
   status_details: {
-    [key: string]: V2.Reporting.ReportRun.StatusDetails;
+    [key: string]: ReportRun.StatusDetails;
   };
 }
-export namespace V2 {
-  export namespace Reporting {
-    export namespace ReportRun {
-      export type ReportParameters = {
-        [key: string]: unknown;
-      };
+export namespace ReportRun {
+  export type ReportParameters = {
+    [key: string]: unknown;
+  };
 
-      export interface Result {
+  export interface Result {
+    /**
+     * Contains metadata about the file produced by the `ReportRun` or `QueryRun`, including
+     * its content type, size, and a URL to download its contents.
+     */
+    file?: Result.File;
+
+    /**
+     * The type of the `ReportRun` or `QueryRun` result.
+     */
+    type: 'file';
+  }
+
+  export interface ResultOptions {
+    /**
+     * If set, the generated results file will be compressed into a ZIP folder.
+     * This is useful for reducing file size and download time for large results.
+     */
+    compress_file?: boolean;
+  }
+
+  export type Status = 'failed' | 'running' | 'succeeded';
+
+  export interface StatusDetails {
+    /**
+     * Error code categorizing the reason the `ReportRun` failed.
+     */
+    error_code?: StatusDetails.ErrorCode;
+
+    /**
+     * Error message with additional details about the failure.
+     */
+    error_message?: string;
+  }
+
+  export namespace Result {
+    export interface File {
+      /**
+       * The content type of the file.
+       */
+      content_type: File.ContentType;
+
+      /**
+       * A pre-signed URL that allows secure, time-limited access to download the file.
+       */
+      download_url: File.DownloadUrl;
+
+      /**
+       * The columns of the schema.
+       */
+      schema: Array<File.Schema>;
+
+      /**
+       * The total size of the file in bytes.
+       */
+      size: bigint;
+    }
+
+    export namespace File {
+      export type ContentType = 'csv' | 'zip';
+
+      export interface DownloadUrl {
         /**
-         * Contains metadata about the file produced by the `ReportRun` or `QueryRun`, including
-         * its content type, size, and a URL to download its contents.
+         * The time that the URL expires.
          */
-        file?: Result.File;
+        expires_at?: string;
 
         /**
-         * The type of the `ReportRun` or `QueryRun` result.
+         * The URL that can be used for accessing the file.
          */
-        type: 'file';
+        url: string;
       }
 
-      export interface ResultOptions {
+      export interface Schema {
         /**
-         * If set, the generated results file will be compressed into a ZIP folder.
-         * This is useful for reducing file size and download time for large results.
+         * The name of the column.
          */
-        compress_file?: boolean;
-      }
-
-      export type Status = 'failed' | 'running' | 'succeeded';
-
-      export interface StatusDetails {
-        /**
-         * Error code categorizing the reason the `ReportRun` failed.
-         */
-        error_code?: StatusDetails.ErrorCode;
+        name: string;
 
         /**
-         * Error message with additional details about the failure.
+         * The type of the column.
          */
-        error_message?: string;
+        type: Schema.Type;
       }
 
-      export namespace Result {
-        export interface File {
-          /**
-           * The content type of the file.
-           */
-          content_type: File.ContentType;
-
-          /**
-           * A pre-signed URL that allows secure, time-limited access to download the file.
-           */
-          download_url: File.DownloadUrl;
-
-          /**
-           * The columns of the schema.
-           */
-          schema: Array<File.Schema>;
-
-          /**
-           * The total size of the file in bytes.
-           */
-          size: bigint;
-        }
-
-        export namespace File {
-          export type ContentType = 'csv' | 'zip';
-
-          export interface DownloadUrl {
-            /**
-             * The time that the URL expires.
-             */
-            expires_at?: string;
-
-            /**
-             * The URL that can be used for accessing the file.
-             */
-            url: string;
-          }
-
-          export interface Schema {
-            /**
-             * The name of the column.
-             */
-            name: string;
-
-            /**
-             * The type of the column.
-             */
-            type: Schema.Type;
-          }
-
-          export namespace Schema {
-            export type Type =
-              | 'boolean'
-              | 'double'
-              | 'bigint'
-              | 'varchar'
-              | 'timestamp';
-          }
-        }
-      }
-
-      export namespace StatusDetails {
-        export type ErrorCode = 'file_size_above_limit' | 'internal_error';
+      export namespace Schema {
+        export type Type =
+          | 'boolean'
+          | 'double'
+          | 'bigint'
+          | 'varchar'
+          | 'timestamp';
       }
     }
+  }
+
+  export namespace StatusDetails {
+    export type ErrorCode = 'file_size_above_limit' | 'internal_error';
   }
 }
 export namespace V2 {

@@ -322,6 +322,11 @@ export interface CreditGrant {
 export namespace CreditGrant {
   export interface Amount {
     /**
+     * The custom pricing unit amount.
+     */
+    custom_pricing_unit?: Amount.CustomPricingUnit | null;
+
+    /**
      * The monetary amount.
      */
     monetary: Amount.Monetary | null;
@@ -329,7 +334,7 @@ export namespace CreditGrant {
     /**
      * The type of this amount. We currently only support `monetary` billing credits.
      */
-    type: 'monetary';
+    type: Amount.Type;
   }
 
   export interface ApplicabilityConfig {
@@ -339,35 +344,48 @@ export namespace CreditGrant {
   export type Category = 'paid' | 'promotional';
 
   export namespace Amount {
-    export interface Monetary {
+    export interface CustomPricingUnit {
       /**
-       * The custom pricing unit amount.
+       * The custom pricing unit object.
        */
-      custom_pricing_unit?: Amount.CustomPricingUnit | null;
+      custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
 
       /**
-       * The monetary amount.
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * A positive integer representing the amount.
+       */
+      value: Decimal;
+    }
+
+    export interface Monetary {
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       currency: string;
 
       /**
        * A positive integer representing the amount.
        */
-      type: Amount.Type;
+      value: number;
     }
 
-    export interface ApplicabilityConfig {
-      scope: ApplicabilityConfig.Scope;
-    }
+    export type Type = 'custom_pricing_unit' | 'monetary';
 
-    export type Category = 'paid' | 'promotional';
-
-    export namespace Amount {
-      export interface CustomPricingUnit {
+    export namespace CustomPricingUnit {
+      export interface CustomPricingUnitDetails {
         /**
-         * The custom pricing unit object.
+         * Time at which the object was created. Measured in seconds since the Unix epoch.
          */
-        custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
+        created: number;
+
+        /**
+         * The name of the custom pricing unit.
+         */
+        display_name: string;
 
         /**
          * Unique identifier for the object.
@@ -375,92 +393,54 @@ export namespace CreditGrant {
         id: string;
 
         /**
-         * A positive integer representing the amount.
+         * A lookup key for the custom pricing unit.
          */
-        value: Decimal;
-      }
+        lookup_key: string | null;
 
-      export interface Monetary {
+        /**
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata: Metadata;
+
+        /**
+         * The status of the custom pricing unit.
+         */
+        status: string;
+      }
+    }
+  }
+
+  export namespace ApplicabilityConfig {
+    export interface Scope {
+      /**
+       * The billable items that credit grants can apply to. We currently only support metered billable items. Cannot be used in combination with `price_type` or `prices`.
+       */
+      billable_items?: Array<Scope.BillableItem>;
+
+      /**
+       * The price type that credit grants can apply to. We currently only support the `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `prices`.
+       */
+      price_type?: 'metered';
+
+      /**
+       * The prices that credit grants can apply to. We currently only support `metered` prices. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `price_type`.
+       */
+      prices?: Array<Scope.Price>;
+    }
+
+    export namespace Scope {
+      export interface BillableItem {
         /**
          * Unique identifier for the object.
          */
-        currency: string;
-
-        /**
-         * A positive integer representing the amount.
-         */
-        value: number;
+        id: string | null;
       }
 
-      export type Type = 'custom_pricing_unit' | 'monetary';
-
-      export namespace CustomPricingUnit {
-        export interface CustomPricingUnitDetails {
-          /**
-           * Time at which the object was created. Measured in seconds since the Unix epoch.
-           */
-          created: number;
-
-          /**
-           * The name of the custom pricing unit.
-           */
-          display_name: string;
-
-          /**
-           * Unique identifier for the object.
-           */
-          id: string;
-
-          /**
-           * A lookup key for the custom pricing unit.
-           */
-          lookup_key: string | null;
-
-          /**
-           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-           */
-          metadata: Metadata;
-
-          /**
-           * The status of the custom pricing unit.
-           */
-          status: string;
-        }
-      }
-    }
-
-    export namespace ApplicabilityConfig {
-      export interface Scope {
+      export interface Price {
         /**
-         * The billable items that credit grants can apply to. We currently only support metered billable items. Cannot be used in combination with `price_type` or `prices`.
+         * Unique identifier for the object.
          */
-        billable_items?: Array<Scope.BillableItem>;
-
-        /**
-         * The price type that credit grants can apply to. We currently only support the `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `prices`.
-         */
-        price_type?: 'metered';
-
-        /**
-         * The prices that credit grants can apply to. We currently only support `metered` prices. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `price_type`.
-         */
-        prices?: Array<Scope.Price>;
-      }
-
-      export namespace Scope {
-        export interface BillableItem {
-          /**
-           * Unique identifier for the object.
-           */
-          id: string | null;
-        }
-
-        export interface Price {
-          /**
-           * Unique identifier for the object.
-           */
-          id: string | null;
-        }
+        id: string | null;
       }
     }
   }

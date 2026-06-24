@@ -129,7 +129,7 @@ export interface ApiKey {
   /**
    * Account that manages this API key (for keys managed by platforms).
    */
-  managed_by?: V2.Iam.ApiKey.ManagedBy;
+  managed_by?: ApiKey.ManagedBy;
 
   /**
    * Name of the API key.
@@ -144,93 +144,89 @@ export interface ApiKey {
   /**
    * Token set for a publishable key.
    */
-  publishable_key?: V2.Iam.ApiKey.PublishableKey;
+  publishable_key?: ApiKey.PublishableKey;
 
   /**
    * Token set for a secret key.
    */
-  secret_key?: V2.Iam.ApiKey.SecretKey;
+  secret_key?: ApiKey.SecretKey;
 
   /**
    * Current status of the API key (e.g., active, expired).
    */
-  status: V2.Iam.ApiKey.Status;
+  status: ApiKey.Status;
 
   /**
    * Type of the API key.
    */
-  type: V2.Iam.ApiKey.Type;
+  type: ApiKey.Type;
 }
-export namespace V2 {
-  export namespace Iam {
-    export namespace ApiKey {
-      export interface ManagedBy {
-        /**
-         * An application.
-         */
-        application?: ManagedBy.Application;
+export namespace ApiKey {
+  export interface ManagedBy {
+    /**
+     * An application.
+     */
+    application?: ManagedBy.Application;
 
-        /**
-         * The type of entity.
-         */
-        type: 'application';
-      }
+    /**
+     * The type of entity.
+     */
+    type: 'application';
+  }
 
-      export interface PublishableKey {
-        /**
-         * The plaintext token for the API key.
-         */
-        token: string;
-      }
+  export interface PublishableKey {
+    /**
+     * The plaintext token for the API key.
+     */
+    token: string;
+  }
 
-      export interface SecretKey {
-        /**
-         * The encrypted secret for the API key. Only included when a key is first created.
-         */
-        encrypted_secret?: SecretKey.EncryptedSecret;
+  export interface SecretKey {
+    /**
+     * The encrypted secret for the API key. Only included when a key is first created.
+     */
+    encrypted_secret?: SecretKey.EncryptedSecret;
 
-        /**
-         * Redacted version of the secret token for display purposes.
-         */
-        secret_token_redacted?: string;
+    /**
+     * Redacted version of the secret token for display purposes.
+     */
+    secret_token_redacted?: string;
 
-        /**
-         * The plaintext token for the API key. Only included for testmode keys.
-         */
-        token?: string;
-      }
+    /**
+     * The plaintext token for the API key. Only included for testmode keys.
+     */
+    token?: string;
+  }
 
-      export type Status = 'active' | 'expired';
+  export type Status = 'active' | 'expired';
 
-      export type Type = 'publishable_key' | 'secret_key';
+  export type Type = 'publishable_key' | 'secret_key';
 
-      export namespace ManagedBy {
-        export interface Application {
-          /**
-           * Identifier of the application.
-           */
-          id: string;
-        }
-      }
+  export namespace ManagedBy {
+    export interface Application {
+      /**
+       * Identifier of the application.
+       */
+      id: string;
+    }
+  }
 
-      export namespace SecretKey {
-        export interface EncryptedSecret {
-          /**
-           * The encrypted secret data in base64 format.
-           */
-          ciphertext: string;
+  export namespace SecretKey {
+    export interface EncryptedSecret {
+      /**
+       * The encrypted secret data in base64 format.
+       */
+      ciphertext: string;
 
-          /**
-           * The format of the encrypted secret (e.g., jwe_compact).
-           */
-          format: string;
+      /**
+       * The format of the encrypted secret (e.g., jwe_compact).
+       */
+      format: string;
 
-          /**
-           * The caller's identifier of the public key provided.
-           */
-          recipient_key_id?: string;
-        }
-      }
+      /**
+       * The caller's identifier of the public key provided.
+       */
+      recipient_key_id?: string;
     }
   }
 }

@@ -217,6 +217,11 @@ export namespace FinancialAccountFeatures {
   export namespace FinancialAddresses {
     export interface Aba {
       /**
+       * Requested bank partner for this Financial Account
+       */
+      bank?: Aba.Bank;
+
+      /**
        * Whether the FinancialAccount should have the Feature.
        */
       requested: boolean;
@@ -233,6 +238,8 @@ export namespace FinancialAccountFeatures {
     }
 
     export namespace Aba {
+      export type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
+
       export type Status = 'active' | 'pending' | 'restricted';
 
       export interface StatusDetail {
@@ -569,134 +576,7 @@ export namespace FinancialAccountFeatures {
       }
     }
 
-    export namespace FinancialAddresses {
-      export interface Aba {
-        /**
-         * Requested bank partner for this Financial Account
-         */
-        bank?: Aba.Bank;
-
-        /**
-         * Whether the FinancialAccount should have the Feature.
-         */
-        requested: boolean;
-
-        /**
-         * Whether the Feature is operational.
-         */
-        status: Aba.Status;
-
-        /**
-         * Additional details; includes at least one entry when the status is not `active`.
-         */
-        status_details: Array<Aba.StatusDetail>;
-      }
-
-      export namespace Aba {
-        export type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
-
-        export type Status = 'active' | 'pending' | 'restricted';
-
-        export interface StatusDetail {
-          /**
-           * Represents the reason why the status is `pending` or `restricted`.
-           */
-          code: StatusDetail.Code;
-
-          /**
-           * Represents what the user should do, if anything, to activate the Feature.
-           */
-          resolution: StatusDetail.Resolution | null;
-
-          /**
-           * The `platform_restrictions` that are restricting this Feature.
-           */
-          restriction?: StatusDetail.Restriction;
-        }
-
-        export namespace StatusDetail {
-          export type Code =
-            | 'activating'
-            | 'capability_not_requested'
-            | 'financial_account_closed'
-            | 'rejected_other'
-            | 'rejected_unsupported_business'
-            | 'requirements_past_due'
-            | 'requirements_pending_verification'
-            | 'restricted_by_platform'
-            | 'restricted_other';
-
-          export type Resolution =
-            | 'contact_stripe'
-            | 'provide_information'
-            | 'remove_restriction';
-
-          export type Restriction = 'inbound_flows' | 'outbound_flows';
-        }
-      }
-    }
-
-    export namespace InboundTransfers {
-      export interface Ach {
-        /**
-         * Whether the FinancialAccount should have the Feature.
-         */
-        requested: boolean;
-
-        /**
-         * Whether the Feature is operational.
-         */
-        status: Ach.Status;
-
-        /**
-         * Additional details; includes at least one entry when the status is not `active`.
-         */
-        status_details: Array<Ach.StatusDetail>;
-      }
-
-      export namespace Ach {
-        export type Status = 'active' | 'pending' | 'restricted';
-
-        export interface StatusDetail {
-          /**
-           * Represents the reason why the status is `pending` or `restricted`.
-           */
-          code: StatusDetail.Code;
-
-          /**
-           * Represents what the user should do, if anything, to activate the Feature.
-           */
-          resolution: StatusDetail.Resolution | null;
-
-          /**
-           * The `platform_restrictions` that are restricting this Feature.
-           */
-          restriction?: StatusDetail.Restriction;
-        }
-
-        export namespace StatusDetail {
-          export type Code =
-            | 'activating'
-            | 'capability_not_requested'
-            | 'financial_account_closed'
-            | 'rejected_other'
-            | 'rejected_unsupported_business'
-            | 'requirements_past_due'
-            | 'requirements_pending_verification'
-            | 'restricted_by_platform'
-            | 'restricted_other';
-
-          export type Resolution =
-            | 'contact_stripe'
-            | 'provide_information'
-            | 'remove_restriction';
-
-          export type Restriction = 'inbound_flows' | 'outbound_flows';
-        }
-      }
-    }
-
-    export namespace IntraStripeFlows {
+    export namespace UsDomesticWire {
       export type Status = 'active' | 'pending' | 'restricted';
 
       export interface StatusDetail {
