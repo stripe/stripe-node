@@ -15,37 +15,35 @@ export interface RedactionJobValidationError {
   /**
    * A code indicating the reason for the error.
    */
-  code: Privacy.RedactionJobValidationError.Code;
+  code: RedactionJobValidationError.Code;
 
   /**
    * If the error is related to a specific object, this field includes the object's identifier and object type.
    */
-  erroring_object: Privacy.RedactionJobValidationError.ErroringObject | null;
+  erroring_object: RedactionJobValidationError.ErroringObject | null;
 
   /**
    * A human-readable message providing more details about the error.
    */
   message: string;
 }
-export namespace Privacy {
-  export namespace RedactionJobValidationError {
-    export type Code =
-      | 'invalid_cascading_source'
-      | 'invalid_file_purpose'
-      | 'invalid_state'
-      | 'locked_by_other_job'
-      | 'too_many_objects';
+export namespace RedactionJobValidationError {
+  export type Code =
+    | 'invalid_cascading_source'
+    | 'invalid_file_purpose'
+    | 'invalid_state'
+    | 'locked_by_other_job'
+    | 'too_many_objects';
 
-    export interface ErroringObject {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
+  export interface ErroringObject {
+    /**
+     * Unique identifier for the object.
+     */
+    id: string;
 
-      /**
-       * Erroring object type
-       */
-      object_type: string;
-    }
+    /**
+     * Erroring object type
+     */
+    object_type: string;
   }
 }

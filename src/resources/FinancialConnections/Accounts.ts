@@ -197,7 +197,7 @@ export interface Account {
   /**
    * The state of the most recent attempt to refresh the account's inferred balance history.
    */
-  inferred_balances_refresh?: FinancialConnections.Account.InferredBalancesRefresh | null;
+  inferred_balances_refresh?: Account.InferredBalancesRefresh | null;
 
   /**
    * The ID of the Financial Connections Institution this account belongs to. Note that this relationship may sometimes change in rare circumstances (e.g. institution mergers).
@@ -239,7 +239,7 @@ export interface Account {
    */
   status: Account.Status;
 
-  status_details?: FinancialConnections.Account.StatusDetails;
+  status_details?: Account.StatusDetails;
 
   /**
    * If `category` is `cash`, one of:
@@ -262,7 +262,7 @@ export interface Account {
   /**
    * The list of data refresh subscriptions requested on this account.
    */
-  subscriptions: Array<FinancialConnections.Account.Subscription> | null;
+  subscriptions: Array<Account.Subscription> | null;
 
   /**
    * The [PaymentMethod type](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type)(s) that can be created from this account.
@@ -362,6 +362,23 @@ export namespace Account {
 
   export type Category = 'cash' | 'credit' | 'investment' | 'other';
 
+  export interface InferredBalancesRefresh {
+    /**
+     * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
+     */
+    last_attempted_at: number;
+
+    /**
+     * Time at which the next inferred balance refresh can be initiated. This value will be `null` when `status` is `pending`. Measured in seconds since the Unix epoch.
+     */
+    next_refresh_available_at: number | null;
+
+    /**
+     * The status of the last refresh attempt.
+     */
+    status: InferredBalancesRefresh.Status;
+  }
+
   export interface OwnershipRefresh {
     /**
      * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
@@ -387,6 +404,10 @@ export namespace Account {
 
   export type Status = 'active' | 'disconnected' | 'inactive';
 
+  export interface StatusDetails {
+    inactive?: StatusDetails.Inactive;
+  }
+
   export type Subcategory =
     | 'checking'
     | 'credit_card'
@@ -394,6 +415,8 @@ export namespace Account {
     | 'mortgage'
     | 'other'
     | 'savings';
+
+  export type Subscription = 'balance' | 'inferred_balances' | 'transactions';
 
   export type SupportedPaymentMethodType = 'link' | 'us_bank_account';
 
@@ -459,167 +482,45 @@ export namespace Account {
     export type Type = 'cash' | 'credit';
   }
 
-    export interface InferredBalancesRefresh {
-      /**
-       * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
-       */
-      last_attempted_at: number;
+  export namespace BalanceRefresh {
+    export type Status = 'failed' | 'pending' | 'succeeded';
+  }
 
-      /**
-       * Time at which the next inferred balance refresh can be initiated. This value will be `null` when `status` is `pending`. Measured in seconds since the Unix epoch.
-       */
-      next_refresh_available_at: number | null;
-
-      /**
-       * The status of the last refresh attempt.
-       */
-      status: InferredBalancesRefresh.Status;
-    }
-
-    export interface OwnershipRefresh {
-      /**
-       * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
-       */
-      last_attempted_at: number;
+  export namespace InferredBalancesRefresh {
+    export type Status = 'failed' | 'pending' | 'succeeded';
+  }
 
   export namespace OwnershipRefresh {
     export type Status = 'failed' | 'pending' | 'succeeded';
   }
 
+  export namespace StatusDetails {
+    export interface Inactive {
       /**
-       * The status of the last refresh attempt.
+       * The action (if any) to relink the inactive Account.
        */
-      status: OwnershipRefresh.Status;
-    }
-
-    export type Permission =
-      | 'balances'
-      | 'ownership'
-      | 'payment_method'
-      | 'transactions';
-
-    export type Status = 'active' | 'disconnected' | 'inactive';
-
-    export interface StatusDetails {
-      inactive?: StatusDetails.Inactive;
-    }
-
-    export type Subcategory =
-      | 'checking'
-      | 'credit_card'
-      | 'line_of_credit'
-      | 'mortgage'
-      | 'other'
-      | 'savings';
-
-    export type Subscription = 'balance' | 'inferred_balances' | 'transactions';
-
-    export type SupportedPaymentMethodType = 'link' | 'us_bank_account';
-
-    export interface TransactionRefresh {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
+      action: Inactive.Action;
 
       /**
-       * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
+       * The underlying cause of the Account being inactive.
        */
-      last_attempted_at: number;
-
-      /**
-       * Time at which the next transaction refresh can be initiated. This value will be `null` when `status` is `pending`. Measured in seconds since the Unix epoch.
-       */
-      next_refresh_available_at: number | null;
-
-      /**
-       * The status of the last refresh attempt.
-       */
-      status: TransactionRefresh.Status;
+      cause: Inactive.Cause;
     }
 
-    export namespace AccountHolder {
-      export type Type = 'account' | 'customer';
+    export namespace Inactive {
+      export type Action = 'none' | 'relink_required';
+
+      export type Cause =
+        | 'access_denied'
+        | 'access_expired'
+        | 'account_closed'
+        | 'account_unavailable'
+        | 'unspecified';
     }
+  }
 
-    export namespace AccountNumber {
-      export type IdentifierType =
-        | 'account_number'
-        | 'tokenized_account_number';
-
-      export type Status = 'deactivated' | 'transactable';
-    }
-
-    export namespace Balance {
-      export interface Cash {
-        /**
-         * The funds available to the account holder. Typically this is the current balance after subtracting any outbound pending transactions and adding any inbound pending transactions.
-         *
-         * Each key is a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
-         *
-         * Each value is a integer amount. A positive amount indicates money owed to the account holder. A negative amount indicates money owed by the account holder.
-         */
-        available: {
-          [key: string]: number;
-        } | null;
-      }
-
-      export interface Credit {
-        /**
-         * The credit that has been used by the account holder.
-         *
-         * Each key is a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
-         *
-         * Each value is a integer amount. A positive amount indicates money owed to the account holder. A negative amount indicates money owed by the account holder.
-         */
-        used: {
-          [key: string]: number;
-        } | null;
-      }
-
-      export type Type = 'cash' | 'credit';
-    }
-
-    export namespace BalanceRefresh {
-      export type Status = 'failed' | 'pending' | 'succeeded';
-    }
-
-    export namespace InferredBalancesRefresh {
-      export type Status = 'failed' | 'pending' | 'succeeded';
-    }
-
-    export namespace OwnershipRefresh {
-      export type Status = 'failed' | 'pending' | 'succeeded';
-    }
-
-    export namespace StatusDetails {
-      export interface Inactive {
-        /**
-         * The action (if any) to relink the inactive Account.
-         */
-        action: Inactive.Action;
-
-        /**
-         * The underlying cause of the Account being inactive.
-         */
-        cause: Inactive.Cause;
-      }
-
-      export namespace Inactive {
-        export type Action = 'none' | 'relink_required';
-
-        export type Cause =
-          | 'access_denied'
-          | 'access_expired'
-          | 'account_closed'
-          | 'account_unavailable'
-          | 'unspecified';
-      }
-    }
-
-    export namespace TransactionRefresh {
-      export type Status = 'failed' | 'pending' | 'succeeded';
-    }
+  export namespace TransactionRefresh {
+    export type Status = 'failed' | 'pending' | 'succeeded';
   }
 }
 export namespace FinancialConnections {

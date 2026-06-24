@@ -1045,9 +1045,23 @@ export namespace Registration {
     }
 
     export interface Us {
+      admissions_tax?: Us.AdmissionsTax;
+
+      attendance_tax?: Us.AttendanceTax;
+
+      entertainment_tax?: Us.EntertainmentTax;
+
+      gross_receipts_tax?: Us.GrossReceiptsTax;
+
+      hospitality_tax?: Us.HospitalityTax;
+
       local_amusement_tax?: Us.LocalAmusementTax;
 
       local_lease_tax?: Us.LocalLeaseTax;
+
+      luxury_tax?: Us.LuxuryTax;
+
+      resort_tax?: Us.ResortTax;
 
       /**
        * Two-letter US state code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
@@ -1055,6 +1069,8 @@ export namespace Registration {
       state: string;
 
       state_sales_tax?: Us.StateSalesTax;
+
+      tourism_tax?: Us.TourismTax;
 
       /**
        * Type of registration in the US.
@@ -1695,42 +1711,52 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Us {
-        admissions_tax?: Us.AdmissionsTax;
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-        attendance_tax?: Us.AttendanceTax;
-
-        entertainment_tax?: Us.EntertainmentTax;
-
-        gross_receipts_tax?: Us.GrossReceiptsTax;
-
-        hospitality_tax?: Us.HospitalityTax;
-
-        local_amusement_tax?: Us.LocalAmusementTax;
-
-        local_lease_tax?: Us.LocalLeaseTax;
-
-        luxury_tax?: Us.LuxuryTax;
-
-        resort_tax?: Us.ResortTax;
-
-        /**
-         * Two-letter US state code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-         */
-        state: string;
-
-        state_sales_tax?: Us.StateSalesTax;
-
-        tourism_tax?: Us.TourismTax;
-
-        /**
-         * Type of registration in the US.
-         */
-        type: Us.Type;
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
     }
 
     export namespace Us {
+      export interface AdmissionsTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=admissions_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
+
+      export interface AttendanceTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=attendance_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
+
+      export interface EntertainmentTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=entertainment_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
+
+      export interface GrossReceiptsTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=gross_receipts_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
+
+      export interface HospitalityTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=hospitality_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
+
       export interface LocalAmusementTax {
         /**
          * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
@@ -1745,6 +1771,20 @@ export namespace Registration {
         jurisdiction: string;
       }
 
+      export interface LuxuryTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=luxury_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
+
+      export interface ResortTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=resort_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
+
       export interface StateSalesTax {
         /**
          * Elections for the state sales tax registration.
@@ -1752,665 +1792,30 @@ export namespace Registration {
         elections?: Array<StateSalesTax.Election>;
       }
 
+      export interface TourismTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=tourism_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
+
       export type Type =
+        | 'admissions_tax'
+        | 'attendance_tax'
+        | 'entertainment_tax'
+        | 'gross_receipts_tax'
+        | 'hospitality_tax'
         | 'local_amusement_tax'
         | 'local_lease_tax'
+        | 'luxury_tax'
+        | 'resort_tax'
         | 'state_communications_tax'
         | 'state_retail_delivery_fee'
-        | 'state_sales_tax';
-
-      export interface Zm {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Zw {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export namespace Ae {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace At {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Au {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Be {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Bg {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Ca {
-        export interface ProvinceStandard {
-          /**
-           * Two-letter CA province code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-           */
-          province: string;
-        }
-
-        export type Type = 'province_standard' | 'simplified' | 'standard';
-      }
-
-      export namespace Ch {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Cy {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Cz {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace De {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Dk {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Ee {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Es {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Fi {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Fr {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Gb {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Gr {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Hr {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Hu {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Ie {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace It {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Jp {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Lt {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Lu {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Lv {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Mt {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Nl {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace No {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Nz {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Pl {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Pt {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Ro {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Se {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Sg {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Si {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Sk {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Us {
-        export interface AdmissionsTax {
-          /**
-           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=admissions_tax#registration-types) representing the local jurisdiction.
-           */
-          jurisdiction: string;
-        }
-
-        export interface AttendanceTax {
-          /**
-           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=attendance_tax#registration-types) representing the local jurisdiction.
-           */
-          jurisdiction: string;
-        }
-
-        export interface EntertainmentTax {
-          /**
-           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=entertainment_tax#registration-types) representing the local jurisdiction.
-           */
-          jurisdiction: string;
-        }
-
-        export interface GrossReceiptsTax {
-          /**
-           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=gross_receipts_tax#registration-types) representing the local jurisdiction.
-           */
-          jurisdiction: string;
-        }
-
-        export interface HospitalityTax {
-          /**
-           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=hospitality_tax#registration-types) representing the local jurisdiction.
-           */
-          jurisdiction: string;
-        }
-
-        export interface LocalAmusementTax {
+        | 'state_sales_tax'
+        | 'tourism_tax';
+
+      export namespace StateSalesTax {
+        export interface Election {
           /**
            * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
            */
@@ -2422,68 +1827,11 @@ export namespace Registration {
           type: Election.Type;
         }
 
-        export interface LuxuryTax {
-          /**
-           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=luxury_tax#registration-types) representing the local jurisdiction.
-           */
-          jurisdiction: string;
-        }
-
-        export interface ResortTax {
-          /**
-           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=resort_tax#registration-types) representing the local jurisdiction.
-           */
-          jurisdiction: string;
-        }
-
-        export interface StateSalesTax {
-          /**
-           * Elections for the state sales tax registration.
-           */
-          elections?: Array<StateSalesTax.Election>;
-        }
-
-        export interface TourismTax {
-          /**
-           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=tourism_tax#registration-types) representing the local jurisdiction.
-           */
-          jurisdiction: string;
-        }
-
-        export type Type =
-          | 'admissions_tax'
-          | 'attendance_tax'
-          | 'entertainment_tax'
-          | 'gross_receipts_tax'
-          | 'hospitality_tax'
-          | 'local_amusement_tax'
-          | 'local_lease_tax'
-          | 'luxury_tax'
-          | 'resort_tax'
-          | 'state_communications_tax'
-          | 'state_retail_delivery_fee'
-          | 'state_sales_tax'
-          | 'tourism_tax';
-
-        export namespace StateSalesTax {
-          export interface Election {
-            /**
-             * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
-             */
-            jurisdiction?: string;
-
-            /**
-             * The type of the election for the state sales tax registration.
-             */
-            type: Election.Type;
-          }
-
-          export namespace Election {
-            export type Type =
-              | 'local_use_tax'
-              | 'simplified_sellers_use_tax'
-              | 'single_local_use_tax';
-          }
+        export namespace Election {
+          export type Type =
+            | 'local_use_tax'
+            | 'simplified_sellers_use_tax'
+            | 'single_local_use_tax';
         }
       }
     }

@@ -52,7 +52,7 @@ export interface TransactionEntry {
   /**
    * The delta to the FinancialAccount's balance.
    */
-  balance_impact: V2.MoneyManagement.TransactionEntry.BalanceImpact;
+  balance_impact: TransactionEntry.BalanceImpact;
 
   /**
    * Time at which the object was created.
@@ -77,121 +77,117 @@ export interface TransactionEntry {
   /**
    * Details copied from the transaction that this TransactionEntry belongs to.
    */
-  transaction_details: V2.MoneyManagement.TransactionEntry.TransactionDetails;
+  transaction_details: TransactionEntry.TransactionDetails;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace TransactionEntry {
-      export interface BalanceImpact {
-        /**
-         * Impact to the available balance.
-         */
-        available: V2Amount;
+export namespace TransactionEntry {
+  export interface BalanceImpact {
+    /**
+     * Impact to the available balance.
+     */
+    available: V2Amount;
 
-        /**
-         * Impact to the inbound_pending balance.
-         */
-        inbound_pending: V2Amount;
+    /**
+     * Impact to the inbound_pending balance.
+     */
+    inbound_pending: V2Amount;
 
-        /**
-         * Impact to the outbound_pending balance.
-         */
-        outbound_pending: V2Amount;
-      }
+    /**
+     * Impact to the outbound_pending balance.
+     */
+    outbound_pending: V2Amount;
+  }
 
-      export interface TransactionDetails {
-        /**
-         * Closed Enum for now, and will be turned into an Open Enum soon. A descriptive category used to classify the Transaction.
-         */
-        category: TransactionDetails.Category;
+  export interface TransactionDetails {
+    /**
+     * Closed Enum for now, and will be turned into an Open Enum soon. A descriptive category used to classify the Transaction.
+     */
+    category: TransactionDetails.Category;
 
-        /**
-         * Indicates the FinancialAccount affected by this Transaction.
-         */
-        financial_account: string;
+    /**
+     * Indicates the FinancialAccount affected by this Transaction.
+     */
+    financial_account: string;
 
-        /**
-         * Details about the Flow object that created the Transaction.
-         */
-        flow?: TransactionDetails.Flow;
-      }
+    /**
+     * Details about the Flow object that created the Transaction.
+     */
+    flow?: TransactionDetails.Flow;
+  }
 
-      export namespace TransactionDetails {
-        export type Category =
-          | 'adjustment'
-          | 'currency_conversion'
-          | 'inbound_transfer'
-          | 'inbound_transfer_reversal'
-          | 'outbound_payment'
-          | 'outbound_payment_reversal'
-          | 'outbound_transfer'
-          | 'outbound_transfer_reversal'
-          | 'received_credit'
-          | 'received_credit_reversal'
-          | 'received_debit'
-          | 'received_debit_reversal'
-          | 'stripe_fee'
-          | 'stripe_fee_tax';
+  export namespace TransactionDetails {
+    export type Category =
+      | 'adjustment'
+      | 'currency_conversion'
+      | 'inbound_transfer'
+      | 'inbound_transfer_reversal'
+      | 'outbound_payment'
+      | 'outbound_payment_reversal'
+      | 'outbound_transfer'
+      | 'outbound_transfer_reversal'
+      | 'received_credit'
+      | 'received_credit_reversal'
+      | 'received_debit'
+      | 'received_debit_reversal'
+      | 'stripe_fee'
+      | 'stripe_fee_tax';
 
-        export interface Flow {
-          /**
-           * If applicable, the ID of the Adjustment that created this Transaction.
-           */
-          adjustment?: string;
+    export interface Flow {
+      /**
+       * If applicable, the ID of the Adjustment that created this Transaction.
+       */
+      adjustment?: string;
 
-          /**
-           * In the future, this will be the ID of the currency conversion that created this Transaction. For now, this field is always null.
-           */
-          currency_conversion?: string;
+      /**
+       * In the future, this will be the ID of the currency conversion that created this Transaction. For now, this field is always null.
+       */
+      currency_conversion?: string;
 
-          /**
-           * If applicable, the ID of the FeeTransaction that created this Transaction.
-           */
-          fee_transaction?: string;
+      /**
+       * If applicable, the ID of the FeeTransaction that created this Transaction.
+       */
+      fee_transaction?: string;
 
-          /**
-           * If applicable, the ID of the InboundTransfer that created this Transaction.
-           */
-          inbound_transfer?: string;
+      /**
+       * If applicable, the ID of the InboundTransfer that created this Transaction.
+       */
+      inbound_transfer?: string;
 
-          /**
-           * If applicable, the ID of the OutboundPayment that created this Transaction.
-           */
-          outbound_payment?: string;
+      /**
+       * If applicable, the ID of the OutboundPayment that created this Transaction.
+       */
+      outbound_payment?: string;
 
-          /**
-           * If applicable, the ID of the OutboundTransfer that created this Transaction.
-           */
-          outbound_transfer?: string;
+      /**
+       * If applicable, the ID of the OutboundTransfer that created this Transaction.
+       */
+      outbound_transfer?: string;
 
-          /**
-           * If applicable, the ID of the ReceivedCredit that created this Transaction.
-           */
-          received_credit?: string;
+      /**
+       * If applicable, the ID of the ReceivedCredit that created this Transaction.
+       */
+      received_credit?: string;
 
-          /**
-           * If applicable, the ID of the ReceivedDebit that created this Transaction.
-           */
-          received_debit?: string;
+      /**
+       * If applicable, the ID of the ReceivedDebit that created this Transaction.
+       */
+      received_debit?: string;
 
-          /**
-           * Open Enum. Type of the flow that created the Transaction. The field matching this value will contain the ID of the flow.
-           */
-          type: Flow.Type;
-        }
+      /**
+       * Open Enum. Type of the flow that created the Transaction. The field matching this value will contain the ID of the flow.
+       */
+      type: Flow.Type;
+    }
 
-        export namespace Flow {
-          export type Type =
-            | 'adjustment'
-            | 'currency_conversion'
-            | 'fee_transaction'
-            | 'inbound_transfer'
-            | 'outbound_payment'
-            | 'outbound_transfer'
-            | 'received_credit'
-            | 'received_debit';
-        }
-      }
+    export namespace Flow {
+      export type Type =
+        | 'adjustment'
+        | 'currency_conversion'
+        | 'fee_transaction'
+        | 'inbound_transfer'
+        | 'outbound_payment'
+        | 'outbound_transfer'
+        | 'received_credit'
+        | 'received_debit';
     }
   }
 }

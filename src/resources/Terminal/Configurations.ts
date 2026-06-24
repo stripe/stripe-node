@@ -122,9 +122,9 @@ export interface Configuration {
 
   offline?: Configuration.Offline;
 
-  reader_security?: Terminal.Configuration.ReaderSecurity;
+  reader_security?: Configuration.ReaderSecurity;
 
-  reboot_window?: Terminal.Configuration.RebootWindow;
+  reboot_window?: Configuration.RebootWindow;
 
   stripe_s700?: Configuration.StripeS700;
 
@@ -189,20 +189,133 @@ export namespace Configuration {
     enabled: boolean | null;
   }
 
+  export interface ReaderSecurity {
+    /**
+     * Passcode used to access a reader's admin menu.
+     */
+    admin_menu_passcode: string;
+  }
+
   export interface RebootWindow {
     /**
      * Integer between 0 to 23 that represents the end hour of the reboot time window. The value must be different than the start_hour.
      */
     end_hour: number;
 
-    export interface ReaderSecurity {
-      /**
-       * Passcode used to access a reader's admin menu.
-       */
-      admin_menu_passcode: string;
-    }
+    /**
+     * Integer between 0 to 23 that represents the start hour of the reboot time window.
+     */
+    start_hour: number;
+  }
 
-    export interface RebootWindow {
+  export interface StripeS700 {
+    /**
+     * A File ID representing an image to display on the reader
+     */
+    splashscreen?: string | File;
+  }
+
+  export interface StripeS710 {
+    /**
+     * A File ID representing an image to display on the reader
+     */
+    splashscreen?: string | File;
+  }
+
+  export interface Tipping {
+    aed?: Tipping.Aed;
+
+    aud?: Tipping.Aud;
+
+    cad?: Tipping.Cad;
+
+    chf?: Tipping.Chf;
+
+    czk?: Tipping.Czk;
+
+    dkk?: Tipping.Dkk;
+
+    eur?: Tipping.Eur;
+
+    gbp?: Tipping.Gbp;
+
+    gip?: Tipping.Gip;
+
+    hkd?: Tipping.Hkd;
+
+    huf?: Tipping.Huf;
+
+    jpy?: Tipping.Jpy;
+
+    mxn?: Tipping.Mxn;
+
+    myr?: Tipping.Myr;
+
+    nok?: Tipping.Nok;
+
+    nzd?: Tipping.Nzd;
+
+    pln?: Tipping.Pln;
+
+    ron?: Tipping.Ron;
+
+    sek?: Tipping.Sek;
+
+    sgd?: Tipping.Sgd;
+
+    usd?: Tipping.Usd;
+  }
+
+  export interface VerifoneM425 {
+    /**
+     * A File ID representing an image to display on the reader
+     */
+    splashscreen?: string | File;
+  }
+
+  export interface VerifoneP400 {
+    /**
+     * A File ID representing an image to display on the reader
+     */
+    splashscreen?: string | File;
+  }
+
+  export interface VerifoneP630 {
+    /**
+     * A File ID representing an image to display on the reader
+     */
+    splashscreen?: string | File;
+  }
+
+  export interface VerifoneUx700 {
+    /**
+     * A File ID representing an image to display on the reader
+     */
+    splashscreen?: string | File;
+  }
+
+  export interface VerifoneV660p {
+    /**
+     * A File ID representing an image to display on the reader
+     */
+    splashscreen?: string | File;
+  }
+
+  export interface Wifi {
+    enterprise_eap_peap?: Wifi.EnterpriseEapPeap;
+
+    enterprise_eap_tls?: Wifi.EnterpriseEapTls;
+
+    personal_psk?: Wifi.PersonalPsk;
+
+    /**
+     * Security type of the WiFi network. The hash with the corresponding name contains the credentials for this security type.
+     */
+    type: Wifi.Type;
+  }
+
+  export namespace Tipping {
+    export interface Aed {
       /**
        * Fixed amounts displayed when collecting a tip
        */

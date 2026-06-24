@@ -134,7 +134,11 @@ export namespace AccountLink {
         future_requirements?: CollectionOptions.FutureRequirements;
       }
 
-      export type Configuration = 'customer' | 'merchant' | 'recipient';
+      export type Configuration =
+        | 'customer'
+        | 'merchant'
+        | 'recipient'
+        | 'storer';
 
       export namespace CollectionOptions {
         export type Fields = 'currently_due' | 'eventually_due';
@@ -156,70 +160,16 @@ export namespace AccountLink {
         future_requirements?: CollectionOptions.FutureRequirements;
       }
 
-      export type Configuration = 'customer' | 'merchant' | 'recipient';
+      export type Configuration =
+        | 'customer'
+        | 'merchant'
+        | 'recipient'
+        | 'storer';
 
       export namespace CollectionOptions {
         export type Fields = 'currently_due' | 'eventually_due';
 
-          /**
-           * The URL that the user will be redirected to upon completing the linked flow.
-           */
-          return_url?: string;
-        }
-
-        export type Type = 'account_onboarding' | 'account_update';
-
-        export namespace AccountOnboarding {
-          export interface CollectionOptions {
-            /**
-             * Specifies whether the platform collects only currently_due requirements (`currently_due`) or both currently_due and eventually_due requirements (`eventually_due`). If you don't specify collection_options, the default value is currently_due.
-             */
-            fields?: CollectionOptions.Fields;
-
-            /**
-             * Specifies whether the platform collects future_requirements in addition to requirements in Connect Onboarding. The default value is `omit`.
-             */
-            future_requirements?: CollectionOptions.FutureRequirements;
-          }
-
-          export type Configuration =
-            | 'customer'
-            | 'merchant'
-            | 'recipient'
-            | 'storer';
-
-          export namespace CollectionOptions {
-            export type Fields = 'currently_due' | 'eventually_due';
-
-            export type FutureRequirements = 'include' | 'omit';
-          }
-        }
-
-        export namespace AccountUpdate {
-          export interface CollectionOptions {
-            /**
-             * Specifies whether the platform collects only currently_due requirements (`currently_due`) or both currently_due and eventually_due requirements (`eventually_due`). The default value is `currently_due`.
-             */
-            fields?: CollectionOptions.Fields;
-
-            /**
-             * Specifies whether the platform collects future_requirements in addition to requirements in Connect Onboarding. The default value is `omit`.
-             */
-            future_requirements?: CollectionOptions.FutureRequirements;
-          }
-
-          export type Configuration =
-            | 'customer'
-            | 'merchant'
-            | 'recipient'
-            | 'storer';
-
-          export namespace CollectionOptions {
-            export type Fields = 'currently_due' | 'eventually_due';
-
-            export type FutureRequirements = 'include' | 'omit';
-          }
-        }
+        export type FutureRequirements = 'include' | 'omit';
       }
     }
   }

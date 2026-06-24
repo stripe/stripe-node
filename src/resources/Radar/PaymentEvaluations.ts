@@ -82,14 +82,13 @@ export interface PaymentEvaluation {
    */
   signals: PaymentEvaluation.Signals;
 }
-export namespace Radar {
-  export namespace PaymentEvaluation {
-    export interface ClientDeviceMetadataDetails {
-      /**
-       * ID for the Radar Session associated with the payment evaluation. A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
-       */
-      radar_session: string | null;
-    }
+export namespace PaymentEvaluation {
+  export interface ClientDeviceMetadataDetails {
+    /**
+     * ID for the Radar Session associated with the payment evaluation. A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+     */
+    radar_session: string | null;
+  }
 
   export interface CustomerDetails {
     /**

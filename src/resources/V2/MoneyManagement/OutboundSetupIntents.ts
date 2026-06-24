@@ -116,7 +116,7 @@ export interface OutboundSetupIntent {
   /**
    * Specifies which actions needs to be taken next to continue setup of the credential.
    */
-  next_action?: V2.MoneyManagement.OutboundSetupIntent.NextAction;
+  next_action?: OutboundSetupIntent.NextAction;
 
   /**
    * Use the PayoutMethods API to list and interact with PayoutMethod objects.
@@ -126,56 +126,52 @@ export interface OutboundSetupIntent {
   /**
    * Closed Enum. Status of the outbound setup intent.
    */
-  status: V2.MoneyManagement.OutboundSetupIntent.Status;
+  status: OutboundSetupIntent.Status;
 
   /**
    * The intended money movement flow this payout method should be set up for, specified in params.
    */
-  usage_intent: V2.MoneyManagement.OutboundSetupIntent.UsageIntent;
+  usage_intent: OutboundSetupIntent.UsageIntent;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace OutboundSetupIntent {
-      export interface NextAction {
-        /**
-         * Confirmation of Payee details.
-         */
-        confirmation_of_payee?: NextAction.ConfirmationOfPayee;
+export namespace OutboundSetupIntent {
+  export interface NextAction {
+    /**
+     * Confirmation of Payee details.
+     */
+    confirmation_of_payee?: NextAction.ConfirmationOfPayee;
 
-        /**
-         * The type of next action.
-         */
-        type: 'confirmation_of_payee';
-      }
+    /**
+     * The type of next action.
+     */
+    type: 'confirmation_of_payee';
+  }
 
+  export type Status =
+    | 'canceled'
+    | 'requires_action'
+    | 'requires_payout_method'
+    | 'succeeded';
+
+  export type UsageIntent = 'payment' | 'transfer';
+
+  export namespace NextAction {
+    export interface ConfirmationOfPayee {
+      /**
+       * The type of the credential.
+       */
+      object: string;
+
+      /**
+       * The Confirmation of Payee status.
+       */
+      status: ConfirmationOfPayee.Status;
+    }
+
+    export namespace ConfirmationOfPayee {
       export type Status =
-        | 'canceled'
-        | 'requires_action'
-        | 'requires_payout_method'
-        | 'succeeded';
-
-      export type UsageIntent = 'payment' | 'transfer';
-
-      export namespace NextAction {
-        export interface ConfirmationOfPayee {
-          /**
-           * The type of the credential.
-           */
-          object: string;
-
-          /**
-           * The Confirmation of Payee status.
-           */
-          status: ConfirmationOfPayee.Status;
-        }
-
-        export namespace ConfirmationOfPayee {
-          export type Status =
-            | 'awaiting_acknowledgement'
-            | 'confirmed'
-            | 'uninitiated';
-        }
-      }
+        | 'awaiting_acknowledgement'
+        | 'confirmed'
+        | 'uninitiated';
     }
   }
 }

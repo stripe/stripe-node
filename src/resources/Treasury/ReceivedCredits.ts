@@ -106,7 +106,7 @@ export interface ReceivedCredit {
   /**
    * Details specific to the money movement rails.
    */
-  network_details?: Treasury.ReceivedCredit.NetworkDetails | null;
+  network_details?: ReceivedCredit.NetworkDetails | null;
 
   /**
    * Details describing when a ReceivedCredit may be reversed.
@@ -187,6 +187,18 @@ export namespace ReceivedCredit {
 
   export type Network = 'ach' | 'card' | 'stripe' | 'us_domestic_wire';
 
+  export interface NetworkDetails {
+    /**
+     * Details about an ACH transaction.
+     */
+    ach?: NetworkDetails.Ach | null;
+
+    /**
+     * The type of flow that originated the ReceivedCredit.
+     */
+    type: 'ach';
+  }
+
   export interface ReversalDetails {
     /**
      * Time before which a ReceivedCredit can be reversed.
@@ -235,19 +247,7 @@ export namespace ReceivedCredit {
       | 'stripe'
       | 'us_bank_account';
 
-    export interface NetworkDetails {
-      /**
-       * Details about an ACH transaction.
-       */
-      ach?: NetworkDetails.Ach | null;
-
-      /**
-       * The type of flow that originated the ReceivedCredit.
-       */
-      type: 'ach';
-    }
-
-    export interface ReversalDetails {
+    export interface UsBankAccount {
       /**
        * Bank name.
        */
@@ -310,101 +310,20 @@ export namespace ReceivedCredit {
 
     export namespace SourceFlowDetails {
       export type Type =
-        | 'balance'
-        | 'financial_account'
-        | 'issuing_card'
-        | 'stripe'
-        | 'us_bank_account';
-
-      export interface UsBankAccount {
-        /**
-         * Bank name.
-         */
-        bank_name: string | null;
-
-        /**
-         * The last four digits of the bank account number.
-         */
-        last4: string | null;
-
-        /**
-         * The routing number for the bank account.
-         */
-        routing_number: string | null;
-      }
-    }
-
-    export namespace LinkedFlows {
-      export interface SourceFlowDetails {
-        /**
-         * You can reverse some [ReceivedCredits](https://api.stripe.com#received_credits) depending on their network and source flow. Reversing a ReceivedCredit leads to the creation of a new object known as a CreditReversal.
-         */
-        credit_reversal?: CreditReversal;
-
-        /**
-         * Use [OutboundPayments](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/out-of/outbound-payments) to send funds to another party's external bank account or [FinancialAccount](https://api.stripe.com#financial_accounts). To send money to an account belonging to the same user, use an [OutboundTransfer](https://api.stripe.com#outbound_transfers).
-         *
-         * Simulate OutboundPayment state changes with the `/v1/test_helpers/treasury/outbound_payments` endpoints. These methods can only be called on test mode objects.
-         *
-         * Related guide: [Moving money with Treasury using OutboundPayment objects](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/out-of/outbound-payments)
-         */
-        outbound_payment?: OutboundPayment;
-
-        /**
-         * Use [OutboundTransfers](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/out-of/outbound-transfers) to transfer funds from a [FinancialAccount](https://api.stripe.com#financial_accounts) to a PaymentMethod belonging to the same entity. To send funds to a different party, use [OutboundPayments](https://api.stripe.com#outbound_payments) instead. You can send funds over ACH rails or through a domestic wire transfer to a user's own external bank account.
-         *
-         * Simulate OutboundTransfer state changes with the `/v1/test_helpers/treasury/outbound_transfers` endpoints. These methods can only be called on test mode objects.
-         *
-         * Related guide: [Moving money with Treasury using OutboundTransfer objects](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/out-of/outbound-transfers)
-         */
-        outbound_transfer?: OutboundTransfer;
-
-        /**
-         * A `Payout` object is created when you receive funds from Stripe, or when you
-         * initiate a payout to either a bank account or debit card of a [connected
-         * Stripe account](https://docs.stripe.com/docs/connect/bank-debit-card-payouts). You can retrieve individual payouts,
-         * and list all payouts. Payouts are made on [varying
-         * schedules](https://docs.stripe.com/docs/connect/manage-payout-schedule), depending on your country and
-         * industry.
-         *
-         * Related guide: [Receiving payouts](https://docs.stripe.com/payouts)
-         */
-        payout?: Payout;
-
-        /**
-         * The type of the source flow that originated the ReceivedCredit.
-         */
-        type: SourceFlowDetails.Type;
-      }
-
-      export namespace SourceFlowDetails {
-        export type Type =
-          | 'credit_reversal'
-          | 'other'
-          | 'outbound_payment'
-          | 'outbound_transfer'
-          | 'payout';
-      }
-    }
-
-    export namespace NetworkDetails {
-      export interface Ach {
-        /**
-         * ACH Addenda record
-         */
-        addenda: string | null;
-      }
-    }
-
-    export namespace ReversalDetails {
-      export type RestrictedReason =
-        | 'already_reversed'
-        | 'deadline_passed'
-        | 'network_restricted'
+        | 'credit_reversal'
         | 'other'
         | 'outbound_payment'
         | 'outbound_transfer'
         | 'payout';
+    }
+  }
+
+  export namespace NetworkDetails {
+    export interface Ach {
+      /**
+       * ACH Addenda record
+       */
+      addenda: string | null;
     }
   }
 

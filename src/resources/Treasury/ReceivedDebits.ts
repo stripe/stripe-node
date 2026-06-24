@@ -102,7 +102,7 @@ export interface ReceivedDebit {
   /**
    * Details specific to the money movement rails.
    */
-  network_details?: Treasury.ReceivedDebit.NetworkDetails | null;
+  network_details?: ReceivedDebit.NetworkDetails | null;
 
   /**
    * Details describing when a ReceivedDebit might be reversed.
@@ -177,12 +177,29 @@ export namespace ReceivedDebit {
     payout: string | null;
 
     /**
+     * The ReceivedCredit that Capital withheld from
+     */
+    received_credit_capital_withholding?: string | null;
+
+    /**
      * Set if the ReceivedDebit was created due to a [Topup](https://api.stripe.com#topups) object.
      */
     topup: string | null;
   }
 
   export type Network = 'ach' | 'card' | 'stripe';
+
+  export interface NetworkDetails {
+    /**
+     * Details about an ACH transaction.
+     */
+    ach?: NetworkDetails.Ach | null;
+
+    /**
+     * The type of flow that originated the ReceivedDebit.
+     */
+    type: 'ach';
+  }
 
   export interface ReversalDetails {
     /**
@@ -222,32 +239,7 @@ export namespace ReceivedDebit {
       /**
        * The rails the ReceivedCredit was sent over. A FinancialAccount can only send funds over `stripe`.
        */
-      inbound_transfer: string | null;
-
-      /**
-       * Set if the ReceivedDebit was created due to an [Issuing Authorization](https://api.stripe.com#issuing_authorizations) object.
-       */
-      issuing_authorization: string | null;
-
-      /**
-       * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://api.stripe.com#issuing_disputes) object.
-       */
-      issuing_transaction: string | null;
-
-      /**
-       * Set if the ReceivedDebit was created due to a [Payout](https://api.stripe.com#payouts) object.
-       */
-      payout: string | null;
-
-      /**
-       * The ReceivedCredit that Capital withheld from
-       */
-      received_credit_capital_withholding?: string | null;
-
-      /**
-       * Set if the ReceivedDebit was created due to a [Topup](https://api.stripe.com#topups) object.
-       */
-      topup: string | null;
+      network: 'stripe';
     }
 
     export type Type =
@@ -257,19 +249,7 @@ export namespace ReceivedDebit {
       | 'stripe'
       | 'us_bank_account';
 
-    export interface NetworkDetails {
-      /**
-       * Details about an ACH transaction.
-       */
-      ach?: NetworkDetails.Ach | null;
-
-      /**
-       * The type of flow that originated the ReceivedDebit.
-       */
-      type: 'ach';
-    }
-
-    export interface ReversalDetails {
+    export interface UsBankAccount {
       /**
        * Bank name.
        */
@@ -287,77 +267,22 @@ export namespace ReceivedDebit {
     }
   }
 
-    export type Status = 'failed' | 'succeeded';
-
-    export namespace InitiatingPaymentMethodDetails {
-      export interface BillingDetails {
-        address: Address;
-
-        /**
-         * Email address.
-         */
-        email: string | null;
-
-        /**
-         * Full name.
-         */
-        name: string | null;
-      }
-
-      export interface FinancialAccount {
-        /**
-         * The FinancialAccount ID.
-         */
-        id: string;
-
-        /**
-         * The rails the ReceivedCredit was sent over. A FinancialAccount can only send funds over `stripe`.
-         */
-        network: 'stripe';
-      }
-
-      export type Type =
-        | 'balance'
-        | 'financial_account'
-        | 'issuing_card'
-        | 'stripe'
-        | 'us_bank_account';
-
-      export interface UsBankAccount {
-        /**
-         * Bank name.
-         */
-        bank_name: string | null;
-
-        /**
-         * The last four digits of the bank account number.
-         */
-        last4: string | null;
-
-        /**
-         * The routing number for the bank account.
-         */
-        routing_number: string | null;
-      }
+  export namespace NetworkDetails {
+    export interface Ach {
+      /**
+       * ACH Addenda record
+       */
+      addenda: string | null;
     }
+  }
 
-    export namespace NetworkDetails {
-      export interface Ach {
-        /**
-         * ACH Addenda record
-         */
-        addenda: string | null;
-      }
-    }
-
-    export namespace ReversalDetails {
-      export type RestrictedReason =
-        | 'already_reversed'
-        | 'deadline_passed'
-        | 'network_restricted'
-        | 'other'
-        | 'source_flow_restricted';
-    }
+  export namespace ReversalDetails {
+    export type RestrictedReason =
+      | 'already_reversed'
+      | 'deadline_passed'
+      | 'network_restricted'
+      | 'other'
+      | 'source_flow_restricted';
   }
 }
 export namespace Treasury {
