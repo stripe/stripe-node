@@ -49,7 +49,7 @@ export interface PhysicalBundle {
    */
   object: 'issuing.physical_bundle';
 
-  features: Issuing.PhysicalBundle.Features;
+  features: PhysicalBundle.Features;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -64,43 +64,41 @@ export interface PhysicalBundle {
   /**
    * Whether this physical bundle can be used to create cards.
    */
-  status: Issuing.PhysicalBundle.Status;
+  status: PhysicalBundle.Status;
 
   /**
    * Whether this physical bundle is a standard Stripe offering or custom-made for you.
    */
-  type: Issuing.PhysicalBundle.Type;
+  type: PhysicalBundle.Type;
 }
-export namespace Issuing {
-  export namespace PhysicalBundle {
-    export interface Features {
-      /**
-       * The policy for how to use card logo images in a card design with this physical bundle.
-       */
-      card_logo: Features.CardLogo;
+export namespace PhysicalBundle {
+  export interface Features {
+    /**
+     * The policy for how to use card logo images in a card design with this physical bundle.
+     */
+    card_logo: Features.CardLogo;
 
-      /**
-       * The policy for how to use carrier letter text in a card design with this physical bundle.
-       */
-      carrier_text: Features.CarrierText;
+    /**
+     * The policy for how to use carrier letter text in a card design with this physical bundle.
+     */
+    carrier_text: Features.CarrierText;
 
-      /**
-       * The policy for how to use a second line on a card with this physical bundle.
-       */
-      second_line: Features.SecondLine;
-    }
+    /**
+     * The policy for how to use a second line on a card with this physical bundle.
+     */
+    second_line: Features.SecondLine;
+  }
 
-    export type Status = 'active' | 'inactive' | 'review';
+  export type Status = 'active' | 'inactive' | 'review';
 
-    export type Type = 'custom' | 'standard';
+  export type Type = 'custom' | 'standard';
 
-    export namespace Features {
-      export type CardLogo = 'optional' | 'required' | 'unsupported';
+  export namespace Features {
+    export type CardLogo = 'optional' | 'required' | 'unsupported';
 
-      export type CarrierText = 'optional' | 'required' | 'unsupported';
+    export type CarrierText = 'optional' | 'required' | 'unsupported';
 
-      export type SecondLine = 'optional' | 'required' | 'unsupported';
-    }
+    export type SecondLine = 'optional' | 'required' | 'unsupported';
   }
 }
 export namespace Issuing {

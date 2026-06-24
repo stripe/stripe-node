@@ -126,12 +126,12 @@ export interface OutboundPayment {
   /**
    * Details about the PaymentMethod for an OutboundPayment.
    */
-  destination_payment_method_details: Treasury.OutboundPayment.DestinationPaymentMethodDetails | null;
+  destination_payment_method_details: OutboundPayment.DestinationPaymentMethodDetails | null;
 
   /**
    * Details about the end user.
    */
-  end_user_details: Treasury.OutboundPayment.EndUserDetails | null;
+  end_user_details: OutboundPayment.EndUserDetails | null;
 
   /**
    * The date when funds are expected to arrive in the destination account.
@@ -161,7 +161,7 @@ export interface OutboundPayment {
   /**
    * Details about a returned OutboundPayment. Only set when the status is `returned`.
    */
-  returned_details: Treasury.OutboundPayment.ReturnedDetails | null;
+  returned_details: OutboundPayment.ReturnedDetails | null;
 
   /**
    * The description that appears on the receiving end for an OutboundPayment (for example, bank statement for external bank transfer).
@@ -171,219 +171,217 @@ export interface OutboundPayment {
   /**
    * Current status of the OutboundPayment: `processing`, `failed`, `posted`, `returned`, `canceled`. An OutboundPayment is `processing` if it has been created and is pending. The status changes to `posted` once the OutboundPayment has been "confirmed" and funds have left the account, or to `failed` or `canceled`. If an OutboundPayment fails to arrive at its destination, its status will change to `returned`.
    */
-  status: Treasury.OutboundPayment.Status;
+  status: OutboundPayment.Status;
 
-  status_transitions: Treasury.OutboundPayment.StatusTransitions;
+  status_transitions: OutboundPayment.StatusTransitions;
 
   /**
    * Details about network-specific tracking information if available.
    */
-  tracking_details: Treasury.OutboundPayment.TrackingDetails | null;
+  tracking_details: OutboundPayment.TrackingDetails | null;
 
   /**
    * The Transaction associated with this object.
    */
   transaction: string | Transaction;
 }
-export namespace Treasury {
-  export namespace OutboundPayment {
-    export interface DestinationPaymentMethodDetails {
-      billing_details: DestinationPaymentMethodDetails.BillingDetails;
+export namespace OutboundPayment {
+  export interface DestinationPaymentMethodDetails {
+    billing_details: DestinationPaymentMethodDetails.BillingDetails;
 
-      financial_account?: DestinationPaymentMethodDetails.FinancialAccount;
+    financial_account?: DestinationPaymentMethodDetails.FinancialAccount;
+
+    /**
+     * The type of the payment method used in the OutboundPayment.
+     */
+    type: DestinationPaymentMethodDetails.Type;
+
+    us_bank_account?: DestinationPaymentMethodDetails.UsBankAccount;
+  }
+
+  export interface EndUserDetails {
+    /**
+     * IP address of the user initiating the OutboundPayment. Set if `present` is set to `true`. IP address collection is required for risk and compliance reasons. This will be used to help determine if the OutboundPayment is authorized or should be blocked.
+     */
+    ip_address: string | null;
+
+    /**
+     * `true` if the OutboundPayment creation request is being made on behalf of an end user by a platform. Otherwise, `false`.
+     */
+    present: boolean;
+  }
+
+  export interface ReturnedDetails {
+    /**
+     * Reason for the return.
+     */
+    code: ReturnedDetails.Code;
+
+    /**
+     * The Transaction associated with this object.
+     */
+    transaction: string | Transaction;
+  }
+
+  export type Status =
+    | 'canceled'
+    | 'failed'
+    | 'posted'
+    | 'processing'
+    | 'returned';
+
+  export interface StatusTransitions {
+    /**
+     * Timestamp describing when an OutboundPayment changed status to `canceled`.
+     */
+    canceled_at: number | null;
+
+    /**
+     * Timestamp describing when an OutboundPayment changed status to `failed`.
+     */
+    failed_at: number | null;
+
+    /**
+     * Timestamp describing when an OutboundPayment changed status to `posted`.
+     */
+    posted_at: number | null;
+
+    /**
+     * Timestamp describing when an OutboundPayment changed status to `returned`.
+     */
+    returned_at: number | null;
+  }
+
+  export interface TrackingDetails {
+    ach?: TrackingDetails.Ach;
+
+    /**
+     * The US bank account network used to send funds.
+     */
+    type: TrackingDetails.Type;
+
+    us_domestic_wire?: TrackingDetails.UsDomesticWire;
+  }
+
+  export namespace DestinationPaymentMethodDetails {
+    export interface BillingDetails {
+      address: Address;
 
       /**
-       * The type of the payment method used in the OutboundPayment.
+       * Email address.
        */
-      type: DestinationPaymentMethodDetails.Type;
+      email: string | null;
 
-      us_bank_account?: DestinationPaymentMethodDetails.UsBankAccount;
+      /**
+       * Full name.
+       */
+      name: string | null;
     }
 
-    export interface EndUserDetails {
+    export interface FinancialAccount {
       /**
-       * IP address of the user initiating the OutboundPayment. Set if `present` is set to `true`. IP address collection is required for risk and compliance reasons. This will be used to help determine if the OutboundPayment is authorized or should be blocked.
+       * Token of the FinancialAccount.
        */
-      ip_address: string | null;
+      id: string;
 
       /**
-       * `true` if the OutboundPayment creation request is being made on behalf of an end user by a platform. Otherwise, `false`.
+       * The rails used to send funds.
        */
-      present: boolean;
+      network: 'stripe';
     }
 
-    export interface ReturnedDetails {
+    export type Type = 'financial_account' | 'us_bank_account';
+
+    export interface UsBankAccount {
       /**
-       * Reason for the return.
+       * Account holder type: individual or company.
        */
-      code: ReturnedDetails.Code;
+      account_holder_type: UsBankAccount.AccountHolderType | null;
 
       /**
-       * The Transaction associated with this object.
+       * Account type: checkings or savings. Defaults to checking if omitted.
        */
-      transaction: string | Transaction;
+      account_type: UsBankAccount.AccountType | null;
+
+      /**
+       * Name of the bank associated with the bank account.
+       */
+      bank_name: string | null;
+
+      /**
+       * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+       */
+      fingerprint: string | null;
+
+      /**
+       * Last four digits of the bank account number.
+       */
+      last4: string | null;
+
+      /**
+       * ID of the mandate used to make this payment.
+       */
+      mandate?: string | Mandate;
+
+      /**
+       * The network rails used. See the [docs](https://docs.stripe.com/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
+       */
+      network: UsBankAccount.Network;
+
+      /**
+       * Routing number of the bank account.
+       */
+      routing_number: string | null;
     }
 
-    export type Status =
-      | 'canceled'
-      | 'failed'
-      | 'posted'
-      | 'processing'
-      | 'returned';
+    export namespace UsBankAccount {
+      export type AccountHolderType = 'company' | 'individual';
 
-    export interface StatusTransitions {
-      /**
-       * Timestamp describing when an OutboundPayment changed status to `canceled`.
-       */
-      canceled_at: number | null;
+      export type AccountType = 'checking' | 'savings';
 
-      /**
-       * Timestamp describing when an OutboundPayment changed status to `failed`.
-       */
-      failed_at: number | null;
+      export type Network = 'ach' | 'us_domestic_wire';
+    }
+  }
 
-      /**
-       * Timestamp describing when an OutboundPayment changed status to `posted`.
-       */
-      posted_at: number | null;
+  export namespace ReturnedDetails {
+    export type Code =
+      | 'account_closed'
+      | 'account_frozen'
+      | 'bank_account_restricted'
+      | 'bank_ownership_changed'
+      | 'declined'
+      | 'incorrect_account_holder_name'
+      | 'invalid_account_number'
+      | 'invalid_currency'
+      | 'no_account'
+      | 'other';
+  }
 
+  export namespace TrackingDetails {
+    export interface Ach {
       /**
-       * Timestamp describing when an OutboundPayment changed status to `returned`.
+       * ACH trace ID of the OutboundPayment for payments sent over the `ach` network.
        */
-      returned_at: number | null;
+      trace_id: string;
     }
 
-    export interface TrackingDetails {
-      ach?: TrackingDetails.Ach;
+    export type Type = 'ach' | 'us_domestic_wire';
+
+    export interface UsDomesticWire {
+      /**
+       * CHIPS System Sequence Number (SSN) of the OutboundPayment for payments sent over the `us_domestic_wire` network.
+       */
+      chips: string | null;
 
       /**
-       * The US bank account network used to send funds.
+       * IMAD of the OutboundPayment for payments sent over the `us_domestic_wire` network.
        */
-      type: TrackingDetails.Type;
+      imad: string | null;
 
-      us_domestic_wire?: TrackingDetails.UsDomesticWire;
-    }
-
-    export namespace DestinationPaymentMethodDetails {
-      export interface BillingDetails {
-        address: Address;
-
-        /**
-         * Email address.
-         */
-        email: string | null;
-
-        /**
-         * Full name.
-         */
-        name: string | null;
-      }
-
-      export interface FinancialAccount {
-        /**
-         * Token of the FinancialAccount.
-         */
-        id: string;
-
-        /**
-         * The rails used to send funds.
-         */
-        network: 'stripe';
-      }
-
-      export type Type = 'financial_account' | 'us_bank_account';
-
-      export interface UsBankAccount {
-        /**
-         * Account holder type: individual or company.
-         */
-        account_holder_type: UsBankAccount.AccountHolderType | null;
-
-        /**
-         * Account type: checkings or savings. Defaults to checking if omitted.
-         */
-        account_type: UsBankAccount.AccountType | null;
-
-        /**
-         * Name of the bank associated with the bank account.
-         */
-        bank_name: string | null;
-
-        /**
-         * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
-         */
-        fingerprint: string | null;
-
-        /**
-         * Last four digits of the bank account number.
-         */
-        last4: string | null;
-
-        /**
-         * ID of the mandate used to make this payment.
-         */
-        mandate?: string | Mandate;
-
-        /**
-         * The network rails used. See the [docs](https://docs.stripe.com/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
-         */
-        network: UsBankAccount.Network;
-
-        /**
-         * Routing number of the bank account.
-         */
-        routing_number: string | null;
-      }
-
-      export namespace UsBankAccount {
-        export type AccountHolderType = 'company' | 'individual';
-
-        export type AccountType = 'checking' | 'savings';
-
-        export type Network = 'ach' | 'us_domestic_wire';
-      }
-    }
-
-    export namespace ReturnedDetails {
-      export type Code =
-        | 'account_closed'
-        | 'account_frozen'
-        | 'bank_account_restricted'
-        | 'bank_ownership_changed'
-        | 'declined'
-        | 'incorrect_account_holder_name'
-        | 'invalid_account_number'
-        | 'invalid_currency'
-        | 'no_account'
-        | 'other';
-    }
-
-    export namespace TrackingDetails {
-      export interface Ach {
-        /**
-         * ACH trace ID of the OutboundPayment for payments sent over the `ach` network.
-         */
-        trace_id: string;
-      }
-
-      export type Type = 'ach' | 'us_domestic_wire';
-
-      export interface UsDomesticWire {
-        /**
-         * CHIPS System Sequence Number (SSN) of the OutboundPayment for payments sent over the `us_domestic_wire` network.
-         */
-        chips: string | null;
-
-        /**
-         * IMAD of the OutboundPayment for payments sent over the `us_domestic_wire` network.
-         */
-        imad: string | null;
-
-        /**
-         * OMAD of the OutboundPayment for payments sent over the `us_domestic_wire` network.
-         */
-        omad: string | null;
-      }
+      /**
+       * OMAD of the OutboundPayment for payments sent over the `us_domestic_wire` network.
+       */
+      omad: string | null;
     }
   }
 }

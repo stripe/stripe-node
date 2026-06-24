@@ -91,109 +91,107 @@ export interface Request {
   /**
    * The field kinds to be replaced in the forwarded request.
    */
-  replacements: Array<Forwarding.Request.Replacement>;
+  replacements: Array<Request.Replacement>;
 
   /**
    * Context about the request from Stripe's servers to the destination endpoint.
    */
-  request_context: Forwarding.Request.RequestContext | null;
+  request_context: Request.RequestContext | null;
 
   /**
    * The request that was sent to the destination endpoint. We redact any sensitive fields.
    */
-  request_details: Forwarding.Request.RequestDetails | null;
+  request_details: Request.RequestDetails | null;
 
   /**
    * The response that the destination endpoint returned to us. We redact any sensitive fields.
    */
-  response_details: Forwarding.Request.ResponseDetails | null;
+  response_details: Request.ResponseDetails | null;
 
   /**
    * The destination URL for the forwarded request. Must be supported by the config.
    */
   url: string | null;
 }
-export namespace Forwarding {
-  export namespace Request {
-    export type Replacement =
-      | 'card_cvc'
-      | 'card_expiry'
-      | 'card_number'
-      | 'cardholder_name'
-      | 'request_signature';
+export namespace Request {
+  export type Replacement =
+    | 'card_cvc'
+    | 'card_expiry'
+    | 'card_number'
+    | 'cardholder_name'
+    | 'request_signature';
 
-    export interface RequestContext {
+  export interface RequestContext {
+    /**
+     * The time it took in milliseconds for the destination endpoint to respond.
+     */
+    destination_duration: number;
+
+    /**
+     * The IP address of the destination.
+     */
+    destination_ip_address: string;
+  }
+
+  export interface RequestDetails {
+    /**
+     * The body payload to send to the destination endpoint.
+     */
+    body: string;
+
+    /**
+     * The headers to include in the forwarded request. Can be omitted if no additional headers (excluding Stripe-generated ones such as the Content-Type header) should be included.
+     */
+    headers: Array<RequestDetails.Header>;
+
+    /**
+     * The HTTP method used to call the destination endpoint.
+     */
+    http_method: 'POST';
+  }
+
+  export interface ResponseDetails {
+    /**
+     * The response body from the destination endpoint to Stripe.
+     */
+    body: string;
+
+    /**
+     * HTTP headers that the destination endpoint returned.
+     */
+    headers: Array<ResponseDetails.Header>;
+
+    /**
+     * The HTTP status code that the destination endpoint returned.
+     */
+    status: number;
+  }
+
+  export namespace RequestDetails {
+    export interface Header {
       /**
-       * The time it took in milliseconds for the destination endpoint to respond.
+       * The header name.
        */
-      destination_duration: number;
+      name: string;
 
       /**
-       * The IP address of the destination.
+       * The header value.
        */
-      destination_ip_address: string;
+      value: string;
     }
+  }
 
-    export interface RequestDetails {
+  export namespace ResponseDetails {
+    export interface Header {
       /**
-       * The body payload to send to the destination endpoint.
+       * The header name.
        */
-      body: string;
-
-      /**
-       * The headers to include in the forwarded request. Can be omitted if no additional headers (excluding Stripe-generated ones such as the Content-Type header) should be included.
-       */
-      headers: Array<RequestDetails.Header>;
+      name: string;
 
       /**
-       * The HTTP method used to call the destination endpoint.
+       * The header value.
        */
-      http_method: 'POST';
-    }
-
-    export interface ResponseDetails {
-      /**
-       * The response body from the destination endpoint to Stripe.
-       */
-      body: string;
-
-      /**
-       * HTTP headers that the destination endpoint returned.
-       */
-      headers: Array<ResponseDetails.Header>;
-
-      /**
-       * The HTTP status code that the destination endpoint returned.
-       */
-      status: number;
-    }
-
-    export namespace RequestDetails {
-      export interface Header {
-        /**
-         * The header name.
-         */
-        name: string;
-
-        /**
-         * The header value.
-         */
-        value: string;
-      }
-    }
-
-    export namespace ResponseDetails {
-      export interface Header {
-        /**
-         * The header name.
-         */
-        name: string;
-
-        /**
-         * The header value.
-         */
-        value: string;
-      }
+      value: string;
     }
   }
 }

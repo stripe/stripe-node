@@ -29,7 +29,7 @@ export interface CreditBalanceSummary {
   /**
    * The billing credit balances. One entry per credit grant currency. If a customer only has credit grants in a single currency, then this will have a single balance entry.
    */
-  balances: Array<Billing.CreditBalanceSummary.Balance>;
+  balances: Array<CreditBalanceSummary.Balance>;
 
   /**
    * The customer the balance is for.
@@ -46,65 +46,63 @@ export interface CreditBalanceSummary {
    */
   livemode: boolean;
 }
-export namespace Billing {
-  export namespace CreditBalanceSummary {
-    export interface Balance {
-      available_balance: Balance.AvailableBalance;
+export namespace CreditBalanceSummary {
+  export interface Balance {
+    available_balance: Balance.AvailableBalance;
 
-      ledger_balance: Balance.LedgerBalance;
+    ledger_balance: Balance.LedgerBalance;
+  }
+
+  export namespace Balance {
+    export interface AvailableBalance {
+      /**
+       * The monetary amount.
+       */
+      monetary: AvailableBalance.Monetary | null;
+
+      /**
+       * The type of this amount. We currently only support `monetary` billing credits.
+       */
+      type: 'monetary';
     }
 
-    export namespace Balance {
-      export interface AvailableBalance {
+    export interface LedgerBalance {
+      /**
+       * The monetary amount.
+       */
+      monetary: LedgerBalance.Monetary | null;
+
+      /**
+       * The type of this amount. We currently only support `monetary` billing credits.
+       */
+      type: 'monetary';
+    }
+
+    export namespace AvailableBalance {
+      export interface Monetary {
         /**
-         * The monetary amount.
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
-        monetary: AvailableBalance.Monetary | null;
+        currency: string;
 
         /**
-         * The type of this amount. We currently only support `monetary` billing credits.
+         * A positive integer representing the amount.
          */
-        type: 'monetary';
+        value: number;
       }
+    }
 
-      export interface LedgerBalance {
+    export namespace LedgerBalance {
+      export interface Monetary {
         /**
-         * The monetary amount.
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
-        monetary: LedgerBalance.Monetary | null;
+        currency: string;
 
         /**
-         * The type of this amount. We currently only support `monetary` billing credits.
+         * A positive integer representing the amount.
          */
-        type: 'monetary';
-      }
-
-      export namespace AvailableBalance {
-        export interface Monetary {
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
-
-          /**
-           * A positive integer representing the amount.
-           */
-          value: number;
-        }
-      }
-
-      export namespace LedgerBalance {
-        export interface Monetary {
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
-
-          /**
-           * A positive integer representing the amount.
-           */
-          value: number;
-        }
+        value: number;
       }
     }
   }

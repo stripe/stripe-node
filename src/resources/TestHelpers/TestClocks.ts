@@ -12,7 +12,7 @@ export class TestClockResource extends StripeResource {
     id: string,
     params?: TestHelpers.TestClockDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<TestHelpers.DeletedTestClock>> {
+  ): Promise<Response<DeletedTestClock>> {
     return this._makeRequest(
       'DELETE',
       `/v1/test_helpers/test_clocks/${encodeURIComponent(id)}`,
@@ -126,42 +126,39 @@ export interface TestClock {
   /**
    * The status of the Test Clock.
    */
-  status: TestHelpers.TestClock.Status;
+  status: TestClock.Status;
 
-  status_details: TestHelpers.TestClock.StatusDetails;
+  status_details: TestClock.StatusDetails;
 }
-export namespace TestHelpers {
-  export interface DeletedTestClock {
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
+export interface DeletedTestClock {
+  /**
+   * Unique identifier for the object.
+   */
+  id: string;
 
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'test_helpers.test_clock';
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'test_helpers.test_clock';
 
-    /**
-     * Always true for a deleted object
-     */
-    deleted: true;
+  /**
+   * Always true for a deleted object
+   */
+  deleted: true;
+}
+export namespace TestClock {
+  export type Status = 'advancing' | 'internal_failure' | 'ready';
+
+  export interface StatusDetails {
+    advancing?: StatusDetails.Advancing;
   }
 
-  export namespace TestClock {
-    export type Status = 'advancing' | 'internal_failure' | 'ready';
-
-    export interface StatusDetails {
-      advancing?: StatusDetails.Advancing;
-    }
-
-    export namespace StatusDetails {
-      export interface Advancing {
-        /**
-         * The `frozen_time` that the Test Clock is advancing towards.
-         */
-        target_frozen_time: number;
-      }
+  export namespace StatusDetails {
+    export interface Advancing {
+      /**
+       * The `frozen_time` that the Test Clock is advancing towards.
+       */
+      target_frozen_time: number;
     }
   }
 }

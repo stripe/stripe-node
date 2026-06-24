@@ -115,14 +115,14 @@ export interface CreditGrant {
    */
   object: 'billing.credit_grant';
 
-  amount: Billing.CreditGrant.Amount;
+  amount: CreditGrant.Amount;
 
-  applicability_config: Billing.CreditGrant.ApplicabilityConfig;
+  applicability_config: CreditGrant.ApplicabilityConfig;
 
   /**
    * The category of this credit grant. This is for tracking purposes and isn't displayed to the customer.
    */
-  category: Billing.CreditGrant.Category;
+  category: CreditGrant.Category;
 
   /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -184,60 +184,58 @@ export interface CreditGrant {
    */
   voided_at: number | null;
 }
-export namespace Billing {
-  export namespace CreditGrant {
-    export interface Amount {
+export namespace CreditGrant {
+  export interface Amount {
+    /**
+     * The monetary amount.
+     */
+    monetary: Amount.Monetary | null;
+
+    /**
+     * The type of this amount. We currently only support `monetary` billing credits.
+     */
+    type: 'monetary';
+  }
+
+  export interface ApplicabilityConfig {
+    scope: ApplicabilityConfig.Scope;
+  }
+
+  export type Category = 'paid' | 'promotional';
+
+  export namespace Amount {
+    export interface Monetary {
       /**
-       * The monetary amount.
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
-      monetary: Amount.Monetary | null;
+      currency: string;
 
       /**
-       * The type of this amount. We currently only support `monetary` billing credits.
+       * A positive integer representing the amount.
        */
-      type: 'monetary';
+      value: number;
+    }
+  }
+
+  export namespace ApplicabilityConfig {
+    export interface Scope {
+      /**
+       * The price type that credit grants can apply to. We currently only support the `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `prices`.
+       */
+      price_type?: 'metered';
+
+      /**
+       * The prices that credit grants can apply to. We currently only support `metered` prices. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `price_type`.
+       */
+      prices?: Array<Scope.Price>;
     }
 
-    export interface ApplicabilityConfig {
-      scope: ApplicabilityConfig.Scope;
-    }
-
-    export type Category = 'paid' | 'promotional';
-
-    export namespace Amount {
-      export interface Monetary {
+    export namespace Scope {
+      export interface Price {
         /**
-         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         * Unique identifier for the object.
          */
-        currency: string;
-
-        /**
-         * A positive integer representing the amount.
-         */
-        value: number;
-      }
-    }
-
-    export namespace ApplicabilityConfig {
-      export interface Scope {
-        /**
-         * The price type that credit grants can apply to. We currently only support the `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `prices`.
-         */
-        price_type?: 'metered';
-
-        /**
-         * The prices that credit grants can apply to. We currently only support `metered` prices. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `price_type`.
-         */
-        prices?: Array<Scope.Price>;
-      }
-
-      export namespace Scope {
-        export interface Price {
-          /**
-           * Unique identifier for the object.
-           */
-          id: string | null;
-        }
+        id: string | null;
       }
     }
   }

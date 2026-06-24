@@ -73,7 +73,7 @@ export interface ReceivedDebit {
   /**
    * Reason for the failure. A ReceivedDebit might fail because the FinancialAccount doesn't have sufficient funds, is closed, or is frozen.
    */
-  failure_code: Treasury.ReceivedDebit.FailureCode | null;
+  failure_code: ReceivedDebit.FailureCode | null;
 
   /**
    * The FinancialAccount that funds were pulled from.
@@ -85,9 +85,9 @@ export interface ReceivedDebit {
    */
   hosted_regulatory_receipt_url: string | null;
 
-  initiating_payment_method_details?: Treasury.ReceivedDebit.InitiatingPaymentMethodDetails;
+  initiating_payment_method_details?: ReceivedDebit.InitiatingPaymentMethodDetails;
 
-  linked_flows: Treasury.ReceivedDebit.LinkedFlows;
+  linked_flows: ReceivedDebit.LinkedFlows;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -97,163 +97,161 @@ export interface ReceivedDebit {
   /**
    * The network used for the ReceivedDebit.
    */
-  network: Treasury.ReceivedDebit.Network;
+  network: ReceivedDebit.Network;
 
   /**
    * Details describing when a ReceivedDebit might be reversed.
    */
-  reversal_details: Treasury.ReceivedDebit.ReversalDetails | null;
+  reversal_details: ReceivedDebit.ReversalDetails | null;
 
   /**
    * Status of the ReceivedDebit. ReceivedDebits are created with a status of either `succeeded` (approved) or `failed` (declined). The failure reason can be found under the `failure_code`.
    */
-  status: Treasury.ReceivedDebit.Status;
+  status: ReceivedDebit.Status;
 
   /**
    * The Transaction associated with this object.
    */
   transaction: string | Transaction | null;
 }
-export namespace Treasury {
-  export namespace ReceivedDebit {
-    export type FailureCode =
-      | 'account_closed'
-      | 'account_frozen'
-      | 'insufficient_funds'
-      | 'international_transaction'
-      | 'other';
+export namespace ReceivedDebit {
+  export type FailureCode =
+    | 'account_closed'
+    | 'account_frozen'
+    | 'insufficient_funds'
+    | 'international_transaction'
+    | 'other';
 
-    export interface InitiatingPaymentMethodDetails {
+  export interface InitiatingPaymentMethodDetails {
+    /**
+     * Set when `type` is `balance`.
+     */
+    balance?: 'payments';
+
+    billing_details: InitiatingPaymentMethodDetails.BillingDetails;
+
+    financial_account?: InitiatingPaymentMethodDetails.FinancialAccount;
+
+    /**
+     * Set when `type` is `issuing_card`. This is an [Issuing Card](https://api.stripe.com#issuing_cards) ID.
+     */
+    issuing_card?: string;
+
+    /**
+     * Polymorphic type matching the originating money movement's source. This can be an external account, a Stripe balance, or a FinancialAccount.
+     */
+    type: InitiatingPaymentMethodDetails.Type;
+
+    us_bank_account?: InitiatingPaymentMethodDetails.UsBankAccount;
+  }
+
+  export interface LinkedFlows {
+    /**
+     * The DebitReversal created as a result of this ReceivedDebit being reversed.
+     */
+    debit_reversal: string | null;
+
+    /**
+     * Set if the ReceivedDebit is associated with an InboundTransfer's return of funds.
+     */
+    inbound_transfer: string | null;
+
+    /**
+     * Set if the ReceivedDebit was created due to an [Issuing Authorization](https://api.stripe.com#issuing_authorizations) object.
+     */
+    issuing_authorization: string | null;
+
+    /**
+     * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://api.stripe.com#issuing_disputes) object.
+     */
+    issuing_transaction: string | null;
+
+    /**
+     * Set if the ReceivedDebit was created due to a [Payout](https://api.stripe.com#payouts) object.
+     */
+    payout: string | null;
+
+    /**
+     * Set if the ReceivedDebit was created due to a [Topup](https://api.stripe.com#topups) object.
+     */
+    topup: string | null;
+  }
+
+  export type Network = 'ach' | 'card' | 'stripe';
+
+  export interface ReversalDetails {
+    /**
+     * Time before which a ReceivedDebit can be reversed.
+     */
+    deadline: number | null;
+
+    /**
+     * Set if a ReceivedDebit can't be reversed.
+     */
+    restricted_reason: ReversalDetails.RestrictedReason | null;
+  }
+
+  export type Status = 'failed' | 'succeeded';
+
+  export namespace InitiatingPaymentMethodDetails {
+    export interface BillingDetails {
+      address: Address;
+
       /**
-       * Set when `type` is `balance`.
+       * Email address.
        */
-      balance?: 'payments';
-
-      billing_details: InitiatingPaymentMethodDetails.BillingDetails;
-
-      financial_account?: InitiatingPaymentMethodDetails.FinancialAccount;
+      email: string | null;
 
       /**
-       * Set when `type` is `issuing_card`. This is an [Issuing Card](https://api.stripe.com#issuing_cards) ID.
+       * Full name.
        */
-      issuing_card?: string;
-
-      /**
-       * Polymorphic type matching the originating money movement's source. This can be an external account, a Stripe balance, or a FinancialAccount.
-       */
-      type: InitiatingPaymentMethodDetails.Type;
-
-      us_bank_account?: InitiatingPaymentMethodDetails.UsBankAccount;
+      name: string | null;
     }
 
-    export interface LinkedFlows {
+    export interface FinancialAccount {
       /**
-       * The DebitReversal created as a result of this ReceivedDebit being reversed.
+       * The FinancialAccount ID.
        */
-      debit_reversal: string | null;
+      id: string;
 
       /**
-       * Set if the ReceivedDebit is associated with an InboundTransfer's return of funds.
+       * The rails the ReceivedCredit was sent over. A FinancialAccount can only send funds over `stripe`.
        */
-      inbound_transfer: string | null;
-
-      /**
-       * Set if the ReceivedDebit was created due to an [Issuing Authorization](https://api.stripe.com#issuing_authorizations) object.
-       */
-      issuing_authorization: string | null;
-
-      /**
-       * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://api.stripe.com#issuing_disputes) object.
-       */
-      issuing_transaction: string | null;
-
-      /**
-       * Set if the ReceivedDebit was created due to a [Payout](https://api.stripe.com#payouts) object.
-       */
-      payout: string | null;
-
-      /**
-       * Set if the ReceivedDebit was created due to a [Topup](https://api.stripe.com#topups) object.
-       */
-      topup: string | null;
+      network: 'stripe';
     }
 
-    export type Network = 'ach' | 'card' | 'stripe';
+    export type Type =
+      | 'balance'
+      | 'financial_account'
+      | 'issuing_card'
+      | 'stripe'
+      | 'us_bank_account';
 
-    export interface ReversalDetails {
+    export interface UsBankAccount {
       /**
-       * Time before which a ReceivedDebit can be reversed.
+       * Bank name.
        */
-      deadline: number | null;
+      bank_name: string | null;
 
       /**
-       * Set if a ReceivedDebit can't be reversed.
+       * The last four digits of the bank account number.
        */
-      restricted_reason: ReversalDetails.RestrictedReason | null;
+      last4: string | null;
+
+      /**
+       * The routing number for the bank account.
+       */
+      routing_number: string | null;
     }
+  }
 
-    export type Status = 'failed' | 'succeeded';
-
-    export namespace InitiatingPaymentMethodDetails {
-      export interface BillingDetails {
-        address: Address;
-
-        /**
-         * Email address.
-         */
-        email: string | null;
-
-        /**
-         * Full name.
-         */
-        name: string | null;
-      }
-
-      export interface FinancialAccount {
-        /**
-         * The FinancialAccount ID.
-         */
-        id: string;
-
-        /**
-         * The rails the ReceivedCredit was sent over. A FinancialAccount can only send funds over `stripe`.
-         */
-        network: 'stripe';
-      }
-
-      export type Type =
-        | 'balance'
-        | 'financial_account'
-        | 'issuing_card'
-        | 'stripe'
-        | 'us_bank_account';
-
-      export interface UsBankAccount {
-        /**
-         * Bank name.
-         */
-        bank_name: string | null;
-
-        /**
-         * The last four digits of the bank account number.
-         */
-        last4: string | null;
-
-        /**
-         * The routing number for the bank account.
-         */
-        routing_number: string | null;
-      }
-    }
-
-    export namespace ReversalDetails {
-      export type RestrictedReason =
-        | 'already_reversed'
-        | 'deadline_passed'
-        | 'network_restricted'
-        | 'other'
-        | 'source_flow_restricted';
-    }
+  export namespace ReversalDetails {
+    export type RestrictedReason =
+      | 'already_reversed'
+      | 'deadline_passed'
+      | 'network_restricted'
+      | 'other'
+      | 'source_flow_restricted';
   }
 }
 export namespace Treasury {
