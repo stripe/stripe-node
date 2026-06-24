@@ -34,6 +34,11 @@ export interface ProductCatalogImport {
   metadata: Metadata;
 
   /**
+   * The import strategy for handling existing catalog data.
+   */
+  mode: ProductCatalogImport.Mode;
+
+  /**
    * The current status of this ProductCatalogImport.
    */
   status: ProductCatalogImport.Status;
@@ -44,7 +49,9 @@ export interface ProductCatalogImport {
   status_details?: ProductCatalogImport.StatusDetails;
 }
 export namespace ProductCatalogImport {
-  export type FeedType = 'inventory' | 'pricing' | 'product';
+  export type FeedType = 'inventory' | 'pricing' | 'product' | 'promotion';
+
+  export type Mode = 'replace' | 'upsert';
 
   export type Status =
     | 'awaiting_upload'

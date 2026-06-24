@@ -162,6 +162,7 @@ export interface Dispute {
 }
 export namespace Dispute {
   export type EnhancedEligibilityType =
+    | 'mastercard_compliance'
     | 'visa_compelling_evidence_3'
     | 'visa_compliance';
 
@@ -355,12 +356,21 @@ export namespace Dispute {
 
   export namespace Evidence {
     export interface EnhancedEvidence {
+      mastercard_compliance?: EnhancedEvidence.MastercardCompliance;
+
       visa_compelling_evidence_3?: EnhancedEvidence.VisaCompellingEvidence3;
 
       visa_compliance?: EnhancedEvidence.VisaCompliance;
     }
 
     export namespace EnhancedEvidence {
+      export interface MastercardCompliance {
+        /**
+         * A field acknowledging the fee incurred when countering a Mastercard compliance dispute. If this field is set to true, evidence can be submitted for the compliance dispute.
+         */
+        fee_acknowledged: boolean;
+      }
+
       export interface VisaCompellingEvidence3 {
         /**
          * Disputed transaction details for Visa Compelling Evidence 3.0 evidence submission.
@@ -476,12 +486,21 @@ export namespace Dispute {
 
   export namespace EvidenceDetails {
     export interface EnhancedEligibility {
+      mastercard_compliance?: EnhancedEligibility.MastercardCompliance;
+
       visa_compelling_evidence_3?: EnhancedEligibility.VisaCompellingEvidence3;
 
       visa_compliance?: EnhancedEligibility.VisaCompliance;
     }
 
     export namespace EnhancedEligibility {
+      export interface MastercardCompliance {
+        /**
+         * Mastercard compliance eligibility status.
+         */
+        status: MastercardCompliance.Status;
+      }
+
       export interface VisaCompellingEvidence3 {
         /**
          * List of actions required to qualify dispute for Visa Compelling Evidence 3.0 evidence submission.
@@ -499,6 +518,12 @@ export namespace Dispute {
          * Visa compliance eligibility status.
          */
         status: VisaCompliance.Status;
+      }
+
+      export namespace MastercardCompliance {
+        export type Status =
+          | 'fee_acknowledged'
+          | 'requires_fee_acknowledgement';
       }
 
       export namespace VisaCompellingEvidence3 {
@@ -758,6 +783,11 @@ export namespace DisputeUpdateParams {
   export namespace Evidence {
     export interface EnhancedEvidence {
       /**
+       * Evidence provided for Mastercard compliance evidence submission.
+       */
+      mastercard_compliance?: EnhancedEvidence.MastercardCompliance;
+
+      /**
        * Evidence provided for Visa Compelling Evidence 3.0 evidence submission.
        */
       visa_compelling_evidence_3?: EnhancedEvidence.VisaCompellingEvidence3;
@@ -769,6 +799,13 @@ export namespace DisputeUpdateParams {
     }
 
     export namespace EnhancedEvidence {
+      export interface MastercardCompliance {
+        /**
+         * A field acknowledging the fee incurred when countering a Mastercard compliance dispute. If this field is set to true, evidence can be submitted for the compliance dispute.
+         */
+        fee_acknowledged?: boolean;
+      }
+
       export interface VisaCompellingEvidence3 {
         /**
          * Disputed transaction details for Visa Compelling Evidence 3.0 evidence submission.

@@ -438,9 +438,19 @@ export namespace ConfirmationToken {
       tax_id: string | null;
     }
 
-    export interface Bizum {}
+    export interface Bizum {
+      /**
+       * A unique identifier for the buyer as determined by the local payment processor.
+       */
+      buyer_id?: string | null;
+    }
 
-    export interface Blik {}
+    export interface Blik {
+      /**
+       * A unique and immutable identifier assigned by BLIK to every buyer.
+       */
+      buyer_id?: string | null;
+    }
 
     export interface Boleto {
       /**
@@ -885,7 +895,12 @@ export namespace ConfirmationToken {
       pay_id: string | null;
     }
 
-    export interface Pix {}
+    export interface Pix {
+      /**
+       * Uniquely identifies this particular Pix account. You can use this attribute to check whether two Pix accounts are the same.
+       */
+      fingerprint?: string | null;
+    }
 
     export interface Promptpay {}
 

@@ -202,6 +202,8 @@ export interface Account {
    */
   status: Account.Status;
 
+  status_details?: Account.StatusDetails;
+
   /**
    * If `category` is `cash`, one of:
    *
@@ -348,6 +350,10 @@ export namespace Account {
 
   export type Status = 'active' | 'disconnected' | 'inactive';
 
+  export interface StatusDetails {
+    active?: StatusDetails.Active;
+  }
+
   export type Subcategory =
     | 'checking'
     | 'credit_card'
@@ -426,6 +432,34 @@ export namespace Account {
 
   export namespace OwnershipRefresh {
     export type Status = 'failed' | 'pending' | 'succeeded';
+  }
+
+  export namespace StatusDetails {
+    export interface Active {
+      /**
+       * The action (if any) to proactively relink the Account.
+       */
+      action: Active.Action;
+
+      /**
+       * The underlying cause of the Account becoming inactive.
+       */
+      cause: Active.Cause;
+
+      /**
+       * When the Account is expected to become inactive, if applicable.
+       */
+      expected_deactivation_date: number;
+    }
+
+    export namespace Active {
+      export type Action = 'none' | 'relink_required';
+
+      export type Cause =
+        | 'access_expired'
+        | 'institution_requirement'
+        | 'unspecified';
+    }
   }
 
   export namespace TransactionRefresh {

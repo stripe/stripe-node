@@ -319,7 +319,7 @@ export namespace TestHelpers {
       sofort?: PaymentMethodData.Sofort;
 
       /**
-       * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+       * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
        */
       sunbit?: PaymentMethodData.Sunbit;
 

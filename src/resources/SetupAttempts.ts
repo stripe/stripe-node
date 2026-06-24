@@ -151,6 +151,8 @@ export namespace SetupAttempt {
 
     revolut_pay?: PaymentMethodDetails.RevolutPay;
 
+    satispay?: PaymentMethodDetails.Satispay;
+
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
     sofort?: PaymentMethodDetails.Sofort;
@@ -482,9 +484,16 @@ export namespace SetupAttempt {
 
     export interface Payto {}
 
-    export interface Pix {}
+    export interface Pix {
+      /**
+       * Uniquely identifies this particular Pix account. You can use this attribute to check whether two Pix accounts are the same.
+       */
+      fingerprint?: string | null;
+    }
 
     export interface RevolutPay {}
+
+    export interface Satispay {}
 
     export interface SepaDebit {}
 
@@ -726,6 +735,7 @@ export namespace SetupAttempt {
       | 'alipay_upgrade_required'
       | 'amount_too_large'
       | 'amount_too_small'
+      | 'anomalous_money_movement_request'
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
@@ -765,6 +775,10 @@ export namespace SetupAttempt {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'failed_tax_calculation'
+      | 'financial_account_balance_does_not_support_currency'
+      | 'financial_account_capability_not_enabled'
+      | 'financial_account_capability_restricted'
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
