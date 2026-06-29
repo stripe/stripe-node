@@ -100,7 +100,7 @@ export interface InboundTransfer {
   to: InboundTransfer.To;
 
   /**
-   * A list of history objects, representing changes in the state of the InboundTransfer.
+   * A list of history objects, representing changes in the state of the InboundTransfer. The most recent entry's type indicates the current status of the InboundTransfer.
    */
   transfer_history: Array<InboundTransfer.TransferHistory>;
 }
