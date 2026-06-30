@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec
-
 import {DeletedObject} from './DeletedObject.js';
 import {Core} from './Core/index.js';
 
