@@ -1,1 +1,0 @@
-import {resourceNamespace} from './ResourceNamespace.js';
