@@ -53,22 +53,13 @@ import {
   Emptyable,
   Decimal,
 } from './shared.js';
-import {EventNotification as V2EventNotification} from './resources/V2/Core/Events.js';
 
 // StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
+import { V2 } from './resources/V2/index.js';
 // StripeInstanceImports: The end of the section generated from our OpenAPI spec
 
 // V1EventImports: The beginning of the section generated from our OpenAPI spec
 // V1EventImports: The end of the section generated from our OpenAPI spec
-import {OAuthResource} from './resources.js';
-import {
-  OAuthToken,
-  OAuthTokenParams,
-  OAuthAuthorizeUrlOptions,
-  OAuthAuthorizeUrlParams,
-  OAuthDeauthorization,
-  OAuthDeauthorizeParams,
-} from './resources/OAuth.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -158,9 +149,6 @@ export class Stripe {
 
   // StripeInstanceVariables: The beginning of the section generated from our OpenAPI spec
   // StripeInstanceVariables: The end of the section generated from our OpenAPI spec
-  // webhooks: WebhookEndpointResource;
-  account: AccountResource;
-  oauth: OAuthResource;
 
   static initialize(
     platformFunctions: PlatformFunctions,
@@ -261,13 +249,6 @@ export class Stripe {
 
     // StripeInitInstanceVariables: The beginning of the section generated from our OpenAPI spec
     // StripeInitInstanceVariables: The end of the section generated from our OpenAPI spec
-
-    // hardcoded properties and resources
-    // account property is added for backward compatibility
-    this.account = this.accounts;
-    this.oauth = new OAuthResource(this);
-
-    // this._prepResources();
   }
 
   /**
@@ -794,16 +775,6 @@ export declare namespace Stripe {
     RangeQueryParam,
     PaginationParams,
     Emptyable,
-  };
-
-  export {
-    OAuthResource,
-    OAuthToken,
-    OAuthTokenParams,
-    OAuthAuthorizeUrlOptions,
-    OAuthAuthorizeUrlParams,
-    OAuthDeauthorization,
-    OAuthDeauthorizeParams,
   };
 
   export type Decimal = import('./shared.js').Decimal;

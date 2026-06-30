@@ -74,13 +74,6 @@ declare namespace StripeConstructor {
   export type RangeQueryParam = Stripe.RangeQueryParam;
   export type PaginationParams = Stripe.PaginationParams;
   export type Emptyable<T> = Stripe.Emptyable<T>;
-  export type OAuthResource = Stripe.OAuthResource;
-  export type OAuthToken = Stripe.OAuthToken;
-  export type OAuthTokenParams = Stripe.OAuthTokenParams;
-  export type OAuthAuthorizeUrlOptions = Stripe.OAuthAuthorizeUrlOptions;
-  export type OAuthAuthorizeUrlParams = Stripe.OAuthAuthorizeUrlParams;
-  export type OAuthDeauthorization = Stripe.OAuthDeauthorization;
-  export type OAuthDeauthorizeParams = Stripe.OAuthDeauthorizeParams;
   export type StripeContextType = Stripe.StripeContextType;
   export type StripeRawError = Stripe.StripeRawError;
   export type Decimal = Stripe.Decimal;

@@ -43,18 +43,6 @@ export const generateOAuthError = (
 ): StripeError => {
   const oauthType = rawStripeError.type;
   switch (oauthType) {
-    case 'invalid_grant':
-      return new StripeInvalidGrantError(rawStripeError);
-    case 'invalid_client':
-      return new StripeInvalidClientError(rawStripeError);
-    case 'invalid_request':
-      return new StripeOAuthInvalidRequestError(rawStripeError);
-    case 'invalid_scope':
-      return new StripeInvalidScopeError(rawStripeError);
-    case 'unsupported_grant_type':
-      return new StripeUnsupportedGrantTypeError(rawStripeError);
-    case 'unsupported_response_type':
-      return new StripeUnsupportedResponseTypeError(rawStripeError);
     default:
       return new StripeOAuthError(rawStripeError);
   }
