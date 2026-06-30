@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec
-
 import { StripeContext } from '../../../StripeContext.js';
 
 export interface EventBase {

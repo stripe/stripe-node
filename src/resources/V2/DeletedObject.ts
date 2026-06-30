@@ -1,6 +1,3 @@
-// File generated from our OpenAPI spec
-
-import {RequestOptions} from '../../lib.js';
 export interface DeletedObject {
   /**
    * The ID of the object that's being deleted.
