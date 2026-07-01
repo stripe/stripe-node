@@ -25638,6 +25638,7 @@ declare namespace StripeConstructor {
         }
       }
       export namespace FinancialAccountCreateParams {
+        export type Type = Stripe_.V2.MoneyManagement.FinancialAccountCreateParams.Type;
         export type Storage = Stripe_.V2.MoneyManagement.FinancialAccountCreateParams.Storage;
         export namespace Storage {
           export type FundsUsageType = Stripe_.V2.MoneyManagement.FinancialAccountCreateParams.Storage.FundsUsageType;
@@ -25646,6 +25647,7 @@ declare namespace StripeConstructor {
       export namespace FinancialAccount {
         export type AccruedFees = Stripe_.V2.MoneyManagement.FinancialAccount.AccruedFees;
         export type Balance = Stripe_.V2.MoneyManagement.FinancialAccount.Balance;
+        export type Credit = Stripe_.V2.MoneyManagement.FinancialAccount.Credit;
         export type ManagedBy = Stripe_.V2.MoneyManagement.FinancialAccount.ManagedBy;
         export type MultiprocessorSettlement = Stripe_.V2.MoneyManagement.FinancialAccount.MultiprocessorSettlement;
         export type Other = Stripe_.V2.MoneyManagement.FinancialAccount.Other;
@@ -25656,6 +25658,13 @@ declare namespace StripeConstructor {
         export type Type = Stripe_.V2.MoneyManagement.FinancialAccount.Type;
         export namespace AccruedFees {
           export type Direction = Stripe_.V2.MoneyManagement.FinancialAccount.AccruedFees.Direction;
+        }
+        export namespace Credit {
+          export type FundedBy = Stripe_.V2.MoneyManagement.FinancialAccount.Credit.FundedBy;
+          export namespace FundedBy {
+            export type Platform = Stripe_.V2.MoneyManagement.FinancialAccount.Credit.FundedBy.Platform;
+            export type Type = Stripe_.V2.MoneyManagement.FinancialAccount.Credit.FundedBy.Type;
+          }
         }
         export namespace Payments {
           export type BalanceByFundsType = Stripe_.V2.MoneyManagement.FinancialAccount.Payments.BalanceByFundsType;

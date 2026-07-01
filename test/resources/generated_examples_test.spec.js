@@ -7098,7 +7098,7 @@ describe('Generated tests', function() {
     ]);
     const financialAccount = await stripe.v2.moneyManagement.financialAccounts.create(
       {
-        type: 'storage',
+        type: 'credit',
       }
     );
     expect(financialAccount).not.to.be.null;
@@ -7844,7 +7844,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/transactions',
         response:
-          '{"data":[{"object":"v2.money_management.transaction","amount":{"currency":"USD","value":96},"balance_impact":{"available":{"currency":"USD","value":35},"inbound_pending":{"currency":"USD","value":11},"outbound_pending":{"currency":"USD","value":60}},"category":"inbound_transfer_reversal","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","livemode":true,"status":"pending","status_transitions":{}}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.money_management.transaction","amount":{"currency":"USD","value":96},"balance_impact":{"available":{"currency":"USD","value":35},"inbound_pending":{"currency":"USD","value":11},"outbound_pending":{"currency":"USD","value":60}},"category":"platform_earning_refund","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","livemode":true,"status":"pending","status_transitions":{}}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const transactions = await stripe.v2.moneyManagement.transactions.list();
@@ -7857,7 +7857,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/transactions/id_123',
         response:
-          '{"object":"v2.money_management.transaction","amount":{"currency":"USD","value":96},"balance_impact":{"available":{"currency":"USD","value":35},"inbound_pending":{"currency":"USD","value":11},"outbound_pending":{"currency":"USD","value":60}},"category":"inbound_transfer_reversal","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","livemode":true,"status":"pending","status_transitions":{}}',
+          '{"object":"v2.money_management.transaction","amount":{"currency":"USD","value":96},"balance_impact":{"available":{"currency":"USD","value":35},"inbound_pending":{"currency":"USD","value":11},"outbound_pending":{"currency":"USD","value":60}},"category":"platform_earning_refund","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","livemode":true,"status":"pending","status_transitions":{}}',
       },
     ]);
     const transaction = await stripe.v2.moneyManagement.transactions.retrieve(
@@ -7872,7 +7872,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/transaction_entries',
         response:
-          '{"data":[{"object":"v2.money_management.transaction_entry","balance_impact":{"available":{"currency":"USD","value":35},"inbound_pending":{"currency":"USD","value":11},"outbound_pending":{"currency":"USD","value":60}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","livemode":true,"transaction":"transaction","transaction_details":{"category":"inbound_transfer_reversal","financial_account":"financial_account"}}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.money_management.transaction_entry","balance_impact":{"available":{"currency":"USD","value":35},"inbound_pending":{"currency":"USD","value":11},"outbound_pending":{"currency":"USD","value":60}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","livemode":true,"transaction":"transaction","transaction_details":{"category":"platform_earning_refund","financial_account":"financial_account"}}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const transactionEntries = await stripe.v2.moneyManagement.transactionEntries.list();
@@ -7885,7 +7885,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/transaction_entries/id_123',
         response:
-          '{"object":"v2.money_management.transaction_entry","balance_impact":{"available":{"currency":"USD","value":35},"inbound_pending":{"currency":"USD","value":11},"outbound_pending":{"currency":"USD","value":60}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","livemode":true,"transaction":"transaction","transaction_details":{"category":"inbound_transfer_reversal","financial_account":"financial_account"}}',
+          '{"object":"v2.money_management.transaction_entry","balance_impact":{"available":{"currency":"USD","value":35},"inbound_pending":{"currency":"USD","value":11},"outbound_pending":{"currency":"USD","value":60}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","livemode":true,"transaction":"transaction","transaction_details":{"category":"platform_earning_refund","financial_account":"financial_account"}}',
       },
     ]);
     const transactionEntry = await stripe.v2.moneyManagement.transactionEntries.retrieve(
@@ -8526,7 +8526,7 @@ describe('Generated tests', function() {
 
     try {
       await realStripe.v2.moneyManagement.financialAccounts.create({
-        type: 'storage',
+        type: 'credit',
       });
       expect.fail('Expected error');
     } catch (err) {

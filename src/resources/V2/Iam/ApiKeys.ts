@@ -102,6 +102,11 @@ export interface ApiKey {
   object: 'v2.iam.api_key';
 
   /**
+   * List of connect permissions for this API key.
+   */
+  connect_permissions?: Array<string>;
+
+  /**
    * Timestamp when the API key was created.
    */
   created: string;
@@ -140,6 +145,11 @@ export interface ApiKey {
    * Note or description for the API key.
    */
   note?: string;
+
+  /**
+   * List of permissions for this API key.
+   */
+  permissions?: Array<string>;
 
   /**
    * Token set for a publishable key.
@@ -239,6 +249,16 @@ export namespace V2 {
       type: ApiKeyCreateParams.Type;
 
       /**
+       * List of connect permissions for this API key.
+       */
+      connect_permissions?: Array<string>;
+
+      /**
+       * Timestamp at which the key expires. If not provided, the key never expires.
+       */
+      expires_at?: string;
+
+      /**
        * Name for the API key.
        */
       name?: string;
@@ -247,6 +267,11 @@ export namespace V2 {
        * Note or description for the API key.
        */
       note?: string;
+
+      /**
+       * List of permissions for this API key.
+       */
+      permissions?: Array<string>;
 
       /**
        * Public key for encrypting the API key secret.
@@ -297,6 +322,11 @@ export namespace V2 {
   export namespace Iam {
     export interface ApiKeyUpdateParams {
       /**
+       * List of connect permissions for this API key.
+       */
+      connect_permissions?: Array<string>;
+
+      /**
        * Name to set for the API key. If blank, the field is left unchanged.
        */
       name?: string;
@@ -305,6 +335,11 @@ export namespace V2 {
        * Note or description to set for the API key. If blank, the field is left unchanged.
        */
       note?: string;
+
+      /**
+       * List of permissions for this API key.
+       */
+      permissions?: Array<string>;
     }
   }
 }
