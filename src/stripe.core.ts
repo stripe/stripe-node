@@ -7,7 +7,6 @@ import {
   RequestAuthenticator,
   UserProvidedConfig,
   RequestData,
-  StripeRawError,
   DEFAULT_BASE_ADDRESSES,
 } from './Types.js';
 import {createWebhooks} from './Webhooks.js';
@@ -23,35 +22,10 @@ import {
   validateInteger,
 } from './utils.js';
 import {
-  Response,
-  RequestOptions,
   RawRequestOptions,
-  ApiList,
-  ApiListPromise,
-  V2List,
-  V2ListPromise,
-  ApiSearchResultPromise,
-  ApiSearchResult,
-  StripeStreamResponse,
   StripeConfig,
-  RequestEvent,
-  ResponseEvent,
   AppInfo,
-  FileData,
 } from './lib.js';
-import {
-  Metadata,
-  MetadataParam,
-  Address,
-  JapanAddress,
-  AddressParam,
-  ShippingAddressParam,
-  JapanAddressParam,
-  RangeQueryParam,
-  PaginationParams,
-  Emptyable,
-  Decimal,
-} from './shared.js';
 
 // StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
 import {V2} from './resources/V2/index.js';
@@ -116,7 +90,6 @@ export class Stripe {
   static CryptoProvider = CryptoProvider;
   static StripeContext = StripeContext;
   static errors = _Error;
-  static Decimal = Decimal;
 
   private static _platformFunctions: PlatformFunctions;
   private static _requestSenderFactory: RequestSenderFactory = defaultRequestSenderFactory;
@@ -136,7 +109,6 @@ export class Stripe {
   // StripeResource: typeof StripeResource;
   webhooks: ReturnType<typeof createWebhooks>;
   errors: typeof _Error;
-  Decimal: typeof Decimal;
   _api: any;
   _prevRequestMetrics: any;
   _emitter: any;
@@ -239,7 +211,6 @@ export class Stripe {
     this._setAuthenticator(key, props.authenticator || null);
 
     this.errors = _Error;
-    this.Decimal = Decimal;
 
     this.webhooks = Stripe.webhooks;
 
@@ -733,159 +704,4 @@ export class Stripe {
 
     return eventNotification;
   }
-}
-
-// For backward compatibility, export createStripe as a factory function
-export function createStripe(
-  platformFunctions: PlatformFunctions,
-  requestSender: RequestSenderFactory = defaultRequestSenderFactory
-): typeof Stripe {
-  // Initialize static properties
-  Stripe.initialize(platformFunctions, requestSender);
-
-  return Stripe;
-}
-
-export declare namespace Stripe {
-  // StripeInterfaceExports: The beginning of the section generated from our OpenAPI spec
-  // StripeInterfaceExports: The end of the section generated from our OpenAPI spec
-  // V1EventExports: The beginning of the section generated from our OpenAPI spec
-  // V1EventExports: The end of the section generated from our OpenAPI spec
-
-  // Export Response and other shared classes
-  export {
-    Response,
-    RequestOptions,
-    RawRequestOptions,
-    ApiList,
-    ApiListPromise,
-    V2List,
-    V2ListPromise,
-    ApiSearchResultPromise,
-    ApiSearchResult,
-    StripeStreamResponse,
-    RequestEvent,
-    ResponseEvent,
-    AppInfo,
-    FileData,
-  };
-
-  export {
-    Metadata,
-    MetadataParam,
-    Address,
-    JapanAddress,
-    AddressParam,
-    ShippingAddressParam,
-    JapanAddressParam,
-    RangeQueryParam,
-    PaginationParams,
-    Emptyable,
-  };
-
-  export type Decimal = import('./shared.js').Decimal;
-
-  export {StripeContext as StripeContextType};
-  export {StripeRawError};
-  // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
-  export namespace ErrorType {
-    export type StripeError = InstanceType<typeof _Error.StripeError>;
-    export type StripeCardError = InstanceType<typeof _Error.StripeCardError>;
-    export type StripeInvalidRequestError = InstanceType<
-      typeof _Error.StripeInvalidRequestError
-    >;
-    export type StripeAPIError = InstanceType<typeof _Error.StripeAPIError>;
-    export type StripeAuthenticationError = InstanceType<
-      typeof _Error.StripeAuthenticationError
-    >;
-    export type StripePermissionError = InstanceType<
-      typeof _Error.StripePermissionError
-    >;
-    export type StripeRateLimitError = InstanceType<
-      typeof _Error.StripeRateLimitError
-    >;
-    export type StripeConnectionError = InstanceType<
-      typeof _Error.StripeConnectionError
-    >;
-    export type StripeSignatureVerificationError = InstanceType<
-      typeof _Error.StripeSignatureVerificationError
-    >;
-    export type StripeIdempotencyError = InstanceType<
-      typeof _Error.StripeIdempotencyError
-    >;
-    export type StripeOAuthError = InstanceType<typeof _Error.StripeOAuthError>;
-    export type StripeInvalidGrantError = InstanceType<
-      typeof _Error.StripeInvalidGrantError
-    >;
-    export type StripeInvalidClientError = InstanceType<
-      typeof _Error.StripeInvalidClientError
-    >;
-    export type StripeOAuthInvalidRequestError = InstanceType<
-      typeof _Error.StripeOAuthInvalidRequestError
-    >;
-    export type StripeInvalidScopeError = InstanceType<
-      typeof _Error.StripeInvalidScopeError
-    >;
-    export type StripeUnsupportedGrantTypeError = InstanceType<
-      typeof _Error.StripeUnsupportedGrantTypeError
-    >;
-    export type StripeUnsupportedResponseTypeError = InstanceType<
-      typeof _Error.StripeUnsupportedResponseTypeError
-    >;
-    export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
-    export type TemporarySessionExpiredError = InstanceType<
-      typeof _Error.TemporarySessionExpiredError
-    >;
-  }
-  export namespace errors {
-    export type StripeError = InstanceType<typeof _Error.StripeError>;
-    export type StripeCardError = InstanceType<typeof _Error.StripeCardError>;
-    export type StripeInvalidRequestError = InstanceType<
-      typeof _Error.StripeInvalidRequestError
-    >;
-    export type StripeAPIError = InstanceType<typeof _Error.StripeAPIError>;
-    export type StripeAuthenticationError = InstanceType<
-      typeof _Error.StripeAuthenticationError
-    >;
-    export type StripePermissionError = InstanceType<
-      typeof _Error.StripePermissionError
-    >;
-    export type StripeRateLimitError = InstanceType<
-      typeof _Error.StripeRateLimitError
-    >;
-    export type StripeConnectionError = InstanceType<
-      typeof _Error.StripeConnectionError
-    >;
-    export type StripeSignatureVerificationError = InstanceType<
-      typeof _Error.StripeSignatureVerificationError
-    >;
-    export type StripeIdempotencyError = InstanceType<
-      typeof _Error.StripeIdempotencyError
-    >;
-    export type StripeOAuthError = InstanceType<typeof _Error.StripeOAuthError>;
-    export type StripeInvalidGrantError = InstanceType<
-      typeof _Error.StripeInvalidGrantError
-    >;
-    export type StripeInvalidClientError = InstanceType<
-      typeof _Error.StripeInvalidClientError
-    >;
-    export type StripeOAuthInvalidRequestError = InstanceType<
-      typeof _Error.StripeOAuthInvalidRequestError
-    >;
-    export type StripeInvalidScopeError = InstanceType<
-      typeof _Error.StripeInvalidScopeError
-    >;
-    export type StripeUnsupportedGrantTypeError = InstanceType<
-      typeof _Error.StripeUnsupportedGrantTypeError
-    >;
-    export type StripeUnsupportedResponseTypeError = InstanceType<
-      typeof _Error.StripeUnsupportedResponseTypeError
-    >;
-    export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
-    export type TemporarySessionExpiredError = InstanceType<
-      typeof _Error.TemporarySessionExpiredError
-    >;
-  }
-  // ErrorTypeNamespaces: The end of the section generated from our OpenAPI spec
-  export import Events = V2.Core.Events;
 }
