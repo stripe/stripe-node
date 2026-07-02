@@ -164,6 +164,16 @@ export interface Card {
   personalization_design: string | PersonalizationDesign | null;
 
   /**
+   * The program that this card belongs to — will not be nil.
+   */
+  program?: string | null;
+
+  /**
+   * Redaction status of this card. If not null, this card is associated to a redaction job.
+   */
+  redaction?: Card.Redaction | null;
+
+  /**
    * The latest card that replaces this card, if any.
    */
   replaced_by: string | Card | null;
@@ -226,6 +236,13 @@ export namespace Card {
 
   export interface LifecycleControls {
     cancel_after: LifecycleControls.CancelAfter;
+  }
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
   }
 
   export type ReplacementReason =
@@ -371,6 +388,10 @@ export namespace Card {
        */
       payment_count: number;
     }
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
   }
 
   export namespace Shipping {

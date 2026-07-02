@@ -159,6 +159,11 @@ export namespace Token {
       device_fingerprint?: string;
 
       /**
+       * An identifier for the device used during wallet provisioning.
+       */
+      device_id?: string | null;
+
+      /**
        * The IP address of the device at provisioning time.
        */
       ip_address?: string;

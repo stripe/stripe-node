@@ -45,6 +45,7 @@ import {CreditUnderwritingRecordResource as IssuingCreditUnderwritingRecords} fr
 import {CurrencyConversionResource as V2MoneyManagementCurrencyConversions} from './resources/V2/MoneyManagement/CurrencyConversions.js';
 import {CustomPricingUnitResource as V2BillingCustomPricingUnits} from './resources/V2/Billing/CustomPricingUnits.js';
 import {CustomerEvaluationResource as RadarCustomerEvaluations} from './resources/Radar/CustomerEvaluations.js';
+import {CustomerResource as CryptoCustomers} from './resources/Crypto/Customers.js';
 import {CustomerResource as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
 import {DebitDisputeResource as V2MoneyManagementDebitDisputes} from './resources/V2/MoneyManagement/DebitDisputes.js';
 import {DebitReversalResource as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
@@ -99,6 +100,8 @@ import {MoneyManagementResource as V2TestHelpersMoneyManagement} from './resourc
 import {OffSessionPaymentResource as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {OnboardingLinkResource as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
 import {OneTimeItemResource as V2BillingOneTimeItems} from './resources/V2/Billing/OneTimeItems.js';
+import {OnrampSessionResource as CryptoOnrampSessions} from './resources/Crypto/OnrampSessions.js';
+import {OnrampTransactionLimitResource as CryptoOnrampTransactionLimits} from './resources/Crypto/OnrampTransactionLimits.js';
 import {OrderResource as ClimateOrders} from './resources/Climate/Orders.js';
 import {OrderResource as DelegatedCheckoutOrders} from './resources/DelegatedCheckout/Orders.js';
 import {OutboundPaymentQuoteResource as V2MoneyManagementOutboundPaymentQuotes} from './resources/V2/MoneyManagement/OutboundPaymentQuotes.js';
@@ -273,6 +276,11 @@ export const Climate = resourceNamespace('climate', {
   Orders: ClimateOrders,
   Products: ClimateProducts,
   Suppliers: ClimateSuppliers,
+});
+export const Crypto = resourceNamespace('crypto', {
+  Customers: CryptoCustomers,
+  OnrampSessions: CryptoOnrampSessions,
+  OnrampTransactionLimits: CryptoOnrampTransactionLimits,
 });
 export const DelegatedCheckout = resourceNamespace('delegatedCheckout', {
   Orders: DelegatedCheckoutOrders,

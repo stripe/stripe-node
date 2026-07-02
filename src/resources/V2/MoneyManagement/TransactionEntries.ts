@@ -141,10 +141,12 @@ export namespace TransactionEntry {
       | 'inbound_transfer'
       | 'inbound_transfer_reversal'
       | 'india_mdr_processing_fee'
+      | 'issuing_authorization'
       | 'issuing_dispute'
       | 'issuing_dispute_fraud_liability_debit'
       | 'issuing_dispute_provisional_credit'
       | 'issuing_dispute_provisional_credit_reversal'
+      | 'issuing_transaction'
       | 'minimum_balance_hold'
       | 'network_cost'
       | 'obligation'
@@ -158,6 +160,7 @@ export namespace TransactionEntry {
       | 'platform_earning'
       | 'platform_earning_refund'
       | 'platform_fee'
+      | 'platform_funded_credit_transaction'
       | 'received_credit'
       | 'received_credit_reversal'
       | 'received_debit'
@@ -175,6 +178,11 @@ export namespace TransactionEntry {
       | 'unreconciled_customer_funds';
 
     export interface Flow {
+      /**
+       * If applicable, the connected account associated with this Transaction's flow.
+       */
+      account?: string;
+
       /**
        * If applicable, the ID of the Adjustment that created this Transaction.
        */
@@ -219,6 +227,21 @@ export namespace TransactionEntry {
        * If applicable, the ID of the InboundTransfer that created this Transaction.
        */
       inbound_transfer?: string;
+
+      /**
+       * If applicable, the ID of the Issuing authorization that created this Transaction.
+       */
+      issuing_authorization?: string;
+
+      /**
+       * If applicable, the ID of the Issuing dispute that created this Transaction.
+       */
+      issuing_dispute?: string;
+
+      /**
+       * If applicable, the ID of the Issuing transaction that created this Transaction.
+       */
+      issuing_transaction?: string;
 
       /**
        * If applicable, the ID of the OutboundPayment that created this Transaction.
@@ -337,6 +360,9 @@ export namespace TransactionEntry {
         | 'dispute'
         | 'fee_transaction'
         | 'inbound_transfer'
+        | 'issuing_authorization'
+        | 'issuing_dispute'
+        | 'issuing_transaction'
         | 'outbound_payment'
         | 'outbound_transfer'
         | 'payout'

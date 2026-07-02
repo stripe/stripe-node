@@ -2473,6 +2473,7 @@ export namespace Invoice {
       | 'alipay_upgrade_required'
       | 'amount_too_large'
       | 'amount_too_small'
+      | 'anomalous_money_movement_request'
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
@@ -2512,6 +2513,10 @@ export namespace Invoice {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'failed_tax_calculation'
+      | 'financial_account_balance_does_not_support_currency'
+      | 'financial_account_capability_not_enabled'
+      | 'financial_account_capability_restricted'
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
@@ -2860,6 +2865,7 @@ export namespace Invoice {
       | 'pix'
       | 'promptpay'
       | 'revolut_pay'
+      | 'satispay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
       | 'sofort'
@@ -3780,6 +3786,7 @@ export namespace InvoiceCreateParams {
       | 'pix'
       | 'promptpay'
       | 'revolut_pay'
+      | 'satispay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
       | 'sofort'
@@ -4745,6 +4752,7 @@ export namespace InvoiceUpdateParams {
       | 'pix'
       | 'promptpay'
       | 'revolut_pay'
+      | 'satispay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
       | 'sofort'
@@ -5343,7 +5351,7 @@ export namespace InvoiceAddLinesParams {
     quantity_decimal?: Decimal;
 
     /**
-     * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
+     * A list of up to 20 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
      */
     tax_amounts?: Emptyable<Array<Line.TaxAmount>>;
 
@@ -6033,6 +6041,15 @@ export namespace InvoiceCreatePreviewParams {
      * A list of up to 20 subscription items, each with an attached price.
      */
     items?: Array<SubscriptionDetails.Item>;
+
+    /**
+     * Previews the invoice that would be generated when pausing the subscription. Passing an empty hash won't preview pausing and instead returns the next invoice.
+     *
+     * To receive a preview invoice, set `invoicing_behavior` to `invoice`. A preview isn't available if the `bill_for` options produce no billable amounts.
+     *
+     * `pending_invoice_item` never has a preview available because pausing wouldn't generate an invoice, and paused subscriptions don't generate invoices either.
+     */
+    pause?: SubscriptionDetails.Pause;
 
     /**
      * The pre-billing to apply to the subscription as a preview.
@@ -8478,7 +8495,7 @@ export namespace InvoiceCreatePreviewParams {
       discounts?: Emptyable<Array<Item.Discount>>;
 
       /**
-       * Subscription item to update.
+       * Subscription item to update. If you omit `id`, the API adds a new subscription item rather than updating the existing one. See [Changing a subscription's price](https://docs.stripe.com/billing/subscriptions/change-price#changing).
        */
       id?: string;
 
@@ -8511,6 +8528,23 @@ export namespace InvoiceCreatePreviewParams {
        * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
        */
       tax_rates?: Emptyable<Array<string>>;
+    }
+
+    export interface Pause {
+      /**
+       * Controls what to bill for when pausing the subscription.
+       */
+      bill_for?: Pause.BillFor;
+
+      /**
+       * Determines how to handle debits and credits when pausing. Defaults to `pending_invoice_item`.
+       */
+      invoicing_behavior?: Pause.InvoicingBehavior;
+
+      /**
+       * The type of pause to apply. Defaults to `subscription`.
+       */
+      type?: 'subscription';
     }
 
     export interface Prebilling {
@@ -8791,6 +8825,46 @@ export namespace InvoiceCreatePreviewParams {
         }
       }
     }
+
+    export namespace Pause {
+      export interface BillFor {
+        /**
+         * Controls when to bill for metered usage in the current period. Defaults to `{ type: "now" }`.
+         */
+        outstanding_usage_through?: BillFor.OutstandingUsageThrough;
+
+        /**
+         * Controls when to credit for unused time on licensed items. Defaults to `{ type: "now" }`.
+         */
+        unused_time_from?: BillFor.UnusedTimeFrom;
+      }
+
+      export type InvoicingBehavior = 'invoice' | 'pending_invoice_item';
+
+      export namespace BillFor {
+        export interface OutstandingUsageThrough {
+          /**
+           * When to bill metered usage in the current period.
+           */
+          type: OutstandingUsageThrough.Type;
+        }
+
+        export interface UnusedTimeFrom {
+          /**
+           * When to credit for unused time.
+           */
+          type: UnusedTimeFrom.Type;
+        }
+
+        export namespace OutstandingUsageThrough {
+          export type Type = 'none' | 'now';
+        }
+
+        export namespace UnusedTimeFrom {
+          export type Type = 'item_current_period_start' | 'none' | 'now';
+        }
+      }
+    }
   }
 }
 export interface InvoiceDetachPaymentParams {
@@ -9021,7 +9095,7 @@ export namespace InvoiceUpdateLinesParams {
     quantity_decimal?: Decimal;
 
     /**
-     * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
+     * A list of up to 20 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
      */
     tax_amounts?: Emptyable<Array<Line.TaxAmount>>;
 
@@ -9378,7 +9452,7 @@ export interface InvoiceUpdateLineItemParams {
   quantity_decimal?: Decimal;
 
   /**
-   * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
+   * A list of up to 20 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
    */
   tax_amounts?: Emptyable<Array<InvoiceUpdateLineItemParams.TaxAmount>>;
 

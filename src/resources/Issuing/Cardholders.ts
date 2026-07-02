@@ -134,6 +134,11 @@ export interface Cardholder {
    */
   preferred_locales: Array<Cardholder.PreferredLocale> | null;
 
+  /**
+   * Redaction status of this cardholder. If the cardholder is not redacted, this field will be null.
+   */
+  redaction?: Cardholder.Redaction | null;
+
   requirements: Cardholder.Requirements;
 
   /**
@@ -199,6 +204,13 @@ export namespace Cardholder {
     | 'it'
     | 'pl'
     | 'sv';
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
+  }
 
   export interface Requirements {
     /**
@@ -322,6 +334,10 @@ export namespace Cardholder {
         front: string | File | null;
       }
     }
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
   }
 
   export namespace Requirements {

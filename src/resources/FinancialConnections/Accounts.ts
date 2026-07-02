@@ -405,6 +405,8 @@ export namespace Account {
   export type Status = 'active' | 'disconnected' | 'inactive';
 
   export interface StatusDetails {
+    active?: StatusDetails.Active;
+
     inactive?: StatusDetails.Inactive;
   }
 
@@ -495,6 +497,23 @@ export namespace Account {
   }
 
   export namespace StatusDetails {
+    export interface Active {
+      /**
+       * The action (if any) to proactively relink the Account.
+       */
+      action: Active.Action;
+
+      /**
+       * The underlying cause of the Account becoming inactive.
+       */
+      cause: Active.Cause;
+
+      /**
+       * When the Account is expected to become inactive, if applicable.
+       */
+      expected_deactivation_date: number;
+    }
+
     export interface Inactive {
       /**
        * The action (if any) to relink the inactive Account.
@@ -505,6 +524,15 @@ export namespace Account {
        * The underlying cause of the Account being inactive.
        */
       cause: Inactive.Cause;
+    }
+
+    export namespace Active {
+      export type Action = 'none' | 'relink_required';
+
+      export type Cause =
+        | 'access_expired'
+        | 'institution_requirement'
+        | 'unspecified';
     }
 
     export namespace Inactive {

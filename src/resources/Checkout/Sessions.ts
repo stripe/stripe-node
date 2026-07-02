@@ -3,7 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {LineItem} from './../LineItems.js';
 import {Discount as _Discount} from './../Discounts.js';
-import {Subscription} from './../Subscriptions.js';
+import {Subscription as _Subscription} from './../Subscriptions.js';
 import {Customer, DeletedCustomer} from './../Customers.js';
 import {Invoice} from './../Invoices.js';
 import {PaymentIntent} from './../PaymentIntents.js';
@@ -14,6 +14,7 @@ import {Account} from './../Accounts.js';
 import {TaxId, DeletedTaxId} from './../TaxIds.js';
 import {Coupon} from './../Coupons.js';
 import {PromotionCode} from './../PromotionCodes.js';
+import {Price} from './../Prices.js';
 import {ShippingRate} from './../ShippingRates.js';
 import {TaxRate} from './../TaxRates.js';
 import {
@@ -1058,6 +1059,11 @@ export interface Session {
   recovered_from: string | null;
 
   /**
+   * The redaction status of the Checkout Session. If the Session is not redacted, this field is null.
+   */
+  redaction?: Session.Redaction | null;
+
+  /**
    * This parameter applies to `ui_mode: embedded_page`. Learn more about the [redirect behavior](https://docs.stripe.com/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
    */
   redirect_on_completion?: Session.RedirectOnCompletion;
@@ -1107,7 +1113,7 @@ export interface Session {
   /**
    * The ID of the [Subscription](https://docs.stripe.com/api/subscriptions) for Checkout Sessions in `subscription` mode.
    */
-  subscription: string | Subscription | null;
+  subscription: string | _Subscription | null;
 
   /**
    * The URL the customer will be directed to after the payment or
@@ -1491,6 +1497,11 @@ export namespace Session {
     key: string;
 
     /**
+     * Details on the subscription for this item.
+     */
+    subscription?: Item.Subscription | null;
+
+    /**
      * The type of the item.
      */
     type: 'subscription';
@@ -1661,6 +1672,8 @@ export namespace Session {
 
     sofort?: PaymentMethodOptions.Sofort;
 
+    sunbit?: PaymentMethodOptions.Sunbit;
+
     swish?: PaymentMethodOptions.Swish;
 
     twint?: PaymentMethodOptions.Twint;
@@ -1668,6 +1681,8 @@ export namespace Session {
     upi?: PaymentMethodOptions.Upi;
 
     us_bank_account?: PaymentMethodOptions.UsBankAccount;
+
+    wechat_pay?: PaymentMethodOptions.WechatPay;
   }
 
   export type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
@@ -1714,6 +1729,13 @@ export namespace Session {
      * Currency presented to the customer during payment.
      */
     presentment_currency: string;
+  }
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
   }
 
   export type RedirectOnCompletion = 'always' | 'if_required' | 'never';
@@ -2676,6 +2698,110 @@ export namespace Session {
     }
   }
 
+  export namespace Item {
+    export interface Subscription {
+      /**
+       * The description for the subscription.
+       */
+      description: string | null;
+
+      /**
+       * The items in the subscription.
+       */
+      items: Array<Subscription.Item>;
+
+      /**
+       * Set of key-value pairs attached to the subscription.
+       */
+      metadata: Metadata | null;
+
+      /**
+       * Specifies an interval for how often to bill for any pending invoice items.
+       */
+      pending_invoice_item_interval: Subscription.PendingInvoiceItemInterval | null;
+
+      /**
+       * Determines how to handle prorations when the subscription is updated.
+       */
+      proration_behavior: Subscription.ProrationBehavior | null;
+
+      /**
+       * The ID of the [Subscription](https://docs.stripe.com/api/subscriptions).
+       */
+      subscription: string | _Subscription | null;
+
+      /**
+       * The Unix timestamp marking when the trial period ends.
+       */
+      trial_end: number | null;
+
+      /**
+       * The number of trial period days before the customer is charged for the first time.
+       */
+      trial_period_days: number | null;
+
+      /**
+       * Settings related to subscription trials.
+       */
+      trial_settings: Subscription.TrialSettings | null;
+    }
+
+    export namespace Subscription {
+      export interface Item {
+        /**
+         * The price for this subscription item.
+         */
+        price: string | Price;
+
+        /**
+         * The quantity for this subscription item.
+         */
+        quantity: number | null;
+      }
+
+      export interface PendingInvoiceItemInterval {
+        /**
+         * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
+         */
+        interval: PendingInvoiceItemInterval.Interval;
+
+        /**
+         * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+         */
+        interval_count: number;
+      }
+
+      export type ProrationBehavior = 'create_prorations' | 'none';
+
+      export interface TrialSettings {
+        /**
+         * Defines how a subscription behaves when a free trial ends.
+         */
+        end_behavior: TrialSettings.EndBehavior;
+      }
+
+      export namespace PendingInvoiceItemInterval {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+
+      export namespace TrialSettings {
+        export interface EndBehavior {
+          /**
+           * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+           */
+          missing_payment_method: EndBehavior.MissingPaymentMethod;
+        }
+
+        export namespace EndBehavior {
+          export type MissingPaymentMethod =
+            | 'cancel'
+            | 'create_invoice'
+            | 'pause';
+        }
+      }
+    }
+  }
+
   export namespace NameCollection {
     export interface Business {
       /**
@@ -3406,6 +3532,24 @@ export namespace Session {
       setup_future_usage?: 'none';
     }
 
+    export interface Sunbit {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
     export interface Swish {
       /**
        * The order reference that will be displayed to customers in the Swish application. Defaults to the `id` of the Payment Intent.
@@ -3464,6 +3608,29 @@ export namespace Session {
        * Bank account verification method. The default value is `automatic`.
        */
       verification_method?: UsBankAccount.VerificationMethod;
+    }
+
+    export interface WechatPay {
+      /**
+       * The app ID registered with WeChat Pay. Only required when client is iOS or Android.
+       */
+      app_id: string | null;
+
+      /**
+       * The client type that the end customer will pay from
+       */
+      client: WechatPay.Client | null;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
     }
 
     export namespace AcssDebit {
@@ -3889,6 +4056,10 @@ export namespace Session {
         }
       }
     }
+
+    export namespace WechatPay {
+      export type Client = 'android' | 'ios' | 'web';
+    }
   }
 
   export namespace Permissions {
@@ -3921,6 +4092,10 @@ export namespace Session {
 
       export type ShippingDetails = 'client_only' | 'server_only';
     }
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
   }
 
   export namespace SavedPaymentMethodOptions {
@@ -4517,8 +4692,6 @@ export namespace Checkout {
      * You can configure Checkout to collect your customers' business names, individual names, or both. Each name field can be either required or optional.
      *
      * If a [Customer](https://docs.stripe.com/api/customers) is created or provided, the names can be saved to the Customer object as well.
-     *
-     * You can't set this parameter if `ui_mode` is `custom`.
      */
     name_collection?: SessionCreateParams.NameCollection;
 
@@ -4706,6 +4879,15 @@ export namespace Checkout {
     }
 
     export interface AutomaticTax {
+      /**
+       * Controls how much address information Checkout collects when [automatic_tax](https://stripe.com/docs/api/checkout/sessions/object#checkout_session_object-automatic_tax-enabled) is enabled.
+       *
+       * Defaults to `full`, which collects the address fields needed for the most accurate tax calculation. Set to `minimal` to collect only the fields required for tax in the buyer's country, accepting potentially less precise tax calculation in exchange for a streamlined form.
+       *
+       * Only honored when `automatic_tax.enabled` is `true`, `billing_address_collection` is `auto`, the resolved tax address source is the session billing address, and `ui_mode` is `form`.
+       */
+      address_collection_precision?: AutomaticTax.AddressCollectionPrecision;
+
       /**
        * Set to `true` to [calculate tax automatically](https://docs.stripe.com/tax) using the customer's location.
        *
@@ -5411,6 +5593,11 @@ export namespace Checkout {
       sofort?: PaymentMethodOptions.Sofort;
 
       /**
+       * contains details about the Sunbit payment method options.
+       */
+      sunbit?: PaymentMethodOptions.Sunbit;
+
+      /**
        * contains details about the Swish payment method options.
        */
       swish?: PaymentMethodOptions.Swish;
@@ -5610,6 +5797,11 @@ export namespace Checkout {
       billing_cycle_anchor?: number;
 
       /**
+       * Configures when the subscription schedule's billing cycle anchors to a specific day of the week or month.
+       */
+      billing_cycle_anchor_config?: SubscriptionData.BillingCycleAnchorConfig;
+
+      /**
        * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
        */
       billing_mode?: SubscriptionData.BillingMode;
@@ -5718,6 +5910,8 @@ export namespace Checkout {
     }
 
     export namespace AutomaticTax {
+      export type AddressCollectionPrecision = 'full' | 'minimal';
+
       export interface Liability {
         /**
          * The connected account being referenced when `type` is `account`.
@@ -7383,6 +7577,24 @@ export namespace Checkout {
         setup_future_usage?: 'none';
       }
 
+      export interface Sunbit {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        capture_method?: 'manual';
+
+        /**
+         * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+         *
+         * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+         *
+         * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+         *
+         * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+         */
+        setup_future_usage?: 'none';
+      }
+
       export interface Swish {
         /**
          * The order reference that will be displayed to customers in the Swish application. Defaults to the `id` of the Payment Intent.
@@ -8362,6 +8574,33 @@ export namespace Checkout {
     }
 
     export namespace SubscriptionData {
+      export interface BillingCycleAnchorConfig {
+        /**
+         * The day of the month the anchor should be. Ranges from 1 to 31.
+         */
+        day_of_month: number;
+
+        /**
+         * The hour of the day the anchor should be. Ranges from 0 to 23.
+         */
+        hour?: number;
+
+        /**
+         * The minute of the hour the anchor should be. Ranges from 0 to 59.
+         */
+        minute?: number;
+
+        /**
+         * The month to start full cycle periods. Ranges from 1 to 12.
+         */
+        month?: number;
+
+        /**
+         * The second of the minute the anchor should be. Ranges from 0 to 59.
+         */
+        second?: number;
+      }
+
       export interface BillingMode {
         /**
          * Configure behavior for flexible billing mode.

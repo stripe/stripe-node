@@ -125,6 +125,11 @@ export interface FinancialAccount {
   created: string;
 
   /**
+   * If this is a `credit` FinancialAccount, this hash includes details specific to `credit` FinancialAccounts.
+   */
+  credit?: FinancialAccount.Credit;
+
+  /**
    * A descriptive name for the FinancialAccount, up to 50 characters long. This name will be used in the Stripe Dashboard and embedded components.
    */
   display_name?: string;
@@ -217,6 +222,18 @@ export namespace FinancialAccount {
     };
   }
 
+  export interface Credit {
+    /**
+     * Details about how this credit FinancialAccount is funded.
+     */
+    funded_by?: Credit.FundedBy;
+
+    /**
+     * The currencies supported by this credit FinancialAccount.
+     */
+    supported_currencies: Array<string>;
+  }
+
   export interface ManagedBy {
     /**
      * Enum describing the Stripe product that is managing this FinancialAccount.
@@ -284,6 +301,7 @@ export namespace FinancialAccount {
 
   export type Type =
     | 'accrued_fees'
+    | 'credit'
     | 'multiprocessor_settlement'
     | 'other'
     | 'payments'
@@ -291,6 +309,31 @@ export namespace FinancialAccount {
 
   export namespace AccruedFees {
     export type Direction = 'payable' | 'receivable';
+  }
+
+  export namespace Credit {
+    export interface FundedBy {
+      /**
+       * Details for platform-funded credit FinancialAccounts.
+       */
+      platform: FundedBy.Platform;
+
+      /**
+       * The type of funding source for this credit FinancialAccount.
+       */
+      type: FundedBy.Type;
+    }
+
+    export namespace FundedBy {
+      export interface Platform {
+        /**
+         * The platform FinancialAccount used to fund this credit FinancialAccount.
+         */
+        financial_account: string;
+      }
+
+      export type Type = 'platform' | 'stripe';
+    }
   }
 
   export namespace Payments {
@@ -409,7 +452,7 @@ export namespace V2 {
       /**
        * The type of FinancialAccount to create.
        */
-      type: 'storage';
+      type: FinancialAccountCreateParams.Type;
 
       /**
        * A descriptive name for the FinancialAccount, up to 50 characters long. This name will be used in the Stripe Dashboard and embedded components.
@@ -428,6 +471,8 @@ export namespace V2 {
     }
 
     export namespace FinancialAccountCreateParams {
+      export type Type = 'credit' | 'storage';
+
       export interface Storage {
         /**
          * The usage type for funds in this FinancialAccount. Can be used to specify that the funds are for Consumer activity.
@@ -516,6 +561,7 @@ export namespace V2 {
 
       export type Type =
         | 'accrued_fees'
+        | 'credit'
         | 'multiprocessor_settlement'
         | 'payments'
         | 'storage';

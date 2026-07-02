@@ -142,7 +142,13 @@ export namespace Event {
     | 'balance_settings.updated'
     | 'billing.alert.recovered'
     | 'billing.alert.triggered'
+    | 'billing.credit_balance_transaction.created'
     | 'billing.credit_grant.created'
+    | 'billing.credit_grant.updated'
+    | 'billing.meter.created'
+    | 'billing.meter.deactivated'
+    | 'billing.meter.reactivated'
+    | 'billing.meter.updated'
     | 'billing_portal.configuration.created'
     | 'billing_portal.configuration.updated'
     | 'billing_portal.session.created'
@@ -253,6 +259,7 @@ export namespace Event {
     | 'invoice.updated'
     | 'invoice.voided'
     | 'invoice.will_be_due'
+    | 'invoice_payment.detached'
     | 'invoice_payment.paid'
     | 'invoiceitem.created'
     | 'invoiceitem.deleted'
@@ -421,14 +428,7 @@ export namespace Event {
     | 'treasury.received_credit.created'
     | 'treasury.received_credit.failed'
     | 'treasury.received_credit.succeeded'
-    | 'treasury.received_debit.created'
-    | 'invoice_payment.detached'
-    | 'billing.credit_balance_transaction.created'
-    | 'billing.credit_grant.updated'
-    | 'billing.meter.created'
-    | 'billing.meter.deactivated'
-    | 'billing.meter.reactivated'
-    | 'billing.meter.updated';
+    | 'treasury.received_debit.created';
 
   export namespace Data {
     export interface Object {}
@@ -2241,7 +2241,7 @@ export namespace CustomerSubscriptionResumedEvent {
 }
 
 /**
- * Occurs three days before a subscription's trial period is scheduled to end, or when a trial is ended immediately (using `trial_end=now`).
+ * Occurs three days before a subscription's trial period is scheduled to end, or immediately when a trial is ended early (for example, with `trial_end=now` or when a Customer Portal plan change ends a trial). If a trial is shortened so that fewer than three days remain, this event can fire immediately, including during the same transaction that collects payment. Before sending payment-reminder communications from this webhook, check the subscription status and latest invoice to determine whether payment has already been collected.
  */
 export interface CustomerSubscriptionTrialWillEndEvent extends EventBase {
   type: 'customer.subscription.trial_will_end';

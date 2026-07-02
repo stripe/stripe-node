@@ -814,6 +814,7 @@ import {BillingPortal} from './resources/BillingPortal/index.js';
 import {Capital} from './resources/Capital/index.js';
 import {Checkout} from './resources/Checkout/index.js';
 import {Climate} from './resources/Climate/index.js';
+import {Crypto} from './resources/Crypto/index.js';
 import {DelegatedCheckout} from './resources/DelegatedCheckout/index.js';
 import {Entitlements} from './resources/Entitlements/index.js';
 import {FinancialConnections} from './resources/FinancialConnections/index.js';
@@ -1314,6 +1315,7 @@ export class Stripe {
   capital: Capital;
   checkout: Checkout;
   climate: Climate;
+  crypto: Crypto;
   delegatedCheckout: DelegatedCheckout;
   entitlements: Entitlements;
   financialConnections: FinancialConnections;
@@ -1513,6 +1515,7 @@ export class Stripe {
     this.capital = new Capital(this);
     this.checkout = new Checkout(this);
     this.climate = new Climate(this);
+    this.crypto = new Crypto(this);
     this.delegatedCheckout = new DelegatedCheckout(this);
     this.entitlements = new Entitlements(this);
     this.financialConnections = new FinancialConnections(this);
@@ -2750,6 +2753,7 @@ export declare namespace Stripe {
   export {Capital};
   export {Checkout};
   export {Climate};
+  export {Crypto};
   export {DelegatedCheckout};
   export {Entitlements};
   export {FinancialConnections};

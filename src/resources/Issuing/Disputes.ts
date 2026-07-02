@@ -149,6 +149,11 @@ export interface Dispute {
   provisional_credit?: Dispute.ProvisionalCredit | null;
 
   /**
+   * Redaction status of this dispute. If the dispute is not redacted, this field will be null.
+   */
+  redaction?: Dispute.Redaction | null;
+
+  /**
    * Current status of the dispute.
    */
   status: Dispute.Status;
@@ -268,6 +273,13 @@ export namespace Dispute {
      * The status of the provisional credit obligation.
      */
     status: ProvisionalCredit.Status;
+  }
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
   }
 
   export type Status = 'expired' | 'lost' | 'submitted' | 'unsubmitted' | 'won';
@@ -727,6 +739,10 @@ export namespace Dispute {
       | 'revocable'
       | 'revocation_notice_period'
       | 'revoked';
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
   }
 }
 export namespace Issuing {
