@@ -76,6 +76,8 @@ export class CreditNoteResource extends StripeResource {
    *
    * You may issue multiple credit notes for an invoice. Each credit note may increment the invoice's pre_payment_credit_notes_amount,
    * post_payment_credit_notes_amount, or both, depending on the invoice's amount_remaining at the time of credit note creation.
+   *
+   * For invoices that also have refunds created through the [Refund API](https://docs.stripe.com/docs/api/refunds), the credit note API subtracts those refund amounts from the maximum creditable amount. This prevents the combined credit notes and refunds from exceeding the invoice amount. If you use both, ensure the combined total does not exceed the invoice's paid amount.
    */
   create(
     params: CreditNoteCreateParams,
@@ -877,7 +879,7 @@ export namespace CreditNoteCreateParams {
     quantity?: number;
 
     /**
-     * A list of up to 10 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
+     * A list of up to 20 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
      */
     tax_amounts?: Emptyable<Array<Line.TaxAmount>>;
 
@@ -1129,7 +1131,7 @@ export namespace CreditNoteListPreviewLineItemsParams {
     quantity?: number;
 
     /**
-     * A list of up to 10 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
+     * A list of up to 20 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
      */
     tax_amounts?: Emptyable<Array<Line.TaxAmount>>;
 
@@ -1327,7 +1329,7 @@ export namespace CreditNotePreviewParams {
     quantity?: number;
 
     /**
-     * A list of up to 10 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
+     * A list of up to 20 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
      */
     tax_amounts?: Emptyable<Array<Line.TaxAmount>>;
 

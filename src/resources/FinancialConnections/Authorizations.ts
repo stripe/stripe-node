@@ -84,6 +84,8 @@ export namespace Authorization {
   export type Status = 'active' | 'disconnected' | 'inactive';
 
   export interface StatusDetails {
+    active?: StatusDetails.Active;
+
     inactive?: StatusDetails.Inactive;
   }
 
@@ -92,11 +94,27 @@ export namespace Authorization {
   }
 
   export namespace StatusDetails {
+    export interface Active {
+      /**
+       * The action (if any) to proactively relink the Authorization.
+       */
+      action: Active.Action;
+
+      /**
+       * When the Authorization is expected to become inactive, if applicable.
+       */
+      expected_deactivation_date: number;
+    }
+
     export interface Inactive {
       /**
        * The action (if any) to relink the inactive Authorization.
        */
       action: Inactive.Action;
+    }
+
+    export namespace Active {
+      export type Action = 'none' | 'relink_required';
     }
 
     export namespace Inactive {

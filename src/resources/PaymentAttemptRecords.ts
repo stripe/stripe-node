@@ -887,6 +887,11 @@ export namespace PaymentAttemptRecord {
 
     export interface Bizum {
       /**
+       * A unique identifier for the buyer as determined by the local payment processor.
+       */
+      buyer_id: string | null;
+
+      /**
        * The Bizum transaction ID associated with this payment.
        */
       transaction_id: string | null;
@@ -935,7 +940,7 @@ export namespace PaymentAttemptRecord {
       /**
        * A high-level description of the type of cards issued in this range.
        */
-      description: string | null;
+      description?: string | null;
 
       /**
        * Two-digit number representing the card's expiration month.
@@ -962,7 +967,7 @@ export namespace PaymentAttemptRecord {
       /**
        * Issuer identification number of the card.
        */
-      iin: string | null;
+      iin?: string | null;
 
       /**
        * Installment details for this payment.
@@ -972,7 +977,7 @@ export namespace PaymentAttemptRecord {
       /**
        * The name of the card's issuing bank.
        */
-      issuer: string | null;
+      issuer?: string | null;
 
       /**
        * The last four digits of the card.
@@ -1008,11 +1013,6 @@ export namespace PaymentAttemptRecord {
        * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
        */
       network_transaction_id: string | null;
-
-      /**
-       * The transaction type that was passed for an off-session, Merchant-Initiated transaction, one of `recurring` or `unscheduled`.
-       */
-      stored_credential_usage: Card.StoredCredentialUsage | null;
 
       /**
        * Populated if this transaction used 3D Secure authentication.
@@ -1192,6 +1192,16 @@ export namespace PaymentAttemptRecord {
 
     export interface Crypto {
       /**
+       * The amount received for the crypto payment.
+       */
+      amount_received?: number;
+
+      /**
+       * The amount requested for the crypto payment.
+       */
+      amount_requested?: number;
+
+      /**
        * The wallet address of the customer.
        */
       buyer_address?: string;
@@ -1275,6 +1285,11 @@ export namespace PaymentAttemptRecord {
        * The expiration year of the gift card.
        */
       exp_year: number | null;
+
+      /**
+       * Uniquely identifies this particular gift card number. You can use this attribute to check whether two transactions were made using the same gift card.
+       */
+      fingerprint: string | null;
 
       /**
        * The first six digits of the gift card number.
@@ -2207,8 +2222,6 @@ export namespace PaymentAttemptRecord {
         used: boolean;
       }
 
-      export type StoredCredentialUsage = 'recurring' | 'unscheduled';
-
       export interface ThreeDSecure {
         /**
          * For authenticated transactions: Indicates how the issuing bank authenticated the customer.
@@ -2467,6 +2480,7 @@ export namespace PaymentAttemptRecord {
         | 'ethereum'
         | 'polygon'
         | 'solana'
+        | 'sui'
         | 'tempo';
 
       export type TokenCurrency =
@@ -2474,6 +2488,7 @@ export namespace PaymentAttemptRecord {
         | 'usdc'
         | 'usdg'
         | 'usdp'
+        | 'usdsui'
         | 'usdt';
     }
 
@@ -3067,6 +3082,11 @@ export interface PaymentAttemptRecordReportFailedParams {
   payment_evaluations?: Array<string>;
 
   /**
+   * Information about the Payment Method debited for this payment.
+   */
+  payment_method_details?: PaymentAttemptRecordReportFailedParams.PaymentMethodDetails;
+
+  /**
    * Processor information for this payment.
    */
   processor_details?: PaymentAttemptRecordReportFailedParams.ProcessorDetails;
@@ -3075,6 +3095,18 @@ export namespace PaymentAttemptRecordReportFailedParams {
   export type FailureCode =
     | 'payment_method_customer_decline'
     | 'payment_method_provider_unknown_outcome';
+
+  export interface PaymentMethodDetails {
+    /**
+     * Information about the card payment method used to make this payment.
+     */
+    card?: PaymentMethodDetails.Card;
+
+    /**
+     * The type of the payment method details. An additional hash is included on the payment_method_details with a name matching this value. It contains additional information specific to the type.
+     */
+    type: 'card';
+  }
 
   export interface ProcessorDetails {
     /**
@@ -3086,6 +3118,50 @@ export namespace PaymentAttemptRecordReportFailedParams {
      * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
      */
     type: 'custom';
+  }
+
+  export namespace PaymentMethodDetails {
+    export interface Card {
+      /**
+       * Verification checks performed on the card.
+       */
+      checks?: Card.Checks;
+    }
+
+    export namespace Card {
+      export interface Checks {
+        /**
+         * The result of the check on the cardholder's address line 1.
+         */
+        address_line1_check?: Checks.AddressLine1Check;
+
+        /**
+         * The result of the check on the cardholder's postal code.
+         */
+        address_postal_code_check?: Checks.AddressPostalCodeCheck;
+
+        /**
+         * The result of the check on the card's CVC.
+         */
+        cvc_check?: Checks.CvcCheck;
+      }
+
+      export namespace Checks {
+        export type AddressLine1Check =
+          | 'fail'
+          | 'pass'
+          | 'unavailable'
+          | 'unchecked';
+
+        export type AddressPostalCodeCheck =
+          | 'fail'
+          | 'pass'
+          | 'unavailable'
+          | 'unchecked';
+
+        export type CvcCheck = 'fail' | 'pass' | 'unavailable' | 'unchecked';
+      }
+    }
   }
 
   export namespace ProcessorDetails {
@@ -3311,6 +3387,11 @@ export interface PaymentAttemptRecordReportRefundParams {
   outcome?: PaymentAttemptRecordReportRefundParams.Outcome;
 
   /**
+   * The reason for the refund. One of `duplicate`, `fraudulent`, or `requested_by_customer`.
+   */
+  reason?: PaymentAttemptRecordReportRefundParams.Reason;
+
+  /**
    * A key to group refunds together.
    */
   refund_group?: string;
@@ -3358,6 +3439,8 @@ export namespace PaymentAttemptRecordReportRefundParams {
   }
 
   export type Outcome = 'failed' | 'refunded';
+
+  export type Reason = 'duplicate' | 'fraudulent' | 'requested_by_customer';
 
   export interface Refunded {
     /**

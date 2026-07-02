@@ -397,6 +397,11 @@ export interface Transaction {
   merchant_amount: number;
 
   /**
+   * The exchange rate used by the network to convert the `merchant_amount` to `amount`. The `merchant_amount` multiplied with this rate will equal to the `amount`.
+   */
+  merchant_amount_exchange_rate?: number | null;
+
+  /**
    * The currency with which the merchant is taking payment.
    */
   merchant_currency: string;
@@ -417,6 +422,11 @@ export interface Transaction {
    * Additional purchase information that is optionally provided by the merchant.
    */
   purchase_details?: Transaction.PurchaseDetails | null;
+
+  /**
+   * Redaction status of this transaction. If the transaction is not redacted, this field will be null.
+   */
+  redaction?: Transaction.Redaction | null;
 
   /**
    * The ID of the [settlement](https://docs.stripe.com/api/issuing/settlements) to which this transaction belongs.
@@ -592,6 +602,13 @@ export namespace Transaction {
      * A merchant-specific order number.
      */
     reference: string | null;
+  }
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
   }
 
   export interface Treasury {
@@ -977,6 +994,10 @@ export namespace Transaction {
         stopover_allowed: boolean | null;
       }
     }
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
   }
 }
 export namespace Issuing {

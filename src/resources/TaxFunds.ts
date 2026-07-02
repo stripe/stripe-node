@@ -86,16 +86,34 @@ export interface TaxFund {
 }
 export namespace TaxFund {
   export interface Context {
+    /**
+     * The Checkout Session associated with this sweep, if any.
+     */
     checkout_session?: string;
 
+    /**
+     * The Credit Note associated with this sweep, if any.
+     */
     credit_note?: string;
 
+    /**
+     * The Invoice associated with this sweep, if any.
+     */
     invoice?: string;
 
+    /**
+     * The PaymentIntent associated with this sweep, if any.
+     */
     payment_intent?: string;
 
+    /**
+     * The Refund associated with this sweep, if any.
+     */
     refund?: string;
 
+    /**
+     * The Tax Transaction associated with this sweep, if any.
+     */
     tax_transaction?: string;
   }
 
@@ -110,6 +128,9 @@ export namespace TaxFund {
      */
     tax_fund_account?: Destination.TaxFundAccount;
 
+    /**
+     * The type of account funds moved to or from. Either `payments_balance` or `tax_fund_account`.
+     */
     type: string;
   }
 
@@ -124,35 +145,62 @@ export namespace TaxFund {
      */
     tax_fund_account?: Source.TaxFundAccount;
 
+    /**
+     * The type of account funds moved to or from. Either `payments_balance` or `tax_fund_account`.
+     */
     type: string;
   }
 
   export interface Trigger {
+    /**
+     * The balance transaction on the payments balance that triggered the sweep.
+     */
     balance_transaction: string | BalanceTransaction;
 
+    /**
+     * The type of event that triggered the sweep. Always `balance_transaction`.
+     */
     type: string;
   }
 
   export namespace Destination {
     export interface PaymentsBalance {
+      /**
+       * The balance transaction on the payments balance side of the sweep.
+       */
       balance_transaction: string | BalanceTransaction;
     }
 
     export interface TaxFundAccount {
+      /**
+       * The tax fund financial account involved in the sweep.
+       */
       financial_account?: string;
 
+      /**
+       * The financial account transaction on the tax fund account side of the sweep.
+       */
       transaction?: string;
     }
   }
 
   export namespace Source {
     export interface PaymentsBalance {
+      /**
+       * The balance transaction on the payments balance side of the sweep.
+       */
       balance_transaction: string | BalanceTransaction;
     }
 
     export interface TaxFundAccount {
+      /**
+       * The tax fund financial account involved in the sweep.
+       */
       financial_account?: string;
 
+      /**
+       * The financial account transaction on the tax fund account side of the sweep.
+       */
       transaction?: string;
     }
   }

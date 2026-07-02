@@ -68,11 +68,6 @@ export interface GiftCardOperation {
   created: number;
 
   /**
-   * Details about a gift card deactivation operation.
-   */
-  deactivation?: GiftCardOperation.Deactivation;
-
-  /**
    * The failure code of the operation. Only present if the status is failed.
    */
   failure_code: GiftCardOperation.FailureCode | null;
@@ -168,8 +163,6 @@ export namespace GiftCardOperation {
     voided_operation: string;
   }
 
-  export interface Deactivation {}
-
   export type FailureCode =
     | 'action_not_supported'
     | 'card_already_activated'
@@ -225,7 +218,6 @@ export namespace GiftCardOperation {
     | 'balance_check'
     | 'cashout'
     | 'cashout_void'
-    | 'deactivation'
     | 'reload'
     | 'reload_void';
 

@@ -85,6 +85,11 @@ export interface Token {
   livemode: boolean;
 
   /**
+   * Redaction status of this token. If not null, this token is associated to a redaction job.
+   */
+  redaction?: Token.Redaction | null;
+
+  /**
    * Type of the token: `account`, `bank_account`, `card`, or `pii`.
    */
   type: string;
@@ -93,6 +98,18 @@ export interface Token {
    * Determines if you have already used this token (you can only use tokens once).
    */
   used: boolean;
+}
+export namespace Token {
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
+  }
 }
 export interface TokenCreateParams {
   /**

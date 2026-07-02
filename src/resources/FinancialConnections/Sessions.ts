@@ -3,6 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Account} from './Accounts.js';
 import {Customer} from './../Customers.js';
+import {Emptyable} from '../../shared.js';
 import {RequestOptions, Response, ApiList} from '../../lib.js';
 
 export class SessionResource extends StripeResource {
@@ -370,9 +371,9 @@ export namespace FinancialConnections {
 
     export interface Limits {
       /**
-       * The number of accounts that can be linked in this Session.
+       * The number of accounts that can be linked in this Session. Pass an empty value to allow any number of accounts.
        */
-      accounts: number;
+      accounts: Emptyable<number>;
     }
 
     export interface ManualEntry {

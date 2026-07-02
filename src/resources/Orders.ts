@@ -1172,7 +1172,7 @@ export namespace Order {
 
         export interface WechatPay {
           /**
-           * The app ID registered with WeChat Pay. Only required when client is ios or android.
+           * The app ID registered with WeChat Pay. Only required when client is ios, android, or mini_program.
            */
           app_id: string | null;
 
@@ -2570,7 +2570,7 @@ export namespace OrderCreateParams {
 
         export interface WechatPay {
           /**
-           * The app ID registered with WeChat Pay. Only required when client is ios or android.
+           * The app ID registered with WeChat Pay. Only required when client is ios, android, or mini_program.
            */
           app_id?: string;
 
@@ -5308,7 +5308,7 @@ export namespace OrderUpdateParams {
 
         export interface WechatPay {
           /**
-           * The app ID registered with WeChat Pay. Only required when client is ios or android.
+           * The app ID registered with WeChat Pay. Only required when client is ios, android, or mini_program.
            */
           app_id?: string;
 
