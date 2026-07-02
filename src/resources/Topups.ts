@@ -195,6 +195,16 @@ export interface TopupCreateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
+   * The ID of a PaymentMethod representing the payment method to be used for the top-up. A PaymentMethod of type `us_bank_account` can be used.
+   */
+  payment_method?: string;
+
+  /**
+   * Payment method-specific configuration for this top-up.
+   */
+  payment_method_options?: TopupCreateParams.PaymentMethodOptions;
+
+  /**
    * The ID of a source to transfer funds from. For most users, this should be left unspecified which will use the bank account that was set up in the dashboard for the specified currency. In test mode, this can be a test bank token (see [Testing Top-ups](https://docs.stripe.com/connect/testing#testing-top-ups)).
    */
   source?: string;
@@ -208,6 +218,17 @@ export interface TopupCreateParams {
    * A string that identifies this top-up as part of a group.
    */
   transfer_group?: string;
+}
+export namespace TopupCreateParams {
+  export interface PaymentMethodOptions {
+    us_bank_account?: PaymentMethodOptions.UsBankAccount;
+  }
+
+  export namespace PaymentMethodOptions {
+    export interface UsBankAccount {
+      network: 'ach';
+    }
+  }
 }
 export interface TopupRetrieveParams {
   /**

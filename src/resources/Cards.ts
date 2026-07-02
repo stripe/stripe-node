@@ -169,6 +169,11 @@ export interface Card {
   networks?: Card.Networks;
 
   /**
+   * Redaction status of this card. If not null, this card is associated to a redaction job.
+   */
+  redaction?: Card.Redaction | null;
+
+  /**
    * Status of a card based on the card issuer.
    */
   regulated_status: Card.RegulatedStatus | null;
@@ -228,5 +233,16 @@ export namespace Card {
     preferred: string | null;
   }
 
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
+  }
+
   export type RegulatedStatus = 'regulated' | 'unregulated';
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
+  }
 }

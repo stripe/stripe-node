@@ -1033,6 +1033,11 @@ export interface Authorization {
   merchant_amount: number;
 
   /**
+   * The exchange rate used by the network to convert the `merchant_amount` to `amount`. The `merchant_amount` multiplied with this rate will equal to the `amount`.
+   */
+  merchant_amount_exchange_rate?: number | null;
+
+  /**
    * The local currency that was presented to the cardholder for the authorization. This currency can be different from the cardholder currency and the `currency` field on this authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
    */
   merchant_currency: string;
@@ -1053,6 +1058,11 @@ export interface Authorization {
    * The pending authorization request. This field will only be non-null during an `issuing_authorization.request` webhook.
    */
   pending_request: Authorization.PendingRequest | null;
+
+  /**
+   * Redaction status of this authorization. If the authorization is not redacted, this field will be null.
+   */
+  redaction?: Authorization.Redaction | null;
 
   /**
    * History of every time a `pending_request` authorization was approved/declined, either by you directly or by Stripe (e.g. based on your spending_controls). If the merchant changes the authorization by performing an incremental authorization, you can look at this field to see the previous requests for the authorization. This field can be helpful in determining why a given authorization was approved/declined.
@@ -1351,6 +1361,13 @@ export namespace Authorization {
      * The card network's estimate of the likelihood that an authorization is fraudulent. Takes on values between 1 and 99.
      */
     network_risk_score: number | null;
+  }
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
   }
 
   export interface RequestHistory {
@@ -2204,6 +2221,10 @@ export namespace Authorization {
     }
   }
 
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
+  }
+
   export namespace RequestHistory {
     export interface AmountDetails {
       /**
@@ -2271,6 +2292,11 @@ export namespace Authorization {
 
     export namespace NetworkData {
       export interface Device {
+        /**
+         * An identifier for the device used during wallet provisioning.
+         */
+        device_id?: string | null;
+
         /**
          * The IP address of the device at provisioning time.
          */

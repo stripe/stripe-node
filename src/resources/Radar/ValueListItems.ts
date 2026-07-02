@@ -117,6 +117,11 @@ export interface ValueListItem {
   livemode: boolean;
 
   /**
+   * Redaction status of this item. If not null, this item is associated to a redaction job.
+   */
+  redaction?: ValueListItem.Redaction | null;
+
+  /**
    * The value of the item.
    */
   value: string;
@@ -141,6 +146,35 @@ export interface DeletedValueListItem {
    * Always true for a deleted object
    */
   deleted: true;
+
+  /**
+   * Redaction status of this item. If not null, this item is associated to a redaction job.
+   */
+  redaction?: DeletedValueListItem.Redaction | null;
+}
+export namespace DeletedValueListItem {
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
+  }
+}
+export namespace ValueListItem {
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
+  }
 }
 export namespace Radar {
   export interface ValueListItemCreateParams {

@@ -278,6 +278,11 @@ export interface SetupIntent {
    */
   payment_method_types: Array<string>;
 
+  /**
+   * Redaction status of this SetupIntent. If the SetupIntent isn't redacted, this field is null.
+   */
+  redaction?: SetupIntent.Redaction | null;
+
   setup_details?: SetupIntent.SetupDetails;
 
   /**
@@ -573,6 +578,13 @@ export namespace SetupIntent {
     us_bank_account?: PaymentMethodOptions.UsBankAccount;
   }
 
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
+  }
+
   export interface SetupDetails {
     benefit?: SetupDetails.Benefit;
 
@@ -608,6 +620,7 @@ export namespace SetupIntent {
       | 'alipay_upgrade_required'
       | 'amount_too_large'
       | 'amount_too_small'
+      | 'anomalous_money_movement_request'
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
@@ -647,6 +660,10 @@ export namespace SetupIntent {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'failed_tax_calculation'
+      | 'financial_account_balance_does_not_support_currency'
+      | 'financial_account_capability_not_enabled'
+      | 'financial_account_capability_restricted'
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
@@ -1421,6 +1438,10 @@ export namespace SetupIntent {
     }
   }
 
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
+  }
+
   export namespace SetupDetails {
     export interface Benefit {
       fr_meal_voucher?: Benefit.FrMealVoucher;
@@ -1966,7 +1987,7 @@ export namespace SetupIntentCreateParams {
     stripe_balance?: PaymentMethodData.StripeBalance;
 
     /**
-     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
      */
     sunbit?: PaymentMethodData.Sunbit;
 
@@ -4031,7 +4052,7 @@ export namespace SetupIntentUpdateParams {
     stripe_balance?: PaymentMethodData.StripeBalance;
 
     /**
-     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
      */
     sunbit?: PaymentMethodData.Sunbit;
 
@@ -5982,7 +6003,7 @@ export namespace SetupIntentConfirmParams {
     stripe_balance?: PaymentMethodData.StripeBalance;
 
     /**
-     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
      */
     sunbit?: PaymentMethodData.Sunbit;
 

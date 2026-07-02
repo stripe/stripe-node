@@ -302,7 +302,7 @@ export interface CreditGrant {
   /**
    * The priority for applying this credit grant. The highest priority is 0 and the lowest is 100.
    */
-  priority?: number | null;
+  priority: number | null;
 
   /**
    * ID of the test clock this credit grant belongs to.
@@ -571,7 +571,7 @@ export namespace Billing {
         price_type?: 'metered';
 
         /**
-         * A list of prices that the credit grant can apply to. We currently only support the `metered` prices. Cannot be used in combination with `price_type`.
+         * A list of prices that the credit grant can apply to. We currently only support the `metered` prices. Cannot be used in combination with `price_type`. Limit 20 prices.
          */
         prices?: Array<Scope.Price>;
       }
