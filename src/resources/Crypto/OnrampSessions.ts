@@ -229,27 +229,6 @@ export namespace OnrampSession {
       | 'wld'
       | 'xlm';
 
-    export type DestinationCurrency =
-      | 'avax'
-      | 'btc'
-      | 'eth'
-      | 'matic'
-      | 'sol'
-      | 'usdc'
-      | 'wld'
-      | 'xlm';
-
-    export type DestinationNetwork =
-      | 'avalanche'
-      | 'base'
-      | 'bitcoin'
-      | 'ethereum'
-      | 'optimism'
-      | 'polygon'
-      | 'solana'
-      | 'stellar'
-      | 'worldchain';
-
     export type DestinationNetwork =
       | 'avalanche'
       | 'base'

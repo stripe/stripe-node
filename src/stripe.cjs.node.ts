@@ -16916,8 +16916,6 @@ declare namespace StripeConstructor {
       export type TransactionDetails = Stripe_.Crypto.OnrampSession.TransactionDetails;
       export namespace TransactionDetails {
         export type DestinationCurrency = Stripe_.Crypto.OnrampSession.TransactionDetails.DestinationCurrency;
-        export type DestinationCurrency = Stripe_.Crypto.OnrampSession.TransactionDetails.DestinationCurrency;
-        export type DestinationNetwork = Stripe_.Crypto.OnrampSession.TransactionDetails.DestinationNetwork;
         export type DestinationNetwork = Stripe_.Crypto.OnrampSession.TransactionDetails.DestinationNetwork;
         export type Fees = Stripe_.Crypto.OnrampSession.TransactionDetails.Fees;
         export type SettlementSpeed = Stripe_.Crypto.OnrampSession.TransactionDetails.SettlementSpeed;
