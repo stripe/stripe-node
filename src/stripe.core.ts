@@ -2593,6 +2593,19 @@ export declare namespace Stripe {
 
   export type Decimal = import('./shared.js').Decimal;
 
+  export type StripeConfig = import('./lib.js').StripeConfig;
+  export type LatestApiVersion = import('./lib.js').LatestApiVersion;
+  export type HttpAgent = import('./lib.js').HttpAgent;
+  export type HttpProtocol = import('./lib.js').HttpProtocol;
+  export type StripeResource = import('./StripeResource.js').StripeResource;
+  export type CryptoProvider = import('./crypto/CryptoProvider.js').CryptoProvider;
+  export type HttpClient = import('./net/HttpClient.js').HttpClient;
+  export type HttpClientResponse = import('./net/HttpClient.js').HttpClientResponse;
+  export type RawErrorType = import('./Types.js').RawErrorType;
+  export type Webhooks = import('./Webhooks.js').WebhookObject;
+  export type WebhookTestHeaderOptions = import('./Webhooks.js').WebhookTestHeaderOptions;
+  export type Signature = import('./Webhooks.js').WebhookSignatureObject;
+
   export {StripeContext as StripeContextType};
   export {StripeRawError};
   // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
