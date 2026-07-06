@@ -4259,7 +4259,7 @@ describe('Generated tests', function() {
         {
           ends_at: {
             timestamp: '1970-01-01T15:18:46.294Z',
-            type: 'contract_end',
+            type: 'timestamp',
           },
           lookup_key: 'lookup_key',
           metadata: {
@@ -4272,7 +4272,7 @@ describe('Generated tests', function() {
                 {
                   ends_at: {
                     timestamp: '1970-01-01T15:18:46.294Z',
-                    type: 'contract_end',
+                    type: 'timestamp',
                   },
                   lookup_key: 'lookup_key',
                   metadata: {
@@ -4293,7 +4293,7 @@ describe('Generated tests', function() {
                   priority: 1165461084,
                   starts_at: {
                     timestamp: '1970-01-01T15:18:46.294Z',
-                    type: 'contract_start',
+                    type: 'timestamp',
                   },
                   type: 'overwrite_price',
                 },
@@ -4312,7 +4312,7 @@ describe('Generated tests', function() {
           },
           starts_at: {
             timestamp: '1970-01-01T15:18:46.294Z',
-            type: 'contract_start',
+            type: 'timestamp',
           },
         },
       ],

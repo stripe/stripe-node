@@ -15,7 +15,7 @@ export class ContractResource extends StripeResource {
     this.pricingLines = new PricingLineResource(stripe);
   }
   /**
-   * List Contract objects with pagination.
+   * List contracts.
    */
   list(
     params?: V2.Billing.ContractListParams,
@@ -92,7 +92,7 @@ export class ContractResource extends StripeResource {
     }) as any;
   }
   /**
-   * Create a Contract object.
+   * Create a draft contract.
    */
   create(
     params: V2.Billing.ContractCreateParams,
@@ -212,7 +212,7 @@ export class ContractResource extends StripeResource {
     }) as any;
   }
   /**
-   * Delete a draft Contract object by ID.
+   * Delete a draft contract.
    */
   del(
     id: string,
@@ -227,7 +227,7 @@ export class ContractResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieve a Contract object by ID.
+   * Retrieve a contract.
    */
   retrieve(
     id: string,
@@ -302,7 +302,7 @@ export class ContractResource extends StripeResource {
     ) as any;
   }
   /**
-   * Update a Contract object by ID.
+   * Update a draft or active contract.
    */
   update(
     id: string,
@@ -512,7 +512,7 @@ export class ContractResource extends StripeResource {
     ) as any;
   }
   /**
-   * Activate a Draft Contract object by ID.
+   * Activate a draft contract.
    */
   activate(
     id: string,
@@ -587,7 +587,7 @@ export class ContractResource extends StripeResource {
     ) as any;
   }
   /**
-   * Cancel a Contract object by ID.
+   * Cancel an active contract.
    */
   cancel(
     id: string,
@@ -664,7 +664,7 @@ export class ContractResource extends StripeResource {
 }
 export interface Contract {
   /**
-   * The ID of the contract object.
+   * The contract id.
    */
   id: string;
 
@@ -674,12 +674,12 @@ export interface Contract {
   object: 'v2.billing.contract';
 
   /**
-   * The billing cycle anchor for the contract.
+   * The billing cycle anchor.
    */
   billing_cycle_anchor?: Contract.BillingCycleAnchor;
 
   /**
-   * The billing settings for the contract.
+   * The billing settings.
    */
   billing_settings?: Contract.BillingSettings;
 
@@ -689,17 +689,17 @@ export interface Contract {
   contract_number: string;
 
   /**
-   * Timestamp of when the object was created.
+   * Timestamp of when the contract was created.
    */
   created: string;
 
   /**
-   * The currency of the contract.
+   * The currency.
    */
   currency: string;
 
   /**
-   * The ID of the customer associated with the contract.
+   * The customer id.
    */
   customer: string;
 
@@ -709,22 +709,22 @@ export interface Contract {
   livemode: boolean;
 
   /**
-   * Set of key-value pairs that you can attach to an object.
+   * Set of key-value pairs.
    */
   metadata?: Metadata;
 
   /**
-   * The one-time fees of the contract. Only populated when `one_time_fees` is passed in the `include` parameter.
+   * The one-time fees. Only populated when `one_time_fees` is passed in the `include` parameter.
    */
   one_time_fees?: Contract.OneTimeFees;
 
   /**
-   * The pricing lines of the contract. Only populated when `pricing_lines` is passed in the `include` parameter.
+   * The pricing lines. Only populated when `pricing_lines` is passed in the `include` parameter.
    */
   pricing_lines?: Contract.PricingLines;
 
   /**
-   * The pricing overrides of the contract. Only populated when `pricing_overrides` is passed in the `include` parameter.
+   * The pricing overrides. Only populated when `pricing_overrides` is passed in the `include` parameter.
    */
   pricing_overrides?: Contract.PricingOverrides;
 
@@ -905,7 +905,7 @@ export namespace Contract {
       bill_at: Data.BillAt;
 
       /**
-       * The ID of the one-time fee.
+       * The id of the one-time fee.
        */
       id: string;
 
@@ -915,7 +915,7 @@ export namespace Contract {
       lookup_key?: string;
 
       /**
-       * The ID of the v1 Product for this fee.
+       * The id of the product for this fee.
        */
       product: string;
     }
@@ -933,12 +933,12 @@ export namespace Contract {
   export namespace PricingLines {
     export interface Data {
       /**
-       * Resolved timestamp when the pricing line ends.
+       * Timestamp when the pricing line ends.
        */
       ends_at: Data.EndsAt;
 
       /**
-       * The ID of the pricing line.
+       * The id of the pricing line.
        */
       id: string;
 
@@ -948,7 +948,7 @@ export namespace Contract {
       lookup_key?: string;
 
       /**
-       * Set of key-value pairs that you can attach to an object.
+       * Set of key-value pairs.
        */
       metadata?: Metadata;
 
@@ -958,7 +958,7 @@ export namespace Contract {
       pricing: Data.Pricing;
 
       /**
-       * Resolved timestamp when the pricing line starts.
+       * Timestamp when the pricing line starts.
        */
       starts_at: Data.StartsAt;
     }
@@ -1019,9 +1019,14 @@ export namespace Contract {
           export namespace PricingOverrides {
             export interface Data {
               /**
-               * Resolved timestamp when this override ends.
+               * Timestamp when this override ends.
                */
               ends_at: Data.EndsAt;
+
+              /**
+               * The ID of the pricing override.
+               */
+              id: string;
 
               /**
                * The user-provided lookup key for this override.
@@ -1034,12 +1039,12 @@ export namespace Contract {
               overwrite_price?: Data.OverwritePrice;
 
               /**
-               * The ID of the pricing line override.
+               * The priority of this override relative to others. Lower number = higher priority.
                */
-              pricing_override: string;
+              priority: number;
 
               /**
-               * Resolved timestamp when this override starts.
+               * Timestamp when this override starts.
                */
               starts_at: Data.StartsAt;
 
@@ -1131,9 +1136,9 @@ export namespace Contract {
       lookup_key?: string;
 
       /**
-       * Details for a multiplier override.
+       * Details for a multiply_pricing override.
        */
-      multiplier?: Data.Multiplier;
+      multiply_pricing?: Data.MultiplyPricing;
 
       /**
        * The priority of this override relative to others. Lower number = higher priority.
@@ -1148,7 +1153,7 @@ export namespace Contract {
       /**
        * The type of pricing override.
        */
-      type: 'multiplier';
+      type: 'multiply_pricing';
     }
 
     export namespace Data {
@@ -1159,14 +1164,14 @@ export namespace Contract {
         timestamp: string;
       }
 
-      export interface Multiplier {
+      export interface MultiplyPricing {
         /**
-         * Criteria determining which rates the multiplier applies to.
+         * Criteria determining which rates the multiply_pricing override applies to.
          */
-        criteria: Array<Multiplier.Criterion>;
+        criteria: Array<MultiplyPricing.Criterion>;
 
         /**
-         * The multiplier factor, represented as a decimal string. e.g. "0.8" for a 20% reduction.
+         * The multiply_pricing factor, represented as a decimal string. e.g. "0.8" for a 20% reduction.
          */
         factor: string;
       }
@@ -1178,7 +1183,7 @@ export namespace Contract {
         timestamp: string;
       }
 
-      export namespace Multiplier {
+      export namespace MultiplyPricing {
         export interface Criterion {
           /**
            * Filter by pricing line IDs.
@@ -1338,7 +1343,7 @@ export namespace V2 {
         lookup_key?: string;
 
         /**
-         * The ID of the v1 Product for this fee.
+         * The id of the product for this fee.
          */
         product: string;
       }
@@ -1355,14 +1360,14 @@ export namespace V2 {
         lookup_key?: string;
 
         /**
-         * Parameters for a multiplier override. Required if `type` is `multiplier`.
+         * Parameters for a multiply_pricing override. Required if `type` is `multiply_pricing`.
          */
-        multiplier?: PricingOverride.Multiplier;
+        multiply_pricing?: PricingOverride.MultiplyPricing;
 
         /**
          * The priority of this override relative to others. The highest priority is 0 and the lowest is 100.
          */
-        priority: number;
+        priority?: number;
 
         /**
          * When the pricing override starts.
@@ -1372,7 +1377,7 @@ export namespace V2 {
         /**
          * The type of pricing override.
          */
-        type: 'multiplier';
+        type: 'multiply_pricing';
       }
 
       export namespace BillingCycleAnchor {
@@ -1433,7 +1438,7 @@ export namespace V2 {
 
         export interface CollectionSettingsDetails {
           /**
-           * The collection method.
+           * How payment is collected for the contract.
            */
           collection_method: CollectionSettingsDetails.CollectionMethod;
 
@@ -1453,7 +1458,7 @@ export namespace V2 {
 
           export interface Invoice {
             /**
-             * The number of time units before the invoice is past due.
+             * How long the customer has to pay the invoice before it's past due.
              */
             time_until_due?: Invoice.TimeUntilDue;
           }
@@ -1525,7 +1530,7 @@ export namespace V2 {
           /**
            * The type of the ends_at.
            */
-          type: EndsAt.Type;
+          type: 'timestamp';
         }
 
         export interface Pricing {
@@ -1549,17 +1554,13 @@ export namespace V2 {
           /**
            * The type of the starts_at.
            */
-          type: StartsAt.Type;
-        }
-
-        export namespace EndsAt {
-          export type Type = 'contract_end' | 'timestamp';
+          type: 'timestamp';
         }
 
         export namespace Pricing {
           export interface PriceDetails {
             /**
-             * The ID of the V1 price.
+             * The id of the price.
              */
             price: string;
 
@@ -1570,7 +1571,7 @@ export namespace V2 {
 
             /**
              * Quantity changes for the pricing line. For now, at most one entry is allowed.
-             * A quantity change clears all future quantity changes on this pricing line.
+             * A quantity change clears all future quantity changes on this pricing line. Defaults to 1.
              */
             quantity_changes?: Array<PriceDetails.QuantityChange>;
           }
@@ -1608,7 +1609,7 @@ export namespace V2 {
               starts_at?: PricingOverride.StartsAt;
 
               /**
-               * The type of override. Currently only `overwrite_price` is supported.
+               * The type of override.
                */
               type: 'overwrite_price';
             }
@@ -1635,7 +1636,7 @@ export namespace V2 {
                 /**
                  * The type of the ends_at.
                  */
-                type: EndsAt.Type;
+                type: 'timestamp';
               }
 
               export interface OverwritePrice {
@@ -1664,11 +1665,7 @@ export namespace V2 {
                 /**
                  * The type of the starts_at.
                  */
-                type: StartsAt.Type;
-              }
-
-              export namespace EndsAt {
-                export type Type = 'contract_end' | 'timestamp';
+                type: 'timestamp';
               }
 
               export namespace OverwritePrice {
@@ -1696,10 +1693,6 @@ export namespace V2 {
                   up_to_inf?: 'inf';
                 }
               }
-
-              export namespace StartsAt {
-                export type Type = 'contract_start' | 'timestamp';
-              }
             }
 
             export namespace QuantityChange {
@@ -1717,10 +1710,6 @@ export namespace V2 {
             }
           }
         }
-
-        export namespace StartsAt {
-          export type Type = 'contract_start' | 'timestamp';
-        }
       }
 
       export namespace PricingOverride {
@@ -1733,17 +1722,17 @@ export namespace V2 {
           /**
            * The type of the ends_at.
            */
-          type: EndsAt.Type;
+          type: 'timestamp';
         }
 
-        export interface Multiplier {
+        export interface MultiplyPricing {
           /**
-           * Criteria determining which rates the multiplier applies to.
+           * Criteria determining which rates the multiply_pricing override applies to.
            */
-          criteria?: Array<Multiplier.Criterion>;
+          criteria?: Array<MultiplyPricing.Criterion>;
 
           /**
-           * The multiplier factor, represented as a decimal string. e.g. "0.8" for a 20% reduction.
+           * The multiply_pricing factor, represented as a decimal string. e.g. "0.8" for a 20% reduction.
            */
           factor: string;
         }
@@ -1757,14 +1746,10 @@ export namespace V2 {
           /**
            * The type of the starts_at.
            */
-          type: StartsAt.Type;
+          type: 'timestamp';
         }
 
-        export namespace EndsAt {
-          export type Type = 'contract_end' | 'timestamp';
-        }
-
-        export namespace Multiplier {
+        export namespace MultiplyPricing {
           export interface Criterion {
             /**
              * Filter by pricing line IDs.
@@ -1785,10 +1770,6 @@ export namespace V2 {
           export namespace Criterion {
             export type Type = 'exclude' | 'include';
           }
-        }
-
-        export namespace StartsAt {
-          export type Type = 'contract_start' | 'timestamp';
         }
       }
     }
@@ -1842,12 +1823,12 @@ export namespace V2 {
 
       export interface PricingLineAction {
         /**
-         * Parameters for adding a pricing line.
+         * Add a pricing line.
          */
         add?: PricingLineAction.Add;
 
         /**
-         * Parameters for removing a pricing line.
+         * Remove a pricing line.
          */
         remove?: PricingLineAction.Remove;
 
@@ -1857,19 +1838,19 @@ export namespace V2 {
         type: PricingLineAction.Type;
 
         /**
-         * Parameters for updating a pricing line.
+         * Update a pricing line.
          */
         update?: PricingLineAction.Update;
       }
 
       export interface PricingOverrideAction {
         /**
-         * Parameters for adding a pricing override.
+         * Add a pricing override.
          */
         add?: PricingOverrideAction.Add;
 
         /**
-         * Parameters for removing a pricing override.
+         * Remove a pricing override.
          */
         remove?: PricingOverrideAction.Remove;
 
@@ -1879,7 +1860,7 @@ export namespace V2 {
         type: PricingOverrideAction.Type;
 
         /**
-         * Parameters for updating a pricing override.
+         * Update a pricing override.
          */
         update?: PricingOverrideAction.Update;
       }
@@ -1914,7 +1895,7 @@ export namespace V2 {
 
         export interface Remove {
           /**
-           * The ID of the pricing line to remove.
+           * The id of the pricing line to remove.
            */
           id: string;
         }
@@ -1923,22 +1904,22 @@ export namespace V2 {
 
         export interface Update {
           /**
-           * The updated end time for the pricing line.
+           * Updated end time.
            */
           ends_at?: Update.EndsAt;
 
           /**
-           * The ID of the pricing line.
+           * The id of the pricing line.
            */
           id: string;
 
           /**
-           * Pricing updates for the pricing line (quantity changes and pricing override actions).
+           * Updated pricing configuration.
            */
           pricing?: Update.Pricing;
 
           /**
-           * The updated start time for the pricing line.
+           * Updated start time.
            */
           starts_at?: Update.StartsAt;
         }
@@ -1946,14 +1927,14 @@ export namespace V2 {
         export namespace Add {
           export interface EndsAt {
             /**
-             * The timestamp when the item ends.
+             * The timestamp when the pricing ends.
              */
             timestamp?: string;
 
             /**
              * The type of end time to apply.
              */
-            type: EndsAt.Type;
+            type: 'timestamp';
           }
 
           export interface Pricing {
@@ -1970,24 +1951,20 @@ export namespace V2 {
 
           export interface StartsAt {
             /**
-             * The timestamp when the item starts.
+             * The timestamp when the pricing starts.
              */
             timestamp?: string;
 
             /**
              * The type of start time to apply.
              */
-            type: StartsAt.Type;
-          }
-
-          export namespace EndsAt {
-            export type Type = 'billing_period_end' | 'timestamp';
+            type: 'timestamp';
           }
 
           export namespace Pricing {
             export interface PriceDetails {
               /**
-               * The ID of the V1 price.
+               * The id of the price.
                */
               price: string;
 
@@ -1998,7 +1975,7 @@ export namespace V2 {
 
               /**
                * Quantity changes for the pricing line. For now, at most one entry is allowed.
-               * A quantity change clears all future quantity changes on this pricing line.
+               * A quantity change clears all future quantity changes on this pricing line. Defaults to 1.
                */
               quantity_changes?: Array<PriceDetails.QuantityChange>;
             }
@@ -2036,7 +2013,7 @@ export namespace V2 {
                 starts_at?: PricingOverride.StartsAt;
 
                 /**
-                 * The type of override. Currently only `overwrite_price` is supported.
+                 * The type of override.
                  */
                 type: 'overwrite_price';
               }
@@ -2063,7 +2040,7 @@ export namespace V2 {
                   /**
                    * The type of the ends_at.
                    */
-                  type: EndsAt.Type;
+                  type: 'timestamp';
                 }
 
                 export interface OverwritePrice {
@@ -2092,11 +2069,7 @@ export namespace V2 {
                   /**
                    * The type of the starts_at.
                    */
-                  type: StartsAt.Type;
-                }
-
-                export namespace EndsAt {
-                  export type Type = 'contract_end' | 'timestamp';
+                  type: 'timestamp';
                 }
 
                 export namespace OverwritePrice {
@@ -2124,10 +2097,6 @@ export namespace V2 {
                     up_to_inf?: 'inf';
                   }
                 }
-
-                export namespace StartsAt {
-                  export type Type = 'contract_start' | 'timestamp';
-                }
               }
 
               export namespace QuantityChange {
@@ -2145,23 +2114,19 @@ export namespace V2 {
               }
             }
           }
-
-          export namespace StartsAt {
-            export type Type = 'billing_period_start' | 'timestamp';
-          }
         }
 
         export namespace Update {
           export interface EndsAt {
             /**
-             * The timestamp when the item ends.
+             * The timestamp when the pricing ends.
              */
             timestamp?: string;
 
             /**
              * The type of end time to apply.
              */
-            type: EndsAt.Type;
+            type: 'timestamp';
           }
 
           export interface Pricing {
@@ -2173,18 +2138,14 @@ export namespace V2 {
 
           export interface StartsAt {
             /**
-             * The timestamp when the item starts.
+             * The timestamp when the pricing starts.
              */
             timestamp?: string;
 
             /**
              * The type of start time to apply.
              */
-            type: StartsAt.Type;
-          }
-
-          export namespace EndsAt {
-            export type Type = 'billing_period_end' | 'timestamp';
+            type: 'timestamp';
           }
 
           export namespace Pricing {
@@ -2205,12 +2166,12 @@ export namespace V2 {
             export namespace PriceDetails {
               export interface PricingOverrideAction {
                 /**
-                 * Parameters for adding a pricing line override.
+                 * Add a pricing line override.
                  */
                 add?: PricingOverrideAction.Add;
 
                 /**
-                 * Parameters for removing a pricing line override.
+                 * Remove a pricing line override.
                  */
                 remove?: PricingOverrideAction.Remove;
 
@@ -2220,7 +2181,7 @@ export namespace V2 {
                 type: PricingOverrideAction.Type;
 
                 /**
-                 * Parameters for updating a pricing line override.
+                 * Update a pricing line override.
                  */
                 update?: PricingOverrideAction.Update;
               }
@@ -2250,7 +2211,7 @@ export namespace V2 {
                   lookup_key?: string;
 
                   /**
-                   * Set of key-value pairs that you can attach to an object.
+                   * Metadata for the pricing override.
                    */
                   metadata?: MetadataParam;
 
@@ -2277,12 +2238,12 @@ export namespace V2 {
 
                 export interface Remove {
                   /**
-                   * The ID of the pricing line override to remove.
+                   * The id of the pricing override to remove.
                    */
                   id?: string;
 
                   /**
-                   * A lookup key for the override to remove.
+                   * Lookup key of the override to remove.
                    */
                   lookup_key?: string;
                 }
@@ -2291,27 +2252,27 @@ export namespace V2 {
 
                 export interface Update {
                   /**
-                   * The updated end time for the override.
+                   * Updated end time.
                    */
                   ends_at?: Update.EndsAt;
 
                   /**
-                   * The ID of the pricing line override to update.
+                   * The id of the pricing override to update.
                    */
                   id?: string;
 
                   /**
-                   * A lookup key for the override to update.
+                   * Updated lookup key.
                    */
                   lookup_key?: string;
 
                   /**
-                   * Set of key-value pairs that you can attach to an object.
+                   * Metadata for the pricing override.
                    */
                   metadata?: MetadataParam;
 
                   /**
-                   * The updated start time for the override.
+                   * Updated start time.
                    */
                   starts_at?: Update.StartsAt;
                 }
@@ -2319,14 +2280,14 @@ export namespace V2 {
                 export namespace Add {
                   export interface EndsAt {
                     /**
-                     * The timestamp when the item ends.
+                     * The timestamp when the pricing ends.
                      */
                     timestamp?: string;
 
                     /**
                      * The type of end time to apply.
                      */
-                    type: EndsAt.Type;
+                    type: 'timestamp';
                   }
 
                   export interface OverwritePrice {
@@ -2348,18 +2309,14 @@ export namespace V2 {
 
                   export interface StartsAt {
                     /**
-                     * The timestamp when the item starts.
+                     * The timestamp when the pricing starts.
                      */
                     timestamp?: string;
 
                     /**
                      * The type of start time to apply.
                      */
-                    type: StartsAt.Type;
-                  }
-
-                  export namespace EndsAt {
-                    export type Type = 'billing_period_end' | 'timestamp';
+                    type: 'timestamp';
                   }
 
                   export namespace OverwritePrice {
@@ -2387,43 +2344,31 @@ export namespace V2 {
                       up_to_inf?: 'inf';
                     }
                   }
-
-                  export namespace StartsAt {
-                    export type Type = 'billing_period_start' | 'timestamp';
-                  }
                 }
 
                 export namespace Update {
                   export interface EndsAt {
                     /**
-                     * The timestamp when the item ends.
+                     * The timestamp when the pricing ends.
                      */
                     timestamp?: string;
 
                     /**
                      * The type of end time to apply.
                      */
-                    type: EndsAt.Type;
+                    type: 'timestamp';
                   }
 
                   export interface StartsAt {
                     /**
-                     * The timestamp when the item starts.
+                     * The timestamp when the pricing starts.
                      */
                     timestamp?: string;
 
                     /**
                      * The type of start time to apply.
                      */
-                    type: StartsAt.Type;
-                  }
-
-                  export namespace EndsAt {
-                    export type Type = 'billing_period_end' | 'timestamp';
-                  }
-
-                  export namespace StartsAt {
-                    export type Type = 'billing_period_start' | 'timestamp';
+                    type: 'timestamp';
                   }
                 }
               }
@@ -2443,10 +2388,6 @@ export namespace V2 {
               }
             }
           }
-
-          export namespace StartsAt {
-            export type Type = 'billing_period_start' | 'timestamp';
-          }
         }
       }
 
@@ -2463,9 +2404,9 @@ export namespace V2 {
           lookup_key?: string;
 
           /**
-           * A multiplier override to add.
+           * A multiply_pricing override to add.
            */
-          multiplier?: Add.Multiplier;
+          multiply_pricing?: Add.MultiplyPricing;
 
           /**
            * An overwrite price override to add.
@@ -2475,7 +2416,7 @@ export namespace V2 {
           /**
            * The priority for the pricing override. The highest priority is 0 and the lowest is 100.
            */
-          priority: number;
+          priority?: number;
 
           /**
            * The start time for the pricing override.
@@ -2485,12 +2426,12 @@ export namespace V2 {
           /**
            * The type of pricing override to add.
            */
-          type: 'multiplier';
+          type: 'multiply_pricing';
         }
 
         export interface Remove {
           /**
-           * The ID of the pricing override to remove.
+           * The id of the pricing override to remove.
            */
           id: string;
         }
@@ -2517,24 +2458,24 @@ export namespace V2 {
         export namespace Add {
           export interface EndsAt {
             /**
-             * The timestamp when the item ends.
+             * The timestamp when the pricing ends.
              */
             timestamp?: string;
 
             /**
              * The type of end time to apply.
              */
-            type: EndsAt.Type;
+            type: 'timestamp';
           }
 
-          export interface Multiplier {
+          export interface MultiplyPricing {
             /**
-             * Criteria determining which rates the multiplier applies to.
+             * Criteria determining which rates the multiply_pricing override applies to.
              */
-            criteria: Array<Multiplier.Criterion>;
+            criteria: Array<MultiplyPricing.Criterion>;
 
             /**
-             * The multiplier factor, represented as a decimal string. e.g. "0.8" for a 20% reduction.
+             * The multiply_pricing factor, represented as a decimal string. e.g. "0.8" for a 20% reduction.
              */
             factor: string;
           }
@@ -2558,21 +2499,17 @@ export namespace V2 {
 
           export interface StartsAt {
             /**
-             * The timestamp when the item starts.
+             * The timestamp when the pricing starts.
              */
             timestamp?: string;
 
             /**
              * The type of start time to apply.
              */
-            type: StartsAt.Type;
+            type: 'timestamp';
           }
 
-          export namespace EndsAt {
-            export type Type = 'billing_period_end' | 'timestamp';
-          }
-
-          export namespace Multiplier {
+          export namespace MultiplyPricing {
             export interface Criterion {
               /**
                * Filter by pricing line IDs.
@@ -2620,43 +2557,31 @@ export namespace V2 {
               up_to_inf?: 'inf';
             }
           }
-
-          export namespace StartsAt {
-            export type Type = 'billing_period_start' | 'timestamp';
-          }
         }
 
         export namespace Update {
           export interface EndsAt {
             /**
-             * The timestamp when the item ends.
+             * The timestamp when the pricing ends.
              */
             timestamp?: string;
 
             /**
              * The type of end time to apply.
              */
-            type: EndsAt.Type;
+            type: 'timestamp';
           }
 
           export interface StartsAt {
             /**
-             * The timestamp when the item starts.
+             * The timestamp when the pricing starts.
              */
             timestamp?: string;
 
             /**
              * The type of start time to apply.
              */
-            type: StartsAt.Type;
-          }
-
-          export namespace EndsAt {
-            export type Type = 'billing_period_end' | 'timestamp';
-          }
-
-          export namespace StartsAt {
-            export type Type = 'billing_period_start' | 'timestamp';
+            type: 'timestamp';
           }
         }
       }
@@ -2667,7 +2592,7 @@ export namespace V2 {
   export namespace Billing {
     export interface ContractListParams {
       /**
-       * Filter by customer ID.
+       * Filter by customer id.
        */
       customer?: string;
 
@@ -2737,7 +2662,7 @@ export namespace V2 {
     export namespace ContractCancelParams {
       export interface CancelPricingLine {
         /**
-         * The ID of the pricing line.
+         * The id of the pricing line.
          */
         id?: string;
 

@@ -20866,9 +20866,6 @@ declare namespace StripeConstructor {
           export type EndsAt = Stripe_.V2.Billing.ContractCreateParams.PricingLine.EndsAt;
           export type Pricing = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing;
           export type StartsAt = Stripe_.V2.Billing.ContractCreateParams.PricingLine.StartsAt;
-          export namespace EndsAt {
-            export type Type = Stripe_.V2.Billing.ContractCreateParams.PricingLine.EndsAt.Type;
-          }
           export namespace Pricing {
             export type PriceDetails = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails;
             export namespace PriceDetails {
@@ -20878,15 +20875,9 @@ declare namespace StripeConstructor {
                 export type EndsAt = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.PricingOverride.EndsAt;
                 export type OverwritePrice = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.PricingOverride.OverwritePrice;
                 export type StartsAt = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.PricingOverride.StartsAt;
-                export namespace EndsAt {
-                  export type Type = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.PricingOverride.EndsAt.Type;
-                }
                 export namespace OverwritePrice {
                   export type TieringMode = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.PricingOverride.OverwritePrice.TieringMode;
                   export type Tier = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.PricingOverride.OverwritePrice.Tier;
-                }
-                export namespace StartsAt {
-                  export type Type = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.PricingOverride.StartsAt.Type;
                 }
               }
               export namespace QuantityChange {
@@ -20894,25 +20885,16 @@ declare namespace StripeConstructor {
               }
             }
           }
-          export namespace StartsAt {
-            export type Type = Stripe_.V2.Billing.ContractCreateParams.PricingLine.StartsAt.Type;
-          }
         }
         export namespace PricingOverride {
           export type EndsAt = Stripe_.V2.Billing.ContractCreateParams.PricingOverride.EndsAt;
-          export type Multiplier = Stripe_.V2.Billing.ContractCreateParams.PricingOverride.Multiplier;
+          export type MultiplyPricing = Stripe_.V2.Billing.ContractCreateParams.PricingOverride.MultiplyPricing;
           export type StartsAt = Stripe_.V2.Billing.ContractCreateParams.PricingOverride.StartsAt;
-          export namespace EndsAt {
-            export type Type = Stripe_.V2.Billing.ContractCreateParams.PricingOverride.EndsAt.Type;
-          }
-          export namespace Multiplier {
-            export type Criterion = Stripe_.V2.Billing.ContractCreateParams.PricingOverride.Multiplier.Criterion;
+          export namespace MultiplyPricing {
+            export type Criterion = Stripe_.V2.Billing.ContractCreateParams.PricingOverride.MultiplyPricing.Criterion;
             export namespace Criterion {
-              export type Type = Stripe_.V2.Billing.ContractCreateParams.PricingOverride.Multiplier.Criterion.Type;
+              export type Type = Stripe_.V2.Billing.ContractCreateParams.PricingOverride.MultiplyPricing.Criterion.Type;
             }
-          }
-          export namespace StartsAt {
-            export type Type = Stripe_.V2.Billing.ContractCreateParams.PricingOverride.StartsAt.Type;
           }
         }
       }
@@ -20984,12 +20966,12 @@ declare namespace StripeConstructor {
           export type Data = Stripe_.V2.Billing.Contract.PricingOverrides.Data;
           export namespace Data {
             export type EndsAt = Stripe_.V2.Billing.Contract.PricingOverrides.Data.EndsAt;
-            export type Multiplier = Stripe_.V2.Billing.Contract.PricingOverrides.Data.Multiplier;
+            export type MultiplyPricing = Stripe_.V2.Billing.Contract.PricingOverrides.Data.MultiplyPricing;
             export type StartsAt = Stripe_.V2.Billing.Contract.PricingOverrides.Data.StartsAt;
-            export namespace Multiplier {
-              export type Criterion = Stripe_.V2.Billing.Contract.PricingOverrides.Data.Multiplier.Criterion;
+            export namespace MultiplyPricing {
+              export type Criterion = Stripe_.V2.Billing.Contract.PricingOverrides.Data.MultiplyPricing.Criterion;
               export namespace Criterion {
-                export type Type = Stripe_.V2.Billing.Contract.PricingOverrides.Data.Multiplier.Criterion.Type;
+                export type Type = Stripe_.V2.Billing.Contract.PricingOverrides.Data.MultiplyPricing.Criterion.Type;
               }
             }
           }
