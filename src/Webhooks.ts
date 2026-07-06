@@ -27,7 +27,7 @@ type WebhookParsedEvent = {
   decodedHeader: string;
   suspectPayloadType: boolean;
 };
-type WebhookTestHeaderOptions = {
+export type WebhookTestHeaderOptions = {
   timestamp?: number;
   payload: string;
   secret: string;
@@ -38,7 +38,7 @@ type WebhookTestHeaderOptions = {
 
 // export type WebhookEvent = Record<string, unknown>;
 type WebhookPayload = string | Uint8Array;
-type WebhookSignatureObject = {
+export type WebhookSignatureObject = {
   verifyHeader: (
     encodedPayload: WebhookPayload,
     encodedHeader: WebhookHeader,
