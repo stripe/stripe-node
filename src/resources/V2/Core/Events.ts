@@ -511,6 +511,11 @@ export type Event =
   | V2BillingCadenceBilledEvent
   | V2BillingCadenceCanceledEvent
   | V2BillingCadenceCreatedEvent
+  | V2BillingContractActivatedEvent
+  | V2BillingContractCanceledEvent
+  | V2BillingContractCreatedEvent
+  | V2BillingContractEndedEvent
+  | V2BillingContractUpdatedEvent
   | V2BillingLicenseFeeCreatedEvent
   | V2BillingLicenseFeeUpdatedEvent
   | V2BillingLicenseFeeVersionCreatedEvent
@@ -925,6 +930,11 @@ export type EventNotification =
   | V2BillingCadenceBilledEventNotification
   | V2BillingCadenceCanceledEventNotification
   | V2BillingCadenceCreatedEventNotification
+  | V2BillingContractActivatedEventNotification
+  | V2BillingContractCanceledEventNotification
+  | V2BillingContractCreatedEventNotification
+  | V2BillingContractEndedEventNotification
+  | V2BillingContractUpdatedEventNotification
   | V2BillingLicenseFeeCreatedEventNotification
   | V2BillingLicenseFeeUpdatedEventNotification
   | V2BillingLicenseFeeVersionCreatedEventNotification
@@ -5496,6 +5506,106 @@ export namespace V2BillingCadenceCreatedEvent {
      */
     created: string;
   }
+}
+
+/**
+ * Occurs when a Contract transitions from Draft to Active.
+ */
+export interface V2BillingContractActivatedEvent extends EventBase {
+  type: 'v2.billing.contract.activated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+}
+export interface V2BillingContractActivatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract.activated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+  fetchEvent(): Promise<V2BillingContractActivatedEvent>;
+}
+
+/**
+ * Occurs when a Contract transitions to canceled.
+ */
+export interface V2BillingContractCanceledEvent extends EventBase {
+  type: 'v2.billing.contract.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+}
+export interface V2BillingContractCanceledEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+  fetchEvent(): Promise<V2BillingContractCanceledEvent>;
+}
+
+/**
+ * Occurs when a Contract is created.
+ */
+export interface V2BillingContractCreatedEvent extends EventBase {
+  type: 'v2.billing.contract.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+}
+export interface V2BillingContractCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+  fetchEvent(): Promise<V2BillingContractCreatedEvent>;
+}
+
+/**
+ * Occurs when a Contract reaches the end of all its Pricing Lines and transitions to ended.
+ */
+export interface V2BillingContractEndedEvent extends EventBase {
+  type: 'v2.billing.contract.ended';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+}
+export interface V2BillingContractEndedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract.ended';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+  fetchEvent(): Promise<V2BillingContractEndedEvent>;
+}
+
+/**
+ * Occurs when a Contract is updated.
+ */
+export interface V2BillingContractUpdatedEvent extends EventBase {
+  type: 'v2.billing.contract.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+}
+export interface V2BillingContractUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+  fetchEvent(): Promise<V2BillingContractUpdatedEvent>;
 }
 
 /**
@@ -12632,6 +12742,11 @@ export declare namespace Events {
     V2BillingCadenceBilledEvent,
     V2BillingCadenceCanceledEvent,
     V2BillingCadenceCreatedEvent,
+    V2BillingContractActivatedEvent,
+    V2BillingContractCanceledEvent,
+    V2BillingContractCreatedEvent,
+    V2BillingContractEndedEvent,
+    V2BillingContractUpdatedEvent,
     V2BillingLicenseFeeCreatedEvent,
     V2BillingLicenseFeeUpdatedEvent,
     V2BillingLicenseFeeVersionCreatedEvent,
@@ -13044,6 +13159,11 @@ export declare namespace Events {
     V2BillingCadenceBilledEventNotification,
     V2BillingCadenceCanceledEventNotification,
     V2BillingCadenceCreatedEventNotification,
+    V2BillingContractActivatedEventNotification,
+    V2BillingContractCanceledEventNotification,
+    V2BillingContractCreatedEventNotification,
+    V2BillingContractEndedEventNotification,
+    V2BillingContractUpdatedEventNotification,
     V2BillingLicenseFeeCreatedEventNotification,
     V2BillingLicenseFeeUpdatedEventNotification,
     V2BillingLicenseFeeVersionCreatedEventNotification,

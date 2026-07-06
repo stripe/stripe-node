@@ -734,9 +734,9 @@ export interface Contract {
   status: Contract.Status;
 
   /**
-   * Information about the contract status transitions.
+   * Historical timestamps of when the contract transitioned into each status.
    */
-  status_details: Contract.StatusDetails;
+  status_transitions?: Contract.StatusTransitions;
 }
 export namespace Contract {
   export interface BillingCycleAnchor {
@@ -786,16 +786,21 @@ export namespace Contract {
 
   export type Status = 'active' | 'canceled' | 'draft' | 'ended';
 
-  export interface StatusDetails {
+  export interface StatusTransitions {
     /**
-     * Details of the active contract status.
+     * The timestamp when the contract was activated.
      */
-    active?: StatusDetails.Active;
+    activated_at?: string;
 
     /**
-     * Details of the canceled contract status.
+     * The timestamp when the contract was canceled.
      */
-    canceled?: StatusDetails.Canceled;
+    canceled_at?: string;
+
+    /**
+     * The timestamp when the contract ended.
+     */
+    ended_at?: string;
   }
 
   export namespace BillingSettings {
@@ -1195,22 +1200,6 @@ export namespace Contract {
           export type Type = 'exclude' | 'include';
         }
       }
-    }
-  }
-
-  export namespace StatusDetails {
-    export interface Active {
-      /**
-       * The timestamp when the contract was activated.
-       */
-      activated_at: string;
-    }
-
-    export interface Canceled {
-      /**
-       * The timestamp when the contract was canceled.
-       */
-      canceled_at: string;
     }
   }
 }

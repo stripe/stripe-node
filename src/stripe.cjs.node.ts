@@ -20923,7 +20923,7 @@ declare namespace StripeConstructor {
         export type PricingLines = Stripe_.V2.Billing.Contract.PricingLines;
         export type PricingOverrides = Stripe_.V2.Billing.Contract.PricingOverrides;
         export type Status = Stripe_.V2.Billing.Contract.Status;
-        export type StatusDetails = Stripe_.V2.Billing.Contract.StatusDetails;
+        export type StatusTransitions = Stripe_.V2.Billing.Contract.StatusTransitions;
         export namespace BillingSettings {
           export type BillSettingsDetails = Stripe_.V2.Billing.Contract.BillingSettings.BillSettingsDetails;
           export type BillingProfileDetails = Stripe_.V2.Billing.Contract.BillingSettings.BillingProfileDetails;
@@ -20993,10 +20993,6 @@ declare namespace StripeConstructor {
               }
             }
           }
-        }
-        export namespace StatusDetails {
-          export type Active = Stripe_.V2.Billing.Contract.StatusDetails.Active;
-          export type Canceled = Stripe_.V2.Billing.Contract.StatusDetails.Canceled;
         }
       }
       export namespace IntentCreateParams {
@@ -27092,6 +27088,16 @@ declare namespace StripeConstructor {
     export type V2BillingCadenceCanceledEventNotification = Stripe_.V2.Core.Events.V2BillingCadenceCanceledEventNotification;
     export type V2BillingCadenceCreatedEvent = Stripe_.V2.Core.Events.V2BillingCadenceCreatedEvent;
     export type V2BillingCadenceCreatedEventNotification = Stripe_.V2.Core.Events.V2BillingCadenceCreatedEventNotification;
+    export type V2BillingContractActivatedEvent = Stripe_.V2.Core.Events.V2BillingContractActivatedEvent;
+    export type V2BillingContractActivatedEventNotification = Stripe_.V2.Core.Events.V2BillingContractActivatedEventNotification;
+    export type V2BillingContractCanceledEvent = Stripe_.V2.Core.Events.V2BillingContractCanceledEvent;
+    export type V2BillingContractCanceledEventNotification = Stripe_.V2.Core.Events.V2BillingContractCanceledEventNotification;
+    export type V2BillingContractCreatedEvent = Stripe_.V2.Core.Events.V2BillingContractCreatedEvent;
+    export type V2BillingContractCreatedEventNotification = Stripe_.V2.Core.Events.V2BillingContractCreatedEventNotification;
+    export type V2BillingContractEndedEvent = Stripe_.V2.Core.Events.V2BillingContractEndedEvent;
+    export type V2BillingContractEndedEventNotification = Stripe_.V2.Core.Events.V2BillingContractEndedEventNotification;
+    export type V2BillingContractUpdatedEvent = Stripe_.V2.Core.Events.V2BillingContractUpdatedEvent;
+    export type V2BillingContractUpdatedEventNotification = Stripe_.V2.Core.Events.V2BillingContractUpdatedEventNotification;
     export type V2BillingLicenseFeeCreatedEvent = Stripe_.V2.Core.Events.V2BillingLicenseFeeCreatedEvent;
     export type V2BillingLicenseFeeCreatedEventNotification = Stripe_.V2.Core.Events.V2BillingLicenseFeeCreatedEventNotification;
     export type V2BillingLicenseFeeUpdatedEvent = Stripe_.V2.Core.Events.V2BillingLicenseFeeUpdatedEvent;

@@ -4236,7 +4236,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/contracts',
         response:
-          '{"data":[{"object":"v2.billing.contract","contract_number":"contract_number","created":"1970-01-12T21:42:34.472Z","currency":"usd","customer":"customer","id":"obj_123","livemode":true,"status":"draft","status_details":{}}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.billing.contract","contract_number":"contract_number","created":"1970-01-12T21:42:34.472Z","currency":"usd","customer":"customer","id":"obj_123","livemode":true,"status":"draft"}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const contracts = await stripe.v2.billing.contracts.list();
@@ -4249,7 +4249,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/contracts',
         response:
-          '{"object":"v2.billing.contract","contract_number":"contract_number","created":"1970-01-12T21:42:34.472Z","currency":"usd","customer":"customer","id":"obj_123","livemode":true,"status":"draft","status_details":{}}',
+          '{"object":"v2.billing.contract","contract_number":"contract_number","created":"1970-01-12T21:42:34.472Z","currency":"usd","customer":"customer","id":"obj_123","livemode":true,"status":"draft"}',
       },
     ]);
     const contract = await stripe.v2.billing.contracts.create({
@@ -4338,7 +4338,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/contracts/id_123',
         response:
-          '{"object":"v2.billing.contract","contract_number":"contract_number","created":"1970-01-12T21:42:34.472Z","currency":"usd","customer":"customer","id":"obj_123","livemode":true,"status":"draft","status_details":{}}',
+          '{"object":"v2.billing.contract","contract_number":"contract_number","created":"1970-01-12T21:42:34.472Z","currency":"usd","customer":"customer","id":"obj_123","livemode":true,"status":"draft"}',
       },
     ]);
     const contract = await stripe.v2.billing.contracts.retrieve('id_123');
@@ -4351,7 +4351,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/contracts/id_123',
         response:
-          '{"object":"v2.billing.contract","contract_number":"contract_number","created":"1970-01-12T21:42:34.472Z","currency":"usd","customer":"customer","id":"obj_123","livemode":true,"status":"draft","status_details":{}}',
+          '{"object":"v2.billing.contract","contract_number":"contract_number","created":"1970-01-12T21:42:34.472Z","currency":"usd","customer":"customer","id":"obj_123","livemode":true,"status":"draft"}',
       },
     ]);
     const contract = await stripe.v2.billing.contracts.update('id_123');
@@ -4364,7 +4364,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/contracts/id_123/activate',
         response:
-          '{"object":"v2.billing.contract","contract_number":"contract_number","created":"1970-01-12T21:42:34.472Z","currency":"usd","customer":"customer","id":"obj_123","livemode":true,"status":"draft","status_details":{}}',
+          '{"object":"v2.billing.contract","contract_number":"contract_number","created":"1970-01-12T21:42:34.472Z","currency":"usd","customer":"customer","id":"obj_123","livemode":true,"status":"draft"}',
       },
     ]);
     const contract = await stripe.v2.billing.contracts.activate('id_123');
@@ -4377,7 +4377,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/contracts/id_123/cancel',
         response:
-          '{"object":"v2.billing.contract","contract_number":"contract_number","created":"1970-01-12T21:42:34.472Z","currency":"usd","customer":"customer","id":"obj_123","livemode":true,"status":"draft","status_details":{}}',
+          '{"object":"v2.billing.contract","contract_number":"contract_number","created":"1970-01-12T21:42:34.472Z","currency":"usd","customer":"customer","id":"obj_123","livemode":true,"status":"draft"}',
       },
     ]);
     const contract = await stripe.v2.billing.contracts.cancel('id_123');
