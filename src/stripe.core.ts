@@ -2599,8 +2599,8 @@ export declare namespace Stripe {
   export type HttpProtocol = import('./lib.js').HttpProtocol;
   export type StripeResource = import('./StripeResource.js').StripeResource;
   export type CryptoProvider = import('./crypto/CryptoProvider.js').CryptoProvider;
-  export type HttpClient = import('./net/HttpClient.js').HttpClient;
-  export type HttpClientResponse = import('./net/HttpClient.js').HttpClientResponse;
+  export type HttpClientInterface = import('./net/HttpClient.js').HttpClientInterface;
+  export type HttpClientResponseInterface = import('./net/HttpClient.js').HttpClientResponseInterface;
   export type RawErrorType = import('./Types.js').RawErrorType;
   export type Webhooks = import('./Webhooks.js').WebhookObject;
   export type WebhookTestHeaderOptions = import('./Webhooks.js').WebhookTestHeaderOptions;

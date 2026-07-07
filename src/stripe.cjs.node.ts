@@ -14420,8 +14420,8 @@ declare namespace StripeConstructor {
   export type HttpProtocol = Stripe_.HttpProtocol;
   export type StripeResource = Stripe_.StripeResource;
   export type CryptoProvider = Stripe_.CryptoProvider;
-  export type HttpClient = Stripe_.HttpClient;
-  export type HttpClientResponse = Stripe_.HttpClientResponse;
+  export type HttpClient = Stripe_.HttpClientInterface;
+  export type HttpClientResponse = Stripe_.HttpClientResponseInterface;
   export type RawErrorType = Stripe_.RawErrorType;
   export type Webhooks = Stripe_.Webhooks;
   export type WebhookTestHeaderOptions = Stripe_.WebhookTestHeaderOptions;
