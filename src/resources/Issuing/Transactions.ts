@@ -434,6 +434,11 @@ export interface Transaction {
   settlement?: string | Settlement | null;
 
   /**
+   * Details about the transaction for settlement reconciliation.
+   */
+  settlement_details?: Transaction.SettlementDetails | null;
+
+  /**
    * [Token](https://docs.stripe.com/api/issuing/tokens/object) object used for this transaction. If a network token was not used for this transaction, this field will be null.
    */
   token?: string | Token | null;
@@ -609,6 +614,23 @@ export namespace Transaction {
      * Indicates whether this object and its related objects have been redacted or not.
      */
     status: Redaction.Status;
+  }
+
+  export interface SettlementDetails {
+    /**
+     * `merchant_amount` in the settlement currency.
+     */
+    amount: number | null;
+
+    /**
+     * Settlement currency.
+     */
+    currency: string | null;
+
+    /**
+     * Exchange rate used by the network to convert the `merchant_amount` to `settlement_details.amount`. The `merchant_amount` multiplied with this rate will equal to the `settlement_details.amount`.
+     */
+    exchange_rate: number | null;
   }
 
   export interface Treasury {

@@ -17546,6 +17546,7 @@ declare namespace StripeConstructor {
       export type Redaction = Stripe_.Issuing.Authorization.Redaction;
       export type RequestHistory = Stripe_.Issuing.Authorization.RequestHistory;
       export type Status = Stripe_.Issuing.Authorization.Status;
+      export type TerminalData = Stripe_.Issuing.Authorization.TerminalData;
       export type TokenDetails = Stripe_.Issuing.Authorization.TokenDetails;
       export type Treasury = Stripe_.Issuing.Authorization.Treasury;
       export type VerificationData = Stripe_.Issuing.Authorization.VerificationData;
@@ -17609,6 +17610,9 @@ declare namespace StripeConstructor {
       export namespace RequestHistory {
         export type AmountDetails = Stripe_.Issuing.Authorization.RequestHistory.AmountDetails;
         export type Reason = Stripe_.Issuing.Authorization.RequestHistory.Reason;
+      }
+      export namespace TerminalData {
+        export type CardholderVerificationResult = Stripe_.Issuing.Authorization.TerminalData.CardholderVerificationResult;
       }
       export namespace TokenDetails {
         export type NetworkData = Stripe_.Issuing.Authorization.TokenDetails.NetworkData;
@@ -17987,6 +17991,7 @@ declare namespace StripeConstructor {
       export type NetworkData = Stripe_.Issuing.Transaction.NetworkData;
       export type PurchaseDetails = Stripe_.Issuing.Transaction.PurchaseDetails;
       export type Redaction = Stripe_.Issuing.Transaction.Redaction;
+      export type SettlementDetails = Stripe_.Issuing.Transaction.SettlementDetails;
       export type Treasury = Stripe_.Issuing.Transaction.Treasury;
       export type Type = Stripe_.Issuing.Transaction.Type;
       export type Wallet = Stripe_.Issuing.Transaction.Wallet;

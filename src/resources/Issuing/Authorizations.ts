@@ -1075,6 +1075,11 @@ export interface Authorization {
   status: Authorization.Status;
 
   /**
+   * Details about the cardholder verification outcome at the terminal.
+   */
+  terminal_data?: Authorization.TerminalData | null;
+
+  /**
    * [Token](https://docs.stripe.com/api/issuing/tokens/object) object used for this authorization. If a network token was not used for this authorization, this field will be null.
    */
   token?: string | Token | null;
@@ -1311,9 +1316,19 @@ export namespace Authorization {
 
   export interface NetworkData {
     /**
+     * Country code of the acquirer assigned by the card network.
+     */
+    acquiring_institution_country?: string | null;
+
+    /**
      * Identifier assigned to the acquirer by the card network. Sometimes this value is not provided by the network; in this case, the value will be `null`.
      */
     acquiring_institution_id: string | null;
+
+    /**
+     * Identifier assigned by the acquirer to track all messages related to this transaction.
+     */
+    retrieval_reference_number?: string | null;
 
     /**
      * The System Trace Audit Number (STAN) is a 6-digit identifier assigned by the acquirer. Prefer `network_data.transaction_id` if present, unless you have special requirements.
@@ -1433,6 +1448,13 @@ export namespace Authorization {
   }
 
   export type Status = 'closed' | 'expired' | 'pending' | 'reversed';
+
+  export interface TerminalData {
+    /**
+     * The method used to confirm the cardholder's identity.
+     */
+    cardholder_verification_result: TerminalData.CardholderVerificationResult | null;
+  }
 
   export interface TokenDetails {
     /**
@@ -2259,6 +2281,16 @@ export namespace Authorization {
       | 'webhook_declined'
       | 'webhook_error'
       | 'webhook_timeout';
+  }
+
+  export namespace TerminalData {
+    export type CardholderVerificationResult =
+      | 'failed'
+      | 'none'
+      | 'pin'
+      | 'pin_and_signature'
+      | 'signature'
+      | 'unknown';
   }
 
   export namespace TokenDetails {
