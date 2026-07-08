@@ -7,6 +7,7 @@ import {Account} from './Accounts.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {SetupIntent} from './SetupIntents.js';
 import {Mandate} from './Mandates.js';
+import {GiftCardOperation} from './GiftCardOperations.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {CustomerSource} from './CustomerSources.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
@@ -147,6 +148,8 @@ export namespace SetupAttempt {
 
     paypal?: PaymentMethodDetails.Paypal;
 
+    paypay?: PaymentMethodDetails.Paypay;
+
     payto?: PaymentMethodDetails.Payto;
 
     pix?: PaymentMethodDetails.Pix;
@@ -198,6 +201,12 @@ export namespace SetupAttempt {
      * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
      */
     doc_url?: string;
+
+    /**
+     * A GiftCardOperation represents an operation performed on a third-party gift card,
+     * such as activation, reload, cashout, balance check, or void.
+     */
+    gift_card_operation?: GiftCardOperation;
 
     /**
      * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
@@ -507,6 +516,8 @@ export namespace SetupAttempt {
     export interface NzBankAccount {}
 
     export interface Paypal {}
+
+    export interface Paypay {}
 
     export interface Payto {}
 

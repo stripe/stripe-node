@@ -1427,6 +1427,11 @@ export namespace Authorization {
     merchant_currency: string;
 
     /**
+     * Details about the authorization request, such as identifiers, set by the card network.
+     */
+    network_data?: RequestHistory.NetworkData | null;
+
+    /**
      * The card network's estimate of the likelihood that an authorization is fraudulent. Takes on values between 1 and 99.
      */
     network_risk_score: number | null;
@@ -2260,6 +2265,13 @@ export namespace Authorization {
       cashback_amount: number | null;
     }
 
+    export interface NetworkData {
+      /**
+       * Mastercard identifier for each authorization request.
+       */
+      trace_id: NetworkData.TraceId | null;
+    }
+
     export type Reason =
       | 'account_disabled'
       | 'card_active'
@@ -2281,6 +2293,25 @@ export namespace Authorization {
       | 'webhook_declined'
       | 'webhook_error'
       | 'webhook_timeout';
+
+    export namespace NetworkData {
+      export interface TraceId {
+        /**
+         * The unique reference number within the specified financial network on the specified network date.
+         */
+        banknet_reference_number: string | null;
+
+        /**
+         * The identifier of the program or service.
+         */
+        financial_network_code: string | null;
+
+        /**
+         * The card network's record date for this authorization.
+         */
+        network_date: string | null;
+      }
+    }
   }
 
   export namespace TerminalData {

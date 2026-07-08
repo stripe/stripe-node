@@ -2,6 +2,8 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Location} from './Locations.js';
+import {GiftCard} from './../GiftCards.js';
+import {GiftCardOperation} from './../GiftCardOperations.js';
 import {PaymentIntent} from './../PaymentIntents.js';
 import {PaymentMethod} from './../PaymentMethods.js';
 import {SetupIntent} from './../SetupIntents.js';
@@ -88,16 +90,61 @@ export class ReaderResource extends StripeResource {
     ) as any;
   }
   /**
+   * Initiates a gift card activation flow on a Reader and optionally sets its balance.
+   */
+  activateGiftCard(
+    id: string,
+    params: Terminal.ReaderActivateGiftCardParams,
+    options?: RequestOptions
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${encodeURIComponent(id)}/activate_gift_card`,
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Cancels the current reader action. See [Programmatic Cancellation](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven#programmatic-cancellation) for more details.
    */
   cancelAction(
     id: string,
     params?: Terminal.ReaderCancelActionParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<Reader | DeletedReader>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}/cancel_action`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Initiates a gift card cashout flow on a Reader. A cashout sets the gift card balance to 0.
+   */
+  cashoutGiftCard(
+    id: string,
+    params: Terminal.ReaderCashoutGiftCardParams,
+    options?: RequestOptions
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${encodeURIComponent(id)}/cashout_gift_card`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Initiates a gift card balance check flow on a Reader.
+   */
+  checkGiftCardBalance(
+    id: string,
+    params: Terminal.ReaderCheckGiftCardBalanceParams,
+    options?: RequestOptions
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${encodeURIComponent(id)}/check_gift_card_balance`,
       params,
       options
     ) as any;
@@ -188,6 +235,21 @@ export class ReaderResource extends StripeResource {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}/refund_payment`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Initiates a gift card reload flow on a Reader by adding the specified amount to its balance.
+   */
+  reloadGiftCard(
+    id: string,
+    params: Terminal.ReaderReloadGiftCardParams,
+    options?: RequestOptions
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${encodeURIComponent(id)}/reload_gift_card`,
       params,
       options
     ) as any;
@@ -330,9 +392,24 @@ export namespace DeletedReader {
 export namespace Reader {
   export interface Action {
     /**
+     * Represents a reader action to activate a gift card
+     */
+    activate_gift_card?: Action.ActivateGiftCard;
+
+    /**
      * The reader action failed due to an [API error](https://docs.stripe.com/api/errors). Only present when `status` is `failed` and the underlying failure was an API error. Avoid parsing the `message` field for programmatic logic; use `type` or `code` instead. The `message` field is for display to humans only and may be updated at anytime. Requires [reader version](https://docs.stripe.com/terminal/readers/stripe-reader-s700-s710#reader-software-version) 2.42 or later. Readers on older versions always return null.
      */
     api_error: Action.ApiError | null;
+
+    /**
+     * Represents a reader action to cash out a gift card
+     */
+    cashout_gift_card?: Action.CashoutGiftCard;
+
+    /**
+     * Represents a reader action to check a gift card balance
+     */
+    check_gift_card_balance?: Action.CheckGiftCardBalance;
 
     /**
      * Represents a reader action to collect customer inputs
@@ -348,6 +425,11 @@ export namespace Reader {
      * Represents a reader action to confirm a payment
      */
     confirm_payment_intent?: Action.ConfirmPaymentIntent;
+
+    /**
+     * Represents a reader action to deactivate a gift card
+     */
+    deactivate_gift_card?: Action.DeactivateGiftCard;
 
     /**
      * Failure code, only set if status is `failed`.
@@ -378,6 +460,11 @@ export namespace Reader {
      * Represents a reader action to refund a payment
      */
     refund_payment?: Action.RefundPayment;
+
+    /**
+     * Represents a reader action to reload a gift card
+     */
+    reload_gift_card?: Action.ReloadGiftCard;
 
     /**
      * Represents a reader action to set the reader display
@@ -419,6 +506,18 @@ export namespace Reader {
   export type Status = 'offline' | 'online';
 
   export namespace Action {
+    export interface ActivateGiftCard {
+      /**
+       * The gift card used in this reader action.
+       */
+      gift_card?: string | GiftCard;
+
+      /**
+       * The GiftCardOperation created for this reader action.
+       */
+      gift_card_operation?: string | GiftCardOperation;
+    }
+
     export interface ApiError {
       /**
        * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://docs.stripe.com/declines#retrying-issuer-declines) if they provide one.
@@ -444,6 +543,12 @@ export namespace Reader {
        * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
        */
       doc_url?: string;
+
+      /**
+       * A GiftCardOperation represents an operation performed on a third-party gift card,
+       * such as activation, reload, cashout, balance check, or void.
+       */
+      gift_card_operation?: GiftCardOperation;
 
       /**
        * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
@@ -532,6 +637,30 @@ export namespace Reader {
       type: ApiError.Type;
     }
 
+    export interface CashoutGiftCard {
+      /**
+       * The gift card used in this reader action.
+       */
+      gift_card?: string | GiftCard;
+
+      /**
+       * The GiftCardOperation created for this reader action.
+       */
+      gift_card_operation?: string | GiftCardOperation;
+    }
+
+    export interface CheckGiftCardBalance {
+      /**
+       * The gift card used in this reader action.
+       */
+      gift_card?: string | GiftCard;
+
+      /**
+       * The GiftCardOperation created for this reader action.
+       */
+      gift_card_operation?: string | GiftCardOperation;
+    }
+
     export interface CollectInputs {
       /**
        * List of inputs to be collected.
@@ -585,6 +714,18 @@ export namespace Reader {
        * Most recent PaymentIntent processed by the reader.
        */
       payment_intent: string | PaymentIntent;
+    }
+
+    export interface DeactivateGiftCard {
+      /**
+       * The gift card used in this reader action.
+       */
+      gift_card?: string | GiftCard;
+
+      /**
+       * The GiftCardOperation created for this reader action.
+       */
+      gift_card_operation?: string | GiftCardOperation;
     }
 
     export interface PrintContent {
@@ -685,6 +826,18 @@ export namespace Reader {
       reverse_transfer?: boolean;
     }
 
+    export interface ReloadGiftCard {
+      /**
+       * The gift card used in this reader action.
+       */
+      gift_card?: string | GiftCard;
+
+      /**
+       * The GiftCardOperation created for this reader action.
+       */
+      gift_card_operation?: string | GiftCardOperation;
+    }
+
     export interface SetReaderDisplay {
       /**
        * Cart object to be displayed by the reader, including line items, amounts, and currency.
@@ -700,13 +853,18 @@ export namespace Reader {
     export type Status = 'failed' | 'in_progress' | 'succeeded';
 
     export type Type =
+      | 'activate_gift_card'
+      | 'cashout_gift_card'
+      | 'check_gift_card_balance'
       | 'collect_inputs'
       | 'collect_payment_method'
       | 'confirm_payment_intent'
+      | 'deactivate_gift_card'
       | 'print_content'
       | 'process_payment_intent'
       | 'process_setup_intent'
       | 'refund_payment'
+      | 'reload_gift_card'
       | 'set_reader_display';
 
     export namespace ApiError {
@@ -1382,11 +1540,94 @@ export namespace Terminal {
   export interface ReaderDeleteParams {}
 }
 export namespace Terminal {
+  export interface ReaderActivateGiftCardParams {
+    /**
+     * The brand of the gift card.
+     */
+    brand: ReaderActivateGiftCardParams.Brand;
+
+    /**
+     * The initial balance to set on the gift card.
+     */
+    balance?: ReaderActivateGiftCardParams.Balance;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * The Stripe account ID to process the gift card operation on behalf of.
+     */
+    on_behalf_of?: string;
+  }
+
+  export namespace ReaderActivateGiftCardParams {
+    export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
+
+    export interface Balance {
+      /**
+       * The initial balance amount to be loaded when activating the gift card, in the smallest currency unit
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+    }
+  }
+}
+export namespace Terminal {
   export interface ReaderCancelActionParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+  }
+}
+export namespace Terminal {
+  export interface ReaderCashoutGiftCardParams {
+    /**
+     * The brand of the gift card.
+     */
+    brand: ReaderCashoutGiftCardParams.Brand;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * The Stripe account ID to process the gift card operation on behalf of.
+     */
+    on_behalf_of?: string;
+  }
+
+  export namespace ReaderCashoutGiftCardParams {
+    export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
+  }
+}
+export namespace Terminal {
+  export interface ReaderCheckGiftCardBalanceParams {
+    /**
+     * The brand of the gift card.
+     */
+    brand: ReaderCheckGiftCardBalanceParams.Brand;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * The Stripe account ID to process the gift card operation on behalf of.
+     */
+    on_behalf_of?: string;
+  }
+
+  export namespace ReaderCheckGiftCardBalanceParams {
+    export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
   }
 }
 export namespace Terminal {
@@ -1550,6 +1791,11 @@ export namespace Terminal {
       enable_customer_cancellation?: boolean;
 
       /**
+       * The gift card brand to use in the transaction.
+       */
+      gift_card_brand?: CollectConfig.GiftCardBrand;
+
+      /**
        * Override showing a tipping selection screen on this transaction.
        */
       skip_tipping?: boolean;
@@ -1562,6 +1808,8 @@ export namespace Terminal {
 
     export namespace CollectConfig {
       export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+      export type GiftCardBrand = 'fiserv_valuelink' | 'givex' | 'svs';
 
       export interface Tipping {
         /**
@@ -1630,6 +1878,11 @@ export namespace Terminal {
       enable_customer_cancellation?: boolean;
 
       /**
+       * The gift card brand to use in the transaction.
+       */
+      gift_card_brand?: ProcessConfig.GiftCardBrand;
+
+      /**
        * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. If you'd prefer to redirect to a mobile application, you can alternatively supply an application URI scheme.
        */
       return_url?: string;
@@ -1647,6 +1900,8 @@ export namespace Terminal {
 
     export namespace ProcessConfig {
       export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+      export type GiftCardBrand = 'fiserv_valuelink' | 'givex' | 'svs';
 
       export interface Tipping {
         /**
@@ -1741,6 +1996,38 @@ export namespace Terminal {
        */
       enable_customer_cancellation?: boolean;
     }
+  }
+}
+export namespace Terminal {
+  export interface ReaderReloadGiftCardParams {
+    /**
+     * The amount to add to the gift card balance, in the smallest currency unit.
+     */
+    amount: number;
+
+    /**
+     * The brand of the gift card.
+     */
+    brand: ReaderReloadGiftCardParams.Brand;
+
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * The Stripe account ID to process the gift card operation on behalf of.
+     */
+    on_behalf_of?: string;
+  }
+
+  export namespace ReaderReloadGiftCardParams {
+    export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
   }
 }
 export namespace Terminal {

@@ -7,6 +7,7 @@ import {SetupAttempt} from './SetupAttempts.js';
 import {Mandate} from './Mandates.js';
 import {Account} from './Accounts.js';
 import {PaymentMethod} from './PaymentMethods.js';
+import {GiftCardOperation} from './GiftCardOperations.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {CustomerSource} from './CustomerSources.js';
 import {
@@ -413,6 +414,12 @@ export namespace SetupIntent {
      * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
      */
     doc_url?: string;
+
+    /**
+     * A GiftCardOperation represents an operation performed on a third-party gift card,
+     * such as activation, reload, cashout, balance check, or void.
+     */
+    gift_card_operation?: GiftCardOperation;
 
     /**
      * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.

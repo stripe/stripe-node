@@ -84,13 +84,17 @@ export declare namespace Terminal {
   export import ReaderUpdateParams = TerminalNamespace4.ReaderUpdateParams;
   export import ReaderListParams = TerminalNamespace4.ReaderListParams;
   export import ReaderCreateParams = TerminalNamespace4.ReaderCreateParams;
+  export import ReaderActivateGiftCardParams = TerminalNamespace4.ReaderActivateGiftCardParams;
   export import ReaderCancelActionParams = TerminalNamespace4.ReaderCancelActionParams;
+  export import ReaderCashoutGiftCardParams = TerminalNamespace4.ReaderCashoutGiftCardParams;
+  export import ReaderCheckGiftCardBalanceParams = TerminalNamespace4.ReaderCheckGiftCardBalanceParams;
   export import ReaderCollectInputsParams = TerminalNamespace4.ReaderCollectInputsParams;
   export import ReaderCollectPaymentMethodParams = TerminalNamespace4.ReaderCollectPaymentMethodParams;
   export import ReaderConfirmPaymentIntentParams = TerminalNamespace4.ReaderConfirmPaymentIntentParams;
   export import ReaderProcessPaymentIntentParams = TerminalNamespace4.ReaderProcessPaymentIntentParams;
   export import ReaderProcessSetupIntentParams = TerminalNamespace4.ReaderProcessSetupIntentParams;
   export import ReaderRefundPaymentParams = TerminalNamespace4.ReaderRefundPaymentParams;
+  export import ReaderReloadGiftCardParams = TerminalNamespace4.ReaderReloadGiftCardParams;
   export import ReaderSetReaderDisplayParams = TerminalNamespace4.ReaderSetReaderDisplayParams;
   export {DeletedReader};
   export {Reader, ReaderResource};

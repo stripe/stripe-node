@@ -1101,6 +1101,10 @@ export namespace Registration {
 
       luxury_tax?: Us.LuxuryTax;
 
+      mass_transit_parking_tax?: Us.MassTransitParkingTax;
+
+      parking_tax?: Us.ParkingTax;
+
       resort_tax?: Us.ResortTax;
 
       /**
@@ -1825,6 +1829,20 @@ export namespace Registration {
         jurisdiction: string;
       }
 
+      export interface MassTransitParkingTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=mass_transit_parking_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
+
+      export interface ParkingTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=parking_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
+
       export interface ResortTax {
         /**
          * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=resort_tax#registration-types) representing the local jurisdiction.
@@ -1856,6 +1874,8 @@ export namespace Registration {
         | 'local_amusement_tax'
         | 'local_lease_tax'
         | 'luxury_tax'
+        | 'mass_transit_parking_tax'
+        | 'parking_tax'
         | 'resort_tax'
         | 'state_communications_tax'
         | 'state_retail_delivery_fee'
@@ -4427,6 +4447,8 @@ export namespace Tax {
           | 'local_amusement_tax'
           | 'local_lease_tax'
           | 'luxury_tax'
+          | 'mass_transit_parking_tax'
+          | 'parking_tax'
           | 'resort_tax'
           | 'state_communications_tax'
           | 'state_retail_delivery_fee'

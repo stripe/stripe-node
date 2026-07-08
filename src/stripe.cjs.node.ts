@@ -5989,6 +5989,9 @@ declare namespace StripeConstructor {
           }
         }
       }
+      export namespace Paypay {
+        export type SetupFutureUsage = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Paypay.SetupFutureUsage;
+      }
       export namespace Payto {
         export type MandateOptions = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Payto.MandateOptions;
         export type SetupFutureUsage = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Payto.SetupFutureUsage;
@@ -6761,6 +6764,9 @@ declare namespace StripeConstructor {
             export type Behavior = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Paypal.LineItem.Tax.Behavior;
           }
         }
+      }
+      export namespace Paypay {
+        export type SetupFutureUsage = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Paypay.SetupFutureUsage;
       }
       export namespace Payto {
         export type MandateOptions = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Payto.MandateOptions;
@@ -7757,6 +7763,9 @@ declare namespace StripeConstructor {
           }
         }
       }
+      export namespace Paypay {
+        export type SetupFutureUsage = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Paypay.SetupFutureUsage;
+      }
       export namespace Payto {
         export type MandateOptions = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Payto.MandateOptions;
         export type SetupFutureUsage = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Payto.SetupFutureUsage;
@@ -8476,6 +8485,9 @@ declare namespace StripeConstructor {
             export type Behavior = Stripe_.PaymentIntent.PaymentMethodOptions.Paypal.LineItem.Tax.Behavior;
           }
         }
+      }
+      export namespace Paypay {
+        export type SetupFutureUsage = Stripe_.PaymentIntent.PaymentMethodOptions.Paypay.SetupFutureUsage;
       }
       export namespace Payto {
         export type MandateOptions = Stripe_.PaymentIntent.PaymentMethodOptions.Payto.MandateOptions;
@@ -11873,6 +11885,7 @@ declare namespace StripeConstructor {
       }
     }
     export namespace InvoiceSettings {
+      export type CustomField = Stripe_.Quote.InvoiceSettings.CustomField;
       export type Issuer = Stripe_.Quote.InvoiceSettings.Issuer;
       export namespace Issuer {
         export type Type = Stripe_.Quote.InvoiceSettings.Issuer.Type;
@@ -12093,6 +12106,7 @@ declare namespace StripeConstructor {
       export type NaverPay = Stripe_.SetupAttempt.PaymentMethodDetails.NaverPay;
       export type NzBankAccount = Stripe_.SetupAttempt.PaymentMethodDetails.NzBankAccount;
       export type Paypal = Stripe_.SetupAttempt.PaymentMethodDetails.Paypal;
+      export type Paypay = Stripe_.SetupAttempt.PaymentMethodDetails.Paypay;
       export type Payto = Stripe_.SetupAttempt.PaymentMethodDetails.Payto;
       export type Pix = Stripe_.SetupAttempt.PaymentMethodDetails.Pix;
       export type RevolutPay = Stripe_.SetupAttempt.PaymentMethodDetails.RevolutPay;
@@ -14461,6 +14475,7 @@ declare namespace StripeConstructor {
         }
       }
       export namespace InvoiceSettings {
+        export type CustomField = Stripe_.SubscriptionSchedule.DefaultSettings.InvoiceSettings.CustomField;
         export type Issuer = Stripe_.SubscriptionSchedule.DefaultSettings.InvoiceSettings.Issuer;
         export namespace Issuer {
           export type Type = Stripe_.SubscriptionSchedule.DefaultSettings.InvoiceSettings.Issuer.Type;
@@ -14521,6 +14536,7 @@ declare namespace StripeConstructor {
         }
       }
       export namespace InvoiceSettings {
+        export type CustomField = Stripe_.SubscriptionSchedule.Phase.InvoiceSettings.CustomField;
         export type Issuer = Stripe_.SubscriptionSchedule.Phase.InvoiceSettings.Issuer;
         export namespace Issuer {
           export type Type = Stripe_.SubscriptionSchedule.Phase.InvoiceSettings.Issuer.Type;
@@ -15350,6 +15366,7 @@ declare namespace StripeConstructor {
         }
       }
       export namespace InvoiceSettings {
+        export type CustomField = Stripe_.QuotePreviewSubscriptionSchedule.DefaultSettings.InvoiceSettings.CustomField;
         export type Issuer = Stripe_.QuotePreviewSubscriptionSchedule.DefaultSettings.InvoiceSettings.Issuer;
         export namespace Issuer {
           export type Type = Stripe_.QuotePreviewSubscriptionSchedule.DefaultSettings.InvoiceSettings.Issuer.Type;
@@ -15410,6 +15427,7 @@ declare namespace StripeConstructor {
         }
       }
       export namespace InvoiceSettings {
+        export type CustomField = Stripe_.QuotePreviewSubscriptionSchedule.Phase.InvoiceSettings.CustomField;
         export type Issuer = Stripe_.QuotePreviewSubscriptionSchedule.Phase.InvoiceSettings.Issuer;
         export namespace Issuer {
           export type Type = Stripe_.QuotePreviewSubscriptionSchedule.Phase.InvoiceSettings.Issuer.Type;
@@ -15749,6 +15767,9 @@ declare namespace StripeConstructor {
     export namespace MeterEventAdjustment {
       export type Cancel = Stripe_.Billing.MeterEventAdjustment.Cancel;
       export type Status = Stripe_.Billing.MeterEventAdjustment.Status;
+    }
+    export namespace AlertRecovered {
+      export type AggregationPeriod = Stripe_.Billing.AlertRecovered.AggregationPeriod;
     }
     export namespace AlertTriggered {
       export type AggregationPeriod = Stripe_.Billing.AlertTriggered.AggregationPeriod;
@@ -16484,6 +16505,7 @@ declare namespace StripeConstructor {
         export type TaxBehavior = Stripe_.Checkout.Session.AutomaticSurcharge.TaxBehavior;
       }
       export namespace AutomaticTax {
+        export type AddressCollectionPrecision = Stripe_.Checkout.Session.AutomaticTax.AddressCollectionPrecision;
         export type Liability = Stripe_.Checkout.Session.AutomaticTax.Liability;
         export type Status = Stripe_.Checkout.Session.AutomaticTax.Status;
         export namespace Liability {
@@ -17281,6 +17303,7 @@ declare namespace StripeConstructor {
       }
       export namespace Filters {
         export type AccountSubcategory = Stripe_.FinancialConnections.Session.Filters.AccountSubcategory;
+        export type RequirePaymentMethodSupport = Stripe_.FinancialConnections.Session.Filters.RequirePaymentMethodSupport;
       }
       export namespace Hosted {
         export type DeliveryMethod = Stripe_.FinancialConnections.Session.Hosted.DeliveryMethod;
@@ -17609,7 +17632,11 @@ declare namespace StripeConstructor {
       }
       export namespace RequestHistory {
         export type AmountDetails = Stripe_.Issuing.Authorization.RequestHistory.AmountDetails;
+        export type NetworkData = Stripe_.Issuing.Authorization.RequestHistory.NetworkData;
         export type Reason = Stripe_.Issuing.Authorization.RequestHistory.Reason;
+        export namespace NetworkData {
+          export type TraceId = Stripe_.Issuing.Authorization.RequestHistory.NetworkData.TraceId;
+        }
       }
       export namespace TerminalData {
         export type CardholderVerificationResult = Stripe_.Issuing.Authorization.TerminalData.CardholderVerificationResult;
@@ -18004,6 +18031,10 @@ declare namespace StripeConstructor {
         export namespace CryptoTransactionFailed {
           export type Fee = Stripe_.Issuing.Transaction.CryptoTransaction.CryptoTransactionFailed.Fee;
         }
+      }
+      export namespace NetworkData {
+        export type RoutedNetwork = Stripe_.Issuing.Transaction.NetworkData.RoutedNetwork;
+        export type TraceId = Stripe_.Issuing.Transaction.NetworkData.TraceId;
       }
       export namespace PurchaseDetails {
         export type Fleet = Stripe_.Issuing.Transaction.PurchaseDetails.Fleet;
@@ -19670,6 +19701,8 @@ declare namespace StripeConstructor {
           export type LocalAmusementTax = Stripe_.Tax.Registration.CountryOptions.Us.LocalAmusementTax;
           export type LocalLeaseTax = Stripe_.Tax.Registration.CountryOptions.Us.LocalLeaseTax;
           export type LuxuryTax = Stripe_.Tax.Registration.CountryOptions.Us.LuxuryTax;
+          export type MassTransitParkingTax = Stripe_.Tax.Registration.CountryOptions.Us.MassTransitParkingTax;
+          export type ParkingTax = Stripe_.Tax.Registration.CountryOptions.Us.ParkingTax;
           export type ResortTax = Stripe_.Tax.Registration.CountryOptions.Us.ResortTax;
           export type StateSalesTax = Stripe_.Tax.Registration.CountryOptions.Us.StateSalesTax;
           export type TourismTax = Stripe_.Tax.Registration.CountryOptions.Us.TourismTax;
@@ -19781,13 +19814,17 @@ declare namespace StripeConstructor {
     export type ReaderUpdateParams = Stripe_.Terminal.ReaderUpdateParams;
     export type ReaderListParams = Stripe_.Terminal.ReaderListParams;
     export type ReaderDeleteParams = Stripe_.Terminal.ReaderDeleteParams;
+    export type ReaderActivateGiftCardParams = Stripe_.Terminal.ReaderActivateGiftCardParams;
     export type ReaderCancelActionParams = Stripe_.Terminal.ReaderCancelActionParams;
+    export type ReaderCashoutGiftCardParams = Stripe_.Terminal.ReaderCashoutGiftCardParams;
+    export type ReaderCheckGiftCardBalanceParams = Stripe_.Terminal.ReaderCheckGiftCardBalanceParams;
     export type ReaderCollectInputsParams = Stripe_.Terminal.ReaderCollectInputsParams;
     export type ReaderCollectPaymentMethodParams = Stripe_.Terminal.ReaderCollectPaymentMethodParams;
     export type ReaderConfirmPaymentIntentParams = Stripe_.Terminal.ReaderConfirmPaymentIntentParams;
     export type ReaderProcessPaymentIntentParams = Stripe_.Terminal.ReaderProcessPaymentIntentParams;
     export type ReaderProcessSetupIntentParams = Stripe_.Terminal.ReaderProcessSetupIntentParams;
     export type ReaderRefundPaymentParams = Stripe_.Terminal.ReaderRefundPaymentParams;
+    export type ReaderReloadGiftCardParams = Stripe_.Terminal.ReaderReloadGiftCardParams;
     export type ReaderSetReaderDisplayParams = Stripe_.Terminal.ReaderSetReaderDisplayParams;
     export type ReaderResource = Stripe_.Terminal.ReaderResource;
     export type ReaderCollectedData = Stripe_.Terminal.ReaderCollectedData;
@@ -19912,14 +19949,19 @@ declare namespace StripeConstructor {
       export type DeviceType = Stripe_.Terminal.Reader.DeviceType;
       export type Status = Stripe_.Terminal.Reader.Status;
       export namespace Action {
+        export type ActivateGiftCard = Stripe_.Terminal.Reader.Action.ActivateGiftCard;
         export type ApiError = Stripe_.Terminal.Reader.Action.ApiError;
+        export type CashoutGiftCard = Stripe_.Terminal.Reader.Action.CashoutGiftCard;
+        export type CheckGiftCardBalance = Stripe_.Terminal.Reader.Action.CheckGiftCardBalance;
         export type CollectInputs = Stripe_.Terminal.Reader.Action.CollectInputs;
         export type CollectPaymentMethod = Stripe_.Terminal.Reader.Action.CollectPaymentMethod;
         export type ConfirmPaymentIntent = Stripe_.Terminal.Reader.Action.ConfirmPaymentIntent;
+        export type DeactivateGiftCard = Stripe_.Terminal.Reader.Action.DeactivateGiftCard;
         export type PrintContent = Stripe_.Terminal.Reader.Action.PrintContent;
         export type ProcessPaymentIntent = Stripe_.Terminal.Reader.Action.ProcessPaymentIntent;
         export type ProcessSetupIntent = Stripe_.Terminal.Reader.Action.ProcessSetupIntent;
         export type RefundPayment = Stripe_.Terminal.Reader.Action.RefundPayment;
+        export type ReloadGiftCard = Stripe_.Terminal.Reader.Action.ReloadGiftCard;
         export type SetReaderDisplay = Stripe_.Terminal.Reader.Action.SetReaderDisplay;
         export type Status = Stripe_.Terminal.Reader.Action.Status;
         export type Type = Stripe_.Terminal.Reader.Action.Type;

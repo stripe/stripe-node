@@ -12,6 +12,7 @@ import {InvoiceLineItem} from './InvoiceLineItems.js';
 import {Account} from './Accounts.js';
 import {InvoicePayment} from './InvoicePayments.js';
 import {Subscription} from './Subscriptions.js';
+import {GiftCardOperation} from './GiftCardOperations.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {SetupIntent} from './SetupIntents.js';
 import {ShippingRate} from './ShippingRates.js';
@@ -615,6 +616,12 @@ export namespace QuotePreviewInvoice {
      * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
      */
     doc_url?: string;
+
+    /**
+     * A GiftCardOperation represents an operation performed on a third-party gift card,
+     * such as activation, reload, cashout, balance check, or void.
+     */
+    gift_card_operation?: GiftCardOperation;
 
     /**
      * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.

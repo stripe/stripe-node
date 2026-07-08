@@ -562,6 +562,16 @@ export namespace Transaction {
     acquirer_reference_number?: string | null;
 
     /**
+     * The two-letter country code of the acquirer ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+     */
+    acquiring_institution_country?: string | null;
+
+    /**
+     * Identifier assigned to the acquirer by the card network. Sometimes this value is not provided by the network; in this case, the value will be null.
+     */
+    acquiring_institution_id?: string | null;
+
+    /**
      * A code created by Stripe which is shared with the merchant to validate the authorization. This field will be populated if the authorization message was approved. The code typically starts with the letter "S", followed by a six-digit number. For example, "S498162". Please note that the code is not guaranteed to be unique across authorizations.
      */
     authorization_code: string | null;
@@ -570,6 +580,18 @@ export namespace Transaction {
      * The date the transaction was processed by the card network. This can be different from the date the seller recorded the transaction depending on when the acquirer submits the transaction to the network.
      */
     processing_date: string | null;
+
+    /**
+     * Identifier assigned by the acquirer to track all messages related to this transaction.
+     */
+    retrieval_reference_number?: string | null;
+
+    /**
+     * The card network over which Stripe received the transaction. This field may differ from the associated card's primary network.
+     */
+    routed_network?: NetworkData.RoutedNetwork | null;
+
+    trace_id?: NetworkData.TraceId;
 
     /**
      * Unique identifier for the authorization assigned by the card network used to match subsequent messages, disputes, and transactions.
@@ -795,6 +817,34 @@ export namespace Transaction {
          */
         type: string;
       }
+    }
+  }
+
+  export namespace NetworkData {
+    export type RoutedNetwork =
+      | 'cirrus'
+      | 'interlink'
+      | 'maestro'
+      | 'mastercard'
+      | 'other'
+      | 'plus'
+      | 'visa';
+
+    export interface TraceId {
+      /**
+       * The unique reference number within the specified financial network on the specified network date.
+       */
+      banknet_reference_number: string | null;
+
+      /**
+       * The identifier of the program or service.
+       */
+      financial_network_code: string | null;
+
+      /**
+       * The card network's record date for this transaction.
+       */
+      network_date: string | null;
     }
   }
 

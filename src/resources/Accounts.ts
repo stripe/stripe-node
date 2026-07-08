@@ -113,7 +113,7 @@ export class AccountResource extends StripeResource {
    * With [Connect](https://docs.stripe.com/docs/connect), you can create Stripe accounts for your users.
    * To do this, you'll first need to [register your platform](https://dashboard.stripe.com/account/applications/settings).
    *
-   * If you've already collected information for your connected accounts, you [can prefill that information](https://docs.stripe.com/docs/connect/best-practices#onboarding) when
+   * If you've already collected information for your connected accounts, you [can prefill that information](https://docs.stripe.com/connect/marketplace/tasks/create#prefill-account-information) when
    * creating the account. Connect Onboarding won't ask for the prefilled information during account onboarding.
    * You can prefill any information on the account.
    */
@@ -1079,6 +1079,8 @@ export namespace Account {
      */
     address_kanji?: Company.AddressKanji | null;
 
+    administrative_address?: Address;
+
     /**
      * Whether the company's directors have been provided. This Boolean will be `true` if you've manually indicated that all directors are provided via [the `directors_provided` parameter](https://docs.stripe.com/api/accounts/update#update_account-company-directors_provided).
      */
@@ -1138,6 +1140,8 @@ export namespace Account {
      * The company's phone number (used for verification).
      */
     phone?: string | null;
+
+    principal_place_of_business?: Address;
 
     registration_date?: Company.RegistrationDate;
 
@@ -1221,7 +1225,7 @@ export namespace Account {
     disabled_reason: FutureRequirements.DisabledReason | null;
 
     /**
-     * Details about validation and verification failures for `due` requirements that must be resolved.
+     * Fields that are `currently_due` and need to be collected again because validation or verification failed.
      */
     errors: Array<FutureRequirements.Error> | null;
 
@@ -1270,7 +1274,7 @@ export namespace Account {
     disabled_reason: Requirements.DisabledReason | null;
 
     /**
-     * Details about validation and verification failures for `due` requirements that must be resolved.
+     * Fields that are `currently_due` and need to be collected again because validation or verification failed.
      */
     errors: Array<Requirements.Error> | null;
 
