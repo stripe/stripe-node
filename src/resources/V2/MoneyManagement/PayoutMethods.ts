@@ -128,6 +128,11 @@ export interface PayoutMethod {
   livemode: boolean;
 
   /**
+   * The PayoutMethodNetworkBusinessProfileWallet object details.
+   */
+  network_business_profile_wallet?: PayoutMethod.NetworkBusinessProfileWallet;
+
+  /**
    * Whether the Payout Method is currently unusable for money movement, despite potentially being correctly set up.
    * Please reach out to Stripe Support for more information.
    */
@@ -276,7 +281,18 @@ export namespace PayoutMethod {
     network: CryptoWallet.Network;
   }
 
-  export type Type = 'bank_account' | 'card' | 'crypto_wallet';
+  export interface NetworkBusinessProfileWallet {
+    /**
+     * The Network ID of the Stripe profile.
+     */
+    network_business_profile: string;
+  }
+
+  export type Type =
+    | 'bank_account'
+    | 'card'
+    | 'crypto_wallet'
+    | 'network_business_profile_wallet';
 
   export interface UsageStatus {
     /**

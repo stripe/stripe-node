@@ -20826,7 +20826,6 @@ declare namespace StripeConstructor {
         export type BillingCycleAnchor = Stripe_.V2.Billing.ContractCreateParams.BillingCycleAnchor;
         export type BillingSettings = Stripe_.V2.Billing.ContractCreateParams.BillingSettings;
         export type Include = Stripe_.V2.Billing.ContractCreateParams.Include;
-        export type OneTimeFee = Stripe_.V2.Billing.ContractCreateParams.OneTimeFee;
         export type PricingOverride = Stripe_.V2.Billing.ContractCreateParams.PricingOverride;
         export namespace BillingCycleAnchor {
           export type Config = Stripe_.V2.Billing.ContractCreateParams.BillingCycleAnchor.Config;
@@ -20856,12 +20855,6 @@ declare namespace StripeConstructor {
             export type CollectionMethod = Stripe_.V2.Billing.ContractCreateParams.BillingSettings.CollectionSettingsDetails.CollectionMethod;
           }
         }
-        export namespace OneTimeFee {
-          export type BillAt = Stripe_.V2.Billing.ContractCreateParams.OneTimeFee.BillAt;
-          export namespace BillAt {
-            export type Type = Stripe_.V2.Billing.ContractCreateParams.OneTimeFee.BillAt.Type;
-          }
-        }
         export namespace PricingLine {
           export type EndsAt = Stripe_.V2.Billing.ContractCreateParams.PricingLine.EndsAt;
           export type Pricing = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing;
@@ -20875,10 +20868,6 @@ declare namespace StripeConstructor {
                 export type EndsAt = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.PricingOverride.EndsAt;
                 export type OverwritePrice = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.PricingOverride.OverwritePrice;
                 export type StartsAt = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.PricingOverride.StartsAt;
-                export namespace OverwritePrice {
-                  export type TieringMode = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.PricingOverride.OverwritePrice.TieringMode;
-                  export type Tier = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.PricingOverride.OverwritePrice.Tier;
-                }
               }
               export namespace QuantityChange {
                 export type EffectiveAt = Stripe_.V2.Billing.ContractCreateParams.PricingLine.Pricing.PriceDetails.QuantityChange.EffectiveAt;
@@ -20901,7 +20890,6 @@ declare namespace StripeConstructor {
       export namespace Contract {
         export type BillingCycleAnchor = Stripe_.V2.Billing.Contract.BillingCycleAnchor;
         export type BillingSettings = Stripe_.V2.Billing.Contract.BillingSettings;
-        export type OneTimeFees = Stripe_.V2.Billing.Contract.OneTimeFees;
         export type PricingLines = Stripe_.V2.Billing.Contract.PricingLines;
         export type PricingOverrides = Stripe_.V2.Billing.Contract.PricingOverrides;
         export type Status = Stripe_.V2.Billing.Contract.Status;
@@ -20930,12 +20918,6 @@ declare namespace StripeConstructor {
             export type CollectionMethod = Stripe_.V2.Billing.Contract.BillingSettings.CollectionSettingsDetails.CollectionMethod;
           }
         }
-        export namespace OneTimeFees {
-          export type Data = Stripe_.V2.Billing.Contract.OneTimeFees.Data;
-          export namespace Data {
-            export type BillAt = Stripe_.V2.Billing.Contract.OneTimeFees.Data.BillAt;
-          }
-        }
         export namespace PricingLines {
           export type Data = Stripe_.V2.Billing.Contract.PricingLines.Data;
           export namespace Data {
@@ -20952,10 +20934,6 @@ declare namespace StripeConstructor {
                     export type EndsAt = Stripe_.V2.Billing.Contract.PricingLines.Data.Pricing.PriceDetails.PricingOverrides.Data.EndsAt;
                     export type OverwritePrice = Stripe_.V2.Billing.Contract.PricingLines.Data.Pricing.PriceDetails.PricingOverrides.Data.OverwritePrice;
                     export type StartsAt = Stripe_.V2.Billing.Contract.PricingLines.Data.Pricing.PriceDetails.PricingOverrides.Data.StartsAt;
-                    export namespace OverwritePrice {
-                      export type TieringMode = Stripe_.V2.Billing.Contract.PricingLines.Data.Pricing.PriceDetails.PricingOverrides.Data.OverwritePrice.TieringMode;
-                      export type Tier = Stripe_.V2.Billing.Contract.PricingLines.Data.Pricing.PriceDetails.PricingOverrides.Data.OverwritePrice.Tier;
-                    }
                   }
                 }
               }
@@ -22818,6 +22796,7 @@ declare namespace StripeConstructor {
         export type Defaults = Stripe_.V2.Core.Account.Defaults;
         export type FutureRequirements = Stripe_.V2.Core.Account.FutureRequirements;
         export type Identity = Stripe_.V2.Core.Account.Identity;
+        export type RelatedNetworkObject = Stripe_.V2.Core.Account.RelatedNetworkObject;
         export type Requirements = Stripe_.V2.Core.Account.Requirements;
         export namespace Configuration {
           export type CardCreator = Stripe_.V2.Core.Account.Configuration.CardCreator;
@@ -24938,6 +24917,9 @@ declare namespace StripeConstructor {
             }
           }
         }
+        export namespace RelatedNetworkObject {
+          export type Type = Stripe_.V2.Core.Account.RelatedNetworkObject.Type;
+        }
         export namespace Requirements {
           export type Entry = Stripe_.V2.Core.Account.Requirements.Entry;
           export type Summary = Stripe_.V2.Core.Account.Requirements.Summary;
@@ -26261,6 +26243,7 @@ declare namespace StripeConstructor {
         export type BankAccount = Stripe_.V2.MoneyManagement.PayoutMethod.BankAccount;
         export type Card = Stripe_.V2.MoneyManagement.PayoutMethod.Card;
         export type CryptoWallet = Stripe_.V2.MoneyManagement.PayoutMethod.CryptoWallet;
+        export type NetworkBusinessProfileWallet = Stripe_.V2.MoneyManagement.PayoutMethod.NetworkBusinessProfileWallet;
         export type Type = Stripe_.V2.MoneyManagement.PayoutMethod.Type;
         export type UsageStatus = Stripe_.V2.MoneyManagement.PayoutMethod.UsageStatus;
         export namespace AlternativeReference {
@@ -26295,6 +26278,7 @@ declare namespace StripeConstructor {
         export type StatusDetails = Stripe_.V2.MoneyManagement.ReceivedCredit.StatusDetails;
         export type StatusTransitions = Stripe_.V2.MoneyManagement.ReceivedCredit.StatusTransitions;
         export type StripeBalancePayment = Stripe_.V2.MoneyManagement.ReceivedCredit.StripeBalancePayment;
+        export type StripeNetworkTransfer = Stripe_.V2.MoneyManagement.ReceivedCredit.StripeNetworkTransfer;
         export type Type = Stripe_.V2.MoneyManagement.ReceivedCredit.Type;
         export namespace BalanceTransfer {
           export type Type = Stripe_.V2.MoneyManagement.ReceivedCredit.BalanceTransfer.Type;
@@ -26331,6 +26315,9 @@ declare namespace StripeConstructor {
           export namespace Failed {
             export type Reason = Stripe_.V2.MoneyManagement.ReceivedCredit.StatusDetails.Failed.Reason;
           }
+        }
+        export namespace StripeNetworkTransfer {
+          export type From = Stripe_.V2.MoneyManagement.ReceivedCredit.StripeNetworkTransfer.From;
         }
       }
       export namespace ReceivedDebit {

@@ -4279,15 +4279,6 @@ describe('Generated tests', function() {
                     key: 'metadata',
                   },
                   overwrite_price: {
-                    tiering_mode: 'graduated',
-                    tiers: [
-                      {
-                        flat_amount: 'flat_amount',
-                        unit_amount: 'unit_amount',
-                        up_to_decimal: Decimal.from('1387931359.3333333'),
-                        up_to_inf: 'inf',
-                      },
-                    ],
                     unit_amount: 'unit_amount',
                   },
                   priority: 1165461084,
@@ -7417,7 +7408,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/outbound_setup_intents',
         response:
-          '{"data":[{"object":"v2.money_management.outbound_setup_intent","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payout_method":{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"}},"status":"requires_payout_method","usage_intent":"payment"}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.money_management.outbound_setup_intent","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payout_method":{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"crypto_wallet","usage_status":{"payments":"requires_action","transfers":"invalid"}},"status":"requires_payout_method","usage_intent":"payment"}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const outboundSetupIntents = await stripe.v2.moneyManagement.outboundSetupIntents.list();
@@ -7430,7 +7421,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/outbound_setup_intents',
         response:
-          '{"object":"v2.money_management.outbound_setup_intent","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payout_method":{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"}},"status":"requires_payout_method","usage_intent":"payment"}',
+          '{"object":"v2.money_management.outbound_setup_intent","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payout_method":{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"crypto_wallet","usage_status":{"payments":"requires_action","transfers":"invalid"}},"status":"requires_payout_method","usage_intent":"payment"}',
       },
     ]);
     const outboundSetupIntent = await stripe.v2.moneyManagement.outboundSetupIntents.create();
@@ -7443,7 +7434,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/outbound_setup_intents/id_123',
         response:
-          '{"object":"v2.money_management.outbound_setup_intent","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payout_method":{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"}},"status":"requires_payout_method","usage_intent":"payment"}',
+          '{"object":"v2.money_management.outbound_setup_intent","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payout_method":{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"crypto_wallet","usage_status":{"payments":"requires_action","transfers":"invalid"}},"status":"requires_payout_method","usage_intent":"payment"}',
       },
     ]);
     const outboundSetupIntent = await stripe.v2.moneyManagement.outboundSetupIntents.retrieve(
@@ -7458,7 +7449,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/outbound_setup_intents/id_123',
         response:
-          '{"object":"v2.money_management.outbound_setup_intent","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payout_method":{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"}},"status":"requires_payout_method","usage_intent":"payment"}',
+          '{"object":"v2.money_management.outbound_setup_intent","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payout_method":{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"crypto_wallet","usage_status":{"payments":"requires_action","transfers":"invalid"}},"status":"requires_payout_method","usage_intent":"payment"}',
       },
     ]);
     const outboundSetupIntent = await stripe.v2.moneyManagement.outboundSetupIntents.update(
@@ -7473,7 +7464,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/outbound_setup_intents/id_123/cancel',
         response:
-          '{"object":"v2.money_management.outbound_setup_intent","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payout_method":{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"}},"status":"requires_payout_method","usage_intent":"payment"}',
+          '{"object":"v2.money_management.outbound_setup_intent","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payout_method":{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"crypto_wallet","usage_status":{"payments":"requires_action","transfers":"invalid"}},"status":"requires_payout_method","usage_intent":"payment"}',
       },
     ]);
     const outboundSetupIntent = await stripe.v2.moneyManagement.outboundSetupIntents.cancel(
@@ -7660,7 +7651,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/payout_methods',
         response:
-          '{"data":[{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"}}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"crypto_wallet","usage_status":{"payments":"requires_action","transfers":"invalid"}}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const payoutMethods = await stripe.v2.moneyManagement.payoutMethods.list();
@@ -7673,7 +7664,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/payout_methods/id_123',
         response:
-          '{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"}}',
+          '{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"crypto_wallet","usage_status":{"payments":"requires_action","transfers":"invalid"}}',
       },
     ]);
     const payoutMethod = await stripe.v2.moneyManagement.payoutMethods.retrieve(
@@ -7688,7 +7679,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/payout_methods/id_123/archive',
         response:
-          '{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"}}',
+          '{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"crypto_wallet","usage_status":{"payments":"requires_action","transfers":"invalid"}}',
       },
     ]);
     const payoutMethod = await stripe.v2.moneyManagement.payoutMethods.archive(
@@ -7703,7 +7694,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/payout_methods/id_123/unarchive',
         response:
-          '{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"}}',
+          '{"object":"v2.money_management.payout_method","available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"crypto_wallet","usage_status":{"payments":"requires_action","transfers":"invalid"}}',
       },
     ]);
     const payoutMethod = await stripe.v2.moneyManagement.payoutMethods.unarchive(
@@ -7718,7 +7709,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/received_credits',
         response:
-          '{"data":[{"object":"v2.money_management.received_credit","amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","livemode":true,"status":"returned","type":"balance_transfer"}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.money_management.received_credit","amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","livemode":true,"status":"returned","type":"crypto_wallet_transfer"}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const receivedCredits = await stripe.v2.moneyManagement.receivedCredits.list();
@@ -7731,7 +7722,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/received_credits/id_123',
         response:
-          '{"object":"v2.money_management.received_credit","amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","livemode":true,"status":"returned","type":"balance_transfer"}',
+          '{"object":"v2.money_management.received_credit","amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","livemode":true,"status":"returned","type":"crypto_wallet_transfer"}',
       },
     ]);
     const receivedCredit = await stripe.v2.moneyManagement.receivedCredits.retrieve(

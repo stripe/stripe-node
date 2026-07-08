@@ -126,6 +126,11 @@ export interface ReceivedCredit {
   stripe_balance_payment?: ReceivedCredit.StripeBalancePayment;
 
   /**
+   * This object stores details about the Stripe network transfer that resulted in the ReceivedCredit. Present if `type` field value is `stripe_network_transfer`.
+   */
+  stripe_network_transfer?: ReceivedCredit.StripeNetworkTransfer;
+
+  /**
    * Open Enum. The type of flow that caused the ReceivedCredit.
    */
   type: ReceivedCredit.Type;
@@ -295,13 +300,21 @@ export namespace ReceivedCredit {
     statement_descriptor?: string;
   }
 
+  export interface StripeNetworkTransfer {
+    /**
+     * Information about the sender of the network transfer.
+     */
+    from: StripeNetworkTransfer.From;
+  }
+
   export type Type =
     | 'balance_transfer'
     | 'bank_transfer'
     | 'card_spend'
     | 'crypto_wallet_transfer'
     | 'external_credit'
-    | 'stripe_balance_payment';
+    | 'stripe_balance_payment'
+    | 'stripe_network_transfer';
 
   export namespace BalanceTransfer {
     export type Type =
@@ -566,6 +579,20 @@ export namespace ReceivedCredit {
         | 'currency_unsupported_on_financial_address'
         | 'financial_address_inactive'
         | 'stripe_rejected';
+    }
+  }
+
+  export namespace StripeNetworkTransfer {
+    export interface From {
+      /**
+       * The network ID of the sender.
+       */
+      network_business_profile: string;
+
+      /**
+       * Open Enum. The type of the sender.
+       */
+      type: 'network_business_profile';
     }
   }
 }

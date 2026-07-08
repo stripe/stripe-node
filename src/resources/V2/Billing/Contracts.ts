@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Decimal, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {DeletedObject} from './../../V2/DeletedObject.js';
@@ -46,35 +45,6 @@ export class ContractResource extends StripeResource {
                                 kind: 'object',
                                 fields: {
                                   current_quantity: {kind: 'decimal_string'},
-                                  pricing_overrides: {
-                                    kind: 'object',
-                                    fields: {
-                                      data: {
-                                        kind: 'array',
-                                        element: {
-                                          kind: 'object',
-                                          fields: {
-                                            overwrite_price: {
-                                              kind: 'object',
-                                              fields: {
-                                                tiers: {
-                                                  kind: 'array',
-                                                  element: {
-                                                    kind: 'object',
-                                                    fields: {
-                                                      up_to_decimal: {
-                                                        kind: 'decimal_string',
-                                                      },
-                                                    },
-                                                  },
-                                                },
-                                              },
-                                            },
-                                          },
-                                        },
-                                      },
-                                    },
-                                  },
                                 },
                               },
                             },
@@ -113,28 +83,6 @@ export class ContractResource extends StripeResource {
                     price_details: {
                       kind: 'object',
                       fields: {
-                        pricing_overrides: {
-                          kind: 'array',
-                          element: {
-                            kind: 'object',
-                            fields: {
-                              overwrite_price: {
-                                kind: 'object',
-                                fields: {
-                                  tiers: {
-                                    kind: 'array',
-                                    element: {
-                                      kind: 'object',
-                                      fields: {
-                                        up_to_decimal: {kind: 'decimal_string'},
-                                      },
-                                    },
-                                  },
-                                },
-                              },
-                            },
-                          },
-                        },
                         quantity_changes: {
                           kind: 'array',
                           element: {
@@ -167,38 +115,7 @@ export class ContractResource extends StripeResource {
                       fields: {
                         price_details: {
                           kind: 'object',
-                          fields: {
-                            current_quantity: {kind: 'decimal_string'},
-                            pricing_overrides: {
-                              kind: 'object',
-                              fields: {
-                                data: {
-                                  kind: 'array',
-                                  element: {
-                                    kind: 'object',
-                                    fields: {
-                                      overwrite_price: {
-                                        kind: 'object',
-                                        fields: {
-                                          tiers: {
-                                            kind: 'array',
-                                            element: {
-                                              kind: 'object',
-                                              fields: {
-                                                up_to_decimal: {
-                                                  kind: 'decimal_string',
-                                                },
-                                              },
-                                            },
-                                          },
-                                        },
-                                      },
-                                    },
-                                  },
-                                },
-                              },
-                            },
-                          },
+                          fields: {current_quantity: {kind: 'decimal_string'}},
                         },
                       },
                     },
@@ -258,35 +175,6 @@ export class ContractResource extends StripeResource {
                             kind: 'object',
                             fields: {
                               current_quantity: {kind: 'decimal_string'},
-                              pricing_overrides: {
-                                kind: 'object',
-                                fields: {
-                                  data: {
-                                    kind: 'array',
-                                    element: {
-                                      kind: 'object',
-                                      fields: {
-                                        overwrite_price: {
-                                          kind: 'object',
-                                          fields: {
-                                            tiers: {
-                                              kind: 'array',
-                                              element: {
-                                                kind: 'object',
-                                                fields: {
-                                                  up_to_decimal: {
-                                                    kind: 'decimal_string',
-                                                  },
-                                                },
-                                              },
-                                            },
-                                          },
-                                        },
-                                      },
-                                    },
-                                  },
-                                },
-                              },
                             },
                           },
                         },
@@ -332,30 +220,6 @@ export class ContractResource extends StripeResource {
                           price_details: {
                             kind: 'object',
                             fields: {
-                              pricing_overrides: {
-                                kind: 'array',
-                                element: {
-                                  kind: 'object',
-                                  fields: {
-                                    overwrite_price: {
-                                      kind: 'object',
-                                      fields: {
-                                        tiers: {
-                                          kind: 'array',
-                                          element: {
-                                            kind: 'object',
-                                            fields: {
-                                              up_to_decimal: {
-                                                kind: 'decimal_string',
-                                              },
-                                            },
-                                          },
-                                        },
-                                      },
-                                    },
-                                  },
-                                },
-                              },
                               quantity_changes: {
                                 kind: 'array',
                                 element: {
@@ -378,35 +242,6 @@ export class ContractResource extends StripeResource {
                           price_details: {
                             kind: 'object',
                             fields: {
-                              pricing_override_actions: {
-                                kind: 'array',
-                                element: {
-                                  kind: 'object',
-                                  fields: {
-                                    add: {
-                                      kind: 'object',
-                                      fields: {
-                                        overwrite_price: {
-                                          kind: 'object',
-                                          fields: {
-                                            tiers: {
-                                              kind: 'array',
-                                              element: {
-                                                kind: 'object',
-                                                fields: {
-                                                  up_to_decimal: {
-                                                    kind: 'decimal_string',
-                                                  },
-                                                },
-                                              },
-                                            },
-                                          },
-                                        },
-                                      },
-                                    },
-                                  },
-                                },
-                              },
                               quantity_changes: {
                                 kind: 'array',
                                 element: {
@@ -414,31 +249,6 @@ export class ContractResource extends StripeResource {
                                   fields: {set: {kind: 'decimal_string'}},
                                 },
                               },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-            pricing_override_actions: {
-              kind: 'array',
-              element: {
-                kind: 'object',
-                fields: {
-                  add: {
-                    kind: 'object',
-                    fields: {
-                      overwrite_price: {
-                        kind: 'object',
-                        fields: {
-                          tiers: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {up_to_decimal: {kind: 'decimal_string'}},
                             },
                           },
                         },
@@ -468,35 +278,6 @@ export class ContractResource extends StripeResource {
                             kind: 'object',
                             fields: {
                               current_quantity: {kind: 'decimal_string'},
-                              pricing_overrides: {
-                                kind: 'object',
-                                fields: {
-                                  data: {
-                                    kind: 'array',
-                                    element: {
-                                      kind: 'object',
-                                      fields: {
-                                        overwrite_price: {
-                                          kind: 'object',
-                                          fields: {
-                                            tiers: {
-                                              kind: 'array',
-                                              element: {
-                                                kind: 'object',
-                                                fields: {
-                                                  up_to_decimal: {
-                                                    kind: 'decimal_string',
-                                                  },
-                                                },
-                                              },
-                                            },
-                                          },
-                                        },
-                                      },
-                                    },
-                                  },
-                                },
-                              },
                             },
                           },
                         },
@@ -543,35 +324,6 @@ export class ContractResource extends StripeResource {
                             kind: 'object',
                             fields: {
                               current_quantity: {kind: 'decimal_string'},
-                              pricing_overrides: {
-                                kind: 'object',
-                                fields: {
-                                  data: {
-                                    kind: 'array',
-                                    element: {
-                                      kind: 'object',
-                                      fields: {
-                                        overwrite_price: {
-                                          kind: 'object',
-                                          fields: {
-                                            tiers: {
-                                              kind: 'array',
-                                              element: {
-                                                kind: 'object',
-                                                fields: {
-                                                  up_to_decimal: {
-                                                    kind: 'decimal_string',
-                                                  },
-                                                },
-                                              },
-                                            },
-                                          },
-                                        },
-                                      },
-                                    },
-                                  },
-                                },
-                              },
                             },
                           },
                         },
@@ -618,35 +370,6 @@ export class ContractResource extends StripeResource {
                             kind: 'object',
                             fields: {
                               current_quantity: {kind: 'decimal_string'},
-                              pricing_overrides: {
-                                kind: 'object',
-                                fields: {
-                                  data: {
-                                    kind: 'array',
-                                    element: {
-                                      kind: 'object',
-                                      fields: {
-                                        overwrite_price: {
-                                          kind: 'object',
-                                          fields: {
-                                            tiers: {
-                                              kind: 'array',
-                                              element: {
-                                                kind: 'object',
-                                                fields: {
-                                                  up_to_decimal: {
-                                                    kind: 'decimal_string',
-                                                  },
-                                                },
-                                              },
-                                            },
-                                          },
-                                        },
-                                      },
-                                    },
-                                  },
-                                },
-                              },
                             },
                           },
                         },
@@ -714,11 +437,6 @@ export interface Contract {
   metadata?: Metadata;
 
   /**
-   * The one-time fees. Only populated when `one_time_fees` is passed in the `include` parameter.
-   */
-  one_time_fees?: Contract.OneTimeFees;
-
-  /**
    * The pricing lines. Only populated when `pricing_lines` is passed in the `include` parameter.
    */
   pricing_lines?: Contract.PricingLines;
@@ -761,13 +479,6 @@ export namespace Contract {
      * The collection settings details configures how payments are collected on the contract.
      */
     collection_settings_details: BillingSettings.CollectionSettingsDetails;
-  }
-
-  export interface OneTimeFees {
-    /**
-     * The one-time fees for this page.
-     */
-    data: Array<OneTimeFees.Data>;
   }
 
   export interface PricingLines {
@@ -889,44 +600,6 @@ export namespace Contract {
 
     export namespace CollectionSettingsDetails {
       export type CollectionMethod = 'charge_automatically' | 'send_invoice';
-    }
-  }
-
-  export namespace OneTimeFees {
-    export interface Data {
-      /**
-       * The amount billed for this fee.
-       */
-      amount: V2Amount;
-
-      /**
-       * When this fee will be billed. Always contains a concrete timestamp.
-       */
-      bill_at: Data.BillAt;
-
-      /**
-       * The id of the one-time fee.
-       */
-      id: string;
-
-      /**
-       * The user-provided lookup key.
-       */
-      lookup_key?: string;
-
-      /**
-       * The id of the product for this fee.
-       */
-      product: string;
-    }
-
-    export namespace Data {
-      export interface BillAt {
-        /**
-         * The timestamp at which the fee will be billed.
-         */
-        timestamp: string;
-      }
     }
   }
 
@@ -1064,16 +737,6 @@ export namespace Contract {
 
               export interface OverwritePrice {
                 /**
-                 * Defines whether the tiered price should be graduated or volume-based.
-                 */
-                tiering_mode?: OverwritePrice.TieringMode;
-
-                /**
-                 * Each element represents a pricing tier.
-                 */
-                tiers: Array<OverwritePrice.Tier>;
-
-                /**
                  * The per-unit amount to be charged, represented as a decimal string in minor currency units.
                  */
                 unit_amount?: string;
@@ -1084,32 +747,6 @@ export namespace Contract {
                  * The timestamp when the item starts.
                  */
                 timestamp: string;
-              }
-
-              export namespace OverwritePrice {
-                export type TieringMode = 'graduated' | 'volume';
-
-                export interface Tier {
-                  /**
-                   * Price for the entire tier, represented as a decimal string in minor currency units.
-                   */
-                  flat_amount?: string;
-
-                  /**
-                   * Per-unit price for units included in this tier, represented as a decimal string in minor currency units.
-                   */
-                  unit_amount?: string;
-
-                  /**
-                   * Up to and including this quantity will be contained in the tier.
-                   */
-                  up_to_decimal?: Decimal;
-
-                  /**
-                   * No upper bound to this tier.
-                   */
-                  up_to_inf?: 'inf';
-                }
               }
             }
           }
@@ -1248,11 +885,6 @@ export namespace V2 {
       metadata?: MetadataParam;
 
       /**
-       * A list of one-time fees to create with the contract. Each fee is billed as individual invoice items per its bill_schedule.
-       */
-      one_time_fees?: Array<ContractCreateParams.OneTimeFee>;
-
-      /**
        * A list of pricing overrides to create with the contract.
        */
       pricing_overrides?: Array<ContractCreateParams.PricingOverride>;
@@ -1322,31 +954,8 @@ export namespace V2 {
 
       export type Include =
         | 'billing_settings'
-        | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides';
-
-      export interface OneTimeFee {
-        /**
-         * The amount to bill.
-         */
-        amount: V2Amount;
-
-        /**
-         * When this fee should be billed.
-         */
-        bill_at: OneTimeFee.BillAt;
-
-        /**
-         * A user-provided lookup key.
-         */
-        lookup_key?: string;
-
-        /**
-         * The id of the product for this fee.
-         */
-        product: string;
-      }
 
       export interface PricingOverride {
         /**
@@ -1502,24 +1111,6 @@ export namespace V2 {
         }
       }
 
-      export namespace OneTimeFee {
-        export interface BillAt {
-          /**
-           * The timestamp at which the entry should be billed. Required if `type` is `timestamp`.
-           */
-          timestamp?: string;
-
-          /**
-           * The type of the bill_at.
-           */
-          type: BillAt.Type;
-        }
-
-        export namespace BillAt {
-          export type Type = 'now' | 'timestamp';
-        }
-      }
-
       export namespace PricingLine {
         export interface EndsAt {
           /**
@@ -1641,16 +1232,6 @@ export namespace V2 {
 
               export interface OverwritePrice {
                 /**
-                 * Defines whether the tiered price should be graduated or volume-based.
-                 */
-                tiering_mode?: OverwritePrice.TieringMode;
-
-                /**
-                 * Each element represents a pricing tier.
-                 */
-                tiers?: Array<OverwritePrice.Tier>;
-
-                /**
                  * The per-unit amount to be charged, represented as a decimal string in minor currency units.
                  */
                 unit_amount?: string;
@@ -1666,32 +1247,6 @@ export namespace V2 {
                  * The type of the starts_at.
                  */
                 type: 'timestamp';
-              }
-
-              export namespace OverwritePrice {
-                export type TieringMode = 'graduated' | 'volume';
-
-                export interface Tier {
-                  /**
-                   * Price for the entire tier, represented as a decimal string in minor currency units.
-                   */
-                  flat_amount?: string;
-
-                  /**
-                   * Per-unit price for units included in this tier, represented as a decimal string in minor currency units.
-                   */
-                  unit_amount?: string;
-
-                  /**
-                   * Up to and including this quantity will be contained in the tier.
-                   */
-                  up_to_decimal?: Decimal;
-
-                  /**
-                   * No upper bound to this tier.
-                   */
-                  up_to_inf?: 'inf';
-                }
               }
             }
 
@@ -1787,7 +1342,6 @@ export namespace V2 {
     export namespace ContractRetrieveParams {
       export type Include =
         | 'billing_settings'
-        | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides';
     }
@@ -1817,7 +1371,6 @@ export namespace V2 {
     export namespace ContractUpdateParams {
       export type Include =
         | 'billing_settings'
-        | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides';
 
@@ -2045,16 +1598,6 @@ export namespace V2 {
 
                 export interface OverwritePrice {
                   /**
-                   * Defines whether the tiered price should be graduated or volume-based.
-                   */
-                  tiering_mode?: OverwritePrice.TieringMode;
-
-                  /**
-                   * Each element represents a pricing tier.
-                   */
-                  tiers?: Array<OverwritePrice.Tier>;
-
-                  /**
                    * The per-unit amount to be charged, represented as a decimal string in minor currency units.
                    */
                   unit_amount?: string;
@@ -2070,32 +1613,6 @@ export namespace V2 {
                    * The type of the starts_at.
                    */
                   type: 'timestamp';
-                }
-
-                export namespace OverwritePrice {
-                  export type TieringMode = 'graduated' | 'volume';
-
-                  export interface Tier {
-                    /**
-                     * Price for the entire tier, represented as a decimal string in minor currency units.
-                     */
-                    flat_amount?: string;
-
-                    /**
-                     * Per-unit price for units included in this tier, represented as a decimal string in minor currency units.
-                     */
-                    unit_amount?: string;
-
-                    /**
-                     * Up to and including this quantity will be contained in the tier.
-                     */
-                    up_to_decimal?: Decimal;
-
-                    /**
-                     * No upper bound to this tier.
-                     */
-                    up_to_inf?: 'inf';
-                  }
                 }
               }
 
@@ -2292,16 +1809,6 @@ export namespace V2 {
 
                   export interface OverwritePrice {
                     /**
-                     * Defines whether the tiered price should be graduated or volume-based.
-                     */
-                    tiering_mode?: OverwritePrice.TieringMode;
-
-                    /**
-                     * Each element represents a pricing tier.
-                     */
-                    tiers?: Array<OverwritePrice.Tier>;
-
-                    /**
                      * The per-unit amount to be charged, represented as a decimal string in minor currency units.
                      */
                     unit_amount?: string;
@@ -2317,32 +1824,6 @@ export namespace V2 {
                      * The type of start time to apply.
                      */
                     type: 'timestamp';
-                  }
-
-                  export namespace OverwritePrice {
-                    export type TieringMode = 'graduated' | 'volume';
-
-                    export interface Tier {
-                      /**
-                       * Price for the entire tier, represented as a decimal string in minor currency units.
-                       */
-                      flat_amount?: string;
-
-                      /**
-                       * Per-unit price for units included in this tier, represented as a decimal string in minor currency units.
-                       */
-                      unit_amount?: string;
-
-                      /**
-                       * Up to and including this quantity will be contained in the tier.
-                       */
-                      up_to_decimal?: Decimal;
-
-                      /**
-                       * No upper bound to this tier.
-                       */
-                      up_to_inf?: 'inf';
-                    }
                   }
                 }
 
@@ -2482,16 +1963,6 @@ export namespace V2 {
 
           export interface OverwritePrice {
             /**
-             * Defines whether the tiered price should be graduated or volume-based.
-             */
-            tiering_mode?: OverwritePrice.TieringMode;
-
-            /**
-             * Each element represents a pricing tier.
-             */
-            tiers: Array<OverwritePrice.Tier>;
-
-            /**
              * The per-unit amount to be charged, represented as a decimal string in minor currency units.
              */
             unit_amount?: string;
@@ -2529,32 +2000,6 @@ export namespace V2 {
 
             export namespace Criterion {
               export type Type = 'exclude' | 'include';
-            }
-          }
-
-          export namespace OverwritePrice {
-            export type TieringMode = 'graduated' | 'volume';
-
-            export interface Tier {
-              /**
-               * Price for the entire tier, represented as a decimal string in minor currency units.
-               */
-              flat_amount?: string;
-
-              /**
-               * Per-unit price for units included in this tier, represented as a decimal string in minor currency units.
-               */
-              unit_amount?: string;
-
-              /**
-               * Up to and including this quantity will be contained in the tier.
-               */
-              up_to_decimal?: Decimal;
-
-              /**
-               * No upper bound to this tier.
-               */
-              up_to_inf?: 'inf';
             }
           }
         }
@@ -2610,7 +2055,6 @@ export namespace V2 {
     export namespace ContractListParams {
       export type Include =
         | 'billing_settings'
-        | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides';
     }
@@ -2633,7 +2077,6 @@ export namespace V2 {
     export namespace ContractActivateParams {
       export type Include =
         | 'billing_settings'
-        | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides';
     }
@@ -2680,7 +2123,6 @@ export namespace V2 {
 
       export type Include =
         | 'billing_settings'
-        | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides';
 
