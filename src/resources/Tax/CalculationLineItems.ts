@@ -187,6 +187,8 @@ export namespace CalculationLineItem {
         | 'jct'
         | 'lease_tax'
         | 'luxury_tax'
+        | 'mass_transit_parking_tax'
+        | 'parking_tax'
         | 'pst'
         | 'qst'
         | 'resort_tax'

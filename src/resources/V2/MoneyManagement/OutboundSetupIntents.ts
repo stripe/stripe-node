@@ -299,7 +299,11 @@ export namespace V2 {
           network: CryptoWallet.Network;
         }
 
-        export type Type = 'bank_account' | 'card' | 'crypto_wallet';
+        export type Type =
+          | 'bank_account'
+          | 'card'
+          | 'crypto_wallet'
+          | 'network_business_profile_wallet';
 
         export namespace BankAccount {
           export type BankAccountType =
@@ -424,7 +428,11 @@ export namespace V2 {
           number?: string;
         }
 
-        export type Type = 'bank_account' | 'card' | 'crypto_wallet';
+        export type Type =
+          | 'bank_account'
+          | 'card'
+          | 'crypto_wallet'
+          | 'network_business_profile_wallet';
 
         export namespace BankAccount {
           export type BankAccountType =

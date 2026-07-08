@@ -150,6 +150,11 @@ export namespace Session {
      * Stripe ID of the institution with which the customer should be directed to log in.
      */
     institution?: string;
+
+    /**
+     * Whether the Session should require that linked accounts support payments and retrieve account numbers before completion.
+     */
+    require_payment_method_support?: Filters.RequirePaymentMethodSupport;
   }
 
   export interface Hosted {
@@ -233,6 +238,8 @@ export namespace Session {
       | 'line_of_credit'
       | 'mortgage'
       | 'savings';
+
+    export type RequirePaymentMethodSupport = 'all' | 'at_least_one' | 'none';
   }
 
   export namespace Hosted {

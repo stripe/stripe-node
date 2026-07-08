@@ -12,6 +12,7 @@ import {CustomerSource} from './CustomerSources.js';
 import {TaxRate} from './TaxRates.js';
 import {Account} from './Accounts.js';
 import {InvoicePayment} from './InvoicePayments.js';
+import {GiftCardOperation} from './GiftCardOperations.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {SetupIntent} from './SetupIntents.js';
 import {Subscription} from './Subscriptions.js';
@@ -1979,6 +1980,12 @@ export namespace Invoice {
      * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
      */
     doc_url?: string;
+
+    /**
+     * A GiftCardOperation represents an operation performed on a third-party gift card,
+     * such as activation, reload, cashout, balance check, or void.
+     */
+    gift_card_operation?: GiftCardOperation;
 
     /**
      * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
@@ -6678,7 +6685,7 @@ export namespace InvoiceCreatePreviewParams {
       proration_behavior?: Phase.ProrationBehavior;
 
       /**
-       * The date at which this phase of the subscription schedule starts or `now`. Must be set on the first phase.
+       * The date at which this phase of the subscription schedule starts or `now`. Must be set on the first phase. Prefer to specify `now` over an explicit timestamp when appropriate to avoid unexpected behavior due to request delays or clock skew resulting in the phase being slightly backdated or postdated.
        */
       start_date?: number | 'now';
 

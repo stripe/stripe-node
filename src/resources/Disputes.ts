@@ -61,7 +61,7 @@ export class DisputeResource extends StripeResource {
     ) as any;
   }
   /**
-   * Closing the dispute for a charge indicates that you do not have any evidence to submit and are essentially dismissing the dispute, acknowledging it as lost.
+   * Closing the dispute for a charge indicates that you do not have any evidence to submit and are essentially dismissing the dispute (accepting it), acknowledging it as lost.
    *
    * The status of the dispute will change from needs_response to lost. Closing a dispute is irreversible.
    */
@@ -623,6 +623,11 @@ export namespace Dispute {
        * The type of dispute opened. Different case types may have varying fees and financial impact.
        */
       case_type: Card.CaseType;
+
+      /**
+       * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+       */
+      network: string;
 
       /**
        * The card network's specific dispute reason code, which maps to one of Stripe's primary dispute categories to simplify response guidance. The [Network code map](https://stripe.com/docs/disputes/categories#network-code-map) lists all available dispute reason codes by network.

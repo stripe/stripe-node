@@ -1075,6 +1075,11 @@ export interface Authorization {
   status: Authorization.Status;
 
   /**
+   * Details about the cardholder verification outcome at the terminal.
+   */
+  terminal_data?: Authorization.TerminalData | null;
+
+  /**
    * [Token](https://docs.stripe.com/api/issuing/tokens/object) object used for this authorization. If a network token was not used for this authorization, this field will be null.
    */
   token?: string | Token | null;
@@ -1311,9 +1316,19 @@ export namespace Authorization {
 
   export interface NetworkData {
     /**
+     * Country code of the acquirer assigned by the card network.
+     */
+    acquiring_institution_country?: string | null;
+
+    /**
      * Identifier assigned to the acquirer by the card network. Sometimes this value is not provided by the network; in this case, the value will be `null`.
      */
     acquiring_institution_id: string | null;
+
+    /**
+     * Identifier assigned by the acquirer to track all messages related to this transaction.
+     */
+    retrieval_reference_number?: string | null;
 
     /**
      * The System Trace Audit Number (STAN) is a 6-digit identifier assigned by the acquirer. Prefer `network_data.transaction_id` if present, unless you have special requirements.
@@ -1412,6 +1427,11 @@ export namespace Authorization {
     merchant_currency: string;
 
     /**
+     * Details about the authorization request, such as identifiers, set by the card network.
+     */
+    network_data?: RequestHistory.NetworkData | null;
+
+    /**
      * The card network's estimate of the likelihood that an authorization is fraudulent. Takes on values between 1 and 99.
      */
     network_risk_score: number | null;
@@ -1433,6 +1453,13 @@ export namespace Authorization {
   }
 
   export type Status = 'closed' | 'expired' | 'pending' | 'reversed';
+
+  export interface TerminalData {
+    /**
+     * The method used to confirm the cardholder's identity.
+     */
+    cardholder_verification_result: TerminalData.CardholderVerificationResult | null;
+  }
 
   export interface TokenDetails {
     /**
@@ -2238,6 +2265,13 @@ export namespace Authorization {
       cashback_amount: number | null;
     }
 
+    export interface NetworkData {
+      /**
+       * Mastercard identifier for each authorization request.
+       */
+      trace_id: NetworkData.TraceId | null;
+    }
+
     export type Reason =
       | 'account_disabled'
       | 'card_active'
@@ -2259,6 +2293,35 @@ export namespace Authorization {
       | 'webhook_declined'
       | 'webhook_error'
       | 'webhook_timeout';
+
+    export namespace NetworkData {
+      export interface TraceId {
+        /**
+         * The unique reference number within the specified financial network on the specified network date.
+         */
+        banknet_reference_number: string | null;
+
+        /**
+         * The identifier of the program or service.
+         */
+        financial_network_code: string | null;
+
+        /**
+         * The card network's record date for this authorization.
+         */
+        network_date: string | null;
+      }
+    }
+  }
+
+  export namespace TerminalData {
+    export type CardholderVerificationResult =
+      | 'failed'
+      | 'none'
+      | 'pin'
+      | 'pin_and_signature'
+      | 'signature'
+      | 'unknown';
   }
 
   export namespace TokenDetails {

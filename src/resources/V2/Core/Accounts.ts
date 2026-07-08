@@ -10550,6 +10550,11 @@ export interface Account {
   metadata?: Metadata;
 
   /**
+   * The network object related to this Account.
+   */
+  related_network_object?: Account.RelatedNetworkObject;
+
+  /**
    * Information about the active requirements for the Account, including what information needs to be collected, and by when.
    */
   requirements?: Account.Requirements;
@@ -10660,6 +10665,18 @@ export namespace Account {
      * Information about the individual represented by the Account. This property is `null` unless `entity_type` is set to `individual`.
      */
     individual?: Identity.Individual;
+  }
+
+  export interface RelatedNetworkObject {
+    /**
+     * The ID of the network business profile associated with this Account.
+     */
+    network_business_profile?: string;
+
+    /**
+     * Closed Enum. The type of related network object.
+     */
+    type: RelatedNetworkObject.Type;
   }
 
   export interface Requirements {
@@ -21436,6 +21453,7 @@ export namespace Account {
           | 'my_bank_account'
           | 'mz_bank_account'
           | 'na_bank_account'
+          | 'network_business_profile_wallet'
           | 'ne_bank_account'
           | 'ng_bank_account'
           | 'ni_bank_account'
@@ -24715,6 +24733,10 @@ export namespace Account {
         }
       }
     }
+  }
+
+  export namespace RelatedNetworkObject {
+    export type Type = 'link' | 'network_business_profile';
   }
 
   export namespace Requirements {
@@ -39372,6 +39394,11 @@ export namespace V2 {
        * The upper limit on the number of accounts returned by the List Account request.
        */
       limit?: number;
+
+      /**
+       * Filter by the network object related to the account. If omitted, returns all Accounts regardless of the network object they have.
+       */
+      related_network_object?: string;
     }
 
     export namespace AccountListParams {

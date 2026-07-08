@@ -11,6 +11,7 @@ import {PaymentRecord} from './PaymentRecords.js';
 import {Review} from './Reviews.js';
 import {CustomerSource, DeletedCustomerSource} from './CustomerSources.js';
 import {Profile} from './Profiles.js';
+import {GiftCardOperation} from './GiftCardOperations.js';
 import {SetupIntent} from './SetupIntents.js';
 import {
   Emptyable,
@@ -852,6 +853,12 @@ export namespace PaymentIntent {
      * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
      */
     doc_url?: string;
+
+    /**
+     * A GiftCardOperation represents an operation performed on a third-party gift card,
+     * such as activation, reload, cashout, balance check, or void.
+     */
+    gift_card_operation?: GiftCardOperation;
 
     /**
      * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
@@ -4959,6 +4966,17 @@ export namespace PaymentIntent {
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface Paynow {
@@ -5017,7 +5035,18 @@ export namespace PaymentIntent {
       subsellers?: Array<string>;
     }
 
-    export interface Paypay {}
+    export interface Paypay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Paypay.SetupFutureUsage;
+    }
 
     export interface Payto {
       mandate_options?: Payto.MandateOptions;
@@ -5115,6 +5144,17 @@ export namespace PaymentIntent {
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface Satispay {
@@ -5874,6 +5914,10 @@ export namespace PaymentIntent {
       }
     }
 
+    export namespace Paypay {
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+    }
+
     export namespace Payto {
       export interface MandateOptions {
         /**
@@ -6437,13 +6481,24 @@ export namespace PaymentIntentCreateParams {
     | 'billie'
     | 'bizum'
     | 'blik'
+    | 'boku_promptpay'
     | 'boleto'
+    | 'capchase_pay'
     | 'card'
     | 'cashapp'
+    | 'check_scan'
+    | 'click_to_pay'
     | 'crypto'
     | 'customer_balance'
+    | 'demo_pay'
+    | 'duitnow'
+    | 'dummy_auth_push'
+    | 'dummy_passthrough_card'
+    | 'edenred'
     | 'eps'
     | 'fpx'
+    | 'gcash'
+    | 'getbalance'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -6452,16 +6507,30 @@ export namespace PaymentIntentCreateParams {
     | 'ideal'
     | 'kakao_pay'
     | 'klarna'
+    | 'knet'
     | 'konbini'
     | 'kr_card'
+    | 'kr_market'
+    | 'kriya'
     | 'link'
     | 'mb_way'
     | 'mobilepay'
+    | 'momo'
+    | 'mondu'
     | 'multibanco'
     | 'naver_pay'
+    | 'netbanking'
+    | 'ng_bank'
+    | 'ng_bank_transfer'
+    | 'ng_card'
+    | 'ng_market'
+    | 'ng_ussd'
+    | 'ng_wallet'
     | 'nz_bank_account'
+    | 'octopus'
     | 'oxxo'
     | 'p24'
+    | 'paper_check'
     | 'pay_by_bank'
     | 'payco'
     | 'paynow'
@@ -6477,16 +6546,24 @@ export namespace PaymentIntentCreateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
+    | 'shop_pay'
     | 'shopeepay'
     | 'sofort'
+    | 'south_korea_market'
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'test_pay'
+    | 'truemoney'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'us_cash_voucher'
+    | 'vipps'
     | 'wechat_pay'
+    | 'wero'
     | 'zip';
 
   export interface AmountDetails {
@@ -11633,6 +11710,17 @@ export namespace PaymentIntentCreateParams {
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
       capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Paypay.SetupFutureUsage>;
     }
 
     export interface Payto {
@@ -13966,6 +14054,10 @@ export namespace PaymentIntentCreateParams {
       }
     }
 
+    export namespace Paypay {
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+    }
+
     export namespace Payto {
       export interface MandateOptions {
         /**
@@ -14486,13 +14578,24 @@ export namespace PaymentIntentUpdateParams {
     | 'billie'
     | 'bizum'
     | 'blik'
+    | 'boku_promptpay'
     | 'boleto'
+    | 'capchase_pay'
     | 'card'
     | 'cashapp'
+    | 'check_scan'
+    | 'click_to_pay'
     | 'crypto'
     | 'customer_balance'
+    | 'demo_pay'
+    | 'duitnow'
+    | 'dummy_auth_push'
+    | 'dummy_passthrough_card'
+    | 'edenred'
     | 'eps'
     | 'fpx'
+    | 'gcash'
+    | 'getbalance'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -14501,16 +14604,30 @@ export namespace PaymentIntentUpdateParams {
     | 'ideal'
     | 'kakao_pay'
     | 'klarna'
+    | 'knet'
     | 'konbini'
     | 'kr_card'
+    | 'kr_market'
+    | 'kriya'
     | 'link'
     | 'mb_way'
     | 'mobilepay'
+    | 'momo'
+    | 'mondu'
     | 'multibanco'
     | 'naver_pay'
+    | 'netbanking'
+    | 'ng_bank'
+    | 'ng_bank_transfer'
+    | 'ng_card'
+    | 'ng_market'
+    | 'ng_ussd'
+    | 'ng_wallet'
     | 'nz_bank_account'
+    | 'octopus'
     | 'oxxo'
     | 'p24'
+    | 'paper_check'
     | 'pay_by_bank'
     | 'payco'
     | 'paynow'
@@ -14526,16 +14643,24 @@ export namespace PaymentIntentUpdateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
+    | 'shop_pay'
     | 'shopeepay'
     | 'sofort'
+    | 'south_korea_market'
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'test_pay'
+    | 'truemoney'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'us_cash_voucher'
+    | 'vipps'
     | 'wechat_pay'
+    | 'wero'
     | 'zip';
 
   export interface AmountDetails {
@@ -19611,6 +19736,17 @@ export namespace PaymentIntentUpdateParams {
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
       capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Paypay.SetupFutureUsage>;
     }
 
     export interface Payto {
@@ -21942,6 +22078,10 @@ export namespace PaymentIntentUpdateParams {
           export type Behavior = 'exclusive' | 'inclusive';
         }
       }
+    }
+
+    export namespace Paypay {
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
     }
 
     export namespace Payto {
@@ -24988,13 +25128,24 @@ export namespace PaymentIntentConfirmParams {
     | 'billie'
     | 'bizum'
     | 'blik'
+    | 'boku_promptpay'
     | 'boleto'
+    | 'capchase_pay'
     | 'card'
     | 'cashapp'
+    | 'check_scan'
+    | 'click_to_pay'
     | 'crypto'
     | 'customer_balance'
+    | 'demo_pay'
+    | 'duitnow'
+    | 'dummy_auth_push'
+    | 'dummy_passthrough_card'
+    | 'edenred'
     | 'eps'
     | 'fpx'
+    | 'gcash'
+    | 'getbalance'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -25003,16 +25154,30 @@ export namespace PaymentIntentConfirmParams {
     | 'ideal'
     | 'kakao_pay'
     | 'klarna'
+    | 'knet'
     | 'konbini'
     | 'kr_card'
+    | 'kr_market'
+    | 'kriya'
     | 'link'
     | 'mb_way'
     | 'mobilepay'
+    | 'momo'
+    | 'mondu'
     | 'multibanco'
     | 'naver_pay'
+    | 'netbanking'
+    | 'ng_bank'
+    | 'ng_bank_transfer'
+    | 'ng_card'
+    | 'ng_market'
+    | 'ng_ussd'
+    | 'ng_wallet'
     | 'nz_bank_account'
+    | 'octopus'
     | 'oxxo'
     | 'p24'
+    | 'paper_check'
     | 'pay_by_bank'
     | 'payco'
     | 'paynow'
@@ -25028,16 +25193,24 @@ export namespace PaymentIntentConfirmParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
+    | 'shop_pay'
     | 'shopeepay'
     | 'sofort'
+    | 'south_korea_market'
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'test_pay'
+    | 'truemoney'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'us_cash_voucher'
+    | 'vipps'
     | 'wechat_pay'
+    | 'wero'
     | 'zip';
 
   export interface AmountDetails {
@@ -30114,6 +30287,17 @@ export namespace PaymentIntentConfirmParams {
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
       capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Paypay.SetupFutureUsage>;
     }
 
     export interface Payto {
@@ -32445,6 +32629,10 @@ export namespace PaymentIntentConfirmParams {
           export type Behavior = 'exclusive' | 'inclusive';
         }
       }
+    }
+
+    export namespace Paypay {
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
     }
 
     export namespace Payto {

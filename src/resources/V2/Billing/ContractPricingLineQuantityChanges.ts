@@ -4,7 +4,7 @@ import {Decimal} from '../../../shared.js';
 import {RequestOptions} from '../../../lib.js';
 export interface ContractPricingLineQuantityChange {
   /**
-   * The ID of the quantity change object.
+   * The id of the quantity change object.
    */
   id: string;
 
@@ -34,7 +34,7 @@ export interface ContractPricingLineQuantityChange {
   pricing: ContractPricingLineQuantityChange.Pricing;
 
   /**
-   * The ID of the pricing line associated with this quantity change.
+   * The id of the pricing line associated with this quantity change.
    */
   pricing_line: string;
 

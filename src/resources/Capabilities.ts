@@ -62,7 +62,7 @@ export namespace Capability {
     disabled_reason: FutureRequirements.DisabledReason | null;
 
     /**
-     * Details about validation and verification failures for `due` requirements that must be resolved.
+     * Fields that are `currently_due` and need to be collected again because validation or verification failed.
      */
     errors: Array<FutureRequirements.Error>;
 
@@ -108,7 +108,7 @@ export namespace Capability {
     disabled_reason: Requirements.DisabledReason | null;
 
     /**
-     * Details about validation and verification failures for `due` requirements that must be resolved.
+     * Fields that are `currently_due` and need to be collected again because validation or verification failed.
      */
     errors: Array<Requirements.Error>;
 
