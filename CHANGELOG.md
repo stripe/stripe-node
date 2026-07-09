@@ -1,5 +1,12 @@
 # Changelog
 
+## 22.3.1 - 2026-07-09
+* [#2781](https://github.com/stripe/stripe-node/pull/2781) Remove unused Retry-After header support
+* [#2779](https://github.com/stripe/stripe-node/pull/2779) Export HttpClient types as interfaces instead of classes
+  - `Stripe.HttpClient` and `Stripe.HttpClientResponse` types now reflect the minimal interface contract rather than the concrete class, making custom HTTP client implementations easier to type correctly.
+* [#2778](https://github.com/stripe/stripe-node/pull/2778) Restore missing public type exports from v21 Stripe namespace
+  - Restores `Stripe.StripeConfig`, `Stripe.CryptoProvider`, `Stripe.HttpClient`, `Stripe.HttpClientResponse`, `Stripe.Webhooks`, `Stripe.Signature`, `Stripe.WebhookTestHeaderOptions`, `Stripe.StripeResource`, `Stripe.LatestApiVersion`, `Stripe.HttpAgent`, `Stripe.HttpProtocol`, and `Stripe.RawErrorType` type exports that were inadvertently dropped in the v22 type system migration.
+
 ## 22.3.0 - 2026-06-24
 This release changes the pinned API version to 2026-06-24.dahlia.
 
