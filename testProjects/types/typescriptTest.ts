@@ -289,6 +289,16 @@ const instanceofNarrowing = (e: unknown): Stripe.ErrorType.StripeError | null =>
   return null;
 };
 
+// Error objects expose generated fields with proper types
+const errorFieldAccess = (e: Stripe.ErrorType.StripeError): void => {
+  const networkAdviceCode: string | undefined = e.network_advice_code;
+  const networkDeclineCode: string | undefined = e.network_decline_code;
+  const adviceCode: string | undefined = e.advice_code;
+  const paymentIntent: Stripe.PaymentIntent | undefined = e.payment_intent;
+  const paymentMethod: Stripe.PaymentMethod | undefined = e.payment_method;
+  const setupIntent: Stripe.SetupIntent | undefined = e.setup_intent;
+};
+
 stripe.files.create({
   purpose: 'dispute_evidence',
   file: {
