@@ -47,6 +47,8 @@ for (const key of Object.getOwnPropertyNames(StripeClass)) {
 
 // `new Stripe()` plus `Stripe()` call compat: the implementation is a function, so we merge
 // callable + construct signatures here (see https://github.com/stripe/stripe-node/issues/2683).
+// StripeInterfaceCJSRuntime: The beginning of the section generated from our OpenAPI spec
+// StripeInterfaceCJSRuntime: The end of the section generated from our OpenAPI spec
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface StripeConstructor extends StripeClass {}
