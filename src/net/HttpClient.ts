@@ -144,3 +144,5 @@ export class HttpClientResponse implements HttpClientResponseInterface {
     throw new Error('toJSON not implemented.');
   }
 }
+
+export class HttpClientRuntimeError extends Error {}

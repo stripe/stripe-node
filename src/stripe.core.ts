@@ -1135,7 +1135,7 @@ export class Stripe {
       maxNetworkRetries: validateInteger(
         'maxNetworkRetries',
         props.maxNetworkRetries,
-        2
+        this._platformFunctions.getDefaultMaxNetworkRetries()
       ),
       agent: agent,
       httpClient:
@@ -1286,6 +1286,10 @@ export class Stripe {
     key: string,
     authenticator: RequestAuthenticator | null
   ): void {
+    if (!key && !authenticator) {
+      authenticator = this._platformFunctions.createDefaultAuthenticator();
+    }
+
     if (key && authenticator) {
       throw new Error("Can't specify both apiKey and authenticator");
     }
