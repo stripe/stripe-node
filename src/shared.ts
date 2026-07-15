@@ -182,7 +182,7 @@ export interface PaginationParams {
 export type Emptyable<T> = null | '' | T;
 
 /**
- * Used at the end of open enums to formally support other strings as part of that
- * union type.
+ * Marker type to append to "open" string unions so IntelliSense keeps known literals
+ * while still allowing arbitrary strings.
  */
 export type OtherString = string & Record<never, never>;
