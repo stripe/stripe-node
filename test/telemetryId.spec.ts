@@ -35,13 +35,11 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
       } else {
         delete process.env.APPDATA;
       }
-    } else {
-      if (origXdg !== undefined) {
+    } else if (origXdg !== undefined) {
         process.env.XDG_CONFIG_HOME = origXdg;
       } else {
         delete process.env.XDG_CONFIG_HOME;
       }
-    }
     fs.rmSync(tmpDir, {recursive: true, force: true});
   });
 
