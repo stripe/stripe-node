@@ -55,7 +55,7 @@ jobs:
         run: just format-check
 
   test:
-    name: Test (${{ matrix.node }})
+    name: Test (${{ matrix.node }}, ${{ matrix.os }})
     needs: [build]
     strategy:
       fail-fast: false
@@ -65,12 +65,19 @@ jobs:
         node:
           # should include even numbers >= 18
           # see: https://docs.stripe.com/sdks/versioning?lang=node#stripe-sdk-language-version-support-policy
-          # note that in Oct 2026, every version will be LTS, so it's not just even numbers anymore
+          # https://endoflife.date/nodejs
+
+          # note that starting in Oct 2026, every version will be LTS, so it's not just even numbers anymore
           # see: https://nodejs.org/en/blog/announcements/evolving-the-nodejs-release-schedule
+          - '26'
           - '24'
           - '22'
           - '20'
           - '18'
+        include:
+          - os: windows-latest
+            # use any modern-ish version
+            node: '26'
     runs-on: ${{ matrix.os }}
     permissions:
       contents: read
@@ -88,11 +95,13 @@ jobs:
 
       # used for one of the integration tests
       - name: Setup Deno
+        if: runner.os != 'Windows'
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
 
       - name: Print Deno version
+        if: runner.os != 'Windows'
         run: deno -V
 
       - name: Get yarn cache directory path
