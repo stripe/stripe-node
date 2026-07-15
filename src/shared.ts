@@ -180,3 +180,9 @@ export interface PaginationParams {
  * in url-encoding. Both `null` and `''` behave identically.
  */
 export type Emptyable<T> = null | '' | T;
+
+/**
+ * Used at the end of open enums to formally support other strings as part of that
+ * union type.
+ */
+export type OtherString = string & Record<never, never>;
