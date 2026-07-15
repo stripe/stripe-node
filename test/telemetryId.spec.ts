@@ -36,10 +36,10 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
         delete process.env.APPDATA;
       }
     } else if (origXdg !== undefined) {
-        process.env.XDG_CONFIG_HOME = origXdg;
-      } else {
-        delete process.env.XDG_CONFIG_HOME;
-      }
+      process.env.XDG_CONFIG_HOME = origXdg;
+    } else {
+      delete process.env.XDG_CONFIG_HOME;
+    }
     fs.rmSync(tmpDir, {recursive: true, force: true});
   });
 
@@ -93,7 +93,7 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
     expect(persisted).to.equal(id);
   });
 
-  it('returns null when the file cannot be written', function () {
+  it('returns null when the file cannot be written', function() {
     if (isWindows) return this.skip();
     // Point to a path whose parent cannot be created: use a file as a directory
     const blockingFile = path.join(tmpDir, 'not-a-dir');
@@ -105,7 +105,7 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
     expect(id).to.be.null;
   });
 
-  it('creates parent directories automatically when they are missing', function () {
+  it('creates parent directories automatically when they are missing', function() {
     if (isWindows) return this.skip();
     // XDG_CONFIG_HOME is set to a path that does not yet exist
     const deepDir = path.join(tmpDir, 'a', 'b', 'c');
@@ -120,7 +120,7 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
   });
 
   describe('_getTelemetryIdPath', () => {
-    it('uses XDG_CONFIG_HOME when set', function () {
+    it('uses XDG_CONFIG_HOME when set', function() {
       if (isWindows) return this.skip();
       const xdgBase = path.join(tmpDir, 'custom-xdg');
       process.env.XDG_CONFIG_HOME = xdgBase;
@@ -129,7 +129,7 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
       expect(result).to.equal(path.join(xdgBase, 'stripe', 'telemetry_id'));
     });
 
-    it('falls back to ~/.config/stripe/telemetry_id when XDG_CONFIG_HOME is unset', function () {
+    it('falls back to ~/.config/stripe/telemetry_id when XDG_CONFIG_HOME is unset', function() {
       if (isWindows) return this.skip();
       delete process.env.XDG_CONFIG_HOME;
 
