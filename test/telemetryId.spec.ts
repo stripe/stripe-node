@@ -7,23 +7,40 @@ import * as path from 'path';
 import {expect} from 'chai';
 import {NodePlatformFunctions} from '../src/platform/NodePlatformFunctions.js';
 
+const isWindows = process.platform === 'win32';
+const stripeDir = isWindows ? 'Stripe' : 'stripe';
+
 describe('NodePlatformFunctions#getTelemetryId', () => {
   let platform: NodePlatformFunctions;
   let tmpDir: string;
   let origXdg: string | undefined;
+  let origAppData: string | undefined;
 
   beforeEach(() => {
     platform = new NodePlatformFunctions();
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'stripe-telemetry-test-'));
-    origXdg = process.env.XDG_CONFIG_HOME;
-    process.env.XDG_CONFIG_HOME = tmpDir;
+    if (isWindows) {
+      origAppData = process.env.APPDATA;
+      process.env.APPDATA = tmpDir;
+    } else {
+      origXdg = process.env.XDG_CONFIG_HOME;
+      process.env.XDG_CONFIG_HOME = tmpDir;
+    }
   });
 
   afterEach(() => {
-    if (origXdg !== undefined) {
-      process.env.XDG_CONFIG_HOME = origXdg;
+    if (isWindows) {
+      if (origAppData !== undefined) {
+        process.env.APPDATA = origAppData;
+      } else {
+        delete process.env.APPDATA;
+      }
     } else {
-      delete process.env.XDG_CONFIG_HOME;
+      if (origXdg !== undefined) {
+        process.env.XDG_CONFIG_HOME = origXdg;
+      } else {
+        delete process.env.XDG_CONFIG_HOME;
+      }
     }
     fs.rmSync(tmpDir, {recursive: true, force: true});
   });
@@ -44,7 +61,7 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
     const id1 = platform.getTelemetryId();
 
     // Overwrite the file with a different value after the first call
-    const filePath = path.join(tmpDir, 'stripe', 'telemetry_id');
+    const filePath = path.join(tmpDir, stripeDir, 'telemetry_id');
     fs.writeFileSync(filePath, 'ffffffffffffffffffffffffffffffff', 'utf8');
 
     // Second call should return the cached value, not the new file content
@@ -55,7 +72,7 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
 
   it('reads an existing telemetry_id from the file', () => {
     const existingId = 'deadbeef1234567890abcdef12345678';
-    const filePath = path.join(tmpDir, 'stripe', 'telemetry_id');
+    const filePath = path.join(tmpDir, stripeDir, 'telemetry_id');
     fs.mkdirSync(path.dirname(filePath), {recursive: true});
     fs.writeFileSync(filePath, existingId, 'utf8');
 
@@ -65,7 +82,7 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
 
   it('generates and persists a new ID when the file is absent', () => {
     // No pre-existing file; the directory exists but the file does not
-    const filePath = path.join(tmpDir, 'stripe', 'telemetry_id');
+    const filePath = path.join(tmpDir, stripeDir, 'telemetry_id');
     expect(fs.existsSync(filePath)).to.be.false;
 
     const id = platform.getTelemetryId();
@@ -78,7 +95,8 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
     expect(persisted).to.equal(id);
   });
 
-  it('returns null when the file cannot be written', () => {
+  it('returns null when the file cannot be written', function () {
+    if (isWindows) return this.skip();
     // Point to a path whose parent cannot be created: use a file as a directory
     const blockingFile = path.join(tmpDir, 'not-a-dir');
     fs.writeFileSync(blockingFile, 'collision', 'utf8');
@@ -89,7 +107,8 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
     expect(id).to.be.null;
   });
 
-  it('creates parent directories automatically when they are missing', () => {
+  it('creates parent directories automatically when they are missing', function () {
+    if (isWindows) return this.skip();
     // XDG_CONFIG_HOME is set to a path that does not yet exist
     const deepDir = path.join(tmpDir, 'a', 'b', 'c');
     process.env.XDG_CONFIG_HOME = deepDir;
@@ -103,7 +122,8 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
   });
 
   describe('_getTelemetryIdPath', () => {
-    it('uses XDG_CONFIG_HOME when set', () => {
+    it('uses XDG_CONFIG_HOME when set', function () {
+      if (isWindows) return this.skip();
       const xdgBase = path.join(tmpDir, 'custom-xdg');
       process.env.XDG_CONFIG_HOME = xdgBase;
 
@@ -111,7 +131,8 @@ describe('NodePlatformFunctions#getTelemetryId', () => {
       expect(result).to.equal(path.join(xdgBase, 'stripe', 'telemetry_id'));
     });
 
-    it('falls back to ~/.config/stripe/telemetry_id when XDG_CONFIG_HOME is unset', () => {
+    it('falls back to ~/.config/stripe/telemetry_id when XDG_CONFIG_HOME is unset', function () {
+      if (isWindows) return this.skip();
       delete process.env.XDG_CONFIG_HOME;
 
       const result = (platform as any)._getTelemetryIdPath();
