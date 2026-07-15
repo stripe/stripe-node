@@ -105,10 +105,14 @@ jobs:
         run: deno -V
 
       - name: Get yarn cache directory path
+        # caches are platform-specific and there's only one windows job, so don't bother caching
+        if: runner.os != 'Windows'
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> "$GITHUB_OUTPUT"
 
       - uses: actions/cache@v4
+        # caches are platform-specific and there's only one windows job, so don't bother caching
+        if: runner.os != 'Windows'
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
