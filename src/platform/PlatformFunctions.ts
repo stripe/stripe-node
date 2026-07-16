@@ -35,7 +35,7 @@ export class PlatformFunctions {
     return null;
   }
 
-  getSourceHash(): string | null {
+  getTelemetryId(): string | null {
     return null;
   }
 

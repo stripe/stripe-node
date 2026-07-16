@@ -254,9 +254,12 @@ describe('Stripe Module', function() {
       ).to.eventually.have.property('httplib', 'node');
     });
 
-    it('Should include source field when SOURCE_HASH is set', async () => {
-      const origSourceHash = StripeCore.SOURCE_HASH;
-      StripeCore.SOURCE_HASH = 'abc123def456abc123def456abc123de';
+    it('Should include telemetry_id field when telemetry is enabled and getTelemetryId returns a value', async () => {
+      const orig = (stripe as any)._platformFunctions.getTelemetryId.bind(
+        (stripe as any)._platformFunctions
+      );
+      (stripe as any)._platformFunctions.getTelemetryId = () =>
+        'abc123def456abc123def456abc123de';
 
       const userAgent: Record<string, string> = await new Promise((resolve) => {
         stripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {
@@ -264,16 +267,18 @@ describe('Stripe Module', function() {
         });
       });
 
-      StripeCore.SOURCE_HASH = origSourceHash;
+      (stripe as any)._platformFunctions.getTelemetryId = orig;
       expect(userAgent).to.have.property(
-        'source',
+        'telemetry_id',
         'abc123def456abc123def456abc123de'
       );
     });
 
-    it('Should omit source field when SOURCE_HASH is null', async () => {
-      const origSourceHash = StripeCore.SOURCE_HASH;
-      StripeCore.SOURCE_HASH = null;
+    it('Should omit telemetry_id field when getTelemetryId returns null', async () => {
+      const orig = (stripe as any)._platformFunctions.getTelemetryId.bind(
+        (stripe as any)._platformFunctions
+      );
+      (stripe as any)._platformFunctions.getTelemetryId = () => null;
 
       const userAgent: Record<string, string> = await new Promise((resolve) => {
         stripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {
@@ -281,8 +286,26 @@ describe('Stripe Module', function() {
         });
       });
 
-      StripeCore.SOURCE_HASH = origSourceHash;
-      expect(userAgent).to.not.have.property('source');
+      (stripe as any)._platformFunctions.getTelemetryId = orig;
+      expect(userAgent).to.not.have.property('telemetry_id');
+    });
+
+    it('Should omit telemetry_id field when telemetry is disabled', async () => {
+      const noTelemetryStripe = Stripe(FAKE_API_KEY, {telemetry: false});
+      const orig = (noTelemetryStripe as any)._platformFunctions.getTelemetryId.bind(
+        (noTelemetryStripe as any)._platformFunctions
+      );
+      (noTelemetryStripe as any)._platformFunctions.getTelemetryId = () =>
+        'abc123def456abc123def456abc123de';
+
+      const userAgent: Record<string, string> = await new Promise((resolve) => {
+        noTelemetryStripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {
+          resolve(JSON.parse(c));
+        });
+      });
+
+      (noTelemetryStripe as any)._platformFunctions.getTelemetryId = orig;
+      expect(userAgent).to.not.have.property('telemetry_id');
     });
   });
 
@@ -355,13 +378,11 @@ describe('Stripe Module', function() {
     const origAIAgent = StripeCore.aiAgent;
     const origAiAgentStatic = StripeCore.AI_AGENT;
     const origUserAgent = StripeCore.USER_AGENT;
-    const origSourceHash = StripeCore.SOURCE_HASH;
 
     afterEach(() => {
       StripeCore.aiAgent = origAIAgent;
       StripeCore.AI_AGENT = origAiAgentStatic;
       StripeCore.USER_AGENT = origUserAgent;
-      StripeCore.SOURCE_HASH = origSourceHash;
       StripeCore.initialize(new NodePlatformFunctions());
     });
 
@@ -390,32 +411,6 @@ describe('Stripe Module', function() {
       expect(StripeCore.AI_AGENT).to.equal('');
       expect(StripeCore.USER_AGENT).to.not.have.property('ai_agent');
       expect(StripeCore.USER_AGENT).to.not.have.property('lang_version');
-    });
-
-    it('sets SOURCE_HASH to an MD5 hex string when getSourceHash is available', () => {
-      const mockPlatform = new NodePlatformFunctions();
-      const expectedHash = crypto
-        .createHash('md5')
-        .update('Linux hostname 5.4.0 #1 SMP x86_64 GNU/Linux')
-        .digest('hex');
-      mockPlatform.getSourceHash = () => expectedHash;
-
-      StripeCore.initialize(mockPlatform);
-
-      expect(StripeCore.SOURCE_HASH).to.be.a('string');
-      expect(StripeCore.SOURCE_HASH).to.match(/^[0-9a-f]{32}$/);
-      expect(StripeCore.SOURCE_HASH).to.equal(expectedHash);
-    });
-
-    it('sets SOURCE_HASH to null when getSourceHash returns null', () => {
-      const {
-        PlatformFunctions,
-      } = require('../src/platform/PlatformFunctions.js');
-      const basePlatform = new PlatformFunctions();
-
-      StripeCore.initialize(basePlatform);
-
-      expect(StripeCore.SOURCE_HASH).to.be.null;
     });
   });
 
