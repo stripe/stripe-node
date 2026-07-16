@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Metadata, Address} from '../../shared.js';
+import {Metadata, Address, OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface CalculationLineItem {
   /**
@@ -78,7 +78,7 @@ export namespace CalculationLineItem {
     address: Address;
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive';
+  export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
 
   export interface TaxBreakdown {
     /**
@@ -166,10 +166,17 @@ export namespace CalculationLineItem {
       | 'reverse_charge'
       | 'standard_rated'
       | 'taxable_basis_reduced'
-      | 'zero_rated';
+      | 'zero_rated'
+      | OtherString;
 
     export namespace Jurisdiction {
-      export type Level = 'city' | 'country' | 'county' | 'district' | 'state';
+      export type Level =
+        | 'city'
+        | 'country'
+        | 'county'
+        | 'district'
+        | 'state'
+        | OtherString;
     }
 
     export namespace TaxRateDetails {

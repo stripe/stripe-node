@@ -5,7 +5,7 @@ import {Discount as _Discount} from './Discounts.js';
 import {PromotionCode} from './PromotionCodes.js';
 import {Price, DeletedPrice} from './Prices.js';
 import {TaxRate} from './TaxRates.js';
-import {Metadata} from '../shared.js';
+import {OtherString, Metadata} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface QuoteLine {
   /**
@@ -147,7 +147,7 @@ export namespace QuoteLine {
     type: AppliesTo.Type;
   }
 
-  export type BillingCycleAnchor = 'automatic' | 'line_starts_at';
+  export type BillingCycleAnchor = 'automatic' | 'line_starts_at' | OtherString;
 
   export interface CancelSubscriptionSchedule {
     /**
@@ -166,7 +166,7 @@ export namespace QuoteLine {
     prorate: boolean | null;
   }
 
-  export type EffectiveAt = 'billing_period_start' | 'line_start';
+  export type EffectiveAt = 'billing_period_start' | 'line_start' | OtherString;
 
   export interface EndsAt {
     /**
@@ -198,7 +198,8 @@ export namespace QuoteLine {
   export type ProrationBehavior =
     | 'always_invoice'
     | 'create_prorations'
-    | 'none';
+    | 'none'
+    | OtherString;
 
   export interface SetPauseCollection {
     /**
@@ -212,7 +213,7 @@ export namespace QuoteLine {
     type: SetPauseCollection.Type;
   }
 
-  export type SetScheduleEnd = 'line_ends_at' | 'line_starts_at';
+  export type SetScheduleEnd = 'line_ends_at' | 'line_starts_at' | OtherString;
 
   export interface StartsAt {
     /**
@@ -416,7 +417,8 @@ export namespace QuoteLine {
       | 'remove_metadata'
       | 'set_discounts'
       | 'set_items'
-      | 'set_metadata';
+      | 'set_metadata'
+      | OtherString;
 
     export namespace AddDiscount {
       export interface DiscountEnd {
@@ -448,7 +450,8 @@ export namespace QuoteLine {
         export type StartDate =
           | 'current_period_end'
           | 'current_period_start'
-          | 'line_start';
+          | 'line_start'
+          | OtherString;
 
         export namespace ServicePeriodAnchorConfig {
           export interface Custom {
@@ -478,7 +481,7 @@ export namespace QuoteLine {
             second: number | null;
           }
 
-          export type Type = 'custom' | 'inherit';
+          export type Type = 'custom' | 'inherit' | OtherString;
         }
       }
     }
@@ -555,7 +558,8 @@ export namespace QuoteLine {
           export type StartDate =
             | 'current_period_end'
             | 'current_period_start'
-            | 'line_start';
+            | 'line_start'
+            | OtherString;
 
           export namespace ServicePeriodAnchorConfig {
             export interface Custom {
@@ -585,13 +589,13 @@ export namespace QuoteLine {
               second: number | null;
             }
 
-            export type Type = 'custom' | 'inherit';
+            export type Type = 'custom' | 'inherit' | OtherString;
           }
         }
       }
 
       export namespace Trial {
-        export type Type = 'free' | 'paid';
+        export type Type = 'free' | 'paid' | OtherString;
       }
     }
 
@@ -644,7 +648,8 @@ export namespace QuoteLine {
         export type StartDate =
           | 'current_period_end'
           | 'current_period_start'
-          | 'line_start';
+          | 'line_start'
+          | OtherString;
 
         export namespace ServicePeriodAnchorConfig {
           export interface Custom {
@@ -674,7 +679,7 @@ export namespace QuoteLine {
             second: number | null;
           }
 
-          export type Type = 'custom' | 'inherit';
+          export type Type = 'custom' | 'inherit' | OtherString;
         }
       }
     }
@@ -751,7 +756,8 @@ export namespace QuoteLine {
           export type StartDate =
             | 'current_period_end'
             | 'current_period_start'
-            | 'line_start';
+            | 'line_start'
+            | OtherString;
 
           export namespace ServicePeriodAnchorConfig {
             export interface Custom {
@@ -781,19 +787,19 @@ export namespace QuoteLine {
               second: number | null;
             }
 
-            export type Type = 'custom' | 'inherit';
+            export type Type = 'custom' | 'inherit' | OtherString;
           }
         }
       }
 
       export namespace Trial {
-        export type Type = 'free' | 'paid';
+        export type Type = 'free' | 'paid' | OtherString;
       }
     }
   }
 
   export namespace AppliesTo {
-    export type Type = 'new_reference' | 'subscription_schedule';
+    export type Type = 'new_reference' | 'subscription_schedule' | OtherString;
   }
 
   export namespace EndsAt {
@@ -823,10 +829,11 @@ export namespace QuoteLine {
       | 'quote_acceptance_date'
       | 'schedule_end'
       | 'timestamp'
-      | 'upcoming_invoice';
+      | 'upcoming_invoice'
+      | OtherString;
 
     export namespace Duration {
-      export type Interval = 'day' | 'month' | 'week' | 'year';
+      export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
     }
   }
 
@@ -838,10 +845,14 @@ export namespace QuoteLine {
       behavior: Set.Behavior;
     }
 
-    export type Type = 'remove' | 'set';
+    export type Type = 'remove' | 'set' | OtherString;
 
     export namespace Set {
-      export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+      export type Behavior =
+        | 'keep_as_draft'
+        | 'mark_uncollectible'
+        | 'void'
+        | OtherString;
     }
   }
 
@@ -867,7 +878,8 @@ export namespace QuoteLine {
       | 'quote_acceptance_date'
       | 'schedule_end'
       | 'timestamp'
-      | 'upcoming_invoice';
+      | 'upcoming_invoice'
+      | OtherString;
   }
 
   export namespace TrialSettings {
@@ -879,7 +891,7 @@ export namespace QuoteLine {
     }
 
     export namespace EndBehavior {
-      export type ProrateUpFront = 'defer' | 'include';
+      export type ProrateUpFront = 'defer' | 'include' | OtherString;
     }
   }
 }

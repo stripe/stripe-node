@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class IssuedTokenResource extends StripeResource {
@@ -137,13 +138,19 @@ export namespace IssuedToken {
     | 'consumed'
     | 'expired'
     | 'resolved'
-    | 'revoked';
+    | 'revoked'
+    | OtherString;
 
   export interface NextAction {
     /**
+     * Contains details for handling the next action by redirecting the customer. Present when `next_action.type` is `redirect_to_url`.
+     */
+    redirect_to_url: NextAction.RedirectToUrl | null;
+
+    /**
      * Specifies the type of next action required. Determines which child attribute contains action details.
      */
-    type: 'use_stripe_sdk';
+    type: NextAction.Type;
 
     /**
      * Contains details for handling the next action using Stripe.js, iOS, or Android SDKs. Present when `next_action.type` is `use_stripe_sdk`.
@@ -170,7 +177,11 @@ export namespace IssuedToken {
     network_business_profile: string;
   }
 
-  export type Status = 'active' | 'deactivated' | 'requires_action';
+  export type Status =
+    | 'active'
+    | 'deactivated'
+    | 'requires_action'
+    | OtherString;
 
   export interface UsageDetails {
     /**
@@ -202,6 +213,20 @@ export namespace IssuedToken {
   }
 
   export namespace NextAction {
+    export interface RedirectToUrl {
+      /**
+       * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
+       */
+      return_url: string;
+
+      /**
+       * The URL you must redirect your customer to in order to authenticate the payment.
+       */
+      url: string;
+    }
+
+    export type Type = 'redirect_to_url' | 'use_stripe_sdk' | OtherString;
+
     export interface UseStripeSdk {
       /**
        * A base64-encoded string used by Stripe.js and the iOS and Android client SDKs to handle the next action. Its content is subject to change.
@@ -316,7 +341,7 @@ export namespace IssuedToken {
   }
 
   export namespace UsageLimits {
-    export type RecurringInterval = 'month' | 'week' | 'year';
+    export type RecurringInterval = 'month' | 'week' | 'year' | OtherString;
   }
 }
 export namespace SharedPayment {
@@ -395,7 +420,7 @@ export namespace SharedPayment {
     }
 
     export namespace UsageLimits {
-      export type RecurringInterval = 'month' | 'week' | 'year';
+      export type RecurringInterval = 'month' | 'week' | 'year' | OtherString;
     }
   }
 }

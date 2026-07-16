@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {PaymentMethod} from './PaymentMethods.js';
-import {PaginationParams} from '../shared.js';
+import {PaginationParams, OtherString} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class MandateResource extends StripeResource {
@@ -167,9 +167,9 @@ export namespace Mandate {
     currency: string;
   }
 
-  export type Status = 'active' | 'inactive' | 'pending';
+  export type Status = 'active' | 'inactive' | 'pending' | OtherString;
 
-  export type Type = 'multi_use' | 'single_use';
+  export type Type = 'multi_use' | 'single_use' | OtherString;
 
   export namespace CustomerAcceptance {
     export interface Offline {}
@@ -419,11 +419,15 @@ export namespace Mandate {
     }
 
     export namespace AcssDebit {
-      export type DefaultFor = 'invoice' | 'subscription';
+      export type DefaultFor = 'invoice' | 'subscription' | OtherString;
 
-      export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+      export type PaymentSchedule =
+        | 'combined'
+        | 'interval'
+        | 'sporadic'
+        | OtherString;
 
-      export type TransactionType = 'business' | 'personal';
+      export type TransactionType = 'business' | 'personal' | OtherString;
     }
 
     export namespace BacsDebit {
@@ -438,15 +442,16 @@ export namespace Mandate {
         | 'bank_account_restricted'
         | 'bank_ownership_changed'
         | 'could_not_process'
-        | 'debit_not_authorized';
+        | 'debit_not_authorized'
+        | OtherString;
     }
 
     export namespace Blik {
-      export type Type = 'off_session' | 'on_session';
+      export type Type = 'off_session' | 'on_session' | OtherString;
     }
 
     export namespace Payto {
-      export type AmountType = 'fixed' | 'maximum';
+      export type AmountType = 'fixed' | 'maximum' | OtherString;
 
       export type PaymentSchedule =
         | 'adhoc'
@@ -456,7 +461,8 @@ export namespace Mandate {
         | 'monthly'
         | 'quarterly'
         | 'semi_annual'
-        | 'weekly';
+        | 'weekly'
+        | OtherString;
 
       export type Purpose =
         | 'dependant_support'
@@ -469,24 +475,26 @@ export namespace Mandate {
         | 'retail'
         | 'salary'
         | 'tax'
-        | 'utility';
+        | 'utility'
+        | OtherString;
     }
 
     export namespace Pix {
-      export type AmountIncludesIof = 'always' | 'never';
+      export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
-      export type AmountType = 'fixed' | 'maximum';
+      export type AmountType = 'fixed' | 'maximum' | OtherString;
 
       export type PaymentSchedule =
         | 'halfyearly'
         | 'monthly'
         | 'quarterly'
         | 'weekly'
-        | 'yearly';
+        | 'yearly'
+        | OtherString;
     }
 
     export namespace Upi {
-      export type AmountType = 'fixed' | 'maximum';
+      export type AmountType = 'fixed' | 'maximum' | OtherString;
     }
   }
 }
@@ -515,5 +523,5 @@ export interface MandateListParams extends PaginationParams {
   on_behalf_of?: string;
 }
 export namespace MandateListParams {
-  export type Status = 'active' | 'inactive' | 'pending';
+  export type Status = 'active' | 'inactive' | 'pending' | OtherString;
 }

@@ -4,7 +4,7 @@ import {Discount as _Discount} from './Discounts.js';
 import {Price} from './Prices.js';
 import {Product, DeletedProduct} from './Products.js';
 import {TaxRate} from './TaxRates.js';
-import {Metadata} from '../shared.js';
+import {Metadata, OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface LineItem {
   /**
@@ -172,6 +172,7 @@ export namespace LineItem {
       | 'reverse_charge'
       | 'standard_rated'
       | 'taxable_basis_reduced'
-      | 'zero_rated';
+      | 'zero_rated'
+      | OtherString;
   }
 }

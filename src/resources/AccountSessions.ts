@@ -595,6 +595,11 @@ export namespace AccountSession {
          * Whether sending refunds is enabled. This is `true` by default.
          */
         refund_management: boolean;
+
+        /**
+         * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
+         */
+        smart_disputes_management: boolean;
       }
     }
 
@@ -817,6 +822,11 @@ export namespace AccountSession {
          * Whether sending refunds is enabled. This is `true` by default.
          */
         refund_management: boolean;
+
+        /**
+         * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
+         */
+        smart_disputes_management: boolean;
       }
     }
 
@@ -836,6 +846,11 @@ export namespace AccountSession {
          * Whether sending refunds is enabled. This is `true` by default.
          */
         refund_management: boolean;
+
+        /**
+         * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
+         */
+        smart_disputes_management: boolean;
       }
     }
 
@@ -860,6 +875,11 @@ export namespace AccountSession {
          * Whether sending refunds is enabled. This is `true` by default.
          */
         refund_management: boolean;
+
+        /**
+         * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
+         */
+        smart_disputes_management: boolean;
       }
     }
 
@@ -1039,16 +1059,6 @@ export namespace AccountSessionCreateParams {
     financial_account_transactions?: Components.FinancialAccountTransactions;
 
     /**
-     * Configuration for the [financial accounts](https://docs.stripe.com/connect/supported-embedded-components/financial-accounts/) embedded component.
-     */
-    financial_accounts?: Components.FinancialAccounts;
-
-    /**
-     * Configuration for the [financial accounts transactions](https://docs.stripe.com/connect/supported-embedded-components/financial-accounts-transactions/) embedded component.
-     */
-    financial_accounts_transactions?: Components.FinancialAccountsTransactions;
-
-    /**
      * Configuration for the [instant payouts promotion](https://docs.stripe.com/connect/supported-embedded-components/instant-payouts-promotion/) embedded component.
      */
     instant_payouts_promotion?: Components.InstantPayoutsPromotion;
@@ -1117,11 +1127,6 @@ export namespace AccountSessionCreateParams {
      * Configuration for the [recipients](https://docs.stripe.com/connect/supported-embedded-components/recipients/) embedded component.
      */
     recipients?: Components.Recipients;
-
-    /**
-     * Configuration for the [recipients list](https://docs.stripe.com/connect/supported-embedded-components/recipients-list/) embedded component.
-     */
-    recipients_list?: Components.RecipientsList;
 
     /**
      * Configuration for the [reporting chart](https://docs.stripe.com/connect/supported-embedded-components/reporting-chart/) embedded component.
@@ -1359,14 +1364,6 @@ export namespace AccountSessionCreateParams {
       features?: FinancialAccountTransactions.Features;
     }
 
-    export interface FinancialAccounts {
-      features?: FinancialAccounts.Features;
-    }
-
-    export interface FinancialAccountsTransactions {
-      features?: FinancialAccountsTransactions.Features;
-    }
-
     export interface InstantPayoutsPromotion {
       /**
        * Whether the embedded component is enabled.
@@ -1530,10 +1527,6 @@ export namespace AccountSessionCreateParams {
       enabled: boolean;
 
       features?: Recipients.Features;
-    }
-
-    export interface RecipientsList {
-      features?: RecipientsList.Features;
     }
 
     export interface ReportingChart {
@@ -1769,14 +1762,6 @@ export namespace AccountSessionCreateParams {
       }
     }
 
-    export namespace FinancialAccounts {
-      export interface Features {}
-    }
-
-    export namespace FinancialAccountsTransactions {
-      export interface Features {}
-    }
-
     export namespace FinancialAccountTransactions {
       export interface Features {
         /**
@@ -1995,10 +1980,6 @@ export namespace AccountSessionCreateParams {
          */
         send_money?: boolean;
       }
-    }
-
-    export namespace RecipientsList {
-      export interface Features {}
     }
 
     export namespace ReportingChart {

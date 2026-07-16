@@ -203,7 +203,6 @@ export {ExchangeRateResource as ExchangeRates} from './resources/ExchangeRates.j
 export {ExternalAccountResource as ExternalAccounts} from './resources/ExternalAccounts.js';
 export {FileResource as Files} from './resources/Files.js';
 export {FileLinkResource as FileLinks} from './resources/FileLinks.js';
-export {FrMealVouchersOnboardingResource as FrMealVouchersOnboardings} from './resources/FrMealVouchersOnboardings.js';
 export {FxQuoteResource as FxQuotes} from './resources/FxQuotes.js';
 export {GiftCardResource as GiftCards} from './resources/GiftCards.js';
 export {GiftCardOperationResource as GiftCardOperations} from './resources/GiftCardOperations.js';

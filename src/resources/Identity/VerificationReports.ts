@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {BlocklistEntry} from './BlocklistEntries.js';
-import {PaginationParams, RangeQueryParam, Address} from '../../shared.js';
+import {
+  PaginationParams,
+  RangeQueryParam,
+  OtherString,
+  Address,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class VerificationReportResource extends StripeResource {
@@ -299,7 +304,12 @@ export namespace VerificationReport {
     status: Selfie.Status;
   }
 
-  export type Type = 'document' | 'email' | 'id_number' | 'verification_flow';
+  export type Type =
+    | 'document'
+    | 'email'
+    | 'id_number'
+    | 'verification_flow'
+    | OtherString;
 
   export namespace Document {
     export interface Dob {
@@ -365,17 +375,23 @@ export namespace VerificationReport {
       year: number | null;
     }
 
-    export type Sex = '[redacted]' | 'female' | 'male' | 'unknown';
+    export type Sex =
+      | '[redacted]'
+      | 'female'
+      | 'male'
+      | 'unknown'
+      | OtherString;
 
-    export type Status = 'unverified' | 'verified';
+    export type Status = 'unverified' | 'verified' | OtherString;
 
-    export type Type = 'driving_license' | 'id_card' | 'passport';
+    export type Type = 'driving_license' | 'id_card' | 'passport' | OtherString;
 
     export namespace Error {
       export type Code =
         | 'document_expired'
         | 'document_type_not_supported'
-        | 'document_unverified_other';
+        | 'document_unverified_other'
+        | OtherString;
     }
   }
 
@@ -409,12 +425,13 @@ export namespace VerificationReport {
       reason: string | null;
     }
 
-    export type Status = 'unverified' | 'verified';
+    export type Status = 'unverified' | 'verified' | OtherString;
 
     export namespace Error {
       export type Code =
         | 'email_unverified_other'
-        | 'email_verification_declined';
+        | 'email_verification_declined'
+        | OtherString;
     }
   }
 
@@ -448,15 +465,16 @@ export namespace VerificationReport {
       reason: string | null;
     }
 
-    export type IdNumberType = 'br_cpf' | 'sg_nric' | 'us_ssn';
+    export type IdNumberType = 'br_cpf' | 'sg_nric' | 'us_ssn' | OtherString;
 
-    export type Status = 'unverified' | 'verified';
+    export type Status = 'unverified' | 'verified' | OtherString;
 
     export namespace Error {
       export type Code =
         | 'id_number_insufficient_document_data'
         | 'id_number_mismatch'
-        | 'id_number_unverified_other';
+        | 'id_number_unverified_other'
+        | OtherString;
     }
   }
 
@@ -486,7 +504,11 @@ export namespace VerificationReport {
     export interface IdNumber {}
 
     export namespace Document {
-      export type AllowedType = 'driving_license' | 'id_card' | 'passport';
+      export type AllowedType =
+        | 'driving_license'
+        | 'id_card'
+        | 'passport'
+        | OtherString;
     }
   }
 
@@ -503,12 +525,13 @@ export namespace VerificationReport {
       reason: string | null;
     }
 
-    export type Status = 'unverified' | 'verified';
+    export type Status = 'unverified' | 'verified' | OtherString;
 
     export namespace Error {
       export type Code =
         | 'phone_unverified_other'
-        | 'phone_verification_declined';
+        | 'phone_verification_declined'
+        | OtherString;
     }
   }
 
@@ -525,14 +548,15 @@ export namespace VerificationReport {
       reason: string | null;
     }
 
-    export type Status = 'unverified' | 'verified';
+    export type Status = 'unverified' | 'verified' | OtherString;
 
     export namespace Error {
       export type Code =
         | 'selfie_document_missing_photo'
         | 'selfie_face_mismatch'
         | 'selfie_manipulated'
-        | 'selfie_unverified_other';
+        | 'selfie_unverified_other'
+        | OtherString;
     }
   }
 }
@@ -578,6 +602,6 @@ export namespace Identity {
   }
 
   export namespace VerificationReportListParams {
-    export type Type = 'document' | 'email' | 'id_number';
+    export type Type = 'document' | 'email' | 'id_number' | OtherString;
   }
 }

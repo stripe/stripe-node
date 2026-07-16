@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {Event} from './Events.js';
-import {MetadataParam, Metadata} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {DeletedObject} from './../../V2/DeletedObject.js';
 
@@ -283,7 +283,8 @@ export namespace EventDestination {
   export type Type =
     | 'amazon_eventbridge'
     | 'azure_event_grid'
-    | 'webhook_endpoint';
+    | 'webhook_endpoint'
+    | OtherString;
 
   export interface WebhookEndpoint {
     /**
@@ -310,7 +311,8 @@ export namespace EventDestination {
       | 'activated'
       | 'deleted'
       | 'never_activated'
-      | 'unknown';
+      | 'unknown'
+      | OtherString;
   }
 
   export namespace StatusDetails {
@@ -325,7 +327,8 @@ export namespace EventDestination {
       export type Reason =
         | 'no_aws_event_source_exists'
         | 'no_azure_partner_topic_exists'
-        | 'user';
+        | 'user'
+        | OtherString;
     }
   }
 }
@@ -403,7 +406,8 @@ export namespace V2 {
       export type Type =
         | 'amazon_eventbridge'
         | 'azure_event_grid'
-        | 'webhook_endpoint';
+        | 'webhook_endpoint'
+        | OtherString;
 
       export interface AmazonEventbridge {
         /**
@@ -436,7 +440,8 @@ export namespace V2 {
 
       export type Include =
         | 'webhook_endpoint.signing_secret'
-        | 'webhook_endpoint.url';
+        | 'webhook_endpoint.url'
+        | OtherString;
 
       export interface WebhookEndpoint {
         /**

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams} from '../../shared.js';
+import {OtherString, PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class SecretResource extends StripeResource {
@@ -116,7 +116,7 @@ export namespace Secret {
   }
 
   export namespace Scope {
-    export type Type = 'account' | 'user';
+    export type Type = 'account' | 'user' | OtherString;
   }
 }
 export namespace Apps {
@@ -161,7 +161,7 @@ export namespace Apps {
     }
 
     export namespace Scope {
-      export type Type = 'account' | 'user';
+      export type Type = 'account' | 'user' | OtherString;
     }
   }
 }
@@ -192,7 +192,7 @@ export namespace Apps {
     }
 
     export namespace Scope {
-      export type Type = 'account' | 'user';
+      export type Type = 'account' | 'user' | OtherString;
     }
   }
 }
@@ -228,7 +228,7 @@ export namespace Apps {
     }
 
     export namespace Scope {
-      export type Type = 'account' | 'user';
+      export type Type = 'account' | 'user' | OtherString;
     }
   }
 }
@@ -264,7 +264,7 @@ export namespace Apps {
     }
 
     export namespace Scope {
-      export type Type = 'account' | 'user';
+      export type Type = 'account' | 'user' | OtherString;
     }
   }
 }

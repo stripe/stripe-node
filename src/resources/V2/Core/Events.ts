@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RangeQueryParam, Decimal} from '../../../shared.js';
+import {RangeQueryParam, Decimal, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class EventResource extends StripeResource {
@@ -201,7 +201,11 @@ export namespace Event {
 
         export interface StripeAction {}
 
-        export type Type = 'api_key' | 'dashboard_user' | 'stripe_action';
+        export type Type =
+          | 'api_key'
+          | 'dashboard_user'
+          | 'stripe_action'
+          | OtherString;
       }
     }
   }
@@ -1335,14 +1339,16 @@ export namespace V1AccountSignalsIncludingDelinquencyCreatedEvent {
       | 'low'
       | 'normal'
       | 'not_assessed'
-      | 'unknown';
+      | 'unknown'
+      | OtherString;
 
     export namespace Indicator {
       export type Impact =
         | 'decrease'
         | 'neutral'
         | 'slight_increase'
-        | 'strong_increase';
+        | 'strong_increase'
+        | OtherString;
 
       export type Indicator =
         | 'account_balance'
@@ -1359,7 +1365,8 @@ export namespace V1AccountSignalsIncludingDelinquencyCreatedEvent {
         | 'payouts'
         | 'refunds'
         | 'tenure'
-        | 'transfers';
+        | 'transfers'
+        | OtherString;
     }
   }
 }
@@ -1551,7 +1558,8 @@ export namespace V1BillingMeterErrorReportTriggeredEvent {
           | 'missing_dimension_payload_keys'
           | 'no_meter'
           | 'timestamp_in_future'
-          | 'timestamp_too_far_in_past';
+          | 'timestamp_too_far_in_past'
+          | OtherString;
 
         export interface SampleError {
           /**
@@ -1657,7 +1665,8 @@ export namespace V1BillingMeterNoMeterFoundEvent {
           | 'missing_dimension_payload_keys'
           | 'no_meter'
           | 'timestamp_in_future'
-          | 'timestamp_too_far_in_past';
+          | 'timestamp_too_far_in_past'
+          | OtherString;
 
         export interface SampleError {
           /**
@@ -6643,7 +6652,8 @@ export namespace V2CoreAccountIncludingConfigurationCardCreatorCapabilityStatusU
       | 'consumer.celtic.revolving_credit_card'
       | 'consumer.cross_river_bank.prepaid_card'
       | 'consumer.lead.debit_card'
-      | 'consumer.lead.prepaid_card';
+      | 'consumer.lead.prepaid_card'
+      | OtherString;
   }
 }
 
@@ -6807,7 +6817,8 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'swish_payments'
       | 'twint_payments'
       | 'us_bank_transfer_payments'
-      | 'zip_payments';
+      | 'zip_payments'
+      | OtherString;
   }
 }
 
@@ -6894,7 +6905,8 @@ export namespace V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatus
       | 'outbound_transfers.financial_accounts'
       | 'received_credits.bank_accounts'
       | 'received_credits.crypto_wallets'
-      | 'received_debits.bank_accounts';
+      | 'received_debits.bank_accounts'
+      | OtherString;
   }
 }
 
@@ -6974,7 +6986,8 @@ export namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpd
       | 'paper_checks'
       | 'stripe_balance.payouts'
       | 'stripe_balance.stripe_transfers'
-      | 'stripe.transfers';
+      | 'stripe.transfers'
+      | OtherString;
   }
 }
 
@@ -7121,9 +7134,10 @@ export namespace V2CoreAccountLinkReturnedEvent {
       | 'merchant'
       | 'money_manager'
       | 'recipient'
-      | 'storer';
+      | 'storer'
+      | OtherString;
 
-    export type UseCase = 'account_onboarding' | 'account_update';
+    export type UseCase = 'account_onboarding' | 'account_update' | OtherString;
   }
 }
 
@@ -7275,7 +7289,8 @@ export namespace V2CoreAccountSignalsFraudulentWebsiteReadyEvent {
       | 'low'
       | 'normal'
       | 'not_assessed'
-      | 'unknown';
+      | 'unknown'
+      | OtherString;
   }
 }
 
@@ -7820,7 +7835,7 @@ export namespace V2CoreHealthApiErrorFiringEvent {
     }
 
     export namespace Impact {
-      export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+      export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | OtherString;
 
       export interface TopImpactedAccount {
         /**
@@ -7928,7 +7943,7 @@ export namespace V2CoreHealthApiErrorResolvedEvent {
     }
 
     export namespace Impact {
-      export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+      export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | OtherString;
 
       export interface TopImpactedAccount {
         /**
@@ -8026,7 +8041,7 @@ export namespace V2CoreHealthApiLatencyFiringEvent {
     }
 
     export namespace Impact {
-      export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+      export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | OtherString;
 
       export interface TopImpactedAccount {
         /**
@@ -8129,7 +8144,7 @@ export namespace V2CoreHealthApiLatencyResolvedEvent {
     }
 
     export namespace Impact {
-      export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+      export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | OtherString;
 
       export interface TopImpactedAccount {
         /**
@@ -8223,7 +8238,7 @@ export namespace V2CoreHealthAuthorizationRateDropFiringEvent {
     }
 
     export namespace Impact {
-      export type ChargeType = 'money_moving' | 'validation';
+      export type ChargeType = 'money_moving' | 'validation' | OtherString;
 
       export interface Dimension {
         /**
@@ -8306,7 +8321,8 @@ export namespace V2CoreHealthAuthorizationRateDropFiringEvent {
         | 'us_bank_account'
         | 'vipps'
         | 'wechat_pay'
-        | 'zip';
+        | 'zip'
+        | OtherString;
     }
   }
 }
@@ -8388,7 +8404,7 @@ export namespace V2CoreHealthAuthorizationRateDropResolvedEvent {
     }
 
     export namespace Impact {
-      export type ChargeType = 'money_moving' | 'validation';
+      export type ChargeType = 'money_moving' | 'validation' | OtherString;
 
       export interface Dimension {
         /**
@@ -8471,7 +8487,8 @@ export namespace V2CoreHealthAuthorizationRateDropResolvedEvent {
         | 'us_bank_account'
         | 'vipps'
         | 'wechat_pay'
-        | 'zip';
+        | 'zip'
+        | OtherString;
     }
   }
 }
@@ -8532,7 +8549,7 @@ export namespace V2CoreHealthElementsErrorFiringEvent {
     }
 
     export namespace Impact {
-      export type ElementType = 'expressCheckout' | 'payment';
+      export type ElementType = 'expressCheckout' | 'payment' | OtherString;
     }
   }
 }
@@ -8598,7 +8615,7 @@ export namespace V2CoreHealthElementsErrorResolvedEvent {
     }
 
     export namespace Impact {
-      export type ElementType = 'expressCheckout' | 'payment';
+      export type ElementType = 'expressCheckout' | 'payment' | OtherString;
     }
   }
 }
@@ -8751,7 +8768,7 @@ export namespace V2CoreHealthFraudRateIncreasedEvent {
     }
 
     export namespace Impact {
-      export type AttackType = 'spike' | 'sustained_attack';
+      export type AttackType = 'spike' | 'sustained_attack' | OtherString;
     }
   }
 }
@@ -9427,7 +9444,8 @@ export namespace V2CoreHealthPaymentMethodErrorFiringEvent {
         | 'us_bank_account'
         | 'vipps'
         | 'wechat_pay'
-        | 'zip';
+        | 'zip'
+        | OtherString;
 
       export interface TopImpactedAccount {
         /**
@@ -9594,7 +9612,8 @@ export namespace V2CoreHealthPaymentMethodErrorResolvedEvent {
         | 'us_bank_account'
         | 'vipps'
         | 'wechat_pay'
-        | 'zip';
+        | 'zip'
+        | OtherString;
 
       export interface TopImpactedAccount {
         /**
@@ -12488,14 +12507,16 @@ export namespace V2SignalsAccountSignalFraudulentMerchantReadyEvent {
         | 'low'
         | 'normal'
         | 'not_assessed'
-        | 'unknown';
+        | 'unknown'
+        | OtherString;
 
       export namespace Indicator {
         export type Impact =
           | 'decrease'
           | 'neutral'
           | 'slight_increase'
-          | 'strong_increase';
+          | 'strong_increase'
+          | OtherString;
 
         export type Indicator =
           | 'bank_account'
@@ -12507,7 +12528,8 @@ export namespace V2SignalsAccountSignalFraudulentMerchantReadyEvent {
           | 'other_related_accounts'
           | 'other_transaction_activity'
           | 'owner_email'
-          | 'web_presence';
+          | 'web_presence'
+          | OtherString;
       }
     }
   }

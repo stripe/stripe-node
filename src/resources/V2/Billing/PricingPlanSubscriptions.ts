@@ -3,7 +3,12 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {CustomPricingUnit} from './CustomPricingUnits.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, Metadata, Decimal} from '../../../shared.js';
+import {
+  OtherString,
+  MetadataParam,
+  Metadata,
+  Decimal,
+} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class PricingPlanSubscriptionResource extends StripeResource {
@@ -563,7 +568,8 @@ export namespace PricingPlanSubscription {
       | 'switched_service'
       | 'too_complex'
       | 'too_expensive'
-      | 'unused';
+      | 'unused'
+      | OtherString;
   }
 
   export namespace DiscountDetail {
@@ -832,7 +838,10 @@ export namespace PricingPlanSubscription {
         interval_count: number;
       }
 
-      export type Type = 'credit_grant' | 'credit_grant_per_tenant';
+      export type Type =
+        | 'credit_grant'
+        | 'credit_grant_per_tenant'
+        | OtherString;
 
       export namespace CreditGrantDetails {
         export interface Amount {
@@ -884,7 +893,7 @@ export namespace PricingPlanSubscription {
             value: Decimal;
           }
 
-          export type Type = 'custom_pricing_unit' | 'monetary';
+          export type Type = 'custom_pricing_unit' | 'monetary' | OtherString;
         }
 
         export namespace ApplicabilityConfig {
@@ -952,7 +961,7 @@ export namespace PricingPlanSubscription {
             value: Decimal;
           }
 
-          export type Type = 'custom_pricing_unit' | 'monetary';
+          export type Type = 'custom_pricing_unit' | 'monetary' | OtherString;
         }
 
         export namespace ApplicabilityConfig {
@@ -988,7 +997,8 @@ export namespace V2 {
     export namespace PricingPlanSubscriptionRetrieveParams {
       export type Include =
         | 'discount_details'
-        | 'pricing_plan_component_details';
+        | 'pricing_plan_component_details'
+        | OtherString;
     }
   }
 }
@@ -1049,7 +1059,8 @@ export namespace V2 {
     export namespace PricingPlanSubscriptionListParams {
       export type Include =
         | 'discount_details'
-        | 'pricing_plan_component_details';
+        | 'pricing_plan_component_details'
+        | OtherString;
 
       export interface Payer {
         /**
@@ -1083,7 +1094,8 @@ export namespace V2 {
     export namespace PricingPlanSubscriptionRemoveDiscountsParams {
       export type Include =
         | 'discount_details'
-        | 'pricing_plan_component_details';
+        | 'pricing_plan_component_details'
+        | OtherString;
     }
   }
 }

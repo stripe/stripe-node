@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {WorkflowRun} from './WorkflowRuns.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class WorkflowResource extends StripeResource {
@@ -85,7 +86,12 @@ export interface Workflow {
   triggers: Array<Workflow.Trigger>;
 }
 export namespace Workflow {
-  export type Status = 'active' | 'archived' | 'draft' | 'inactive';
+  export type Status =
+    | 'active'
+    | 'archived'
+    | 'draft'
+    | 'inactive'
+    | OtherString;
 
   export interface Trigger {
     /**
@@ -119,7 +125,7 @@ export namespace Workflow {
 
     export interface Manual {}
 
-    export type Type = 'event_trigger' | 'manual';
+    export type Type = 'event_trigger' | 'manual' | OtherString;
   }
 }
 export namespace V2 {
@@ -143,7 +149,12 @@ export namespace V2 {
     }
 
     export namespace WorkflowListParams {
-      export type Status = 'active' | 'archived' | 'draft' | 'inactive';
+      export type Status =
+        | 'active'
+        | 'archived'
+        | 'draft'
+        | 'inactive'
+        | OtherString;
     }
   }
 }

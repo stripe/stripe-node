@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, Metadata} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {StatementResource} from './FinancialAccounts/Statements.js';
 import {Stripe} from '../../../stripe.core.js';
@@ -332,7 +332,7 @@ export namespace FinancialAccount {
         financial_account: string;
       }
 
-      export type Type = 'platform' | 'stripe';
+      export type Type = 'platform' | 'stripe' | OtherString;
     }
   }
 
@@ -443,7 +443,7 @@ export namespace FinancialAccount {
   }
 
   export namespace Storage {
-    export type FundsUsageType = 'business' | 'consumer';
+    export type FundsUsageType = 'business' | 'consumer' | OtherString;
   }
 }
 export namespace V2 {
@@ -486,7 +486,7 @@ export namespace V2 {
       }
 
       export namespace Storage {
-        export type FundsUsageType = 'business' | 'consumer';
+        export type FundsUsageType = 'business' | 'consumer' | OtherString;
       }
     }
   }
@@ -564,7 +564,8 @@ export namespace V2 {
         | 'credit'
         | 'multiprocessor_settlement'
         | 'payments'
-        | 'storage';
+        | 'storage'
+        | OtherString;
     }
   }
 }

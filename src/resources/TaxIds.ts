@@ -4,7 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {Customer} from './Customers.js';
 import {Account} from './Accounts.js';
 import {Application} from './Applications.js';
-import {PaginationParams} from '../shared.js';
+import {OtherString, PaginationParams} from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 
 export class TaxIdResource extends StripeResource {
@@ -319,7 +319,12 @@ export namespace TaxId {
   }
 
   export namespace Owner {
-    export type Type = 'account' | 'application' | 'customer' | 'self';
+    export type Type =
+      | 'account'
+      | 'application'
+      | 'customer'
+      | 'self'
+      | OtherString;
   }
 
   export namespace Verification {
@@ -489,7 +494,12 @@ export namespace TaxIdCreateParams {
   }
 
   export namespace Owner {
-    export type Type = 'account' | 'application' | 'customer' | 'self';
+    export type Type =
+      | 'account'
+      | 'application'
+      | 'customer'
+      | 'self'
+      | OtherString;
   }
 }
 export interface TaxIdRetrieveParams {
@@ -533,7 +543,12 @@ export namespace TaxIdListParams {
   }
 
   export namespace Owner {
-    export type Type = 'account' | 'application' | 'customer' | 'self';
+    export type Type =
+      | 'account'
+      | 'application'
+      | 'customer'
+      | 'self'
+      | OtherString;
   }
 }
 export interface TaxIdDeleteParams {}

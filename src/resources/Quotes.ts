@@ -19,6 +19,7 @@ import * as TestHelpers from './TestHelpers/index.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   Decimal,
   PaginationParams,
   Metadata,
@@ -2524,7 +2525,8 @@ export namespace Quote {
     | 'canceled'
     | 'draft'
     | 'open'
-    | 'stale';
+    | 'stale'
+    | OtherString;
 
   export interface StatusDetails {
     canceled?: StatusDetails.Canceled;
@@ -2723,10 +2725,14 @@ export namespace Quote {
       type: Liability.Type;
     }
 
-    export type Status = 'complete' | 'failed' | 'requires_location_inputs';
+    export type Status =
+      | 'complete'
+      | 'failed'
+      | 'requires_location_inputs'
+      | OtherString;
 
     export namespace Liability {
-      export type Type = 'account' | 'application' | 'self';
+      export type Type = 'account' | 'application' | 'self' | OtherString;
     }
   }
 
@@ -2804,10 +2810,13 @@ export namespace Quote {
         reason: Failed.Reason;
       }
 
-      export type Status = 'failed' | 'in_progress' | 'succeeded';
+      export type Status = 'failed' | 'in_progress' | 'succeeded' | OtherString;
 
       export namespace Failed {
-        export type Reason = 'automation_failure' | 'internal_error';
+        export type Reason =
+          | 'automation_failure'
+          | 'internal_error'
+          | OtherString;
       }
     }
 
@@ -2902,7 +2911,8 @@ export namespace Quote {
               | 'reverse_charge'
               | 'standard_rated'
               | 'taxable_basis_reduced'
-              | 'zero_rated';
+              | 'zero_rated'
+              | OtherString;
           }
         }
       }
@@ -2997,7 +3007,8 @@ export namespace Quote {
               | 'reverse_charge'
               | 'standard_rated'
               | 'taxable_basis_reduced'
-              | 'zero_rated';
+              | 'zero_rated'
+              | OtherString;
           }
         }
       }
@@ -3030,7 +3041,7 @@ export namespace Quote {
     }
 
     export namespace Issuer {
-      export type Type = 'account' | 'application' | 'self';
+      export type Type = 'account' | 'application' | 'self' | OtherString;
     }
   }
 
@@ -3075,7 +3086,8 @@ export namespace Quote {
         | 'quote_accepted'
         | 'quote_expired'
         | 'quote_superseded'
-        | 'subscription_canceled';
+        | 'subscription_canceled'
+        | OtherString;
     }
 
     export namespace Stale {
@@ -3212,9 +3224,12 @@ export namespace Quote {
       key: string;
     }
 
-    export type EndBehavior = 'cancel' | 'release';
+    export type EndBehavior = 'cancel' | 'release' | OtherString;
 
-    export type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
+    export type PhaseEffectiveAt =
+      | 'billing_period_start'
+      | 'phase_start'
+      | OtherString;
 
     export interface Prebilling {
       iterations: number;
@@ -3233,7 +3248,7 @@ export namespace Quote {
         proration_discounts?: Flexible.ProrationDiscounts;
       }
 
-      export type Type = 'classic' | 'flexible';
+      export type Type = 'classic' | 'flexible' | OtherString;
 
       export namespace Flexible {
         export type ProrationDiscounts = 'included' | 'itemized';
@@ -3413,7 +3428,8 @@ export namespace Quote {
           | 'now'
           | 'pause_collection_start'
           | 'quote_acceptance_date'
-          | 'timestamp';
+          | 'timestamp'
+          | OtherString;
       }
 
       export namespace BillUntil {
@@ -3441,10 +3457,16 @@ export namespace Quote {
           | 'line_ends_at'
           | 'schedule_end'
           | 'timestamp'
-          | 'upcoming_invoice';
+          | 'upcoming_invoice'
+          | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -3501,9 +3523,12 @@ export namespace Quote {
       key: string;
     }
 
-    export type EndBehavior = 'cancel' | 'release';
+    export type EndBehavior = 'cancel' | 'release' | OtherString;
 
-    export type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
+    export type PhaseEffectiveAt =
+      | 'billing_period_start'
+      | 'phase_start'
+      | OtherString;
 
     export type ProrationBehavior =
       | 'always_invoice'
@@ -3511,7 +3536,10 @@ export namespace Quote {
       | 'none';
 
     export namespace AppliesTo {
-      export type Type = 'new_reference' | 'subscription_schedule';
+      export type Type =
+        | 'new_reference'
+        | 'subscription_schedule'
+        | OtherString;
     }
 
     export namespace BillingSchedule {
@@ -3687,7 +3715,8 @@ export namespace Quote {
           | 'now'
           | 'pause_collection_start'
           | 'quote_acceptance_date'
-          | 'timestamp';
+          | 'timestamp'
+          | OtherString;
       }
 
       export namespace BillUntil {
@@ -3715,10 +3744,16 @@ export namespace Quote {
           | 'line_ends_at'
           | 'schedule_end'
           | 'timestamp'
-          | 'upcoming_invoice';
+          | 'upcoming_invoice'
+          | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -3743,7 +3778,10 @@ export namespace Quote {
     }
 
     export namespace AppliesTo {
-      export type Type = 'new_reference' | 'subscription_schedule';
+      export type Type =
+        | 'new_reference'
+        | 'subscription_schedule'
+        | OtherString;
     }
   }
 
@@ -3816,7 +3854,8 @@ export namespace Quote {
           | 'reverse_charge'
           | 'standard_rated'
           | 'taxable_basis_reduced'
-          | 'zero_rated';
+          | 'zero_rated'
+          | OtherString;
       }
     }
   }
@@ -4251,7 +4290,7 @@ export namespace QuoteCreateParams {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'application' | 'self';
+      export type Type = 'account' | 'application' | 'self' | OtherString;
     }
   }
 
@@ -4286,10 +4325,10 @@ export namespace QuoteCreateParams {
         interval_count: number;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -4308,7 +4347,7 @@ export namespace QuoteCreateParams {
     }
 
     export namespace Issuer {
-      export type Type = 'account' | 'application' | 'self';
+      export type Type = 'account' | 'application' | 'self' | OtherString;
     }
   }
 
@@ -4386,7 +4425,10 @@ export namespace QuoteCreateParams {
       type: AppliesTo.Type;
     }
 
-    export type BillingCycleAnchor = 'automatic' | 'line_starts_at';
+    export type BillingCycleAnchor =
+      | 'automatic'
+      | 'line_starts_at'
+      | OtherString;
 
     export interface CancelSubscriptionSchedule {
       /**
@@ -4405,7 +4447,10 @@ export namespace QuoteCreateParams {
       prorate?: boolean;
     }
 
-    export type EffectiveAt = 'billing_period_start' | 'line_start';
+    export type EffectiveAt =
+      | 'billing_period_start'
+      | 'line_start'
+      | OtherString;
 
     export interface EndsAt {
       /**
@@ -4432,7 +4477,8 @@ export namespace QuoteCreateParams {
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export interface SetPauseCollection {
       /**
@@ -4446,7 +4492,10 @@ export namespace QuoteCreateParams {
       type: SetPauseCollection.Type;
     }
 
-    export type SetScheduleEnd = 'line_ends_at' | 'line_starts_at';
+    export type SetScheduleEnd =
+      | 'line_ends_at'
+      | 'line_starts_at'
+      | OtherString;
 
     export interface StartsAt {
       /**
@@ -4641,7 +4690,8 @@ export namespace QuoteCreateParams {
         | 'remove_metadata'
         | 'set_discounts'
         | 'set_items'
-        | 'set_metadata';
+        | 'set_metadata'
+        | OtherString;
 
       export namespace AddDiscount {
         export interface DiscountEnd {
@@ -4679,7 +4729,8 @@ export namespace QuoteCreateParams {
           export type StartDate =
             | 'current_period_end'
             | 'current_period_start'
-            | 'line_start';
+            | 'line_start'
+            | OtherString;
 
           export namespace ServicePeriodAnchorConfig {
             export interface Custom {
@@ -4709,7 +4760,7 @@ export namespace QuoteCreateParams {
               second?: number;
             }
 
-            export type Type = 'custom' | 'inherit';
+            export type Type = 'custom' | 'inherit' | OtherString;
           }
         }
       }
@@ -4797,10 +4848,15 @@ export namespace QuoteCreateParams {
               interval_count: number;
             }
 
-            export type Type = 'duration' | 'timestamp';
+            export type Type = 'duration' | 'timestamp' | OtherString;
 
             export namespace Duration {
-              export type Interval = 'day' | 'month' | 'week' | 'year';
+              export type Interval =
+                | 'day'
+                | 'month'
+                | 'week'
+                | 'year'
+                | OtherString;
             }
           }
 
@@ -4820,7 +4876,8 @@ export namespace QuoteCreateParams {
             export type StartDate =
               | 'current_period_end'
               | 'current_period_start'
-              | 'line_start';
+              | 'line_start'
+              | OtherString;
 
             export namespace ServicePeriodAnchorConfig {
               export interface Custom {
@@ -4850,13 +4907,13 @@ export namespace QuoteCreateParams {
                 second?: number;
               }
 
-              export type Type = 'custom' | 'inherit';
+              export type Type = 'custom' | 'inherit' | OtherString;
             }
           }
         }
 
         export namespace Trial {
-          export type Type = 'free' | 'paid';
+          export type Type = 'free' | 'paid' | OtherString;
         }
       }
 
@@ -4889,7 +4946,8 @@ export namespace QuoteCreateParams {
           export type StartDate =
             | 'current_period_end'
             | 'current_period_start'
-            | 'line_start';
+            | 'line_start'
+            | OtherString;
 
           export namespace ServicePeriodAnchorConfig {
             export interface Custom {
@@ -4919,7 +4977,7 @@ export namespace QuoteCreateParams {
               second?: number;
             }
 
-            export type Type = 'custom' | 'inherit';
+            export type Type = 'custom' | 'inherit' | OtherString;
           }
         }
       }
@@ -5007,10 +5065,15 @@ export namespace QuoteCreateParams {
               interval_count: number;
             }
 
-            export type Type = 'duration' | 'timestamp';
+            export type Type = 'duration' | 'timestamp' | OtherString;
 
             export namespace Duration {
-              export type Interval = 'day' | 'month' | 'week' | 'year';
+              export type Interval =
+                | 'day'
+                | 'month'
+                | 'week'
+                | 'year'
+                | OtherString;
             }
           }
 
@@ -5030,7 +5093,8 @@ export namespace QuoteCreateParams {
             export type StartDate =
               | 'current_period_end'
               | 'current_period_start'
-              | 'line_start';
+              | 'line_start'
+              | OtherString;
 
             export namespace ServicePeriodAnchorConfig {
               export interface Custom {
@@ -5060,19 +5124,22 @@ export namespace QuoteCreateParams {
                 second?: number;
               }
 
-              export type Type = 'custom' | 'inherit';
+              export type Type = 'custom' | 'inherit' | OtherString;
             }
           }
         }
 
         export namespace Trial {
-          export type Type = 'free' | 'paid';
+          export type Type = 'free' | 'paid' | OtherString;
         }
       }
     }
 
     export namespace AppliesTo {
-      export type Type = 'new_reference' | 'subscription_schedule';
+      export type Type =
+        | 'new_reference'
+        | 'subscription_schedule'
+        | OtherString;
     }
 
     export namespace EndsAt {
@@ -5102,10 +5169,11 @@ export namespace QuoteCreateParams {
         | 'quote_acceptance_date'
         | 'schedule_end'
         | 'timestamp'
-        | 'upcoming_invoice';
+        | 'upcoming_invoice'
+        | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
 
@@ -5117,10 +5185,14 @@ export namespace QuoteCreateParams {
         behavior: Set.Behavior;
       }
 
-      export type Type = 'remove' | 'set';
+      export type Type = 'remove' | 'set' | OtherString;
 
       export namespace Set {
-        export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        export type Behavior =
+          | 'keep_as_draft'
+          | 'mark_uncollectible'
+          | 'void'
+          | OtherString;
       }
     }
 
@@ -5146,7 +5218,8 @@ export namespace QuoteCreateParams {
         | 'quote_acceptance_date'
         | 'schedule_end'
         | 'timestamp'
-        | 'upcoming_invoice';
+        | 'upcoming_invoice'
+        | OtherString;
     }
 
     export namespace TrialSettings {
@@ -5158,7 +5231,7 @@ export namespace QuoteCreateParams {
       }
 
       export namespace EndBehavior {
-        export type ProrateUpFront = 'defer' | 'include';
+        export type ProrateUpFront = 'defer' | 'include' | OtherString;
       }
     }
   }
@@ -5249,10 +5322,15 @@ export namespace QuoteCreateParams {
           interval_count: number;
         }
 
-        export type Type = 'duration' | 'timestamp';
+        export type Type = 'duration' | 'timestamp' | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -5327,9 +5405,12 @@ export namespace QuoteCreateParams {
       key?: string;
     }
 
-    export type EndBehavior = 'cancel' | 'release';
+    export type EndBehavior = 'cancel' | 'release' | OtherString;
 
-    export type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
+    export type PhaseEffectiveAt =
+      | 'billing_period_start'
+      | 'phase_start'
+      | OtherString;
 
     export interface Prebilling {
       /**
@@ -5351,7 +5432,7 @@ export namespace QuoteCreateParams {
         proration_discounts?: Flexible.ProrationDiscounts;
       }
 
-      export type Type = 'classic' | 'flexible';
+      export type Type = 'classic' | 'flexible' | OtherString;
 
       export namespace Flexible {
         export type ProrationDiscounts = 'included' | 'itemized';
@@ -5460,10 +5541,16 @@ export namespace QuoteCreateParams {
           | 'line_ends_at'
           | 'schedule_end'
           | 'timestamp'
-          | 'upcoming_invoice';
+          | 'upcoming_invoice'
+          | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -5526,7 +5613,8 @@ export namespace QuoteCreateParams {
           | 'now'
           | 'pause_collection_start'
           | 'quote_acceptance_date'
-          | 'timestamp';
+          | 'timestamp'
+          | OtherString;
       }
 
       export namespace BillUntil {
@@ -5559,10 +5647,16 @@ export namespace QuoteCreateParams {
           | 'line_ends_at'
           | 'schedule_end'
           | 'timestamp'
-          | 'upcoming_invoice';
+          | 'upcoming_invoice'
+          | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -5622,9 +5716,12 @@ export namespace QuoteCreateParams {
       key?: string;
     }
 
-    export type EndBehavior = 'cancel' | 'release';
+    export type EndBehavior = 'cancel' | 'release' | OtherString;
 
-    export type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
+    export type PhaseEffectiveAt =
+      | 'billing_period_start'
+      | 'phase_start'
+      | OtherString;
 
     export type ProrationBehavior =
       | 'always_invoice'
@@ -5632,7 +5729,10 @@ export namespace QuoteCreateParams {
       | 'none';
 
     export namespace AppliesTo {
-      export type Type = 'new_reference' | 'subscription_schedule';
+      export type Type =
+        | 'new_reference'
+        | 'subscription_schedule'
+        | OtherString;
     }
 
     export namespace BillingSchedule {
@@ -5737,10 +5837,16 @@ export namespace QuoteCreateParams {
           | 'line_ends_at'
           | 'schedule_end'
           | 'timestamp'
-          | 'upcoming_invoice';
+          | 'upcoming_invoice'
+          | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -5803,7 +5909,8 @@ export namespace QuoteCreateParams {
           | 'now'
           | 'pause_collection_start'
           | 'quote_acceptance_date'
-          | 'timestamp';
+          | 'timestamp'
+          | OtherString;
       }
 
       export namespace BillUntil {
@@ -5836,10 +5943,16 @@ export namespace QuoteCreateParams {
           | 'line_ends_at'
           | 'schedule_end'
           | 'timestamp'
-          | 'upcoming_invoice';
+          | 'upcoming_invoice'
+          | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -6259,7 +6372,7 @@ export namespace QuoteUpdateParams {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'application' | 'self';
+      export type Type = 'account' | 'application' | 'self' | OtherString;
     }
   }
 
@@ -6294,10 +6407,10 @@ export namespace QuoteUpdateParams {
         interval_count: number;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -6316,7 +6429,7 @@ export namespace QuoteUpdateParams {
     }
 
     export namespace Issuer {
-      export type Type = 'account' | 'application' | 'self';
+      export type Type = 'account' | 'application' | 'self' | OtherString;
     }
   }
 
@@ -6394,7 +6507,10 @@ export namespace QuoteUpdateParams {
       type: AppliesTo.Type;
     }
 
-    export type BillingCycleAnchor = 'automatic' | 'line_starts_at';
+    export type BillingCycleAnchor =
+      | 'automatic'
+      | 'line_starts_at'
+      | OtherString;
 
     export interface CancelSubscriptionSchedule {
       /**
@@ -6413,7 +6529,10 @@ export namespace QuoteUpdateParams {
       prorate?: boolean;
     }
 
-    export type EffectiveAt = 'billing_period_start' | 'line_start';
+    export type EffectiveAt =
+      | 'billing_period_start'
+      | 'line_start'
+      | OtherString;
 
     export interface EndsAt {
       /**
@@ -6440,7 +6559,8 @@ export namespace QuoteUpdateParams {
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export interface SetPauseCollection {
       /**
@@ -6454,7 +6574,10 @@ export namespace QuoteUpdateParams {
       type: SetPauseCollection.Type;
     }
 
-    export type SetScheduleEnd = 'line_ends_at' | 'line_starts_at';
+    export type SetScheduleEnd =
+      | 'line_ends_at'
+      | 'line_starts_at'
+      | OtherString;
 
     export interface StartsAt {
       /**
@@ -6649,7 +6772,8 @@ export namespace QuoteUpdateParams {
         | 'remove_metadata'
         | 'set_discounts'
         | 'set_items'
-        | 'set_metadata';
+        | 'set_metadata'
+        | OtherString;
 
       export namespace AddDiscount {
         export interface DiscountEnd {
@@ -6687,7 +6811,8 @@ export namespace QuoteUpdateParams {
           export type StartDate =
             | 'current_period_end'
             | 'current_period_start'
-            | 'line_start';
+            | 'line_start'
+            | OtherString;
 
           export namespace ServicePeriodAnchorConfig {
             export interface Custom {
@@ -6717,7 +6842,7 @@ export namespace QuoteUpdateParams {
               second?: number;
             }
 
-            export type Type = 'custom' | 'inherit';
+            export type Type = 'custom' | 'inherit' | OtherString;
           }
         }
       }
@@ -6805,10 +6930,15 @@ export namespace QuoteUpdateParams {
               interval_count: number;
             }
 
-            export type Type = 'duration' | 'timestamp';
+            export type Type = 'duration' | 'timestamp' | OtherString;
 
             export namespace Duration {
-              export type Interval = 'day' | 'month' | 'week' | 'year';
+              export type Interval =
+                | 'day'
+                | 'month'
+                | 'week'
+                | 'year'
+                | OtherString;
             }
           }
 
@@ -6828,7 +6958,8 @@ export namespace QuoteUpdateParams {
             export type StartDate =
               | 'current_period_end'
               | 'current_period_start'
-              | 'line_start';
+              | 'line_start'
+              | OtherString;
 
             export namespace ServicePeriodAnchorConfig {
               export interface Custom {
@@ -6858,13 +6989,13 @@ export namespace QuoteUpdateParams {
                 second?: number;
               }
 
-              export type Type = 'custom' | 'inherit';
+              export type Type = 'custom' | 'inherit' | OtherString;
             }
           }
         }
 
         export namespace Trial {
-          export type Type = 'free' | 'paid';
+          export type Type = 'free' | 'paid' | OtherString;
         }
       }
 
@@ -6897,7 +7028,8 @@ export namespace QuoteUpdateParams {
           export type StartDate =
             | 'current_period_end'
             | 'current_period_start'
-            | 'line_start';
+            | 'line_start'
+            | OtherString;
 
           export namespace ServicePeriodAnchorConfig {
             export interface Custom {
@@ -6927,7 +7059,7 @@ export namespace QuoteUpdateParams {
               second?: number;
             }
 
-            export type Type = 'custom' | 'inherit';
+            export type Type = 'custom' | 'inherit' | OtherString;
           }
         }
       }
@@ -7015,10 +7147,15 @@ export namespace QuoteUpdateParams {
               interval_count: number;
             }
 
-            export type Type = 'duration' | 'timestamp';
+            export type Type = 'duration' | 'timestamp' | OtherString;
 
             export namespace Duration {
-              export type Interval = 'day' | 'month' | 'week' | 'year';
+              export type Interval =
+                | 'day'
+                | 'month'
+                | 'week'
+                | 'year'
+                | OtherString;
             }
           }
 
@@ -7038,7 +7175,8 @@ export namespace QuoteUpdateParams {
             export type StartDate =
               | 'current_period_end'
               | 'current_period_start'
-              | 'line_start';
+              | 'line_start'
+              | OtherString;
 
             export namespace ServicePeriodAnchorConfig {
               export interface Custom {
@@ -7068,19 +7206,22 @@ export namespace QuoteUpdateParams {
                 second?: number;
               }
 
-              export type Type = 'custom' | 'inherit';
+              export type Type = 'custom' | 'inherit' | OtherString;
             }
           }
         }
 
         export namespace Trial {
-          export type Type = 'free' | 'paid';
+          export type Type = 'free' | 'paid' | OtherString;
         }
       }
     }
 
     export namespace AppliesTo {
-      export type Type = 'new_reference' | 'subscription_schedule';
+      export type Type =
+        | 'new_reference'
+        | 'subscription_schedule'
+        | OtherString;
     }
 
     export namespace EndsAt {
@@ -7110,10 +7251,11 @@ export namespace QuoteUpdateParams {
         | 'quote_acceptance_date'
         | 'schedule_end'
         | 'timestamp'
-        | 'upcoming_invoice';
+        | 'upcoming_invoice'
+        | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
 
@@ -7125,10 +7267,14 @@ export namespace QuoteUpdateParams {
         behavior: Set.Behavior;
       }
 
-      export type Type = 'remove' | 'set';
+      export type Type = 'remove' | 'set' | OtherString;
 
       export namespace Set {
-        export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        export type Behavior =
+          | 'keep_as_draft'
+          | 'mark_uncollectible'
+          | 'void'
+          | OtherString;
       }
     }
 
@@ -7159,7 +7305,8 @@ export namespace QuoteUpdateParams {
         | 'quote_acceptance_date'
         | 'schedule_end'
         | 'timestamp'
-        | 'upcoming_invoice';
+        | 'upcoming_invoice'
+        | OtherString;
     }
 
     export namespace TrialSettings {
@@ -7171,7 +7318,7 @@ export namespace QuoteUpdateParams {
       }
 
       export namespace EndBehavior {
-        export type ProrateUpFront = 'defer' | 'include';
+        export type ProrateUpFront = 'defer' | 'include' | OtherString;
       }
     }
   }
@@ -7262,10 +7409,15 @@ export namespace QuoteUpdateParams {
           interval_count: number;
         }
 
-        export type Type = 'duration' | 'timestamp';
+        export type Type = 'duration' | 'timestamp' | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -7328,9 +7480,12 @@ export namespace QuoteUpdateParams {
       key?: string;
     }
 
-    export type EndBehavior = 'cancel' | 'release';
+    export type EndBehavior = 'cancel' | 'release' | OtherString;
 
-    export type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
+    export type PhaseEffectiveAt =
+      | 'billing_period_start'
+      | 'phase_start'
+      | OtherString;
 
     export interface Prebilling {
       /**
@@ -7446,10 +7601,16 @@ export namespace QuoteUpdateParams {
           | 'line_ends_at'
           | 'schedule_end'
           | 'timestamp'
-          | 'upcoming_invoice';
+          | 'upcoming_invoice'
+          | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -7512,7 +7673,8 @@ export namespace QuoteUpdateParams {
           | 'now'
           | 'pause_collection_start'
           | 'quote_acceptance_date'
-          | 'timestamp';
+          | 'timestamp'
+          | OtherString;
       }
 
       export namespace BillUntil {
@@ -7545,10 +7707,16 @@ export namespace QuoteUpdateParams {
           | 'line_ends_at'
           | 'schedule_end'
           | 'timestamp'
-          | 'upcoming_invoice';
+          | 'upcoming_invoice'
+          | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -7608,9 +7776,12 @@ export namespace QuoteUpdateParams {
       key?: string;
     }
 
-    export type EndBehavior = 'cancel' | 'release';
+    export type EndBehavior = 'cancel' | 'release' | OtherString;
 
-    export type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
+    export type PhaseEffectiveAt =
+      | 'billing_period_start'
+      | 'phase_start'
+      | OtherString;
 
     export type ProrationBehavior =
       | 'always_invoice'
@@ -7618,7 +7789,10 @@ export namespace QuoteUpdateParams {
       | 'none';
 
     export namespace AppliesTo {
-      export type Type = 'new_reference' | 'subscription_schedule';
+      export type Type =
+        | 'new_reference'
+        | 'subscription_schedule'
+        | OtherString;
     }
 
     export namespace BillingSchedule {
@@ -7723,10 +7897,16 @@ export namespace QuoteUpdateParams {
           | 'line_ends_at'
           | 'schedule_end'
           | 'timestamp'
-          | 'upcoming_invoice';
+          | 'upcoming_invoice'
+          | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -7789,7 +7969,8 @@ export namespace QuoteUpdateParams {
           | 'now'
           | 'pause_collection_start'
           | 'quote_acceptance_date'
-          | 'timestamp';
+          | 'timestamp'
+          | OtherString;
       }
 
       export namespace BillUntil {
@@ -7822,10 +8003,16 @@ export namespace QuoteUpdateParams {
           | 'line_ends_at'
           | 'schedule_end'
           | 'timestamp'
-          | 'upcoming_invoice';
+          | 'upcoming_invoice'
+          | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -7869,7 +8056,8 @@ export namespace QuoteListParams {
     | 'canceled'
     | 'draft'
     | 'open'
-    | 'stale';
+    | 'stale'
+    | OtherString;
 }
 export interface QuoteAcceptParams {
   /**

@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {JapanAddressParam, MetadataParam, Decimal} from '../../../shared.js';
+import {
+  JapanAddressParam,
+  OtherString,
+  MetadataParam,
+  Decimal,
+} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class AccountTokenResource extends StripeResource {
@@ -240,7 +245,8 @@ export namespace V2 {
           | 'company'
           | 'government_entity'
           | 'individual'
-          | 'non_profit';
+          | 'non_profit'
+          | OtherString;
 
         export interface Individual {
           /**
@@ -805,7 +811,8 @@ export namespace V2 {
             | 'trust'
             | 'unincorporated_association'
             | 'unincorporated_non_profit'
-            | 'unincorporated_partnership';
+            | 'unincorporated_partnership'
+            | OtherString;
 
           export namespace Documents {
             export interface BankAccountOwnershipVerification {
@@ -1112,7 +1119,8 @@ export namespace V2 {
               | 'us_ein'
               | 'uy_ruc'
               | 'vg_cn'
-              | 'za_tin';
+              | 'za_tin'
+              | OtherString;
           }
 
           export namespace ScriptNames {
@@ -1253,9 +1261,9 @@ export namespace V2 {
             value: string;
           }
 
-          export type LegalGender = 'female' | 'male';
+          export type LegalGender = 'female' | 'male' | OtherString;
 
-          export type PoliticalExposure = 'existing' | 'none';
+          export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
           export interface Relationship {
             /**
@@ -1500,7 +1508,8 @@ export namespace V2 {
               | 'us_ssn_last_4'
               | 'uy_dni'
               | 'vg_pp'
-              | 'za_id';
+              | 'za_id'
+              | OtherString;
           }
 
           export namespace ScriptNames {

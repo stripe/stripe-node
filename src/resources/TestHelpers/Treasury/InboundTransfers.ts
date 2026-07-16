@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {InboundTransfer} from './../../Treasury/InboundTransfers.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class InboundTransferResource extends StripeResource {
@@ -93,7 +94,8 @@ export namespace TestHelpers {
           | 'invalid_account_number'
           | 'invalid_currency'
           | 'no_account'
-          | 'other';
+          | 'other'
+          | OtherString;
       }
     }
   }

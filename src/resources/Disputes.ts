@@ -9,6 +9,7 @@ import {
   Emptyable,
   MetadataParam,
   AddressParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -196,7 +197,8 @@ export namespace Dispute {
   export type EnhancedEligibilityType =
     | 'mastercard_compliance'
     | 'visa_compelling_evidence_3'
-    | 'visa_compliance';
+    | 'visa_compliance'
+    | OtherString;
 
   export interface Evidence {
     /**
@@ -407,7 +409,8 @@ export namespace Dispute {
     | 'warning_closed'
     | 'warning_needs_response'
     | 'warning_under_review'
-    | 'won';
+    | 'won'
+    | OtherString;
 
   export namespace Evidence {
     export interface EnhancedEvidence {
@@ -533,7 +536,10 @@ export namespace Dispute {
         }
 
         export namespace DisputedTransaction {
-          export type MerchandiseOrServices = 'merchandise' | 'services';
+          export type MerchandiseOrServices =
+            | 'merchandise'
+            | 'services'
+            | OtherString;
         }
       }
     }
@@ -551,7 +557,8 @@ export namespace Dispute {
     export type SubmissionMethod =
       | 'manual'
       | 'not_submitted'
-      | 'smart_disputes';
+      | 'smart_disputes'
+      | OtherString;
 
     export namespace EnhancedEligibility {
       export interface MastercardCompliance {
@@ -592,15 +599,21 @@ export namespace Dispute {
           | 'missing_disputed_transaction_description'
           | 'missing_merchandise_or_services'
           | 'missing_prior_undisputed_transaction_description'
-          | 'missing_prior_undisputed_transactions';
+          | 'missing_prior_undisputed_transactions'
+          | OtherString;
 
-        export type Status = 'not_qualified' | 'qualified' | 'requires_action';
+        export type Status =
+          | 'not_qualified'
+          | 'qualified'
+          | 'requires_action'
+          | OtherString;
       }
 
       export namespace VisaCompliance {
         export type Status =
           | 'fee_acknowledged'
-          | 'requires_fee_acknowledgement';
+          | 'requires_fee_acknowledgement'
+          | OtherString;
       }
     }
   }
@@ -659,10 +672,15 @@ export namespace Dispute {
       reason_code: string | null;
     }
 
-    export type Type = 'amazon_pay' | 'card' | 'klarna' | 'paypal';
+    export type Type =
+      | 'amazon_pay'
+      | 'card'
+      | 'klarna'
+      | 'paypal'
+      | OtherString;
 
     export namespace AmazonPay {
-      export type DisputeType = 'chargeback' | 'claim';
+      export type DisputeType = 'chargeback' | 'claim' | OtherString;
     }
 
     export namespace Card {
@@ -671,7 +689,8 @@ export namespace Dispute {
         | 'chargeback'
         | 'compliance'
         | 'inquiry'
-        | 'resolution';
+        | 'resolution'
+        | OtherString;
     }
   }
 
@@ -1002,7 +1021,10 @@ export namespace DisputeUpdateParams {
         }
 
         export namespace DisputedTransaction {
-          export type MerchandiseOrServices = 'merchandise' | 'services';
+          export type MerchandiseOrServices =
+            | 'merchandise'
+            | 'services'
+            | OtherString;
         }
       }
     }

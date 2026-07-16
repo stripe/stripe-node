@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Account} from './../Accounts.js';
-import {PaginationParams} from '../../shared.js';
+import {PaginationParams, OtherString} from '../../shared.js';
 import {
   RequestOptions,
   ApiListPromise,
@@ -211,7 +211,8 @@ export namespace Form {
     | 'nz_mrdp'
     | 'us_1099_k'
     | 'us_1099_misc'
-    | 'us_1099_nec';
+    | 'us_1099_nec'
+    | OtherString;
 
   export interface Us1099K {
     /**
@@ -252,15 +253,15 @@ export namespace Form {
       state: string | null;
     }
 
-    export type Value = 'accepted' | 'filed' | 'rejected';
+    export type Value = 'accepted' | 'filed' | 'rejected' | OtherString;
 
     export namespace Jurisdiction {
-      export type Level = 'country' | 'state';
+      export type Level = 'country' | 'state' | OtherString;
     }
   }
 
   export namespace Payee {
-    export type Type = 'account' | 'external_reference';
+    export type Type = 'account' | 'external_reference' | OtherString;
   }
 }
 export namespace Tax {
@@ -315,7 +316,8 @@ export namespace Tax {
       | 'nz_mrdp'
       | 'us_1099_k'
       | 'us_1099_misc'
-      | 'us_1099_nec';
+      | 'us_1099_nec'
+      | OtherString;
 
     export namespace Payee {
       export type Type = 'account' | 'external_reference';

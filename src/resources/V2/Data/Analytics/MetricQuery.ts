@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {MetricQueryResult} from './MetricQueryResults.js';
+import {OtherString} from '../../../../shared.js';
 import {RequestOptions, Response} from '../../../../lib.js';
 
 export class MetricQueryResource extends StripeResource {
@@ -98,7 +99,12 @@ export namespace V2 {
       }
 
       export namespace MetricQueryCreateParams {
-        export type Granularity = 'day' | 'month' | 'week' | 'year';
+        export type Granularity =
+          | 'day'
+          | 'month'
+          | 'week'
+          | 'year'
+          | OtherString;
 
         export interface Metric {
           /**

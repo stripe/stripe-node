@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class OutboundPaymentQuoteResource extends StripeResource {
@@ -172,9 +173,13 @@ export namespace OutboundPaymentQuote {
   }
 
   export namespace DeliveryOptions {
-    export type BankAccount = 'automatic' | 'local' | 'wire';
+    export type BankAccount = 'automatic' | 'local' | 'wire' | OtherString;
 
-    export type Speed = 'instant' | 'next_business_day' | 'standard';
+    export type Speed =
+      | 'instant'
+      | 'next_business_day'
+      | 'standard'
+      | OtherString;
   }
 
   export namespace EstimatedFee {
@@ -185,13 +190,14 @@ export namespace OutboundPaymentQuote {
       | 'next_day_payout_fee'
       | 'real_time_payout_fee'
       | 'standard_payout_fee'
-      | 'wire_payout_fee';
+      | 'wire_payout_fee'
+      | OtherString;
   }
 
   export namespace FxQuote {
-    export type LockDuration = 'five_minutes' | 'none';
+    export type LockDuration = 'five_minutes' | 'none' | OtherString;
 
-    export type LockStatus = 'active' | 'expired' | 'none';
+    export type LockStatus = 'active' | 'expired' | 'none' | OtherString;
 
     export interface Rates {
       /**
@@ -274,9 +280,13 @@ export namespace V2 {
       }
 
       export namespace DeliveryOptions {
-        export type BankAccount = 'automatic' | 'local' | 'wire';
+        export type BankAccount = 'automatic' | 'local' | 'wire' | OtherString;
 
-        export type Speed = 'instant' | 'next_business_day' | 'standard';
+        export type Speed =
+          | 'instant'
+          | 'next_business_day'
+          | 'standard'
+          | OtherString;
       }
     }
   }

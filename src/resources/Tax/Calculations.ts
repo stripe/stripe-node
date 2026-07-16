@@ -6,6 +6,7 @@ import {
   MetadataParam,
   Address,
   Emptyable,
+  OtherString,
   PaginationParams,
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise, ApiList} from '../../lib.js';
@@ -221,11 +222,11 @@ export namespace Calculation {
   }
 
   export namespace CustomerDetails {
-    export type AddressSource = 'billing' | 'shipping';
+    export type AddressSource = 'billing' | 'shipping' | OtherString;
 
     export interface TaxId {
       /**
-       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`
+       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
        */
       type: TaxId.Type;
 
@@ -238,7 +239,8 @@ export namespace Calculation {
     export type TaxabilityOverride =
       | 'customer_exempt'
       | 'none'
-      | 'reverse_charge';
+      | 'reverse_charge'
+      | OtherString;
 
     export namespace TaxId {
       export type Type =
@@ -295,6 +297,7 @@ export namespace Calculation {
         | 'hk_br'
         | 'hr_oib'
         | 'hu_tin'
+        | 'ic_nif'
         | 'id_npwp'
         | 'il_vat'
         | 'in_gst'
@@ -363,7 +366,7 @@ export namespace Calculation {
   }
 
   export namespace ShippingCost {
-    export type TaxBehavior = 'exclusive' | 'inclusive';
+    export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
 
     export interface TaxBreakdown {
       /**
@@ -451,7 +454,8 @@ export namespace Calculation {
         | 'reverse_charge'
         | 'standard_rated'
         | 'taxable_basis_reduced'
-        | 'zero_rated';
+        | 'zero_rated'
+        | OtherString;
 
       export namespace Jurisdiction {
         export type Level =
@@ -459,7 +463,8 @@ export namespace Calculation {
           | 'country'
           | 'county'
           | 'district'
-          | 'state';
+          | 'state'
+          | OtherString;
       }
 
       export namespace TaxRateDetails {
@@ -540,7 +545,8 @@ export namespace Calculation {
       | 'reverse_charge'
       | 'standard_rated'
       | 'taxable_basis_reduced'
-      | 'zero_rated';
+      | 'zero_rated'
+      | OtherString;
 
     export namespace TaxRateDetails {
       export interface FlatAmount {
@@ -555,7 +561,7 @@ export namespace Calculation {
         currency: string;
       }
 
-      export type RateType = 'flat_amount' | 'percentage';
+      export type RateType = 'flat_amount' | 'percentage' | OtherString;
 
       export type TaxType =
         | 'admissions_tax'
@@ -766,7 +772,7 @@ export namespace Tax {
         state?: Emptyable<string>;
       }
 
-      export type AddressSource = 'billing' | 'shipping';
+      export type AddressSource = 'billing' | 'shipping' | OtherString;
 
       export interface TaxId {
         /**
@@ -783,7 +789,8 @@ export namespace Tax {
       export type TaxabilityOverride =
         | 'customer_exempt'
         | 'none'
-        | 'reverse_charge';
+        | 'reverse_charge'
+        | OtherString;
 
       export namespace TaxId {
         export type Type =
@@ -914,7 +921,7 @@ export namespace Tax {
         address: PerformanceLocationDetails.Address;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive';
+      export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
 
       export namespace PerformanceLocationDetails {
         export interface Address {
@@ -986,7 +993,7 @@ export namespace Tax {
     }
 
     export namespace ShippingCost {
-      export type TaxBehavior = 'exclusive' | 'inclusive';
+      export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
     }
   }
 }

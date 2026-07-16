@@ -3,7 +3,12 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Customer} from './../Customers.js';
 import {Meter} from './Meters.js';
-import {Decimal, PaginationParams, Metadata} from '../../shared.js';
+import {
+  OtherString,
+  Decimal,
+  PaginationParams,
+  Metadata,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class AlertResource extends StripeResource {
@@ -458,7 +463,8 @@ export namespace Alert {
   export type AlertType =
     | 'credit_balance_threshold'
     | 'spend_threshold'
-    | 'usage_threshold';
+    | 'usage_threshold'
+    | OtherString;
 
   export interface CreditBalanceThreshold {
     /**
@@ -491,7 +497,7 @@ export namespace Alert {
     gte: SpendThreshold.Gte;
   }
 
-  export type Status = 'active' | 'archived' | 'inactive';
+  export type Status = 'active' | 'archived' | 'inactive' | OtherString;
 
   export interface UsageThreshold {
     /**
@@ -543,11 +549,14 @@ export namespace Alert {
     }
 
     export namespace Filter {
-      export type Type = 'customer' | 'tenant';
+      export type Type = 'customer' | 'tenant' | OtherString;
     }
 
     export namespace Lte {
-      export type BalanceType = 'custom_pricing_unit' | 'monetary';
+      export type BalanceType =
+        | 'custom_pricing_unit'
+        | 'monetary'
+        | OtherString;
 
       export interface CustomPricingUnit {
         /**
@@ -632,7 +641,10 @@ export namespace Alert {
       pricing_plan_subscription: string | null;
     }
 
-    export type GroupBy = 'billing_cadence' | 'pricing_plan_subscription';
+    export type GroupBy =
+      | 'billing_cadence'
+      | 'pricing_plan_subscription'
+      | OtherString;
 
     export interface Gte {
       /**
@@ -681,7 +693,7 @@ export namespace Alert {
         value: Decimal;
       }
 
-      export type Type = 'amount' | 'custom_pricing_unit';
+      export type Type = 'amount' | 'custom_pricing_unit' | OtherString;
 
       export namespace CustomPricingUnit {
         export interface CustomPricingUnitDetails {
@@ -767,7 +779,8 @@ export namespace Billing {
     export type AlertType =
       | 'credit_balance_threshold'
       | 'spend_threshold'
-      | 'usage_threshold';
+      | 'usage_threshold'
+      | OtherString;
 
     export interface CreditBalanceThreshold {
       /**
@@ -868,7 +881,7 @@ export namespace Billing {
           applicability_config: CreditGrants.ApplicabilityConfig;
         }
 
-        export type Type = 'customer' | 'tenant';
+        export type Type = 'customer' | 'tenant' | OtherString;
 
         export namespace CreditGrants {
           export interface ApplicabilityConfig {
@@ -916,7 +929,10 @@ export namespace Billing {
       }
 
       export namespace Lte {
-        export type BalanceType = 'custom_pricing_unit' | 'monetary';
+        export type BalanceType =
+          | 'custom_pricing_unit'
+          | 'monetary'
+          | OtherString;
 
         export interface CustomPricingUnit {
           /**
@@ -967,7 +983,10 @@ export namespace Billing {
         pricing_plan_subscription?: string;
       }
 
-      export type GroupBy = 'billing_cadence' | 'pricing_plan_subscription';
+      export type GroupBy =
+        | 'billing_cadence'
+        | 'pricing_plan_subscription'
+        | OtherString;
 
       export interface Gte {
         /**
@@ -1011,7 +1030,7 @@ export namespace Billing {
           value: Decimal;
         }
 
-        export type Type = 'amount' | 'custom_pricing_unit';
+        export type Type = 'amount' | 'custom_pricing_unit' | OtherString;
       }
     }
 
@@ -1065,7 +1084,8 @@ export namespace Billing {
     export type AlertType =
       | 'credit_balance_threshold'
       | 'spend_threshold'
-      | 'usage_threshold';
+      | 'usage_threshold'
+      | OtherString;
   }
 }
 export namespace Billing {

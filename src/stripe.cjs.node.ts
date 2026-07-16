@@ -243,12 +243,6 @@ declare namespace StripeConstructor {
   export type FileLinkUpdateParams = Stripe_.FileLinkUpdateParams;
   export type FileLinkListParams = Stripe_.FileLinkListParams;
   export type FileLinkResource = Stripe_.FileLinkResource;
-  export type FrMealVouchersOnboarding = Stripe_.FrMealVouchersOnboarding;
-  export type FrMealVouchersOnboardingCreateParams = Stripe_.FrMealVouchersOnboardingCreateParams;
-  export type FrMealVouchersOnboardingRetrieveParams = Stripe_.FrMealVouchersOnboardingRetrieveParams;
-  export type FrMealVouchersOnboardingUpdateParams = Stripe_.FrMealVouchersOnboardingUpdateParams;
-  export type FrMealVouchersOnboardingListParams = Stripe_.FrMealVouchersOnboardingListParams;
-  export type FrMealVouchersOnboardingResource = Stripe_.FrMealVouchersOnboardingResource;
   export type FxQuote = Stripe_.FxQuote;
   export type FxQuoteCreateParams = Stripe_.FxQuoteCreateParams;
   export type FxQuoteRetrieveParams = Stripe_.FxQuoteRetrieveParams;
@@ -415,6 +409,7 @@ declare namespace StripeConstructor {
   export type PaymentMethodDomainValidateParams = Stripe_.PaymentMethodDomainValidateParams;
   export type PaymentMethodDomainResource = Stripe_.PaymentMethodDomainResource;
   export type PaymentRecord = Stripe_.PaymentRecord;
+  export type PaymentRecordCreateParams = Stripe_.PaymentRecordCreateParams;
   export type PaymentRecordRetrieveParams = Stripe_.PaymentRecordRetrieveParams;
   export type PaymentRecordReportPaymentParams = Stripe_.PaymentRecordReportPaymentParams;
   export type PaymentRecordReportPaymentAttemptParams = Stripe_.PaymentRecordReportPaymentAttemptParams;
@@ -1432,8 +1427,6 @@ declare namespace StripeConstructor {
       export type ExportTaxTransactions = Stripe_.AccountSessionCreateParams.Components.ExportTaxTransactions;
       export type FinancialAccount = Stripe_.AccountSessionCreateParams.Components.FinancialAccount;
       export type FinancialAccountTransactions = Stripe_.AccountSessionCreateParams.Components.FinancialAccountTransactions;
-      export type FinancialAccounts = Stripe_.AccountSessionCreateParams.Components.FinancialAccounts;
-      export type FinancialAccountsTransactions = Stripe_.AccountSessionCreateParams.Components.FinancialAccountsTransactions;
       export type InstantPayoutsPromotion = Stripe_.AccountSessionCreateParams.Components.InstantPayoutsPromotion;
       export type IssuingCard = Stripe_.AccountSessionCreateParams.Components.IssuingCard;
       export type IssuingCardsList = Stripe_.AccountSessionCreateParams.Components.IssuingCardsList;
@@ -1448,7 +1441,6 @@ declare namespace StripeConstructor {
       export type PayoutsList = Stripe_.AccountSessionCreateParams.Components.PayoutsList;
       export type ProductTaxCodeSelector = Stripe_.AccountSessionCreateParams.Components.ProductTaxCodeSelector;
       export type Recipients = Stripe_.AccountSessionCreateParams.Components.Recipients;
-      export type RecipientsList = Stripe_.AccountSessionCreateParams.Components.RecipientsList;
       export type ReportingChart = Stripe_.AccountSessionCreateParams.Components.ReportingChart;
       export type TaxRegistrations = Stripe_.AccountSessionCreateParams.Components.TaxRegistrations;
       export type TaxSettings = Stripe_.AccountSessionCreateParams.Components.TaxSettings;
@@ -1503,12 +1495,6 @@ declare namespace StripeConstructor {
       export namespace FinancialAccount {
         export type Features = Stripe_.AccountSessionCreateParams.Components.FinancialAccount.Features;
       }
-      export namespace FinancialAccounts {
-        export type Features = Stripe_.AccountSessionCreateParams.Components.FinancialAccounts.Features;
-      }
-      export namespace FinancialAccountsTransactions {
-        export type Features = Stripe_.AccountSessionCreateParams.Components.FinancialAccountsTransactions.Features;
-      }
       export namespace FinancialAccountTransactions {
         export type Features = Stripe_.AccountSessionCreateParams.Components.FinancialAccountTransactions.Features;
       }
@@ -1553,9 +1539,6 @@ declare namespace StripeConstructor {
       }
       export namespace Recipients {
         export type Features = Stripe_.AccountSessionCreateParams.Components.Recipients.Features;
-      }
-      export namespace RecipientsList {
-        export type Features = Stripe_.AccountSessionCreateParams.Components.RecipientsList.Features;
       }
       export namespace ReportingChart {
         export type Features = Stripe_.AccountSessionCreateParams.Components.ReportingChart.Features;
@@ -3132,28 +3115,6 @@ declare namespace StripeConstructor {
   }
   export namespace File {
     export type Purpose = Stripe_.File.Purpose;
-  }
-  export namespace FrMealVouchersOnboarding {
-    export type Providers = Stripe_.FrMealVouchersOnboarding.Providers;
-    export namespace Providers {
-      export type Conecs = Stripe_.FrMealVouchersOnboarding.Providers.Conecs;
-      export namespace Conecs {
-        export type Issuers = Stripe_.FrMealVouchersOnboarding.Providers.Conecs.Issuers;
-        export type Requirements = Stripe_.FrMealVouchersOnboarding.Providers.Conecs.Requirements;
-        export type Status = Stripe_.FrMealVouchersOnboarding.Providers.Conecs.Status;
-        export namespace Issuers {
-          export type Available = Stripe_.FrMealVouchersOnboarding.Providers.Conecs.Issuers.Available;
-        }
-        export namespace Requirements {
-          export type Error = Stripe_.FrMealVouchersOnboarding.Providers.Conecs.Requirements.Error;
-          export type PastDue = Stripe_.FrMealVouchersOnboarding.Providers.Conecs.Requirements.PastDue;
-          export namespace Error {
-            export type Code = Stripe_.FrMealVouchersOnboarding.Providers.Conecs.Requirements.Error.Code;
-            export type Requirement = Stripe_.FrMealVouchersOnboarding.Providers.Conecs.Requirements.Error.Requirement;
-          }
-        }
-      }
-    }
   }
   export namespace FxQuoteCreateParams {
     export type LockDuration = Stripe_.FxQuoteCreateParams.LockDuration;
@@ -10745,6 +10706,19 @@ declare namespace StripeConstructor {
       export type StatusDetails = Stripe_.PaymentMethodDomain.Paypal.StatusDetails;
     }
   }
+  export namespace PaymentRecordCreateParams {
+    export type Amount = Stripe_.PaymentRecordCreateParams.Amount;
+    export type Closed = Stripe_.PaymentRecordCreateParams.Closed;
+    export type Funded = Stripe_.PaymentRecordCreateParams.Funded;
+    export type ProcessorDetails = Stripe_.PaymentRecordCreateParams.ProcessorDetails;
+    export type Reason = Stripe_.PaymentRecordCreateParams.Reason;
+    export namespace Funded {
+      export type Amount = Stripe_.PaymentRecordCreateParams.Funded.Amount;
+    }
+    export namespace ProcessorDetails {
+      export type Custom = Stripe_.PaymentRecordCreateParams.ProcessorDetails.Custom;
+    }
+  }
   export namespace PaymentRecordReportPaymentParams {
     export type AmountRequested = Stripe_.PaymentRecordReportPaymentParams.AmountRequested;
     export type PaymentMethodDetails = Stripe_.PaymentRecordReportPaymentParams.PaymentMethodDetails;
@@ -13936,6 +13910,7 @@ declare namespace StripeConstructor {
     export type BillingSchedule = Stripe_.SubscriptionScheduleCreateParams.BillingSchedule;
     export type DefaultSettings = Stripe_.SubscriptionScheduleCreateParams.DefaultSettings;
     export type EndBehavior = Stripe_.SubscriptionScheduleCreateParams.EndBehavior;
+    export type PauseSchedule = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule;
     export type Phase = Stripe_.SubscriptionScheduleCreateParams.Phase;
     export type Prebilling = Stripe_.SubscriptionScheduleCreateParams.Prebilling;
     export namespace BillingMode {
@@ -13974,6 +13949,47 @@ declare namespace StripeConstructor {
         export type Issuer = Stripe_.SubscriptionScheduleCreateParams.DefaultSettings.InvoiceSettings.Issuer;
         export namespace Issuer {
           export type Type = Stripe_.SubscriptionScheduleCreateParams.DefaultSettings.InvoiceSettings.Issuer.Type;
+        }
+      }
+    }
+    export namespace PauseSchedule {
+      export type Pause = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Pause;
+      export type Resume = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Resume;
+      export namespace Pause {
+        export type PauseAt = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Pause.PauseAt;
+        export type Settings = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Pause.Settings;
+        export namespace PauseAt {
+          export type Type = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Pause.PauseAt.Type;
+        }
+        export namespace Settings {
+          export type BillFor = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Pause.Settings.BillFor;
+          export type InvoicingBehavior = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Pause.Settings.InvoicingBehavior;
+          export namespace BillFor {
+            export type OutstandingUsageThrough = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Pause.Settings.BillFor.OutstandingUsageThrough;
+            export type UnusedTimeFrom = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Pause.Settings.BillFor.UnusedTimeFrom;
+            export namespace OutstandingUsageThrough {
+              export type Type = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Pause.Settings.BillFor.OutstandingUsageThrough.Type;
+            }
+            export namespace UnusedTimeFrom {
+              export type Type = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Pause.Settings.BillFor.UnusedTimeFrom.Type;
+            }
+          }
+        }
+      }
+      export namespace Resume {
+        export type ResumeAt = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Resume.ResumeAt;
+        export type Settings = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Resume.Settings;
+        export namespace ResumeAt {
+          export type Duration = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Resume.ResumeAt.Duration;
+          export type Type = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Resume.ResumeAt.Type;
+          export namespace Duration {
+            export type Interval = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Resume.ResumeAt.Duration.Interval;
+          }
+        }
+        export namespace Settings {
+          export type BillingCycleAnchor = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Resume.Settings.BillingCycleAnchor;
+          export type PaymentBehavior = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Resume.Settings.PaymentBehavior;
+          export type ProrationBehavior = Stripe_.SubscriptionScheduleCreateParams.PauseSchedule.Resume.Settings.ProrationBehavior;
         }
       }
     }
@@ -14109,6 +14125,7 @@ declare namespace StripeConstructor {
     export type BillingSchedule = Stripe_.SubscriptionScheduleUpdateParams.BillingSchedule;
     export type DefaultSettings = Stripe_.SubscriptionScheduleUpdateParams.DefaultSettings;
     export type EndBehavior = Stripe_.SubscriptionScheduleUpdateParams.EndBehavior;
+    export type PauseSchedule = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule;
     export type Phase = Stripe_.SubscriptionScheduleUpdateParams.Phase;
     export type Prebilling = Stripe_.SubscriptionScheduleUpdateParams.Prebilling;
     export type ProrationBehavior = Stripe_.SubscriptionScheduleUpdateParams.ProrationBehavior;
@@ -14141,6 +14158,47 @@ declare namespace StripeConstructor {
         export type Issuer = Stripe_.SubscriptionScheduleUpdateParams.DefaultSettings.InvoiceSettings.Issuer;
         export namespace Issuer {
           export type Type = Stripe_.SubscriptionScheduleUpdateParams.DefaultSettings.InvoiceSettings.Issuer.Type;
+        }
+      }
+    }
+    export namespace PauseSchedule {
+      export type Pause = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Pause;
+      export type Resume = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Resume;
+      export namespace Pause {
+        export type PauseAt = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Pause.PauseAt;
+        export type Settings = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Pause.Settings;
+        export namespace PauseAt {
+          export type Type = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Pause.PauseAt.Type;
+        }
+        export namespace Settings {
+          export type BillFor = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Pause.Settings.BillFor;
+          export type InvoicingBehavior = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Pause.Settings.InvoicingBehavior;
+          export namespace BillFor {
+            export type OutstandingUsageThrough = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Pause.Settings.BillFor.OutstandingUsageThrough;
+            export type UnusedTimeFrom = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Pause.Settings.BillFor.UnusedTimeFrom;
+            export namespace OutstandingUsageThrough {
+              export type Type = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Pause.Settings.BillFor.OutstandingUsageThrough.Type;
+            }
+            export namespace UnusedTimeFrom {
+              export type Type = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Pause.Settings.BillFor.UnusedTimeFrom.Type;
+            }
+          }
+        }
+      }
+      export namespace Resume {
+        export type ResumeAt = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Resume.ResumeAt;
+        export type Settings = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Resume.Settings;
+        export namespace ResumeAt {
+          export type Duration = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Resume.ResumeAt.Duration;
+          export type Type = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Resume.ResumeAt.Type;
+          export namespace Duration {
+            export type Interval = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Resume.ResumeAt.Duration.Interval;
+          }
+        }
+        export namespace Settings {
+          export type BillingCycleAnchor = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Resume.Settings.BillingCycleAnchor;
+          export type PaymentBehavior = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Resume.Settings.PaymentBehavior;
+          export type ProrationBehavior = Stripe_.SubscriptionScheduleUpdateParams.PauseSchedule.Resume.Settings.ProrationBehavior;
         }
       }
     }
@@ -14439,6 +14497,7 @@ declare namespace StripeConstructor {
     export type DefaultSettings = Stripe_.SubscriptionSchedule.DefaultSettings;
     export type EndBehavior = Stripe_.SubscriptionSchedule.EndBehavior;
     export type LastPriceMigrationError = Stripe_.SubscriptionSchedule.LastPriceMigrationError;
+    export type PauseSchedule = Stripe_.SubscriptionSchedule.PauseSchedule;
     export type Phase = Stripe_.SubscriptionSchedule.Phase;
     export type Prebilling = Stripe_.SubscriptionSchedule.Prebilling;
     export type Status = Stripe_.SubscriptionSchedule.Status;
@@ -14484,6 +14543,35 @@ declare namespace StripeConstructor {
     }
     export namespace LastPriceMigrationError {
       export type FailedTransition = Stripe_.SubscriptionSchedule.LastPriceMigrationError.FailedTransition;
+    }
+    export namespace PauseSchedule {
+      export type Pause = Stripe_.SubscriptionSchedule.PauseSchedule.Pause;
+      export type Resume = Stripe_.SubscriptionSchedule.PauseSchedule.Resume;
+      export namespace Pause {
+        export type Settings = Stripe_.SubscriptionSchedule.PauseSchedule.Pause.Settings;
+        export namespace Settings {
+          export type BillFor = Stripe_.SubscriptionSchedule.PauseSchedule.Pause.Settings.BillFor;
+          export type InvoicingBehavior = Stripe_.SubscriptionSchedule.PauseSchedule.Pause.Settings.InvoicingBehavior;
+          export namespace BillFor {
+            export type OutstandingUsageThrough = Stripe_.SubscriptionSchedule.PauseSchedule.Pause.Settings.BillFor.OutstandingUsageThrough;
+            export type UnusedTimeFrom = Stripe_.SubscriptionSchedule.PauseSchedule.Pause.Settings.BillFor.UnusedTimeFrom;
+            export namespace OutstandingUsageThrough {
+              export type Type = Stripe_.SubscriptionSchedule.PauseSchedule.Pause.Settings.BillFor.OutstandingUsageThrough.Type;
+            }
+            export namespace UnusedTimeFrom {
+              export type Type = Stripe_.SubscriptionSchedule.PauseSchedule.Pause.Settings.BillFor.UnusedTimeFrom.Type;
+            }
+          }
+        }
+      }
+      export namespace Resume {
+        export type Settings = Stripe_.SubscriptionSchedule.PauseSchedule.Resume.Settings;
+        export namespace Settings {
+          export type BillingCycleAnchor = Stripe_.SubscriptionSchedule.PauseSchedule.Resume.Settings.BillingCycleAnchor;
+          export type PaymentBehavior = Stripe_.SubscriptionSchedule.PauseSchedule.Resume.Settings.PaymentBehavior;
+          export type ProrationBehavior = Stripe_.SubscriptionSchedule.PauseSchedule.Resume.Settings.ProrationBehavior;
+        }
+      }
     }
     export namespace Phase {
       export type AddInvoiceItem = Stripe_.SubscriptionSchedule.Phase.AddInvoiceItem;
@@ -15327,6 +15415,7 @@ declare namespace StripeConstructor {
     export type DefaultSettings = Stripe_.QuotePreviewSubscriptionSchedule.DefaultSettings;
     export type EndBehavior = Stripe_.QuotePreviewSubscriptionSchedule.EndBehavior;
     export type LastPriceMigrationError = Stripe_.QuotePreviewSubscriptionSchedule.LastPriceMigrationError;
+    export type PauseSchedule = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule;
     export type Phase = Stripe_.QuotePreviewSubscriptionSchedule.Phase;
     export type Prebilling = Stripe_.QuotePreviewSubscriptionSchedule.Prebilling;
     export type Status = Stripe_.QuotePreviewSubscriptionSchedule.Status;
@@ -15375,6 +15464,35 @@ declare namespace StripeConstructor {
     }
     export namespace LastPriceMigrationError {
       export type FailedTransition = Stripe_.QuotePreviewSubscriptionSchedule.LastPriceMigrationError.FailedTransition;
+    }
+    export namespace PauseSchedule {
+      export type Pause = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Pause;
+      export type Resume = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Resume;
+      export namespace Pause {
+        export type Settings = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Pause.Settings;
+        export namespace Settings {
+          export type BillFor = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Pause.Settings.BillFor;
+          export type InvoicingBehavior = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Pause.Settings.InvoicingBehavior;
+          export namespace BillFor {
+            export type OutstandingUsageThrough = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Pause.Settings.BillFor.OutstandingUsageThrough;
+            export type UnusedTimeFrom = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Pause.Settings.BillFor.UnusedTimeFrom;
+            export namespace OutstandingUsageThrough {
+              export type Type = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Pause.Settings.BillFor.OutstandingUsageThrough.Type;
+            }
+            export namespace UnusedTimeFrom {
+              export type Type = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Pause.Settings.BillFor.UnusedTimeFrom.Type;
+            }
+          }
+        }
+      }
+      export namespace Resume {
+        export type Settings = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Resume.Settings;
+        export namespace Settings {
+          export type BillingCycleAnchor = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Resume.Settings.BillingCycleAnchor;
+          export type PaymentBehavior = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Resume.Settings.PaymentBehavior;
+          export type ProrationBehavior = Stripe_.QuotePreviewSubscriptionSchedule.PauseSchedule.Resume.Settings.ProrationBehavior;
+        }
+      }
     }
     export namespace Phase {
       export type AddInvoiceItem = Stripe_.QuotePreviewSubscriptionSchedule.Phase.AddInvoiceItem;
@@ -17308,6 +17426,9 @@ declare namespace StripeConstructor {
       export namespace Hosted {
         export type DeliveryMethod = Stripe_.FinancialConnections.Session.Hosted.DeliveryMethod;
       }
+      export namespace ManualEntry {
+        export type Mode = Stripe_.FinancialConnections.Session.ManualEntry.Mode;
+      }
       export namespace RelinkResult {
         export type FailureReason = Stripe_.FinancialConnections.Session.RelinkResult.FailureReason;
       }
@@ -18672,6 +18793,8 @@ declare namespace StripeConstructor {
       export type UsageDetails = Stripe_.SharedPayment.IssuedToken.UsageDetails;
       export type UsageLimits = Stripe_.SharedPayment.IssuedToken.UsageLimits;
       export namespace NextAction {
+        export type RedirectToUrl = Stripe_.SharedPayment.IssuedToken.NextAction.RedirectToUrl;
+        export type Type = Stripe_.SharedPayment.IssuedToken.NextAction.Type;
         export type UseStripeSdk = Stripe_.SharedPayment.IssuedToken.NextAction.UseStripeSdk;
       }
       export namespace RiskDetails {
@@ -27867,12 +27990,17 @@ declare namespace StripeConstructor {
   export type FinancialConnectionsAccountCreatedEvent = Stripe_.FinancialConnectionsAccountCreatedEvent;
   export type FinancialConnectionsAccountDeactivatedEvent = Stripe_.FinancialConnectionsAccountDeactivatedEvent;
   export type FinancialConnectionsAccountDisconnectedEvent = Stripe_.FinancialConnectionsAccountDisconnectedEvent;
+  export type FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent = Stripe_.FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent;
   export type FinancialConnectionsAccountReactivatedEvent = Stripe_.FinancialConnectionsAccountReactivatedEvent;
   export type FinancialConnectionsAccountRefreshedBalanceEvent = Stripe_.FinancialConnectionsAccountRefreshedBalanceEvent;
   export type FinancialConnectionsAccountRefreshedInferredBalancesEvent = Stripe_.FinancialConnectionsAccountRefreshedInferredBalancesEvent;
   export type FinancialConnectionsAccountRefreshedOwnershipEvent = Stripe_.FinancialConnectionsAccountRefreshedOwnershipEvent;
   export type FinancialConnectionsAccountRefreshedTransactionsEvent = Stripe_.FinancialConnectionsAccountRefreshedTransactionsEvent;
+  export type FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent = Stripe_.FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent;
   export type FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent = Stripe_.FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent;
+  export type FinancialConnectionsAccountUpcomingDeactivationEvent = Stripe_.FinancialConnectionsAccountUpcomingDeactivationEvent;
+  export type FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent = Stripe_.FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent;
+  export type FinancialConnectionsAuthorizationUpcomingDeactivationEvent = Stripe_.FinancialConnectionsAuthorizationUpcomingDeactivationEvent;
   export type FinancialConnectionsSessionUpdatedEvent = Stripe_.FinancialConnectionsSessionUpdatedEvent;
   export type FxQuoteExpiredEvent = Stripe_.FxQuoteExpiredEvent;
   export type IdentityVerificationSessionCanceledEvent = Stripe_.IdentityVerificationSessionCanceledEvent;

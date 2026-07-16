@@ -2,7 +2,7 @@
 
 import {Account} from './Accounts.js';
 import {Customer, DeletedCustomer} from './Customers.js';
-import {Metadata} from '../shared.js';
+import {Metadata, OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface Card {
   /**
@@ -210,7 +210,11 @@ export interface DeletedCard {
   deleted: true;
 }
 export namespace Card {
-  export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+  export type AllowRedisplay =
+    | 'always'
+    | 'limited'
+    | 'unspecified'
+    | OtherString;
 
   export type AvailablePayoutMethod = 'instant' | 'standard';
 
@@ -240,9 +244,9 @@ export namespace Card {
     status: Redaction.Status;
   }
 
-  export type RegulatedStatus = 'regulated' | 'unregulated';
+  export type RegulatedStatus = 'regulated' | 'unregulated' | OtherString;
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 }

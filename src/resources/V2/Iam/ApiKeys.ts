@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ApiKeyResource extends StripeResource {
@@ -208,9 +209,9 @@ export namespace ApiKey {
     token?: string;
   }
 
-  export type Status = 'active' | 'expired';
+  export type Status = 'active' | 'expired' | OtherString;
 
-  export type Type = 'publishable_key' | 'secret_key';
+  export type Type = 'publishable_key' | 'secret_key' | OtherString;
 
   export namespace ManagedBy {
     export interface Application {
@@ -283,7 +284,7 @@ export namespace V2 {
     }
 
     export namespace ApiKeyCreateParams {
-      export type Type = 'publishable_key' | 'secret_key';
+      export type Type = 'publishable_key' | 'secret_key' | OtherString;
 
       export interface PublicKey {
         /**

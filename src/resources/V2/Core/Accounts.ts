@@ -6,6 +6,7 @@ import {
   MetadataParam,
   AddressParam,
   Address,
+  OtherString,
   Decimal,
   JapanAddressParam,
   Metadata,
@@ -16975,7 +16976,8 @@ export namespace Account {
         | 'precious_metals_precious_stones_jewelry'
         | 'safe_deposit_box_rentals'
         | 'third_party_payment_processing'
-        | 'weapons_firearms_and_explosives';
+        | 'weapons_firearms_and_explosives'
+        | OtherString;
 
       export type PurposeOfFunds =
         | 'charitable_donations'
@@ -16990,7 +16992,8 @@ export namespace Account {
         | 'receive_payments_for_goods_and_services'
         | 'tax_optimization'
         | 'third_party_money_transmission'
-        | 'treasury_management';
+        | 'treasury_management'
+        | OtherString;
 
       export interface RegulatedActivity {
         /**
@@ -17026,7 +17029,8 @@ export namespace Account {
         | 'sales_of_goods_and_services'
         | 'tax_refund'
         | 'third_party_funds'
-        | 'treasury_reserves';
+        | 'treasury_reserves'
+        | OtherString;
 
       export namespace Capabilities {
         export interface BusinessStorage {
@@ -21580,7 +21584,8 @@ export namespace Account {
       | 'zh-Hant-HK'
       | 'zh-Hant-TW'
       | 'zh-HK'
-      | 'zh-TW';
+      | 'zh-TW'
+      | OtherString;
 
     export interface Profile {
       /**
@@ -21825,7 +21830,8 @@ export namespace Account {
           | 'verification_selfie_manipulated'
           | 'verification_selfie_unverified_other'
           | 'verification_supportability'
-          | 'verification_token_stale';
+          | 'verification_token_stale'
+          | OtherString;
       }
 
       export namespace Impact {
@@ -21945,7 +21951,8 @@ export namespace Account {
             | 'swish_payments'
             | 'twint_payments'
             | 'us_bank_transfer_payments'
-            | 'zip_payments';
+            | 'zip_payments'
+            | OtherString;
 
           export type Configuration =
             | 'card_creator'
@@ -21953,7 +21960,8 @@ export namespace Account {
             | 'merchant'
             | 'money_manager'
             | 'recipient'
-            | 'storer';
+            | 'storer'
+            | OtherString;
 
           export interface Deadline {
             /**
@@ -21976,7 +21984,11 @@ export namespace Account {
       }
 
       export namespace Reference {
-        export type Type = 'inquiry' | 'payment_method' | 'person';
+        export type Type =
+          | 'inquiry'
+          | 'payment_method'
+          | 'person'
+          | OtherString;
       }
 
       export namespace RequestedReason {
@@ -22102,7 +22114,8 @@ export namespace Account {
       | 'company'
       | 'government_entity'
       | 'individual'
-      | 'non_profit';
+      | 'non_profit'
+      | OtherString;
 
     export interface Individual {
       /**
@@ -23784,7 +23797,8 @@ export namespace Account {
         | 'trust'
         | 'unincorporated_association'
         | 'unincorporated_non_profit'
-        | 'unincorporated_partnership';
+        | 'unincorporated_partnership'
+        | OtherString;
 
       export namespace Documents {
         export interface BankAccountOwnershipVerification {
@@ -24091,7 +24105,8 @@ export namespace Account {
           | 'us_ein'
           | 'uy_ruc'
           | 'vg_cn'
-          | 'za_tin';
+          | 'za_tin'
+          | OtherString;
       }
 
       export namespace ScriptAddresses {
@@ -24347,9 +24362,9 @@ export namespace Account {
         type: IdNumber.Type;
       }
 
-      export type LegalGender = 'female' | 'male';
+      export type LegalGender = 'female' | 'male' | OtherString;
 
-      export type PoliticalExposure = 'existing' | 'none';
+      export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
       export interface Relationship {
         /**
@@ -24628,7 +24643,8 @@ export namespace Account {
           | 'us_ssn_last_4'
           | 'uy_dni'
           | 'vg_pp'
-          | 'za_id';
+          | 'za_id'
+          | OtherString;
       }
 
       export namespace ScriptAddresses {
@@ -24736,7 +24752,7 @@ export namespace Account {
   }
 
   export namespace RelatedNetworkObject {
-    export type Type = 'link' | 'network_business_profile';
+    export type Type = 'link' | 'network_business_profile' | OtherString;
   }
 
   export namespace Requirements {
@@ -24935,7 +24951,8 @@ export namespace Account {
           | 'verification_selfie_manipulated'
           | 'verification_selfie_unverified_other'
           | 'verification_supportability'
-          | 'verification_token_stale';
+          | 'verification_token_stale'
+          | OtherString;
       }
 
       export namespace Impact {
@@ -25055,7 +25072,8 @@ export namespace Account {
             | 'swish_payments'
             | 'twint_payments'
             | 'us_bank_transfer_payments'
-            | 'zip_payments';
+            | 'zip_payments'
+            | OtherString;
 
           export type Configuration =
             | 'card_creator'
@@ -25063,7 +25081,8 @@ export namespace Account {
             | 'merchant'
             | 'money_manager'
             | 'recipient'
-            | 'storer';
+            | 'storer'
+            | OtherString;
 
           export interface Deadline {
             /**
@@ -25086,7 +25105,11 @@ export namespace Account {
       }
 
       export namespace Reference {
-        export type Type = 'inquiry' | 'payment_method' | 'person';
+        export type Type =
+          | 'inquiry'
+          | 'payment_method'
+          | 'person'
+          | OtherString;
       }
 
       export namespace RequestedReason {
@@ -27972,7 +27995,8 @@ export namespace V2 {
             | 'precious_metals_precious_stones_jewelry'
             | 'safe_deposit_box_rentals'
             | 'third_party_payment_processing'
-            | 'weapons_firearms_and_explosives';
+            | 'weapons_firearms_and_explosives'
+            | OtherString;
 
           export type PurposeOfFunds =
             | 'charitable_donations'
@@ -27987,7 +28011,8 @@ export namespace V2 {
             | 'receive_payments_for_goods_and_services'
             | 'tax_optimization'
             | 'third_party_money_transmission'
-            | 'treasury_management';
+            | 'treasury_management'
+            | OtherString;
 
           export interface RegulatedActivity {
             /**
@@ -28023,7 +28048,8 @@ export namespace V2 {
             | 'sales_of_goods_and_services'
             | 'tax_refund'
             | 'third_party_funds'
-            | 'treasury_reserves';
+            | 'treasury_reserves'
+            | OtherString;
 
           export namespace Capabilities {
             export interface BusinessStorage {
@@ -29777,7 +29803,8 @@ export namespace V2 {
           | 'zh-Hant-HK'
           | 'zh-Hant-TW'
           | 'zh-HK'
-          | 'zh-TW';
+          | 'zh-TW'
+          | OtherString;
 
         export interface Profile {
           /**
@@ -29925,7 +29952,8 @@ export namespace V2 {
           | 'company'
           | 'government_entity'
           | 'individual'
-          | 'non_profit';
+          | 'non_profit'
+          | OtherString;
 
         export interface Individual {
           /**
@@ -31428,7 +31456,8 @@ export namespace V2 {
             | 'trust'
             | 'unincorporated_association'
             | 'unincorporated_non_profit'
-            | 'unincorporated_partnership';
+            | 'unincorporated_partnership'
+            | OtherString;
 
           export namespace Documents {
             export interface BankAccountOwnershipVerification {
@@ -31735,7 +31764,8 @@ export namespace V2 {
               | 'us_ein'
               | 'uy_ruc'
               | 'vg_cn'
-              | 'za_tin';
+              | 'za_tin'
+              | OtherString;
           }
 
           export namespace ScriptAddresses {
@@ -31989,9 +32019,9 @@ export namespace V2 {
             value: string;
           }
 
-          export type LegalGender = 'female' | 'male';
+          export type LegalGender = 'female' | 'male' | OtherString;
 
-          export type PoliticalExposure = 'existing' | 'none';
+          export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
           export interface Relationship {
             /**
@@ -32236,7 +32266,8 @@ export namespace V2 {
               | 'us_ssn_last_4'
               | 'uy_dni'
               | 'vg_pp'
-              | 'za_id';
+              | 'za_id'
+              | OtherString;
           }
 
           export namespace ScriptAddresses {
@@ -35230,7 +35261,8 @@ export namespace V2 {
             | 'precious_metals_precious_stones_jewelry'
             | 'safe_deposit_box_rentals'
             | 'third_party_payment_processing'
-            | 'weapons_firearms_and_explosives';
+            | 'weapons_firearms_and_explosives'
+            | OtherString;
 
           export type PurposeOfFunds =
             | 'charitable_donations'
@@ -35245,7 +35277,8 @@ export namespace V2 {
             | 'receive_payments_for_goods_and_services'
             | 'tax_optimization'
             | 'third_party_money_transmission'
-            | 'treasury_management';
+            | 'treasury_management'
+            | OtherString;
 
           export interface RegulatedActivity {
             /**
@@ -35281,7 +35314,8 @@ export namespace V2 {
             | 'sales_of_goods_and_services'
             | 'tax_refund'
             | 'third_party_funds'
-            | 'treasury_reserves';
+            | 'treasury_reserves'
+            | OtherString;
 
           export namespace Capabilities {
             export interface BusinessStorage {
@@ -37035,7 +37069,8 @@ export namespace V2 {
           | 'zh-Hant-HK'
           | 'zh-Hant-TW'
           | 'zh-HK'
-          | 'zh-TW';
+          | 'zh-TW'
+          | OtherString;
 
         export interface Profile {
           /**
@@ -37183,7 +37218,8 @@ export namespace V2 {
           | 'company'
           | 'government_entity'
           | 'individual'
-          | 'non_profit';
+          | 'non_profit'
+          | OtherString;
 
         export interface Individual {
           /**
@@ -38649,7 +38685,8 @@ export namespace V2 {
             | 'trust'
             | 'unincorporated_association'
             | 'unincorporated_non_profit'
-            | 'unincorporated_partnership';
+            | 'unincorporated_partnership'
+            | OtherString;
 
           export namespace Documents {
             export interface BankAccountOwnershipVerification {
@@ -38956,7 +38993,8 @@ export namespace V2 {
               | 'us_ein'
               | 'uy_ruc'
               | 'vg_cn'
-              | 'za_tin';
+              | 'za_tin'
+              | OtherString;
           }
 
           export namespace ScriptNames {
@@ -39097,9 +39135,9 @@ export namespace V2 {
             value: string;
           }
 
-          export type LegalGender = 'female' | 'male';
+          export type LegalGender = 'female' | 'male' | OtherString;
 
-          export type PoliticalExposure = 'existing' | 'none';
+          export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
           export interface Relationship {
             /**
@@ -39344,7 +39382,8 @@ export namespace V2 {
               | 'us_ssn_last_4'
               | 'uy_dni'
               | 'vg_pp'
-              | 'za_id';
+              | 'za_id'
+              | OtherString;
           }
 
           export namespace ScriptNames {

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Address, Metadata, Decimal} from '../../../shared.js';
+import {Address, Metadata, OtherString, Decimal} from '../../../shared.js';
 import {RequestOptions} from '../../../lib.js';
 export interface AccountPerson {
   /**
@@ -283,9 +283,9 @@ export namespace AccountPerson {
     type: IdNumber.Type;
   }
 
-  export type LegalGender = 'female' | 'male';
+  export type LegalGender = 'female' | 'male' | OtherString;
 
-  export type PoliticalExposure = 'existing' | 'none';
+  export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
   export interface Relationship {
     /**
@@ -564,7 +564,8 @@ export namespace AccountPerson {
       | 'us_ssn_last_4'
       | 'uy_dni'
       | 'vg_pp'
-      | 'za_id';
+      | 'za_id'
+      | OtherString;
   }
 
   export namespace ScriptAddresses {

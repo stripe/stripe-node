@@ -13,6 +13,7 @@ import {
   Emptyable,
   MetadataParam,
   AddressParam,
+  OtherString,
   JapanAddressParam,
   PaginationParams,
   RangeQueryParam,
@@ -364,7 +365,7 @@ export class AccountResource extends StripeResource {
     ) as any;
   }
   /**
-   * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
+   * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the representative. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
    */
   deletePerson(
     accountId: string,
@@ -667,7 +668,8 @@ export namespace Account {
     | 'company'
     | 'government_entity'
     | 'individual'
-    | 'non_profit';
+    | 'non_profit'
+    | OtherString;
 
   export interface Capabilities {
     /**
@@ -1357,7 +1359,7 @@ export namespace Account {
     user_agent?: string | null;
   }
 
-  export type Type = 'custom' | 'express' | 'none' | 'standard';
+  export type Type = 'custom' | 'express' | 'none' | 'standard' | OtherString;
 
   export namespace BusinessProfile {
     export interface AnnualRevenue {
@@ -1382,7 +1384,8 @@ export namespace Account {
       | 'minority_owned_business'
       | 'none_of_these_apply'
       | 'prefer_not_to_answer'
-      | 'women_owned_business';
+      | 'women_owned_business'
+      | OtherString;
 
     export interface MonthlyEstimatedRevenue {
       /**
@@ -1671,7 +1674,8 @@ export namespace Account {
 
     export type OwnershipExemptionReason =
       | 'qualified_entity_exceeds_ownership_threshold'
-      | 'qualifies_as_financial_institution';
+      | 'qualifies_as_financial_institution'
+      | OtherString;
 
     export interface RegistrationDate {
       /**
@@ -1730,7 +1734,8 @@ export namespace Account {
       | 'tax_exempt_government_instrumentality'
       | 'unincorporated_association'
       | 'unincorporated_non_profit'
-      | 'unincorporated_partnership';
+      | 'unincorporated_partnership'
+      | OtherString;
 
     export interface Verification {
       document: Verification.Document;
@@ -1800,7 +1805,7 @@ export namespace Account {
       payments: Losses.Payments;
     }
 
-    export type RequirementCollection = 'application' | 'stripe';
+    export type RequirementCollection = 'application' | 'stripe' | OtherString;
 
     export interface StripeDashboard {
       /**
@@ -1821,15 +1826,16 @@ export namespace Account {
         | 'application'
         | 'application_custom'
         | 'application_express'
-        | 'application_unified_accounts_beta';
+        | 'application_unified_accounts_beta'
+        | OtherString;
     }
 
     export namespace Losses {
-      export type Payments = 'application' | 'stripe';
+      export type Payments = 'application' | 'stripe' | OtherString;
     }
 
     export namespace StripeDashboard {
-      export type Type = 'express' | 'full' | 'none';
+      export type Type = 'express' | 'full' | 'none' | OtherString;
     }
   }
 
@@ -2156,7 +2162,8 @@ export namespace Account {
       | 'fraud_payment_method_casher'
       | 'fraud_payment_method_tester'
       | 'other'
-      | 'terms_of_service';
+      | 'terms_of_service'
+      | OtherString;
   }
 
   export namespace Settings {
@@ -2411,7 +2418,8 @@ export namespace Account {
           | 'monday'
           | 'thursday'
           | 'tuesday'
-          | 'wednesday';
+          | 'wednesday'
+          | OtherString;
       }
     }
 
@@ -2676,7 +2684,8 @@ export namespace AccountCreateParams {
     | 'company'
     | 'government_entity'
     | 'individual'
-    | 'non_profit';
+    | 'non_profit'
+    | OtherString;
 
   export interface Capabilities {
     /**
@@ -3173,6 +3182,8 @@ export namespace AccountCreateParams {
 
     /**
      * The business ID number of the company, as appropriate for the company's country. (Examples are an Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
+     *
+     * Changing this value requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
      */
     tax_id?: string;
 
@@ -3570,7 +3581,8 @@ export namespace AccountCreateParams {
       | 'minority_owned_business'
       | 'none_of_these_apply'
       | 'prefer_not_to_answer'
-      | 'women_owned_business';
+      | 'women_owned_business'
+      | OtherString;
 
     export interface MonthlyEstimatedRevenue {
       /**
@@ -4200,7 +4212,8 @@ export namespace AccountCreateParams {
 
     export type OwnershipExemptionReason =
       | 'qualified_entity_exceeds_ownership_threshold'
-      | 'qualifies_as_financial_institution';
+      | 'qualifies_as_financial_institution'
+      | OtherString;
 
     export interface RegistrationDate {
       /**
@@ -4259,7 +4272,8 @@ export namespace AccountCreateParams {
       | 'tax_exempt_government_instrumentality'
       | 'unincorporated_association'
       | 'unincorporated_non_profit'
-      | 'unincorporated_partnership';
+      | 'unincorporated_partnership'
+      | OtherString;
 
     export interface Verification {
       /**
@@ -4322,7 +4336,7 @@ export namespace AccountCreateParams {
       payments?: Losses.Payments;
     }
 
-    export type RequirementCollection = 'application' | 'stripe';
+    export type RequirementCollection = 'application' | 'stripe' | OtherString;
 
     export interface StripeDashboard {
       /**
@@ -4332,19 +4346,19 @@ export namespace AccountCreateParams {
     }
 
     export namespace Dashboard {
-      export type Type = 'express' | 'full' | 'none';
+      export type Type = 'express' | 'full' | 'none' | OtherString;
     }
 
     export namespace Fees {
-      export type Payer = 'account' | 'application';
+      export type Payer = 'account' | 'application' | OtherString;
     }
 
     export namespace Losses {
-      export type Payments = 'application' | 'stripe';
+      export type Payments = 'application' | 'stripe' | OtherString;
     }
 
     export namespace StripeDashboard {
-      export type Type = 'express' | 'full' | 'none';
+      export type Type = 'express' | 'full' | 'none' | OtherString;
     }
   }
 
@@ -4459,7 +4473,7 @@ export namespace AccountCreateParams {
       year: number;
     }
 
-    export type PoliticalExposure = 'existing' | 'none';
+    export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
     export interface Relationship {
       /**
@@ -4774,7 +4788,11 @@ export namespace AccountCreateParams {
     }
 
     export namespace Invoices {
-      export type HostedPaymentMethodSave = 'always' | 'never' | 'offer';
+      export type HostedPaymentMethodSave =
+        | 'always'
+        | 'never'
+        | 'offer'
+        | OtherString;
     }
 
     export namespace Payouts {
@@ -4827,7 +4845,8 @@ export namespace AccountCreateParams {
           | 'monday'
           | 'thursday'
           | 'tuesday'
-          | 'wednesday';
+          | 'wednesday'
+          | OtherString;
       }
     }
 
@@ -5090,7 +5109,8 @@ export namespace AccountUpdateParams {
     | 'company'
     | 'government_entity'
     | 'individual'
-    | 'non_profit';
+    | 'non_profit'
+    | OtherString;
 
   export interface Capabilities {
     /**
@@ -5584,6 +5604,8 @@ export namespace AccountUpdateParams {
 
     /**
      * The business ID number of the company, as appropriate for the company's country. (Examples are an Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
+     *
+     * Changing this value requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
      */
     tax_id?: string;
 
@@ -5991,7 +6013,8 @@ export namespace AccountUpdateParams {
       | 'minority_owned_business'
       | 'none_of_these_apply'
       | 'prefer_not_to_answer'
-      | 'women_owned_business';
+      | 'women_owned_business'
+      | OtherString;
 
     export interface MonthlyEstimatedRevenue {
       /**
@@ -6621,7 +6644,8 @@ export namespace AccountUpdateParams {
 
     export type OwnershipExemptionReason =
       | 'qualified_entity_exceeds_ownership_threshold'
-      | 'qualifies_as_financial_institution';
+      | 'qualifies_as_financial_institution'
+      | OtherString;
 
     export interface RegistrationDate {
       /**
@@ -6680,7 +6704,8 @@ export namespace AccountUpdateParams {
       | 'tax_exempt_government_instrumentality'
       | 'unincorporated_association'
       | 'unincorporated_non_profit'
-      | 'unincorporated_partnership';
+      | 'unincorporated_partnership'
+      | OtherString;
 
     export interface Verification {
       /**
@@ -6815,7 +6840,7 @@ export namespace AccountUpdateParams {
       year: number;
     }
 
-    export type PoliticalExposure = 'existing' | 'none';
+    export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
     export interface Relationship {
       /**
@@ -7135,7 +7160,11 @@ export namespace AccountUpdateParams {
     }
 
     export namespace Invoices {
-      export type HostedPaymentMethodSave = 'always' | 'never' | 'offer';
+      export type HostedPaymentMethodSave =
+        | 'always'
+        | 'never'
+        | 'offer'
+        | OtherString;
     }
 
     export namespace Payouts {
@@ -7188,7 +7217,8 @@ export namespace AccountUpdateParams {
           | 'monday'
           | 'thursday'
           | 'tuesday'
-          | 'wednesday';
+          | 'wednesday'
+          | OtherString;
       }
     }
 
@@ -7472,11 +7502,15 @@ export interface AccountCreatePersonParams {
 
   /**
    * The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+   *
+   * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
    */
   id_number?: string;
 
   /**
    * The person's secondary ID number, as appropriate for their country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+   *
+   * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
    */
   id_number_secondary?: string;
 
@@ -7547,6 +7581,8 @@ export interface AccountCreatePersonParams {
 
   /**
    * The last four digits of the person's Social Security number (U.S. only).
+   *
+   * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
    */
   ssn_last_4?: string;
 
@@ -7602,7 +7638,7 @@ export namespace AccountCreatePersonParams {
     visa?: Documents.Visa;
   }
 
-  export type PoliticalExposure = 'existing' | 'none';
+  export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
   export interface Relationship {
     /**
@@ -7774,7 +7810,8 @@ export namespace AccountCreatePersonParams {
         | 'not_hispanic_or_latino'
         | 'other_hispanic_or_latino'
         | 'prefer_not_to_answer'
-        | 'puerto_rican';
+        | 'puerto_rican'
+        | OtherString;
     }
 
     export namespace RaceDetails {
@@ -7802,7 +7839,8 @@ export namespace AccountCreatePersonParams {
         | 'samoan'
         | 'somali'
         | 'vietnamese'
-        | 'white';
+        | 'white'
+        | OtherString;
     }
   }
 
@@ -8132,11 +8170,15 @@ export interface AccountUpdatePersonParams {
 
   /**
    * The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+   *
+   * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
    */
   id_number?: string;
 
   /**
    * The person's secondary ID number, as appropriate for their country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+   *
+   * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
    */
   id_number_secondary?: string;
 
@@ -8207,6 +8249,8 @@ export interface AccountUpdatePersonParams {
 
   /**
    * The last four digits of the person's Social Security number (U.S. only).
+   *
+   * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
    */
   ssn_last_4?: string;
 
@@ -8262,7 +8306,7 @@ export namespace AccountUpdatePersonParams {
     visa?: Documents.Visa;
   }
 
-  export type PoliticalExposure = 'existing' | 'none';
+  export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
   export interface Relationship {
     /**
@@ -8434,7 +8478,8 @@ export namespace AccountUpdatePersonParams {
         | 'not_hispanic_or_latino'
         | 'other_hispanic_or_latino'
         | 'prefer_not_to_answer'
-        | 'puerto_rican';
+        | 'puerto_rican'
+        | OtherString;
     }
 
     export namespace RaceDetails {
@@ -8462,7 +8507,8 @@ export namespace AccountUpdatePersonParams {
         | 'samoan'
         | 'somali'
         | 'vietnamese'
-        | 'white';
+        | 'white'
+        | OtherString;
     }
   }
 

@@ -7,6 +7,7 @@ import {
   MetadataParam,
   Emptyable,
   PaginationParams,
+  OtherString,
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
@@ -181,7 +182,12 @@ export namespace PersonalizationDesign {
     carrier_text: Array<RejectionReasons.CarrierText> | null;
   }
 
-  export type Status = 'active' | 'inactive' | 'rejected' | 'review';
+  export type Status =
+    | 'active'
+    | 'inactive'
+    | 'rejected'
+    | 'review'
+    | OtherString;
 
   export namespace RejectionReasons {
     export type CardLogo =
@@ -192,7 +198,8 @@ export namespace PersonalizationDesign {
       | 'non_fiat_currency'
       | 'other'
       | 'other_entity'
-      | 'promotional_material';
+      | 'promotional_material'
+      | OtherString;
 
     export type CarrierText =
       | 'geographic_location'
@@ -201,7 +208,8 @@ export namespace PersonalizationDesign {
       | 'non_fiat_currency'
       | 'other'
       | 'other_entity'
-      | 'promotional_material';
+      | 'promotional_material'
+      | OtherString;
   }
 }
 export namespace Issuing {
@@ -406,6 +414,11 @@ export namespace Issuing {
       is_platform_default?: boolean;
     }
 
-    export type Status = 'active' | 'inactive' | 'rejected' | 'review';
+    export type Status =
+      | 'active'
+      | 'inactive'
+      | 'rejected'
+      | 'review'
+      | OtherString;
   }
 }

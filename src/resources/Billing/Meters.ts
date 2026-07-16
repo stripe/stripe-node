@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {MeterEventSummary} from './MeterEventSummaries.js';
-import {PaginationParams} from '../../shared.js';
+import {OtherString, PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class MeterResource extends StripeResource {
@@ -189,9 +189,9 @@ export namespace Meter {
     formula: DefaultAggregation.Formula;
   }
 
-  export type EventTimeWindow = 'day' | 'hour';
+  export type EventTimeWindow = 'day' | 'hour' | OtherString;
 
-  export type Status = 'active' | 'inactive';
+  export type Status = 'active' | 'inactive' | OtherString;
 
   export interface StatusTransitions {
     /**
@@ -208,7 +208,7 @@ export namespace Meter {
   }
 
   export namespace DefaultAggregation {
-    export type Formula = 'count' | 'last' | 'sum';
+    export type Formula = 'count' | 'last' | 'sum' | OtherString;
   }
 }
 export namespace Billing {
@@ -274,7 +274,7 @@ export namespace Billing {
       type: 'by_id';
     }
 
-    export type EventTimeWindow = 'day' | 'hour';
+    export type EventTimeWindow = 'day' | 'hour' | OtherString;
 
     export interface ValueSettings {
       /**
@@ -284,7 +284,7 @@ export namespace Billing {
     }
 
     export namespace DefaultAggregation {
-      export type Formula = 'count' | 'last' | 'sum';
+      export type Formula = 'count' | 'last' | 'sum' | OtherString;
     }
   }
 }
@@ -323,7 +323,7 @@ export namespace Billing {
   }
 
   export namespace MeterListParams {
-    export type Status = 'active' | 'inactive';
+    export type Status = 'active' | 'inactive' | OtherString;
   }
 }
 export namespace Billing {
@@ -392,7 +392,7 @@ export namespace Billing {
   export namespace MeterListEventSummariesParams {
     export type TenantOperator = 'excludes' | 'includes';
 
-    export type ValueGroupingWindow = 'day' | 'hour';
+    export type ValueGroupingWindow = 'day' | 'hour' | OtherString;
   }
 }
 export namespace Billing {

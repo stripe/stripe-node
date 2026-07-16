@@ -3,6 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {
   MetadataParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -227,7 +228,8 @@ export namespace OnrampSession {
       | 'sol'
       | 'usdc'
       | 'wld'
-      | 'xlm';
+      | 'xlm'
+      | OtherString;
 
     export type DestinationNetwork =
       | 'avalanche'
@@ -238,7 +240,8 @@ export namespace OnrampSession {
       | 'polygon'
       | 'solana'
       | 'stellar'
-      | 'worldchain';
+      | 'worldchain'
+      | OtherString;
 
     export interface Fees {
       /**
@@ -252,9 +255,9 @@ export namespace OnrampSession {
       transaction_fee_amount: string | null;
     }
 
-    export type SettlementSpeed = 'instant' | 'standard';
+    export type SettlementSpeed = 'instant' | 'standard' | OtherString;
 
-    export type SourceCurrency = 'eur' | 'gbp' | 'usd';
+    export type SourceCurrency = 'eur' | 'gbp' | 'usd' | OtherString;
 
     export interface WalletAddresses {
       /**
@@ -435,7 +438,8 @@ export namespace Crypto {
       | 'sol'
       | 'usdc'
       | 'wld'
-      | 'xlm';
+      | 'xlm'
+      | OtherString;
 
     export type DestinationNetwork =
       | 'avalanche'
@@ -446,13 +450,14 @@ export namespace Crypto {
       | 'polygon'
       | 'solana'
       | 'stellar'
-      | 'worldchain';
+      | 'worldchain'
+      | OtherString;
 
     export interface KycDetails {}
 
-    export type SettlementSpeed = 'instant' | 'standard';
+    export type SettlementSpeed = 'instant' | 'standard' | OtherString;
 
-    export type SourceCurrency = 'eur' | 'gbp' | 'usd';
+    export type SourceCurrency = 'eur' | 'gbp' | 'usd' | OtherString;
 
     export interface WalletAddresses {
       /**
@@ -515,7 +520,8 @@ export namespace Crypto {
       | 'sol'
       | 'usdc'
       | 'wld'
-      | 'xlm';
+      | 'xlm'
+      | OtherString;
 
     export type DestinationNetwork =
       | 'avalanche'
@@ -526,14 +532,16 @@ export namespace Crypto {
       | 'polygon'
       | 'solana'
       | 'stellar'
-      | 'worldchain';
+      | 'worldchain'
+      | OtherString;
 
     export type Status =
       | 'fulfillment_complete'
       | 'fulfillment_processing'
       | 'initialized'
       | 'rejected'
-      | 'requires_payment';
+      | 'requires_payment'
+      | OtherString;
   }
 }
 export namespace Crypto {

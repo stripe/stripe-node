@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Configuration} from './Configurations.js';
+import {OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class SessionResource extends StripeResource {
@@ -153,7 +154,8 @@ export namespace Session {
     | 'vi'
     | 'zh'
     | 'zh-HK'
-    | 'zh-TW';
+    | 'zh-TW'
+    | OtherString;
 
   export namespace Flow {
     export interface AfterCompletion {
@@ -213,7 +215,8 @@ export namespace Session {
       | 'payment_method_update'
       | 'subscription_cancel'
       | 'subscription_update'
-      | 'subscription_update_confirm';
+      | 'subscription_update_confirm'
+      | OtherString;
 
     export namespace AfterCompletion {
       export interface HostedConfirmation {
@@ -230,7 +233,11 @@ export namespace Session {
         return_url: string;
       }
 
-      export type Type = 'hosted_confirmation' | 'portal_homepage' | 'redirect';
+      export type Type =
+        | 'hosted_confirmation'
+        | 'portal_homepage'
+        | 'redirect'
+        | OtherString;
     }
 
     export namespace SubscriptionCancel {
@@ -406,7 +413,8 @@ export namespace BillingPortal {
       | 'vi'
       | 'zh'
       | 'zh-HK'
-      | 'zh-TW';
+      | 'zh-TW'
+      | OtherString;
 
     export namespace FlowData {
       export interface AfterCompletion {
@@ -466,7 +474,8 @@ export namespace BillingPortal {
         | 'payment_method_update'
         | 'subscription_cancel'
         | 'subscription_update'
-        | 'subscription_update_confirm';
+        | 'subscription_update_confirm'
+        | OtherString;
 
       export namespace AfterCompletion {
         export interface HostedConfirmation {
@@ -486,7 +495,8 @@ export namespace BillingPortal {
         export type Type =
           | 'hosted_confirmation'
           | 'portal_homepage'
-          | 'redirect';
+          | 'redirect'
+          | OtherString;
       }
 
       export namespace SubscriptionCancel {

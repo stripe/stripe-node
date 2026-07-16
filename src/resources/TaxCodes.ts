@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams} from '../shared.js';
+import {PaginationParams, OtherString} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class TaxCodeResource extends StripeResource {
@@ -67,7 +67,7 @@ export namespace TaxCode {
   }
 
   export namespace Requirements {
-    export type PerformanceLocation = 'optional' | 'required';
+    export type PerformanceLocation = 'optional' | 'required' | OtherString;
   }
 }
 export interface TaxCodeRetrieveParams {

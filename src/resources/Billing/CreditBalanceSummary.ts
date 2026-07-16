@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Customer, DeletedCustomer} from './../Customers.js';
-import {Decimal, Metadata} from '../../shared.js';
+import {OtherString, Decimal, Metadata} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class CreditBalanceSummaryResource extends StripeResource {
@@ -167,7 +167,7 @@ export namespace CreditBalanceSummary {
         value: number;
       }
 
-      export type Type = 'custom_pricing_unit' | 'monetary';
+      export type Type = 'custom_pricing_unit' | 'monetary' | OtherString;
 
       export namespace CustomPricingUnit {
         export interface CustomPricingUnitDetails {
@@ -248,7 +248,7 @@ export namespace CreditBalanceSummary {
         value: number;
       }
 
-      export type Type = 'custom_pricing_unit' | 'monetary';
+      export type Type = 'custom_pricing_unit' | 'monetary' | OtherString;
 
       export namespace CustomPricingUnit {
         export interface CustomPricingUnitDetails {
@@ -345,7 +345,7 @@ export namespace Billing {
         prices?: Array<ApplicabilityScope.Price>;
       }
 
-      export type Type = 'applicability_scope' | 'credit_grant';
+      export type Type = 'applicability_scope' | 'credit_grant' | OtherString;
 
       export namespace ApplicabilityScope {
         export interface BillableItem {

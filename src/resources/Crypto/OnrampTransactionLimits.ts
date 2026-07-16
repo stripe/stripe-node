@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class OnrampTransactionLimitResource extends StripeResource {
@@ -85,6 +86,7 @@ export namespace Crypto {
       | 'polygon'
       | 'solana'
       | 'stellar'
-      | 'worldchain';
+      | 'worldchain'
+      | OtherString;
   }
 }

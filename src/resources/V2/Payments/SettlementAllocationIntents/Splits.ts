@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {SettlementAllocationIntentSplit} from './../../../V2/Payments/SettlementAllocationIntentSplits.js';
 import {V2Amount} from './../../V2Amounts.js';
-import {MetadataParam} from '../../../../shared.js';
+import {MetadataParam, OtherString} from '../../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 
 export class SplitResource extends StripeResource {
@@ -107,7 +107,7 @@ export namespace V2 {
       }
 
       export namespace SplitCreateParams {
-        export type Type = 'credit' | 'debit';
+        export type Type = 'credit' | 'debit' | OtherString;
       }
     }
   }
@@ -135,7 +135,7 @@ export namespace V2 {
       }
 
       export namespace SplitListParams {
-        export type Status = 'canceled' | 'pending' | 'settled';
+        export type Status = 'canceled' | 'pending' | 'settled' | OtherString;
       }
     }
   }

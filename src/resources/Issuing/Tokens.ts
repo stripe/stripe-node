@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Card} from './Cards.js';
-import {PaginationParams, RangeQueryParam} from '../../shared.js';
+import {OtherString, PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class TokenResource extends StripeResource {
@@ -117,7 +117,7 @@ export interface Token {
   wallet_provider?: Token.WalletProvider;
 }
 export namespace Token {
-  export type Network = 'mastercard' | 'visa';
+  export type Network = 'mastercard' | 'visa' | OtherString;
 
   export interface NetworkData {
     device?: NetworkData.Device;
@@ -137,9 +137,15 @@ export namespace Token {
   export type ProvisioningDecision =
     | 'approve'
     | 'approve_pending_id_and_v'
-    | 'decline';
+    | 'decline'
+    | OtherString;
 
-  export type Status = 'active' | 'deleted' | 'requested' | 'suspended';
+  export type Status =
+    | 'active'
+    | 'deleted'
+    | 'requested'
+    | 'suspended'
+    | OtherString;
 
   export type TokenType =
     | 'card_on_file'
@@ -147,9 +153,14 @@ export namespace Token {
     | 'commerce_platform'
     | 'commercial_virtual_account'
     | 'secure_element'
-    | 'static_credential';
+    | 'static_credential'
+    | OtherString;
 
-  export type WalletProvider = 'apple_pay' | 'google_pay' | 'samsung_pay';
+  export type WalletProvider =
+    | 'apple_pay'
+    | 'google_pay'
+    | 'samsung_pay'
+    | OtherString;
 
   export namespace NetworkData {
     export interface Device {
@@ -216,7 +227,7 @@ export namespace Token {
       token_requestor_name?: string;
     }
 
-    export type Type = 'mastercard' | 'visa';
+    export type Type = 'mastercard' | 'visa' | OtherString;
 
     export interface Visa {
       /**
@@ -478,20 +489,27 @@ export namespace Token {
         | 'yo'
         | 'za'
         | 'zh'
-        | 'zu';
+        | 'zu'
+        | OtherString;
 
-      export type Type = 'other' | 'phone' | 'watch';
+      export type Type = 'other' | 'phone' | 'watch' | OtherString;
     }
 
     export namespace Visa {
       export type TokenDecisionRecommendation =
         | 'approve'
         | 'decline'
-        | 'recommend_id_and_v';
+        | 'recommend_id_and_v'
+        | OtherString;
     }
 
     export namespace WalletProvider {
-      export type CardNumberSource = 'app' | 'manual' | 'on_file' | 'other';
+      export type CardNumberSource =
+        | 'app'
+        | 'manual'
+        | 'on_file'
+        | 'other'
+        | OtherString;
 
       export interface CardholderAddress {
         /**
@@ -533,9 +551,14 @@ export namespace Token {
         | 'suspicious_activity'
         | 'too_many_different_cardholders'
         | 'too_many_recent_attempts'
-        | 'too_many_recent_tokens';
+        | 'too_many_recent_tokens'
+        | OtherString;
 
-      export type SuggestedDecision = 'approve' | 'decline' | 'require_auth';
+      export type SuggestedDecision =
+        | 'approve'
+        | 'decline'
+        | 'require_auth'
+        | OtherString;
     }
   }
 }
@@ -561,7 +584,7 @@ export namespace Issuing {
   }
 
   export namespace TokenUpdateParams {
-    export type Status = 'active' | 'deleted' | 'suspended';
+    export type Status = 'active' | 'deleted' | 'suspended' | OtherString;
   }
 }
 export namespace Issuing {
@@ -588,6 +611,11 @@ export namespace Issuing {
   }
 
   export namespace TokenListParams {
-    export type Status = 'active' | 'deleted' | 'requested' | 'suspended';
+    export type Status =
+      | 'active'
+      | 'deleted'
+      | 'requested'
+      | 'suspended'
+      | OtherString;
   }
 }

@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class DebitDisputeResource extends StripeResource {
@@ -132,7 +133,7 @@ export namespace DebitDispute {
     statement_descriptor?: string;
   }
 
-  export type Status = 'failed' | 'submitted' | 'succeeded';
+  export type Status = 'failed' | 'submitted' | 'succeeded' | OtherString;
 
   export interface StatusDetails {
     /**
@@ -157,7 +158,10 @@ export namespace DebitDispute {
   }
 
   export namespace BankTransfer {
-    export type Reason = 'incorrect_amount_or_date' | 'unauthorized';
+    export type Reason =
+      | 'incorrect_amount_or_date'
+      | 'unauthorized'
+      | OtherString;
   }
 
   export namespace StatusDetails {
@@ -192,7 +196,10 @@ export namespace V2 {
       }
 
       export namespace BankTransfer {
-        export type Reason = 'incorrect_amount_or_date' | 'unauthorized';
+        export type Reason =
+          | 'incorrect_amount_or_date'
+          | 'unauthorized'
+          | OtherString;
       }
     }
   }
@@ -222,7 +229,7 @@ export namespace V2 {
     }
 
     export namespace DebitDisputeListParams {
-      export type Status = 'failed' | 'submitted' | 'succeeded';
+      export type Status = 'failed' | 'submitted' | 'succeeded' | OtherString;
     }
   }
 }

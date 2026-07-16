@@ -6,6 +6,7 @@ import {Mandate} from './../Mandates.js';
 import {
   MetadataParam,
   PaginationParams,
+  OtherString,
   Metadata,
   Address,
 } from '../../shared.js';
@@ -195,7 +196,12 @@ export namespace InboundTransfer {
     us_bank_account?: OriginPaymentMethodDetails.UsBankAccount;
   }
 
-  export type Status = 'canceled' | 'failed' | 'processing' | 'succeeded';
+  export type Status =
+    | 'canceled'
+    | 'failed'
+    | 'processing'
+    | 'succeeded'
+    | OtherString;
 
   export interface StatusTransitions {
     /**
@@ -228,7 +234,8 @@ export namespace InboundTransfer {
       | 'invalid_account_number'
       | 'invalid_currency'
       | 'no_account'
-      | 'other';
+      | 'other'
+      | OtherString;
   }
 
   export namespace OriginPaymentMethodDetails {
@@ -289,9 +296,9 @@ export namespace InboundTransfer {
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
     }
   }
 }
@@ -365,7 +372,12 @@ export namespace Treasury {
   }
 
   export namespace InboundTransferListParams {
-    export type Status = 'canceled' | 'failed' | 'processing' | 'succeeded';
+    export type Status =
+      | 'canceled'
+      | 'failed'
+      | 'processing'
+      | 'succeeded'
+      | OtherString;
   }
 }
 export namespace Treasury {

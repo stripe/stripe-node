@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {JapanAddress} from '../../../shared.js';
+import {OtherString, JapanAddress} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FinancialAddressResource extends StripeResource {
@@ -267,7 +267,8 @@ export namespace FinancialAddress {
       | 'gb_bank_account'
       | 'mx_bank_account'
       | 'sepa_bank_account'
-      | 'us_bank_account';
+      | 'us_bank_account'
+      | OtherString;
 
     export interface UsBankAccount {
       /**
@@ -317,7 +318,8 @@ export namespace FinancialAddress {
         | 'polygon'
         | 'solana'
         | 'stellar'
-        | 'tempo';
+        | 'tempo'
+        | OtherString;
     }
   }
 }
@@ -357,7 +359,8 @@ export namespace V2 {
         | 'gb_bank_account'
         | 'mx_bank_account'
         | 'sepa_bank_account'
-        | 'us_bank_account';
+        | 'us_bank_account'
+        | OtherString;
 
       export interface CryptoProperties {
         /**
@@ -383,7 +386,8 @@ export namespace V2 {
           | 'polygon'
           | 'solana'
           | 'stellar'
-          | 'tempo';
+          | 'tempo'
+          | OtherString;
       }
     }
   }
@@ -402,7 +406,8 @@ export namespace V2 {
         | 'credentials.ca_bank_account.account_number'
         | 'credentials.gb_bank_account.account_number'
         | 'credentials.sepa_bank_account.iban'
-        | 'credentials.us_bank_account.account_number';
+        | 'credentials.us_bank_account.account_number'
+        | OtherString;
     }
   }
 }
@@ -430,7 +435,8 @@ export namespace V2 {
         | 'credentials.ca_bank_account.account_number'
         | 'credentials.gb_bank_account.account_number'
         | 'credentials.sepa_bank_account.iban'
-        | 'credentials.us_bank_account.account_number';
+        | 'credentials.us_bank_account.account_number'
+        | OtherString;
     }
   }
 }

@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface CustomerConsumerWallet {
   /**
@@ -43,5 +44,6 @@ export namespace CustomerConsumerWallet {
     | 'polygon'
     | 'solana'
     | 'stellar'
-    | 'worldchain';
+    | 'worldchain'
+    | OtherString;
 }

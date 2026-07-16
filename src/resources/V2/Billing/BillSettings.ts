@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {VersionResource} from './BillSettings/Versions.js';
 import {Stripe} from '../../../stripe.core.js';
@@ -156,7 +157,7 @@ export namespace BillSetting {
     }
 
     export namespace Tax {
-      export type Type = 'automatic' | 'manual';
+      export type Type = 'automatic' | 'manual' | OtherString;
     }
   }
 
@@ -234,7 +235,7 @@ export namespace V2 {
         }
 
         export namespace Tax {
-          export type Type = 'automatic' | 'manual';
+          export type Type = 'automatic' | 'manual' | OtherString;
         }
       }
 
@@ -326,7 +327,7 @@ export namespace V2 {
         }
 
         export namespace Tax {
-          export type Type = 'automatic' | 'manual';
+          export type Type = 'automatic' | 'manual' | OtherString;
         }
       }
 

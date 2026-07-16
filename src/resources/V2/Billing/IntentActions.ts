@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Decimal, Metadata} from '../../../shared.js';
+import {Decimal, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions} from '../../../lib.js';
 export interface IntentAction {
   /**
@@ -179,7 +179,13 @@ export namespace IntentAction {
     v1_subscription_details?: Subscribe.V1SubscriptionDetails;
   }
 
-  export type Type = 'apply' | 'deactivate' | 'modify' | 'remove' | 'subscribe';
+  export type Type =
+    | 'apply'
+    | 'deactivate'
+    | 'modify'
+    | 'remove'
+    | 'subscribe'
+    | OtherString;
 
   export namespace Apply {
     export interface Discount {
@@ -263,7 +269,8 @@ export namespace IntentAction {
     export type Type =
       | 'discount'
       | 'invoice_discount_rule'
-      | 'spend_modifier_rule';
+      | 'spend_modifier_rule'
+      | OtherString;
 
     export namespace Discount {
       export type Type = 'coupon' | 'promotion_code';
@@ -364,7 +371,10 @@ export namespace IntentAction {
       feedback?: CancellationDetails.Feedback;
     }
 
-    export type CollectAt = 'next_billing_date' | 'on_effective_at';
+    export type CollectAt =
+      | 'next_billing_date'
+      | 'on_effective_at'
+      | OtherString;
 
     export interface EffectiveAt {
       /**
@@ -403,7 +413,8 @@ export namespace IntentAction {
         | 'switched_service'
         | 'too_complex'
         | 'too_expensive'
-        | 'unused';
+        | 'unused'
+        | OtherString;
     }
 
     export namespace EffectiveAt {
@@ -411,7 +422,8 @@ export namespace IntentAction {
         | 'current_billing_period_end'
         | 'current_billing_period_start'
         | 'on_reserve'
-        | 'timestamp';
+        | 'timestamp'
+        | OtherString;
     }
 
     export namespace PricingPlanSubscriptionDetails {
@@ -443,10 +455,16 @@ export namespace IntentAction {
             credit_proration_behavior: LicenseFee.CreditProrationBehavior;
           }
 
-          export type Type = 'license_fee' | 'recurring_credit_grant';
+          export type Type =
+            | 'license_fee'
+            | 'recurring_credit_grant'
+            | OtherString;
 
           export namespace LicenseFee {
-            export type CreditProrationBehavior = 'none' | 'prorated';
+            export type CreditProrationBehavior =
+              | 'none'
+              | 'prorated'
+              | OtherString;
           }
         }
       }
@@ -454,7 +472,10 @@ export namespace IntentAction {
   }
 
   export namespace Modify {
-    export type CollectAt = 'next_billing_date' | 'on_effective_at';
+    export type CollectAt =
+      | 'next_billing_date'
+      | 'on_effective_at'
+      | OtherString;
 
     export interface EffectiveAt {
       /**
@@ -505,7 +526,8 @@ export namespace IntentAction {
       export type Type =
         | 'current_billing_period_start'
         | 'on_reserve'
-        | 'timestamp';
+        | 'timestamp'
+        | OtherString;
     }
 
     export namespace PricingPlanSubscriptionDetails {
@@ -571,16 +593,25 @@ export namespace IntentAction {
             create_behavior: RecurringCreditGrant.CreateBehavior;
           }
 
-          export type Type = 'license_fee' | 'recurring_credit_grant';
+          export type Type =
+            | 'license_fee'
+            | 'recurring_credit_grant'
+            | OtherString;
 
           export namespace LicenseFee {
-            export type CreditProrationBehavior = 'none' | 'prorated';
+            export type CreditProrationBehavior =
+              | 'none'
+              | 'prorated'
+              | OtherString;
 
-            export type DebitProrationBehavior = 'none' | 'prorated';
+            export type DebitProrationBehavior =
+              | 'none'
+              | 'prorated'
+              | OtherString;
           }
 
           export namespace RecurringCreditGrant {
-            export type CreateBehavior = 'full_credits' | 'none';
+            export type CreateBehavior = 'full_credits' | 'none' | OtherString;
           }
         }
       }
@@ -595,15 +626,24 @@ export namespace IntentAction {
       type: EffectiveAt.Type;
     }
 
-    export type Type = 'invoice_discount_rule' | 'spend_modifier_rule';
+    export type Type =
+      | 'invoice_discount_rule'
+      | 'spend_modifier_rule'
+      | OtherString;
 
     export namespace EffectiveAt {
-      export type Type = 'current_billing_period_end' | 'on_reserve';
+      export type Type =
+        | 'current_billing_period_end'
+        | 'on_reserve'
+        | OtherString;
     }
   }
 
   export namespace Subscribe {
-    export type CollectAt = 'next_billing_date' | 'on_effective_at';
+    export type CollectAt =
+      | 'next_billing_date'
+      | 'on_effective_at'
+      | OtherString;
 
     export interface EffectiveAt {
       /**
@@ -677,7 +717,8 @@ export namespace IntentAction {
       export type Type =
         | 'current_billing_period_start'
         | 'on_reserve'
-        | 'timestamp';
+        | 'timestamp'
+        | OtherString;
     }
 
     export namespace PricingPlanSubscriptionDetails {
@@ -738,14 +779,20 @@ export namespace IntentAction {
             create_behavior: RecurringCreditGrant.CreateBehavior;
           }
 
-          export type Type = 'license_fee' | 'recurring_credit_grant';
+          export type Type =
+            | 'license_fee'
+            | 'recurring_credit_grant'
+            | OtherString;
 
           export namespace LicenseFee {
-            export type DebitProrationBehavior = 'none' | 'prorated';
+            export type DebitProrationBehavior =
+              | 'none'
+              | 'prorated'
+              | OtherString;
           }
 
           export namespace RecurringCreditGrant {
-            export type CreateBehavior = 'full_credits' | 'none';
+            export type CreateBehavior = 'full_credits' | 'none' | OtherString;
           }
         }
       }

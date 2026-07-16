@@ -296,14 +296,6 @@ import {
   FileLinkResource,
 } from './resources/FileLinks.js';
 import {
-  FrMealVouchersOnboarding,
-  FrMealVouchersOnboardingCreateParams,
-  FrMealVouchersOnboardingRetrieveParams,
-  FrMealVouchersOnboardingUpdateParams,
-  FrMealVouchersOnboardingListParams,
-  FrMealVouchersOnboardingResource,
-} from './resources/FrMealVouchersOnboardings.js';
-import {
   FxQuote,
   FxQuoteCreateParams,
   FxQuoteRetrieveParams,
@@ -506,6 +498,7 @@ import {
 } from './resources/PaymentMethodDomains.js';
 import {
   PaymentRecord,
+  PaymentRecordCreateParams,
   PaymentRecordRetrieveParams,
   PaymentRecordReportPaymentParams,
   PaymentRecordReportPaymentAttemptParams,
@@ -936,12 +929,17 @@ import {
   FinancialConnectionsAccountCreatedEvent,
   FinancialConnectionsAccountDeactivatedEvent,
   FinancialConnectionsAccountDisconnectedEvent,
+  FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent,
   FinancialConnectionsAccountReactivatedEvent,
   FinancialConnectionsAccountRefreshedBalanceEvent,
   FinancialConnectionsAccountRefreshedInferredBalancesEvent,
   FinancialConnectionsAccountRefreshedOwnershipEvent,
   FinancialConnectionsAccountRefreshedTransactionsEvent,
+  FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent,
   FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent,
+  FinancialConnectionsAccountUpcomingDeactivationEvent,
+  FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent,
+  FinancialConnectionsAuthorizationUpcomingDeactivationEvent,
   FinancialConnectionsSessionUpdatedEvent,
   FxQuoteExpiredEvent,
   IdentityVerificationSessionCanceledEvent,
@@ -1266,7 +1264,6 @@ export class Stripe {
   externalAccounts: ExternalAccountResource;
   fileLinks: FileLinkResource;
   files: FileResource;
-  frMealVouchersOnboardings: FrMealVouchersOnboardingResource;
   fxQuotes: FxQuoteResource;
   giftCardOperations: GiftCardOperationResource;
   giftCards: GiftCardResource;
@@ -1462,7 +1459,6 @@ export class Stripe {
     this.externalAccounts = new ExternalAccountResource(this);
     this.fileLinks = new FileLinkResource(this);
     this.files = new FileResource(this);
-    this.frMealVouchersOnboardings = new FrMealVouchersOnboardingResource(this);
     this.fxQuotes = new FxQuoteResource(this);
     this.giftCardOperations = new GiftCardOperationResource(this);
     this.giftCards = new GiftCardResource(this);
@@ -2265,14 +2261,6 @@ export declare namespace Stripe {
     FileLinkResource,
   };
   export {
-    FrMealVouchersOnboarding,
-    FrMealVouchersOnboardingCreateParams,
-    FrMealVouchersOnboardingRetrieveParams,
-    FrMealVouchersOnboardingUpdateParams,
-    FrMealVouchersOnboardingListParams,
-    FrMealVouchersOnboardingResource,
-  };
-  export {
     FxQuote,
     FxQuoteCreateParams,
     FxQuoteRetrieveParams,
@@ -2470,6 +2458,7 @@ export declare namespace Stripe {
   };
   export {
     PaymentRecord,
+    PaymentRecordCreateParams,
     PaymentRecordRetrieveParams,
     PaymentRecordReportPaymentParams,
     PaymentRecordReportPaymentAttemptParams,
@@ -2874,12 +2863,17 @@ export declare namespace Stripe {
     FinancialConnectionsAccountCreatedEvent,
     FinancialConnectionsAccountDeactivatedEvent,
     FinancialConnectionsAccountDisconnectedEvent,
+    FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent,
     FinancialConnectionsAccountReactivatedEvent,
     FinancialConnectionsAccountRefreshedBalanceEvent,
     FinancialConnectionsAccountRefreshedInferredBalancesEvent,
     FinancialConnectionsAccountRefreshedOwnershipEvent,
     FinancialConnectionsAccountRefreshedTransactionsEvent,
+    FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent,
     FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent,
+    FinancialConnectionsAccountUpcomingDeactivationEvent,
+    FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent,
+    FinancialConnectionsAuthorizationUpcomingDeactivationEvent,
     FinancialConnectionsSessionUpdatedEvent,
     FxQuoteExpiredEvent,
     IdentityVerificationSessionCanceledEvent,

@@ -6,6 +6,7 @@ import * as TestHelpers from './../TestHelpers/index.js';
 import {
   MetadataParam,
   Decimal,
+  OtherString,
   Emptyable,
   PaginationParams,
   Metadata,
@@ -341,7 +342,7 @@ export namespace CreditGrant {
     scope: ApplicabilityConfig.Scope;
   }
 
-  export type Category = 'paid' | 'promotional';
+  export type Category = 'paid' | 'promotional' | OtherString;
 
   export namespace Amount {
     export interface CustomPricingUnit {
@@ -373,7 +374,7 @@ export namespace CreditGrant {
       value: number;
     }
 
-    export type Type = 'custom_pricing_unit' | 'monetary';
+    export type Type = 'custom_pricing_unit' | 'monetary' | OtherString;
 
     export namespace CustomPricingUnit {
       export interface CustomPricingUnitDetails {
@@ -528,7 +529,7 @@ export namespace Billing {
       scope: ApplicabilityConfig.Scope;
     }
 
-    export type Category = 'paid' | 'promotional';
+    export type Category = 'paid' | 'promotional' | OtherString;
 
     export namespace Amount {
       export interface CustomPricingUnit {
@@ -555,7 +556,7 @@ export namespace Billing {
         value: number;
       }
 
-      export type Type = 'custom_pricing_unit' | 'monetary';
+      export type Type = 'custom_pricing_unit' | 'monetary' | OtherString;
     }
 
     export namespace ApplicabilityConfig {

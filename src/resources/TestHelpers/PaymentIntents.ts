@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {PaymentIntent} from './../PaymentIntents.js';
+import {OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class PaymentIntentResource extends StripeResource {
@@ -52,7 +53,13 @@ export namespace TestHelpers {
   }
 
   export namespace PaymentIntentSimulateCryptoDepositParams {
-    export type Network = 'base' | 'ethereum' | 'polygon' | 'solana' | 'tempo';
+    export type Network =
+      | 'base'
+      | 'ethereum'
+      | 'polygon'
+      | 'solana'
+      | 'tempo'
+      | OtherString;
 
     export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
   }

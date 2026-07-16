@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Transaction} from './Transactions.js';
-import {MetadataParam, PaginationParams, Metadata} from '../../shared.js';
+import {
+  MetadataParam,
+  PaginationParams,
+  OtherString,
+  Metadata,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class DebitReversalResource extends StripeResource {
@@ -134,9 +139,9 @@ export namespace DebitReversal {
     issuing_dispute: string | null;
   }
 
-  export type Network = 'ach' | 'card';
+  export type Network = 'ach' | 'card' | OtherString;
 
-  export type Status = 'failed' | 'processing' | 'succeeded';
+  export type Status = 'failed' | 'processing' | 'succeeded' | OtherString;
 
   export interface StatusTransitions {
     /**
@@ -200,8 +205,8 @@ export namespace Treasury {
   }
 
   export namespace DebitReversalListParams {
-    export type Resolution = 'lost' | 'won';
+    export type Resolution = 'lost' | 'won' | OtherString;
 
-    export type Status = 'canceled' | 'completed' | 'processing';
+    export type Status = 'canceled' | 'completed' | 'processing' | OtherString;
   }
 }

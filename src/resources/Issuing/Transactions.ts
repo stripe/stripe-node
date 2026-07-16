@@ -13,6 +13,7 @@ import {
   MetadataParam,
   PaginationParams,
   RangeQueryParam,
+  OtherString,
   Metadata,
   Decimal,
 } from '../../shared.js';
@@ -591,7 +592,10 @@ export namespace Transaction {
      */
     routed_network?: NetworkData.RoutedNetwork | null;
 
-    trace_id?: NetworkData.TraceId;
+    /**
+     * Mastercard identifier assigned by the card network for the transaction.
+     */
+    trace_id?: NetworkData.TraceId | null;
 
     /**
      * Unique identifier for the authorization assigned by the card network used to match subsequent messages, disputes, and transactions.
@@ -667,9 +671,9 @@ export namespace Transaction {
     received_debit: string | null;
   }
 
-  export type Type = 'capture' | 'refund';
+  export type Type = 'capture' | 'refund' | OtherString;
 
-  export type Wallet = 'apple_pay' | 'google_pay' | 'samsung_pay';
+  export type Wallet = 'apple_pay' | 'google_pay' | 'samsung_pay' | OtherString;
 
   export namespace CryptoTransaction {
     export interface CryptoTransactionConfirmed {
@@ -828,7 +832,8 @@ export namespace Transaction {
       | 'mastercard'
       | 'other'
       | 'plus'
-      | 'visa';
+      | 'visa'
+      | OtherString;
 
     export interface TraceId {
       /**
@@ -1007,7 +1012,7 @@ export namespace Transaction {
       export namespace ReportedBreakdown {
         export interface Fuel {
           /**
-           * Gross fuel amount that should equal Fuel Volume multipled by Fuel Unit Cost, inclusive of taxes.
+           * Gross fuel amount that should equal Fuel Volume multiplied by Fuel Unit Cost, inclusive of taxes.
            */
           gross_amount_decimal: Decimal | null;
         }
@@ -1069,7 +1074,7 @@ export namespace Transaction {
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 }
 export namespace Issuing {
@@ -1127,6 +1132,6 @@ export namespace Issuing {
   }
 
   export namespace TransactionListParams {
-    export type Type = 'capture' | 'refund';
+    export type Type = 'capture' | 'refund' | OtherString;
   }
 }

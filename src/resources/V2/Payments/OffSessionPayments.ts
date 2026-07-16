@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, AddressParam, Metadata} from '../../../shared.js';
+import {
+  MetadataParam,
+  OtherString,
+  AddressParam,
+  Metadata,
+} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class OffSessionPaymentResource extends StripeResource {
@@ -288,7 +293,7 @@ export namespace OffSessionPayment {
     tax?: AmountDetails.Tax;
   }
 
-  export type Cadence = 'recurring' | 'unscheduled';
+  export type Cadence = 'recurring' | 'unscheduled' | OtherString;
 
   export interface Capture {
     /**
@@ -307,7 +312,8 @@ export namespace OffSessionPayment {
     | 'exceeded_retry_window'
     | 'no_valid_payment_method'
     | 'rejected_by_partner'
-    | 'retries_exhausted';
+    | 'retries_exhausted'
+    | OtherString;
 
   export interface PaymentDetails {
     /**
@@ -359,7 +365,8 @@ export namespace OffSessionPayment {
     | 'pending_retry'
     | 'processing'
     | 'requires_capture'
-    | 'succeeded';
+    | 'succeeded'
+    | OtherString;
 
   export interface TransferData {
     /**
@@ -457,7 +464,8 @@ export namespace OffSessionPayment {
     export namespace Error {
       export type Code =
         | 'amount_details_amount_mismatch'
-        | 'amount_details_amount_greater_than_tax_shipping_discount';
+        | 'amount_details_amount_greater_than_tax_shipping_discount'
+        | OtherString;
     }
 
     export namespace LineItem {
@@ -471,11 +479,16 @@ export namespace OffSessionPayment {
   }
 
   export namespace Capture {
-    export type CaptureMethod = 'automatic' | 'manual';
+    export type CaptureMethod = 'automatic' | 'manual' | OtherString;
   }
 
   export namespace RetryDetails {
-    export type RetryStrategy = 'heuristic' | 'none' | 'scheduled' | 'smart';
+    export type RetryStrategy =
+      | 'heuristic'
+      | 'none'
+      | 'scheduled'
+      | 'smart'
+      | OtherString;
   }
 }
 export namespace V2 {
@@ -587,7 +600,7 @@ export namespace V2 {
     }
 
     export namespace OffSessionPaymentCreateParams {
-      export type Cadence = 'recurring' | 'unscheduled';
+      export type Cadence = 'recurring' | 'unscheduled' | OtherString;
 
       export interface AmountDetails {
         /**
@@ -774,7 +787,7 @@ export namespace V2 {
       }
 
       export namespace Capture {
-        export type CaptureMethod = 'automatic' | 'manual';
+        export type CaptureMethod = 'automatic' | 'manual' | OtherString;
       }
 
       export namespace PaymentMethodData {
@@ -843,7 +856,7 @@ export namespace V2 {
       }
 
       export namespace RetryDetails {
-        export type RetryStrategy = 'best_available' | 'none';
+        export type RetryStrategy = 'best_available' | 'none' | OtherString;
       }
     }
   }

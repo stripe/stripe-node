@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams} from '../shared.js';
+import {OtherString, PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class FxQuoteResource extends StripeResource {
@@ -91,9 +91,14 @@ export interface FxQuote {
   usage: FxQuote.Usage;
 }
 export namespace FxQuote {
-  export type LockDuration = 'day' | 'five_minutes' | 'hour' | 'none';
+  export type LockDuration =
+    | 'day'
+    | 'five_minutes'
+    | 'hour'
+    | 'none'
+    | OtherString;
 
-  export type LockStatus = 'active' | 'expired' | 'none';
+  export type LockStatus = 'active' | 'expired' | 'none' | OtherString;
 
   export interface Rates {
     /**
@@ -178,7 +183,7 @@ export namespace FxQuote {
       destination: string;
     }
 
-    export type Type = 'payment' | 'transfer';
+    export type Type = 'payment' | 'transfer' | OtherString;
   }
 }
 export interface FxQuoteCreateParams {
@@ -208,7 +213,12 @@ export interface FxQuoteCreateParams {
   usage?: FxQuoteCreateParams.Usage;
 }
 export namespace FxQuoteCreateParams {
-  export type LockDuration = 'day' | 'five_minutes' | 'hour' | 'none';
+  export type LockDuration =
+    | 'day'
+    | 'five_minutes'
+    | 'hour'
+    | 'none'
+    | OtherString;
 
   export interface Usage {
     /**
@@ -255,7 +265,7 @@ export namespace FxQuoteCreateParams {
       destination: string;
     }
 
-    export type Type = 'payment' | 'transfer';
+    export type Type = 'payment' | 'transfer' | OtherString;
   }
 }
 export interface FxQuoteRetrieveParams {

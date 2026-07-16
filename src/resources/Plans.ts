@@ -6,6 +6,7 @@ import {
   Decimal,
   Emptyable,
   MetadataParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -324,7 +325,7 @@ export interface DeletedPlan {
 export namespace Plan {
   export type BillingScheme = 'per_unit' | 'tiered';
 
-  export type Interval = 'day' | 'month' | 'week' | 'year';
+  export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
   export interface Tier {
     /**
@@ -367,10 +368,10 @@ export namespace Plan {
     round: TransformUsage.Round;
   }
 
-  export type UsageType = 'licensed' | 'metered';
+  export type UsageType = 'licensed' | 'metered' | OtherString;
 
   export namespace TransformUsage {
-    export type Round = 'down' | 'up';
+    export type Round = 'down' | 'up' | OtherString;
   }
 }
 export interface PlanCreateParams {
@@ -537,7 +538,7 @@ export namespace PlanCreateParams {
     up_to: 'inf' | number;
   }
 
-  export type TiersMode = 'graduated' | 'volume';
+  export type TiersMode = 'graduated' | 'volume' | OtherString;
 
   export interface TransformUsage {
     /**
@@ -568,7 +569,7 @@ export namespace PlanCreateParams {
   }
 
   export namespace TransformUsage {
-    export type Round = 'down' | 'up';
+    export type Round = 'down' | 'up' | OtherString;
   }
 }
 export interface PlanRetrieveParams {

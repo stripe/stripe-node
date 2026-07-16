@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {TaxCode} from './TaxCodes.js';
 import {
   MetadataParam,
+  OtherString,
   Emptyable,
   PaginationParams,
   RangeQueryParam,
@@ -186,11 +187,23 @@ export namespace ShippingRate {
     }
 
     export namespace Maximum {
-      export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+      export type Unit =
+        | 'business_day'
+        | 'day'
+        | 'hour'
+        | 'month'
+        | 'week'
+        | OtherString;
     }
 
     export namespace Minimum {
-      export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+      export type Unit =
+        | 'business_day'
+        | 'day'
+        | 'hour'
+        | 'month'
+        | 'week'
+        | OtherString;
     }
   }
 
@@ -313,11 +326,23 @@ export namespace ShippingRateCreateParams {
     }
 
     export namespace Maximum {
-      export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+      export type Unit =
+        | 'business_day'
+        | 'day'
+        | 'hour'
+        | 'month'
+        | 'week'
+        | OtherString;
     }
 
     export namespace Minimum {
-      export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+      export type Unit =
+        | 'business_day'
+        | 'day'
+        | 'hour'
+        | 'month'
+        | 'week'
+        | OtherString;
     }
   }
 

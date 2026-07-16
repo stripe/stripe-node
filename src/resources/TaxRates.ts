@@ -7,6 +7,7 @@ import {
   PaginationParams,
   RangeQueryParam,
   Metadata,
+  OtherString,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
@@ -214,7 +215,7 @@ export namespace TaxRate {
     | 'multiple'
     | 'state';
 
-  export type RateType = 'flat_amount' | 'percentage';
+  export type RateType = 'flat_amount' | 'percentage' | OtherString;
 
   export type TaxType =
     | 'amusement_tax'

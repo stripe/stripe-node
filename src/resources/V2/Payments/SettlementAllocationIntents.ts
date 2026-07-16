@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, Metadata} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {SplitResource} from './SettlementAllocationIntents/Splits.js';
 import {Stripe} from '../../../stripe.core.js';
@@ -177,7 +177,8 @@ export namespace SettlementAllocationIntent {
     | 'matched'
     | 'pending'
     | 'settled'
-    | 'submitted';
+    | 'submitted'
+    | OtherString;
 
   export interface StatusDetails {
     /**
@@ -305,7 +306,8 @@ export namespace V2 {
         | 'matched'
         | 'pending'
         | 'settled'
-        | 'submitted';
+        | 'submitted'
+        | OtherString;
     }
   }
 }

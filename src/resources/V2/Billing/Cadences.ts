@@ -1,7 +1,12 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {MetadataParam, Metadata, Decimal} from '../../../shared.js';
+import {
+  MetadataParam,
+  OtherString,
+  Metadata,
+  Decimal,
+} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {SpendModifierRuleResource} from './Cadences/SpendModifierRules.js';
 import {Stripe} from '../../../stripe.core.js';
@@ -460,7 +465,7 @@ export namespace Cadence {
     collection: SettingsData.Collection;
   }
 
-  export type Status = 'active' | 'canceled';
+  export type Status = 'active' | 'canceled' | OtherString;
 
   export namespace BillingCycle {
     export interface Day {
@@ -490,7 +495,7 @@ export namespace Cadence {
       time: Month.Time;
     }
 
-    export type Type = 'day' | 'month' | 'week' | 'year';
+    export type Type = 'day' | 'month' | 'week' | 'year' | OtherString;
 
     export interface Week {
       /**
@@ -733,7 +738,7 @@ export namespace Cadence {
         }
 
         export namespace Tax {
-          export type Type = 'automatic' | 'manual';
+          export type Type = 'automatic' | 'manual' | OtherString;
         }
       }
 
@@ -897,15 +902,21 @@ export namespace Cadence {
           export type VerificationMethod =
             | 'automatic'
             | 'instant'
-            | 'microdeposits';
+            | 'microdeposits'
+            | OtherString;
 
           export namespace MandateOptions {
-            export type TransactionType = 'business' | 'personal';
+            export type TransactionType = 'business' | 'personal' | OtherString;
           }
         }
 
         export namespace Bancontact {
-          export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+          export type PreferredLanguage =
+            | 'de'
+            | 'en'
+            | 'fr'
+            | 'nl'
+            | OtherString;
         }
 
         export namespace Card {
@@ -926,10 +937,14 @@ export namespace Cadence {
             description?: string;
           }
 
-          export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+          export type RequestThreeDSecure =
+            | 'any'
+            | 'automatic'
+            | 'challenge'
+            | OtherString;
 
           export namespace MandateOptions {
-            export type AmountType = 'fixed' | 'maximum';
+            export type AmountType = 'fixed' | 'maximum' | OtherString;
           }
         }
 
@@ -959,10 +974,18 @@ export namespace Cadence {
               | 'gb_bank_transfer'
               | 'jp_bank_transfer'
               | 'mx_bank_transfer'
-              | 'us_bank_transfer';
+              | 'us_bank_transfer'
+              | OtherString;
 
             export namespace EuBankTransfer {
-              export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+              export type Country =
+                | 'BE'
+                | 'DE'
+                | 'ES'
+                | 'FR'
+                | 'IE'
+                | 'NL'
+                | OtherString;
             }
           }
         }
@@ -988,7 +1011,8 @@ export namespace Cadence {
           export type VerificationMethod =
             | 'automatic'
             | 'instant'
-            | 'microdeposits';
+            | 'microdeposits'
+            | OtherString;
 
           export namespace FinancialConnections {
             export interface Filters {
@@ -1002,12 +1026,20 @@ export namespace Cadence {
               | 'balances'
               | 'ownership'
               | 'payment_method'
-              | 'transactions';
+              | 'transactions'
+              | OtherString;
 
-            export type Prefetch = 'balances' | 'ownership' | 'transactions';
+            export type Prefetch =
+              | 'balances'
+              | 'ownership'
+              | 'transactions'
+              | OtherString;
 
             export namespace Filters {
-              export type AccountSubcategory = 'checking' | 'savings';
+              export type AccountSubcategory =
+                | 'checking'
+                | 'savings'
+                | OtherString;
             }
           }
         }
@@ -1091,7 +1123,10 @@ export namespace V2 {
         billing_profile: string;
       }
 
-      export type Include = 'invoice_discount_rules' | 'settings_data';
+      export type Include =
+        | 'invoice_discount_rules'
+        | 'settings_data'
+        | OtherString;
 
       export interface Settings {
         /**
@@ -1144,7 +1179,7 @@ export namespace V2 {
           time?: Month.Time;
         }
 
-        export type Type = 'day' | 'month' | 'week' | 'year';
+        export type Type = 'day' | 'month' | 'week' | 'year' | OtherString;
 
         export interface Week {
           /**
@@ -1319,7 +1354,10 @@ export namespace V2 {
     }
 
     export namespace CadenceRetrieveParams {
-      export type Include = 'invoice_discount_rules' | 'settings_data';
+      export type Include =
+        | 'invoice_discount_rules'
+        | 'settings_data'
+        | OtherString;
     }
   }
 }
@@ -1353,7 +1391,10 @@ export namespace V2 {
     }
 
     export namespace CadenceUpdateParams {
-      export type Include = 'invoice_discount_rules' | 'settings_data';
+      export type Include =
+        | 'invoice_discount_rules'
+        | 'settings_data'
+        | OtherString;
 
       export interface Payer {
         /**
@@ -1441,7 +1482,10 @@ export namespace V2 {
     }
 
     export namespace CadenceListParams {
-      export type Include = 'invoice_discount_rules' | 'settings_data';
+      export type Include =
+        | 'invoice_discount_rules'
+        | 'settings_data'
+        | OtherString;
 
       export interface Payer {
         /**
@@ -1467,7 +1511,10 @@ export namespace V2 {
     }
 
     export namespace CadenceCancelParams {
-      export type Include = 'invoice_discount_rules' | 'settings_data';
+      export type Include =
+        | 'invoice_discount_rules'
+        | 'settings_data'
+        | OtherString;
     }
   }
 }

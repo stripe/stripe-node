@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Decimal} from '../../../shared.js';
+import {Decimal, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ManualRuleResource extends StripeResource {
@@ -314,7 +314,7 @@ export namespace ManualRule {
     starts_at?: string;
   }
 
-  export type Status = 'active' | 'inactive';
+  export type Status = 'active' | 'inactive' | OtherString;
 
   export namespace Product {
     export type Type = 'licensed_item' | 'metered_item' | 'tax_code';

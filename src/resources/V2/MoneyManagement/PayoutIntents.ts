@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, Metadata} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class PayoutIntentResource extends StripeResource {
@@ -230,7 +230,8 @@ export namespace PayoutIntent {
     | 'pending'
     | 'posted'
     | 'processing'
-    | 'requires_action';
+    | 'requires_action'
+    | OtherString;
 
   export interface StatusTransitions {
     /**
@@ -281,7 +282,7 @@ export namespace PayoutIntent {
   }
 
   export namespace LatestPayout {
-    export type Type = 'outbound_payment' | 'outbound_transfer';
+    export type Type = 'outbound_payment' | 'outbound_transfer' | OtherString;
   }
 
   export namespace NextAction {
@@ -318,7 +319,8 @@ export namespace PayoutIntent {
         | 'recalled'
         | 'review_rejected'
         | 'to_destination_invalid'
-        | 'unknown_failure';
+        | 'unknown_failure'
+        | OtherString;
     }
   }
 
@@ -365,7 +367,8 @@ export namespace PayoutIntent {
           | 'rtp'
           | 'sepa_credit'
           | 'sepa_instant'
-          | 'swift';
+          | 'swift'
+          | OtherString;
 
         export namespace PreferredNetworkOptions {
           export interface Ach {
@@ -381,7 +384,7 @@ export namespace PayoutIntent {
           }
 
           export namespace Ach {
-            export type Submission = 'next_day' | 'same_day';
+            export type Submission = 'next_day' | 'same_day' | OtherString;
           }
         }
       }
@@ -525,7 +528,8 @@ export namespace V2 {
               | 'rtp'
               | 'sepa_credit'
               | 'sepa_instant'
-              | 'swift';
+              | 'swift'
+              | OtherString;
 
             export namespace PreferredNetworkOptions {
               export interface Ach {
@@ -541,7 +545,7 @@ export namespace V2 {
               }
 
               export namespace Ach {
-                export type Submission = 'next_day' | 'same_day';
+                export type Submission = 'next_day' | 'same_day' | OtherString;
               }
             }
           }
@@ -692,7 +696,8 @@ export namespace V2 {
               | 'rtp'
               | 'sepa_credit'
               | 'sepa_instant'
-              | 'swift';
+              | 'swift'
+              | OtherString;
 
             export namespace PreferredNetworkOptions {
               export interface Ach {
@@ -708,7 +713,7 @@ export namespace V2 {
               }
 
               export namespace Ach {
-                export type Submission = 'next_day' | 'same_day';
+                export type Submission = 'next_day' | 'same_day' | OtherString;
               }
             }
           }

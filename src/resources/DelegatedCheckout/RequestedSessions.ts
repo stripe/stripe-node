@@ -6,6 +6,7 @@ import {Profile} from './../Profiles.js';
 import * as SharedPayment from './../SharedPayment/index.js';
 import {
   MetadataParam,
+  OtherString,
   Address,
   Emptyable,
   PaginationParams,
@@ -513,7 +514,12 @@ export namespace RequestedSession {
     terms_of_service_url: string | null;
   }
 
-  export type Status = 'completed' | 'expired' | 'open' | 'requires_action';
+  export type Status =
+    | 'completed'
+    | 'expired'
+    | 'open'
+    | 'requires_action'
+    | OtherString;
 
   export interface TotalDetails {
     /**
@@ -575,10 +581,10 @@ export namespace RequestedSession {
       url: string | null;
     }
 
-    export type Touchpoint = 'first' | 'last';
+    export type Touchpoint = 'first' | 'last' | OtherString;
 
     export namespace Source {
-      export type Type = 'platform' | 'url';
+      export type Type = 'platform' | 'url' | OtherString;
     }
   }
 
@@ -688,7 +694,7 @@ export namespace RequestedSession {
     }
 
     export namespace Applied {
-      export type Type = 'cart' | 'fulfillment';
+      export type Type = 'cart' | 'fulfillment' | OtherString;
     }
   }
 
@@ -764,7 +770,7 @@ export namespace RequestedSession {
         shipping_options: Array<Shipping.ShippingOption> | null;
       }
 
-      export type Type = 'digital' | 'shipping';
+      export type Type = 'digital' | 'shipping' | OtherString;
 
       export namespace Digital {
         export interface DigitalOption {
@@ -850,7 +856,7 @@ export namespace RequestedSession {
         shipping_option: string | null;
       }
 
-      export type Type = 'digital' | 'shipping';
+      export type Type = 'digital' | 'shipping' | OtherString;
     }
 
     export namespace SelectedFulfillmentOptionOverride {
@@ -868,7 +874,7 @@ export namespace RequestedSession {
         shipping_option: string | null;
       }
 
-      export type Type = 'digital' | 'shipping';
+      export type Type = 'digital' | 'shipping' | OtherString;
     }
   }
 
@@ -931,7 +937,7 @@ export namespace RequestedSession {
       }
 
       export namespace Disclosure {
-        export type ContentType = 'link' | 'markdown' | 'plain';
+        export type ContentType = 'link' | 'markdown' | 'plain' | OtherString;
       }
     }
   }
@@ -947,14 +953,27 @@ export namespace RequestedSession {
     export type DisplayableCardBrand =
       | 'american_express'
       | 'mastercard'
-      | 'visa';
+      | 'visa'
+      | OtherString;
 
-    export type DisplayablePaymentMethodType = 'affirm' | 'card' | 'klarna';
+    export type DisplayablePaymentMethodType =
+      | 'affirm'
+      | 'card'
+      | 'klarna'
+      | OtherString;
 
-    export type ExcludedPaymentMethodType = 'affirm' | 'card' | 'klarna';
+    export type ExcludedPaymentMethodType =
+      | 'affirm'
+      | 'card'
+      | 'klarna'
+      | OtherString;
 
     export namespace Card {
-      export type BrandsBlocked = 'american_express' | 'mastercard' | 'visa';
+      export type BrandsBlocked =
+        | 'american_express'
+        | 'mastercard'
+        | 'visa'
+        | OtherString;
     }
   }
 
@@ -1029,11 +1048,15 @@ export namespace RequestedSession {
   }
 
   export namespace SellerDetails {
-    export type CardBrand = 'american_express' | 'mastercard' | 'visa';
+    export type CardBrand =
+      | 'american_express'
+      | 'mastercard'
+      | 'visa'
+      | OtherString;
 
     export interface MarketplaceSellerDetails {}
 
-    export type PaymentMethodType = 'affirm' | 'card' | 'klarna';
+    export type PaymentMethodType = 'affirm' | 'card' | 'klarna' | OtherString;
   }
 
   export namespace TotalDetails {
@@ -1291,10 +1314,10 @@ export namespace DelegatedCheckout {
         url?: string;
       }
 
-      export type Touchpoint = 'first' | 'last';
+      export type Touchpoint = 'first' | 'last' | OtherString;
 
       export namespace Source {
-        export type Type = 'platform' | 'url';
+        export type Type = 'platform' | 'url' | OtherString;
       }
     }
 
@@ -1340,10 +1363,18 @@ export namespace DelegatedCheckout {
         brands_blocked?: Array<Card.BrandsBlocked>;
       }
 
-      export type ExcludedPaymentMethodType = 'affirm' | 'card' | 'klarna';
+      export type ExcludedPaymentMethodType =
+        | 'affirm'
+        | 'card'
+        | 'klarna'
+        | OtherString;
 
       export namespace Card {
-        export type BrandsBlocked = 'american_express' | 'mastercard' | 'visa';
+        export type BrandsBlocked =
+          | 'american_express'
+          | 'mastercard'
+          | 'visa'
+          | OtherString;
       }
     }
   }
@@ -1561,7 +1592,7 @@ export namespace DelegatedCheckout {
           shipping_option: string;
         }
 
-        export type Type = 'digital' | 'shipping';
+        export type Type = 'digital' | 'shipping' | OtherString;
       }
 
       export namespace SelectedFulfillmentOptionOverride {
@@ -1579,7 +1610,7 @@ export namespace DelegatedCheckout {
           shipping_option: string;
         }
 
-        export type Type = 'digital' | 'shipping';
+        export type Type = 'digital' | 'shipping' | OtherString;
       }
     }
 
@@ -1591,10 +1622,18 @@ export namespace DelegatedCheckout {
         brands_blocked?: Array<Card.BrandsBlocked>;
       }
 
-      export type ExcludedPaymentMethodType = 'affirm' | 'card' | 'klarna';
+      export type ExcludedPaymentMethodType =
+        | 'affirm'
+        | 'card'
+        | 'klarna'
+        | OtherString;
 
       export namespace Card {
-        export type BrandsBlocked = 'american_express' | 'mastercard' | 'visa';
+        export type BrandsBlocked =
+          | 'american_express'
+          | 'mastercard'
+          | 'visa'
+          | OtherString;
       }
     }
   }
@@ -1729,10 +1768,10 @@ export namespace DelegatedCheckout {
         url?: string;
       }
 
-      export type Touchpoint = 'first' | 'last';
+      export type Touchpoint = 'first' | 'last' | OtherString;
 
       export namespace Source {
-        export type Type = 'platform' | 'url';
+        export type Type = 'platform' | 'url' | OtherString;
       }
     }
 

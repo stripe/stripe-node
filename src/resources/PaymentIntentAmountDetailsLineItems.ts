@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface PaymentIntentAmountDetailsLineItem {
   /**
@@ -134,7 +135,11 @@ export namespace PaymentIntentAmountDetailsLineItem {
     }
 
     export namespace Paypal {
-      export type Category = 'digital_goods' | 'donation' | 'physical_goods';
+      export type Category =
+        | 'digital_goods'
+        | 'donation'
+        | 'physical_goods'
+        | OtherString;
     }
   }
 }

@@ -16,6 +16,7 @@ import {SetupIntent} from './SetupIntents.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   AddressParam,
   Address,
   ShippingAddressParam,
@@ -756,9 +757,13 @@ export namespace PaymentIntent {
     | 'requested_by_customer'
     | 'void_invoice';
 
-  export type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+  export type CaptureMethod =
+    | 'automatic'
+    | 'automatic_async'
+    | 'manual'
+    | OtherString;
 
-  export type ConfirmationMethod = 'automatic' | 'manual';
+  export type ConfirmationMethod = 'automatic' | 'manual' | OtherString;
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
@@ -822,7 +827,8 @@ export namespace PaymentIntent {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export interface Hooks {
     inputs?: Hooks.Inputs;
@@ -1229,9 +1235,9 @@ export namespace PaymentIntent {
     status: Redaction.Status;
   }
 
-  export type SecretKeyConfirmation = 'optional' | 'required';
+  export type SecretKeyConfirmation = 'optional' | 'required' | OtherString;
 
-  export type SetupFutureUsage = 'off_session' | 'on_session';
+  export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
 
   export interface Shipping {
     address?: Address;
@@ -1341,23 +1347,23 @@ export namespace PaymentIntent {
     }
 
     export namespace DecrementalAuthorization {
-      export type Status = 'available' | 'unavailable';
+      export type Status = 'available' | 'unavailable' | OtherString;
     }
 
     export namespace ForcedCapture {
-      export type Status = 'available' | 'unavailable';
+      export type Status = 'available' | 'unavailable' | OtherString;
     }
 
     export namespace IncrementalAuthorization {
-      export type Status = 'available' | 'unavailable';
+      export type Status = 'available' | 'unavailable' | OtherString;
     }
 
     export namespace Multicapture {
-      export type Status = 'available' | 'unavailable';
+      export type Status = 'available' | 'unavailable' | OtherString;
     }
 
     export namespace Overcapture {
-      export type Status = 'available' | 'unavailable';
+      export type Status = 'available' | 'unavailable' | OtherString;
     }
   }
 
@@ -1432,7 +1438,8 @@ export namespace PaymentIntent {
     export namespace Error {
       export type Code =
         | 'amount_details_amount_mismatch'
-        | 'amount_details_tax_shipping_discount_greater_than_amount';
+        | 'amount_details_tax_shipping_discount_greater_than_amount'
+        | OtherString;
     }
 
     export namespace Surcharge {
@@ -1456,7 +1463,7 @@ export namespace PaymentIntent {
   }
 
   export namespace AutomaticPaymentMethods {
-    export type AllowRedirects = 'always' | 'never';
+    export type AllowRedirects = 'always' | 'never' | OtherString;
   }
 
   export namespace Hooks {
@@ -2333,7 +2340,8 @@ export namespace PaymentIntent {
         | 'gb_bank_transfer'
         | 'jp_bank_transfer'
         | 'mx_bank_transfer'
-        | 'us_bank_transfer';
+        | 'us_bank_transfer'
+        | OtherString;
 
       export namespace FinancialAddress {
         export interface Aba {
@@ -2443,12 +2451,14 @@ export namespace PaymentIntent {
         export type SupportedNetwork =
           | 'ach'
           | 'bacs'
+          | 'chaps'
           | 'domestic_wire_us'
           | 'fps'
           | 'sepa'
           | 'spei'
           | 'swift'
-          | 'zengin';
+          | 'zengin'
+          | OtherString;
 
         export interface Swift {
           account_holder_address: Address;
@@ -2487,7 +2497,8 @@ export namespace PaymentIntent {
           | 'sort_code'
           | 'spei'
           | 'swift'
-          | 'zengin';
+          | 'zengin'
+          | OtherString;
 
         export interface Zengin {
           account_holder_address: Address;
@@ -2645,7 +2656,10 @@ export namespace PaymentIntent {
     }
 
     export namespace VerifyWithMicrodeposits {
-      export type MicrodepositType = 'amounts' | 'descriptor_code';
+      export type MicrodepositType =
+        | 'amounts'
+        | 'descriptor_code'
+        | OtherString;
     }
   }
 
@@ -3020,7 +3034,10 @@ export namespace PaymentIntent {
       }
 
       export namespace FrMealVoucher {
-        export type Enabled = 'if_payment_method_is_eligible' | 'never';
+        export type Enabled =
+          | 'if_payment_method_is_eligible'
+          | 'never'
+          | OtherString;
       }
     }
 
@@ -3075,12 +3092,13 @@ export namespace PaymentIntent {
         | 'gas'
         | 'late_return'
         | 'one_way_service'
-        | 'parking_violation';
+        | 'parking_violation'
+        | OtherString;
 
-      export type RateInterval = 'day' | 'month' | 'week';
+      export type RateInterval = 'day' | 'month' | 'week' | OtherString;
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -3259,7 +3277,7 @@ export namespace PaymentIntent {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
 
       export namespace Driver {
@@ -3288,7 +3306,8 @@ export namespace PaymentIntent {
           | 'other'
           | 'partial_damage_waiver'
           | 'personal_accident'
-          | 'personal_effects';
+          | 'personal_effects'
+          | OtherString;
       }
 
       export namespace Total {
@@ -3321,7 +3340,7 @@ export namespace PaymentIntent {
           type?: ExtraCharge.Type;
         }
 
-        export type RateUnit = 'kilometers' | 'miles';
+        export type RateUnit = 'kilometers' | 'miles' | OtherString;
 
         export interface Tax {
           /**
@@ -3346,7 +3365,8 @@ export namespace PaymentIntent {
             | 'parking'
             | 'phone'
             | 'regular_mileage'
-            | 'towing';
+            | 'towing'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -3404,13 +3424,15 @@ export namespace PaymentIntent {
           | 'twenty_foot_truck'
           | 'twenty_four_foot_truck'
           | 'twenty_six_foot_truck'
-          | 'unique';
+          | 'unique'
+          | OtherString;
 
         export type VehicleClass =
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -3432,7 +3454,7 @@ export namespace PaymentIntent {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -3646,7 +3668,8 @@ export namespace PaymentIntent {
         | 'exchange_ticket'
         | 'miscellaneous'
         | 'refund'
-        | 'ticket_purchase';
+        | 'ticket_purchase'
+        | OtherString;
 
       export namespace Insurance {
         export type InsuranceType =
@@ -3654,7 +3677,8 @@ export namespace PaymentIntent {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Segment {
@@ -3706,7 +3730,8 @@ export namespace PaymentIntent {
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
 
       export namespace Total {
@@ -3715,7 +3740,8 @@ export namespace PaymentIntent {
           | 'partial_ticket_refund'
           | 'passenger_transport_ancillary_cancellation'
           | 'ticket_and_ancillary_cancellation'
-          | 'ticket_cancellation';
+          | 'ticket_cancellation'
+          | OtherString;
 
         export interface Discounts {
           /**
@@ -3747,7 +3773,8 @@ export namespace PaymentIntent {
           export type Type =
             | 'additional_fees'
             | 'ancillary_service_charges'
-            | 'exchange_fee';
+            | 'exchange_fee'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -3929,11 +3956,17 @@ export namespace PaymentIntent {
           | 'room'
           | 'standard'
           | 'suite'
-          | 'villa';
+          | 'villa'
+          | OtherString;
       }
 
       export namespace Host {
-        export type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+        export type HostType =
+          | 'hostel'
+          | 'hotel'
+          | 'owner'
+          | 'rental_agency'
+          | OtherString;
       }
 
       export namespace Insurance {
@@ -3941,7 +3974,8 @@ export namespace PaymentIntent {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Total {
@@ -3988,7 +4022,8 @@ export namespace PaymentIntent {
             | 'mini_bar'
             | 'other'
             | 'phone'
-            | 'restaurant';
+            | 'restaurant'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -4045,7 +4080,10 @@ export namespace PaymentIntent {
         surname?: string;
       }
 
-      export type TransactionType = 'account_funding' | 'debt_repayment';
+      export type TransactionType =
+        | 'account_funding'
+        | 'debt_repayment'
+        | OtherString;
 
       export namespace AccountFunding {
         export interface SenderDetails {
@@ -4199,7 +4237,7 @@ export namespace PaymentIntent {
       }
 
       export namespace BillingInterval {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -5406,30 +5444,43 @@ export namespace PaymentIntent {
         transaction_type: MandateOptions.TransactionType | null;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+        export type PaymentSchedule =
+          | 'combined'
+          | 'interval'
+          | 'sporadic'
+          | OtherString;
 
-        export type TransactionType = 'business' | 'personal';
+        export type TransactionType = 'business' | 'personal' | OtherString;
       }
     }
 
     export namespace Alipay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace AmazonPay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace AuBecsDebit {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace BacsDebit {
@@ -5440,17 +5491,25 @@ export namespace PaymentIntent {
         reference_prefix?: string;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Bancontact {
       export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Boleto {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Card {
@@ -5472,7 +5531,7 @@ export namespace PaymentIntent {
         hours?: number;
       }
 
-      export type CaptureMethod = 'automatic_delayed' | 'manual';
+      export type CaptureMethod = 'automatic_delayed' | 'manual' | OtherString;
 
       export interface Installments {
         /**
@@ -5553,23 +5612,46 @@ export namespace PaymentIntent {
         | 'unknown'
         | 'visa';
 
-      export type RequestDecrementalAuthorization = 'if_available' | 'never';
+      export type RequestDecrementalAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestExtendedAuthorization = 'if_available' | 'never';
+      export type RequestExtendedAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestIncrementalAuthorization = 'if_available' | 'never';
+      export type RequestIncrementalAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestMulticapture = 'if_available' | 'never';
+      export type RequestMulticapture = 'if_available' | 'never' | OtherString;
 
-      export type RequestOvercapture = 'if_available' | 'never';
+      export type RequestOvercapture = 'if_available' | 'never' | OtherString;
 
-      export type RequestPartialAuthorization = 'if_available' | 'never';
+      export type RequestPartialAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestReauthorization = 'if_available' | 'never';
+      export type RequestReauthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+      export type RequestThreeDSecure =
+        | 'any'
+        | 'automatic'
+        | 'challenge'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export interface StatementDetails {
         address?: StatementDetails.Address;
@@ -5618,11 +5700,19 @@ export namespace PaymentIntent {
         }
 
         export namespace AvailablePlan {
-          export type Type = 'bonus' | 'fixed_count' | 'revolving';
+          export type Type =
+            | 'bonus'
+            | 'fixed_count'
+            | 'revolving'
+            | OtherString;
         }
 
         export namespace Plan {
-          export type Type = 'bonus' | 'fixed_count' | 'revolving';
+          export type Type =
+            | 'bonus'
+            | 'fixed_count'
+            | 'revolving'
+            | OtherString;
         }
       }
 
@@ -5691,9 +5781,12 @@ export namespace PaymentIntent {
         | 'manual'
         | 'manual_preferred';
 
-      export type RequestMulticapture = 'if_available' | 'never';
+      export type RequestMulticapture = 'if_available' | 'never' | OtherString;
 
-      export type RequestReauthorization = 'if_available' | 'never';
+      export type RequestReauthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
       export interface Routing {
         /**
@@ -5703,12 +5796,19 @@ export namespace PaymentIntent {
       }
 
       export namespace Routing {
-        export type RequestedPriority = 'domestic' | 'international';
+        export type RequestedPriority =
+          | 'domestic'
+          | 'international'
+          | OtherString;
       }
     }
 
     export namespace Cashapp {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Crypto {
@@ -5731,7 +5831,11 @@ export namespace PaymentIntent {
         static_address?: boolean;
       }
 
-      export type Mode = 'default' | 'deposit' | 'transaction_verification';
+      export type Mode =
+        | 'default'
+        | 'deposit'
+        | 'transaction_verification'
+        | OtherString;
 
       export interface TransactionVerificationOptions {
         /**
@@ -5755,7 +5859,8 @@ export namespace PaymentIntent {
           | 'ethereum'
           | 'polygon'
           | 'solana'
-          | 'tempo';
+          | 'tempo'
+          | OtherString;
       }
 
       export namespace TransactionVerificationOptions {
@@ -5764,7 +5869,8 @@ export namespace PaymentIntent {
           | 'ethereum'
           | 'polygon'
           | 'solana'
-          | 'tempo';
+          | 'tempo'
+          | OtherString;
       }
     }
 
@@ -5800,14 +5906,16 @@ export namespace PaymentIntent {
           | 'sort_code'
           | 'spei'
           | 'swift'
-          | 'zengin';
+          | 'zengin'
+          | OtherString;
 
         export type Type =
           | 'eu_bank_transfer'
           | 'gb_bank_transfer'
           | 'jp_bank_transfer'
           | 'mx_bank_transfer'
-          | 'us_bank_transfer';
+          | 'us_bank_transfer'
+          | OtherString;
 
         export namespace EuBankTransfer {
           export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
@@ -5816,39 +5924,50 @@ export namespace PaymentIntent {
     }
 
     export namespace GiftCard {
-      export type RequestPartialAuthorization = 'if_available' | 'never';
+      export type RequestPartialAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
     }
 
     export namespace Gopay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Ideal {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace KakaoPay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Klarna {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace KrCard {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Link {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace NaverPay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace NzBankAccount {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Paypal {
@@ -5891,10 +6010,14 @@ export namespace PaymentIntent {
         unit_amount: number;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
       export namespace LineItem {
-        export type Category = 'digital_goods' | 'donation' | 'physical_goods';
+        export type Category =
+          | 'digital_goods'
+          | 'donation'
+          | 'physical_goods'
+          | OtherString;
 
         export interface Tax {
           /**
@@ -5909,13 +6032,17 @@ export namespace PaymentIntent {
         }
 
         export namespace Tax {
-          export type Behavior = 'exclusive' | 'inclusive';
+          export type Behavior = 'exclusive' | 'inclusive' | OtherString;
         }
       }
     }
 
     export namespace Paypay {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Payto {
@@ -5951,10 +6078,10 @@ export namespace PaymentIntent {
         purpose: MandateOptions.Purpose | null;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'adhoc'
@@ -5964,7 +6091,8 @@ export namespace PaymentIntent {
           | 'monthly'
           | 'quarterly'
           | 'semi_annual'
-          | 'weekly';
+          | 'weekly'
+          | OtherString;
 
         export type Purpose =
           | 'dependant_support'
@@ -5977,12 +6105,13 @@ export namespace PaymentIntent {
           | 'retail'
           | 'salary'
           | 'tax'
-          | 'utility';
+          | 'utility'
+          | OtherString;
       }
     }
 
     export namespace Pix {
-      export type AmountIncludesIof = 'always' | 'never';
+      export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
       export interface MandateOptions {
         /**
@@ -6026,19 +6155,20 @@ export namespace PaymentIntent {
         start_date?: string;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
       export namespace MandateOptions {
-        export type AmountIncludesIof = 'always' | 'never';
+        export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'halfyearly'
           | 'monthly'
           | 'quarterly'
           | 'weekly'
-          | 'yearly';
+          | 'yearly'
+          | OtherString;
       }
     }
 
@@ -6047,7 +6177,11 @@ export namespace PaymentIntent {
     }
 
     export namespace Satispay {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace SepaDebit {
@@ -6058,7 +6192,11 @@ export namespace PaymentIntent {
         reference_prefix?: string;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Sofort {
@@ -6071,7 +6209,7 @@ export namespace PaymentIntent {
         | 'nl'
         | 'pl';
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace StripeBalance {
@@ -6082,15 +6220,15 @@ export namespace PaymentIntent {
         stripe_balance_debit_agreement?: string;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Twint {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Upi {
-      export type SetupFutureUsage = 'off_session' | 'on_session';
+      export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
     }
 
     export namespace UsBankAccount {
@@ -6122,18 +6260,24 @@ export namespace PaymentIntent {
         collection_method?: 'paper';
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export type TransactionPurpose =
         | 'goods'
         | 'other'
         | 'services'
-        | 'unspecified';
+        | 'unspecified'
+        | OtherString;
 
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace FinancialConnections {
         export interface Filters {
@@ -6159,26 +6303,33 @@ export namespace PaymentIntent {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
           | 'inferred_balances'
           | 'ownership'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
 
         export namespace ManualEntry {
-          export type Mode = 'automatic' | 'custom';
+          export type Mode = 'automatic' | 'custom' | OtherString;
         }
       }
     }
 
     export namespace WechatPay {
-      export type Client = 'android' | 'ios' | 'mini_program' | 'web';
+      export type Client =
+        | 'android'
+        | 'ios'
+        | 'mini_program'
+        | 'web'
+        | OtherString;
     }
   }
 
@@ -6203,7 +6354,7 @@ export namespace PaymentIntent {
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 
   export namespace TransferData {
@@ -6564,7 +6715,8 @@ export namespace PaymentIntentCreateParams {
     | 'vipps'
     | 'wechat_pay'
     | 'wero'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export interface AmountDetails {
     /**
@@ -6623,9 +6775,13 @@ export namespace PaymentIntentCreateParams {
     enabled: boolean;
   }
 
-  export type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+  export type CaptureMethod =
+    | 'automatic'
+    | 'automatic_async'
+    | 'manual'
+    | OtherString;
 
-  export type ConfirmationMethod = 'automatic' | 'manual';
+  export type ConfirmationMethod = 'automatic' | 'manual' | OtherString;
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
@@ -6689,7 +6845,8 @@ export namespace PaymentIntentCreateParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export interface Hooks {
     /**
@@ -7471,9 +7628,9 @@ export namespace PaymentIntentCreateParams {
     session?: string;
   }
 
-  export type SecretKeyConfirmation = 'optional' | 'required';
+  export type SecretKeyConfirmation = 'optional' | 'required' | OtherString;
 
-  export type SetupFutureUsage = 'off_session' | 'on_session';
+  export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
 
   export interface Shipping {
     /**
@@ -7781,13 +7938,15 @@ export namespace PaymentIntentCreateParams {
               | 'vehicle_accessories'
               | 'vehicle_parking'
               | 'vehicle_parts'
-              | 'wash_out';
+              | 'wash_out'
+              | OtherString;
 
             export type ServiceType =
               | 'full_service'
               | 'high_speed_diesel'
               | 'non_fuel_only'
-              | 'self_service';
+              | 'self_service'
+              | OtherString;
           }
         }
 
@@ -7795,18 +7954,23 @@ export namespace PaymentIntentCreateParams {
           export type Category =
             | 'digital_goods'
             | 'donation'
-            | 'physical_goods';
+            | 'physical_goods'
+            | OtherString;
         }
       }
     }
 
     export namespace Surcharge {
-      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+      export type EnforceValidation =
+        | 'automatic'
+        | 'disabled'
+        | 'enabled'
+        | OtherString;
     }
   }
 
   export namespace AutomaticPaymentMethods {
-    export type AllowRedirects = 'always' | 'never';
+    export type AllowRedirects = 'always' | 'never' | OtherString;
   }
 
   export namespace Hooks {
@@ -8471,7 +8635,10 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace FrMealVoucher {
-        export type Enabled = 'if_payment_method_is_eligible' | 'never';
+        export type Enabled =
+          | 'if_payment_method_is_eligible'
+          | 'never'
+          | OtherString;
       }
     }
 
@@ -8529,12 +8696,13 @@ export namespace PaymentIntentCreateParams {
         | 'gas'
         | 'late_return'
         | 'one_way_service'
-        | 'parking_violation';
+        | 'parking_violation'
+        | OtherString;
 
-      export type RateInterval = 'day' | 'month' | 'week';
+      export type RateInterval = 'day' | 'month' | 'week' | OtherString;
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -8555,7 +8723,7 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
     }
 
@@ -8732,7 +8900,7 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
 
       export namespace Driver {
@@ -8795,7 +8963,8 @@ export namespace PaymentIntentCreateParams {
           | 'other'
           | 'partial_damage_waiver'
           | 'personal_accident'
-          | 'personal_effects';
+          | 'personal_effects'
+          | OtherString;
       }
 
       export namespace Pickup {
@@ -8867,7 +9036,8 @@ export namespace PaymentIntentCreateParams {
           | 'kilometers'
           | 'miles'
           | 'months'
-          | 'weeks';
+          | 'weeks'
+          | OtherString;
 
         export interface Tax {
           /**
@@ -8892,7 +9062,8 @@ export namespace PaymentIntentCreateParams {
             | 'parking'
             | 'phone'
             | 'regular_mileage'
-            | 'towing';
+            | 'towing'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -8950,13 +9121,15 @@ export namespace PaymentIntentCreateParams {
           | 'twenty_foot_truck'
           | 'twenty_four_foot_truck'
           | 'twenty_six_foot_truck'
-          | 'unique';
+          | 'unique'
+          | OtherString;
 
         export type VehicleClass =
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -8981,7 +9154,7 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -9182,14 +9355,16 @@ export namespace PaymentIntentCreateParams {
           | 'wawa'
           | 'western_energetix'
           | 'wilco'
-          | 'zions';
+          | 'zions'
+          | OtherString;
       }
 
       export namespace Vat {
         export type IobIndicator =
           | 'issuer_to_iob'
           | 'issuer_to_iob_and_incremental_certification'
-          | 'merchant_does_not_agree_to_iob';
+          | 'merchant_does_not_agree_to_iob'
+          | OtherString;
       }
     }
 
@@ -9263,7 +9438,7 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -9288,7 +9463,8 @@ export namespace PaymentIntentCreateParams {
           | 'business'
           | 'economy'
           | 'first'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -9452,7 +9628,8 @@ export namespace PaymentIntentCreateParams {
         | 'exchange_ticket'
         | 'miscellaneous'
         | 'refund'
-        | 'ticket_purchase';
+        | 'ticket_purchase'
+        | OtherString;
 
       export namespace Insurance {
         export type InsuranceType =
@@ -9460,7 +9637,8 @@ export namespace PaymentIntentCreateParams {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Segment {
@@ -9512,7 +9690,8 @@ export namespace PaymentIntentCreateParams {
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
 
       export namespace Total {
@@ -9521,7 +9700,8 @@ export namespace PaymentIntentCreateParams {
           | 'partial_ticket_refund'
           | 'passenger_transport_ancillary_cancellation'
           | 'ticket_and_ancillary_cancellation'
-          | 'ticket_cancellation';
+          | 'ticket_cancellation'
+          | OtherString;
 
         export interface Discounts {
           /**
@@ -9553,7 +9733,8 @@ export namespace PaymentIntentCreateParams {
           export type Type =
             | 'additional_fees'
             | 'ancillary_service_charges'
-            | 'exchange_fee';
+            | 'exchange_fee'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -9585,7 +9766,7 @@ export namespace PaymentIntentCreateParams {
         name: string;
       }
 
-      export type Category = 'hotel' | 'vacation_rental';
+      export type Category = 'hotel' | 'vacation_rental' | OtherString;
 
       export interface Delivery {
         /**
@@ -9605,7 +9786,8 @@ export namespace PaymentIntentCreateParams {
         | 'mini_bar'
         | 'other'
         | 'restaurant'
-        | 'telephone';
+        | 'telephone'
+        | OtherString;
 
       export interface Passenger {
         /**
@@ -9615,7 +9797,7 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -9803,7 +9985,8 @@ export namespace PaymentIntentCreateParams {
           | 'room'
           | 'standard'
           | 'suite'
-          | 'villa';
+          | 'villa'
+          | OtherString;
       }
 
       export namespace Host {
@@ -9839,7 +10022,12 @@ export namespace PaymentIntentCreateParams {
           state?: string;
         }
 
-        export type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+        export type HostType =
+          | 'hostel'
+          | 'hotel'
+          | 'owner'
+          | 'rental_agency'
+          | OtherString;
       }
 
       export namespace Insurance {
@@ -9847,7 +10035,8 @@ export namespace PaymentIntentCreateParams {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Total {
@@ -9894,7 +10083,8 @@ export namespace PaymentIntentCreateParams {
             | 'mini_bar'
             | 'other'
             | 'phone'
-            | 'restaurant';
+            | 'restaurant'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -9963,7 +10153,10 @@ export namespace PaymentIntentCreateParams {
         surname?: string;
       }
 
-      export type TransactionType = 'account_funding' | 'debt_repayment';
+      export type TransactionType =
+        | 'account_funding'
+        | 'debt_repayment'
+        | OtherString;
 
       export namespace AccountFunding {
         export interface SenderDetails {
@@ -10059,7 +10252,7 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace BillingInterval {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -10088,7 +10281,11 @@ export namespace PaymentIntentCreateParams {
 
     export interface Alipay {}
 
-    export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+    export type AllowRedisplay =
+      | 'always'
+      | 'limited'
+      | 'unspecified'
+      | OtherString;
 
     export interface Alma {}
 
@@ -10428,7 +10625,8 @@ export namespace PaymentIntentCreateParams {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
-      | 'zip';
+      | 'zip'
+      | OtherString;
 
     export interface Upi {
       /**
@@ -10529,7 +10727,13 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace IdBankTransfer {
-      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      export type Bank =
+        | 'bca'
+        | 'bni'
+        | 'bri'
+        | 'cimb'
+        | 'permata'
+        | OtherString;
     }
 
     export namespace Ideal {
@@ -10576,7 +10780,7 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace NaverPay {
-      export type Funding = 'card' | 'points';
+      export type Funding = 'card' | 'points' | OtherString;
     }
 
     export namespace P24 {
@@ -10606,7 +10810,8 @@ export namespace PaymentIntentCreateParams {
         | 'tmobile_usbugi_bankowe'
         | 'toyota_bank'
         | 'velobank'
-        | 'volkswagen_bank';
+        | 'volkswagen_bank'
+        | OtherString;
     }
 
     export namespace Rechnung {
@@ -10629,7 +10834,14 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace Sofort {
-      export type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+      export type Country =
+        | 'AT'
+        | 'BE'
+        | 'DE'
+        | 'ES'
+        | 'IT'
+        | 'NL'
+        | OtherString;
     }
 
     export namespace Upi {
@@ -10656,14 +10868,14 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
     }
   }
 
@@ -12135,30 +12347,43 @@ export namespace PaymentIntentCreateParams {
         transaction_type?: MandateOptions.TransactionType;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+        export type PaymentSchedule =
+          | 'combined'
+          | 'interval'
+          | 'sporadic'
+          | OtherString;
 
-        export type TransactionType = 'business' | 'personal';
+        export type TransactionType = 'business' | 'personal' | OtherString;
       }
     }
 
     export namespace Alipay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace AmazonPay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace AuBecsDebit {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace BacsDebit {
@@ -12169,17 +12394,25 @@ export namespace PaymentIntentCreateParams {
         reference_prefix?: Emptyable<string>;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Bancontact {
-      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Boleto {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Card {
@@ -12191,7 +12424,7 @@ export namespace PaymentIntentCreateParams {
         hours?: number;
       }
 
-      export type CaptureMethod = 'automatic_delayed' | 'manual';
+      export type CaptureMethod = 'automatic_delayed' | 'manual' | OtherString;
 
       export interface Installments {
         /**
@@ -12277,23 +12510,46 @@ export namespace PaymentIntentCreateParams {
         money_services?: PaymentDetails.MoneyServices;
       }
 
-      export type RequestDecrementalAuthorization = 'if_available' | 'never';
+      export type RequestDecrementalAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestExtendedAuthorization = 'if_available' | 'never';
+      export type RequestExtendedAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestIncrementalAuthorization = 'if_available' | 'never';
+      export type RequestIncrementalAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestMulticapture = 'if_available' | 'never';
+      export type RequestMulticapture = 'if_available' | 'never' | OtherString;
 
-      export type RequestOvercapture = 'if_available' | 'never';
+      export type RequestOvercapture = 'if_available' | 'never' | OtherString;
 
-      export type RequestPartialAuthorization = 'if_available' | 'never';
+      export type RequestPartialAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestReauthorization = 'if_available' | 'never';
+      export type RequestReauthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+      export type RequestThreeDSecure =
+        | 'any'
+        | 'automatic'
+        | 'challenge'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export interface StatementDetails {
         /**
@@ -12377,7 +12633,11 @@ export namespace PaymentIntentCreateParams {
         }
 
         export namespace Plan {
-          export type Type = 'bonus' | 'fixed_count' | 'revolving';
+          export type Type =
+            | 'bonus'
+            | 'fixed_count'
+            | 'revolving'
+            | OtherString;
         }
       }
 
@@ -12408,22 +12668,32 @@ export namespace PaymentIntentCreateParams {
               | 'blockchain_native'
               | 'nft'
               | 'other_non_fiat'
-              | 'stablecoin';
+              | 'stablecoin'
+              | OtherString;
           }
         }
       }
 
       export namespace ThreeDSecure {
-        export type AresTransStatus = 'A' | 'C' | 'I' | 'N' | 'R' | 'U' | 'Y';
+        export type AresTransStatus =
+          | 'A'
+          | 'C'
+          | 'I'
+          | 'N'
+          | 'R'
+          | 'U'
+          | 'Y'
+          | OtherString;
 
         export type ElectronicCommerceIndicator =
           | '01'
           | '02'
           | '05'
           | '06'
-          | '07';
+          | '07'
+          | OtherString;
 
-        export type ExemptionIndicator = 'low_risk' | 'none';
+        export type ExemptionIndicator = 'low_risk' | 'none' | OtherString;
 
         export interface NetworkOptions {
           /**
@@ -12432,7 +12702,13 @@ export namespace PaymentIntentCreateParams {
           cartes_bancaires?: NetworkOptions.CartesBancaires;
         }
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
 
         export namespace NetworkOptions {
           export interface CartesBancaires {
@@ -12459,7 +12735,14 @@ export namespace PaymentIntentCreateParams {
           }
 
           export namespace CartesBancaires {
-            export type CbAvalgo = '0' | '1' | '2' | '3' | '4' | 'A';
+            export type CbAvalgo =
+              | '0'
+              | '1'
+              | '2'
+              | '3'
+              | '4'
+              | 'A'
+              | OtherString;
           }
         }
       }
@@ -12486,9 +12769,12 @@ export namespace PaymentIntentCreateParams {
         money_services?: PaymentDetails.MoneyServices;
       }
 
-      export type RequestMulticapture = 'if_available' | 'never';
+      export type RequestMulticapture = 'if_available' | 'never' | OtherString;
 
-      export type RequestReauthorization = 'if_available' | 'never';
+      export type RequestReauthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
       export interface Routing {
         /**
@@ -12518,18 +12804,26 @@ export namespace PaymentIntentCreateParams {
               | 'blockchain_native'
               | 'nft'
               | 'other_non_fiat'
-              | 'stablecoin';
+              | 'stablecoin'
+              | OtherString;
           }
         }
       }
 
       export namespace Routing {
-        export type RequestedPriority = 'domestic' | 'international';
+        export type RequestedPriority =
+          | 'domestic'
+          | 'international'
+          | OtherString;
       }
     }
 
     export namespace Cashapp {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Crypto {
@@ -12552,7 +12846,11 @@ export namespace PaymentIntentCreateParams {
         static_address?: boolean;
       }
 
-      export type Mode = 'default' | 'deposit' | 'transaction_verification';
+      export type Mode =
+        | 'default'
+        | 'deposit'
+        | 'transaction_verification'
+        | OtherString;
 
       export interface TransactionVerificationOptions {
         /**
@@ -12576,7 +12874,8 @@ export namespace PaymentIntentCreateParams {
           | 'ethereum'
           | 'polygon'
           | 'solana'
-          | 'tempo';
+          | 'tempo'
+          | OtherString;
       }
 
       export namespace TransactionVerificationOptions {
@@ -12585,7 +12884,8 @@ export namespace PaymentIntentCreateParams {
           | 'ethereum'
           | 'polygon'
           | 'solana'
-          | 'tempo';
+          | 'tempo'
+          | OtherString;
       }
     }
 
@@ -12624,31 +12924,36 @@ export namespace PaymentIntentCreateParams {
           | 'sort_code'
           | 'spei'
           | 'swift'
-          | 'zengin';
+          | 'zengin'
+          | OtherString;
 
         export type Type =
           | 'eu_bank_transfer'
           | 'gb_bank_transfer'
           | 'jp_bank_transfer'
           | 'mx_bank_transfer'
-          | 'us_bank_transfer';
+          | 'us_bank_transfer'
+          | OtherString;
       }
     }
 
     export namespace GiftCard {
-      export type RequestPartialAuthorization = 'if_available' | 'never';
+      export type RequestPartialAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
     }
 
     export namespace Gopay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Ideal {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace KakaoPay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Klarna {
@@ -12725,9 +13030,14 @@ export namespace PaymentIntentCreateParams {
         | 'pt-PT'
         | 'ro-RO'
         | 'sv-FI'
-        | 'sv-SE';
+        | 'sv-SE'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export interface Subscription {
         /**
@@ -12811,11 +13121,16 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace OnDemand {
-        export type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+        export type PurchaseInterval =
+          | 'day'
+          | 'month'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace Subscription {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
         export interface NextBilling {
           /**
@@ -13255,7 +13570,8 @@ export namespace PaymentIntentCreateParams {
             | 'business'
             | 'economy'
             | 'first_class'
-            | 'premium_economy';
+            | 'premium_economy'
+            | OtherString;
 
           export namespace Arrival {
             export interface Address {
@@ -13331,7 +13647,8 @@ export namespace PaymentIntentCreateParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -13376,7 +13693,8 @@ export namespace PaymentIntentCreateParams {
             | 'festival'
             | 'in_person_education'
             | 'sport'
-            | 'tour';
+            | 'tour'
+            | OtherString;
 
           export interface Insurance {
             /**
@@ -13405,7 +13723,8 @@ export namespace PaymentIntentCreateParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -13477,7 +13796,8 @@ export namespace PaymentIntentCreateParams {
             | 'business'
             | 'economy'
             | 'first_class'
-            | 'premium_economy';
+            | 'premium_economy'
+            | OtherString;
 
           export namespace Arrival {
             export interface Address {
@@ -13553,7 +13873,8 @@ export namespace PaymentIntentCreateParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -13562,7 +13883,8 @@ export namespace PaymentIntentCreateParams {
             | 'bankruptcy'
             | 'cancelation'
             | 'emergency'
-            | 'medical';
+            | 'medical'
+            | OtherString;
         }
 
         export namespace MarketplaceSeller {
@@ -13632,14 +13954,16 @@ export namespace PaymentIntentCreateParams {
             | 'tools_and_home_improvement'
             | 'toys_and_games'
             | 'video_games'
-            | 'women_clothing';
+            | 'women_clothing'
+            | OtherString;
 
           export type SellerRating =
             | 'high'
             | 'low'
             | 'medium'
             | 'very_high'
-            | 'very_low';
+            | 'very_low'
+            | OtherString;
         }
 
         export namespace RoundTripReservationDetail {
@@ -13710,7 +14034,8 @@ export namespace PaymentIntentCreateParams {
             | 'business'
             | 'economy'
             | 'first_class'
-            | 'premium_economy';
+            | 'premium_economy'
+            | OtherString;
 
           export namespace Arrival {
             export interface Address {
@@ -13786,7 +14111,8 @@ export namespace PaymentIntentCreateParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -13858,7 +14184,8 @@ export namespace PaymentIntentCreateParams {
             | 'business'
             | 'economy'
             | 'first_class'
-            | 'premium_economy';
+            | 'premium_economy'
+            | OtherString;
 
           export namespace Arrival {
             export interface Address {
@@ -13934,7 +14261,8 @@ export namespace PaymentIntentCreateParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -13944,25 +14272,30 @@ export namespace PaymentIntentCreateParams {
             | 'discount'
             | 'gift_card'
             | 'physical_product'
-            | 'services';
+            | 'services'
+            | OtherString;
         }
       }
     }
 
     export namespace KrCard {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Link {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace NaverPay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace NzBankAccount {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Paypal {
@@ -14029,12 +14362,17 @@ export namespace PaymentIntentCreateParams {
         | 'pl-PL'
         | 'pt-PT'
         | 'sk-SK'
-        | 'sv-SE';
+        | 'sv-SE'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
       export namespace LineItem {
-        export type Category = 'digital_goods' | 'donation' | 'physical_goods';
+        export type Category =
+          | 'digital_goods'
+          | 'donation'
+          | 'physical_goods'
+          | OtherString;
 
         export interface Tax {
           /**
@@ -14049,13 +14387,17 @@ export namespace PaymentIntentCreateParams {
         }
 
         export namespace Tax {
-          export type Behavior = 'exclusive' | 'inclusive';
+          export type Behavior = 'exclusive' | 'inclusive' | OtherString;
         }
       }
     }
 
     export namespace Paypay {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Payto {
@@ -14091,10 +14433,10 @@ export namespace PaymentIntentCreateParams {
         purpose?: Emptyable<MandateOptions.Purpose>;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'adhoc'
@@ -14104,7 +14446,8 @@ export namespace PaymentIntentCreateParams {
           | 'monthly'
           | 'quarterly'
           | 'semi_annual'
-          | 'weekly';
+          | 'weekly'
+          | OtherString;
 
         export type Purpose =
           | 'dependant_support'
@@ -14117,12 +14460,13 @@ export namespace PaymentIntentCreateParams {
           | 'retail'
           | 'salary'
           | 'tax'
-          | 'utility';
+          | 'utility'
+          | OtherString;
       }
     }
 
     export namespace Pix {
-      export type AmountIncludesIof = 'always' | 'never';
+      export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
       export interface MandateOptions {
         /**
@@ -14166,19 +14510,20 @@ export namespace PaymentIntentCreateParams {
         start_date?: string;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
       export namespace MandateOptions {
-        export type AmountIncludesIof = 'always' | 'never';
+        export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'halfyearly'
           | 'monthly'
           | 'quarterly'
           | 'weekly'
-          | 'yearly';
+          | 'yearly'
+          | OtherString;
       }
     }
 
@@ -14187,7 +14532,11 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace Satispay {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace SepaDebit {
@@ -14198,7 +14547,11 @@ export namespace PaymentIntentCreateParams {
         reference_prefix?: Emptyable<string>;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Sofort {
@@ -14209,9 +14562,10 @@ export namespace PaymentIntentCreateParams {
         | 'fr'
         | 'it'
         | 'nl'
-        | 'pl';
+        | 'pl'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace StripeBalance {
@@ -14222,11 +14576,11 @@ export namespace PaymentIntentCreateParams {
         stripe_balance_debit_agreement?: string;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Twint {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Upi {
@@ -14252,10 +14606,14 @@ export namespace PaymentIntentCreateParams {
         end_date?: number;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
@@ -14301,18 +14659,24 @@ export namespace PaymentIntentCreateParams {
         requested?: Array<Networks.Requested>;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export type TransactionPurpose =
         | 'goods'
         | 'other'
         | 'services'
-        | 'unspecified';
+        | 'unspecified'
+        | OtherString;
 
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace FinancialConnections {
         export interface Filters {
@@ -14344,14 +14708,15 @@ export namespace PaymentIntentCreateParams {
           | 'balances'
           | 'inferred_balances'
           | 'ownership'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export namespace Filters {
           export type AccountSubcategory = 'checking' | 'savings';
         }
 
         export namespace ManualEntry {
-          export type Mode = 'automatic' | 'custom';
+          export type Mode = 'automatic' | 'custom' | OtherString;
         }
       }
 
@@ -14361,7 +14726,12 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace WechatPay {
-      export type Client = 'android' | 'ios' | 'mini_program' | 'web';
+      export type Client =
+        | 'android'
+        | 'ios'
+        | 'mini_program'
+        | 'web'
+        | OtherString;
     }
   }
 
@@ -14661,7 +15031,8 @@ export namespace PaymentIntentUpdateParams {
     | 'vipps'
     | 'wechat_pay'
     | 'wero'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export interface AmountDetails {
     /**
@@ -14706,7 +15077,11 @@ export namespace PaymentIntentUpdateParams {
     tip?: Emptyable<AmountDetails.Tip>;
   }
 
-  export type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+  export type CaptureMethod =
+    | 'automatic'
+    | 'automatic_async'
+    | 'manual'
+    | OtherString;
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
@@ -14770,7 +15145,8 @@ export namespace PaymentIntentUpdateParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export interface Hooks {
     /**
@@ -15531,7 +15907,7 @@ export namespace PaymentIntentUpdateParams {
     zip?: Emptyable<PaymentMethodOptions.Zip>;
   }
 
-  export type SetupFutureUsage = 'off_session' | 'on_session';
+  export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
 
   export interface Shipping {
     /**
@@ -15825,13 +16201,15 @@ export namespace PaymentIntentUpdateParams {
               | 'vehicle_accessories'
               | 'vehicle_parking'
               | 'vehicle_parts'
-              | 'wash_out';
+              | 'wash_out'
+              | OtherString;
 
             export type ServiceType =
               | 'full_service'
               | 'high_speed_diesel'
               | 'non_fuel_only'
-              | 'self_service';
+              | 'self_service'
+              | OtherString;
           }
         }
 
@@ -15839,13 +16217,18 @@ export namespace PaymentIntentUpdateParams {
           export type Category =
             | 'digital_goods'
             | 'donation'
-            | 'physical_goods';
+            | 'physical_goods'
+            | OtherString;
         }
       }
     }
 
     export namespace Surcharge {
-      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+      export type EnforceValidation =
+        | 'automatic'
+        | 'disabled'
+        | 'enabled'
+        | OtherString;
     }
   }
 
@@ -16497,7 +16880,10 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace FrMealVoucher {
-        export type Enabled = 'if_payment_method_is_eligible' | 'never';
+        export type Enabled =
+          | 'if_payment_method_is_eligible'
+          | 'never'
+          | OtherString;
       }
     }
 
@@ -16555,12 +16941,13 @@ export namespace PaymentIntentUpdateParams {
         | 'gas'
         | 'late_return'
         | 'one_way_service'
-        | 'parking_violation';
+        | 'parking_violation'
+        | OtherString;
 
-      export type RateInterval = 'day' | 'month' | 'week';
+      export type RateInterval = 'day' | 'month' | 'week' | OtherString;
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -16581,7 +16968,7 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
     }
 
@@ -16758,7 +17145,7 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
 
       export namespace Driver {
@@ -16821,7 +17208,8 @@ export namespace PaymentIntentUpdateParams {
           | 'other'
           | 'partial_damage_waiver'
           | 'personal_accident'
-          | 'personal_effects';
+          | 'personal_effects'
+          | OtherString;
       }
 
       export namespace Pickup {
@@ -16893,7 +17281,8 @@ export namespace PaymentIntentUpdateParams {
           | 'kilometers'
           | 'miles'
           | 'months'
-          | 'weeks';
+          | 'weeks'
+          | OtherString;
 
         export interface Tax {
           /**
@@ -16918,7 +17307,8 @@ export namespace PaymentIntentUpdateParams {
             | 'parking'
             | 'phone'
             | 'regular_mileage'
-            | 'towing';
+            | 'towing'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -16976,13 +17366,15 @@ export namespace PaymentIntentUpdateParams {
           | 'twenty_foot_truck'
           | 'twenty_four_foot_truck'
           | 'twenty_six_foot_truck'
-          | 'unique';
+          | 'unique'
+          | OtherString;
 
         export type VehicleClass =
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -17007,7 +17399,7 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -17208,14 +17600,16 @@ export namespace PaymentIntentUpdateParams {
           | 'wawa'
           | 'western_energetix'
           | 'wilco'
-          | 'zions';
+          | 'zions'
+          | OtherString;
       }
 
       export namespace Vat {
         export type IobIndicator =
           | 'issuer_to_iob'
           | 'issuer_to_iob_and_incremental_certification'
-          | 'merchant_does_not_agree_to_iob';
+          | 'merchant_does_not_agree_to_iob'
+          | OtherString;
       }
     }
 
@@ -17289,7 +17683,7 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -17314,7 +17708,8 @@ export namespace PaymentIntentUpdateParams {
           | 'business'
           | 'economy'
           | 'first'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -17478,7 +17873,8 @@ export namespace PaymentIntentUpdateParams {
         | 'exchange_ticket'
         | 'miscellaneous'
         | 'refund'
-        | 'ticket_purchase';
+        | 'ticket_purchase'
+        | OtherString;
 
       export namespace Insurance {
         export type InsuranceType =
@@ -17486,7 +17882,8 @@ export namespace PaymentIntentUpdateParams {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Segment {
@@ -17538,7 +17935,8 @@ export namespace PaymentIntentUpdateParams {
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
 
       export namespace Total {
@@ -17547,7 +17945,8 @@ export namespace PaymentIntentUpdateParams {
           | 'partial_ticket_refund'
           | 'passenger_transport_ancillary_cancellation'
           | 'ticket_and_ancillary_cancellation'
-          | 'ticket_cancellation';
+          | 'ticket_cancellation'
+          | OtherString;
 
         export interface Discounts {
           /**
@@ -17579,7 +17978,8 @@ export namespace PaymentIntentUpdateParams {
           export type Type =
             | 'additional_fees'
             | 'ancillary_service_charges'
-            | 'exchange_fee';
+            | 'exchange_fee'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -17611,7 +18011,7 @@ export namespace PaymentIntentUpdateParams {
         name: string;
       }
 
-      export type Category = 'hotel' | 'vacation_rental';
+      export type Category = 'hotel' | 'vacation_rental' | OtherString;
 
       export interface Delivery {
         /**
@@ -17631,7 +18031,8 @@ export namespace PaymentIntentUpdateParams {
         | 'mini_bar'
         | 'other'
         | 'restaurant'
-        | 'telephone';
+        | 'telephone'
+        | OtherString;
 
       export interface Passenger {
         /**
@@ -17641,7 +18042,7 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -17829,7 +18230,8 @@ export namespace PaymentIntentUpdateParams {
           | 'room'
           | 'standard'
           | 'suite'
-          | 'villa';
+          | 'villa'
+          | OtherString;
       }
 
       export namespace Host {
@@ -17865,7 +18267,12 @@ export namespace PaymentIntentUpdateParams {
           state?: string;
         }
 
-        export type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+        export type HostType =
+          | 'hostel'
+          | 'hotel'
+          | 'owner'
+          | 'rental_agency'
+          | OtherString;
       }
 
       export namespace Insurance {
@@ -17873,7 +18280,8 @@ export namespace PaymentIntentUpdateParams {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Total {
@@ -17920,7 +18328,8 @@ export namespace PaymentIntentUpdateParams {
             | 'mini_bar'
             | 'other'
             | 'phone'
-            | 'restaurant';
+            | 'restaurant'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -17989,7 +18398,10 @@ export namespace PaymentIntentUpdateParams {
         surname?: string;
       }
 
-      export type TransactionType = 'account_funding' | 'debt_repayment';
+      export type TransactionType =
+        | 'account_funding'
+        | 'debt_repayment'
+        | OtherString;
 
       export namespace AccountFunding {
         export interface SenderDetails {
@@ -18085,7 +18497,7 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace BillingInterval {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -18114,7 +18526,11 @@ export namespace PaymentIntentUpdateParams {
 
     export interface Alipay {}
 
-    export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+    export type AllowRedisplay =
+      | 'always'
+      | 'limited'
+      | 'unspecified'
+      | OtherString;
 
     export interface Alma {}
 
@@ -18454,7 +18870,8 @@ export namespace PaymentIntentUpdateParams {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
-      | 'zip';
+      | 'zip'
+      | OtherString;
 
     export interface Upi {
       /**
@@ -18555,7 +18972,13 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace IdBankTransfer {
-      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      export type Bank =
+        | 'bca'
+        | 'bni'
+        | 'bri'
+        | 'cimb'
+        | 'permata'
+        | OtherString;
     }
 
     export namespace Ideal {
@@ -18602,7 +19025,7 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace NaverPay {
-      export type Funding = 'card' | 'points';
+      export type Funding = 'card' | 'points' | OtherString;
     }
 
     export namespace P24 {
@@ -18632,7 +19055,8 @@ export namespace PaymentIntentUpdateParams {
         | 'tmobile_usbugi_bankowe'
         | 'toyota_bank'
         | 'velobank'
-        | 'volkswagen_bank';
+        | 'volkswagen_bank'
+        | OtherString;
     }
 
     export namespace Rechnung {
@@ -18655,7 +19079,14 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace Sofort {
-      export type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+      export type Country =
+        | 'AT'
+        | 'BE'
+        | 'DE'
+        | 'ES'
+        | 'IT'
+        | 'NL'
+        | OtherString;
     }
 
     export namespace Upi {
@@ -18682,14 +19113,14 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
     }
   }
 
@@ -20161,30 +20592,43 @@ export namespace PaymentIntentUpdateParams {
         transaction_type?: MandateOptions.TransactionType;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+        export type PaymentSchedule =
+          | 'combined'
+          | 'interval'
+          | 'sporadic'
+          | OtherString;
 
-        export type TransactionType = 'business' | 'personal';
+        export type TransactionType = 'business' | 'personal' | OtherString;
       }
     }
 
     export namespace Alipay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace AmazonPay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace AuBecsDebit {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace BacsDebit {
@@ -20195,17 +20639,25 @@ export namespace PaymentIntentUpdateParams {
         reference_prefix?: Emptyable<string>;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Bancontact {
-      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Boleto {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Card {
@@ -20217,7 +20669,7 @@ export namespace PaymentIntentUpdateParams {
         hours?: number;
       }
 
-      export type CaptureMethod = 'automatic_delayed' | 'manual';
+      export type CaptureMethod = 'automatic_delayed' | 'manual' | OtherString;
 
       export interface Installments {
         /**
@@ -20303,23 +20755,46 @@ export namespace PaymentIntentUpdateParams {
         money_services?: PaymentDetails.MoneyServices;
       }
 
-      export type RequestDecrementalAuthorization = 'if_available' | 'never';
+      export type RequestDecrementalAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestExtendedAuthorization = 'if_available' | 'never';
+      export type RequestExtendedAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestIncrementalAuthorization = 'if_available' | 'never';
+      export type RequestIncrementalAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestMulticapture = 'if_available' | 'never';
+      export type RequestMulticapture = 'if_available' | 'never' | OtherString;
 
-      export type RequestOvercapture = 'if_available' | 'never';
+      export type RequestOvercapture = 'if_available' | 'never' | OtherString;
 
-      export type RequestPartialAuthorization = 'if_available' | 'never';
+      export type RequestPartialAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestReauthorization = 'if_available' | 'never';
+      export type RequestReauthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+      export type RequestThreeDSecure =
+        | 'any'
+        | 'automatic'
+        | 'challenge'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export interface StatementDetails {
         /**
@@ -20403,7 +20878,11 @@ export namespace PaymentIntentUpdateParams {
         }
 
         export namespace Plan {
-          export type Type = 'bonus' | 'fixed_count' | 'revolving';
+          export type Type =
+            | 'bonus'
+            | 'fixed_count'
+            | 'revolving'
+            | OtherString;
         }
       }
 
@@ -20434,22 +20913,32 @@ export namespace PaymentIntentUpdateParams {
               | 'blockchain_native'
               | 'nft'
               | 'other_non_fiat'
-              | 'stablecoin';
+              | 'stablecoin'
+              | OtherString;
           }
         }
       }
 
       export namespace ThreeDSecure {
-        export type AresTransStatus = 'A' | 'C' | 'I' | 'N' | 'R' | 'U' | 'Y';
+        export type AresTransStatus =
+          | 'A'
+          | 'C'
+          | 'I'
+          | 'N'
+          | 'R'
+          | 'U'
+          | 'Y'
+          | OtherString;
 
         export type ElectronicCommerceIndicator =
           | '01'
           | '02'
           | '05'
           | '06'
-          | '07';
+          | '07'
+          | OtherString;
 
-        export type ExemptionIndicator = 'low_risk' | 'none';
+        export type ExemptionIndicator = 'low_risk' | 'none' | OtherString;
 
         export interface NetworkOptions {
           /**
@@ -20458,7 +20947,13 @@ export namespace PaymentIntentUpdateParams {
           cartes_bancaires?: NetworkOptions.CartesBancaires;
         }
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
 
         export namespace NetworkOptions {
           export interface CartesBancaires {
@@ -20485,7 +20980,14 @@ export namespace PaymentIntentUpdateParams {
           }
 
           export namespace CartesBancaires {
-            export type CbAvalgo = '0' | '1' | '2' | '3' | '4' | 'A';
+            export type CbAvalgo =
+              | '0'
+              | '1'
+              | '2'
+              | '3'
+              | '4'
+              | 'A'
+              | OtherString;
           }
         }
       }
@@ -20512,9 +21014,12 @@ export namespace PaymentIntentUpdateParams {
         money_services?: PaymentDetails.MoneyServices;
       }
 
-      export type RequestMulticapture = 'if_available' | 'never';
+      export type RequestMulticapture = 'if_available' | 'never' | OtherString;
 
-      export type RequestReauthorization = 'if_available' | 'never';
+      export type RequestReauthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
       export interface Routing {
         /**
@@ -20544,18 +21049,26 @@ export namespace PaymentIntentUpdateParams {
               | 'blockchain_native'
               | 'nft'
               | 'other_non_fiat'
-              | 'stablecoin';
+              | 'stablecoin'
+              | OtherString;
           }
         }
       }
 
       export namespace Routing {
-        export type RequestedPriority = 'domestic' | 'international';
+        export type RequestedPriority =
+          | 'domestic'
+          | 'international'
+          | OtherString;
       }
     }
 
     export namespace Cashapp {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Crypto {
@@ -20578,7 +21091,11 @@ export namespace PaymentIntentUpdateParams {
         static_address?: boolean;
       }
 
-      export type Mode = 'default' | 'deposit' | 'transaction_verification';
+      export type Mode =
+        | 'default'
+        | 'deposit'
+        | 'transaction_verification'
+        | OtherString;
 
       export interface TransactionVerificationOptions {
         /**
@@ -20602,7 +21119,8 @@ export namespace PaymentIntentUpdateParams {
           | 'ethereum'
           | 'polygon'
           | 'solana'
-          | 'tempo';
+          | 'tempo'
+          | OtherString;
       }
 
       export namespace TransactionVerificationOptions {
@@ -20611,7 +21129,8 @@ export namespace PaymentIntentUpdateParams {
           | 'ethereum'
           | 'polygon'
           | 'solana'
-          | 'tempo';
+          | 'tempo'
+          | OtherString;
       }
     }
 
@@ -20650,31 +21169,36 @@ export namespace PaymentIntentUpdateParams {
           | 'sort_code'
           | 'spei'
           | 'swift'
-          | 'zengin';
+          | 'zengin'
+          | OtherString;
 
         export type Type =
           | 'eu_bank_transfer'
           | 'gb_bank_transfer'
           | 'jp_bank_transfer'
           | 'mx_bank_transfer'
-          | 'us_bank_transfer';
+          | 'us_bank_transfer'
+          | OtherString;
       }
     }
 
     export namespace GiftCard {
-      export type RequestPartialAuthorization = 'if_available' | 'never';
+      export type RequestPartialAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
     }
 
     export namespace Gopay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Ideal {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace KakaoPay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Klarna {
@@ -20751,9 +21275,14 @@ export namespace PaymentIntentUpdateParams {
         | 'pt-PT'
         | 'ro-RO'
         | 'sv-FI'
-        | 'sv-SE';
+        | 'sv-SE'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export interface Subscription {
         /**
@@ -20837,11 +21366,16 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace OnDemand {
-        export type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+        export type PurchaseInterval =
+          | 'day'
+          | 'month'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace Subscription {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
         export interface NextBilling {
           /**
@@ -21281,7 +21815,8 @@ export namespace PaymentIntentUpdateParams {
             | 'business'
             | 'economy'
             | 'first_class'
-            | 'premium_economy';
+            | 'premium_economy'
+            | OtherString;
 
           export namespace Arrival {
             export interface Address {
@@ -21357,7 +21892,8 @@ export namespace PaymentIntentUpdateParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -21402,7 +21938,8 @@ export namespace PaymentIntentUpdateParams {
             | 'festival'
             | 'in_person_education'
             | 'sport'
-            | 'tour';
+            | 'tour'
+            | OtherString;
 
           export interface Insurance {
             /**
@@ -21431,7 +21968,8 @@ export namespace PaymentIntentUpdateParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -21503,7 +22041,8 @@ export namespace PaymentIntentUpdateParams {
             | 'business'
             | 'economy'
             | 'first_class'
-            | 'premium_economy';
+            | 'premium_economy'
+            | OtherString;
 
           export namespace Arrival {
             export interface Address {
@@ -21579,7 +22118,8 @@ export namespace PaymentIntentUpdateParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -21588,7 +22128,8 @@ export namespace PaymentIntentUpdateParams {
             | 'bankruptcy'
             | 'cancelation'
             | 'emergency'
-            | 'medical';
+            | 'medical'
+            | OtherString;
         }
 
         export namespace MarketplaceSeller {
@@ -21658,14 +22199,16 @@ export namespace PaymentIntentUpdateParams {
             | 'tools_and_home_improvement'
             | 'toys_and_games'
             | 'video_games'
-            | 'women_clothing';
+            | 'women_clothing'
+            | OtherString;
 
           export type SellerRating =
             | 'high'
             | 'low'
             | 'medium'
             | 'very_high'
-            | 'very_low';
+            | 'very_low'
+            | OtherString;
         }
 
         export namespace RoundTripReservationDetail {
@@ -21736,7 +22279,8 @@ export namespace PaymentIntentUpdateParams {
             | 'business'
             | 'economy'
             | 'first_class'
-            | 'premium_economy';
+            | 'premium_economy'
+            | OtherString;
 
           export namespace Arrival {
             export interface Address {
@@ -21812,7 +22356,8 @@ export namespace PaymentIntentUpdateParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -21884,7 +22429,8 @@ export namespace PaymentIntentUpdateParams {
             | 'business'
             | 'economy'
             | 'first_class'
-            | 'premium_economy';
+            | 'premium_economy'
+            | OtherString;
 
           export namespace Arrival {
             export interface Address {
@@ -21960,7 +22506,8 @@ export namespace PaymentIntentUpdateParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -21970,25 +22517,30 @@ export namespace PaymentIntentUpdateParams {
             | 'discount'
             | 'gift_card'
             | 'physical_product'
-            | 'services';
+            | 'services'
+            | OtherString;
         }
       }
     }
 
     export namespace KrCard {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Link {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace NaverPay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace NzBankAccount {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Paypal {
@@ -22055,12 +22607,17 @@ export namespace PaymentIntentUpdateParams {
         | 'pl-PL'
         | 'pt-PT'
         | 'sk-SK'
-        | 'sv-SE';
+        | 'sv-SE'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
       export namespace LineItem {
-        export type Category = 'digital_goods' | 'donation' | 'physical_goods';
+        export type Category =
+          | 'digital_goods'
+          | 'donation'
+          | 'physical_goods'
+          | OtherString;
 
         export interface Tax {
           /**
@@ -22075,13 +22632,17 @@ export namespace PaymentIntentUpdateParams {
         }
 
         export namespace Tax {
-          export type Behavior = 'exclusive' | 'inclusive';
+          export type Behavior = 'exclusive' | 'inclusive' | OtherString;
         }
       }
     }
 
     export namespace Paypay {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Payto {
@@ -22117,10 +22678,10 @@ export namespace PaymentIntentUpdateParams {
         purpose?: Emptyable<MandateOptions.Purpose>;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'adhoc'
@@ -22130,7 +22691,8 @@ export namespace PaymentIntentUpdateParams {
           | 'monthly'
           | 'quarterly'
           | 'semi_annual'
-          | 'weekly';
+          | 'weekly'
+          | OtherString;
 
         export type Purpose =
           | 'dependant_support'
@@ -22143,12 +22705,13 @@ export namespace PaymentIntentUpdateParams {
           | 'retail'
           | 'salary'
           | 'tax'
-          | 'utility';
+          | 'utility'
+          | OtherString;
       }
     }
 
     export namespace Pix {
-      export type AmountIncludesIof = 'always' | 'never';
+      export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
       export interface MandateOptions {
         /**
@@ -22192,19 +22755,20 @@ export namespace PaymentIntentUpdateParams {
         start_date?: string;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
       export namespace MandateOptions {
-        export type AmountIncludesIof = 'always' | 'never';
+        export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'halfyearly'
           | 'monthly'
           | 'quarterly'
           | 'weekly'
-          | 'yearly';
+          | 'yearly'
+          | OtherString;
       }
     }
 
@@ -22213,7 +22777,11 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace Satispay {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace SepaDebit {
@@ -22224,7 +22792,11 @@ export namespace PaymentIntentUpdateParams {
         reference_prefix?: Emptyable<string>;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Sofort {
@@ -22235,9 +22807,10 @@ export namespace PaymentIntentUpdateParams {
         | 'fr'
         | 'it'
         | 'nl'
-        | 'pl';
+        | 'pl'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace StripeBalance {
@@ -22248,11 +22821,11 @@ export namespace PaymentIntentUpdateParams {
         stripe_balance_debit_agreement?: string;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Twint {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Upi {
@@ -22278,10 +22851,14 @@ export namespace PaymentIntentUpdateParams {
         end_date?: number;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
@@ -22327,18 +22904,24 @@ export namespace PaymentIntentUpdateParams {
         requested?: Array<Networks.Requested>;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export type TransactionPurpose =
         | 'goods'
         | 'other'
         | 'services'
-        | 'unspecified';
+        | 'unspecified'
+        | OtherString;
 
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace FinancialConnections {
         export interface Filters {
@@ -22370,14 +22953,15 @@ export namespace PaymentIntentUpdateParams {
           | 'balances'
           | 'inferred_balances'
           | 'ownership'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export namespace Filters {
           export type AccountSubcategory = 'checking' | 'savings';
         }
 
         export namespace ManualEntry {
-          export type Mode = 'automatic' | 'custom';
+          export type Mode = 'automatic' | 'custom' | OtherString;
         }
       }
 
@@ -22387,7 +22971,12 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace WechatPay {
-      export type Client = 'android' | 'ios' | 'mini_program' | 'web';
+      export type Client =
+        | 'android'
+        | 'ios'
+        | 'mini_program'
+        | 'web'
+        | OtherString;
     }
   }
 
@@ -22885,13 +23474,15 @@ export namespace PaymentIntentCaptureParams {
               | 'vehicle_accessories'
               | 'vehicle_parking'
               | 'vehicle_parts'
-              | 'wash_out';
+              | 'wash_out'
+              | OtherString;
 
             export type ServiceType =
               | 'full_service'
               | 'high_speed_diesel'
               | 'non_fuel_only'
-              | 'self_service';
+              | 'self_service'
+              | OtherString;
           }
         }
 
@@ -22899,13 +23490,18 @@ export namespace PaymentIntentCaptureParams {
           export type Category =
             | 'digital_goods'
             | 'donation'
-            | 'physical_goods';
+            | 'physical_goods'
+            | OtherString;
         }
       }
     }
 
     export namespace Surcharge {
-      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+      export type EnforceValidation =
+        | 'automatic'
+        | 'disabled'
+        | 'enabled'
+        | OtherString;
     }
   }
 
@@ -23545,12 +24141,13 @@ export namespace PaymentIntentCaptureParams {
         | 'gas'
         | 'late_return'
         | 'one_way_service'
-        | 'parking_violation';
+        | 'parking_violation'
+        | OtherString;
 
-      export type RateInterval = 'day' | 'month' | 'week';
+      export type RateInterval = 'day' | 'month' | 'week' | OtherString;
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -23571,7 +24168,7 @@ export namespace PaymentIntentCaptureParams {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
     }
 
@@ -23748,7 +24345,7 @@ export namespace PaymentIntentCaptureParams {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
 
       export namespace Driver {
@@ -23811,7 +24408,8 @@ export namespace PaymentIntentCaptureParams {
           | 'other'
           | 'partial_damage_waiver'
           | 'personal_accident'
-          | 'personal_effects';
+          | 'personal_effects'
+          | OtherString;
       }
 
       export namespace Pickup {
@@ -23883,7 +24481,8 @@ export namespace PaymentIntentCaptureParams {
           | 'kilometers'
           | 'miles'
           | 'months'
-          | 'weeks';
+          | 'weeks'
+          | OtherString;
 
         export interface Tax {
           /**
@@ -23908,7 +24507,8 @@ export namespace PaymentIntentCaptureParams {
             | 'parking'
             | 'phone'
             | 'regular_mileage'
-            | 'towing';
+            | 'towing'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -23966,13 +24566,15 @@ export namespace PaymentIntentCaptureParams {
           | 'twenty_foot_truck'
           | 'twenty_four_foot_truck'
           | 'twenty_six_foot_truck'
-          | 'unique';
+          | 'unique'
+          | OtherString;
 
         export type VehicleClass =
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -23997,7 +24599,7 @@ export namespace PaymentIntentCaptureParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -24198,14 +24800,16 @@ export namespace PaymentIntentCaptureParams {
           | 'wawa'
           | 'western_energetix'
           | 'wilco'
-          | 'zions';
+          | 'zions'
+          | OtherString;
       }
 
       export namespace Vat {
         export type IobIndicator =
           | 'issuer_to_iob'
           | 'issuer_to_iob_and_incremental_certification'
-          | 'merchant_does_not_agree_to_iob';
+          | 'merchant_does_not_agree_to_iob'
+          | OtherString;
       }
     }
 
@@ -24279,7 +24883,7 @@ export namespace PaymentIntentCaptureParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -24304,7 +24908,8 @@ export namespace PaymentIntentCaptureParams {
           | 'business'
           | 'economy'
           | 'first'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -24468,7 +25073,8 @@ export namespace PaymentIntentCaptureParams {
         | 'exchange_ticket'
         | 'miscellaneous'
         | 'refund'
-        | 'ticket_purchase';
+        | 'ticket_purchase'
+        | OtherString;
 
       export namespace Insurance {
         export type InsuranceType =
@@ -24476,7 +25082,8 @@ export namespace PaymentIntentCaptureParams {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Segment {
@@ -24528,7 +25135,8 @@ export namespace PaymentIntentCaptureParams {
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
 
       export namespace Total {
@@ -24537,7 +25145,8 @@ export namespace PaymentIntentCaptureParams {
           | 'partial_ticket_refund'
           | 'passenger_transport_ancillary_cancellation'
           | 'ticket_and_ancillary_cancellation'
-          | 'ticket_cancellation';
+          | 'ticket_cancellation'
+          | OtherString;
 
         export interface Discounts {
           /**
@@ -24569,7 +25178,8 @@ export namespace PaymentIntentCaptureParams {
           export type Type =
             | 'additional_fees'
             | 'ancillary_service_charges'
-            | 'exchange_fee';
+            | 'exchange_fee'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -24601,7 +25211,7 @@ export namespace PaymentIntentCaptureParams {
         name: string;
       }
 
-      export type Category = 'hotel' | 'vacation_rental';
+      export type Category = 'hotel' | 'vacation_rental' | OtherString;
 
       export interface Delivery {
         /**
@@ -24621,7 +25231,8 @@ export namespace PaymentIntentCaptureParams {
         | 'mini_bar'
         | 'other'
         | 'restaurant'
-        | 'telephone';
+        | 'telephone'
+        | OtherString;
 
       export interface Passenger {
         /**
@@ -24631,7 +25242,7 @@ export namespace PaymentIntentCaptureParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -24819,7 +25430,8 @@ export namespace PaymentIntentCaptureParams {
           | 'room'
           | 'standard'
           | 'suite'
-          | 'villa';
+          | 'villa'
+          | OtherString;
       }
 
       export namespace Host {
@@ -24855,7 +25467,12 @@ export namespace PaymentIntentCaptureParams {
           state?: string;
         }
 
-        export type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+        export type HostType =
+          | 'hostel'
+          | 'hotel'
+          | 'owner'
+          | 'rental_agency'
+          | OtherString;
       }
 
       export namespace Insurance {
@@ -24863,7 +25480,8 @@ export namespace PaymentIntentCaptureParams {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Total {
@@ -24910,7 +25528,8 @@ export namespace PaymentIntentCaptureParams {
             | 'mini_bar'
             | 'other'
             | 'phone'
-            | 'restaurant';
+            | 'restaurant'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -24955,7 +25574,7 @@ export namespace PaymentIntentCaptureParams {
       }
 
       export namespace BillingInterval {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -25211,7 +25830,8 @@ export namespace PaymentIntentConfirmParams {
     | 'vipps'
     | 'wechat_pay'
     | 'wero'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export interface AmountDetails {
     /**
@@ -25256,7 +25876,11 @@ export namespace PaymentIntentConfirmParams {
     tip?: Emptyable<AmountDetails.Tip>;
   }
 
-  export type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+  export type CaptureMethod =
+    | 'automatic'
+    | 'automatic_async'
+    | 'manual'
+    | OtherString;
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
@@ -25320,7 +25944,8 @@ export namespace PaymentIntentConfirmParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export interface Hooks {
     /**
@@ -26090,7 +26715,7 @@ export namespace PaymentIntentConfirmParams {
     session?: string;
   }
 
-  export type SetupFutureUsage = 'off_session' | 'on_session';
+  export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
 
   export interface Shipping {
     /**
@@ -26362,13 +26987,15 @@ export namespace PaymentIntentConfirmParams {
               | 'vehicle_accessories'
               | 'vehicle_parking'
               | 'vehicle_parts'
-              | 'wash_out';
+              | 'wash_out'
+              | OtherString;
 
             export type ServiceType =
               | 'full_service'
               | 'high_speed_diesel'
               | 'non_fuel_only'
-              | 'self_service';
+              | 'self_service'
+              | OtherString;
           }
         }
 
@@ -26376,13 +27003,18 @@ export namespace PaymentIntentConfirmParams {
           export type Category =
             | 'digital_goods'
             | 'donation'
-            | 'physical_goods';
+            | 'physical_goods'
+            | OtherString;
         }
       }
     }
 
     export namespace Surcharge {
-      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+      export type EnforceValidation =
+        | 'automatic'
+        | 'disabled'
+        | 'enabled'
+        | OtherString;
     }
   }
 
@@ -27048,7 +27680,10 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace FrMealVoucher {
-        export type Enabled = 'if_payment_method_is_eligible' | 'never';
+        export type Enabled =
+          | 'if_payment_method_is_eligible'
+          | 'never'
+          | OtherString;
       }
     }
 
@@ -27106,12 +27741,13 @@ export namespace PaymentIntentConfirmParams {
         | 'gas'
         | 'late_return'
         | 'one_way_service'
-        | 'parking_violation';
+        | 'parking_violation'
+        | OtherString;
 
-      export type RateInterval = 'day' | 'month' | 'week';
+      export type RateInterval = 'day' | 'month' | 'week' | OtherString;
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -27132,7 +27768,7 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
     }
 
@@ -27309,7 +27945,7 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
 
       export namespace Driver {
@@ -27372,7 +28008,8 @@ export namespace PaymentIntentConfirmParams {
           | 'other'
           | 'partial_damage_waiver'
           | 'personal_accident'
-          | 'personal_effects';
+          | 'personal_effects'
+          | OtherString;
       }
 
       export namespace Pickup {
@@ -27444,7 +28081,8 @@ export namespace PaymentIntentConfirmParams {
           | 'kilometers'
           | 'miles'
           | 'months'
-          | 'weeks';
+          | 'weeks'
+          | OtherString;
 
         export interface Tax {
           /**
@@ -27469,7 +28107,8 @@ export namespace PaymentIntentConfirmParams {
             | 'parking'
             | 'phone'
             | 'regular_mileage'
-            | 'towing';
+            | 'towing'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -27527,13 +28166,15 @@ export namespace PaymentIntentConfirmParams {
           | 'twenty_foot_truck'
           | 'twenty_four_foot_truck'
           | 'twenty_six_foot_truck'
-          | 'unique';
+          | 'unique'
+          | OtherString;
 
         export type VehicleClass =
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -27558,7 +28199,7 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -27759,14 +28400,16 @@ export namespace PaymentIntentConfirmParams {
           | 'wawa'
           | 'western_energetix'
           | 'wilco'
-          | 'zions';
+          | 'zions'
+          | OtherString;
       }
 
       export namespace Vat {
         export type IobIndicator =
           | 'issuer_to_iob'
           | 'issuer_to_iob_and_incremental_certification'
-          | 'merchant_does_not_agree_to_iob';
+          | 'merchant_does_not_agree_to_iob'
+          | OtherString;
       }
     }
 
@@ -27840,7 +28483,7 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -27865,7 +28508,8 @@ export namespace PaymentIntentConfirmParams {
           | 'business'
           | 'economy'
           | 'first'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -28029,7 +28673,8 @@ export namespace PaymentIntentConfirmParams {
         | 'exchange_ticket'
         | 'miscellaneous'
         | 'refund'
-        | 'ticket_purchase';
+        | 'ticket_purchase'
+        | OtherString;
 
       export namespace Insurance {
         export type InsuranceType =
@@ -28037,7 +28682,8 @@ export namespace PaymentIntentConfirmParams {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Segment {
@@ -28089,7 +28735,8 @@ export namespace PaymentIntentConfirmParams {
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
 
       export namespace Total {
@@ -28098,7 +28745,8 @@ export namespace PaymentIntentConfirmParams {
           | 'partial_ticket_refund'
           | 'passenger_transport_ancillary_cancellation'
           | 'ticket_and_ancillary_cancellation'
-          | 'ticket_cancellation';
+          | 'ticket_cancellation'
+          | OtherString;
 
         export interface Discounts {
           /**
@@ -28130,7 +28778,8 @@ export namespace PaymentIntentConfirmParams {
           export type Type =
             | 'additional_fees'
             | 'ancillary_service_charges'
-            | 'exchange_fee';
+            | 'exchange_fee'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -28162,7 +28811,7 @@ export namespace PaymentIntentConfirmParams {
         name: string;
       }
 
-      export type Category = 'hotel' | 'vacation_rental';
+      export type Category = 'hotel' | 'vacation_rental' | OtherString;
 
       export interface Delivery {
         /**
@@ -28182,7 +28831,8 @@ export namespace PaymentIntentConfirmParams {
         | 'mini_bar'
         | 'other'
         | 'restaurant'
-        | 'telephone';
+        | 'telephone'
+        | OtherString;
 
       export interface Passenger {
         /**
@@ -28192,7 +28842,7 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -28380,7 +29030,8 @@ export namespace PaymentIntentConfirmParams {
           | 'room'
           | 'standard'
           | 'suite'
-          | 'villa';
+          | 'villa'
+          | OtherString;
       }
 
       export namespace Host {
@@ -28416,7 +29067,12 @@ export namespace PaymentIntentConfirmParams {
           state?: string;
         }
 
-        export type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+        export type HostType =
+          | 'hostel'
+          | 'hotel'
+          | 'owner'
+          | 'rental_agency'
+          | OtherString;
       }
 
       export namespace Insurance {
@@ -28424,7 +29080,8 @@ export namespace PaymentIntentConfirmParams {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Total {
@@ -28471,7 +29128,8 @@ export namespace PaymentIntentConfirmParams {
             | 'mini_bar'
             | 'other'
             | 'phone'
-            | 'restaurant';
+            | 'restaurant'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -28540,7 +29198,10 @@ export namespace PaymentIntentConfirmParams {
         surname?: string;
       }
 
-      export type TransactionType = 'account_funding' | 'debt_repayment';
+      export type TransactionType =
+        | 'account_funding'
+        | 'debt_repayment'
+        | OtherString;
 
       export namespace AccountFunding {
         export interface SenderDetails {
@@ -28636,7 +29297,7 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace BillingInterval {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -28665,7 +29326,11 @@ export namespace PaymentIntentConfirmParams {
 
     export interface Alipay {}
 
-    export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+    export type AllowRedisplay =
+      | 'always'
+      | 'limited'
+      | 'unspecified'
+      | OtherString;
 
     export interface Alma {}
 
@@ -29005,7 +29670,8 @@ export namespace PaymentIntentConfirmParams {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
-      | 'zip';
+      | 'zip'
+      | OtherString;
 
     export interface Upi {
       /**
@@ -29106,7 +29772,13 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace IdBankTransfer {
-      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      export type Bank =
+        | 'bca'
+        | 'bni'
+        | 'bri'
+        | 'cimb'
+        | 'permata'
+        | OtherString;
     }
 
     export namespace Ideal {
@@ -29153,7 +29825,7 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace NaverPay {
-      export type Funding = 'card' | 'points';
+      export type Funding = 'card' | 'points' | OtherString;
     }
 
     export namespace P24 {
@@ -29183,7 +29855,8 @@ export namespace PaymentIntentConfirmParams {
         | 'tmobile_usbugi_bankowe'
         | 'toyota_bank'
         | 'velobank'
-        | 'volkswagen_bank';
+        | 'volkswagen_bank'
+        | OtherString;
     }
 
     export namespace Rechnung {
@@ -29206,7 +29879,14 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace Sofort {
-      export type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+      export type Country =
+        | 'AT'
+        | 'BE'
+        | 'DE'
+        | 'ES'
+        | 'IT'
+        | 'NL'
+        | OtherString;
     }
 
     export namespace Upi {
@@ -29233,14 +29913,14 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
     }
   }
 
@@ -30712,30 +31392,43 @@ export namespace PaymentIntentConfirmParams {
         transaction_type?: MandateOptions.TransactionType;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+        export type PaymentSchedule =
+          | 'combined'
+          | 'interval'
+          | 'sporadic'
+          | OtherString;
 
-        export type TransactionType = 'business' | 'personal';
+        export type TransactionType = 'business' | 'personal' | OtherString;
       }
     }
 
     export namespace Alipay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace AmazonPay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace AuBecsDebit {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace BacsDebit {
@@ -30746,17 +31439,25 @@ export namespace PaymentIntentConfirmParams {
         reference_prefix?: Emptyable<string>;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Bancontact {
-      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Boleto {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Card {
@@ -30768,7 +31469,7 @@ export namespace PaymentIntentConfirmParams {
         hours?: number;
       }
 
-      export type CaptureMethod = 'automatic_delayed' | 'manual';
+      export type CaptureMethod = 'automatic_delayed' | 'manual' | OtherString;
 
       export interface Installments {
         /**
@@ -30854,23 +31555,46 @@ export namespace PaymentIntentConfirmParams {
         money_services?: PaymentDetails.MoneyServices;
       }
 
-      export type RequestDecrementalAuthorization = 'if_available' | 'never';
+      export type RequestDecrementalAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestExtendedAuthorization = 'if_available' | 'never';
+      export type RequestExtendedAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestIncrementalAuthorization = 'if_available' | 'never';
+      export type RequestIncrementalAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestMulticapture = 'if_available' | 'never';
+      export type RequestMulticapture = 'if_available' | 'never' | OtherString;
 
-      export type RequestOvercapture = 'if_available' | 'never';
+      export type RequestOvercapture = 'if_available' | 'never' | OtherString;
 
-      export type RequestPartialAuthorization = 'if_available' | 'never';
+      export type RequestPartialAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestReauthorization = 'if_available' | 'never';
+      export type RequestReauthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
-      export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+      export type RequestThreeDSecure =
+        | 'any'
+        | 'automatic'
+        | 'challenge'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export interface StatementDetails {
         /**
@@ -30954,7 +31678,11 @@ export namespace PaymentIntentConfirmParams {
         }
 
         export namespace Plan {
-          export type Type = 'bonus' | 'fixed_count' | 'revolving';
+          export type Type =
+            | 'bonus'
+            | 'fixed_count'
+            | 'revolving'
+            | OtherString;
         }
       }
 
@@ -30985,22 +31713,32 @@ export namespace PaymentIntentConfirmParams {
               | 'blockchain_native'
               | 'nft'
               | 'other_non_fiat'
-              | 'stablecoin';
+              | 'stablecoin'
+              | OtherString;
           }
         }
       }
 
       export namespace ThreeDSecure {
-        export type AresTransStatus = 'A' | 'C' | 'I' | 'N' | 'R' | 'U' | 'Y';
+        export type AresTransStatus =
+          | 'A'
+          | 'C'
+          | 'I'
+          | 'N'
+          | 'R'
+          | 'U'
+          | 'Y'
+          | OtherString;
 
         export type ElectronicCommerceIndicator =
           | '01'
           | '02'
           | '05'
           | '06'
-          | '07';
+          | '07'
+          | OtherString;
 
-        export type ExemptionIndicator = 'low_risk' | 'none';
+        export type ExemptionIndicator = 'low_risk' | 'none' | OtherString;
 
         export interface NetworkOptions {
           /**
@@ -31009,7 +31747,13 @@ export namespace PaymentIntentConfirmParams {
           cartes_bancaires?: NetworkOptions.CartesBancaires;
         }
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
 
         export namespace NetworkOptions {
           export interface CartesBancaires {
@@ -31036,7 +31780,14 @@ export namespace PaymentIntentConfirmParams {
           }
 
           export namespace CartesBancaires {
-            export type CbAvalgo = '0' | '1' | '2' | '3' | '4' | 'A';
+            export type CbAvalgo =
+              | '0'
+              | '1'
+              | '2'
+              | '3'
+              | '4'
+              | 'A'
+              | OtherString;
           }
         }
       }
@@ -31063,9 +31814,12 @@ export namespace PaymentIntentConfirmParams {
         money_services?: PaymentDetails.MoneyServices;
       }
 
-      export type RequestMulticapture = 'if_available' | 'never';
+      export type RequestMulticapture = 'if_available' | 'never' | OtherString;
 
-      export type RequestReauthorization = 'if_available' | 'never';
+      export type RequestReauthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
 
       export interface Routing {
         /**
@@ -31095,18 +31849,26 @@ export namespace PaymentIntentConfirmParams {
               | 'blockchain_native'
               | 'nft'
               | 'other_non_fiat'
-              | 'stablecoin';
+              | 'stablecoin'
+              | OtherString;
           }
         }
       }
 
       export namespace Routing {
-        export type RequestedPriority = 'domestic' | 'international';
+        export type RequestedPriority =
+          | 'domestic'
+          | 'international'
+          | OtherString;
       }
     }
 
     export namespace Cashapp {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Crypto {
@@ -31129,7 +31891,11 @@ export namespace PaymentIntentConfirmParams {
         static_address?: boolean;
       }
 
-      export type Mode = 'default' | 'deposit' | 'transaction_verification';
+      export type Mode =
+        | 'default'
+        | 'deposit'
+        | 'transaction_verification'
+        | OtherString;
 
       export interface TransactionVerificationOptions {
         /**
@@ -31153,7 +31919,8 @@ export namespace PaymentIntentConfirmParams {
           | 'ethereum'
           | 'polygon'
           | 'solana'
-          | 'tempo';
+          | 'tempo'
+          | OtherString;
       }
 
       export namespace TransactionVerificationOptions {
@@ -31162,7 +31929,8 @@ export namespace PaymentIntentConfirmParams {
           | 'ethereum'
           | 'polygon'
           | 'solana'
-          | 'tempo';
+          | 'tempo'
+          | OtherString;
       }
     }
 
@@ -31201,31 +31969,36 @@ export namespace PaymentIntentConfirmParams {
           | 'sort_code'
           | 'spei'
           | 'swift'
-          | 'zengin';
+          | 'zengin'
+          | OtherString;
 
         export type Type =
           | 'eu_bank_transfer'
           | 'gb_bank_transfer'
           | 'jp_bank_transfer'
           | 'mx_bank_transfer'
-          | 'us_bank_transfer';
+          | 'us_bank_transfer'
+          | OtherString;
       }
     }
 
     export namespace GiftCard {
-      export type RequestPartialAuthorization = 'if_available' | 'never';
+      export type RequestPartialAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
     }
 
     export namespace Gopay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Ideal {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace KakaoPay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Klarna {
@@ -31302,9 +32075,14 @@ export namespace PaymentIntentConfirmParams {
         | 'pt-PT'
         | 'ro-RO'
         | 'sv-FI'
-        | 'sv-SE';
+        | 'sv-SE'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export interface Subscription {
         /**
@@ -31388,11 +32166,16 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace OnDemand {
-        export type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+        export type PurchaseInterval =
+          | 'day'
+          | 'month'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace Subscription {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
         export interface NextBilling {
           /**
@@ -31832,7 +32615,8 @@ export namespace PaymentIntentConfirmParams {
             | 'business'
             | 'economy'
             | 'first_class'
-            | 'premium_economy';
+            | 'premium_economy'
+            | OtherString;
 
           export namespace Arrival {
             export interface Address {
@@ -31908,7 +32692,8 @@ export namespace PaymentIntentConfirmParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -31953,7 +32738,8 @@ export namespace PaymentIntentConfirmParams {
             | 'festival'
             | 'in_person_education'
             | 'sport'
-            | 'tour';
+            | 'tour'
+            | OtherString;
 
           export interface Insurance {
             /**
@@ -31982,7 +32768,8 @@ export namespace PaymentIntentConfirmParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -32054,7 +32841,8 @@ export namespace PaymentIntentConfirmParams {
             | 'business'
             | 'economy'
             | 'first_class'
-            | 'premium_economy';
+            | 'premium_economy'
+            | OtherString;
 
           export namespace Arrival {
             export interface Address {
@@ -32130,7 +32918,8 @@ export namespace PaymentIntentConfirmParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -32139,7 +32928,8 @@ export namespace PaymentIntentConfirmParams {
             | 'bankruptcy'
             | 'cancelation'
             | 'emergency'
-            | 'medical';
+            | 'medical'
+            | OtherString;
         }
 
         export namespace MarketplaceSeller {
@@ -32209,14 +32999,16 @@ export namespace PaymentIntentConfirmParams {
             | 'tools_and_home_improvement'
             | 'toys_and_games'
             | 'video_games'
-            | 'women_clothing';
+            | 'women_clothing'
+            | OtherString;
 
           export type SellerRating =
             | 'high'
             | 'low'
             | 'medium'
             | 'very_high'
-            | 'very_low';
+            | 'very_low'
+            | OtherString;
         }
 
         export namespace RoundTripReservationDetail {
@@ -32287,7 +33079,8 @@ export namespace PaymentIntentConfirmParams {
             | 'business'
             | 'economy'
             | 'first_class'
-            | 'premium_economy';
+            | 'premium_economy'
+            | OtherString;
 
           export namespace Arrival {
             export interface Address {
@@ -32363,7 +33156,8 @@ export namespace PaymentIntentConfirmParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -32435,7 +33229,8 @@ export namespace PaymentIntentConfirmParams {
             | 'business'
             | 'economy'
             | 'first_class'
-            | 'premium_economy';
+            | 'premium_economy'
+            | OtherString;
 
           export namespace Arrival {
             export interface Address {
@@ -32511,7 +33306,8 @@ export namespace PaymentIntentConfirmParams {
               | 'bankruptcy'
               | 'cancelation'
               | 'emergency'
-              | 'medical';
+              | 'medical'
+              | OtherString;
           }
         }
 
@@ -32521,25 +33317,30 @@ export namespace PaymentIntentConfirmParams {
             | 'discount'
             | 'gift_card'
             | 'physical_product'
-            | 'services';
+            | 'services'
+            | OtherString;
         }
       }
     }
 
     export namespace KrCard {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Link {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace NaverPay {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace NzBankAccount {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Paypal {
@@ -32606,12 +33407,17 @@ export namespace PaymentIntentConfirmParams {
         | 'pl-PL'
         | 'pt-PT'
         | 'sk-SK'
-        | 'sv-SE';
+        | 'sv-SE'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
       export namespace LineItem {
-        export type Category = 'digital_goods' | 'donation' | 'physical_goods';
+        export type Category =
+          | 'digital_goods'
+          | 'donation'
+          | 'physical_goods'
+          | OtherString;
 
         export interface Tax {
           /**
@@ -32626,13 +33432,17 @@ export namespace PaymentIntentConfirmParams {
         }
 
         export namespace Tax {
-          export type Behavior = 'exclusive' | 'inclusive';
+          export type Behavior = 'exclusive' | 'inclusive' | OtherString;
         }
       }
     }
 
     export namespace Paypay {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Payto {
@@ -32668,10 +33478,10 @@ export namespace PaymentIntentConfirmParams {
         purpose?: Emptyable<MandateOptions.Purpose>;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'adhoc'
@@ -32681,7 +33491,8 @@ export namespace PaymentIntentConfirmParams {
           | 'monthly'
           | 'quarterly'
           | 'semi_annual'
-          | 'weekly';
+          | 'weekly'
+          | OtherString;
 
         export type Purpose =
           | 'dependant_support'
@@ -32694,12 +33505,13 @@ export namespace PaymentIntentConfirmParams {
           | 'retail'
           | 'salary'
           | 'tax'
-          | 'utility';
+          | 'utility'
+          | OtherString;
       }
     }
 
     export namespace Pix {
-      export type AmountIncludesIof = 'always' | 'never';
+      export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
       export interface MandateOptions {
         /**
@@ -32743,19 +33555,20 @@ export namespace PaymentIntentConfirmParams {
         start_date?: string;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
       export namespace MandateOptions {
-        export type AmountIncludesIof = 'always' | 'never';
+        export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'halfyearly'
           | 'monthly'
           | 'quarterly'
           | 'weekly'
-          | 'yearly';
+          | 'yearly'
+          | OtherString;
       }
     }
 
@@ -32764,7 +33577,11 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace Satispay {
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace SepaDebit {
@@ -32775,7 +33592,11 @@ export namespace PaymentIntentConfirmParams {
         reference_prefix?: Emptyable<string>;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
     }
 
     export namespace Sofort {
@@ -32786,9 +33607,10 @@ export namespace PaymentIntentConfirmParams {
         | 'fr'
         | 'it'
         | 'nl'
-        | 'pl';
+        | 'pl'
+        | OtherString;
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace StripeBalance {
@@ -32799,11 +33621,11 @@ export namespace PaymentIntentConfirmParams {
         stripe_balance_debit_agreement?: string;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Twint {
-      export type SetupFutureUsage = 'none' | 'off_session';
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Upi {
@@ -32829,10 +33651,14 @@ export namespace PaymentIntentConfirmParams {
         end_date?: number;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
@@ -32878,18 +33704,24 @@ export namespace PaymentIntentConfirmParams {
         requested?: Array<Networks.Requested>;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export type TransactionPurpose =
         | 'goods'
         | 'other'
         | 'services'
-        | 'unspecified';
+        | 'unspecified'
+        | OtherString;
 
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace FinancialConnections {
         export interface Filters {
@@ -32921,14 +33753,15 @@ export namespace PaymentIntentConfirmParams {
           | 'balances'
           | 'inferred_balances'
           | 'ownership'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export namespace Filters {
           export type AccountSubcategory = 'checking' | 'savings';
         }
 
         export namespace ManualEntry {
-          export type Mode = 'automatic' | 'custom';
+          export type Mode = 'automatic' | 'custom' | OtherString;
         }
       }
 
@@ -32938,7 +33771,12 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace WechatPay {
-      export type Client = 'android' | 'ios' | 'mini_program' | 'web';
+      export type Client =
+        | 'android'
+        | 'ios'
+        | 'mini_program'
+        | 'web'
+        | OtherString;
     }
   }
 }
@@ -33306,13 +34144,15 @@ export namespace PaymentIntentDecrementAuthorizationParams {
               | 'vehicle_accessories'
               | 'vehicle_parking'
               | 'vehicle_parts'
-              | 'wash_out';
+              | 'wash_out'
+              | OtherString;
 
             export type ServiceType =
               | 'full_service'
               | 'high_speed_diesel'
               | 'non_fuel_only'
-              | 'self_service';
+              | 'self_service'
+              | OtherString;
           }
         }
 
@@ -33320,13 +34160,18 @@ export namespace PaymentIntentDecrementAuthorizationParams {
           export type Category =
             | 'digital_goods'
             | 'donation'
-            | 'physical_goods';
+            | 'physical_goods'
+            | OtherString;
         }
       }
     }
 
     export namespace Surcharge {
-      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+      export type EnforceValidation =
+        | 'automatic'
+        | 'disabled'
+        | 'enabled'
+        | OtherString;
     }
   }
 
@@ -33729,13 +34574,15 @@ export namespace PaymentIntentIncrementAuthorizationParams {
               | 'vehicle_accessories'
               | 'vehicle_parking'
               | 'vehicle_parts'
-              | 'wash_out';
+              | 'wash_out'
+              | OtherString;
 
             export type ServiceType =
               | 'full_service'
               | 'high_speed_diesel'
               | 'non_fuel_only'
-              | 'self_service';
+              | 'self_service'
+              | OtherString;
           }
         }
 
@@ -33743,13 +34590,18 @@ export namespace PaymentIntentIncrementAuthorizationParams {
           export type Category =
             | 'digital_goods'
             | 'donation'
-            | 'physical_goods';
+            | 'physical_goods'
+            | OtherString;
         }
       }
     }
 
     export namespace Surcharge {
-      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+      export type EnforceValidation =
+        | 'automatic'
+        | 'disabled'
+        | 'enabled'
+        | OtherString;
     }
   }
 
@@ -33780,7 +34632,10 @@ export namespace PaymentIntentIncrementAuthorizationParams {
     }
 
     export namespace Card {
-      export type RequestPartialAuthorization = 'if_available' | 'never';
+      export type RequestPartialAuthorization =
+        | 'if_available'
+        | 'never'
+        | OtherString;
     }
   }
 }
@@ -33845,7 +34700,7 @@ export interface PaymentIntentTriggerActionParams {
   scan_qr_code?: PaymentIntentTriggerActionParams.ScanQrCode;
 }
 export namespace PaymentIntentTriggerActionParams {
-  export type Type = 'expire' | 'fund';
+  export type Type = 'expire' | 'fund' | OtherString;
 
   export interface ScanQrCode {
     /**
@@ -33855,7 +34710,7 @@ export namespace PaymentIntentTriggerActionParams {
   }
 
   export namespace ScanQrCode {
-    export type Result = 'failure' | 'success';
+    export type Result = 'failure' | 'success' | OtherString;
   }
 }
 export interface PaymentIntentUpdateCryptoRefundAddressParams {
@@ -33881,7 +34736,8 @@ export namespace PaymentIntentUpdateCryptoRefundAddressParams {
     | 'polygon'
     | 'solana'
     | 'sui'
-    | 'tempo';
+    | 'tempo'
+    | OtherString;
 }
 export interface PaymentIntentVerifyMicrodepositsParams {
   /**

@@ -16,6 +16,7 @@ import {
   Emptyable,
   AddressParam,
   MetadataParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Address,
@@ -1532,7 +1533,7 @@ export namespace Customer {
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 
   export namespace Tax {
@@ -1540,7 +1541,8 @@ export namespace Customer {
       | 'failed'
       | 'not_collecting'
       | 'supported'
-      | 'unrecognized_location';
+      | 'unrecognized_location'
+      | OtherString;
 
     export interface Location {
       /**
@@ -1559,14 +1561,20 @@ export namespace Customer {
       state: string | null;
     }
 
-    export type Provider = 'anrok' | 'avalara' | 'sphere' | 'stripe';
+    export type Provider =
+      | 'anrok'
+      | 'avalara'
+      | 'sphere'
+      | 'stripe'
+      | OtherString;
 
     export namespace Location {
       export type Source =
         | 'billing_address'
         | 'ip_address'
         | 'payment_method'
-        | 'shipping_destination';
+        | 'shipping_destination'
+        | OtherString;
     }
   }
 }
@@ -1798,7 +1806,7 @@ export namespace CustomerCreateParams {
   }
 
   export namespace Tax {
-    export type ValidateLocation = 'deferred' | 'immediately';
+    export type ValidateLocation = 'deferred' | 'immediately' | OtherString;
   }
 
   export namespace TaxIdDatum {
@@ -2140,7 +2148,11 @@ export namespace CustomerUpdateParams {
   }
 
   export namespace Tax {
-    export type ValidateLocation = 'auto' | 'deferred' | 'immediately';
+    export type ValidateLocation =
+      | 'auto'
+      | 'deferred'
+      | 'immediately'
+      | OtherString;
   }
 }
 export interface CustomerListParams extends PaginationParams {
@@ -2240,14 +2252,20 @@ export namespace CustomerCreateFundingInstructionsParams {
       country: string;
     }
 
-    export type RequestedAddressType = 'iban' | 'sort_code' | 'spei' | 'zengin';
+    export type RequestedAddressType =
+      | 'iban'
+      | 'sort_code'
+      | 'spei'
+      | 'zengin'
+      | OtherString;
 
     export type Type =
       | 'eu_bank_transfer'
       | 'gb_bank_transfer'
       | 'jp_bank_transfer'
       | 'mx_bank_transfer'
-      | 'us_bank_transfer';
+      | 'us_bank_transfer'
+      | OtherString;
   }
 }
 export interface CustomerCreateSourceParams {
@@ -2452,7 +2470,11 @@ export interface CustomerListPaymentMethodsParams extends PaginationParams {
   type?: CustomerListPaymentMethodsParams.Type;
 }
 export namespace CustomerListPaymentMethodsParams {
-  export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+  export type AllowRedisplay =
+    | 'always'
+    | 'limited'
+    | 'unspecified'
+    | OtherString;
 
   export type Type =
     | 'acss_debit'
@@ -2518,7 +2540,8 @@ export namespace CustomerListPaymentMethodsParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 }
 export interface CustomerListSourcesParams extends PaginationParams {
   /**

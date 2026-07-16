@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {File} from './Files.js';
-import {Address, Metadata} from '../shared.js';
+import {Address, Metadata, OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface Person {
   /**
@@ -304,7 +304,7 @@ export namespace Person {
     pending_verification: Array<string>;
   }
 
-  export type PoliticalExposure = 'existing' | 'none';
+  export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
   export interface Relationship {
     /**
@@ -763,7 +763,8 @@ export namespace Person {
         | 'not_hispanic_or_latino'
         | 'other_hispanic_or_latino'
         | 'prefer_not_to_answer'
-        | 'puerto_rican';
+        | 'puerto_rican'
+        | OtherString;
     }
 
     export namespace RaceDetails {
@@ -791,7 +792,8 @@ export namespace Person {
         | 'samoan'
         | 'somali'
         | 'vietnamese'
-        | 'white';
+        | 'white'
+        | OtherString;
     }
   }
 

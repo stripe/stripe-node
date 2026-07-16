@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ApprovalRequestResource extends StripeResource {
@@ -175,7 +176,8 @@ export namespace ApprovalRequest {
     | 'subscription.create'
     | 'subscription.update'
     | 'topup.create'
-    | 'transfer.create';
+    | 'transfer.create'
+    | OtherString;
 
   export interface RequestedBy {
     /**
@@ -230,7 +232,8 @@ export namespace ApprovalRequest {
     | 'rejected'
     | 'requires_execution'
     | 'requires_review'
-    | 'succeeded';
+    | 'succeeded'
+    | OtherString;
 
   export interface StatusDetails {
     /**

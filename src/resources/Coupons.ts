@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -270,7 +271,12 @@ export namespace Coupon {
     amount_off: number;
   }
 
-  export type Duration = 'forever' | 'once' | 'repeating' | 'service_period';
+  export type Duration =
+    | 'forever'
+    | 'once'
+    | 'repeating'
+    | 'service_period'
+    | OtherString;
 
   export interface Script {
     /**
@@ -303,7 +309,7 @@ export namespace Coupon {
     iterations: ServicePeriod.Iterations;
   }
 
-  export type Type = 'amount_off' | 'percent_off' | 'script';
+  export type Type = 'amount_off' | 'percent_off' | 'script' | OtherString;
 
   export namespace Script {
     export type Configuration = {
@@ -325,7 +331,7 @@ export namespace Coupon {
     }
 
     export namespace Iterations {
-      export type Type = 'count' | 'forever';
+      export type Type = 'count' | 'forever' | OtherString;
     }
   }
 }
@@ -422,7 +428,12 @@ export namespace CouponCreateParams {
     amount_off: number;
   }
 
-  export type Duration = 'forever' | 'once' | 'repeating' | 'service_period';
+  export type Duration =
+    | 'forever'
+    | 'once'
+    | 'repeating'
+    | 'service_period'
+    | OtherString;
 
   export interface Script {
     /**
@@ -475,7 +486,7 @@ export namespace CouponCreateParams {
     }
 
     export namespace Iterations {
-      export type Type = 'count' | 'forever';
+      export type Type = 'count' | 'forever' | OtherString;
     }
   }
 }
