@@ -957,7 +957,6 @@ export class Stripe {
     lang: 'node',
     typescript: false,
   };
-  static SOURCE_HASH: string | null = null;
   static StripeResource = StripeResource;
   static resources = resources;
   static HttpClient = HttpClient;
@@ -1101,8 +1100,6 @@ export class Stripe {
       ...(runtimeVersion ? {lang_version: runtimeVersion} : {}),
       ...(Stripe.aiAgent ? {ai_agent: Stripe.aiAgent} : {}),
     };
-
-    Stripe.SOURCE_HASH = platformFunctions.getSourceHash();
   }
 
   constructor(key: string, config: StripeConfig = {}) {
@@ -1449,8 +1446,11 @@ export class Stripe {
       userAgent.application = this._appInfo;
     }
 
-    if (Stripe.SOURCE_HASH) {
-      userAgent.source = Stripe.SOURCE_HASH;
+    if (this.getTelemetryEnabled()) {
+      const telemetryId = this._platformFunctions.getTelemetryId();
+      if (telemetryId) {
+        userAgent.telemetry_id = telemetryId;
+      }
     }
 
     cb(JSON.stringify(userAgent));
