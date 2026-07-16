@@ -1,5 +1,9 @@
 # Changelog
 
+## 22.3.2 - 2026-07-15
+* [#2784](https://github.com/stripe/stripe-node/pull/2784) Replace source hash with Telemetry UUID
+* [#2783](https://github.com/stripe/stripe-node/pull/2783) Make Error fields generated
+
 ## 22.3.1 - 2026-07-09
 * [#2781](https://github.com/stripe/stripe-node/pull/2781) Remove unused Retry-After header support
 * [#2779](https://github.com/stripe/stripe-node/pull/2779) Export HttpClient types as interfaces instead of classes
