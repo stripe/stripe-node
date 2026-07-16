@@ -6,6 +6,7 @@ import {
   MetadataParam,
   Decimal,
   Emptyable,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -766,13 +767,13 @@ export namespace Price {
   }
 
   export namespace Recurring {
-    export type Interval = 'day' | 'month' | 'week' | 'year';
+    export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
-    export type UsageType = 'licensed' | 'metered';
+    export type UsageType = 'licensed' | 'metered' | OtherString;
   }
 
   export namespace TransformQuantity {
-    export type Round = 'down' | 'up';
+    export type Round = 'down' | 'up' | OtherString;
   }
 }
 export interface PriceCreateParams {
@@ -1030,7 +1031,7 @@ export namespace PriceCreateParams {
     up_to: 'inf' | number;
   }
 
-  export type TiersMode = 'graduated' | 'volume';
+  export type TiersMode = 'graduated' | 'volume' | OtherString;
 
   export interface TransformQuantity {
     /**
@@ -1118,7 +1119,7 @@ export namespace PriceCreateParams {
   }
 
   export namespace TransformQuantity {
-    export type Round = 'down' | 'up';
+    export type Round = 'down' | 'up' | OtherString;
   }
 }
 export interface PriceRetrieveParams {

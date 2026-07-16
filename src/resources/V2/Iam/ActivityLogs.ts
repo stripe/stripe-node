@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ActivityLogResource extends StripeResource {
@@ -121,7 +122,8 @@ export namespace ActivityLog {
     | 'user_invite_created'
     | 'user_invite_deleted'
     | 'user_roles_deleted'
-    | 'user_roles_updated';
+    | 'user_roles_updated'
+    | OtherString;
 
   export namespace Actor {
     export interface ApiKey {
@@ -189,7 +191,7 @@ export namespace ActivityLog {
       type: ApiKey.Type;
     }
 
-    export type Type = 'api_key' | 'user_invite' | 'user_roles';
+    export type Type = 'api_key' | 'user_invite' | 'user_roles' | OtherString;
 
     export interface UserInvite {
       /**
@@ -271,7 +273,11 @@ export namespace V2 {
     }
 
     export namespace ActivityLogListParams {
-      export type ActionGroup = 'api_key' | 'user_invite' | 'user_roles';
+      export type ActionGroup =
+        | 'api_key'
+        | 'user_invite'
+        | 'user_roles'
+        | OtherString;
 
       export type Action =
         | 'api_key_created'
@@ -282,7 +288,8 @@ export namespace V2 {
         | 'user_invite_created'
         | 'user_invite_deleted'
         | 'user_roles_deleted'
-        | 'user_roles_updated';
+        | 'user_roles_updated'
+        | OtherString;
     }
   }
 }

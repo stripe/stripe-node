@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {AccountPersonToken} from './../../../V2/Core/AccountPersonTokens.js';
-import {JapanAddressParam, MetadataParam, Decimal} from '../../../../shared.js';
+import {
+  JapanAddressParam,
+  MetadataParam,
+  OtherString,
+  Decimal,
+} from '../../../../shared.js';
 import {RequestOptions, Response} from '../../../../lib.js';
 
 export class PersonTokenResource extends StripeResource {
@@ -277,9 +282,9 @@ export namespace V2 {
           value: string;
         }
 
-        export type LegalGender = 'female' | 'male';
+        export type LegalGender = 'female' | 'male' | OtherString;
 
-        export type PoliticalExposure = 'existing' | 'none';
+        export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
         export interface Relationship {
           /**
@@ -548,7 +553,8 @@ export namespace V2 {
             | 'us_ssn_last_4'
             | 'uy_dni'
             | 'vg_pp'
-            | 'za_id';
+            | 'za_id'
+            | OtherString;
         }
 
         export namespace ScriptNames {

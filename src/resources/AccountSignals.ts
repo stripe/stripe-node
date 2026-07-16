@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface AccountSignals {
   /**
@@ -106,14 +107,16 @@ export namespace AccountSignals {
       | 'low'
       | 'normal'
       | 'not_assessed'
-      | 'unknown';
+      | 'unknown'
+      | OtherString;
 
     export namespace Indicator {
       export type Impact =
         | 'decrease'
         | 'neutral'
         | 'slight_increase'
-        | 'strong_increase';
+        | 'strong_increase'
+        | OtherString;
 
       export type Indicator =
         | 'account_balance'
@@ -131,7 +134,8 @@ export namespace AccountSignals {
         | 'refunds'
         | 'related_accounts'
         | 'tenure'
-        | 'transfers';
+        | 'transfers'
+        | OtherString;
     }
   }
 
@@ -159,14 +163,16 @@ export namespace AccountSignals {
       | 'low'
       | 'normal'
       | 'not_assessed'
-      | 'unknown';
+      | 'unknown'
+      | OtherString;
 
     export namespace Indicator {
       export type Impact =
         | 'decrease'
         | 'neutral'
         | 'slight_increase'
-        | 'strong_increase';
+        | 'strong_increase'
+        | OtherString;
 
       export type Indicator =
         | 'bank_account'
@@ -178,7 +184,8 @@ export namespace AccountSignals {
         | 'other_related_accounts'
         | 'other_transaction_activity'
         | 'owner_email'
-        | 'web_presence';
+        | 'web_presence'
+        | OtherString;
     }
   }
 }

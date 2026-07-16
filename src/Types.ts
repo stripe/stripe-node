@@ -11,6 +11,7 @@ import {StripeContext} from './StripeContext.js';
 import {Stripe} from './stripe.core.js';
 import {AppInfo} from './lib.js';
 // errorTypeImports: The beginning of the section generated from our OpenAPI spec
+import {GiftCardOperation} from './resources/GiftCardOperations.js';
 import {PaymentIntent} from './resources/PaymentIntents.js';
 import {PaymentMethod} from './resources/PaymentMethods.js';
 import {SetupIntent} from './resources/SetupIntents.js';
@@ -182,6 +183,10 @@ export type StripeRawError = {
    * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
    */
   doc_url?: string;
+  /**
+   * The GiftCardOperation object for errors returned on a request involving a GiftCardOperation.
+   */
+  gift_card_operation?: GiftCardOperation;
   /**
    * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
    */

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {AddressParam, Address} from '../../shared.js';
+import {AddressParam, OtherString, Address} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class SettingResource extends StripeResource {
@@ -94,7 +94,7 @@ export namespace Settings {
     address: Address;
   }
 
-  export type Status = 'active' | 'pending';
+  export type Status = 'active' | 'pending' | OtherString;
 
   export interface StatusDetails {
     active?: StatusDetails.Active;
@@ -103,12 +103,18 @@ export namespace Settings {
   }
 
   export namespace Defaults {
-    export type Provider = 'anrok' | 'avalara' | 'sphere' | 'stripe';
+    export type Provider =
+      | 'anrok'
+      | 'avalara'
+      | 'sphere'
+      | 'stripe'
+      | OtherString;
 
     export type TaxBehavior =
       | 'exclusive'
       | 'inclusive'
-      | 'inferred_by_currency';
+      | 'inferred_by_currency'
+      | OtherString;
   }
 
   export namespace StatusDetails {

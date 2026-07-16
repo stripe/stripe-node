@@ -3,7 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Account} from './Accounts.js';
 import {Customer} from './../Customers.js';
-import {Emptyable} from '../../shared.js';
+import {OtherString, Emptyable} from '../../shared.js';
 import {RequestOptions, Response, ApiList} from '../../lib.js';
 
 export class SessionResource extends StripeResource {
@@ -176,19 +176,26 @@ export namespace Session {
     accounts: number;
   }
 
-  export interface ManualEntry {}
+  export interface ManualEntry {
+    /**
+     * Controls how manual entry of bank account details is presented to the user.
+     */
+    mode?: ManualEntry.Mode;
+  }
 
   export type Permission =
     | 'balances'
     | 'ownership'
     | 'payment_method'
-    | 'transactions';
+    | 'transactions'
+    | OtherString;
 
   export type Prefetch =
     | 'balances'
     | 'inferred_balances'
     | 'ownership'
-    | 'transactions';
+    | 'transactions'
+    | OtherString;
 
   export interface RelinkOptions {
     /**
@@ -219,16 +226,21 @@ export namespace Session {
     failure_reason: RelinkResult.FailureReason | null;
   }
 
-  export type Status = 'cancelled' | 'failed' | 'pending' | 'succeeded';
+  export type Status =
+    | 'cancelled'
+    | 'failed'
+    | 'pending'
+    | 'succeeded'
+    | OtherString;
 
   export interface StatusDetails {
     cancelled?: StatusDetails.Cancelled;
   }
 
-  export type UiMode = 'hosted' | 'modal';
+  export type UiMode = 'hosted' | 'modal' | OtherString;
 
   export namespace AccountHolder {
-    export type Type = 'account' | 'customer';
+    export type Type = 'account' | 'customer' | OtherString;
   }
 
   export namespace Filters {
@@ -237,7 +249,8 @@ export namespace Session {
       | 'credit_card'
       | 'line_of_credit'
       | 'mortgage'
-      | 'savings';
+      | 'savings'
+      | OtherString;
 
     export type RequirePaymentMethodSupport = 'all' | 'at_least_one' | 'none';
   }
@@ -246,8 +259,16 @@ export namespace Session {
     export type DeliveryMethod = 'email' | 'url';
   }
 
+  export namespace ManualEntry {
+    export type Mode = 'automatic' | 'custom' | 'disabled' | OtherString;
+  }
+
   export namespace RelinkResult {
-    export type FailureReason = 'no_account' | 'no_authorization' | 'other';
+    export type FailureReason =
+      | 'no_account'
+      | 'no_authorization'
+      | 'other'
+      | OtherString;
   }
 
   export namespace StatusDetails {
@@ -259,7 +280,7 @@ export namespace Session {
     }
 
     export namespace Cancelled {
-      export type Reason = 'custom_manual_entry' | 'other';
+      export type Reason = 'custom_manual_entry' | 'other' | OtherString;
     }
   }
 }
@@ -394,7 +415,8 @@ export namespace FinancialConnections {
       | 'balances'
       | 'inferred_balances'
       | 'ownership'
-      | 'transactions';
+      | 'transactions'
+      | OtherString;
 
     export interface RelinkOptions {
       /**
@@ -408,10 +430,10 @@ export namespace FinancialConnections {
       authorization: string;
     }
 
-    export type UiMode = 'hosted' | 'modal';
+    export type UiMode = 'hosted' | 'modal' | OtherString;
 
     export namespace AccountHolder {
-      export type Type = 'account' | 'customer';
+      export type Type = 'account' | 'customer' | OtherString;
     }
 
     export namespace Filters {
@@ -420,7 +442,8 @@ export namespace FinancialConnections {
         | 'credit_card'
         | 'line_of_credit'
         | 'mortgage'
-        | 'savings';
+        | 'savings'
+        | OtherString;
     }
 
     export namespace Hosted {

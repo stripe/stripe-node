@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams} from '../../shared.js';
+import {PaginationParams, OtherString} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class DisputeSettlementDetailResource extends StripeResource {
@@ -100,9 +100,14 @@ export interface DisputeSettlementDetail {
   settlement: string | null;
 }
 export namespace DisputeSettlementDetail {
-  export type EventType = 'filing' | 'loss' | 'representment' | 'win';
+  export type EventType =
+    | 'filing'
+    | 'loss'
+    | 'representment'
+    | 'win'
+    | OtherString;
 
-  export type Network = 'maestro' | 'mastercard' | 'visa';
+  export type Network = 'maestro' | 'mastercard' | 'visa' | OtherString;
 
   export interface NetworkData {
     /**

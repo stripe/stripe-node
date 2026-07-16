@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class ReportRunResource extends StripeResource {
@@ -188,7 +189,7 @@ export namespace ReportRun {
     }
 
     export namespace File {
-      export type ContentType = 'csv' | 'zip';
+      export type ContentType = 'csv' | 'zip' | OtherString;
 
       export interface DownloadUrl {
         /**

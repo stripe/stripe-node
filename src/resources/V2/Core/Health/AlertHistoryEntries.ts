@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {V2Amount} from './../../V2Amounts.js';
-import {Decimal} from '../../../../shared.js';
+import {Decimal, OtherString} from '../../../../shared.js';
 import {RequestOptions} from '../../../../lib.js';
 export interface AlertHistoryEntry {
   /**
@@ -388,7 +388,11 @@ export namespace AlertHistoryEntry {
     time_window: string;
   }
 
-  export type Transition = 'impact_updated' | 'opened' | 'resolved';
+  export type Transition =
+    | 'impact_updated'
+    | 'opened'
+    | 'resolved'
+    | OtherString;
 
   export type Type =
     | 'api_error'
@@ -405,7 +409,8 @@ export namespace AlertHistoryEntry {
     | 'payment_method_error'
     | 'sepa_debit_delayed'
     | 'traffic_volume_drop'
-    | 'webhook_latency';
+    | 'webhook_latency'
+    | OtherString;
 
   export interface WebhookLatency {
     /**
@@ -415,7 +420,7 @@ export namespace AlertHistoryEntry {
   }
 
   export namespace ApiError {
-    export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+    export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | OtherString;
 
     export interface TopImpactedAccount {
       /**
@@ -436,7 +441,7 @@ export namespace AlertHistoryEntry {
   }
 
   export namespace ApiLatency {
-    export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+    export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | OtherString;
 
     export interface TopImpactedAccount {
       /**
@@ -457,7 +462,7 @@ export namespace AlertHistoryEntry {
   }
 
   export namespace AuthorizationRateDrop {
-    export type ChargeType = 'money_moving' | 'validation';
+    export type ChargeType = 'money_moving' | 'validation' | OtherString;
 
     export interface Dimension {
       /**
@@ -540,11 +545,12 @@ export namespace AlertHistoryEntry {
       | 'us_bank_account'
       | 'vipps'
       | 'wechat_pay'
-      | 'zip';
+      | 'zip'
+      | OtherString;
   }
 
   export namespace ElementsError {
-    export type ElementType = 'expressCheckout' | 'payment';
+    export type ElementType = 'expressCheckout' | 'payment' | OtherString;
   }
 
   export namespace EventGenerationFailure {
@@ -567,7 +573,7 @@ export namespace AlertHistoryEntry {
   }
 
   export namespace FraudRate {
-    export type AttackType = 'spike' | 'sustained_attack';
+    export type AttackType = 'spike' | 'sustained_attack' | OtherString;
   }
 
   export namespace MetronomeNotificationLatency {
@@ -575,7 +581,8 @@ export namespace AlertHistoryEntry {
       | 'configuration_triggered'
       | 'high_cardinality_usage_triggered'
       | 'standard_usage_triggered'
-      | 'time_triggered';
+      | 'time_triggered'
+      | OtherString;
   }
 
   export namespace PaymentMethodError {
@@ -648,7 +655,8 @@ export namespace AlertHistoryEntry {
       | 'us_bank_account'
       | 'vipps'
       | 'wechat_pay'
-      | 'zip';
+      | 'zip'
+      | OtherString;
 
     export interface TopImpactedAccount {
       /**

@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {PersonalizationDesign} from './../../Issuing/PersonalizationDesigns.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class PersonalizationDesignResource extends StripeResource {
@@ -113,7 +114,8 @@ export namespace TestHelpers {
           | 'non_fiat_currency'
           | 'other'
           | 'other_entity'
-          | 'promotional_material';
+          | 'promotional_material'
+          | OtherString;
 
         export type CarrierText =
           | 'geographic_location'
@@ -122,7 +124,8 @@ export namespace TestHelpers {
           | 'non_fiat_currency'
           | 'other'
           | 'other_entity'
-          | 'promotional_material';
+          | 'promotional_material'
+          | OtherString;
       }
     }
   }

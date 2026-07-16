@@ -18,6 +18,7 @@ import {
   Emptyable,
   MetadataParam,
   AddressParam,
+  OtherString,
   Address,
   ShippingAddressParam,
   PaginationParams,
@@ -668,7 +669,7 @@ export namespace Charge {
     tracking_number?: string | null;
   }
 
-  export type Status = 'failed' | 'pending' | 'succeeded';
+  export type Status = 'failed' | 'pending' | 'succeeded' | OtherString;
 
   export interface TransferData {
     /**
@@ -2410,7 +2411,7 @@ export namespace Charge {
         status: Reauthorization.Status;
       }
 
-      export type RegulatedStatus = 'regulated' | 'unregulated';
+      export type RegulatedStatus = 'regulated' | 'unregulated' | OtherString;
 
       export interface ThreeDSecure {
         /**
@@ -2499,15 +2500,15 @@ export namespace Charge {
       }
 
       export namespace DecrementalAuthorization {
-        export type Status = 'available' | 'unavailable';
+        export type Status = 'available' | 'unavailable' | OtherString;
       }
 
       export namespace ExtendedAuthorization {
-        export type Status = 'disabled' | 'enabled';
+        export type Status = 'disabled' | 'enabled' | OtherString;
       }
 
       export namespace IncrementalAuthorization {
-        export type Status = 'available' | 'unavailable';
+        export type Status = 'available' | 'unavailable' | OtherString;
       }
 
       export namespace Installments {
@@ -2530,16 +2531,20 @@ export namespace Charge {
         }
 
         export namespace Plan {
-          export type Type = 'bonus' | 'fixed_count' | 'revolving';
+          export type Type =
+            | 'bonus'
+            | 'fixed_count'
+            | 'revolving'
+            | OtherString;
         }
       }
 
       export namespace Multicapture {
-        export type Status = 'available' | 'unavailable';
+        export type Status = 'available' | 'unavailable' | OtherString;
       }
 
       export namespace Overcapture {
-        export type Status = 'available' | 'unavailable';
+        export type Status = 'available' | 'unavailable' | OtherString;
       }
 
       export namespace PartialAuthorization {
@@ -2547,24 +2552,29 @@ export namespace Charge {
           | 'declined'
           | 'fully_authorized'
           | 'not_requested'
-          | 'partially_authorized';
+          | 'partially_authorized'
+          | OtherString;
       }
 
       export namespace Reauthorization {
-        export type Status = 'available' | 'unavailable';
+        export type Status = 'available' | 'unavailable' | OtherString;
       }
 
       export namespace ThreeDSecure {
-        export type AuthenticationFlow = 'challenge' | 'frictionless';
+        export type AuthenticationFlow =
+          | 'challenge'
+          | 'frictionless'
+          | OtherString;
 
         export type ElectronicCommerceIndicator =
           | '01'
           | '02'
           | '05'
           | '06'
-          | '07';
+          | '07'
+          | OtherString;
 
-        export type ExemptionIndicator = 'low_risk' | 'none';
+        export type ExemptionIndicator = 'low_risk' | 'none' | OtherString;
 
         export type Result =
           | 'attempt_acknowledged'
@@ -2572,7 +2582,8 @@ export namespace Charge {
           | 'exempted'
           | 'failed'
           | 'not_supported'
-          | 'processing_error';
+          | 'processing_error'
+          | OtherString;
 
         export type ResultReason =
           | 'abandoned'
@@ -2581,9 +2592,16 @@ export namespace Charge {
           | 'card_not_enrolled'
           | 'network_not_supported'
           | 'protocol_error'
-          | 'rejected';
+          | 'rejected'
+          | OtherString;
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
       }
 
       export namespace Wallet {
@@ -2677,7 +2695,8 @@ export namespace Charge {
         | 'contactless_emv'
         | 'contactless_magstripe_mode'
         | 'magnetic_stripe_fallback'
-        | 'magnetic_stripe_track2';
+        | 'magnetic_stripe_track2'
+        | OtherString;
 
       export interface Reauthorization {
         /**
@@ -2745,11 +2764,16 @@ export namespace Charge {
       }
 
       export namespace Reauthorization {
-        export type Status = 'available' | 'unavailable';
+        export type Status = 'available' | 'unavailable' | OtherString;
       }
 
       export namespace Receipt {
-        export type AccountType = 'checking' | 'credit' | 'prepaid' | 'unknown';
+        export type AccountType =
+          | 'checking'
+          | 'credit'
+          | 'prepaid'
+          | 'unknown'
+          | OtherString;
       }
 
       export namespace Wallet {
@@ -2757,7 +2781,8 @@ export namespace Charge {
           | 'apple_pay'
           | 'google_pay'
           | 'samsung_pay'
-          | 'unknown';
+          | 'unknown'
+          | OtherString;
       }
     }
 
@@ -2768,7 +2793,8 @@ export namespace Charge {
         | 'polygon'
         | 'solana'
         | 'sui'
-        | 'tempo';
+        | 'tempo'
+        | OtherString;
 
       export type TokenCurrency =
         | 'phantom_cash'
@@ -2776,7 +2802,8 @@ export namespace Charge {
         | 'usdg'
         | 'usdp'
         | 'usdsui'
-        | 'usdt';
+        | 'usdt'
+        | OtherString;
     }
 
     export namespace Eps {
@@ -2855,11 +2882,17 @@ export namespace Charge {
         currency: string;
       }
 
-      export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
+      export type Brand = 'fiserv_valuelink' | 'givex' | 'svs' | OtherString;
     }
 
     export namespace IdBankTransfer {
-      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      export type Bank =
+        | 'bca'
+        | 'bni'
+        | 'bri'
+        | 'cimb'
+        | 'permata'
+        | OtherString;
     }
 
     export namespace Ideal {
@@ -2915,7 +2948,8 @@ export namespace Charge {
         | 'contactless_emv'
         | 'contactless_magstripe_mode'
         | 'magnetic_stripe_fallback'
-        | 'magnetic_stripe_track2';
+        | 'magnetic_stripe_track2'
+        | OtherString;
 
       export interface Receipt {
         /**
@@ -2965,7 +2999,11 @@ export namespace Charge {
       }
 
       export namespace Receipt {
-        export type AccountType = 'checking' | 'savings' | 'unknown';
+        export type AccountType =
+          | 'checking'
+          | 'savings'
+          | 'unknown'
+          | OtherString;
       }
     }
 
@@ -3023,7 +3061,8 @@ export namespace Charge {
         | 'shinhyup'
         | 'suhyup'
         | 'tossbank'
-        | 'woori';
+        | 'woori'
+        | OtherString;
     }
 
     export namespace Mobilepay {
@@ -3099,9 +3138,16 @@ export namespace Charge {
       }
 
       export namespace SellerProtection {
-        export type DisputeCategory = 'fraudulent' | 'product_not_received';
+        export type DisputeCategory =
+          | 'fraudulent'
+          | 'product_not_received'
+          | OtherString;
 
-        export type Status = 'eligible' | 'not_eligible' | 'partially_eligible';
+        export type Status =
+          | 'eligible'
+          | 'not_eligible'
+          | 'partially_eligible'
+          | OtherString;
       }
     }
 
@@ -3167,14 +3213,14 @@ export namespace Charge {
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
     }
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 }
 export interface ChargeCreateParams {
@@ -4103,12 +4149,13 @@ export namespace ChargeUpdateParams {
         | 'gas'
         | 'late_return'
         | 'one_way_service'
-        | 'parking_violation';
+        | 'parking_violation'
+        | OtherString;
 
-      export type RateInterval = 'day' | 'month' | 'week';
+      export type RateInterval = 'day' | 'month' | 'week' | OtherString;
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -4129,7 +4176,7 @@ export namespace ChargeUpdateParams {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
     }
 
@@ -4306,7 +4353,7 @@ export namespace ChargeUpdateParams {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
 
       export namespace Driver {
@@ -4369,7 +4416,8 @@ export namespace ChargeUpdateParams {
           | 'other'
           | 'partial_damage_waiver'
           | 'personal_accident'
-          | 'personal_effects';
+          | 'personal_effects'
+          | OtherString;
       }
 
       export namespace Pickup {
@@ -4441,7 +4489,8 @@ export namespace ChargeUpdateParams {
           | 'kilometers'
           | 'miles'
           | 'months'
-          | 'weeks';
+          | 'weeks'
+          | OtherString;
 
         export interface Tax {
           /**
@@ -4466,7 +4515,8 @@ export namespace ChargeUpdateParams {
             | 'parking'
             | 'phone'
             | 'regular_mileage'
-            | 'towing';
+            | 'towing'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -4524,13 +4574,15 @@ export namespace ChargeUpdateParams {
           | 'twenty_foot_truck'
           | 'twenty_four_foot_truck'
           | 'twenty_six_foot_truck'
-          | 'unique';
+          | 'unique'
+          | OtherString;
 
         export type VehicleClass =
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -4555,7 +4607,7 @@ export namespace ChargeUpdateParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -4756,14 +4808,16 @@ export namespace ChargeUpdateParams {
           | 'wawa'
           | 'western_energetix'
           | 'wilco'
-          | 'zions';
+          | 'zions'
+          | OtherString;
       }
 
       export namespace Vat {
         export type IobIndicator =
           | 'issuer_to_iob'
           | 'issuer_to_iob_and_incremental_certification'
-          | 'merchant_does_not_agree_to_iob';
+          | 'merchant_does_not_agree_to_iob'
+          | OtherString;
       }
     }
 
@@ -4837,7 +4891,7 @@ export namespace ChargeUpdateParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -4862,7 +4916,8 @@ export namespace ChargeUpdateParams {
           | 'business'
           | 'economy'
           | 'first'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -5026,7 +5081,8 @@ export namespace ChargeUpdateParams {
         | 'exchange_ticket'
         | 'miscellaneous'
         | 'refund'
-        | 'ticket_purchase';
+        | 'ticket_purchase'
+        | OtherString;
 
       export namespace Insurance {
         export type InsuranceType =
@@ -5034,7 +5090,8 @@ export namespace ChargeUpdateParams {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Segment {
@@ -5086,7 +5143,8 @@ export namespace ChargeUpdateParams {
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
 
       export namespace Total {
@@ -5095,7 +5153,8 @@ export namespace ChargeUpdateParams {
           | 'partial_ticket_refund'
           | 'passenger_transport_ancillary_cancellation'
           | 'ticket_and_ancillary_cancellation'
-          | 'ticket_cancellation';
+          | 'ticket_cancellation'
+          | OtherString;
 
         export interface Discounts {
           /**
@@ -5127,7 +5186,8 @@ export namespace ChargeUpdateParams {
           export type Type =
             | 'additional_fees'
             | 'ancillary_service_charges'
-            | 'exchange_fee';
+            | 'exchange_fee'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -5159,7 +5219,7 @@ export namespace ChargeUpdateParams {
         name: string;
       }
 
-      export type Category = 'hotel' | 'vacation_rental';
+      export type Category = 'hotel' | 'vacation_rental' | OtherString;
 
       export interface Delivery {
         /**
@@ -5179,7 +5239,8 @@ export namespace ChargeUpdateParams {
         | 'mini_bar'
         | 'other'
         | 'restaurant'
-        | 'telephone';
+        | 'telephone'
+        | OtherString;
 
       export interface Passenger {
         /**
@@ -5189,7 +5250,7 @@ export namespace ChargeUpdateParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -5377,7 +5438,8 @@ export namespace ChargeUpdateParams {
           | 'room'
           | 'standard'
           | 'suite'
-          | 'villa';
+          | 'villa'
+          | OtherString;
       }
 
       export namespace Host {
@@ -5413,7 +5475,12 @@ export namespace ChargeUpdateParams {
           state?: string;
         }
 
-        export type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+        export type HostType =
+          | 'hostel'
+          | 'hotel'
+          | 'owner'
+          | 'rental_agency'
+          | OtherString;
       }
 
       export namespace Insurance {
@@ -5421,7 +5488,8 @@ export namespace ChargeUpdateParams {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Total {
@@ -5468,7 +5536,8 @@ export namespace ChargeUpdateParams {
             | 'mini_bar'
             | 'other'
             | 'phone'
-            | 'restaurant';
+            | 'restaurant'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -5513,7 +5582,7 @@ export namespace ChargeUpdateParams {
       }
 
       export namespace BillingInterval {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -6284,12 +6353,13 @@ export namespace ChargeCaptureParams {
         | 'gas'
         | 'late_return'
         | 'one_way_service'
-        | 'parking_violation';
+        | 'parking_violation'
+        | OtherString;
 
-      export type RateInterval = 'day' | 'month' | 'week';
+      export type RateInterval = 'day' | 'month' | 'week' | OtherString;
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -6310,7 +6380,7 @@ export namespace ChargeCaptureParams {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
     }
 
@@ -6487,7 +6557,7 @@ export namespace ChargeCaptureParams {
       }
 
       export namespace Distance {
-        export type Unit = 'kilometers' | 'miles';
+        export type Unit = 'kilometers' | 'miles' | OtherString;
       }
 
       export namespace Driver {
@@ -6550,7 +6620,8 @@ export namespace ChargeCaptureParams {
           | 'other'
           | 'partial_damage_waiver'
           | 'personal_accident'
-          | 'personal_effects';
+          | 'personal_effects'
+          | OtherString;
       }
 
       export namespace Pickup {
@@ -6622,7 +6693,8 @@ export namespace ChargeCaptureParams {
           | 'kilometers'
           | 'miles'
           | 'months'
-          | 'weeks';
+          | 'weeks'
+          | OtherString;
 
         export interface Tax {
           /**
@@ -6647,7 +6719,8 @@ export namespace ChargeCaptureParams {
             | 'parking'
             | 'phone'
             | 'regular_mileage'
-            | 'towing';
+            | 'towing'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -6705,13 +6778,15 @@ export namespace ChargeCaptureParams {
           | 'twenty_foot_truck'
           | 'twenty_four_foot_truck'
           | 'twenty_six_foot_truck'
-          | 'unique';
+          | 'unique'
+          | OtherString;
 
         export type VehicleClass =
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -6736,7 +6811,7 @@ export namespace ChargeCaptureParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -6937,14 +7012,16 @@ export namespace ChargeCaptureParams {
           | 'wawa'
           | 'western_energetix'
           | 'wilco'
-          | 'zions';
+          | 'zions'
+          | OtherString;
       }
 
       export namespace Vat {
         export type IobIndicator =
           | 'issuer_to_iob'
           | 'issuer_to_iob_and_incremental_certification'
-          | 'merchant_does_not_agree_to_iob';
+          | 'merchant_does_not_agree_to_iob'
+          | OtherString;
       }
     }
 
@@ -7018,7 +7095,7 @@ export namespace ChargeCaptureParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -7043,7 +7120,8 @@ export namespace ChargeCaptureParams {
           | 'business'
           | 'economy'
           | 'first'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
     }
 
@@ -7207,7 +7285,8 @@ export namespace ChargeCaptureParams {
         | 'exchange_ticket'
         | 'miscellaneous'
         | 'refund'
-        | 'ticket_purchase';
+        | 'ticket_purchase'
+        | OtherString;
 
       export namespace Insurance {
         export type InsuranceType =
@@ -7215,7 +7294,8 @@ export namespace ChargeCaptureParams {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Segment {
@@ -7267,7 +7347,8 @@ export namespace ChargeCaptureParams {
           | 'business'
           | 'economy'
           | 'first_class'
-          | 'premium_economy';
+          | 'premium_economy'
+          | OtherString;
       }
 
       export namespace Total {
@@ -7276,7 +7357,8 @@ export namespace ChargeCaptureParams {
           | 'partial_ticket_refund'
           | 'passenger_transport_ancillary_cancellation'
           | 'ticket_and_ancillary_cancellation'
-          | 'ticket_cancellation';
+          | 'ticket_cancellation'
+          | OtherString;
 
         export interface Discounts {
           /**
@@ -7308,7 +7390,8 @@ export namespace ChargeCaptureParams {
           export type Type =
             | 'additional_fees'
             | 'ancillary_service_charges'
-            | 'exchange_fee';
+            | 'exchange_fee'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -7340,7 +7423,7 @@ export namespace ChargeCaptureParams {
         name: string;
       }
 
-      export type Category = 'hotel' | 'vacation_rental';
+      export type Category = 'hotel' | 'vacation_rental' | OtherString;
 
       export interface Delivery {
         /**
@@ -7360,7 +7443,8 @@ export namespace ChargeCaptureParams {
         | 'mini_bar'
         | 'other'
         | 'restaurant'
-        | 'telephone';
+        | 'telephone'
+        | OtherString;
 
       export interface Passenger {
         /**
@@ -7370,7 +7454,7 @@ export namespace ChargeCaptureParams {
       }
 
       export namespace Delivery {
-        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post' | OtherString;
 
         export interface Recipient {
           /**
@@ -7558,7 +7642,8 @@ export namespace ChargeCaptureParams {
           | 'room'
           | 'standard'
           | 'suite'
-          | 'villa';
+          | 'villa'
+          | OtherString;
       }
 
       export namespace Host {
@@ -7594,7 +7679,12 @@ export namespace ChargeCaptureParams {
           state?: string;
         }
 
-        export type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+        export type HostType =
+          | 'hostel'
+          | 'hotel'
+          | 'owner'
+          | 'rental_agency'
+          | OtherString;
       }
 
       export namespace Insurance {
@@ -7602,7 +7692,8 @@ export namespace ChargeCaptureParams {
           | 'bankruptcy'
           | 'cancelation'
           | 'emergency'
-          | 'medical';
+          | 'medical'
+          | OtherString;
       }
 
       export namespace Total {
@@ -7649,7 +7740,8 @@ export namespace ChargeCaptureParams {
             | 'mini_bar'
             | 'other'
             | 'phone'
-            | 'restaurant';
+            | 'restaurant'
+            | OtherString;
         }
 
         export namespace Tax {
@@ -7694,7 +7786,7 @@ export namespace ChargeCaptureParams {
       }
 
       export namespace BillingInterval {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Alert} from './Alerts.js';
-import {Decimal} from '../../shared.js';
+import {Decimal, OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface AlertTriggered {
   /**
@@ -95,6 +95,9 @@ export namespace AlertTriggered {
   }
 
   export namespace GroupBy {
-    export type Type = 'billing_cadence' | 'pricing_plan_subscription';
+    export type Type =
+      | 'billing_cadence'
+      | 'pricing_plan_subscription'
+      | OtherString;
   }
 }

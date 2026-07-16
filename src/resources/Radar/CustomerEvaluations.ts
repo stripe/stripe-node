@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class CustomerEvaluationResource extends StripeResource {
@@ -96,7 +97,7 @@ export interface CustomerEvaluation {
   status?: string;
 }
 export namespace CustomerEvaluation {
-  export type EventType = 'login' | 'registration';
+  export type EventType = 'login' | 'registration' | OtherString;
 
   export interface Event {
     /**
@@ -184,7 +185,8 @@ export namespace CustomerEvaluation {
         | 'low'
         | 'normal'
         | 'not_assessed'
-        | 'unknown';
+        | 'unknown'
+        | OtherString;
     }
 
     export namespace MultiAccounting {
@@ -194,7 +196,8 @@ export namespace CustomerEvaluation {
         | 'low'
         | 'normal'
         | 'not_assessed'
-        | 'unknown';
+        | 'unknown'
+        | OtherString;
     }
   }
 }

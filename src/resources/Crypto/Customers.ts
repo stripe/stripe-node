@@ -3,7 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {CustomerConsumerWallet} from './CustomerConsumerWallets.js';
 import {CustomerPaymentToken} from './CustomerPaymentTokens.js';
-import {PaginationParams} from '../../shared.js';
+import {PaginationParams, OtherString} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 
 export class CustomerResource extends StripeResource {
@@ -91,7 +91,7 @@ export interface Customer {
   verifications: Array<Customer.Verification>;
 }
 export namespace Customer {
-  export type KycRegion = 'eu' | 'us';
+  export type KycRegion = 'eu' | 'us' | OtherString;
 
   export interface KycTier {
     /**
@@ -128,7 +128,8 @@ export namespace Customer {
     | 'identifiers'
     | 'last_name'
     | 'nationalities'
-    | 'selfie';
+    | 'selfie'
+    | OtherString;
 
   export interface Verification {
     /**
@@ -153,33 +154,38 @@ export namespace Customer {
     export type VerificationError =
       | 'id_document_verification_failed'
       | 'phone_verification_failed'
-      | 'user_has_reached_max_verification_attempts';
+      | 'user_has_reached_max_verification_attempts'
+      | OtherString;
 
     export type VerificationStatus =
       | 'not_available'
       | 'not_started'
       | 'pending'
       | 'rejected'
-      | 'verified';
+      | 'verified'
+      | OtherString;
   }
 
   export namespace Verification {
     export type Error =
       | 'id_document_verification_failed'
       | 'phone_verification_failed'
-      | 'user_has_reached_max_verification_attempts';
+      | 'user_has_reached_max_verification_attempts'
+      | OtherString;
 
     export type Name =
       | 'id_document_verified'
       | 'kyc_verified'
-      | 'phone_verified';
+      | 'phone_verified'
+      | OtherString;
 
     export type Status =
       | 'not_available'
       | 'not_started'
       | 'pending'
       | 'rejected'
-      | 'verified';
+      | 'verified'
+      | OtherString;
   }
 }
 export namespace Crypto {

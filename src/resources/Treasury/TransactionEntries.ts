@@ -10,7 +10,7 @@ import {OutboundTransfer} from './OutboundTransfers.js';
 import {ReceivedCredit} from './ReceivedCredits.js';
 import {ReceivedDebit} from './ReceivedDebits.js';
 import * as Issuing from './../Issuing/index.js';
-import {PaginationParams, RangeQueryParam} from '../../shared.js';
+import {PaginationParams, RangeQueryParam, OtherString} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class TransactionEntryResource extends StripeResource {
@@ -585,7 +585,8 @@ export namespace TransactionEntry {
     | 'outbound_payment'
     | 'outbound_transfer'
     | 'received_credit'
-    | 'received_debit';
+    | 'received_debit'
+    | OtherString;
 
   export type Type =
     | 'credit_reversal'
@@ -607,7 +608,8 @@ export namespace TransactionEntry {
     | 'outbound_transfer_posting'
     | 'outbound_transfer_return'
     | 'received_credit'
-    | 'received_debit';
+    | 'received_debit'
+    | OtherString;
 
   export namespace FlowDetails {
     export type Type =
@@ -619,7 +621,8 @@ export namespace TransactionEntry {
       | 'outbound_payment'
       | 'outbound_transfer'
       | 'received_credit'
-      | 'received_debit';
+      | 'received_debit'
+      | OtherString;
   }
 }
 export namespace Treasury {
@@ -661,6 +664,6 @@ export namespace Treasury {
   }
 
   export namespace TransactionEntryListParams {
-    export type OrderBy = 'created' | 'effective_at';
+    export type OrderBy = 'created' | 'effective_at' | OtherString;
   }
 }

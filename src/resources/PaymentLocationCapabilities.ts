@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
+import {OtherString} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class PaymentLocationCapabilityResource extends StripeResource {
@@ -113,7 +114,12 @@ export namespace PaymentLocationCapability {
     errors: Array<Requirements.Error>;
   }
 
-  export type Status = 'active' | 'inactive' | 'pending' | 'unrequested';
+  export type Status =
+    | 'active'
+    | 'inactive'
+    | 'pending'
+    | 'unrequested'
+    | OtherString;
 
   export namespace Requirements {
     export type DisabledReason =
@@ -122,7 +128,8 @@ export namespace PaymentLocationCapability {
       | 'pending.review'
       | 'rejected.other'
       | 'rejected.unsupported_business'
-      | 'requirements.fields_needed';
+      | 'requirements.fields_needed'
+      | OtherString;
 
     export interface Error {
       /**
@@ -142,7 +149,10 @@ export namespace PaymentLocationCapability {
     }
 
     export namespace Error {
-      export type Code = 'information_missing' | 'invalid_value_other';
+      export type Code =
+        | 'information_missing'
+        | 'invalid_value_other'
+        | OtherString;
     }
   }
 }

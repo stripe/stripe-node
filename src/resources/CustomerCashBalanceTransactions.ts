@@ -4,6 +4,7 @@ import {Customer} from './Customers.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {Refund} from './Refunds.js';
+import {OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface CustomerCashBalanceTransaction {
   /**
@@ -115,7 +116,8 @@ export namespace CustomerCashBalanceTransaction {
     | 'return_canceled'
     | 'return_initiated'
     | 'transferred_to_balance'
-    | 'unapplied_from_payment';
+    | 'unapplied_from_payment'
+    | OtherString;
 
   export interface UnappliedFromPayment {
     /**
@@ -202,7 +204,8 @@ export namespace CustomerCashBalanceTransaction {
         | 'gb_bank_transfer'
         | 'jp_bank_transfer'
         | 'mx_bank_transfer'
-        | 'us_bank_transfer';
+        | 'us_bank_transfer'
+        | OtherString;
 
       export interface UsBankTransfer {
         /**
@@ -217,7 +220,11 @@ export namespace CustomerCashBalanceTransaction {
       }
 
       export namespace UsBankTransfer {
-        export type Network = 'ach' | 'domestic_wire_us' | 'swift';
+        export type Network =
+          | 'ach'
+          | 'domestic_wire_us'
+          | 'swift'
+          | OtherString;
       }
     }
   }

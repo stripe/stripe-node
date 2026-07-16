@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams} from '../../shared.js';
+import {PaginationParams, OtherString} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class PhysicalBundleResource extends StripeResource {
@@ -89,16 +89,28 @@ export namespace PhysicalBundle {
     second_line: Features.SecondLine;
   }
 
-  export type Status = 'active' | 'inactive' | 'review';
+  export type Status = 'active' | 'inactive' | 'review' | OtherString;
 
-  export type Type = 'custom' | 'standard';
+  export type Type = 'custom' | 'standard' | OtherString;
 
   export namespace Features {
-    export type CardLogo = 'optional' | 'required' | 'unsupported';
+    export type CardLogo =
+      | 'optional'
+      | 'required'
+      | 'unsupported'
+      | OtherString;
 
-    export type CarrierText = 'optional' | 'required' | 'unsupported';
+    export type CarrierText =
+      | 'optional'
+      | 'required'
+      | 'unsupported'
+      | OtherString;
 
-    export type SecondLine = 'optional' | 'required' | 'unsupported';
+    export type SecondLine =
+      | 'optional'
+      | 'required'
+      | 'unsupported'
+      | OtherString;
   }
 }
 export namespace Issuing {
@@ -128,8 +140,8 @@ export namespace Issuing {
   }
 
   export namespace PhysicalBundleListParams {
-    export type Status = 'active' | 'inactive' | 'review';
+    export type Status = 'active' | 'inactive' | 'review' | OtherString;
 
-    export type Type = 'custom' | 'standard';
+    export type Type = 'custom' | 'standard' | OtherString;
   }
 }

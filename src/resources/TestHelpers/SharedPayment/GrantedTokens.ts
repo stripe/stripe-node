@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {GrantedToken} from './../../SharedPayment/GrantedTokens.js';
-import {Emptyable} from '../../../shared.js';
+import {Emptyable, OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class GrantedTokenResource extends StripeResource {
@@ -93,7 +93,7 @@ export namespace TestHelpers {
       }
 
       export namespace UsageLimits {
-        export type RecurringInterval = 'month' | 'week' | 'year';
+        export type RecurringInterval = 'month' | 'week' | 'year' | OtherString;
       }
     }
   }

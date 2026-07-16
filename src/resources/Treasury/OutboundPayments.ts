@@ -7,6 +7,7 @@ import {
   MetadataParam,
   Emptyable,
   AddressParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -233,7 +234,8 @@ export namespace OutboundPayment {
     | 'failed'
     | 'posted'
     | 'processing'
-    | 'returned';
+    | 'returned'
+    | OtherString;
 
   export interface StatusTransitions {
     /**
@@ -295,7 +297,7 @@ export namespace OutboundPayment {
       network: 'stripe';
     }
 
-    export type Type = 'financial_account' | 'us_bank_account';
+    export type Type = 'financial_account' | 'us_bank_account' | OtherString;
 
     export interface UsBankAccount {
       /**
@@ -340,11 +342,11 @@ export namespace OutboundPayment {
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
 
-      export type Network = 'ach' | 'us_domestic_wire';
+      export type Network = 'ach' | 'us_domestic_wire' | OtherString;
     }
   }
 
@@ -359,7 +361,8 @@ export namespace OutboundPayment {
       | 'invalid_account_number'
       | 'invalid_currency'
       | 'no_account'
-      | 'other';
+      | 'other'
+      | OtherString;
   }
 
   export namespace TrackingDetails {
@@ -370,7 +373,7 @@ export namespace OutboundPayment {
       trace_id: string;
     }
 
-    export type Type = 'ach' | 'us_domestic_wire';
+    export type Type = 'ach' | 'us_domestic_wire' | OtherString;
 
     export interface UsDomesticWire {
       /**
@@ -530,7 +533,7 @@ export namespace Treasury {
         phone?: Emptyable<string>;
       }
 
-      export type Type = 'financial_account' | 'us_bank_account';
+      export type Type = 'financial_account' | 'us_bank_account' | OtherString;
 
       export interface UsBankAccount {
         /**
@@ -560,9 +563,9 @@ export namespace Treasury {
       }
 
       export namespace UsBankAccount {
-        export type AccountHolderType = 'company' | 'individual';
+        export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-        export type AccountType = 'checking' | 'savings';
+        export type AccountType = 'checking' | 'savings' | OtherString;
       }
     }
 
@@ -575,7 +578,7 @@ export namespace Treasury {
       }
 
       export namespace UsBankAccount {
-        export type Network = 'ach' | 'us_domestic_wire';
+        export type Network = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
   }
@@ -622,7 +625,8 @@ export namespace Treasury {
       | 'failed'
       | 'posted'
       | 'processing'
-      | 'returned';
+      | 'returned'
+      | OtherString;
   }
 }
 export namespace Treasury {

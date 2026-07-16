@@ -11,6 +11,7 @@ import {
   PaginationParams,
   RangeQueryParam,
   Metadata,
+  OtherString,
 } from '../shared.js';
 import {
   RequestOptions,
@@ -519,7 +520,7 @@ export namespace Product {
   export type Type = 'good' | 'service';
 
   export namespace ManagedPayments {
-    export type Eligibility = 'eligible' | 'ineligible';
+    export type Eligibility = 'eligible' | 'ineligible' | OtherString;
 
     export interface IneligibilityReason {
       /**
@@ -534,7 +535,10 @@ export namespace Product {
     }
 
     export namespace IneligibilityReason {
-      export type Code = 'ineligible_tax_code' | 'no_tax_code_specified';
+      export type Code =
+        | 'ineligible_tax_code'
+        | 'no_tax_code_specified'
+        | OtherString;
     }
   }
 }

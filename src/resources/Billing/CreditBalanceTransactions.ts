@@ -4,7 +4,12 @@ import {StripeResource} from '../../StripeResource.js';
 import {CreditGrant} from './CreditGrants.js';
 import {Invoice} from './../Invoices.js';
 import * as TestHelpers from './../TestHelpers/index.js';
-import {PaginationParams, Decimal, Metadata} from '../../shared.js';
+import {
+  PaginationParams,
+  Decimal,
+  Metadata,
+  OtherString,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class CreditBalanceTransactionResource extends StripeResource {
@@ -221,7 +226,7 @@ export namespace CreditBalanceTransaction {
     type: Debit.Type;
   }
 
-  export type Type = 'credit' | 'debit';
+  export type Type = 'credit' | 'debit' | OtherString;
 
   export namespace Credit {
     export interface Amount {
@@ -253,7 +258,10 @@ export namespace CreditBalanceTransaction {
       invoice_line_item: string;
     }
 
-    export type Type = 'credits_application_invoice_voided' | 'credits_granted';
+    export type Type =
+      | 'credits_application_invoice_voided'
+      | 'credits_granted'
+      | OtherString;
 
     export namespace Amount {
       export interface CustomPricingUnit {
@@ -285,7 +293,7 @@ export namespace CreditBalanceTransaction {
         value: number;
       }
 
-      export type Type = 'custom_pricing_unit' | 'monetary';
+      export type Type = 'custom_pricing_unit' | 'monetary' | OtherString;
 
       export namespace CustomPricingUnit {
         export interface CustomPricingUnitDetails {
@@ -353,7 +361,11 @@ export namespace CreditBalanceTransaction {
       invoice_line_item: string;
     }
 
-    export type Type = 'credits_applied' | 'credits_expired' | 'credits_voided';
+    export type Type =
+      | 'credits_applied'
+      | 'credits_expired'
+      | 'credits_voided'
+      | OtherString;
 
     export namespace Amount {
       export interface CustomPricingUnit {
@@ -385,7 +397,7 @@ export namespace CreditBalanceTransaction {
         value: number;
       }
 
-      export type Type = 'custom_pricing_unit' | 'monetary';
+      export type Type = 'custom_pricing_unit' | 'monetary' | OtherString;
 
       export namespace CustomPricingUnit {
         export interface CustomPricingUnitDetails {

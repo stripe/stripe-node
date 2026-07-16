@@ -2,7 +2,13 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {PaymentMethod} from './../PaymentMethods.js';
-import {MetadataParam, AddressParam, Metadata, Address} from '../../shared.js';
+import {
+  MetadataParam,
+  OtherString,
+  AddressParam,
+  Metadata,
+  Address,
+} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class PaymentEvaluationResource extends StripeResource {
@@ -223,7 +229,7 @@ export namespace PaymentEvaluation {
     statement_descriptor: string | null;
   }
 
-  export type RecommendedAction = 'block' | 'continue';
+  export type RecommendedAction = 'block' | 'continue' | OtherString;
 
   export interface Signals {
     /**
@@ -261,7 +267,13 @@ export namespace PaymentEvaluation {
     }
 
     export namespace Data {
-      export type PastedField = 'cvc' | 'exp' | 'number' | 'other' | 'zip';
+      export type PastedField =
+        | 'cvc'
+        | 'exp'
+        | 'number'
+        | 'other'
+        | 'zip'
+        | OtherString;
     }
   }
 
@@ -312,7 +324,8 @@ export namespace PaymentEvaluation {
       | 'early_fraud_warning_received'
       | 'refunded'
       | 'user_intervention_raised'
-      | 'user_intervention_resolved';
+      | 'user_intervention_resolved'
+      | OtherString;
 
     export interface UserInterventionRaised {
       /**
@@ -355,7 +368,8 @@ export namespace PaymentEvaluation {
         | 'product_not_received'
         | 'product_unacceptable'
         | 'subscription_canceled'
-        | 'unrecognized';
+        | 'unrecognized'
+        | OtherString;
     }
 
     export namespace EarlyFraudWarningReceived {
@@ -363,7 +377,8 @@ export namespace PaymentEvaluation {
         | 'made_with_lost_card'
         | 'made_with_stolen_card'
         | 'other'
-        | 'unauthorized_use_of_card';
+        | 'unauthorized_use_of_card'
+        | OtherString;
     }
 
     export namespace Refunded {
@@ -371,7 +386,8 @@ export namespace PaymentEvaluation {
         | 'duplicate'
         | 'fraudulent'
         | 'other'
-        | 'requested_by_customer';
+        | 'requested_by_customer'
+        | OtherString;
     }
 
     export namespace UserInterventionRaised {
@@ -382,11 +398,11 @@ export namespace PaymentEvaluation {
         type: string;
       }
 
-      export type Type = '3ds' | 'captcha' | 'custom';
+      export type Type = '3ds' | 'captcha' | 'custom' | OtherString;
     }
 
     export namespace UserInterventionResolved {
-      export type Outcome = 'abandoned' | 'failed' | 'passed';
+      export type Outcome = 'abandoned' | 'failed' | 'passed' | OtherString;
     }
   }
 
@@ -412,14 +428,20 @@ export namespace PaymentEvaluation {
       card?: Succeeded.Card;
     }
 
-    export type Type = 'failed' | 'merchant_blocked' | 'rejected' | 'succeeded';
+    export type Type =
+      | 'failed'
+      | 'merchant_blocked'
+      | 'rejected'
+      | 'succeeded'
+      | OtherString;
 
     export namespace MerchantBlocked {
       export type Reason =
         | 'authentication_required'
         | 'blocked_for_fraud'
         | 'invalid_payment'
-        | 'other';
+        | 'other'
+        | OtherString;
     }
 
     export namespace Rejected {
@@ -450,15 +472,22 @@ export namespace PaymentEvaluation {
           | 'fail'
           | 'pass'
           | 'unavailable'
-          | 'unchecked';
+          | 'unchecked'
+          | OtherString;
 
         export type AddressPostalCodeCheck =
           | 'fail'
           | 'pass'
           | 'unavailable'
-          | 'unchecked';
+          | 'unchecked'
+          | OtherString;
 
-        export type CvcCheck = 'fail' | 'pass' | 'unavailable' | 'unchecked';
+        export type CvcCheck =
+          | 'fail'
+          | 'pass'
+          | 'unavailable'
+          | 'unchecked'
+          | OtherString;
 
         export type Reason =
           | 'authentication_failed'
@@ -473,7 +502,8 @@ export namespace PaymentEvaluation {
           | 'other'
           | 'processing_error'
           | 'reported_stolen'
-          | 'try_again_later';
+          | 'try_again_later'
+          | OtherString;
       }
     }
 
@@ -500,15 +530,22 @@ export namespace PaymentEvaluation {
           | 'fail'
           | 'pass'
           | 'unavailable'
-          | 'unchecked';
+          | 'unchecked'
+          | OtherString;
 
         export type AddressPostalCodeCheck =
           | 'fail'
           | 'pass'
           | 'unavailable'
-          | 'unchecked';
+          | 'unchecked'
+          | OtherString;
 
-        export type CvcCheck = 'fail' | 'pass' | 'unavailable' | 'unchecked';
+        export type CvcCheck =
+          | 'fail'
+          | 'pass'
+          | 'unavailable'
+          | 'unchecked'
+          | OtherString;
       }
     }
   }
@@ -569,13 +606,17 @@ export namespace PaymentEvaluation {
       }
 
       export namespace Card {
-        export type CustomerPresence = 'off_session' | 'on_session';
+        export type CustomerPresence =
+          | 'off_session'
+          | 'on_session'
+          | OtherString;
 
         export type PaymentType =
           | 'one_off'
           | 'recurring'
           | 'setup_one_off'
-          | 'setup_recurring';
+          | 'setup_recurring'
+          | OtherString;
       }
     }
 
@@ -827,13 +868,17 @@ export namespace Radar {
         }
 
         export namespace Card {
-          export type CustomerPresence = 'off_session' | 'on_session';
+          export type CustomerPresence =
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
 
           export type PaymentType =
             | 'one_off'
             | 'recurring'
             | 'setup_one_off'
-            | 'setup_recurring';
+            | 'setup_recurring'
+            | OtherString;
         }
       }
 

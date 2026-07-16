@@ -1,7 +1,13 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {AddressParam, Emptyable, PaginationParams, Address} from '../shared.js';
+import {
+  AddressParam,
+  Emptyable,
+  PaginationParams,
+  Address,
+  OtherString,
+} from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 
 export class PaymentLocationResource extends StripeResource {
@@ -167,9 +173,14 @@ export namespace PaymentLocation {
       }
 
       export namespace SupportedIssuers {
-        export type Card = 'bimpli' | 'edenred' | 'pluxee' | 'up';
+        export type Card = 'bimpli' | 'edenred' | 'pluxee' | 'up' | OtherString;
 
-        export type CardPresent = 'bimpli' | 'edenred' | 'pluxee' | 'up';
+        export type CardPresent =
+          | 'bimpli'
+          | 'edenred'
+          | 'pluxee'
+          | 'up'
+          | OtherString;
       }
     }
   }

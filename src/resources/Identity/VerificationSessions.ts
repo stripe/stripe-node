@@ -5,6 +5,7 @@ import {VerificationReport} from './VerificationReports.js';
 import {
   MetadataParam,
   Emptyable,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -295,9 +296,15 @@ export namespace VerificationSession {
     | 'canceled'
     | 'processing'
     | 'requires_input'
-    | 'verified';
+    | 'verified'
+    | OtherString;
 
-  export type Type = 'document' | 'email' | 'id_number' | 'verification_flow';
+  export type Type =
+    | 'document'
+    | 'email'
+    | 'id_number'
+    | 'verification_flow'
+    | OtherString;
 
   export interface VerifiedOutputs {
     /**
@@ -376,7 +383,8 @@ export namespace VerificationSession {
       | 'selfie_face_mismatch'
       | 'selfie_manipulated'
       | 'selfie_unverified_other'
-      | 'under_supported_age';
+      | 'under_supported_age'
+      | OtherString;
   }
 
   export namespace Options {
@@ -431,18 +439,22 @@ export namespace VerificationSession {
     }
 
     export namespace Document {
-      export type AllowedType = 'driving_license' | 'id_card' | 'passport';
+      export type AllowedType =
+        | 'driving_license'
+        | 'id_card'
+        | 'passport'
+        | OtherString;
     }
 
     export namespace Matching {
-      export type Dob = 'none' | 'similar';
+      export type Dob = 'none' | 'similar' | OtherString;
 
-      export type Name = 'none' | 'similar';
+      export type Name = 'none' | 'similar' | OtherString;
     }
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 
   export namespace VerifiedOutputs {
@@ -463,9 +475,14 @@ export namespace VerificationSession {
       year: number | null;
     }
 
-    export type IdNumberType = 'br_cpf' | 'sg_nric' | 'us_ssn';
+    export type IdNumberType = 'br_cpf' | 'sg_nric' | 'us_ssn' | OtherString;
 
-    export type Sex = '[redacted]' | 'female' | 'male' | 'unknown';
+    export type Sex =
+      | '[redacted]'
+      | 'female'
+      | 'male'
+      | 'unknown'
+      | OtherString;
   }
 }
 export namespace Identity {
@@ -563,7 +580,7 @@ export namespace Identity {
       person: string;
     }
 
-    export type Type = 'document' | 'email' | 'id_number';
+    export type Type = 'document' | 'email' | 'id_number' | OtherString;
 
     export namespace Options {
       export interface Document {
@@ -589,7 +606,11 @@ export namespace Identity {
       }
 
       export namespace Document {
-        export type AllowedType = 'driving_license' | 'id_card' | 'passport';
+        export type AllowedType =
+          | 'driving_license'
+          | 'id_card'
+          | 'passport'
+          | OtherString;
       }
     }
   }
@@ -655,7 +676,7 @@ export namespace Identity {
       phone?: string;
     }
 
-    export type Type = 'document' | 'email' | 'id_number';
+    export type Type = 'document' | 'email' | 'id_number' | OtherString;
 
     export namespace Options {
       export interface Document {
@@ -681,7 +702,11 @@ export namespace Identity {
       }
 
       export namespace Document {
-        export type AllowedType = 'driving_license' | 'id_card' | 'passport';
+        export type AllowedType =
+          | 'driving_license'
+          | 'id_card'
+          | 'passport'
+          | OtherString;
       }
     }
   }
@@ -724,7 +749,8 @@ export namespace Identity {
       | 'canceled'
       | 'processing'
       | 'requires_input'
-      | 'verified';
+      | 'verified'
+      | OtherString;
   }
 }
 export namespace Identity {

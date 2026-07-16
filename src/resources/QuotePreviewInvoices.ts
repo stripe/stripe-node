@@ -18,7 +18,7 @@ import {SetupIntent} from './SetupIntents.js';
 import {ShippingRate} from './ShippingRates.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import * as Billing from './Billing/index.js';
-import {Address, Metadata} from '../shared.js';
+import {Address, Metadata, OtherString} from '../shared.js';
 import {RequestOptions, ApiList} from '../lib.js';
 export interface QuotePreviewInvoice {
   /**
@@ -503,7 +503,10 @@ export namespace QuotePreviewInvoice {
     | 'subscription_update'
     | 'upcoming';
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface ConfirmationSecret {
     /**
@@ -557,7 +560,7 @@ export namespace QuotePreviewInvoice {
 
   export interface CustomerTaxId {
     /**
-     * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`
+     * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
      */
     type: CustomerTaxId.Type;
 
@@ -827,7 +830,13 @@ export namespace QuotePreviewInvoice {
     tracking_number?: string | null;
   }
 
-  export type Status = 'draft' | 'open' | 'paid' | 'uncollectible' | 'void';
+  export type Status =
+    | 'draft'
+    | 'open'
+    | 'paid'
+    | 'uncollectible'
+    | 'void'
+    | OtherString;
 
   export interface StatusTransitions {
     /**
@@ -954,13 +963,14 @@ export namespace QuotePreviewInvoice {
   }
 
   export namespace AppliesTo {
-    export type Type = 'new_reference' | 'subscription_schedule';
+    export type Type = 'new_reference' | 'subscription_schedule' | OtherString;
   }
 
   export namespace AutomaticTax {
     export type DisabledReason =
       | 'finalization_requires_location_inputs'
-      | 'finalization_system_error';
+      | 'finalization_system_error'
+      | OtherString;
 
     export interface Liability {
       /**
@@ -974,10 +984,14 @@ export namespace QuotePreviewInvoice {
       type: Liability.Type;
     }
 
-    export type Status = 'complete' | 'failed' | 'requires_location_inputs';
+    export type Status =
+      | 'complete'
+      | 'failed'
+      | 'requires_location_inputs'
+      | OtherString;
 
     export namespace Liability {
-      export type Type = 'account' | 'application' | 'self';
+      export type Type = 'account' | 'application' | 'self' | OtherString;
     }
   }
 
@@ -1036,6 +1050,7 @@ export namespace QuotePreviewInvoice {
       | 'hk_br'
       | 'hr_oib'
       | 'hu_tin'
+      | 'ic_nif'
       | 'id_npwp'
       | 'il_vat'
       | 'in_gst'
@@ -1103,7 +1118,7 @@ export namespace QuotePreviewInvoice {
   }
 
   export namespace Issuer {
-    export type Type = 'account' | 'application' | 'self';
+    export type Type = 'account' | 'application' | 'self' | OtherString;
   }
 
   export namespace LastFinalizationError {
@@ -1370,7 +1385,8 @@ export namespace QuotePreviewInvoice {
       | 'billing_cadence_details'
       | 'quote_details'
       | 'schedule_details'
-      | 'subscription_details';
+      | 'subscription_details'
+      | OtherString;
 
     export namespace SubscriptionDetails {
       export interface PauseCollection {
@@ -1474,6 +1490,7 @@ export namespace QuotePreviewInvoice {
       | 'ach_debit'
       | 'acss_debit'
       | 'affirm'
+      | 'alipay'
       | 'amazon_pay'
       | 'au_becs_debit'
       | 'bacs_debit'
@@ -1515,13 +1532,15 @@ export namespace QuotePreviewInvoice {
       | 'satispay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
+      | 'sequra'
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
-      | 'wechat_pay';
+      | 'wechat_pay'
+      | OtherString;
 
     export namespace PaymentMethodOptions {
       export interface AcssDebit {
@@ -1622,15 +1641,16 @@ export namespace QuotePreviewInvoice {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace MandateOptions {
-          export type TransactionType = 'business' | 'personal';
+          export type TransactionType = 'business' | 'personal' | OtherString;
         }
       }
 
       export namespace Bancontact {
-        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
       }
 
       export namespace Card {
@@ -1641,7 +1661,11 @@ export namespace QuotePreviewInvoice {
           enabled: boolean | null;
         }
 
-        export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+        export type RequestThreeDSecure =
+          | 'any'
+          | 'automatic'
+          | 'challenge'
+          | OtherString;
       }
 
       export namespace CustomerBalance {
@@ -1687,7 +1711,7 @@ export namespace QuotePreviewInvoice {
         }
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
 
           export type Purpose =
             | 'dependant_support'
@@ -1700,12 +1724,13 @@ export namespace QuotePreviewInvoice {
             | 'retail'
             | 'salary'
             | 'tax'
-            | 'utility';
+            | 'utility'
+            | OtherString;
         }
       }
 
       export namespace Pix {
-        export type AmountIncludesIof = 'always' | 'never';
+        export type AmountIncludesIof = 'always' | 'never' | OtherString;
       }
 
       export namespace Upi {
@@ -1732,7 +1757,7 @@ export namespace QuotePreviewInvoice {
         }
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
         }
       }
 
@@ -1754,7 +1779,8 @@ export namespace QuotePreviewInvoice {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace FinancialConnections {
           export interface Filters {
@@ -1773,16 +1799,21 @@ export namespace QuotePreviewInvoice {
             | 'balances'
             | 'ownership'
             | 'payment_method'
-            | 'transactions';
+            | 'transactions'
+            | OtherString;
 
           export type Prefetch =
             | 'balances'
             | 'inferred_balances'
             | 'ownership'
-            | 'transactions';
+            | 'transactions'
+            | OtherString;
 
           export namespace Filters {
-            export type AccountSubcategory = 'checking' | 'savings';
+            export type AccountSubcategory =
+              | 'checking'
+              | 'savings'
+              | OtherString;
           }
         }
       }
@@ -1847,7 +1878,8 @@ export namespace QuotePreviewInvoice {
         | 'reverse_charge'
         | 'standard_rated'
         | 'taxable_basis_reduced'
-        | 'zero_rated';
+        | 'zero_rated'
+        | OtherString;
     }
   }
 
@@ -1866,7 +1898,11 @@ export namespace QuotePreviewInvoice {
   }
 
   export namespace TotalPretaxCreditAmount {
-    export type Type = 'credit_balance_transaction' | 'discount' | 'margin';
+    export type Type =
+      | 'credit_balance_transaction'
+      | 'discount'
+      | 'margin'
+      | OtherString;
   }
 
   export namespace TotalTax {
@@ -1895,6 +1931,7 @@ export namespace QuotePreviewInvoice {
       | 'reverse_charge'
       | 'standard_rated'
       | 'taxable_basis_reduced'
-      | 'zero_rated';
+      | 'zero_rated'
+      | OtherString;
   }
 }

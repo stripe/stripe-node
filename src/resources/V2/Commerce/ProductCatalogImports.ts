@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Metadata} from '../../../shared.js';
+import {Metadata, OtherString} from '../../../shared.js';
 import {RequestOptions} from '../../../lib.js';
 export interface ProductCatalogImport {
   /**
@@ -49,9 +49,14 @@ export interface ProductCatalogImport {
   status_details?: ProductCatalogImport.StatusDetails;
 }
 export namespace ProductCatalogImport {
-  export type FeedType = 'inventory' | 'pricing' | 'product' | 'promotion';
+  export type FeedType =
+    | 'inventory'
+    | 'pricing'
+    | 'product'
+    | 'promotion'
+    | OtherString;
 
-  export type Mode = 'replace' | 'upsert';
+  export type Mode = 'replace' | 'upsert' | OtherString;
 
   export type Status =
     | 'awaiting_upload'
@@ -168,9 +173,13 @@ export namespace ProductCatalogImport {
     }
 
     export namespace Failed {
-      export type Code = 'file_not_found' | 'internal_error' | 'invalid_file';
+      export type Code =
+        | 'file_not_found'
+        | 'internal_error'
+        | 'invalid_file'
+        | OtherString;
 
-      export type Type = 'cannot_proceed' | 'transient_failure';
+      export type Type = 'cannot_proceed' | 'transient_failure' | OtherString;
     }
 
     export namespace SucceededWithErrors {

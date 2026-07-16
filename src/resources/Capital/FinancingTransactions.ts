@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams} from '../../shared.js';
+import {PaginationParams, OtherString} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class FinancingTransactionResource extends StripeResource {
@@ -136,7 +136,7 @@ export namespace FinancingTransaction {
     transaction?: Details.Transaction;
   }
 
-  export type Type = 'payment' | 'payout' | 'reversal';
+  export type Type = 'payment' | 'payout' | 'reversal' | OtherString;
 
   export namespace Details {
     export type Reason =
@@ -147,7 +147,8 @@ export namespace FinancingTransaction {
       | 'financing_cancellation'
       | 'refill'
       | 'requested_by_user'
-      | 'user_initiated';
+      | 'user_initiated'
+      | OtherString;
 
     export interface Transaction {
       /**

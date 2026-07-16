@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ReceivedCreditResource extends StripeResource {
@@ -254,7 +255,12 @@ export namespace ReceivedCredit {
     statement_descriptor?: string;
   }
 
-  export type Status = 'failed' | 'pending' | 'returned' | 'succeeded';
+  export type Status =
+    | 'failed'
+    | 'pending'
+    | 'returned'
+    | 'succeeded'
+    | OtherString;
 
   export interface StatusDetails {
     /**
@@ -314,14 +320,16 @@ export namespace ReceivedCredit {
     | 'crypto_wallet_transfer'
     | 'external_credit'
     | 'stripe_balance_payment'
-    | 'stripe_network_transfer';
+    | 'stripe_network_transfer'
+    | OtherString;
 
   export namespace BalanceTransfer {
     export type Type =
       | 'outbound_payment'
       | 'outbound_transfer'
       | 'transfer'
-      | 'payout_v1';
+      | 'payout_v1'
+      | OtherString;
   }
 
   export namespace BankTransfer {
@@ -431,7 +439,8 @@ export namespace ReceivedCredit {
       | 'gb_bank_account'
       | 'mx_bank_account'
       | 'sepa_bank_account'
-      | 'us_bank_account';
+      | 'us_bank_account'
+      | OtherString;
 
     export interface SepaBankAccount {
       /**
@@ -493,11 +502,11 @@ export namespace ReceivedCredit {
     }
 
     export namespace GbBankAccount {
-      export type Network = 'chaps' | 'fps';
+      export type Network = 'chaps' | 'fps' | OtherString;
     }
 
     export namespace UsBankAccount {
-      export type Network = 'ach' | 'rtp' | 'us_domestic_wire';
+      export type Network = 'ach' | 'rtp' | 'us_domestic_wire' | OtherString;
     }
   }
 
@@ -542,7 +551,8 @@ export namespace ReceivedCredit {
       | 'gb_bank_account'
       | 'mx_bank_account'
       | 'sepa_bank_account'
-      | 'us_bank_account';
+      | 'us_bank_account'
+      | OtherString;
 
     export namespace CryptoWallet {
       export type Network =
@@ -554,7 +564,8 @@ export namespace ReceivedCredit {
         | 'polygon'
         | 'solana'
         | 'stellar'
-        | 'tempo';
+        | 'tempo'
+        | OtherString;
     }
   }
 
@@ -578,7 +589,8 @@ export namespace ReceivedCredit {
         | 'capability_inactive'
         | 'currency_unsupported_on_financial_address'
         | 'financial_address_inactive'
-        | 'stripe_rejected';
+        | 'stripe_rejected'
+        | OtherString;
     }
   }
 

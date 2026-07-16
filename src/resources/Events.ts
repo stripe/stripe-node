@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams, RangeQueryParam} from '../shared.js';
+import {PaginationParams, RangeQueryParam, OtherString} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class EventResource extends StripeResource {
@@ -227,12 +227,17 @@ export namespace Event {
     | 'financial_connections.account.created'
     | 'financial_connections.account.deactivated'
     | 'financial_connections.account.disconnected'
+    | 'financial_connections.account.expected_deactivation_date_updated'
     | 'financial_connections.account.reactivated'
     | 'financial_connections.account.refreshed_balance'
     | 'financial_connections.account.refreshed_inferred_balances'
     | 'financial_connections.account.refreshed_ownership'
     | 'financial_connections.account.refreshed_transactions'
+    | 'financial_connections.account.supported_payment_method_types_updated'
     | 'financial_connections.account.upcoming_account_number_expiry'
+    | 'financial_connections.account.upcoming_deactivation'
+    | 'financial_connections.authorization.expected_deactivation_date_updated'
+    | 'financial_connections.authorization.upcoming_deactivation'
     | 'financial_connections.session.updated'
     | 'fx_quote.expired'
     | 'identity.verification_session.canceled'
@@ -464,7 +469,7 @@ export namespace Event {
       idempotency_key: string | null;
     }
 
-    export type Type = 'automation_action' | 'request';
+    export type Type = 'automation_action' | 'request' | OtherString;
 
     export namespace AutomationAction {
       export interface StripeSendWebhookCustomEvent {
@@ -673,12 +678,17 @@ export type Event =
   | FinancialConnectionsAccountCreatedEvent
   | FinancialConnectionsAccountDeactivatedEvent
   | FinancialConnectionsAccountDisconnectedEvent
+  | FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent
   | FinancialConnectionsAccountReactivatedEvent
   | FinancialConnectionsAccountRefreshedBalanceEvent
   | FinancialConnectionsAccountRefreshedInferredBalancesEvent
   | FinancialConnectionsAccountRefreshedOwnershipEvent
   | FinancialConnectionsAccountRefreshedTransactionsEvent
+  | FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent
   | FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent
+  | FinancialConnectionsAccountUpcomingDeactivationEvent
+  | FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent
+  | FinancialConnectionsAuthorizationUpcomingDeactivationEvent
   | FinancialConnectionsSessionUpdatedEvent
   | FxQuoteExpiredEvent
   | IdentityVerificationSessionCanceledEvent
@@ -2452,6 +2462,23 @@ export namespace FinancialConnectionsAccountDisconnectedEvent {
 }
 
 /**
+ * Occurs when a Financial Connections account’s `expected_deactivation_date` changes.
+ */
+export interface FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent
+  extends EventBase {
+  type: 'financial_connections.account.expected_deactivation_date_updated';
+  data: FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent.Data;
+}
+
+export namespace FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent {
+  export interface Data extends Event.Data {
+    object: FinancialConnections.Account;
+
+    previous_attributes?: Partial<FinancialConnections.Account>;
+  }
+}
+
+/**
  * Occurs when a Financial Connections account's status is updated from `inactive` to `active`.
  */
 export interface FinancialConnectionsAccountReactivatedEvent extends EventBase {
@@ -2536,6 +2563,23 @@ export namespace FinancialConnectionsAccountRefreshedTransactionsEvent {
 }
 
 /**
+ * Occurs when the supported_payment_method_types array on a Financial Connections account changes.
+ */
+export interface FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent
+  extends EventBase {
+  type: 'financial_connections.account.supported_payment_method_types_updated';
+  data: FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent.Data;
+}
+
+export namespace FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent {
+  export interface Data extends Event.Data {
+    object: FinancialConnections.Account;
+
+    previous_attributes?: Partial<FinancialConnections.Account>;
+  }
+}
+
+/**
  * Occurs when an Account’s tokenized account number is about to expire.
  */
 export interface FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent
@@ -2549,6 +2593,57 @@ export namespace FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent {
     object: FinancialConnections.Account;
 
     previous_attributes?: Partial<FinancialConnections.Account>;
+  }
+}
+
+/**
+ * Occurs when a Financial Connections account is about to become `inactive`.
+ */
+export interface FinancialConnectionsAccountUpcomingDeactivationEvent
+  extends EventBase {
+  type: 'financial_connections.account.upcoming_deactivation';
+  data: FinancialConnectionsAccountUpcomingDeactivationEvent.Data;
+}
+
+export namespace FinancialConnectionsAccountUpcomingDeactivationEvent {
+  export interface Data extends Event.Data {
+    object: FinancialConnections.Account;
+
+    previous_attributes?: Partial<FinancialConnections.Account>;
+  }
+}
+
+/**
+ * Occurs when a Financial Connections authorization’s `expected_deactivation_date` changes.
+ */
+export interface FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent
+  extends EventBase {
+  type: 'financial_connections.authorization.expected_deactivation_date_updated';
+  data: FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent.Data;
+}
+
+export namespace FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent {
+  export interface Data extends Event.Data {
+    object: FinancialConnections.Authorization;
+
+    previous_attributes?: Partial<FinancialConnections.Authorization>;
+  }
+}
+
+/**
+ * Occurs when a Financial Connections authorization is about to become `inactive`.
+ */
+export interface FinancialConnectionsAuthorizationUpcomingDeactivationEvent
+  extends EventBase {
+  type: 'financial_connections.authorization.upcoming_deactivation';
+  data: FinancialConnectionsAuthorizationUpcomingDeactivationEvent.Data;
+}
+
+export namespace FinancialConnectionsAuthorizationUpcomingDeactivationEvent {
+  export interface Data extends Event.Data {
+    object: FinancialConnections.Authorization;
+
+    previous_attributes?: Partial<FinancialConnections.Authorization>;
   }
 }
 

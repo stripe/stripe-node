@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface CustomerPaymentToken {
   /**
@@ -60,7 +61,7 @@ export namespace CustomerPaymentToken {
     wallet: Card.Wallet | null;
   }
 
-  export type Type = 'card' | 'us_bank_account';
+  export type Type = 'card' | 'us_bank_account' | OtherString;
 
   export interface UsBankAccount {
     /**
@@ -88,11 +89,11 @@ export namespace CustomerPaymentToken {
     }
 
     export namespace Wallet {
-      export type Type = 'apple_pay' | 'google_pay';
+      export type Type = 'apple_pay' | 'google_pay' | OtherString;
     }
   }
 
   export namespace UsBankAccount {
-    export type AccountType = 'checking' | 'savings';
+    export type AccountType = 'checking' | 'savings' | OtherString;
   }
 }

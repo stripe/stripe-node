@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Decimal} from '../../../shared.js';
+import {OtherString, Decimal} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class AccountSignalResource extends StripeResource {
   /**
-   * Lists AccountSignals for a given account or customer, filtered by signal type.
+   * Lists the latest AccountSignals for a given account or customer, filtered by signal type. Note that this endpoint returns only the latest signal for each requested signal type.
    */
   list(
     params: V2.Signals.AccountSignalListParams,
@@ -166,7 +166,10 @@ export namespace AccountSignal {
     risk_level: MerchantDelinquency.RiskLevel;
   }
 
-  export type Type = 'fraudulent_merchant' | 'merchant_delinquency';
+  export type Type =
+    | 'fraudulent_merchant'
+    | 'merchant_delinquency'
+    | OtherString;
 
   export namespace FraudulentMerchant {
     export interface Indicator {
@@ -293,7 +296,10 @@ export namespace V2 {
     }
 
     export namespace AccountSignalListParams {
-      export type Type = 'fraudulent_merchant' | 'merchant_delinquency';
+      export type Type =
+        | 'fraudulent_merchant'
+        | 'merchant_delinquency'
+        | OtherString;
 
       export interface AccountDetails {
         /**

@@ -7,6 +7,7 @@ import {File} from './../Files.js';
 import {
   MetadataParam,
   Emptyable,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -229,7 +230,8 @@ export namespace Dispute {
     | 'transaction_authorized'
     | 'transaction_electronically_read'
     | 'transaction_qualifies_for_visa_easy_payment_service'
-    | 'transaction_unattended';
+    | 'transaction_unattended'
+    | OtherString;
 
   export interface NetworkLifecycle {
     /**
@@ -282,7 +284,13 @@ export namespace Dispute {
     status: Redaction.Status;
   }
 
-  export type Status = 'expired' | 'lost' | 'submitted' | 'unsubmitted' | 'won';
+  export type Status =
+    | 'expired'
+    | 'lost'
+    | 'submitted'
+    | 'unsubmitted'
+    | 'won'
+    | OtherString;
 
   export interface Treasury {
     /**
@@ -643,7 +651,8 @@ export namespace Dispute {
       | 'no_valid_authorization'
       | 'not_received'
       | 'other'
-      | 'service_not_as_described';
+      | 'service_not_as_described'
+      | OtherString;
 
     export interface ServiceNotAsDescribed {
       /**
@@ -673,21 +682,27 @@ export namespace Dispute {
     }
 
     export namespace Canceled {
-      export type ProductType = 'merchandise' | 'service';
+      export type ProductType = 'merchandise' | 'service' | OtherString;
 
-      export type ReturnStatus = 'merchant_rejected' | 'successful';
+      export type ReturnStatus =
+        | 'merchant_rejected'
+        | 'successful'
+        | OtherString;
     }
 
     export namespace MerchandiseNotAsDescribed {
-      export type ReturnStatus = 'merchant_rejected' | 'successful';
+      export type ReturnStatus =
+        | 'merchant_rejected'
+        | 'successful'
+        | OtherString;
     }
 
     export namespace NotReceived {
-      export type ProductType = 'merchandise' | 'service';
+      export type ProductType = 'merchandise' | 'service' | OtherString;
     }
 
     export namespace Other {
-      export type ProductType = 'merchandise' | 'service';
+      export type ProductType = 'merchandise' | 'service' | OtherString;
     }
   }
 
@@ -738,11 +753,12 @@ export namespace Dispute {
       | 'required'
       | 'revocable'
       | 'revocation_notice_period'
-      | 'revoked';
+      | 'revoked'
+      | OtherString;
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 }
 export namespace Issuing {
@@ -1033,7 +1049,8 @@ export namespace Issuing {
         | 'no_valid_authorization'
         | 'not_received'
         | 'other'
-        | 'service_not_as_described';
+        | 'service_not_as_described'
+        | OtherString;
 
       export interface ServiceNotAsDescribed {
         /**
@@ -1063,21 +1080,27 @@ export namespace Issuing {
       }
 
       export namespace Canceled {
-        export type ProductType = 'merchandise' | 'service';
+        export type ProductType = 'merchandise' | 'service' | OtherString;
 
-        export type ReturnStatus = 'merchant_rejected' | 'successful';
+        export type ReturnStatus =
+          | 'merchant_rejected'
+          | 'successful'
+          | OtherString;
       }
 
       export namespace MerchandiseNotAsDescribed {
-        export type ReturnStatus = 'merchant_rejected' | 'successful';
+        export type ReturnStatus =
+          | 'merchant_rejected'
+          | 'successful'
+          | OtherString;
       }
 
       export namespace NotReceived {
-        export type ProductType = 'merchandise' | 'service';
+        export type ProductType = 'merchandise' | 'service' | OtherString;
       }
 
       export namespace Other {
-        export type ProductType = 'merchandise' | 'service';
+        export type ProductType = 'merchandise' | 'service' | OtherString;
       }
     }
   }
@@ -1378,7 +1401,8 @@ export namespace Issuing {
         | 'no_valid_authorization'
         | 'not_received'
         | 'other'
-        | 'service_not_as_described';
+        | 'service_not_as_described'
+        | OtherString;
 
       export interface ServiceNotAsDescribed {
         /**
@@ -1408,21 +1432,27 @@ export namespace Issuing {
       }
 
       export namespace Canceled {
-        export type ProductType = 'merchandise' | 'service';
+        export type ProductType = 'merchandise' | 'service' | OtherString;
 
-        export type ReturnStatus = 'merchant_rejected' | 'successful';
+        export type ReturnStatus =
+          | 'merchant_rejected'
+          | 'successful'
+          | OtherString;
       }
 
       export namespace MerchandiseNotAsDescribed {
-        export type ReturnStatus = 'merchant_rejected' | 'successful';
+        export type ReturnStatus =
+          | 'merchant_rejected'
+          | 'successful'
+          | OtherString;
       }
 
       export namespace NotReceived {
-        export type ProductType = 'merchandise' | 'service';
+        export type ProductType = 'merchandise' | 'service' | OtherString;
       }
 
       export namespace Other {
-        export type ProductType = 'merchandise' | 'service';
+        export type ProductType = 'merchandise' | 'service' | OtherString;
       }
     }
   }
@@ -1456,7 +1486,8 @@ export namespace Issuing {
       | 'lost'
       | 'submitted'
       | 'unsubmitted'
-      | 'won';
+      | 'won'
+      | OtherString;
   }
 }
 export namespace Issuing {

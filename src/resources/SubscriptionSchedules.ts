@@ -18,6 +18,7 @@ import * as TestHelpers from './TestHelpers/index.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   Decimal,
   PaginationParams,
   RangeQueryParam,
@@ -386,6 +387,11 @@ export interface SubscriptionSchedule {
   metadata: Metadata | null;
 
   /**
+   * The pause schedules for this subscription schedule.
+   */
+  pause_schedules?: Array<SubscriptionSchedule.PauseSchedule>;
+
+  /**
    * Configuration for the subscription schedule's phases.
    */
   phases: Array<SubscriptionSchedule.Phase>;
@@ -520,7 +526,12 @@ export namespace SubscriptionSchedule {
     transfer_data: DefaultSettings.TransferData | null;
   }
 
-  export type EndBehavior = 'cancel' | 'none' | 'release' | 'renew';
+  export type EndBehavior =
+    | 'cancel'
+    | 'none'
+    | 'release'
+    | 'renew'
+    | OtherString;
 
   export interface LastPriceMigrationError {
     /**
@@ -537,6 +548,20 @@ export namespace SubscriptionSchedule {
      * The type of error encountered by the price migration.
      */
     type: 'price_uniqueness_violation';
+  }
+
+  export interface PauseSchedule {
+    /**
+     * A unique identifier for this pause schedule.
+     */
+    key: string;
+
+    pause: PauseSchedule.Pause;
+
+    /**
+     * Details about when and how the subscription resumes.
+     */
+    resume: PauseSchedule.Resume | null;
   }
 
   export interface Phase {
@@ -643,6 +668,11 @@ export namespace SubscriptionSchedule {
     transfer_data: Phase.TransferData | null;
 
     /**
+     * If set to true the entire phase is counted as a trial and the customer will not be charged for any fees.
+     */
+    trial?: boolean;
+
+    /**
      * Specify behavior of the trial when crossing schedule phase boundaries
      */
     trial_continuation?: Phase.TrialContinuation | null;
@@ -695,7 +725,7 @@ export namespace SubscriptionSchedule {
       proration_discounts?: Flexible.ProrationDiscounts;
     }
 
-    export type Type = 'classic' | 'flexible';
+    export type Type = 'classic' | 'flexible' | OtherString;
 
     export namespace Flexible {
       export type ProrationDiscounts = 'included' | 'itemized';
@@ -750,7 +780,7 @@ export namespace SubscriptionSchedule {
         interval_count: number | null;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
         export type Interval = 'day' | 'month' | 'week' | 'year';
@@ -790,7 +820,10 @@ export namespace SubscriptionSchedule {
       reset_billing_cycle_anchor: boolean | null;
     }
 
-    export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+    export type CollectionMethod =
+      | 'charge_automatically'
+      | 'send_invoice'
+      | OtherString;
 
     export interface InvoiceSettings {
       /**
@@ -849,7 +882,7 @@ export namespace SubscriptionSchedule {
       }
 
       export namespace Liability {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -879,7 +912,7 @@ export namespace SubscriptionSchedule {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
   }
@@ -895,6 +928,118 @@ export namespace SubscriptionSchedule {
        * The intended resulting price of the migration.
        */
       target_price: string;
+    }
+  }
+
+  export namespace PauseSchedule {
+    export interface Pause {
+      /**
+       * Time at which the subscription pauses.
+       */
+      pause_at: number;
+
+      /**
+       * Settings controlling billing behavior during the pause.
+       */
+      settings: Pause.Settings | null;
+    }
+
+    export interface Resume {
+      /**
+       * Time at which the subscription resumes.
+       */
+      resume_at: number;
+
+      settings: Resume.Settings;
+    }
+
+    export namespace Pause {
+      export interface Settings {
+        bill_for: Settings.BillFor;
+
+        /**
+         * Determines how to handle debits and credits when pausing.
+         */
+        invoicing_behavior: Settings.InvoicingBehavior;
+
+        /**
+         * The type of pause settings.
+         */
+        type: 'subscription';
+      }
+
+      export namespace Settings {
+        export interface BillFor {
+          outstanding_usage_through: BillFor.OutstandingUsageThrough;
+
+          unused_time_from: BillFor.UnusedTimeFrom;
+        }
+
+        export type InvoicingBehavior =
+          | 'invoice'
+          | 'pending_invoice_item'
+          | OtherString;
+
+        export namespace BillFor {
+          export interface OutstandingUsageThrough {
+            /**
+             * The type of outstanding usage billing behavior.
+             */
+            type: OutstandingUsageThrough.Type;
+          }
+
+          export interface UnusedTimeFrom {
+            /**
+             * The type of unused time credit behavior.
+             */
+            type: UnusedTimeFrom.Type;
+          }
+
+          export namespace OutstandingUsageThrough {
+            export type Type = 'none' | 'pause_at';
+          }
+
+          export namespace UnusedTimeFrom {
+            export type Type =
+              | 'item_current_period_start'
+              | 'none'
+              | 'pause_at';
+          }
+        }
+      }
+    }
+
+    export namespace Resume {
+      export interface Settings {
+        /**
+         * The billing cycle anchor that applies when the subscription is resumed.
+         */
+        billing_cycle_anchor: Settings.BillingCycleAnchor;
+
+        /**
+         * Controls whether Stripe attempts payment on the resumption invoice and how that affects the subscription's status.
+         */
+        payment_behavior: Settings.PaymentBehavior;
+
+        /**
+         * Determines how to handle prorations resulting from the billing_cycle_anchor change on resume.
+         */
+        proration_behavior: Settings.ProrationBehavior;
+      }
+
+      export namespace Settings {
+        export type BillingCycleAnchor = 'resume_at' | 'unchanged';
+
+        export type PaymentBehavior =
+          | 'resume_on_payment_attempt'
+          | 'resume_on_payment_success';
+
+        export type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none'
+          | OtherString;
+      }
     }
   }
 
@@ -1095,7 +1240,7 @@ export namespace SubscriptionSchedule {
       destination: string | Account;
     }
 
-    export type TrialContinuation = 'continue' | 'none';
+    export type TrialContinuation = 'continue' | 'none' | OtherString;
 
     export interface TrialSettings {
       /**
@@ -1173,14 +1318,19 @@ export namespace SubscriptionSchedule {
         }
 
         export namespace End {
-          export type Type = 'min_item_period_end' | 'phase_end' | 'timestamp';
+          export type Type =
+            | 'min_item_period_end'
+            | 'phase_end'
+            | 'timestamp'
+            | OtherString;
         }
 
         export namespace Start {
           export type Type =
             | 'max_item_period_start'
             | 'phase_start'
-            | 'timestamp';
+            | 'timestamp'
+            | OtherString;
         }
       }
     }
@@ -1199,7 +1349,7 @@ export namespace SubscriptionSchedule {
       }
 
       export namespace Liability {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -1238,7 +1388,8 @@ export namespace SubscriptionSchedule {
         export type StartDate =
           | 'current_period_end'
           | 'current_period_start'
-          | 'phase_start';
+          | 'phase_start'
+          | OtherString;
 
         export namespace ServicePeriodAnchorConfig {
           export interface Custom {
@@ -1268,7 +1419,7 @@ export namespace SubscriptionSchedule {
             second: number | null;
           }
 
-          export type Type = 'custom' | 'inherit';
+          export type Type = 'custom' | 'inherit' | OtherString;
         }
       }
     }
@@ -1299,7 +1450,7 @@ export namespace SubscriptionSchedule {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -1382,7 +1533,8 @@ export namespace SubscriptionSchedule {
           export type StartDate =
             | 'current_period_end'
             | 'current_period_start'
-            | 'phase_start';
+            | 'phase_start'
+            | OtherString;
 
           export namespace ServicePeriodAnchorConfig {
             export interface Custom {
@@ -1412,18 +1564,22 @@ export namespace SubscriptionSchedule {
               second: number | null;
             }
 
-            export type Type = 'custom' | 'inherit';
+            export type Type = 'custom' | 'inherit' | OtherString;
           }
         }
       }
 
       export namespace Trial {
-        export type Type = 'free' | 'paid';
+        export type Type = 'free' | 'paid' | OtherString;
       }
     }
 
     export namespace PauseCollection {
-      export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+      export type Behavior =
+        | 'keep_as_draft'
+        | 'mark_uncollectible'
+        | 'void'
+        | OtherString;
     }
 
     export namespace TrialSettings {
@@ -1435,13 +1591,13 @@ export namespace SubscriptionSchedule {
       }
 
       export namespace EndBehavior {
-        export type ProrateUpFront = 'defer' | 'include';
+        export type ProrateUpFront = 'defer' | 'include' | OtherString;
       }
     }
   }
 
   export namespace Prebilling {
-    export type UpdateBehavior = 'prebill' | 'reset';
+    export type UpdateBehavior = 'prebill' | 'reset' | OtherString;
   }
 }
 export interface SubscriptionScheduleCreateParams {
@@ -1494,6 +1650,11 @@ export interface SubscriptionScheduleCreateParams {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * Sets the pause schedules for the subscription schedule. Each entry configures when and how the subscription pauses and optionally when and how it resumes.
+   */
+  pause_schedules?: Array<SubscriptionScheduleCreateParams.PauseSchedule>;
 
   /**
    * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
@@ -1599,7 +1760,29 @@ export namespace SubscriptionScheduleCreateParams {
     transfer_data?: Emptyable<DefaultSettings.TransferData>;
   }
 
-  export type EndBehavior = 'cancel' | 'none' | 'release' | 'renew';
+  export type EndBehavior =
+    | 'cancel'
+    | 'none'
+    | 'release'
+    | 'renew'
+    | OtherString;
+
+  export interface PauseSchedule {
+    /**
+     * A unique identifier for this pause schedule entry.
+     */
+    key?: string;
+
+    /**
+     * Configuration for when and how the subscription pauses.
+     */
+    pause: PauseSchedule.Pause;
+
+    /**
+     * Configuration for when and how the subscription resumes.
+     */
+    resume?: PauseSchedule.Resume;
+  }
 
   export interface Phase {
     /**
@@ -1748,7 +1931,7 @@ export namespace SubscriptionScheduleCreateParams {
       proration_discounts?: Flexible.ProrationDiscounts;
     }
 
-    export type Type = 'classic' | 'flexible';
+    export type Type = 'classic' | 'flexible' | OtherString;
 
     export namespace Flexible {
       export type ProrationDiscounts = 'included' | 'itemized';
@@ -1798,7 +1981,7 @@ export namespace SubscriptionScheduleCreateParams {
         interval_count?: number;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
         export type Interval = 'day' | 'month' | 'week' | 'year';
@@ -1880,7 +2063,7 @@ export namespace SubscriptionScheduleCreateParams {
       }
 
       export namespace Liability {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -1898,7 +2081,184 @@ export namespace SubscriptionScheduleCreateParams {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
+      }
+    }
+  }
+
+  export namespace PauseSchedule {
+    export interface Pause {
+      /**
+       * When to pause the subscription.
+       */
+      pause_at: Pause.PauseAt;
+
+      /**
+       * Settings controlling billing behavior during the pause.
+       */
+      settings?: Pause.Settings;
+    }
+
+    export interface Resume {
+      /**
+       * When to resume the subscription.
+       */
+      resume_at: Resume.ResumeAt;
+
+      /**
+       * Settings controlling how the subscription resumes.
+       */
+      settings?: Resume.Settings;
+    }
+
+    export namespace Pause {
+      export interface PauseAt {
+        /**
+         * The Unix timestamp at which to pause the subscription. Required when `type` is `timestamp`.
+         */
+        timestamp?: number;
+
+        /**
+         * When to pause the subscription. Use `now` to pause immediately or `timestamp` to pause at a specific time.
+         */
+        type: PauseAt.Type;
+      }
+
+      export interface Settings {
+        /**
+         * Controls what to bill for when pausing the subscription.
+         */
+        bill_for?: Settings.BillFor;
+
+        /**
+         * Determines whether to generate an invoice for outstanding amounts when pausing.
+         */
+        invoicing_behavior?: Settings.InvoicingBehavior;
+
+        /**
+         * The pause type. Currently only `subscription` is supported.
+         */
+        type?: 'subscription';
+      }
+
+      export namespace PauseAt {
+        export type Type = 'now' | 'timestamp' | OtherString;
+      }
+
+      export namespace Settings {
+        export interface BillFor {
+          /**
+           * Controls whether to collect metered usage accrued up to the pause date.
+           */
+          outstanding_usage_through?: BillFor.OutstandingUsageThrough;
+
+          /**
+           * Controls how unused time on subscription items is credited when pausing.
+           */
+          unused_time_from?: BillFor.UnusedTimeFrom;
+        }
+
+        export type InvoicingBehavior =
+          | 'invoice'
+          | 'pending_invoice_item'
+          | OtherString;
+
+        export namespace BillFor {
+          export interface OutstandingUsageThrough {
+            /**
+             * Determines whether to collect metered usage accrued up to the pause date.
+             */
+            type?: OutstandingUsageThrough.Type;
+          }
+
+          export interface UnusedTimeFrom {
+            /**
+             * Determines which point in the billing period unused time is credited from.
+             */
+            type?: UnusedTimeFrom.Type;
+          }
+
+          export namespace OutstandingUsageThrough {
+            export type Type = 'none' | 'pause_at';
+          }
+
+          export namespace UnusedTimeFrom {
+            export type Type =
+              | 'item_current_period_start'
+              | 'none'
+              | 'pause_at';
+          }
+        }
+      }
+    }
+
+    export namespace Resume {
+      export interface ResumeAt {
+        /**
+         * The duration after which to resume the subscription. Required when `type` is `duration`.
+         */
+        duration?: ResumeAt.Duration;
+
+        /**
+         * The Unix timestamp at which to resume the subscription. Required when `type` is `timestamp`.
+         */
+        timestamp?: number;
+
+        /**
+         * When to resume the subscription. Use `now` to resume immediately, `duration` to resume after a set duration, or `timestamp` to resume at a specific time.
+         */
+        type: ResumeAt.Type;
+      }
+
+      export interface Settings {
+        /**
+         * Controls the billing cycle anchor when the subscription resumes.
+         */
+        billing_cycle_anchor?: Settings.BillingCycleAnchor;
+
+        /**
+         * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. The default is `resume_on_payment_attempt`.
+         */
+        payment_behavior?: Settings.PaymentBehavior;
+
+        /**
+         * Determines how to handle prorations when the subscription resumes. The default is `create_prorations`.
+         */
+        proration_behavior?: Settings.ProrationBehavior;
+      }
+
+      export namespace ResumeAt {
+        export interface Duration {
+          /**
+           * The time unit for the resume duration. One of `day`, `week`, `month`, or `year`.
+           */
+          interval: Duration.Interval;
+
+          /**
+           * The number of intervals after which the subscription resumes.
+           */
+          interval_count?: number;
+        }
+
+        export type Type = 'duration' | 'now' | 'timestamp' | OtherString;
+
+        export namespace Duration {
+          export type Interval = 'day' | 'month' | 'week' | 'year';
+        }
+      }
+
+      export namespace Settings {
+        export type BillingCycleAnchor = 'resume_at' | 'unchanged';
+
+        export type PaymentBehavior =
+          | 'resume_on_payment_attempt'
+          | 'resume_on_payment_success';
+
+        export type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none'
+          | OtherString;
       }
     }
   }
@@ -2094,7 +2454,8 @@ export namespace SubscriptionScheduleCreateParams {
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export interface TransferData {
       /**
@@ -2108,7 +2469,7 @@ export namespace SubscriptionScheduleCreateParams {
       destination: string;
     }
 
-    export type TrialContinuation = 'continue' | 'none';
+    export type TrialContinuation = 'continue' | 'none' | OtherString;
 
     export interface TrialSettings {
       /**
@@ -2210,10 +2571,15 @@ export namespace SubscriptionScheduleCreateParams {
             interval_count: number;
           }
 
-          export type Type = 'duration' | 'timestamp';
+          export type Type = 'duration' | 'timestamp' | OtherString;
 
           export namespace Duration {
-            export type Interval = 'day' | 'month' | 'week' | 'year';
+            export type Interval =
+              | 'day'
+              | 'month'
+              | 'week'
+              | 'year'
+              | OtherString;
           }
         }
       }
@@ -2244,14 +2610,19 @@ export namespace SubscriptionScheduleCreateParams {
         }
 
         export namespace End {
-          export type Type = 'min_item_period_end' | 'phase_end' | 'timestamp';
+          export type Type =
+            | 'min_item_period_end'
+            | 'phase_end'
+            | 'timestamp'
+            | OtherString;
         }
 
         export namespace Start {
           export type Type =
             | 'max_item_period_start'
             | 'phase_start'
-            | 'timestamp';
+            | 'timestamp'
+            | OtherString;
         }
       }
 
@@ -2274,7 +2645,7 @@ export namespace SubscriptionScheduleCreateParams {
       }
 
       export namespace Liability {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -2321,10 +2692,15 @@ export namespace SubscriptionScheduleCreateParams {
           interval_count: number;
         }
 
-        export type Type = 'duration' | 'timestamp';
+        export type Type = 'duration' | 'timestamp' | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
 
@@ -2344,7 +2720,8 @@ export namespace SubscriptionScheduleCreateParams {
         export type StartDate =
           | 'current_period_end'
           | 'current_period_start'
-          | 'phase_start';
+          | 'phase_start'
+          | OtherString;
 
         export namespace ServicePeriodAnchorConfig {
           export interface Custom {
@@ -2374,7 +2751,7 @@ export namespace SubscriptionScheduleCreateParams {
             second?: number;
           }
 
-          export type Type = 'custom' | 'inherit';
+          export type Type = 'custom' | 'inherit' | OtherString;
         }
       }
     }
@@ -2397,7 +2774,7 @@ export namespace SubscriptionScheduleCreateParams {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -2523,10 +2900,15 @@ export namespace SubscriptionScheduleCreateParams {
             interval_count: number;
           }
 
-          export type Type = 'duration' | 'timestamp';
+          export type Type = 'duration' | 'timestamp' | OtherString;
 
           export namespace Duration {
-            export type Interval = 'day' | 'month' | 'week' | 'year';
+            export type Interval =
+              | 'day'
+              | 'month'
+              | 'week'
+              | 'year'
+              | OtherString;
           }
         }
 
@@ -2546,7 +2928,8 @@ export namespace SubscriptionScheduleCreateParams {
           export type StartDate =
             | 'current_period_end'
             | 'current_period_start'
-            | 'phase_start';
+            | 'phase_start'
+            | OtherString;
 
           export namespace ServicePeriodAnchorConfig {
             export interface Custom {
@@ -2576,7 +2959,7 @@ export namespace SubscriptionScheduleCreateParams {
               second?: number;
             }
 
-            export type Type = 'custom' | 'inherit';
+            export type Type = 'custom' | 'inherit' | OtherString;
           }
         }
       }
@@ -2602,12 +2985,16 @@ export namespace SubscriptionScheduleCreateParams {
       }
 
       export namespace Trial {
-        export type Type = 'free' | 'paid';
+        export type Type = 'free' | 'paid' | OtherString;
       }
     }
 
     export namespace PauseCollection {
-      export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+      export type Behavior =
+        | 'keep_as_draft'
+        | 'mark_uncollectible'
+        | 'void'
+        | OtherString;
     }
 
     export namespace TrialSettings {
@@ -2619,13 +3006,13 @@ export namespace SubscriptionScheduleCreateParams {
       }
 
       export namespace EndBehavior {
-        export type ProrateUpFront = 'defer' | 'include';
+        export type ProrateUpFront = 'defer' | 'include' | OtherString;
       }
     }
   }
 
   export namespace Prebilling {
-    export type UpdateBehavior = 'prebill' | 'reset';
+    export type UpdateBehavior = 'prebill' | 'reset' | OtherString;
   }
 }
 export interface SubscriptionScheduleRetrieveParams {
@@ -2666,6 +3053,13 @@ export interface SubscriptionScheduleUpdateParams {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * Sets the pause schedules for the subscription schedule. Include a `key` to update an existing entry or omit it to add a new one. Pass `""` to clear all entries or `[]` to leave them unchanged.
+   */
+  pause_schedules?: Emptyable<
+    Array<SubscriptionScheduleUpdateParams.PauseSchedule>
+  >;
 
   /**
    * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase. Note that past phases can be omitted.
@@ -2759,7 +3153,29 @@ export namespace SubscriptionScheduleUpdateParams {
     transfer_data?: Emptyable<DefaultSettings.TransferData>;
   }
 
-  export type EndBehavior = 'cancel' | 'none' | 'release' | 'renew';
+  export type EndBehavior =
+    | 'cancel'
+    | 'none'
+    | 'release'
+    | 'renew'
+    | OtherString;
+
+  export interface PauseSchedule {
+    /**
+     * A unique identifier for this pause schedule entry.
+     */
+    key?: string;
+
+    /**
+     * Configuration for when and how the subscription pauses.
+     */
+    pause?: PauseSchedule.Pause;
+
+    /**
+     * Configuration for when and how the subscription resumes.
+     */
+    resume?: PauseSchedule.Resume;
+  }
 
   export interface Phase {
     /**
@@ -2883,7 +3299,7 @@ export namespace SubscriptionScheduleUpdateParams {
     trial_continuation?: Phase.TrialContinuation;
 
     /**
-     * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
+     * Sets the phase to trialing from the start date to this date. Must be within the phase. When combined with `trial=true`, it must match the phase end date.
      */
     trial_end?: number | 'now';
 
@@ -2908,7 +3324,8 @@ export namespace SubscriptionScheduleUpdateParams {
   export type ProrationBehavior =
     | 'always_invoice'
     | 'create_prorations'
-    | 'none';
+    | 'none'
+    | OtherString;
 
   export namespace BillingSchedule {
     export interface AppliesTo {
@@ -2953,7 +3370,7 @@ export namespace SubscriptionScheduleUpdateParams {
         interval_count?: number;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
         export type Interval = 'day' | 'month' | 'week' | 'year';
@@ -3035,7 +3452,7 @@ export namespace SubscriptionScheduleUpdateParams {
       }
 
       export namespace Liability {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -3053,7 +3470,184 @@ export namespace SubscriptionScheduleUpdateParams {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
+      }
+    }
+  }
+
+  export namespace PauseSchedule {
+    export interface Pause {
+      /**
+       * When to pause the subscription.
+       */
+      pause_at?: Pause.PauseAt;
+
+      /**
+       * Settings controlling billing behavior during the pause.
+       */
+      settings?: Pause.Settings;
+    }
+
+    export interface Resume {
+      /**
+       * When to resume the subscription.
+       */
+      resume_at?: Resume.ResumeAt;
+
+      /**
+       * Settings controlling how the subscription resumes.
+       */
+      settings?: Resume.Settings;
+    }
+
+    export namespace Pause {
+      export interface PauseAt {
+        /**
+         * The Unix timestamp at which to pause the subscription. Required when `type` is `timestamp`.
+         */
+        timestamp?: number;
+
+        /**
+         * When to pause the subscription. Use `now` to pause immediately or `timestamp` to pause at a specific time.
+         */
+        type: PauseAt.Type;
+      }
+
+      export interface Settings {
+        /**
+         * Controls what to bill for when pausing the subscription.
+         */
+        bill_for?: Settings.BillFor;
+
+        /**
+         * Determines whether to generate an invoice for outstanding amounts when pausing.
+         */
+        invoicing_behavior?: Settings.InvoicingBehavior;
+
+        /**
+         * The pause type. Currently only `subscription` is supported.
+         */
+        type?: 'subscription';
+      }
+
+      export namespace PauseAt {
+        export type Type = 'now' | 'timestamp' | OtherString;
+      }
+
+      export namespace Settings {
+        export interface BillFor {
+          /**
+           * Controls whether to collect metered usage accrued up to the pause date.
+           */
+          outstanding_usage_through?: BillFor.OutstandingUsageThrough;
+
+          /**
+           * Controls how unused time on subscription items is credited when pausing.
+           */
+          unused_time_from?: BillFor.UnusedTimeFrom;
+        }
+
+        export type InvoicingBehavior =
+          | 'invoice'
+          | 'pending_invoice_item'
+          | OtherString;
+
+        export namespace BillFor {
+          export interface OutstandingUsageThrough {
+            /**
+             * Determines whether to collect metered usage accrued up to the pause date.
+             */
+            type?: OutstandingUsageThrough.Type;
+          }
+
+          export interface UnusedTimeFrom {
+            /**
+             * Determines which point in the billing period unused time is credited from.
+             */
+            type?: UnusedTimeFrom.Type;
+          }
+
+          export namespace OutstandingUsageThrough {
+            export type Type = 'none' | 'pause_at';
+          }
+
+          export namespace UnusedTimeFrom {
+            export type Type =
+              | 'item_current_period_start'
+              | 'none'
+              | 'pause_at';
+          }
+        }
+      }
+    }
+
+    export namespace Resume {
+      export interface ResumeAt {
+        /**
+         * The duration after which to resume the subscription. Required when `type` is `duration`.
+         */
+        duration?: ResumeAt.Duration;
+
+        /**
+         * The Unix timestamp at which to resume the subscription. Required when `type` is `timestamp`.
+         */
+        timestamp?: number;
+
+        /**
+         * When to resume the subscription. Use `now` to resume immediately, `duration` to resume after a set duration, or `timestamp` to resume at a specific time.
+         */
+        type: ResumeAt.Type;
+      }
+
+      export interface Settings {
+        /**
+         * Controls the billing cycle anchor when the subscription resumes.
+         */
+        billing_cycle_anchor?: Settings.BillingCycleAnchor;
+
+        /**
+         * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. The default is `resume_on_payment_attempt`.
+         */
+        payment_behavior?: Settings.PaymentBehavior;
+
+        /**
+         * Determines how to handle prorations when the subscription resumes. The default is `create_prorations`.
+         */
+        proration_behavior?: Settings.ProrationBehavior;
+      }
+
+      export namespace ResumeAt {
+        export interface Duration {
+          /**
+           * The time unit for the resume duration. One of `day`, `week`, `month`, or `year`.
+           */
+          interval: Duration.Interval;
+
+          /**
+           * The number of intervals after which the subscription resumes.
+           */
+          interval_count?: number;
+        }
+
+        export type Type = 'duration' | 'now' | 'timestamp' | OtherString;
+
+        export namespace Duration {
+          export type Interval = 'day' | 'month' | 'week' | 'year';
+        }
+      }
+
+      export namespace Settings {
+        export type BillingCycleAnchor = 'resume_at' | 'unchanged';
+
+        export type PaymentBehavior =
+          | 'resume_on_payment_attempt'
+          | 'resume_on_payment_success';
+
+        export type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none'
+          | OtherString;
       }
     }
   }
@@ -3249,7 +3843,8 @@ export namespace SubscriptionScheduleUpdateParams {
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export interface TransferData {
       /**
@@ -3263,7 +3858,7 @@ export namespace SubscriptionScheduleUpdateParams {
       destination: string;
     }
 
-    export type TrialContinuation = 'continue' | 'none';
+    export type TrialContinuation = 'continue' | 'none' | OtherString;
 
     export interface TrialSettings {
       /**
@@ -3365,10 +3960,15 @@ export namespace SubscriptionScheduleUpdateParams {
             interval_count: number;
           }
 
-          export type Type = 'duration' | 'timestamp';
+          export type Type = 'duration' | 'timestamp' | OtherString;
 
           export namespace Duration {
-            export type Interval = 'day' | 'month' | 'week' | 'year';
+            export type Interval =
+              | 'day'
+              | 'month'
+              | 'week'
+              | 'year'
+              | OtherString;
           }
         }
       }
@@ -3399,14 +3999,19 @@ export namespace SubscriptionScheduleUpdateParams {
         }
 
         export namespace End {
-          export type Type = 'min_item_period_end' | 'phase_end' | 'timestamp';
+          export type Type =
+            | 'min_item_period_end'
+            | 'phase_end'
+            | 'timestamp'
+            | OtherString;
         }
 
         export namespace Start {
           export type Type =
             | 'max_item_period_start'
             | 'phase_start'
-            | 'timestamp';
+            | 'timestamp'
+            | OtherString;
         }
       }
 
@@ -3429,7 +4034,7 @@ export namespace SubscriptionScheduleUpdateParams {
       }
 
       export namespace Liability {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -3476,10 +4081,15 @@ export namespace SubscriptionScheduleUpdateParams {
           interval_count: number;
         }
 
-        export type Type = 'duration' | 'timestamp';
+        export type Type = 'duration' | 'timestamp' | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
 
@@ -3499,7 +4109,8 @@ export namespace SubscriptionScheduleUpdateParams {
         export type StartDate =
           | 'current_period_end'
           | 'current_period_start'
-          | 'phase_start';
+          | 'phase_start'
+          | OtherString;
 
         export namespace ServicePeriodAnchorConfig {
           export interface Custom {
@@ -3529,7 +4140,7 @@ export namespace SubscriptionScheduleUpdateParams {
             second?: number;
           }
 
-          export type Type = 'custom' | 'inherit';
+          export type Type = 'custom' | 'inherit' | OtherString;
         }
       }
     }
@@ -3552,7 +4163,7 @@ export namespace SubscriptionScheduleUpdateParams {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -3678,10 +4289,15 @@ export namespace SubscriptionScheduleUpdateParams {
             interval_count: number;
           }
 
-          export type Type = 'duration' | 'timestamp';
+          export type Type = 'duration' | 'timestamp' | OtherString;
 
           export namespace Duration {
-            export type Interval = 'day' | 'month' | 'week' | 'year';
+            export type Interval =
+              | 'day'
+              | 'month'
+              | 'week'
+              | 'year'
+              | OtherString;
           }
         }
 
@@ -3701,7 +4317,8 @@ export namespace SubscriptionScheduleUpdateParams {
           export type StartDate =
             | 'current_period_end'
             | 'current_period_start'
-            | 'phase_start';
+            | 'phase_start'
+            | OtherString;
 
           export namespace ServicePeriodAnchorConfig {
             export interface Custom {
@@ -3731,7 +4348,7 @@ export namespace SubscriptionScheduleUpdateParams {
               second?: number;
             }
 
-            export type Type = 'custom' | 'inherit';
+            export type Type = 'custom' | 'inherit' | OtherString;
           }
         }
       }
@@ -3757,12 +4374,16 @@ export namespace SubscriptionScheduleUpdateParams {
       }
 
       export namespace Trial {
-        export type Type = 'free' | 'paid';
+        export type Type = 'free' | 'paid' | OtherString;
       }
     }
 
     export namespace PauseCollection {
-      export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+      export type Behavior =
+        | 'keep_as_draft'
+        | 'mark_uncollectible'
+        | 'void'
+        | OtherString;
     }
 
     export namespace TrialSettings {
@@ -3774,13 +4395,13 @@ export namespace SubscriptionScheduleUpdateParams {
       }
 
       export namespace EndBehavior {
-        export type ProrateUpFront = 'defer' | 'include';
+        export type ProrateUpFront = 'defer' | 'include' | OtherString;
       }
     }
   }
 
   export namespace Prebilling {
-    export type UpdateBehavior = 'prebill' | 'reset';
+    export type UpdateBehavior = 'prebill' | 'reset' | OtherString;
   }
 }
 export interface SubscriptionScheduleListParams extends PaginationParams {
@@ -3939,7 +4560,8 @@ export namespace SubscriptionScheduleAmendParams {
   export type ProrationBehavior =
     | 'always_invoice'
     | 'create_prorations'
-    | 'none';
+    | 'none'
+    | OtherString;
 
   export interface ScheduleSettings {
     /**
@@ -3993,7 +4615,10 @@ export namespace SubscriptionScheduleAmendParams {
       type: AmendmentStart.Type;
     }
 
-    export type BillingCycleAnchor = 'amendment_start' | 'automatic';
+    export type BillingCycleAnchor =
+      | 'amendment_start'
+      | 'automatic'
+      | OtherString;
 
     export interface BillingSchedulesAction {
       /**
@@ -4029,7 +4654,10 @@ export namespace SubscriptionScheduleAmendParams {
       type: DiscountAction.Type;
     }
 
-    export type EffectiveAt = 'amendment_start' | 'billing_period_start';
+    export type EffectiveAt =
+      | 'amendment_start'
+      | 'billing_period_start'
+      | OtherString;
 
     export interface ItemAction {
       /**
@@ -4082,7 +4710,8 @@ export namespace SubscriptionScheduleAmendParams {
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export interface SetPauseCollection {
       /**
@@ -4096,7 +4725,10 @@ export namespace SubscriptionScheduleAmendParams {
       type: SetPauseCollection.Type;
     }
 
-    export type SetScheduleEnd = 'amendment_end' | 'amendment_start';
+    export type SetScheduleEnd =
+      | 'amendment_end'
+      | 'amendment_start'
+      | OtherString;
 
     export interface TrialSettings {
       /**
@@ -4132,10 +4764,11 @@ export namespace SubscriptionScheduleAmendParams {
         | 'timestamp'
         | 'trial_end'
         | 'trial_start'
-        | 'upcoming_invoice';
+        | 'upcoming_invoice'
+        | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
 
@@ -4162,7 +4795,8 @@ export namespace SubscriptionScheduleAmendParams {
         | 'timestamp'
         | 'trial_end'
         | 'trial_start'
-        | 'upcoming_invoice';
+        | 'upcoming_invoice'
+        | OtherString;
     }
 
     export namespace BillingSchedulesAction {
@@ -4178,7 +4812,7 @@ export namespace SubscriptionScheduleAmendParams {
         type: 'price';
       }
 
-      export type Type = 'remove' | 'set';
+      export type Type = 'remove' | 'set' | OtherString;
     }
 
     export namespace DiscountAction {
@@ -4253,7 +4887,7 @@ export namespace SubscriptionScheduleAmendParams {
         settings?: Set.Settings;
       }
 
-      export type Type = 'add' | 'remove' | 'set';
+      export type Type = 'add' | 'remove' | 'set' | OtherString;
 
       export namespace Add {
         export interface DiscountEnd {
@@ -4291,7 +4925,8 @@ export namespace SubscriptionScheduleAmendParams {
           export type StartDate =
             | 'amendment_start'
             | 'current_period_end'
-            | 'current_period_start';
+            | 'current_period_start'
+            | OtherString;
 
           export namespace ServicePeriodAnchorConfig {
             export interface Custom {
@@ -4321,7 +4956,7 @@ export namespace SubscriptionScheduleAmendParams {
               second?: number;
             }
 
-            export type Type = 'custom' | 'inherit';
+            export type Type = 'custom' | 'inherit' | OtherString;
           }
         }
       }
@@ -4355,7 +4990,8 @@ export namespace SubscriptionScheduleAmendParams {
           export type StartDate =
             | 'amendment_start'
             | 'current_period_end'
-            | 'current_period_start';
+            | 'current_period_start'
+            | OtherString;
 
           export namespace ServicePeriodAnchorConfig {
             export interface Custom {
@@ -4385,7 +5021,7 @@ export namespace SubscriptionScheduleAmendParams {
               second?: number;
             }
 
-            export type Type = 'custom' | 'inherit';
+            export type Type = 'custom' | 'inherit' | OtherString;
           }
         }
       }
@@ -4473,7 +5109,7 @@ export namespace SubscriptionScheduleAmendParams {
         trial_offer?: string;
       }
 
-      export type Type = 'add' | 'remove' | 'set';
+      export type Type = 'add' | 'remove' | 'set' | OtherString;
 
       export namespace Add {
         export interface Discount {
@@ -4558,10 +5194,15 @@ export namespace SubscriptionScheduleAmendParams {
               interval_count: number;
             }
 
-            export type Type = 'duration' | 'timestamp';
+            export type Type = 'duration' | 'timestamp' | OtherString;
 
             export namespace Duration {
-              export type Interval = 'day' | 'month' | 'week' | 'year';
+              export type Interval =
+                | 'day'
+                | 'month'
+                | 'week'
+                | 'year'
+                | OtherString;
             }
           }
 
@@ -4581,7 +5222,8 @@ export namespace SubscriptionScheduleAmendParams {
             export type StartDate =
               | 'amendment_start'
               | 'current_period_end'
-              | 'current_period_start';
+              | 'current_period_start'
+              | OtherString;
 
             export namespace ServicePeriodAnchorConfig {
               export interface Custom {
@@ -4611,13 +5253,13 @@ export namespace SubscriptionScheduleAmendParams {
                 second?: number;
               }
 
-              export type Type = 'custom' | 'inherit';
+              export type Type = 'custom' | 'inherit' | OtherString;
             }
           }
         }
 
         export namespace Trial {
-          export type Type = 'free' | 'paid';
+          export type Type = 'free' | 'paid' | OtherString;
         }
       }
 
@@ -4704,10 +5346,15 @@ export namespace SubscriptionScheduleAmendParams {
               interval_count: number;
             }
 
-            export type Type = 'duration' | 'timestamp';
+            export type Type = 'duration' | 'timestamp' | OtherString;
 
             export namespace Duration {
-              export type Interval = 'day' | 'month' | 'week' | 'year';
+              export type Interval =
+                | 'day'
+                | 'month'
+                | 'week'
+                | 'year'
+                | OtherString;
             }
           }
 
@@ -4727,7 +5374,8 @@ export namespace SubscriptionScheduleAmendParams {
             export type StartDate =
               | 'amendment_start'
               | 'current_period_end'
-              | 'current_period_start';
+              | 'current_period_start'
+              | OtherString;
 
             export namespace ServicePeriodAnchorConfig {
               export interface Custom {
@@ -4757,19 +5405,19 @@ export namespace SubscriptionScheduleAmendParams {
                 second?: number;
               }
 
-              export type Type = 'custom' | 'inherit';
+              export type Type = 'custom' | 'inherit' | OtherString;
             }
           }
         }
 
         export namespace Trial {
-          export type Type = 'free' | 'paid';
+          export type Type = 'free' | 'paid' | OtherString;
         }
       }
     }
 
     export namespace MetadataAction {
-      export type Type = 'add' | 'remove' | 'set';
+      export type Type = 'add' | 'remove' | 'set' | OtherString;
     }
 
     export namespace SetPauseCollection {
@@ -4780,10 +5428,14 @@ export namespace SubscriptionScheduleAmendParams {
         behavior: Set.Behavior;
       }
 
-      export type Type = 'remove' | 'set';
+      export type Type = 'remove' | 'set' | OtherString;
 
       export namespace Set {
-        export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        export type Behavior =
+          | 'keep_as_draft'
+          | 'mark_uncollectible'
+          | 'void'
+          | OtherString;
       }
     }
 
@@ -4796,7 +5448,7 @@ export namespace SubscriptionScheduleAmendParams {
       }
 
       export namespace EndBehavior {
-        export type ProrateUpFront = 'defer' | 'include';
+        export type ProrateUpFront = 'defer' | 'include' | OtherString;
       }
     }
   }
@@ -4841,7 +5493,7 @@ export namespace SubscriptionScheduleAmendParams {
       type: BillUntil.Type;
     }
 
-    export type UpdateBehavior = 'prebill' | 'reset';
+    export type UpdateBehavior = 'prebill' | 'reset' | OtherString;
 
     export namespace BillFrom {
       export interface AmendmentStart {
@@ -4851,7 +5503,7 @@ export namespace SubscriptionScheduleAmendParams {
         index: number;
       }
 
-      export type Type = 'amendment_start' | 'now' | 'timestamp';
+      export type Type = 'amendment_start' | 'now' | 'timestamp' | OtherString;
     }
 
     export namespace BillUntil {
@@ -4878,16 +5530,17 @@ export namespace SubscriptionScheduleAmendParams {
         | 'amendment_end'
         | 'duration'
         | 'schedule_end'
-        | 'timestamp';
+        | 'timestamp'
+        | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
 
   export namespace ScheduleSettings {
-    export type EndBehavior = 'cancel' | 'release';
+    export type EndBehavior = 'cancel' | 'release' | OtherString;
   }
 }
 export interface SubscriptionScheduleCancelParams {

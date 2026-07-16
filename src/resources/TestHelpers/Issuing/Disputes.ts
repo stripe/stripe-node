@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {Dispute} from './../../Issuing/Disputes.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class DisputeResource extends StripeResource {
@@ -104,7 +105,7 @@ export namespace TestHelpers {
     }
 
     export namespace DisputeCloseParams {
-      export type Status = 'lost' | 'won';
+      export type Status = 'lost' | 'won' | OtherString;
     }
   }
 }

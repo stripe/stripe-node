@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
-import {MetadataParam, Metadata} from '../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class BalanceTransferResource extends StripeResource {
@@ -164,7 +164,7 @@ export interface BalanceTransferCreateParams {
   metadata?: MetadataParam;
 }
 export namespace BalanceTransferCreateParams {
-  export type Currency = 'eur' | 'gbp' | 'usd';
+  export type Currency = 'eur' | 'gbp' | 'usd' | OtherString;
 
   export interface DestinationBalance {
     /**
@@ -183,7 +183,7 @@ export namespace BalanceTransferCreateParams {
   }
 
   export namespace DestinationBalance {
-    export type Type = 'issuing' | 'payments';
+    export type Type = 'issuing' | 'payments' | OtherString;
   }
 
   export namespace SourceBalance {
@@ -199,6 +199,6 @@ export namespace BalanceTransferCreateParams {
       type: 'charge';
     }
 
-    export type Type = 'allocated_funds' | 'issuing' | 'payments';
+    export type Type = 'allocated_funds' | 'issuing' | 'payments' | OtherString;
   }
 }

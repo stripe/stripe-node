@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../../StripeResource.js';
+import {OtherString} from '../../../../shared.js';
 import {RequestOptions, Response} from '../../../../lib.js';
 
 export class QueryRunResource extends StripeResource {
@@ -170,7 +171,7 @@ export namespace QueryRun {
     }
 
     export namespace File {
-      export type ContentType = 'csv' | 'zip';
+      export type ContentType = 'csv' | 'zip' | OtherString;
 
       export interface DownloadUrl {
         /**
@@ -208,7 +209,10 @@ export namespace QueryRun {
   }
 
   export namespace StatusDetails {
-    export type ErrorCode = 'file_size_above_limit' | 'internal_error';
+    export type ErrorCode =
+      | 'file_size_above_limit'
+      | 'internal_error'
+      | OtherString;
   }
 }
 export namespace V2 {

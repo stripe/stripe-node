@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams} from '../shared.js';
+import {PaginationParams, OtherString} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class PaymentMethodDomainResource extends StripeResource {
@@ -222,7 +222,7 @@ export namespace PaymentMethodDomain {
   }
 
   export namespace AmazonPay {
-    export type Status = 'active' | 'inactive';
+    export type Status = 'active' | 'inactive' | OtherString;
 
     export interface StatusDetails {
       /**
@@ -233,7 +233,7 @@ export namespace PaymentMethodDomain {
   }
 
   export namespace ApplePay {
-    export type Status = 'active' | 'inactive';
+    export type Status = 'active' | 'inactive' | OtherString;
 
     export interface StatusDetails {
       /**
@@ -244,7 +244,7 @@ export namespace PaymentMethodDomain {
   }
 
   export namespace GooglePay {
-    export type Status = 'active' | 'inactive';
+    export type Status = 'active' | 'inactive' | OtherString;
 
     export interface StatusDetails {
       /**
@@ -255,7 +255,7 @@ export namespace PaymentMethodDomain {
   }
 
   export namespace Klarna {
-    export type Status = 'active' | 'inactive';
+    export type Status = 'active' | 'inactive' | OtherString;
 
     export interface StatusDetails {
       /**
@@ -266,7 +266,7 @@ export namespace PaymentMethodDomain {
   }
 
   export namespace Link {
-    export type Status = 'active' | 'inactive';
+    export type Status = 'active' | 'inactive' | OtherString;
 
     export interface StatusDetails {
       /**
@@ -277,7 +277,7 @@ export namespace PaymentMethodDomain {
   }
 
   export namespace Paypal {
-    export type Status = 'active' | 'inactive';
+    export type Status = 'active' | 'inactive' | OtherString;
 
     export interface StatusDetails {
       /**

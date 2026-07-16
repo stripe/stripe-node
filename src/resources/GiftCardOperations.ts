@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {GiftCard} from './GiftCards.js';
+import {OtherString} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class GiftCardOperationResource extends StripeResource {
@@ -184,7 +185,8 @@ export namespace GiftCardOperation {
     | 'provider_unavailable'
     | 'stolen_card'
     | 'suspected_fraud'
-    | 'timeout';
+    | 'timeout'
+    | OtherString;
 
   export interface Reload {
     /**

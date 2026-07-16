@@ -5,7 +5,7 @@ import {Customer} from './Customers.js';
 import {SetupAttempt} from './SetupAttempts.js';
 import {Charge} from './Charges.js';
 import {PaymentMethod} from './PaymentMethods.js';
-import {Address} from '../shared.js';
+import {OtherString, Address} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class ConfirmationTokenResource extends StripeResource {
@@ -264,7 +264,7 @@ export namespace ConfirmationToken {
     zip?: PaymentMethodPreview.Zip;
   }
 
-  export type SetupFutureUsage = 'off_session' | 'on_session';
+  export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
 
   export interface Shipping {
     address: Address;
@@ -346,7 +346,11 @@ export namespace ConfirmationToken {
         }
 
         export namespace Plan {
-          export type Type = 'bonus' | 'fixed_count' | 'revolving';
+          export type Type =
+            | 'bonus'
+            | 'fixed_count'
+            | 'revolving'
+            | OtherString;
         }
       }
     }
@@ -391,7 +395,11 @@ export namespace ConfirmationToken {
 
     export interface Alipay {}
 
-    export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+    export type AllowRedisplay =
+      | 'always'
+      | 'limited'
+      | 'unspecified'
+      | OtherString;
 
     export interface Alma {}
 
@@ -1118,7 +1126,8 @@ export namespace ConfirmationToken {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
-      | 'zip';
+      | 'zip'
+      | OtherString;
 
     export interface Upi {
       /**
@@ -1242,7 +1251,7 @@ export namespace ConfirmationToken {
         preferred: string | null;
       }
 
-      export type RegulatedStatus = 'regulated' | 'unregulated';
+      export type RegulatedStatus = 'regulated' | 'unregulated' | OtherString;
 
       export interface ThreeDSecureUsage {
         /**
@@ -1461,7 +1470,8 @@ export namespace ConfirmationToken {
               | 'contactless_emv'
               | 'contactless_magstripe_mode'
               | 'magnetic_stripe_fallback'
-              | 'magnetic_stripe_track2';
+              | 'magnetic_stripe_track2'
+              | OtherString;
 
             export interface Reauthorization {
               /**
@@ -1529,7 +1539,7 @@ export namespace ConfirmationToken {
             }
 
             export namespace Reauthorization {
-              export type Status = 'available' | 'unavailable';
+              export type Status = 'available' | 'unavailable' | OtherString;
             }
 
             export namespace Receipt {
@@ -1537,7 +1547,8 @@ export namespace ConfirmationToken {
                 | 'checking'
                 | 'credit'
                 | 'prepaid'
-                | 'unknown';
+                | 'unknown'
+                | OtherString;
             }
 
             export namespace Wallet {
@@ -1545,7 +1556,8 @@ export namespace ConfirmationToken {
                 | 'apple_pay'
                 | 'google_pay'
                 | 'samsung_pay'
-                | 'unknown';
+                | 'unknown'
+                | OtherString;
             }
           }
         }
@@ -1647,7 +1659,8 @@ export namespace ConfirmationToken {
         | 'contactless_emv'
         | 'contactless_magstripe_mode'
         | 'magnetic_stripe_fallback'
-        | 'magnetic_stripe_track2';
+        | 'magnetic_stripe_track2'
+        | OtherString;
 
       export interface Wallet {
         /**
@@ -1661,7 +1674,8 @@ export namespace ConfirmationToken {
           | 'apple_pay'
           | 'google_pay'
           | 'samsung_pay'
-          | 'unknown';
+          | 'unknown'
+          | OtherString;
       }
     }
 
@@ -1733,7 +1747,13 @@ export namespace ConfirmationToken {
     }
 
     export namespace IdBankTransfer {
-      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      export type Bank =
+        | 'bca'
+        | 'bni'
+        | 'bri'
+        | 'cimb'
+        | 'permata'
+        | OtherString;
     }
 
     export namespace Ideal {
@@ -1801,7 +1821,8 @@ export namespace ConfirmationToken {
         | 'contactless_emv'
         | 'contactless_magstripe_mode'
         | 'magnetic_stripe_fallback'
-        | 'magnetic_stripe_track2';
+        | 'magnetic_stripe_track2'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -1846,11 +1867,12 @@ export namespace ConfirmationToken {
         | 'shinhyup'
         | 'suhyup'
         | 'tossbank'
-        | 'woori';
+        | 'woori'
+        | OtherString;
     }
 
     export namespace NaverPay {
-      export type Funding = 'card' | 'points';
+      export type Funding = 'card' | 'points' | OtherString;
     }
 
     export namespace P24 {
@@ -1880,7 +1902,8 @@ export namespace ConfirmationToken {
         | 'tmobile_usbugi_bankowe'
         | 'toyota_bank'
         | 'velobank'
-        | 'volkswagen_bank';
+        | 'volkswagen_bank'
+        | OtherString;
     }
 
     export namespace Rechnung {
@@ -1922,9 +1945,9 @@ export namespace ConfirmationToken {
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
 
       export interface Networks {
         /**
@@ -1972,7 +1995,8 @@ export namespace ConfirmationToken {
             | 'R16'
             | 'R20'
             | 'R29'
-            | 'R31';
+            | 'R31'
+            | OtherString;
 
           export type Reason =
             | 'bank_account_closed'
@@ -1981,7 +2005,8 @@ export namespace ConfirmationToken {
             | 'bank_account_restricted'
             | 'bank_account_unusable'
             | 'debit_not_authorized'
-            | 'tokenized_account_number_deactivated';
+            | 'tokenized_account_number_deactivated'
+            | OtherString;
         }
       }
     }

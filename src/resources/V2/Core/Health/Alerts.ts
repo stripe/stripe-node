@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {V2Amount} from './../../V2Amounts.js';
-import {Decimal} from '../../../../shared.js';
+import {OtherString, Decimal} from '../../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 import {HistoryResource} from './Alerts/History.js';
 import {Stripe} from '../../../../stripe.core.js';
@@ -490,7 +490,7 @@ export namespace Alert {
     realized_fraud_amount: V2Amount;
   }
 
-  export type GroupingType = 'incident' | 'standalone';
+  export type GroupingType = 'incident' | 'standalone' | OtherString;
 
   export interface InvoiceCountDropped {
     /**
@@ -606,9 +606,9 @@ export namespace Alert {
     impacted_payments_percentage: Decimal;
   }
 
-  export type Severity = 'critical' | 'non_critical';
+  export type Severity = 'critical' | 'non_critical' | OtherString;
 
-  export type Status = 'open' | 'resolved';
+  export type Status = 'open' | 'resolved' | OtherString;
 
   export interface TrafficVolumeDrop {
     /**
@@ -647,7 +647,8 @@ export namespace Alert {
     | 'payment_method_error'
     | 'sepa_debit_delayed'
     | 'traffic_volume_drop'
-    | 'webhook_latency';
+    | 'webhook_latency'
+    | OtherString;
 
   export interface WebhookLatency {
     /**
@@ -657,7 +658,7 @@ export namespace Alert {
   }
 
   export namespace ApiError {
-    export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+    export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | OtherString;
 
     export interface TopImpactedAccount {
       /**
@@ -678,7 +679,7 @@ export namespace Alert {
   }
 
   export namespace ApiLatency {
-    export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+    export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | OtherString;
 
     export interface TopImpactedAccount {
       /**
@@ -699,7 +700,7 @@ export namespace Alert {
   }
 
   export namespace AuthorizationRateDrop {
-    export type ChargeType = 'money_moving' | 'validation';
+    export type ChargeType = 'money_moving' | 'validation' | OtherString;
 
     export interface Dimension {
       /**
@@ -782,11 +783,12 @@ export namespace Alert {
       | 'us_bank_account'
       | 'vipps'
       | 'wechat_pay'
-      | 'zip';
+      | 'zip'
+      | OtherString;
   }
 
   export namespace ElementsError {
-    export type ElementType = 'expressCheckout' | 'payment';
+    export type ElementType = 'expressCheckout' | 'payment' | OtherString;
   }
 
   export namespace EventGenerationFailure {
@@ -809,7 +811,7 @@ export namespace Alert {
   }
 
   export namespace FraudRate {
-    export type AttackType = 'spike' | 'sustained_attack';
+    export type AttackType = 'spike' | 'sustained_attack' | OtherString;
   }
 
   export namespace MetronomeNotificationLatency {
@@ -817,7 +819,8 @@ export namespace Alert {
       | 'configuration_triggered'
       | 'high_cardinality_usage_triggered'
       | 'standard_usage_triggered'
-      | 'time_triggered';
+      | 'time_triggered'
+      | OtherString;
   }
 
   export namespace PaymentMethodError {
@@ -890,7 +893,8 @@ export namespace Alert {
       | 'us_bank_account'
       | 'vipps'
       | 'wechat_pay'
-      | 'zip';
+      | 'zip'
+      | OtherString;
 
     export interface TopImpactedAccount {
       /**
@@ -968,9 +972,9 @@ export namespace V2 {
       }
 
       export namespace AlertListParams {
-        export type Severity = 'critical' | 'non_critical';
+        export type Severity = 'critical' | 'non_critical' | OtherString;
 
-        export type Status = 'open' | 'resolved';
+        export type Status = 'open' | 'resolved' | OtherString;
 
         export type Type =
           | 'api_error'
@@ -987,7 +991,8 @@ export namespace V2 {
           | 'payment_method_error'
           | 'sepa_debit_delayed'
           | 'traffic_volume_drop'
-          | 'webhook_latency';
+          | 'webhook_latency'
+          | OtherString;
       }
     }
   }

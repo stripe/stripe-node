@@ -5,6 +5,7 @@ import {Application, DeletedApplication} from './../Applications.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   PaginationParams,
   Metadata,
 } from '../../shared.js';
@@ -102,7 +103,7 @@ export interface Configuration {
   created: number;
 
   /**
-   * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overriden](https://docs.stripe.com/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
+   * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overridden](https://docs.stripe.com/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
    */
   default_return_url: string | null;
 
@@ -271,7 +272,8 @@ export namespace Configuration {
         | 'name'
         | 'phone'
         | 'shipping'
-        | 'tax_id';
+        | 'tax_id'
+        | OtherString;
     }
 
     export namespace SubscriptionCancel {
@@ -287,7 +289,7 @@ export namespace Configuration {
         options: Array<CancellationReason.Option>;
       }
 
-      export type Mode = 'at_period_end' | 'immediately';
+      export type Mode = 'at_period_end' | 'immediately' | OtherString;
 
       export type ProrationBehavior =
         | 'always_invoice'
@@ -303,7 +305,8 @@ export namespace Configuration {
           | 'switched_service'
           | 'too_complex'
           | 'too_expensive'
-          | 'unused';
+          | 'unused'
+          | OtherString;
       }
     }
 
@@ -313,7 +316,8 @@ export namespace Configuration {
       export type DefaultAllowedUpdate =
         | 'price'
         | 'promotion_code'
-        | 'quantity';
+        | 'quantity'
+        | OtherString;
 
       export interface Product {
         adjustable_quantity: Product.AdjustableQuantity;
@@ -341,7 +345,10 @@ export namespace Configuration {
         conditions: Array<ScheduleAtPeriodEnd.Condition>;
       }
 
-      export type TrialUpdateBehavior = 'continue_trial' | 'end_trial';
+      export type TrialUpdateBehavior =
+        | 'continue_trial'
+        | 'end_trial'
+        | OtherString;
 
       export namespace Product {
         export interface AdjustableQuantity {
@@ -371,7 +378,10 @@ export namespace Configuration {
         }
 
         export namespace Condition {
-          export type Type = 'decreasing_item_amount' | 'shortening_interval';
+          export type Type =
+            | 'decreasing_item_amount'
+            | 'shortening_interval'
+            | OtherString;
         }
       }
     }
@@ -390,7 +400,7 @@ export namespace BillingPortal {
     business_profile?: ConfigurationCreateParams.BusinessProfile;
 
     /**
-     * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overriden](https://docs.stripe.com/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
+     * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overridden](https://docs.stripe.com/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
      */
     default_return_url?: Emptyable<string>;
 
@@ -567,7 +577,8 @@ export namespace BillingPortal {
           | 'name'
           | 'phone'
           | 'shipping'
-          | 'tax_id';
+          | 'tax_id'
+          | OtherString;
       }
 
       export namespace SubscriptionCancel {
@@ -583,7 +594,7 @@ export namespace BillingPortal {
           options: Emptyable<Array<CancellationReason.Option>>;
         }
 
-        export type Mode = 'at_period_end' | 'immediately';
+        export type Mode = 'at_period_end' | 'immediately' | OtherString;
 
         export type ProrationBehavior =
           | 'always_invoice'
@@ -599,7 +610,8 @@ export namespace BillingPortal {
             | 'switched_service'
             | 'too_complex'
             | 'too_expensive'
-            | 'unused';
+            | 'unused'
+            | OtherString;
         }
       }
 
@@ -609,7 +621,8 @@ export namespace BillingPortal {
         export type DefaultAllowedUpdate =
           | 'price'
           | 'promotion_code'
-          | 'quantity';
+          | 'quantity'
+          | OtherString;
 
         export interface Product {
           /**
@@ -640,7 +653,10 @@ export namespace BillingPortal {
           conditions?: Array<ScheduleAtPeriodEnd.Condition>;
         }
 
-        export type TrialUpdateBehavior = 'continue_trial' | 'end_trial';
+        export type TrialUpdateBehavior =
+          | 'continue_trial'
+          | 'end_trial'
+          | OtherString;
 
         export namespace Product {
           export interface AdjustableQuantity {
@@ -670,7 +686,10 @@ export namespace BillingPortal {
           }
 
           export namespace Condition {
-            export type Type = 'decreasing_item_amount' | 'shortening_interval';
+            export type Type =
+              | 'decreasing_item_amount'
+              | 'shortening_interval'
+              | OtherString;
           }
         }
       }
@@ -698,7 +717,7 @@ export namespace BillingPortal {
     business_profile?: ConfigurationUpdateParams.BusinessProfile;
 
     /**
-     * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overriden](https://docs.stripe.com/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
+     * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overridden](https://docs.stripe.com/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
      */
     default_return_url?: Emptyable<string>;
 
@@ -882,7 +901,8 @@ export namespace BillingPortal {
           | 'name'
           | 'phone'
           | 'shipping'
-          | 'tax_id';
+          | 'tax_id'
+          | OtherString;
       }
 
       export namespace SubscriptionCancel {
@@ -898,7 +918,7 @@ export namespace BillingPortal {
           options?: Emptyable<Array<CancellationReason.Option>>;
         }
 
-        export type Mode = 'at_period_end' | 'immediately';
+        export type Mode = 'at_period_end' | 'immediately' | OtherString;
 
         export type ProrationBehavior =
           | 'always_invoice'
@@ -914,7 +934,8 @@ export namespace BillingPortal {
             | 'switched_service'
             | 'too_complex'
             | 'too_expensive'
-            | 'unused';
+            | 'unused'
+            | OtherString;
         }
       }
 
@@ -924,7 +945,8 @@ export namespace BillingPortal {
         export type DefaultAllowedUpdate =
           | 'price'
           | 'promotion_code'
-          | 'quantity';
+          | 'quantity'
+          | OtherString;
 
         export interface Product {
           /**
@@ -955,7 +977,10 @@ export namespace BillingPortal {
           conditions?: Emptyable<Array<ScheduleAtPeriodEnd.Condition>>;
         }
 
-        export type TrialUpdateBehavior = 'continue_trial' | 'end_trial';
+        export type TrialUpdateBehavior =
+          | 'continue_trial'
+          | 'end_trial'
+          | OtherString;
 
         export namespace Product {
           export interface AdjustableQuantity {
@@ -985,7 +1010,10 @@ export namespace BillingPortal {
           }
 
           export namespace Condition {
-            export type Type = 'decreasing_item_amount' | 'shortening_interval';
+            export type Type =
+              | 'decreasing_item_amount'
+              | 'shortening_interval'
+              | OtherString;
           }
         }
       }

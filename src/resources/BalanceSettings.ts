@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {Emptyable} from '../shared.js';
+import {Emptyable, OtherString} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class BalanceSettingResource extends StripeResource {
@@ -106,7 +106,8 @@ export namespace BalanceSettings {
     export type SettlementCurrencies =
       | 'disabled'
       | 'enabled'
-      | 'restricted_by_application';
+      | 'restricted_by_application'
+      | OtherString;
 
     export interface SettlementTiming {
       /**
@@ -160,21 +161,30 @@ export namespace BalanceSettings {
         weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
       }
 
-      export type Status = 'disabled' | 'enabled';
+      export type Status = 'disabled' | 'enabled' | OtherString;
 
       export namespace AutomaticTransferRulesByCurrency {
-        export type Type = 'transfer_all' | 'transfer_up_to_amount';
+        export type Type =
+          | 'transfer_all'
+          | 'transfer_up_to_amount'
+          | OtherString;
       }
 
       export namespace Schedule {
-        export type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
+        export type Interval =
+          | 'daily'
+          | 'manual'
+          | 'monthly'
+          | 'weekly'
+          | OtherString;
 
         export type WeeklyPayoutDay =
           | 'friday'
           | 'monday'
           | 'thursday'
           | 'tuesday'
-          | 'wednesday';
+          | 'wednesday'
+          | OtherString;
       }
     }
 
@@ -269,7 +279,7 @@ export namespace BalanceSettingsUpdateParams {
       statement_descriptor?: string;
     }
 
-    export type SettlementCurrencies = 'disabled' | 'enabled';
+    export type SettlementCurrencies = 'disabled' | 'enabled' | OtherString;
 
     export interface SettlementTiming {
       /**
@@ -319,18 +329,27 @@ export namespace BalanceSettingsUpdateParams {
       }
 
       export namespace AutomaticTransferRulesByCurrency {
-        export type Type = 'transfer_all' | 'transfer_up_to_amount';
+        export type Type =
+          | 'transfer_all'
+          | 'transfer_up_to_amount'
+          | OtherString;
       }
 
       export namespace Schedule {
-        export type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
+        export type Interval =
+          | 'daily'
+          | 'manual'
+          | 'monthly'
+          | 'weekly'
+          | OtherString;
 
         export type WeeklyPayoutDay =
           | 'friday'
           | 'monday'
           | 'thursday'
           | 'tuesday'
-          | 'wednesday';
+          | 'wednesday'
+          | OtherString;
       }
     }
 

@@ -1,7 +1,12 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {MetadataParam, Decimal, Metadata} from '../../../shared.js';
+import {
+  MetadataParam,
+  Decimal,
+  OtherString,
+  Metadata,
+} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {DeletedObject} from './../../V2/DeletedObject.js';
 import {PricingLineResource} from './Contracts/PricingLines.js';
@@ -495,7 +500,7 @@ export namespace Contract {
     data: Array<PricingOverrides.Data>;
   }
 
-  export type Status = 'active' | 'canceled' | 'draft' | 'ended';
+  export type Status = 'active' | 'canceled' | 'draft' | 'ended' | OtherString;
 
   export interface StatusTransitions {
     /**
@@ -839,7 +844,7 @@ export namespace Contract {
         }
 
         export namespace Criterion {
-          export type Type = 'exclude' | 'include';
+          export type Type = 'exclude' | 'include' | OtherString;
         }
       }
     }
@@ -955,7 +960,8 @@ export namespace V2 {
       export type Include =
         | 'billing_settings'
         | 'pricing_lines'
-        | 'pricing_overrides';
+        | 'pricing_overrides'
+        | OtherString;
 
       export interface PricingOverride {
         /**
@@ -1323,7 +1329,7 @@ export namespace V2 {
           }
 
           export namespace Criterion {
-            export type Type = 'exclude' | 'include';
+            export type Type = 'exclude' | 'include' | OtherString;
           }
         }
       }
@@ -1343,7 +1349,8 @@ export namespace V2 {
       export type Include =
         | 'billing_settings'
         | 'pricing_lines'
-        | 'pricing_overrides';
+        | 'pricing_overrides'
+        | OtherString;
     }
   }
 }
@@ -1372,7 +1379,8 @@ export namespace V2 {
       export type Include =
         | 'billing_settings'
         | 'pricing_lines'
-        | 'pricing_overrides';
+        | 'pricing_overrides'
+        | OtherString;
 
       export interface PricingLineAction {
         /**
@@ -1453,7 +1461,7 @@ export namespace V2 {
           id: string;
         }
 
-        export type Type = 'add' | 'remove' | 'update';
+        export type Type = 'add' | 'remove' | 'update' | OtherString;
 
         export interface Update {
           /**
@@ -1765,7 +1773,7 @@ export namespace V2 {
                   lookup_key?: string;
                 }
 
-                export type Type = 'add' | 'remove' | 'update';
+                export type Type = 'add' | 'remove' | 'update' | OtherString;
 
                 export interface Update {
                   /**
@@ -1917,7 +1925,7 @@ export namespace V2 {
           id: string;
         }
 
-        export type Type = 'add' | 'remove' | 'update';
+        export type Type = 'add' | 'remove' | 'update' | OtherString;
 
         export interface Update {
           /**
@@ -1999,7 +2007,7 @@ export namespace V2 {
             }
 
             export namespace Criterion {
-              export type Type = 'exclude' | 'include';
+              export type Type = 'exclude' | 'include' | OtherString;
             }
           }
         }
@@ -2056,7 +2064,8 @@ export namespace V2 {
       export type Include =
         | 'billing_settings'
         | 'pricing_lines'
-        | 'pricing_overrides';
+        | 'pricing_overrides'
+        | OtherString;
     }
   }
 }
@@ -2078,7 +2087,8 @@ export namespace V2 {
       export type Include =
         | 'billing_settings'
         | 'pricing_lines'
-        | 'pricing_overrides';
+        | 'pricing_overrides'
+        | OtherString;
     }
   }
 }
@@ -2124,12 +2134,13 @@ export namespace V2 {
       export type Include =
         | 'billing_settings'
         | 'pricing_lines'
-        | 'pricing_overrides';
+        | 'pricing_overrides'
+        | OtherString;
 
-      export type ProrationBehavior = 'none' | 'prorated';
+      export type ProrationBehavior = 'none' | 'prorated' | OtherString;
 
       export namespace CancelPricingLine {
-        export type ProrationBehavior = 'none' | 'prorated';
+        export type ProrationBehavior = 'none' | 'prorated' | OtherString;
       }
     }
   }

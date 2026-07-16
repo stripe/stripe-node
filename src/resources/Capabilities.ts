@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Account} from './Accounts.js';
+import {OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface Capability {
   /**
@@ -128,7 +129,12 @@ export namespace Capability {
     pending_verification: Array<string>;
   }
 
-  export type Status = 'active' | 'inactive' | 'pending' | 'unrequested';
+  export type Status =
+    | 'active'
+    | 'inactive'
+    | 'pending'
+    | 'unrequested'
+    | OtherString;
 
   export namespace FutureRequirements {
     export interface Alternative {
@@ -153,7 +159,8 @@ export namespace Capability {
       | 'rejected.inactivity'
       | 'rejected.other'
       | 'rejected.unsupported_business'
-      | 'requirements.fields_needed';
+      | 'requirements.fields_needed'
+      | OtherString;
 
     export interface Error {
       /**
@@ -294,7 +301,12 @@ export namespace Capability {
     }
 
     export namespace PspMigration {
-      export type Status = 'active' | 'disrupted' | 'expired' | 'inactive';
+      export type Status =
+        | 'active'
+        | 'disrupted'
+        | 'expired'
+        | 'inactive'
+        | OtherString;
     }
   }
 
@@ -321,7 +333,8 @@ export namespace Capability {
       | 'rejected.inactivity'
       | 'rejected.other'
       | 'rejected.unsupported_business'
-      | 'requirements.fields_needed';
+      | 'requirements.fields_needed'
+      | OtherString;
 
     export interface Error {
       /**

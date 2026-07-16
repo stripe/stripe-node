@@ -4,6 +4,7 @@ import {StripeResource} from '../../../StripeResource.js';
 import {FinancialAddressCreditSimulation} from './../../V2/FinancialAddressCreditSimulations.js';
 import {FinancialAddressGeneratedMicrodeposits} from './../../V2/FinancialAddressGeneratedMicrodeposits.js';
 import {V2Amount} from './../V2Amounts.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class FinancialAddressResource extends StripeResource {
@@ -69,7 +70,8 @@ export namespace V2 {
         | 'fps'
         | 'rtp'
         | 'sepa_credit_transfer'
-        | 'wire';
+        | 'wire'
+        | OtherString;
     }
   }
 }

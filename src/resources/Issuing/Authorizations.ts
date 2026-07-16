@@ -11,6 +11,7 @@ import {
   MetadataParam,
   PaginationParams,
   RangeQueryParam,
+  OtherString,
   Metadata,
   Address,
   Decimal,
@@ -1126,7 +1127,8 @@ export namespace Authorization {
     | 'contactless'
     | 'keyed_in'
     | 'online'
-    | 'swipe';
+    | 'swipe'
+    | OtherString;
 
   export interface BalanceResponse {
     /**
@@ -1150,7 +1152,7 @@ export namespace Authorization {
     current_balance: number;
   }
 
-  export type CardPresence = 'not_present' | 'present';
+  export type CardPresence = 'not_present' | 'present' | OtherString;
 
   export interface CryptoTransaction {
     /**
@@ -1452,7 +1454,12 @@ export namespace Authorization {
     requested_at: number | null;
   }
 
-  export type Status = 'closed' | 'expired' | 'pending' | 'reversed';
+  export type Status =
+    | 'closed'
+    | 'expired'
+    | 'pending'
+    | 'reversed'
+    | OtherString;
 
   export interface TerminalData {
     /**
@@ -1551,7 +1558,8 @@ export namespace Authorization {
       | 'default'
       | 'other'
       | 'savings'
-      | 'universal';
+      | 'universal'
+      | OtherString;
   }
 
   export namespace CryptoTransaction {
@@ -2076,7 +2084,8 @@ export namespace Authorization {
           | 'web_infrastructure'
           | 'wedding_and_bridal'
           | 'women_s_clothing'
-          | 'zoos_and_aquariums';
+          | 'zoos_and_aquariums'
+          | OtherString;
       }
 
       export namespace Location {
@@ -2108,7 +2117,8 @@ export namespace Authorization {
         | 'marketplace'
         | 'other'
         | 'payment_processor'
-        | 'platform';
+        | 'platform'
+        | OtherString;
     }
   }
 
@@ -2149,7 +2159,8 @@ export namespace Authorization {
     export type PurchaseType =
       | 'fuel_and_non_fuel_purchase'
       | 'fuel_purchase'
-      | 'non_fuel_purchase';
+      | 'non_fuel_purchase'
+      | OtherString;
 
     export interface ReportedBreakdown {
       /**
@@ -2171,7 +2182,8 @@ export namespace Authorization {
     export type ServiceType =
       | 'full_service'
       | 'non_fuel_transaction'
-      | 'self_service';
+      | 'self_service'
+      | OtherString;
 
     export namespace ReportedBreakdown {
       export interface Fuel {
@@ -2208,11 +2220,13 @@ export namespace Authorization {
       | 'pending'
       | 'rejected'
       | 'undeliverable'
-      | 'verified';
+      | 'verified'
+      | OtherString;
 
     export type UndeliverableReason =
       | 'no_phone_number'
-      | 'unsupported_phone_number';
+      | 'unsupported_phone_number'
+      | OtherString;
   }
 
   export namespace Fuel {
@@ -2221,7 +2235,8 @@ export namespace Authorization {
       | 'other'
       | 'unleaded_plus'
       | 'unleaded_regular'
-      | 'unleaded_super';
+      | 'unleaded_super'
+      | OtherString;
 
     export type Unit =
       | 'charging_minute'
@@ -2231,7 +2246,8 @@ export namespace Authorization {
       | 'liter'
       | 'other'
       | 'pound'
-      | 'us_gallon';
+      | 'us_gallon'
+      | OtherString;
   }
 
   export namespace PendingRequest {
@@ -2249,7 +2265,7 @@ export namespace Authorization {
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 
   export namespace RequestHistory {
@@ -2287,12 +2303,14 @@ export namespace Authorization {
       | 'not_allowed'
       | 'pin_blocked'
       | 'spending_controls'
+      | 'stripe_internal_error'
       | 'suspected_fraud'
       | 'verification_failed'
       | 'webhook_approved'
       | 'webhook_declined'
       | 'webhook_error'
-      | 'webhook_timeout';
+      | 'webhook_timeout'
+      | OtherString;
 
     export namespace NetworkData {
       export interface TraceId {
@@ -2321,7 +2339,8 @@ export namespace Authorization {
       | 'pin'
       | 'pin_and_signature'
       | 'signature'
-      | 'unknown';
+      | 'unknown'
+      | OtherString;
   }
 
   export namespace TokenDetails {
@@ -2343,7 +2362,8 @@ export namespace Authorization {
     export type ProvisioningDecision =
       | 'approve'
       | 'approve_pending_id_and_v'
-      | 'decline';
+      | 'decline'
+      | OtherString;
 
     export type TokenType =
       | 'card_on_file'
@@ -2351,7 +2371,8 @@ export namespace Authorization {
       | 'commerce_platform'
       | 'commercial_virtual_account'
       | 'secure_element'
-      | 'static_credential';
+      | 'static_credential'
+      | OtherString;
 
     export namespace NetworkData {
       export interface Device {
@@ -2393,7 +2414,7 @@ export namespace Authorization {
         token_requestor_id: string;
       }
 
-      export type Type = 'mastercard' | 'visa';
+      export type Type = 'mastercard' | 'visa' | OtherString;
 
       export interface Visa {
         /**
@@ -2633,18 +2654,25 @@ export namespace Authorization {
           | 'yo'
           | 'za'
           | 'zh'
-          | 'zu';
+          | 'zu'
+          | OtherString;
       }
 
       export namespace Visa {
         export type TokenDecisionRecommendation =
           | 'approve'
           | 'decline'
-          | 'recommend_id_and_v';
+          | 'recommend_id_and_v'
+          | OtherString;
       }
 
       export namespace WalletProvider {
-        export type CardNumberSource = 'app' | 'manual' | 'on_file' | 'other';
+        export type CardNumberSource =
+          | 'app'
+          | 'manual'
+          | 'on_file'
+          | 'other'
+          | OtherString;
 
         export type ReasonCode =
           | 'account_card_too_new'
@@ -2674,17 +2702,30 @@ export namespace Authorization {
           | 'suspicious_activity'
           | 'too_many_different_cardholders'
           | 'too_many_recent_attempts'
-          | 'too_many_recent_tokens';
+          | 'too_many_recent_tokens'
+          | OtherString;
 
-        export type SuggestedDecision = 'approve' | 'decline' | 'require_auth';
+        export type SuggestedDecision =
+          | 'approve'
+          | 'decline'
+          | 'require_auth'
+          | OtherString;
       }
     }
   }
 
   export namespace VerificationData {
-    export type AddressLine1Check = 'match' | 'mismatch' | 'not_provided';
+    export type AddressLine1Check =
+      | 'match'
+      | 'mismatch'
+      | 'not_provided'
+      | OtherString;
 
-    export type AddressPostalCodeCheck = 'match' | 'mismatch' | 'not_provided';
+    export type AddressPostalCodeCheck =
+      | 'match'
+      | 'mismatch'
+      | 'not_provided'
+      | OtherString;
 
     export interface AuthenticationExemption {
       /**
@@ -2698,9 +2739,13 @@ export namespace Authorization {
       type: AuthenticationExemption.Type;
     }
 
-    export type CvcCheck = 'match' | 'mismatch' | 'not_provided';
+    export type CvcCheck = 'match' | 'mismatch' | 'not_provided' | OtherString;
 
-    export type ExpiryCheck = 'match' | 'mismatch' | 'not_provided';
+    export type ExpiryCheck =
+      | 'match'
+      | 'mismatch'
+      | 'not_provided'
+      | OtherString;
 
     export interface ThreeDSecure {
       /**
@@ -2710,12 +2755,13 @@ export namespace Authorization {
     }
 
     export namespace AuthenticationExemption {
-      export type ClaimedBy = 'acquirer' | 'issuer';
+      export type ClaimedBy = 'acquirer' | 'issuer' | OtherString;
 
       export type Type =
         | 'low_value_transaction'
         | 'transaction_risk_analysis'
-        | 'unknown';
+        | 'unknown'
+        | OtherString;
     }
 
     export namespace ThreeDSecure {
@@ -2723,7 +2769,8 @@ export namespace Authorization {
         | 'attempt_acknowledged'
         | 'authenticated'
         | 'failed'
-        | 'required';
+        | 'required'
+        | OtherString;
     }
   }
 }
@@ -2777,7 +2824,12 @@ export namespace Issuing {
   }
 
   export namespace AuthorizationListParams {
-    export type Status = 'closed' | 'expired' | 'pending' | 'reversed';
+    export type Status =
+      | 'closed'
+      | 'expired'
+      | 'pending'
+      | 'reversed'
+      | OtherString;
   }
 }
 export namespace Issuing {

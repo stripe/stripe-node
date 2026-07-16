@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FeeBatchResource extends StripeResource {
@@ -153,7 +154,7 @@ export namespace FeeBatch {
     type: CollectionRecord.Type;
   }
 
-  export type Status = 'billed' | 'pending';
+  export type Status = 'billed' | 'pending' | OtherString;
 
   export interface StatusTransitions {
     /**
@@ -186,7 +187,7 @@ export namespace FeeBatch {
   }
 
   export namespace CollectedBy {
-    export type Type = 'application' | 'network' | 'stripe';
+    export type Type = 'application' | 'network' | 'stripe' | OtherString;
   }
 
   export namespace CollectionRecord {
@@ -215,7 +216,8 @@ export namespace FeeBatch {
       | 'balance_transaction'
       | 'credit_transaction'
       | 'money_management_transaction'
-      | 'payable_invoice';
+      | 'payable_invoice'
+      | OtherString;
 
     export namespace Tax {
       export interface Amount {

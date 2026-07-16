@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface RedactionJobValidationError {
   /**
@@ -33,7 +34,8 @@ export namespace RedactionJobValidationError {
     | 'invalid_file_purpose'
     | 'invalid_state'
     | 'locked_by_other_job'
-    | 'too_many_objects';
+    | 'too_many_objects'
+    | OtherString;
 
   export interface ErroringObject {
     /**

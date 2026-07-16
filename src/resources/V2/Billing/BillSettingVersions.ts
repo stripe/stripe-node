@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../../../shared.js';
 import {RequestOptions} from '../../../lib.js';
 export interface BillSettingVersion {
   /**
@@ -61,7 +62,7 @@ export namespace BillSettingVersion {
     }
 
     export namespace Tax {
-      export type Type = 'automatic' | 'manual';
+      export type Type = 'automatic' | 'manual' | OtherString;
     }
   }
 

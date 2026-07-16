@@ -6,6 +6,7 @@ import {Mandate} from './Mandates.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   AddressParam,
   Metadata,
   Address,
@@ -385,7 +386,7 @@ export namespace PaymentAttemptRecord {
     phone: string | null;
   }
 
-  export type CustomerPresence = 'off_session' | 'on_session';
+  export type CustomerPresence = 'off_session' | 'on_session' | OtherString;
 
   export interface PaymentMethodDetails {
     ach_credit_transfer?: PaymentMethodDetails.AchCreditTransfer;
@@ -585,7 +586,7 @@ export namespace PaymentAttemptRecord {
     type: ProcessorDetails.Type;
   }
 
-  export type ReportedBy = 'self' | 'stripe';
+  export type ReportedBy = 'self' | 'stripe' | OtherString;
 
   export interface ShippingDetails {
     /**
@@ -2173,7 +2174,8 @@ export namespace PaymentAttemptRecord {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export interface Checks {
         /**
@@ -2192,7 +2194,12 @@ export namespace PaymentAttemptRecord {
         cvc_check: Checks.CvcCheck | null;
       }
 
-      export type Funding = 'credit' | 'debit' | 'prepaid' | 'unknown';
+      export type Funding =
+        | 'credit'
+        | 'debit'
+        | 'prepaid'
+        | 'unknown'
+        | OtherString;
 
       export interface Installments {
         /**
@@ -2213,7 +2220,8 @@ export namespace PaymentAttemptRecord {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export interface NetworkToken {
         /**
@@ -2285,15 +2293,22 @@ export namespace PaymentAttemptRecord {
           | 'fail'
           | 'pass'
           | 'unavailable'
-          | 'unchecked';
+          | 'unchecked'
+          | OtherString;
 
         export type AddressPostalCodeCheck =
           | 'fail'
           | 'pass'
           | 'unavailable'
-          | 'unchecked';
+          | 'unchecked'
+          | OtherString;
 
-        export type CvcCheck = 'fail' | 'pass' | 'unavailable' | 'unchecked';
+        export type CvcCheck =
+          | 'fail'
+          | 'pass'
+          | 'unavailable'
+          | 'unchecked'
+          | OtherString;
       }
 
       export namespace Installments {
@@ -2315,12 +2330,19 @@ export namespace PaymentAttemptRecord {
         }
 
         export namespace Plan {
-          export type Type = 'bonus' | 'fixed_count' | 'revolving';
+          export type Type =
+            | 'bonus'
+            | 'fixed_count'
+            | 'revolving'
+            | OtherString;
         }
       }
 
       export namespace ThreeDSecure {
-        export type AuthenticationFlow = 'challenge' | 'frictionless';
+        export type AuthenticationFlow =
+          | 'challenge'
+          | 'frictionless'
+          | OtherString;
 
         export type ElectronicCommerceIndicator =
           | '01'
@@ -2339,7 +2361,8 @@ export namespace PaymentAttemptRecord {
           | 'exempted'
           | 'failed'
           | 'not_supported'
-          | 'processing_error';
+          | 'processing_error'
+          | OtherString;
 
         export type ResultReason =
           | 'abandoned'
@@ -2348,9 +2371,10 @@ export namespace PaymentAttemptRecord {
           | 'card_not_enrolled'
           | 'network_not_supported'
           | 'protocol_error'
-          | 'rejected';
+          | 'rejected'
+          | OtherString;
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0';
+        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | OtherString;
       }
 
       export namespace Wallet {
@@ -2390,7 +2414,8 @@ export namespace PaymentAttemptRecord {
         | 'contactless_emv'
         | 'contactless_magstripe_mode'
         | 'magnetic_stripe_fallback'
-        | 'magnetic_stripe_track2';
+        | 'magnetic_stripe_track2'
+        | OtherString;
 
       export interface Reauthorization {
         /**
@@ -2458,11 +2483,16 @@ export namespace PaymentAttemptRecord {
       }
 
       export namespace Reauthorization {
-        export type Status = 'available' | 'unavailable';
+        export type Status = 'available' | 'unavailable' | OtherString;
       }
 
       export namespace Receipt {
-        export type AccountType = 'checking' | 'credit' | 'prepaid' | 'unknown';
+        export type AccountType =
+          | 'checking'
+          | 'credit'
+          | 'prepaid'
+          | 'unknown'
+          | OtherString;
       }
 
       export namespace Wallet {
@@ -2470,7 +2500,8 @@ export namespace PaymentAttemptRecord {
           | 'apple_pay'
           | 'google_pay'
           | 'samsung_pay'
-          | 'unknown';
+          | 'unknown'
+          | OtherString;
       }
     }
 
@@ -2481,7 +2512,8 @@ export namespace PaymentAttemptRecord {
         | 'polygon'
         | 'solana'
         | 'sui'
-        | 'tempo';
+        | 'tempo'
+        | OtherString;
 
       export type TokenCurrency =
         | 'phantom_cash'
@@ -2489,7 +2521,8 @@ export namespace PaymentAttemptRecord {
         | 'usdg'
         | 'usdp'
         | 'usdsui'
-        | 'usdt';
+        | 'usdt'
+        | OtherString;
     }
 
     export namespace Eps {
@@ -2568,11 +2601,17 @@ export namespace PaymentAttemptRecord {
         currency: string | null;
       }
 
-      export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
+      export type Brand = 'fiserv_valuelink' | 'givex' | 'svs' | OtherString;
     }
 
     export namespace IdBankTransfer {
-      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      export type Bank =
+        | 'bca'
+        | 'bni'
+        | 'bri'
+        | 'cimb'
+        | 'permata'
+        | OtherString;
     }
 
     export namespace Ideal {
@@ -2628,7 +2667,8 @@ export namespace PaymentAttemptRecord {
         | 'contactless_emv'
         | 'contactless_magstripe_mode'
         | 'magnetic_stripe_fallback'
-        | 'magnetic_stripe_track2';
+        | 'magnetic_stripe_track2'
+        | OtherString;
 
       export interface Receipt {
         /**
@@ -2678,7 +2718,11 @@ export namespace PaymentAttemptRecord {
       }
 
       export namespace Receipt {
-        export type AccountType = 'checking' | 'savings' | 'unknown';
+        export type AccountType =
+          | 'checking'
+          | 'savings'
+          | 'unknown'
+          | OtherString;
       }
     }
 
@@ -2709,7 +2753,12 @@ export namespace PaymentAttemptRecord {
       }
 
       export namespace Store {
-        export type Chain = 'familymart' | 'lawson' | 'ministop' | 'seicomart';
+        export type Chain =
+          | 'familymart'
+          | 'lawson'
+          | 'ministop'
+          | 'seicomart'
+          | OtherString;
       }
     }
 
@@ -2736,7 +2785,8 @@ export namespace PaymentAttemptRecord {
         | 'shinhyup'
         | 'suhyup'
         | 'tossbank'
-        | 'woori';
+        | 'woori'
+        | OtherString;
     }
 
     export namespace Mobilepay {
@@ -2812,9 +2862,16 @@ export namespace PaymentAttemptRecord {
       }
 
       export namespace SellerProtection {
-        export type DisputeCategory = 'fraudulent' | 'product_not_received';
+        export type DisputeCategory =
+          | 'fraudulent'
+          | 'product_not_received'
+          | OtherString;
 
-        export type Status = 'eligible' | 'not_eligible' | 'partially_eligible';
+        export type Status =
+          | 'eligible'
+          | 'not_eligible'
+          | 'partially_eligible'
+          | OtherString;
       }
     }
 
@@ -2880,9 +2937,9 @@ export namespace PaymentAttemptRecord {
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
     }
   }
 
@@ -2915,7 +2972,12 @@ export namespace PaymentAttemptRecord {
       payment_reference: string;
     }
 
-    export type Type = 'custom' | 'fiserv_valuelink' | 'givex' | 'svs';
+    export type Type =
+      | 'custom'
+      | 'fiserv_valuelink'
+      | 'givex'
+      | 'svs'
+      | OtherString;
   }
 }
 export interface PaymentAttemptRecordRetrieveParams {
@@ -3056,7 +3118,8 @@ export namespace PaymentAttemptRecordReportEarlyFraudWarningParams {
     | 'made_with_lost_card'
     | 'made_with_stolen_card'
     | 'other'
-    | 'unauthorized_use_of_card';
+    | 'unauthorized_use_of_card'
+    | OtherString;
 }
 export interface PaymentAttemptRecordReportFailedParams {
   /**
@@ -3097,7 +3160,8 @@ export interface PaymentAttemptRecordReportFailedParams {
 export namespace PaymentAttemptRecordReportFailedParams {
   export type FailureCode =
     | 'payment_method_customer_decline'
-    | 'payment_method_provider_unknown_outcome';
+    | 'payment_method_provider_unknown_outcome'
+    | OtherString;
 
   export interface PaymentMethodDetails {
     /**
@@ -3154,15 +3218,22 @@ export namespace PaymentAttemptRecordReportFailedParams {
           | 'fail'
           | 'pass'
           | 'unavailable'
-          | 'unchecked';
+          | 'unchecked'
+          | OtherString;
 
         export type AddressPostalCodeCheck =
           | 'fail'
           | 'pass'
           | 'unavailable'
-          | 'unchecked';
+          | 'unchecked'
+          | OtherString;
 
-        export type CvcCheck = 'fail' | 'pass' | 'unavailable' | 'unchecked';
+        export type CvcCheck =
+          | 'fail'
+          | 'pass'
+          | 'unavailable'
+          | 'unchecked'
+          | OtherString;
       }
     }
   }
@@ -3263,15 +3334,22 @@ export namespace PaymentAttemptRecordReportGuaranteedParams {
           | 'fail'
           | 'pass'
           | 'unavailable'
-          | 'unchecked';
+          | 'unchecked'
+          | OtherString;
 
         export type AddressPostalCodeCheck =
           | 'fail'
           | 'pass'
           | 'unavailable'
-          | 'unchecked';
+          | 'unchecked'
+          | OtherString;
 
-        export type CvcCheck = 'fail' | 'pass' | 'unavailable' | 'unchecked';
+        export type CvcCheck =
+          | 'fail'
+          | 'pass'
+          | 'unavailable'
+          | 'unchecked'
+          | OtherString;
       }
     }
   }
@@ -3441,9 +3519,13 @@ export namespace PaymentAttemptRecordReportRefundParams {
     failure_reason?: Failed.FailureReason;
   }
 
-  export type Outcome = 'failed' | 'refunded';
+  export type Outcome = 'failed' | 'refunded' | OtherString;
 
-  export type Reason = 'duplicate' | 'fraudulent' | 'requested_by_customer';
+  export type Reason =
+    | 'duplicate'
+    | 'fraudulent'
+    | 'requested_by_customer'
+    | OtherString;
 
   export interface Refunded {
     /**
@@ -3460,7 +3542,8 @@ export namespace PaymentAttemptRecordReportRefundParams {
       | 'insufficient_funds'
       | 'lost_or_stolen_card'
       | 'merchant_request'
-      | 'unknown';
+      | 'unknown'
+      | OtherString;
   }
 
   export namespace ProcessorDetails {

@@ -4,7 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {Charge} from './../Charges.js';
 import {PaymentMethod} from './../PaymentMethods.js';
 import {SetupAttempt} from './../SetupAttempts.js';
-import {Address} from '../../shared.js';
+import {OtherString, Address} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class GrantedTokenResource extends StripeResource {
@@ -99,7 +99,8 @@ export namespace GrantedToken {
     | 'consumed'
     | 'expired'
     | 'resolved'
-    | 'revoked';
+    | 'revoked'
+    | OtherString;
 
   export interface PaymentMethodDetails {
     acss_debit?: PaymentMethodDetails.AcssDebit;
@@ -1026,7 +1027,8 @@ export namespace GrantedToken {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
-      | 'zip';
+      | 'zip'
+      | OtherString;
 
     export interface Upi {
       /**
@@ -1243,7 +1245,8 @@ export namespace GrantedToken {
         | 'contactless_emv'
         | 'contactless_magstripe_mode'
         | 'magnetic_stripe_fallback'
-        | 'magnetic_stripe_track2';
+        | 'magnetic_stripe_track2'
+        | OtherString;
 
       export interface Wallet {
         /**
@@ -1257,7 +1260,8 @@ export namespace GrantedToken {
           | 'apple_pay'
           | 'google_pay'
           | 'samsung_pay'
-          | 'unknown';
+          | 'unknown'
+          | OtherString;
       }
     }
 
@@ -1329,7 +1333,13 @@ export namespace GrantedToken {
     }
 
     export namespace IdBankTransfer {
-      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      export type Bank =
+        | 'bca'
+        | 'bni'
+        | 'bri'
+        | 'cimb'
+        | 'permata'
+        | OtherString;
     }
 
     export namespace Ideal {
@@ -1397,7 +1407,8 @@ export namespace GrantedToken {
         | 'contactless_emv'
         | 'contactless_magstripe_mode'
         | 'magnetic_stripe_fallback'
-        | 'magnetic_stripe_track2';
+        | 'magnetic_stripe_track2'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -1442,11 +1453,12 @@ export namespace GrantedToken {
         | 'shinhyup'
         | 'suhyup'
         | 'tossbank'
-        | 'woori';
+        | 'woori'
+        | OtherString;
     }
 
     export namespace NaverPay {
-      export type Funding = 'card' | 'points';
+      export type Funding = 'card' | 'points' | OtherString;
     }
 
     export namespace P24 {
@@ -1476,7 +1488,8 @@ export namespace GrantedToken {
         | 'tmobile_usbugi_bankowe'
         | 'toyota_bank'
         | 'velobank'
-        | 'volkswagen_bank';
+        | 'volkswagen_bank'
+        | OtherString;
     }
 
     export namespace Rechnung {
@@ -1518,9 +1531,9 @@ export namespace GrantedToken {
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
 
       export interface Networks {
         /**
@@ -1568,7 +1581,8 @@ export namespace GrantedToken {
             | 'R16'
             | 'R20'
             | 'R29'
-            | 'R31';
+            | 'R31'
+            | OtherString;
 
           export type Reason =
             | 'bank_account_closed'
@@ -1577,7 +1591,8 @@ export namespace GrantedToken {
             | 'bank_account_restricted'
             | 'bank_account_unusable'
             | 'debit_not_authorized'
-            | 'tokenized_account_number_deactivated';
+            | 'tokenized_account_number_deactivated'
+            | OtherString;
         }
       }
     }
@@ -1689,7 +1704,7 @@ export namespace GrantedToken {
   }
 
   export namespace UsageLimits {
-    export type RecurringInterval = 'month' | 'week' | 'year';
+    export type RecurringInterval = 'month' | 'week' | 'year' | OtherString;
   }
 }
 export namespace SharedPayment {

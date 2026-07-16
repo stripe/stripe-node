@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams, RangeQueryParam} from '../../shared.js';
+import {PaginationParams, RangeQueryParam, OtherString} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 
 export class ValueListItemResource extends StripeResource {
@@ -161,7 +161,7 @@ export namespace DeletedValueListItem {
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 }
 export namespace ValueListItem {
@@ -173,7 +173,7 @@ export namespace ValueListItem {
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 }
 export namespace Radar {

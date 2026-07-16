@@ -10,6 +10,7 @@ import {
   MetadataParam,
   Decimal,
   Emptyable,
+  OtherString,
   PaginationParams,
   Metadata,
 } from '../shared.js';
@@ -696,7 +697,7 @@ export namespace PaymentLink {
     liability: AutomaticTax.Liability | null;
   }
 
-  export type BillingAddressCollection = 'auto' | 'required';
+  export type BillingAddressCollection = 'auto' | 'required' | OtherString;
 
   export interface ConsentCollection {
     /**
@@ -762,7 +763,7 @@ export namespace PaymentLink {
     terms_of_service_acceptance: CustomText.TermsOfServiceAcceptance | null;
   }
 
-  export type CustomerCreation = 'always' | 'if_required';
+  export type CustomerCreation = 'always' | 'if_required' | OtherString;
 
   export interface InvoiceCreation {
     /**
@@ -834,7 +835,7 @@ export namespace PaymentLink {
     transfer_group: string | null;
   }
 
-  export type PaymentMethodCollection = 'always' | 'if_required';
+  export type PaymentMethodCollection = 'always' | 'if_required' | OtherString;
 
   export interface PaymentMethodOptions {
     /**
@@ -890,7 +891,8 @@ export namespace PaymentLink {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export interface PhoneNumberCollection {
     /**
@@ -922,7 +924,13 @@ export namespace PaymentLink {
     shipping_rate: string | ShippingRate;
   }
 
-  export type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
+  export type SubmitType =
+    | 'auto'
+    | 'book'
+    | 'donate'
+    | 'pay'
+    | 'subscribe'
+    | OtherString;
 
   export interface SubscriptionData {
     /**
@@ -984,7 +992,7 @@ export namespace PaymentLink {
       url: string;
     }
 
-    export type Type = 'hosted_confirmation' | 'redirect';
+    export type Type = 'hosted_confirmation' | 'redirect' | OtherString;
   }
 
   export namespace AutomaticSurcharge {
@@ -1009,7 +1017,7 @@ export namespace PaymentLink {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'application' | 'self';
+      export type Type = 'account' | 'application' | 'self' | OtherString;
     }
   }
 
@@ -1091,7 +1099,7 @@ export namespace PaymentLink {
       minimum_length: number | null;
     }
 
-    export type Type = 'dropdown' | 'numeric' | 'text';
+    export type Type = 'dropdown' | 'numeric' | 'text' | OtherString;
 
     export namespace Dropdown {
       export interface Option {
@@ -1214,7 +1222,7 @@ export namespace PaymentLink {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
   }
@@ -1265,9 +1273,13 @@ export namespace PaymentLink {
   }
 
   export namespace PaymentIntentData {
-    export type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+    export type CaptureMethod =
+      | 'automatic'
+      | 'automatic_async'
+      | 'manual'
+      | OtherString;
 
-    export type SetupFutureUsage = 'off_session' | 'on_session';
+    export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
   }
 
   export namespace PaymentMethodOptions {
@@ -1291,7 +1303,8 @@ export namespace PaymentLink {
           | 'american_express'
           | 'discover_global_network'
           | 'mastercard'
-          | 'visa';
+          | 'visa'
+          | OtherString;
       }
     }
   }
@@ -1549,7 +1562,8 @@ export namespace PaymentLink {
       | 'ZA'
       | 'ZM'
       | 'ZW'
-      | 'ZZ';
+      | 'ZZ'
+      | OtherString;
   }
 
   export namespace SubscriptionData {
@@ -1578,7 +1592,7 @@ export namespace PaymentLink {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -1594,13 +1608,14 @@ export namespace PaymentLink {
         export type MissingPaymentMethod =
           | 'cancel'
           | 'create_invoice'
-          | 'pause';
+          | 'pause'
+          | OtherString;
       }
     }
   }
 
   export namespace TaxIdCollection {
-    export type Required = 'if_supported' | 'never';
+    export type Required = 'if_supported' | 'never' | OtherString;
   }
 }
 export interface PaymentLinkCreateParams {
@@ -1848,7 +1863,7 @@ export namespace PaymentLinkCreateParams {
     liability?: AutomaticTax.Liability;
   }
 
-  export type BillingAddressCollection = 'auto' | 'required';
+  export type BillingAddressCollection = 'auto' | 'required' | OtherString;
 
   export interface ConsentCollection {
     /**
@@ -1931,7 +1946,7 @@ export namespace PaymentLinkCreateParams {
     >;
   }
 
-  export type CustomerCreation = 'always' | 'if_required';
+  export type CustomerCreation = 'always' | 'if_required' | OtherString;
 
   export interface InvoiceCreation {
     /**
@@ -2030,7 +2045,7 @@ export namespace PaymentLinkCreateParams {
     transfer_group?: string;
   }
 
-  export type PaymentMethodCollection = 'always' | 'if_required';
+  export type PaymentMethodCollection = 'always' | 'if_required' | OtherString;
 
   export interface PaymentMethodOptions {
     /**
@@ -2086,7 +2101,8 @@ export namespace PaymentLinkCreateParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export interface PhoneNumberCollection {
     /**
@@ -2117,7 +2133,13 @@ export namespace PaymentLinkCreateParams {
     shipping_rate?: string;
   }
 
-  export type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
+  export type SubmitType =
+    | 'auto'
+    | 'book'
+    | 'donate'
+    | 'pay'
+    | 'subscribe'
+    | OtherString;
 
   export interface SubscriptionData {
     /**
@@ -2188,7 +2210,7 @@ export namespace PaymentLinkCreateParams {
       url: string;
     }
 
-    export type Type = 'hosted_confirmation' | 'redirect';
+    export type Type = 'hosted_confirmation' | 'redirect' | OtherString;
   }
 
   export namespace AutomaticSurcharge {
@@ -2211,7 +2233,7 @@ export namespace PaymentLinkCreateParams {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'application' | 'self';
+      export type Type = 'account' | 'application' | 'self' | OtherString;
     }
   }
 
@@ -2224,12 +2246,12 @@ export namespace PaymentLinkCreateParams {
       position: PaymentMethodReuseAgreement.Position;
     }
 
-    export type Promotions = 'auto' | 'none';
+    export type Promotions = 'auto' | 'none' | OtherString;
 
-    export type TermsOfService = 'none' | 'required';
+    export type TermsOfService = 'none' | 'required' | OtherString;
 
     export namespace PaymentMethodReuseAgreement {
-      export type Position = 'auto' | 'hidden';
+      export type Position = 'auto' | 'hidden' | OtherString;
     }
   }
 
@@ -2292,7 +2314,7 @@ export namespace PaymentLinkCreateParams {
       minimum_length?: number;
     }
 
-    export type Type = 'dropdown' | 'numeric' | 'text';
+    export type Type = 'dropdown' | 'numeric' | 'text' | OtherString;
 
     export namespace Dropdown {
       export interface Option {
@@ -2415,7 +2437,7 @@ export namespace PaymentLinkCreateParams {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
 
       export namespace RenderingOptions {
@@ -2597,9 +2619,13 @@ export namespace PaymentLinkCreateParams {
   }
 
   export namespace PaymentIntentData {
-    export type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+    export type CaptureMethod =
+      | 'automatic'
+      | 'automatic_async'
+      | 'manual'
+      | OtherString;
 
-    export type SetupFutureUsage = 'off_session' | 'on_session';
+    export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
   }
 
   export namespace PaymentMethodOptions {
@@ -2623,7 +2649,8 @@ export namespace PaymentLinkCreateParams {
           | 'american_express'
           | 'discover_global_network'
           | 'mastercard'
-          | 'visa';
+          | 'visa'
+          | OtherString;
       }
     }
   }
@@ -2876,7 +2903,8 @@ export namespace PaymentLinkCreateParams {
       | 'ZA'
       | 'ZM'
       | 'ZW'
-      | 'ZZ';
+      | 'ZZ'
+      | OtherString;
   }
 
   export namespace SubscriptionData {
@@ -2908,7 +2936,7 @@ export namespace PaymentLinkCreateParams {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -2924,13 +2952,14 @@ export namespace PaymentLinkCreateParams {
         export type MissingPaymentMethod =
           | 'cancel'
           | 'create_invoice'
-          | 'pause';
+          | 'pause'
+          | OtherString;
       }
     }
   }
 
   export namespace TaxIdCollection {
-    export type Required = 'if_supported' | 'never';
+    export type Required = 'if_supported' | 'never' | OtherString;
   }
 }
 export interface PaymentLinkRetrieveParams {
@@ -3111,7 +3140,7 @@ export namespace PaymentLinkUpdateParams {
     liability?: AutomaticTax.Liability;
   }
 
-  export type BillingAddressCollection = 'auto' | 'required';
+  export type BillingAddressCollection = 'auto' | 'required' | OtherString;
 
   export interface CustomField {
     /**
@@ -3174,7 +3203,7 @@ export namespace PaymentLinkUpdateParams {
     >;
   }
 
-  export type CustomerCreation = 'always' | 'if_required';
+  export type CustomerCreation = 'always' | 'if_required' | OtherString;
 
   export interface InvoiceCreation {
     /**
@@ -3263,7 +3292,7 @@ export namespace PaymentLinkUpdateParams {
     transfer_group?: Emptyable<string>;
   }
 
-  export type PaymentMethodCollection = 'always' | 'if_required';
+  export type PaymentMethodCollection = 'always' | 'if_required' | OtherString;
 
   export interface PaymentMethodOptions {
     /**
@@ -3319,7 +3348,8 @@ export namespace PaymentLinkUpdateParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export interface PhoneNumberCollection {
     /**
@@ -3343,7 +3373,13 @@ export namespace PaymentLinkUpdateParams {
     allowed_countries: Array<ShippingAddressCollection.AllowedCountry>;
   }
 
-  export type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
+  export type SubmitType =
+    | 'auto'
+    | 'book'
+    | 'donate'
+    | 'pay'
+    | 'subscribe'
+    | OtherString;
 
   export interface SubscriptionData {
     /**
@@ -3394,7 +3430,7 @@ export namespace PaymentLinkUpdateParams {
       url: string;
     }
 
-    export type Type = 'hosted_confirmation' | 'redirect';
+    export type Type = 'hosted_confirmation' | 'redirect' | OtherString;
   }
 
   export namespace AutomaticTax {
@@ -3411,7 +3447,7 @@ export namespace PaymentLinkUpdateParams {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'application' | 'self';
+      export type Type = 'account' | 'application' | 'self' | OtherString;
     }
   }
 
@@ -3474,7 +3510,7 @@ export namespace PaymentLinkUpdateParams {
       minimum_length?: number;
     }
 
-    export type Type = 'dropdown' | 'numeric' | 'text';
+    export type Type = 'dropdown' | 'numeric' | 'text' | OtherString;
 
     export namespace Dropdown {
       export interface Option {
@@ -3597,7 +3633,7 @@ export namespace PaymentLinkUpdateParams {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
 
       export namespace RenderingOptions {
@@ -3691,7 +3727,8 @@ export namespace PaymentLinkUpdateParams {
           | 'american_express'
           | 'discover_global_network'
           | 'mastercard'
-          | 'visa';
+          | 'visa'
+          | OtherString;
       }
     }
   }
@@ -3944,7 +3981,8 @@ export namespace PaymentLinkUpdateParams {
       | 'ZA'
       | 'ZM'
       | 'ZW'
-      | 'ZZ';
+      | 'ZZ'
+      | OtherString;
   }
 
   export namespace SubscriptionData {
@@ -3976,7 +4014,7 @@ export namespace PaymentLinkUpdateParams {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -3992,13 +4030,14 @@ export namespace PaymentLinkUpdateParams {
         export type MissingPaymentMethod =
           | 'cancel'
           | 'create_invoice'
-          | 'pause';
+          | 'pause'
+          | OtherString;
       }
     }
   }
 
   export namespace TaxIdCollection {
-    export type Required = 'if_supported' | 'never';
+    export type Required = 'if_supported' | 'never' | OtherString;
   }
 }
 export interface PaymentLinkListParams extends PaginationParams {

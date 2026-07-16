@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Price} from './../Prices.js';
+import {OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class TrialOfferResource extends StripeResource {
@@ -77,7 +78,7 @@ export namespace TrialOffer {
       iterations: number;
     }
 
-    export type Type = 'relative' | 'timestamp';
+    export type Type = 'relative' | 'timestamp' | OtherString;
   }
 
   export namespace EndBehavior {
@@ -145,7 +146,7 @@ export namespace ProductCatalog {
         iterations: number;
       }
 
-      export type Type = 'relative' | 'timestamp';
+      export type Type = 'relative' | 'timestamp' | OtherString;
     }
 
     export namespace EndBehavior {

@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, Metadata} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class OutboundPaymentResource extends StripeResource {
@@ -328,7 +328,7 @@ export namespace OutboundPayment {
   }
 
   export namespace DeliveryOptions {
-    export type BankAccount = 'automatic' | 'local' | 'wire';
+    export type BankAccount = 'automatic' | 'local' | 'wire' | OtherString;
 
     export interface PaperCheck {
       /**
@@ -352,10 +352,14 @@ export namespace OutboundPayment {
       signature: string;
     }
 
-    export type Speed = 'instant' | 'next_business_day' | 'standard';
+    export type Speed =
+      | 'instant'
+      | 'next_business_day'
+      | 'standard'
+      | OtherString;
 
     export namespace PaperCheck {
-      export type ShippingSpeed = 'priority' | 'standard';
+      export type ShippingSpeed = 'priority' | 'standard' | OtherString;
     }
   }
 
@@ -398,7 +402,8 @@ export namespace OutboundPayment {
         | 'payout_method_unsupported'
         | 'payout_method_usage_frequency_limit_exceeded'
         | 'review_rejected'
-        | 'unknown_failure';
+        | 'unknown_failure'
+        | OtherString;
     }
 
     export namespace Returned {
@@ -413,7 +418,8 @@ export namespace OutboundPayment {
         | 'payout_method_invalid_account_number'
         | 'payout_method_restricted'
         | 'recalled'
-        | 'unknown_failure';
+        | 'unknown_failure'
+        | OtherString;
     }
   }
 
@@ -456,7 +462,8 @@ export namespace OutboundPayment {
           | 'rtp'
           | 'sepa_credit'
           | 'sepa_instant'
-          | 'swift';
+          | 'swift'
+          | OtherString;
 
         export namespace PreferredNetworkOptions {
           export interface Ach {
@@ -472,7 +479,7 @@ export namespace OutboundPayment {
           }
 
           export namespace Ach {
-            export type Submission = 'next_day' | 'same_day';
+            export type Submission = 'next_day' | 'same_day' | OtherString;
           }
         }
       }
@@ -480,7 +487,7 @@ export namespace OutboundPayment {
   }
 
   export namespace TraceId {
-    export type Status = 'pending' | 'supported' | 'unsupported';
+    export type Status = 'pending' | 'supported' | 'unsupported' | OtherString;
   }
 
   export namespace TrackingDetails {
@@ -522,7 +529,7 @@ export namespace OutboundPayment {
     }
 
     export namespace PaperCheck {
-      export type Carrier = 'fedex' | 'usps';
+      export type Carrier = 'fedex' | 'usps' | OtherString;
 
       export interface MailingAddress {
         /**
@@ -556,7 +563,11 @@ export namespace OutboundPayment {
         state?: string;
       }
 
-      export type TrackingStatus = 'delivered' | 'in_transit' | 'mailed';
+      export type TrackingStatus =
+        | 'delivered'
+        | 'in_transit'
+        | 'mailed'
+        | OtherString;
     }
   }
 }
@@ -691,7 +702,7 @@ export namespace V2 {
       }
 
       export namespace DeliveryOptions {
-        export type BankAccount = 'automatic' | 'local' | 'wire';
+        export type BankAccount = 'automatic' | 'local' | 'wire' | OtherString;
 
         export interface PaperCheck {
           /**
@@ -715,10 +726,14 @@ export namespace V2 {
           signature: string;
         }
 
-        export type Speed = 'instant' | 'next_business_day' | 'standard';
+        export type Speed =
+          | 'instant'
+          | 'next_business_day'
+          | 'standard'
+          | OtherString;
 
         export namespace PaperCheck {
-          export type ShippingSpeed = 'priority' | 'standard';
+          export type ShippingSpeed = 'priority' | 'standard' | OtherString;
         }
       }
 
@@ -765,7 +780,8 @@ export namespace V2 {
               | 'rtp'
               | 'sepa_credit'
               | 'sepa_instant'
-              | 'swift';
+              | 'swift'
+              | OtherString;
 
             export namespace PreferredNetworkOptions {
               export interface Ach {
@@ -781,7 +797,7 @@ export namespace V2 {
               }
 
               export namespace Ach {
-                export type Submission = 'next_day' | 'same_day';
+                export type Submission = 'next_day' | 'same_day' | OtherString;
               }
             }
           }

@@ -4,6 +4,7 @@
 import {HttpClientResponseError} from './RequestSender.js';
 import {RawErrorType, StripeRawError} from './Types.js';
 // errorImports: The beginning of the section generated from our OpenAPI spec
+import {GiftCardOperation} from './resources/GiftCardOperations.js';
 import {PaymentIntent} from './resources/PaymentIntents.js';
 import {PaymentMethod} from './resources/PaymentMethods.js';
 import {SetupIntent} from './resources/SetupIntents.js';
@@ -160,6 +161,10 @@ export class StripeError extends Error {
    */
   readonly doc_url?: string;
   /**
+   * The GiftCardOperation object for errors returned on a request involving a GiftCardOperation.
+   */
+  readonly gift_card_operation?: GiftCardOperation;
+  /**
    * For card errors resulting from a card issuer decline, a 2 digit code which indicates the advice given to merchant by the card network on how to proceed with an error.
    */
   readonly network_advice_code?: string;
@@ -218,6 +223,7 @@ export class StripeError extends Error {
     this.code = raw.code;
     this.decline_code = raw.decline_code;
     this.doc_url = raw.doc_url;
+    this.gift_card_operation = raw.gift_card_operation;
     this.network_advice_code = raw.network_advice_code;
     this.network_decline_code = raw.network_decline_code;
     this.param = raw.param;

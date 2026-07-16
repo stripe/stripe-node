@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface OrderEvent {
   /**
@@ -122,7 +123,7 @@ export namespace OrderEvent {
     tracking_url: string | null;
   }
 
-  export type Type = 'adjustment' | 'fulfillment';
+  export type Type = 'adjustment' | 'fulfillment' | OtherString;
 
   export namespace Adjustment {
     export interface LineItem {
@@ -137,7 +138,7 @@ export namespace OrderEvent {
       quantity: number;
     }
 
-    export type Status = 'completed' | 'failed' | 'pending';
+    export type Status = 'completed' | 'failed' | 'pending' | OtherString;
 
     export type Type =
       | 'cancellation'
@@ -145,7 +146,8 @@ export namespace OrderEvent {
       | 'dispute'
       | 'original_payment_refund'
       | 'return'
-      | 'store_credit_refund';
+      | 'store_credit_refund'
+      | OtherString;
   }
 
   export namespace Fulfillment {
@@ -167,6 +169,7 @@ export namespace OrderEvent {
       | 'fulfilled'
       | 'pending'
       | 'returned'
-      | 'shipped';
+      | 'shipped'
+      | OtherString;
   }
 }

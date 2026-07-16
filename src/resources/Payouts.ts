@@ -10,6 +10,7 @@ import {
   PaginationParams,
   RangeQueryParam,
   Metadata,
+  OtherString,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
@@ -241,7 +242,8 @@ export namespace Payout {
   export type ReconciliationStatus =
     | 'completed'
     | 'in_progress'
-    | 'not_applicable';
+    | 'not_applicable'
+    | OtherString;
 
   export interface TraceId {
     /**
@@ -255,7 +257,7 @@ export namespace Payout {
     value: string | null;
   }
 
-  export type Type = 'bank_account' | 'card';
+  export type Type = 'bank_account' | 'card' | OtherString;
 }
 export interface PayoutCreateParams {
   /**

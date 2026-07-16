@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {MetadataParam, Metadata} from '../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class IssuingAuthorizationEvaluationResource extends StripeResource {
@@ -249,7 +249,8 @@ export namespace IssuingAuthorizationEvaluation {
       | 'contactless'
       | 'keyed_in'
       | 'online'
-      | 'swipe';
+      | 'swipe'
+      | OtherString;
 
     export type EntryMode =
       | 'contactless'
@@ -260,7 +261,8 @@ export namespace IssuingAuthorizationEvaluation {
       | 'magstripe_no_cvv'
       | 'manual'
       | 'other'
-      | 'unknown';
+      | 'unknown'
+      | OtherString;
 
     export type PointOfSaleCondition =
       | 'account_verification'
@@ -272,11 +274,12 @@ export namespace IssuingAuthorizationEvaluation {
       | 'moto'
       | 'other'
       | 'pin_entered'
-      | 'recurring';
+      | 'recurring'
+      | OtherString;
   }
 
   export namespace CardDetails {
-    export type CardType = 'physical' | 'virtual';
+    export type CardType = 'physical' | 'virtual' | OtherString;
   }
 
   export namespace NetworkDetails {
@@ -287,7 +290,8 @@ export namespace IssuingAuthorizationEvaluation {
       | 'mastercard'
       | 'other'
       | 'plus'
-      | 'visa';
+      | 'visa'
+      | OtherString;
   }
 
   export namespace Signals {
@@ -328,7 +332,7 @@ export namespace IssuingAuthorizationEvaluation {
         score: number;
       }
 
-      export type Status = 'error' | 'success';
+      export type Status = 'error' | 'success' | OtherString;
 
       export namespace Data {
         export type Level =
@@ -337,13 +341,18 @@ export namespace IssuingAuthorizationEvaluation {
           | 'low'
           | 'normal'
           | 'not_assessed'
-          | 'unknown';
+          | 'unknown'
+          | OtherString;
       }
     }
   }
 
   export namespace TokenDetails {
-    export type Wallet = 'apple_pay' | 'google_pay' | 'samsung_pay';
+    export type Wallet =
+      | 'apple_pay'
+      | 'google_pay'
+      | 'samsung_pay'
+      | OtherString;
   }
 
   export namespace VerificationDetails {
@@ -352,7 +361,8 @@ export namespace IssuingAuthorizationEvaluation {
       | 'authenticated'
       | 'exempted'
       | 'failed'
-      | 'required';
+      | 'required'
+      | OtherString;
   }
 }
 export namespace Radar {
@@ -564,7 +574,8 @@ export namespace Radar {
         | 'contactless'
         | 'keyed_in'
         | 'online'
-        | 'swipe';
+        | 'swipe'
+        | OtherString;
 
       export type EntryMode =
         | 'contactless'
@@ -575,7 +586,8 @@ export namespace Radar {
         | 'magstripe_no_cvv'
         | 'manual'
         | 'other'
-        | 'unknown';
+        | 'unknown'
+        | OtherString;
 
       export type PointOfSaleCondition =
         | 'account_verification'
@@ -587,11 +599,12 @@ export namespace Radar {
         | 'moto'
         | 'other'
         | 'pin_entered'
-        | 'recurring';
+        | 'recurring'
+        | OtherString;
     }
 
     export namespace CardDetails {
-      export type CardType = 'physical' | 'virtual';
+      export type CardType = 'physical' | 'virtual' | OtherString;
     }
 
     export namespace NetworkDetails {
@@ -602,11 +615,16 @@ export namespace Radar {
         | 'mastercard'
         | 'other'
         | 'plus'
-        | 'visa';
+        | 'visa'
+        | OtherString;
     }
 
     export namespace TokenDetails {
-      export type Wallet = 'apple_pay' | 'google_pay' | 'samsung_pay';
+      export type Wallet =
+        | 'apple_pay'
+        | 'google_pay'
+        | 'samsung_pay'
+        | OtherString;
     }
 
     export namespace VerificationDetails {
@@ -615,7 +633,8 @@ export namespace Radar {
         | 'authenticated'
         | 'exempted'
         | 'failed'
-        | 'required';
+        | 'required'
+        | OtherString;
     }
   }
 }

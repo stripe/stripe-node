@@ -14,7 +14,7 @@ import {Coupon} from './Coupons.js';
 import {PromotionCode} from './PromotionCodes.js';
 import {Plan, DeletedPlan} from './Plans.js';
 import * as TestHelpers from './TestHelpers/index.js';
-import {Metadata} from '../shared.js';
+import {Metadata, OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface QuotePreviewSubscriptionSchedule {
   /**
@@ -105,6 +105,11 @@ export interface QuotePreviewSubscriptionSchedule {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
+
+  /**
+   * The pause schedules for this subscription schedule.
+   */
+  pause_schedules?: Array<QuotePreviewSubscriptionSchedule.PauseSchedule>;
 
   /**
    * Configuration for the subscription schedule's phases.
@@ -258,7 +263,12 @@ export namespace QuotePreviewSubscriptionSchedule {
     transfer_data: DefaultSettings.TransferData | null;
   }
 
-  export type EndBehavior = 'cancel' | 'none' | 'release' | 'renew';
+  export type EndBehavior =
+    | 'cancel'
+    | 'none'
+    | 'release'
+    | 'renew'
+    | OtherString;
 
   export interface LastPriceMigrationError {
     /**
@@ -275,6 +285,20 @@ export namespace QuotePreviewSubscriptionSchedule {
      * The type of error encountered by the price migration.
      */
     type: 'price_uniqueness_violation';
+  }
+
+  export interface PauseSchedule {
+    /**
+     * A unique identifier for this pause schedule.
+     */
+    key: string;
+
+    pause: PauseSchedule.Pause;
+
+    /**
+     * Details about when and how the subscription resumes.
+     */
+    resume: PauseSchedule.Resume | null;
   }
 
   export interface Phase {
@@ -381,6 +405,11 @@ export namespace QuotePreviewSubscriptionSchedule {
     transfer_data: Phase.TransferData | null;
 
     /**
+     * If set to true the entire phase is counted as a trial and the customer will not be charged for any fees.
+     */
+    trial?: boolean;
+
+    /**
      * Specify behavior of the trial when crossing schedule phase boundaries
      */
     trial_continuation?: Phase.TrialContinuation | null;
@@ -426,7 +455,7 @@ export namespace QuotePreviewSubscriptionSchedule {
     | 'released';
 
   export namespace AppliesTo {
-    export type Type = 'new_reference' | 'subscription_schedule';
+    export type Type = 'new_reference' | 'subscription_schedule' | OtherString;
   }
 
   export namespace BillingMode {
@@ -437,7 +466,7 @@ export namespace QuotePreviewSubscriptionSchedule {
       proration_discounts?: Flexible.ProrationDiscounts;
     }
 
-    export type Type = 'classic' | 'flexible';
+    export type Type = 'classic' | 'flexible' | OtherString;
 
     export namespace Flexible {
       export type ProrationDiscounts = 'included' | 'itemized';
@@ -492,7 +521,7 @@ export namespace QuotePreviewSubscriptionSchedule {
         interval_count: number | null;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
         export type Interval = 'day' | 'month' | 'week' | 'year';
@@ -532,7 +561,10 @@ export namespace QuotePreviewSubscriptionSchedule {
       reset_billing_cycle_anchor: boolean | null;
     }
 
-    export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+    export type CollectionMethod =
+      | 'charge_automatically'
+      | 'send_invoice'
+      | OtherString;
 
     export interface InvoiceSettings {
       /**
@@ -591,7 +623,7 @@ export namespace QuotePreviewSubscriptionSchedule {
       }
 
       export namespace Liability {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -621,7 +653,7 @@ export namespace QuotePreviewSubscriptionSchedule {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
   }
@@ -637,6 +669,118 @@ export namespace QuotePreviewSubscriptionSchedule {
        * The intended resulting price of the migration.
        */
       target_price: string;
+    }
+  }
+
+  export namespace PauseSchedule {
+    export interface Pause {
+      /**
+       * Time at which the subscription pauses.
+       */
+      pause_at: number;
+
+      /**
+       * Settings controlling billing behavior during the pause.
+       */
+      settings: Pause.Settings | null;
+    }
+
+    export interface Resume {
+      /**
+       * Time at which the subscription resumes.
+       */
+      resume_at: number;
+
+      settings: Resume.Settings;
+    }
+
+    export namespace Pause {
+      export interface Settings {
+        bill_for: Settings.BillFor;
+
+        /**
+         * Determines how to handle debits and credits when pausing.
+         */
+        invoicing_behavior: Settings.InvoicingBehavior;
+
+        /**
+         * The type of pause settings.
+         */
+        type: 'subscription';
+      }
+
+      export namespace Settings {
+        export interface BillFor {
+          outstanding_usage_through: BillFor.OutstandingUsageThrough;
+
+          unused_time_from: BillFor.UnusedTimeFrom;
+        }
+
+        export type InvoicingBehavior =
+          | 'invoice'
+          | 'pending_invoice_item'
+          | OtherString;
+
+        export namespace BillFor {
+          export interface OutstandingUsageThrough {
+            /**
+             * The type of outstanding usage billing behavior.
+             */
+            type: OutstandingUsageThrough.Type;
+          }
+
+          export interface UnusedTimeFrom {
+            /**
+             * The type of unused time credit behavior.
+             */
+            type: UnusedTimeFrom.Type;
+          }
+
+          export namespace OutstandingUsageThrough {
+            export type Type = 'none' | 'pause_at';
+          }
+
+          export namespace UnusedTimeFrom {
+            export type Type =
+              | 'item_current_period_start'
+              | 'none'
+              | 'pause_at';
+          }
+        }
+      }
+    }
+
+    export namespace Resume {
+      export interface Settings {
+        /**
+         * The billing cycle anchor that applies when the subscription is resumed.
+         */
+        billing_cycle_anchor: Settings.BillingCycleAnchor;
+
+        /**
+         * Controls whether Stripe attempts payment on the resumption invoice and how that affects the subscription's status.
+         */
+        payment_behavior: Settings.PaymentBehavior;
+
+        /**
+         * Determines how to handle prorations resulting from the billing_cycle_anchor change on resume.
+         */
+        proration_behavior: Settings.ProrationBehavior;
+      }
+
+      export namespace Settings {
+        export type BillingCycleAnchor = 'resume_at' | 'unchanged';
+
+        export type PaymentBehavior =
+          | 'resume_on_payment_attempt'
+          | 'resume_on_payment_success';
+
+        export type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none'
+          | OtherString;
+      }
     }
   }
 
@@ -837,7 +981,7 @@ export namespace QuotePreviewSubscriptionSchedule {
       destination: string | Account;
     }
 
-    export type TrialContinuation = 'continue' | 'none';
+    export type TrialContinuation = 'continue' | 'none' | OtherString;
 
     export interface TrialSettings {
       /**
@@ -915,14 +1059,19 @@ export namespace QuotePreviewSubscriptionSchedule {
         }
 
         export namespace End {
-          export type Type = 'min_item_period_end' | 'phase_end' | 'timestamp';
+          export type Type =
+            | 'min_item_period_end'
+            | 'phase_end'
+            | 'timestamp'
+            | OtherString;
         }
 
         export namespace Start {
           export type Type =
             | 'max_item_period_start'
             | 'phase_start'
-            | 'timestamp';
+            | 'timestamp'
+            | OtherString;
         }
       }
     }
@@ -941,7 +1090,7 @@ export namespace QuotePreviewSubscriptionSchedule {
       }
 
       export namespace Liability {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -980,7 +1129,8 @@ export namespace QuotePreviewSubscriptionSchedule {
         export type StartDate =
           | 'current_period_end'
           | 'current_period_start'
-          | 'phase_start';
+          | 'phase_start'
+          | OtherString;
 
         export namespace ServicePeriodAnchorConfig {
           export interface Custom {
@@ -1010,7 +1160,7 @@ export namespace QuotePreviewSubscriptionSchedule {
             second: number | null;
           }
 
-          export type Type = 'custom' | 'inherit';
+          export type Type = 'custom' | 'inherit' | OtherString;
         }
       }
     }
@@ -1041,7 +1191,7 @@ export namespace QuotePreviewSubscriptionSchedule {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'application' | 'self';
+        export type Type = 'account' | 'application' | 'self' | OtherString;
       }
     }
 
@@ -1124,7 +1274,8 @@ export namespace QuotePreviewSubscriptionSchedule {
           export type StartDate =
             | 'current_period_end'
             | 'current_period_start'
-            | 'phase_start';
+            | 'phase_start'
+            | OtherString;
 
           export namespace ServicePeriodAnchorConfig {
             export interface Custom {
@@ -1154,18 +1305,22 @@ export namespace QuotePreviewSubscriptionSchedule {
               second: number | null;
             }
 
-            export type Type = 'custom' | 'inherit';
+            export type Type = 'custom' | 'inherit' | OtherString;
           }
         }
       }
 
       export namespace Trial {
-        export type Type = 'free' | 'paid';
+        export type Type = 'free' | 'paid' | OtherString;
       }
     }
 
     export namespace PauseCollection {
-      export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+      export type Behavior =
+        | 'keep_as_draft'
+        | 'mark_uncollectible'
+        | 'void'
+        | OtherString;
     }
 
     export namespace TrialSettings {
@@ -1177,12 +1332,12 @@ export namespace QuotePreviewSubscriptionSchedule {
       }
 
       export namespace EndBehavior {
-        export type ProrateUpFront = 'defer' | 'include';
+        export type ProrateUpFront = 'defer' | 'include' | OtherString;
       }
     }
   }
 
   export namespace Prebilling {
-    export type UpdateBehavior = 'prebill' | 'reset';
+    export type UpdateBehavior = 'prebill' | 'reset' | OtherString;
   }
 }

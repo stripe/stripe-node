@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FeeEntryResource extends StripeResource {
@@ -152,7 +153,8 @@ export namespace FeeEntry {
     | 'refund'
     | 'refund_failure'
     | 'reprice'
-    | 'tier_true_up';
+    | 'tier_true_up'
+    | OtherString;
 
   export interface Tax {
     /**
@@ -161,7 +163,11 @@ export namespace FeeEntry {
     amount: Tax.Amount;
   }
 
-  export type Type = 'application_fee' | 'passthrough_fee' | 'stripe_fee';
+  export type Type =
+    | 'application_fee'
+    | 'passthrough_fee'
+    | 'stripe_fee'
+    | OtherString;
 
   export namespace ChargedBy {
     export interface Application {
@@ -185,7 +191,7 @@ export namespace FeeEntry {
       feature_name?: string;
     }
 
-    export type Type = 'application' | 'network' | 'stripe';
+    export type Type = 'application' | 'network' | 'stripe' | OtherString;
   }
 
   export namespace Tax {

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {V2Amount} from './../V2Amounts.js';
-import {Metadata} from '../../../shared.js';
+import {Metadata, OtherString} from '../../../shared.js';
 import {RequestOptions} from '../../../lib.js';
 export interface SettlementAllocationIntentSplit {
   /**
@@ -82,14 +82,15 @@ export namespace SettlementAllocationIntentSplit {
     type: Flow.Type;
   }
 
-  export type Status = 'canceled' | 'pending' | 'settled';
+  export type Status = 'canceled' | 'pending' | 'settled' | OtherString;
 
-  export type Type = 'credit' | 'debit';
+  export type Type = 'credit' | 'debit' | OtherString;
 
   export namespace Flow {
     export type Type =
       | 'outbound_payment'
       | 'outbound_transfer'
-      | 'received_credit';
+      | 'received_credit'
+      | OtherString;
   }
 }

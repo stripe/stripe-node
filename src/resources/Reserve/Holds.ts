@@ -3,7 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Plan} from './Plans.js';
 import {Charge} from './../Charges.js';
-import {PaginationParams, Metadata} from '../../shared.js';
+import {PaginationParams, OtherString, Metadata} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class HoldResource extends StripeResource {
@@ -113,9 +113,9 @@ export interface Hold {
   source_type: Hold.SourceType;
 }
 export namespace Hold {
-  export type CreatedBy = 'application' | 'stripe';
+  export type CreatedBy = 'application' | 'stripe' | OtherString;
 
-  export type Reason = 'charge' | 'standalone';
+  export type Reason = 'charge' | 'standalone' | OtherString;
 
   export interface ReleaseDetail {
     /**
@@ -141,7 +141,7 @@ export namespace Hold {
     scheduled_release: number | null;
   }
 
-  export type SourceType = 'bank_account' | 'card' | 'fpx';
+  export type SourceType = 'bank_account' | 'card' | 'fpx' | OtherString;
 }
 export namespace Reserve {
   export interface HoldRetrieveParams {
@@ -187,6 +187,6 @@ export namespace Reserve {
   }
 
   export namespace HoldListParams {
-    export type Reason = 'charge' | 'standalone';
+    export type Reason = 'charge' | 'standalone' | OtherString;
   }
 }

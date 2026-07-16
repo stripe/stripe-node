@@ -11,6 +11,7 @@ import {
   RangeQueryParam,
   MetadataParam,
   Emptyable,
+  OtherString,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
 
@@ -250,7 +251,7 @@ export namespace ApplicationFee {
   export type SettlementType = 'gross_settled' | 'net_settled';
 
   export namespace FeeSource {
-    export type Type = 'charge' | 'payout' | 'transfer';
+    export type Type = 'charge' | 'payout' | 'transfer' | OtherString;
   }
 }
 export interface ApplicationFeeRetrieveParams {

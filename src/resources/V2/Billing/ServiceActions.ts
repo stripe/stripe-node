@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {CustomPricingUnit} from './CustomPricingUnits.js';
 import {V2Amount} from './../V2Amounts.js';
-import {Decimal} from '../../../shared.js';
+import {OtherString, Decimal} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class ServiceActionResource extends StripeResource {
@@ -308,7 +308,7 @@ export namespace ServiceAction {
 
   export type ServiceInterval = 'day' | 'month' | 'week' | 'year';
 
-  export type Type = 'credit_grant' | 'credit_grant_per_tenant';
+  export type Type = 'credit_grant' | 'credit_grant_per_tenant' | OtherString;
 
   export namespace CreditGrant {
     export interface Amount {
@@ -362,7 +362,7 @@ export namespace ServiceAction {
         value: Decimal;
       }
 
-      export type Type = 'custom_pricing_unit' | 'monetary';
+      export type Type = 'custom_pricing_unit' | 'monetary' | OtherString;
     }
 
     export namespace ApplicabilityConfig {
@@ -432,7 +432,7 @@ export namespace ServiceAction {
         value: Decimal;
       }
 
-      export type Type = 'custom_pricing_unit' | 'monetary';
+      export type Type = 'custom_pricing_unit' | 'monetary' | OtherString;
     }
 
     export namespace ApplicabilityConfig {
@@ -487,7 +487,10 @@ export namespace V2 {
     export namespace ServiceActionCreateParams {
       export type ServiceInterval = 'day' | 'month' | 'week' | 'year';
 
-      export type Type = 'credit_grant' | 'credit_grant_per_tenant';
+      export type Type =
+        | 'credit_grant'
+        | 'credit_grant_per_tenant'
+        | OtherString;
 
       export interface CreditGrant {
         /**
@@ -605,7 +608,7 @@ export namespace V2 {
             value: Decimal;
           }
 
-          export type Type = 'custom_pricing_unit' | 'monetary';
+          export type Type = 'custom_pricing_unit' | 'monetary' | OtherString;
         }
 
         export namespace ApplicabilityConfig {
@@ -682,7 +685,7 @@ export namespace V2 {
             value: Decimal;
           }
 
-          export type Type = 'custom_pricing_unit' | 'monetary';
+          export type Type = 'custom_pricing_unit' | 'monetary' | OtherString;
         }
 
         export namespace ApplicabilityConfig {

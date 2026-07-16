@@ -11,6 +11,7 @@ import {
   PaginationParams,
   RangeQueryParam,
   Metadata,
+  OtherString,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
@@ -329,7 +330,8 @@ export namespace Refund {
   export type PendingReason =
     | 'charge_pending'
     | 'insufficient_funds'
-    | 'processing';
+    | 'processing'
+    | OtherString;
 
   export interface PresentmentDetails {
     /**
@@ -347,7 +349,8 @@ export namespace Refund {
     | 'duplicate'
     | 'expired_uncaptured_charge'
     | 'fraudulent'
-    | 'requested_by_customer';
+    | 'requested_by_customer'
+    | OtherString;
 
   export namespace DestinationDetails {
     export interface Affirm {}
@@ -595,7 +598,7 @@ export namespace Refund {
     export interface Zip {}
 
     export namespace Card {
-      export type Type = 'pending' | 'refund' | 'reversal';
+      export type Type = 'pending' | 'refund' | 'reversal' | OtherString;
     }
   }
 
@@ -671,6 +674,11 @@ export interface RefundCreateParams {
    * The identifier of the PaymentIntent to refund.
    */
   payment_intent?: string;
+
+  /**
+   * The identifier of the PaymentRecord to refund.
+   */
+  payment_record?: string;
 
   /**
    * String indicating the reason for the refund. If set, possible values are `duplicate`, `fraudulent`, and `requested_by_customer`. If you believe the charge to be fraudulent, specifying `fraudulent` as the reason will add the associated card and email to your [block lists](https://docs.stripe.com/radar/lists), and will also help us improve our fraud detection algorithms.

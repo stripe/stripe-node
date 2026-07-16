@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {MetadataParam, Metadata} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ProfileResource extends StripeResource {
@@ -115,7 +115,7 @@ export interface Profile {
   status: Profile.Status;
 }
 export namespace Profile {
-  export type Status = 'active' | 'inactive';
+  export type Status = 'active' | 'inactive' | OtherString;
 }
 export namespace V2 {
   export namespace Billing {
@@ -218,7 +218,7 @@ export namespace V2 {
     }
 
     export namespace ProfileListParams {
-      export type Status = 'active' | 'inactive';
+      export type Status = 'active' | 'inactive' | OtherString;
     }
   }
 }
