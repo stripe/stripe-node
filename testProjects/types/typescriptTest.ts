@@ -289,6 +289,16 @@ const instanceofNarrowing = (e: unknown): Stripe.ErrorType.StripeError | null =>
   return null;
 };
 
+// Error objects expose generated fields with proper types
+const errorFieldAccess = (e: Stripe.ErrorType.StripeError): void => {
+  const networkAdviceCode: string | undefined = e.network_advice_code;
+  const networkDeclineCode: string | undefined = e.network_decline_code;
+  const adviceCode: string | undefined = e.advice_code;
+  const paymentIntent: Stripe.PaymentIntent | undefined = e.payment_intent;
+  const paymentMethod: Stripe.PaymentMethod | undefined = e.payment_method;
+  const setupIntent: Stripe.SetupIntent | undefined = e.setup_intent;
+};
+
 stripe.files.create({
   purpose: 'dispute_evidence',
   file: {
@@ -502,3 +512,25 @@ const customerResource: Stripe.CustomerResource = new Stripe.CustomerResource(
 const v2AccountResource: Stripe.V2.Billing.MeterEventResource = new Stripe.V2.Billing.MeterEventResource(
   stripe
 );
+
+// Namespace type exports that must remain accessible (v21 parity).
+const _stripeConfig: Stripe.StripeConfig = {maxNetworkRetries: 3};
+const _latestApiVersion: Stripe.LatestApiVersion = '' as any;
+const _httpAgent: Stripe.HttpAgent = null as any;
+const _httpProtocol: Stripe.HttpProtocol = 'https';
+const _stripeResource: Stripe.StripeResource = null as any;
+const _cryptoProvider: Stripe.CryptoProvider = null as any;
+const _httpClient: Stripe.HttpClient = null as any;
+const _httpClientResponse: Stripe.HttpClientResponse = null as any;
+const _rawErrorType: Stripe.RawErrorType = 'card_error';
+const _webhooksType: Stripe.Webhooks = null as any;
+const _webhookTestHeaderOptions: Stripe.WebhookTestHeaderOptions = {
+  payload: '{}',
+  secret: 'whsec_test',
+};
+const _signatureType: Stripe.Signature = null as any;
+
+// Factory function return types must be assignable to their interface types.
+const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
+const _nodeCryptoProvider: Stripe.CryptoProvider =
+  Stripe.createNodeCryptoProvider();

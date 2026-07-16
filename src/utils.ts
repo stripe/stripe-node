@@ -457,24 +457,6 @@ export function parseHttpHeaderAsString<K extends keyof RequestHeaders>(
   return String(header);
 }
 
-export function parseHttpHeaderAsNumber<K extends keyof RequestHeaders>(
-  header: RequestHeaders[K] | null | undefined
-): number | undefined {
-  const value = Array.isArray(header) ? header[0] : header;
-  if (value == null) {
-    return undefined;
-  }
-  const trimmed = String(value).trim();
-  if (trimmed === '') {
-    return undefined;
-  }
-  const parsed = Number(trimmed);
-  if (!Number.isFinite(parsed)) {
-    return undefined;
-  }
-  return parsed;
-}
-
 export function parseHeadersForFetch(
   headers: RequestHeaders
 ): [string, string][] {
