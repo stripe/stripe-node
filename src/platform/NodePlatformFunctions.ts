@@ -1,6 +1,8 @@
 import * as crypto from 'crypto';
+import * as fs from 'fs';
 import * as http from 'http';
 import * as os from 'os';
+import * as path from 'path';
 import {CryptoProvider} from '../crypto/CryptoProvider.js';
 import {EventEmitter} from 'events';
 import {HttpClient, NodeHttpClientInterface} from '../net/HttpClient.js';
@@ -50,36 +52,59 @@ export class NodePlatformFunctions extends PlatformFunctions {
     return process.version;
   }
 
-  private getUname(): string | null {
-    try {
-      const parts = [os.type(), os.release(), os.arch()];
-      // os.version() returns detailed kernel version, available since Node 10.7.0
-      // It may not exist in older typings, so access carefully
-      const version = (os as any).version?.();
-      if (version) parts.push(version);
-      try {
-        parts.push(os.hostname());
-        // eslint-disable-next-line no-empty
-      } catch (_e) {}
-      return parts.join(' ');
-    } catch {
-      return null;
-    }
-  }
+  private _telemetryId: string | null | undefined = undefined;
 
   /** @override */
-  getSourceHash(): string | null {
-    try {
-      const uname = this.getUname();
-      return uname
-        ? crypto
-            .createHash('md5')
-            .update(uname)
-            .digest('hex')
-        : null;
-    } catch {
+  getTelemetryId(): string | null {
+    if (this._telemetryId !== undefined) {
+      return this._telemetryId;
+    }
+
+    const filePath = this._getTelemetryIdPath();
+    if (!filePath) {
+      this._telemetryId = null;
       return null;
     }
+
+    try {
+      // eslint-disable-next-line no-sync
+      const content = fs.readFileSync(filePath, 'utf8').trim();
+      if (content) {
+        this._telemetryId = content;
+        return content;
+      }
+      // eslint-disable-next-line no-empty
+    } catch {}
+
+    const newId = crypto.randomBytes(16).toString('hex');
+
+    try {
+      // eslint-disable-next-line no-sync
+      fs.mkdirSync(path.dirname(filePath), {recursive: true});
+      // eslint-disable-next-line no-sync
+      fs.writeFileSync(filePath, newId, 'utf8');
+    } catch {
+      this._telemetryId = null;
+      return null;
+    }
+
+    this._telemetryId = newId;
+    return newId;
+  }
+
+  private _getTelemetryIdPath(): string | null {
+    if (process.platform === 'win32') {
+      const appData = process.env.APPDATA;
+      if (!appData) return null;
+      return path.join(appData, 'Stripe', 'telemetry_id');
+    }
+    const xdg = process.env.XDG_CONFIG_HOME;
+    if (xdg) {
+      return path.join(xdg, 'stripe', 'telemetry_id');
+    }
+    const home = os.homedir();
+    if (!home) return null;
+    return path.join(home, '.config', 'stripe', 'telemetry_id');
   }
 
   /**

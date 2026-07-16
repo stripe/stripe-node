@@ -3,6 +3,12 @@
 
 import {HttpClientResponseError} from './RequestSender.js';
 import {RawErrorType, StripeRawError} from './Types.js';
+// errorImports: The beginning of the section generated from our OpenAPI spec
+import {PaymentIntent} from './resources/PaymentIntents.js';
+import {PaymentMethod} from './resources/PaymentMethods.js';
+import {SetupIntent} from './resources/SetupIntents.js';
+import {CustomerSource} from './resources/CustomerSources.js';
+// errorImports: The end of the section generated from our OpenAPI spec
 
 export const generateV1Error = (
   rawStripeError: StripeRawError
@@ -129,42 +135,100 @@ export class StripeError extends Error {
   readonly rawType?: RawErrorType;
   readonly headers?: {[header: string]: string};
   readonly requestId?: string;
-
-  readonly code?: string;
-  readonly doc_url?: string;
-  readonly param?: string;
   readonly detail?: string | Error | HttpClientResponseError;
   readonly statusCode?: number;
-  readonly charge?: string;
-  readonly decline_code?: string;
-  readonly payment_method_type?: string;
 
-  readonly payment_intent?: any;
-  readonly payment_method?: any;
-  readonly setup_intent?: any;
-  readonly source?: any;
+  // errorProperties: The beginning of the section generated from our OpenAPI spec
+  /**
+   * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://docs.stripe.com/declines#retrying-issuer-declines) if they provide one.
+   */
+  readonly advice_code?: string;
+  /**
+   * For card errors, the ID of the failed charge.
+   */
+  readonly charge?: string;
+  /**
+   * For some errors that could be handled programmatically, a short string indicating the [error code](https://docs.stripe.com/error-codes) reported.
+   */
+  readonly code?: string;
+  /**
+   * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://docs.stripe.com/declines#issuer-declines) if they provide one.
+   */
+  readonly decline_code?: string;
+  /**
+   * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
+   */
+  readonly doc_url?: string;
+  /**
+   * For card errors resulting from a card issuer decline, a 2 digit code which indicates the advice given to merchant by the card network on how to proceed with an error.
+   */
+  readonly network_advice_code?: string;
+  /**
+   * For payments declined by the network, an alphanumeric code which indicates the reason the payment failed.
+   */
+  readonly network_decline_code?: string;
+  /**
+   * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
+   */
+  readonly param?: string;
+  /**
+   * The PaymentIntent object for errors returned on a request involving a PaymentIntent.
+   */
+  readonly payment_intent?: PaymentIntent;
+  /**
+   * The PaymentMethod object for errors returned on a request involving a PaymentMethod.
+   */
+  readonly payment_method?: PaymentMethod;
+  /**
+   * If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
+   */
+  readonly payment_method_type?: string;
+  /**
+   * A URL to the request log entry in your dashboard.
+   */
+  readonly request_log_url?: string;
+  /**
+   * The SetupIntent object for errors returned on a request involving a SetupIntent.
+   */
+  readonly setup_intent?: SetupIntent;
+  /**
+   * The CustomerSource object for errors returned on a request involving a CustomerSource.
+   */
+  readonly source?: CustomerSource;
+  /**
+   * The user message associated with the error.
+   */
+  readonly user_message?: string;
+  // errorProperties: The end of the section generated from our OpenAPI spec
 
   constructor(raw: StripeRawError = {}, type: string | null = null) {
     super(raw.message);
     this.type = type || this.constructor.name;
     this.raw = raw;
     this.rawType = raw.type;
-    this.code = raw.code;
-    this.doc_url = raw.doc_url;
-    this.param = raw.param;
     this.detail = raw.detail;
     this.headers = raw.headers;
     this.requestId = raw.requestId;
     this.statusCode = raw.statusCode;
     this.message = raw.message ?? '';
     this.userMessage = raw.user_message;
+    // errorAssignments: The beginning of the section generated from our OpenAPI spec
+    this.advice_code = raw.advice_code;
     this.charge = raw.charge;
+    this.code = raw.code;
     this.decline_code = raw.decline_code;
+    this.doc_url = raw.doc_url;
+    this.network_advice_code = raw.network_advice_code;
+    this.network_decline_code = raw.network_decline_code;
+    this.param = raw.param;
     this.payment_intent = raw.payment_intent;
     this.payment_method = raw.payment_method;
     this.payment_method_type = raw.payment_method_type;
+    this.request_log_url = raw.request_log_url;
     this.setup_intent = raw.setup_intent;
     this.source = raw.source;
+    this.user_message = raw.user_message;
+    // errorAssignments: The end of the section generated from our OpenAPI spec
   }
 
   /**

@@ -32,13 +32,10 @@ import {
   removeNullish,
   getAPIMode,
   parseHttpHeaderAsString,
-  parseHttpHeaderAsNumber,
   processOptions,
 } from './utils.js';
 
 export type HttpClientResponseError = {code: string};
-
-const MAX_RETRY_AFTER_WAIT = 60;
 
 export class RequestSender {
   protected _stripe: Stripe;
@@ -306,7 +303,7 @@ export class RequestSender {
     return false;
   }
 
-  _getSleepTimeInMS(numRetries: number, retryAfter?: number): number {
+  _getSleepTimeInMS(numRetries: number): number {
     const initialNetworkRetryDelay = this._stripe.getInitialNetworkRetryDelay();
     const maxNetworkRetryDelay = this._stripe.getMaxNetworkRetryDelay();
 
@@ -324,11 +321,6 @@ export class RequestSender {
 
     // But never sleep less than the base sleep seconds.
     sleepSeconds = Math.max(initialNetworkRetryDelay, sleepSeconds);
-
-    // And never sleep less than the time the API asks us to wait, assuming it's a reasonable ask.
-    if (Number.isInteger(retryAfter) && retryAfter! <= MAX_RETRY_AFTER_WAIT) {
-      sleepSeconds = Math.max(sleepSeconds, retryAfter!);
-    }
 
     return sleepSeconds * 1000;
   }
@@ -586,12 +578,11 @@ export class RequestSender {
       requestFn: typeof makeRequest,
       apiVersion: string,
       headers: RequestHeaders,
-      requestRetries: number,
-      retryAfter?: number
+      requestRetries: number
     ): ReturnType<typeof setTimeout> => {
       return setTimeout(
         requestFn,
-        this._getSleepTimeInMS(requestRetries, retryAfter),
+        this._getSleepTimeInMS(requestRetries),
         apiVersion,
         headers,
         requestRetries + 1
@@ -671,8 +662,7 @@ export class RequestSender {
                   makeRequest,
                   apiVersion,
                   headers,
-                  requestRetries,
-                  parseHttpHeaderAsNumber(res.getHeaders()['retry-after'])
+                  requestRetries
                 );
               } else if (options.streaming && res.getStatusCode() < 400) {
                 return this._streamingResponseHandler(
