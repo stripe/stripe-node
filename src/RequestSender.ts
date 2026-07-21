@@ -23,7 +23,11 @@ import {
   ApiMode,
 } from './Types.js';
 import {RawRequestOptions, RequestOptions} from './lib.js';
-import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
+import {
+  HttpClient,
+  HttpClientResponseInterface,
+  HttpClientRuntimeError,
+} from './net/HttpClient.js';
 import {Stripe} from './stripe.core.js';
 import {
   jsonStringifyRequestData,
@@ -679,37 +683,43 @@ export class RequestSender {
                 )(res);
               }
             })
-            .catch((error: HttpClientResponseError) => {
-              if (
-                RequestSender._shouldRetry(
-                  null,
-                  requestRetries,
-                  maxRetries,
-                  error
-                )
-              ) {
-                return retryRequest(
-                  makeRequest,
-                  apiVersion,
-                  headers,
-                  requestRetries
-                );
-              } else {
-                const isTimeoutError =
-                  error.code && error.code === HttpClient.TIMEOUT_ERROR_CODE;
+            .catch(
+              (error: HttpClientResponseError | HttpClientRuntimeError) => {
+                if (error instanceof HttpClientRuntimeError) {
+                  return callback(error);
+                }
 
-                return callback(
-                  new StripeConnectionError({
-                    message: isTimeoutError
-                      ? `Request aborted due to timeout being reached (${timeout}ms)`
-                      : RequestSender._generateConnectionErrorMessage(
-                          requestRetries
-                        ),
-                    detail: error,
-                  })
-                );
+                if (
+                  RequestSender._shouldRetry(
+                    null,
+                    requestRetries,
+                    maxRetries,
+                    error
+                  )
+                ) {
+                  return retryRequest(
+                    makeRequest,
+                    apiVersion,
+                    headers,
+                    requestRetries
+                  );
+                } else {
+                  const isTimeoutError =
+                    error.code && error.code === HttpClient.TIMEOUT_ERROR_CODE;
+
+                  return callback(
+                    new StripeConnectionError({
+                      message: isTimeoutError
+                        ? `Request aborted due to timeout being reached (${timeout}ms)`
+                        : RequestSender._generateConnectionErrorMessage(
+                            requestRetries
+                          ),
+                      detail: error,
+                    })
+                  );
+                }
               }
-            });
+            );
         })
         .catch((e: any) => {
           throw new StripeError({

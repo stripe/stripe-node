@@ -68,6 +68,10 @@
     "prepack": "just install && just build"
   },
   "exports": {
+    "extensibility": {
+      "import": "./esm/stripe.esm.extensibility.js",
+      "require": "./cjs/stripe.cjs.extensibility.js"
+    },
     "browser": {
       "import": "./esm/stripe.esm.worker.js",
       "require": "./cjs/stripe.cjs.worker.js"

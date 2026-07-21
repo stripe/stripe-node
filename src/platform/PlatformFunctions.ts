@@ -2,18 +2,28 @@
 // eslint-disable-next-line wintertc-compat
 import * as http from 'http';
 import {CryptoProvider} from '../crypto/CryptoProvider.js';
-// TODO(DEVSDK-3113): Remove EventEmitter from shared base class in next major version.
-// eslint-disable-next-line wintertc-compat
-import {EventEmitter} from 'events';
 import {FetchHttpClient} from '../net/FetchHttpClient.js';
 import {
   HttpClient,
   NodeHttpClientInterface,
   FetchHttpClientInterface,
 } from '../net/HttpClient.js';
-import {StripeEmitter} from '../StripeEmitter.js';
 import {SubtleCryptoProvider} from '../crypto/SubtleCryptoProvider.js';
-import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
+import {
+  MultipartRequestData,
+  RequestData,
+  BufferedFile,
+  RequestEvent,
+  ResponseEvent,
+  RequestAuthenticator,
+} from '../Types.js';
+
+export interface StripeEmitterInterface {
+  on(eventName: string, listener: (...args: any[]) => any): void;
+  once(eventName: string, listener: (...args: any[]) => any): void;
+  removeListener(eventName: string, listener: (...args: any[]) => any): void;
+  emit(eventName: string, data?: RequestEvent | ResponseEvent): boolean;
+}
 
 /**
  * Interface encapsulating various utility functions whose
@@ -64,6 +74,20 @@ export class PlatformFunctions {
   }
 
   /**
+   * Returns the default number of network retries for this platform.
+   */
+  getDefaultMaxNetworkRetries(): number {
+    return 2;
+  }
+
+  /**
+   * Returns the default request authenticator for this platform.
+   */
+  createDefaultAuthenticator(): RequestAuthenticator | null {
+    return null;
+  }
+
+  /**
    * Generates a v4 UUID. See https://stackoverflow.com/a/2117523
    */
   uuid4(): string {
@@ -93,7 +117,7 @@ export class PlatformFunctions {
   /**
    * Creates an event emitter.
    */
-  createEmitter(): StripeEmitter | EventEmitter {
+  createEmitter(): StripeEmitterInterface {
     throw new Error('createEmitter not implemented.');
   }
 
