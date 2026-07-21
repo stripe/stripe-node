@@ -298,6 +298,49 @@ export interface V2ListPromise<T>
 }
 
 /**
+ * A container for paginated v2 search results.
+ * The array of objects is on the `.data` property.
+ * Use `next_page_url` / `previous_page_url` opaque cursors for pagination
+ * (pass the value back as the `page` request parameter).
+ */
+export interface V2SearchResult<T> {
+  object: 'v2.search_result';
+
+  data: Array<T>;
+
+  /**
+   * Opaque cursor to fetch the next page of results.
+   * Pass back as the `page` request parameter. Null if no more pages.
+   */
+  next_page_url: string | null;
+
+  /**
+   * Opaque cursor to fetch the previous page of results.
+   * Pass back as the `page` request parameter. Null on the first page.
+   */
+  previous_page_url: string | null;
+
+  /**
+   * The total number of objects that match the query.
+   */
+  total_count: number;
+}
+
+export interface V2SearchResultPromise<T>
+  extends Promise<Response<V2SearchResult<T>>>,
+    AsyncIterableIterator<T> {
+  autoPagingEach(
+    handler: (item: T) => boolean | void | Promise<boolean | void>,
+    onDone?: (err: any) => void
+  ): Promise<void>;
+
+  autoPagingToArray(
+    opts: {limit: number},
+    onDone?: (err: any) => void
+  ): Promise<Array<T>>;
+}
+
+/**
  * A container for paginated lists of search results.
  * The array of objects is on the `.data` property,
  * and `.has_more` indicates whether there are additional objects beyond the end of this list.
