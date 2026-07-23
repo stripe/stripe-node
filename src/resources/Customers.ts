@@ -2539,6 +2539,7 @@ export namespace CustomerListPaymentMethodsParams {
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'vipps'
     | 'wechat_pay'
     | 'zip'
     | OtherString;

@@ -259,6 +259,8 @@ export namespace ConfirmationToken {
 
     us_bank_account?: PaymentMethodPreview.UsBankAccount;
 
+    vipps?: PaymentMethodPreview.Vipps;
+
     wechat_pay?: PaymentMethodPreview.WechatPay;
 
     zip?: PaymentMethodPreview.Zip;
@@ -1125,6 +1127,7 @@ export namespace ConfirmationToken {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
+      | 'vipps'
       | 'wechat_pay'
       | 'zip'
       | OtherString;
@@ -1187,6 +1190,8 @@ export namespace ConfirmationToken {
        */
       status_details: UsBankAccount.StatusDetails | null;
     }
+
+    export interface Vipps {}
 
     export interface WechatPay {}
 

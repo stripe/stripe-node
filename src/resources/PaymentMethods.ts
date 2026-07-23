@@ -346,6 +346,8 @@ export interface PaymentMethod {
 
   us_bank_account?: PaymentMethod.UsBankAccount;
 
+  vipps?: PaymentMethod.Vipps;
+
   wechat_pay?: PaymentMethod.WechatPay;
 
   zip?: PaymentMethod.Zip;
@@ -1160,6 +1162,7 @@ export namespace PaymentMethod {
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'vipps'
     | 'wechat_pay'
     | 'zip'
     | OtherString;
@@ -1222,6 +1225,8 @@ export namespace PaymentMethod {
      */
     status_details: UsBankAccount.StatusDetails | null;
   }
+
+  export interface Vipps {}
 
   export interface WechatPay {}
 
@@ -2415,6 +2420,11 @@ export interface PaymentMethodCreateParams {
   us_bank_account?: PaymentMethodCreateParams.UsBankAccount;
 
   /**
+   * If this is a `vipps` PaymentMethod, this hash contains details about the Vipps payment method.
+   */
+  vipps?: PaymentMethodCreateParams.Vipps;
+
+  /**
    * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
    */
   wechat_pay?: PaymentMethodCreateParams.WechatPay;
@@ -2832,6 +2842,7 @@ export namespace PaymentMethodCreateParams {
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'vipps'
     | 'wechat_pay'
     | 'zip'
     | OtherString;
@@ -2869,6 +2880,8 @@ export namespace PaymentMethodCreateParams {
      */
     routing_number?: string;
   }
+
+  export interface Vipps {}
 
   export interface WechatPay {}
 
@@ -3348,6 +3361,7 @@ export namespace PaymentMethodListParams {
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'vipps'
     | 'wechat_pay'
     | 'zip'
     | OtherString;

@@ -169,6 +169,7 @@ export namespace AccountSignal {
   export type Type =
     | 'fraudulent_merchant'
     | 'merchant_delinquency'
+    | 'payment_delinquency_exposure'
     | OtherString;
 
   export namespace FraudulentMerchant {
@@ -299,6 +300,7 @@ export namespace V2 {
       export type Type =
         | 'fraudulent_merchant'
         | 'merchant_delinquency'
+        | 'payment_delinquency_exposure'
         | OtherString;
 
       export interface AccountDetails {

@@ -1674,6 +1674,11 @@ export namespace DelegatedCheckout {
      * Risk details/signals associated with the requested session
      */
     risk_details?: RequestedSessionConfirmParams.RiskDetails;
+
+    /**
+     * Set to true when using Stripe.js, iOS, or Android client-side SDKs to handle next actions.
+     */
+    use_stripe_sdk?: boolean;
   }
 
   export namespace RequestedSessionConfirmParams {

@@ -2370,6 +2370,7 @@ export namespace PaymentRecord {
         export type Result =
           | 'attempt_acknowledged'
           | 'authenticated'
+          | 'data_share_only'
           | 'exempted'
           | 'failed'
           | 'not_supported'
@@ -2999,24 +3000,24 @@ export interface PaymentRecordCreateParams {
   amount: PaymentRecordCreateParams.Amount;
 
   /**
-   * Information about the dispute closing.
-   */
-  closed: PaymentRecordCreateParams.Closed;
-
-  /**
-   * Information about the dispute funding event.
-   */
-  funded: PaymentRecordCreateParams.Funded;
-
-  /**
    * Processor information for this payment.
    */
   processor_details: PaymentRecordCreateParams.ProcessorDetails;
 
   /**
+   * Information about the dispute closing.
+   */
+  closed?: PaymentRecordCreateParams.Closed;
+
+  /**
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * Information about the dispute funding event.
+   */
+  funded?: PaymentRecordCreateParams.Funded;
 
   /**
    * When the reported payment was initiated. Measured in seconds since the Unix epoch.
@@ -3046,6 +3047,18 @@ export namespace PaymentRecordCreateParams {
     value: number;
   }
 
+  export interface ProcessorDetails {
+    /**
+     * Information about the custom processor used to make this payment.
+     */
+    custom?: ProcessorDetails.Custom;
+
+    /**
+     * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
+     */
+    type: 'custom';
+  }
+
   export interface Closed {
     /**
      * When the dispute was closed. Measured in seconds since the Unix epoch.
@@ -3068,18 +3081,6 @@ export namespace PaymentRecordCreateParams {
      * The type of dispute funding event.
      */
     type: 'withdrawn';
-  }
-
-  export interface ProcessorDetails {
-    /**
-     * Information about the custom processor used to make this payment.
-     */
-    custom?: ProcessorDetails.Custom;
-
-    /**
-     * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
-     */
-    type: 'custom';
   }
 
   export type Reason =

@@ -1516,6 +1516,7 @@ export namespace QuotePreviewInvoice {
       | 'konbini'
       | 'kr_card'
       | 'link'
+      | 'mb_way'
       | 'momo'
       | 'multibanco'
       | 'naver_pay'

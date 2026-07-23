@@ -1,12 +1,14 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {AlertNotification} from './AlertNotifications.js';
 import {Customer} from './../Customers.js';
 import {Meter} from './Meters.js';
 import {
   OtherString,
   Decimal,
   PaginationParams,
+  RangeQueryParam,
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
@@ -409,6 +411,24 @@ export class AlertResource extends StripeResource {
             },
           },
         },
+      }
+    ) as any;
+  }
+  /**
+   * Lists sent billing alert triggered and recovered notifications for a billing alert.
+   */
+  listNotifications(
+    id: string,
+    params: Billing.AlertListNotificationsParams,
+    options?: RequestOptions
+  ): ApiListPromise<AlertNotification> {
+    return this._makeRequest(
+      'GET',
+      `/v1/billing/alerts/${encodeURIComponent(id)}/notifications`,
+      params,
+      options,
+      {
+        methodType: 'list',
       }
     ) as any;
   }
@@ -823,7 +843,7 @@ export namespace Billing {
       filters?: Array<UsageThreshold.Filter>;
 
       /**
-       * Defines the threshold value that triggers the alert.
+       * Defines the threshold value that triggers the alert. The value must be greater than 0.
        */
       gte: number;
 
@@ -1110,5 +1130,47 @@ export namespace Billing {
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+  }
+}
+export namespace Billing {
+  export interface AlertListNotificationsParams extends PaginationParams {
+    /**
+     * The customer to list notifications for.
+     */
+    customer: string;
+
+    /**
+     * Filter results to only include triggered or recovered notifications.
+     */
+    action?: AlertListNotificationsParams.Action;
+
+    /**
+     * Filter results to only include notifications for the given billing cadence.
+     */
+    cadence?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Filter results to only include notifications for the given meter.
+     */
+    meter?: string;
+
+    /**
+     * Filter results according to when the notification was sent.
+     */
+    notified_at?: RangeQueryParam | number;
+
+    /**
+     * Filter results to only include notifications for the given subscription.
+     */
+    subscription?: string;
+  }
+
+  export namespace AlertListNotificationsParams {
+    export type Action = 'recovered' | 'triggered';
   }
 }

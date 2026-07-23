@@ -30,6 +30,7 @@ import {
 } from './MeterEventAdjustments.js';
 import {AlertRecovered} from './AlertRecovereds.js';
 import {AlertTriggered} from './AlertTriggereds.js';
+import {AlertNotification} from './AlertNotifications.js';
 import {MeterEventSummary} from './MeterEventSummaries.js';
 import {Analytics} from './Analytics/index.js';
 
@@ -42,6 +43,7 @@ export {MeterEvent} from './MeterEvents.js';
 export {MeterEventAdjustment} from './MeterEventAdjustments.js';
 export {AlertRecovered} from './AlertRecovereds.js';
 export {AlertTriggered} from './AlertTriggereds.js';
+export {AlertNotification} from './AlertNotifications.js';
 export {MeterEventSummary} from './MeterEventSummaries.js';
 
 export class Billing {
@@ -75,6 +77,7 @@ export declare namespace Billing {
   export import AlertActivateParams = BillingNamespace0.AlertActivateParams;
   export import AlertArchiveParams = BillingNamespace0.AlertArchiveParams;
   export import AlertDeactivateParams = BillingNamespace0.AlertDeactivateParams;
+  export import AlertListNotificationsParams = BillingNamespace0.AlertListNotificationsParams;
   export {Alert, AlertResource};
   export import CreditBalanceSummaryRetrieveParams = BillingNamespace1.CreditBalanceSummaryRetrieveParams;
   export {CreditBalanceSummary, CreditBalanceSummaryResource};
@@ -102,6 +105,7 @@ export declare namespace Billing {
   export {MeterEventAdjustment, MeterEventAdjustmentResource};
   export {AlertRecovered};
   export {AlertTriggered};
+  export {AlertNotification};
   export {MeterEventSummary};
   export {Analytics};
 }

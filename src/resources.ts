@@ -49,6 +49,7 @@ import {CustomerResource as CryptoCustomers} from './resources/Crypto/Customers.
 import {CustomerResource as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
 import {DebitDisputeResource as V2MoneyManagementDebitDisputes} from './resources/V2/MoneyManagement/DebitDisputes.js';
 import {DebitReversalResource as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
+import {DepositAddressResource as CryptoDepositAddresses} from './resources/Crypto/DepositAddresses.js';
 import {DisputeSettlementDetailResource as IssuingDisputeSettlementDetails} from './resources/Issuing/DisputeSettlementDetails.js';
 import {DisputeResource as IssuingDisputes} from './resources/Issuing/Disputes.js';
 import {DisputeResource as TestHelpersIssuingDisputes} from './resources/TestHelpers/Issuing/Disputes.js';
@@ -278,6 +279,7 @@ export const Climate = resourceNamespace('climate', {
 });
 export const Crypto = resourceNamespace('crypto', {
   Customers: CryptoCustomers,
+  DepositAddresses: CryptoDepositAddresses,
   OnrampSessions: CryptoOnrampSessions,
   OnrampTransactionLimits: CryptoOnrampTransactionLimits,
 });

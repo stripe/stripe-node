@@ -404,6 +404,11 @@ export namespace TestHelpers {
       us_bank_account?: PaymentMethodData.UsBankAccount;
 
       /**
+       * If this is a `vipps` PaymentMethod, this hash contains details about the Vipps payment method.
+       */
+      vipps?: PaymentMethodData.Vipps;
+
+      /**
        * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
        */
       wechat_pay?: PaymentMethodData.WechatPay;
@@ -807,6 +812,7 @@ export namespace TestHelpers {
         | 'twint'
         | 'upi'
         | 'us_bank_account'
+        | 'vipps'
         | 'wechat_pay'
         | 'zip'
         | OtherString;
@@ -844,6 +850,8 @@ export namespace TestHelpers {
          */
         routing_number?: string;
       }
+
+      export interface Vipps {}
 
       export interface WechatPay {}
 
