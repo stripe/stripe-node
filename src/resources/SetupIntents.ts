@@ -385,6 +385,7 @@ export namespace SetupIntent {
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'vipps'
     | 'wechat_pay'
     | 'zip'
     | OtherString;
@@ -1703,6 +1704,7 @@ export namespace SetupIntentCreateParams {
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'vipps'
     | 'wechat_pay'
     | 'zip'
     | OtherString;
@@ -2051,6 +2053,11 @@ export namespace SetupIntentCreateParams {
      * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
      */
     us_bank_account?: PaymentMethodData.UsBankAccount;
+
+    /**
+     * If this is a `vipps` PaymentMethod, this hash contains details about the Vipps payment method.
+     */
+    vipps?: PaymentMethodData.Vipps;
 
     /**
      * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
@@ -2579,6 +2586,7 @@ export namespace SetupIntentCreateParams {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
+      | 'vipps'
       | 'wechat_pay'
       | 'zip'
       | OtherString;
@@ -2616,6 +2624,8 @@ export namespace SetupIntentCreateParams {
        */
       routing_number?: string;
     }
+
+    export interface Vipps {}
 
     export interface WechatPay {}
 
@@ -3844,6 +3854,7 @@ export namespace SetupIntentUpdateParams {
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'vipps'
     | 'wechat_pay'
     | 'zip'
     | OtherString;
@@ -4185,6 +4196,11 @@ export namespace SetupIntentUpdateParams {
      * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
      */
     us_bank_account?: PaymentMethodData.UsBankAccount;
+
+    /**
+     * If this is a `vipps` PaymentMethod, this hash contains details about the Vipps payment method.
+     */
+    vipps?: PaymentMethodData.Vipps;
 
     /**
      * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
@@ -4653,6 +4669,7 @@ export namespace SetupIntentUpdateParams {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
+      | 'vipps'
       | 'wechat_pay'
       | 'zip'
       | OtherString;
@@ -4690,6 +4707,8 @@ export namespace SetupIntentUpdateParams {
        */
       routing_number?: string;
     }
+
+    export interface Vipps {}
 
     export interface WechatPay {}
 
@@ -6206,6 +6225,11 @@ export namespace SetupIntentConfirmParams {
     us_bank_account?: PaymentMethodData.UsBankAccount;
 
     /**
+     * If this is a `vipps` PaymentMethod, this hash contains details about the Vipps payment method.
+     */
+    vipps?: PaymentMethodData.Vipps;
+
+    /**
      * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
      */
     wechat_pay?: PaymentMethodData.WechatPay;
@@ -6714,6 +6738,7 @@ export namespace SetupIntentConfirmParams {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
+      | 'vipps'
       | 'wechat_pay'
       | 'zip'
       | OtherString;
@@ -6751,6 +6776,8 @@ export namespace SetupIntentConfirmParams {
        */
       routing_number?: string;
     }
+
+    export interface Vipps {}
 
     export interface WechatPay {}
 

@@ -86,6 +86,7 @@ export namespace Crypto {
       | 'polygon'
       | 'solana'
       | 'stellar'
+      | 'sui'
       | 'worldchain'
       | OtherString;
   }

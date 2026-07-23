@@ -408,7 +408,9 @@ export interface PaymentIntent {
   /**
    * The list of payment method types allowed for use with this payment. Stripe automatically returns compatible payment methods from this list in the `payment_method_types` field of the response, based on the other PaymentIntent parameters, such as `currency`, `amount`, and `customer`.
    */
-  allowed_payment_method_types?: Array<string> | null;
+  allowed_payment_method_types?: Array<
+    PaymentIntent.AllowedPaymentMethodType
+  > | null;
 
   /**
    * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://docs.stripe.com/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
@@ -705,6 +707,105 @@ export namespace PaymentIntent {
     enabled: boolean | null;
   }
 
+  export type AllowedPaymentMethodType =
+    | 'acss_debit'
+    | 'affirm'
+    | 'afterpay_clearpay'
+    | 'alipay'
+    | 'alma'
+    | 'amazon_pay'
+    | 'au_becs_debit'
+    | 'bacs_debit'
+    | 'bancontact'
+    | 'billie'
+    | 'bizum'
+    | 'blik'
+    | 'boku_promptpay'
+    | 'boleto'
+    | 'capchase_pay'
+    | 'card'
+    | 'cashapp'
+    | 'check_scan'
+    | 'click_to_pay'
+    | 'crypto'
+    | 'customer_balance'
+    | 'demo_pay'
+    | 'duitnow'
+    | 'dummy_auth_push'
+    | 'dummy_passthrough_card'
+    | 'edenred'
+    | 'eps'
+    | 'fpx'
+    | 'gcash'
+    | 'getbalance'
+    | 'gift_card'
+    | 'giropay'
+    | 'gopay'
+    | 'grabpay'
+    | 'id_bank_transfer'
+    | 'ideal'
+    | 'kakao_pay'
+    | 'klarna'
+    | 'knet'
+    | 'konbini'
+    | 'kr_card'
+    | 'kr_market'
+    | 'kriya'
+    | 'link'
+    | 'mb_way'
+    | 'mobilepay'
+    | 'momo'
+    | 'mondu'
+    | 'multibanco'
+    | 'naver_pay'
+    | 'netbanking'
+    | 'ng_bank'
+    | 'ng_bank_transfer'
+    | 'ng_card'
+    | 'ng_market'
+    | 'ng_ussd'
+    | 'ng_wallet'
+    | 'nz_bank_account'
+    | 'octopus'
+    | 'oxxo'
+    | 'p24'
+    | 'paper_check'
+    | 'pay_by_bank'
+    | 'payco'
+    | 'paynow'
+    | 'paypal'
+    | 'paypay'
+    | 'payto'
+    | 'pix'
+    | 'promptpay'
+    | 'qris'
+    | 'rechnung'
+    | 'revolut_pay'
+    | 'samsung_pay'
+    | 'satispay'
+    | 'scalapay'
+    | 'sepa_debit'
+    | 'sequra'
+    | 'shop_pay'
+    | 'shopeepay'
+    | 'sofort'
+    | 'south_korea_market'
+    | 'stripe_balance'
+    | 'sunbit'
+    | 'swish'
+    | 'tamara'
+    | 'test_pay'
+    | 'truemoney'
+    | 'twint'
+    | 'upi'
+    | 'us_bank_account'
+    | 'us_cash_voucher'
+    | 'vipps'
+    | 'wechat_pay'
+    | 'wero'
+    | 'zip'
+    | OtherString;
+
   export interface AmountDetails {
     /**
      * The total discount applied on the transaction represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than 0.
@@ -826,6 +927,7 @@ export namespace PaymentIntent {
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'vipps'
     | 'wechat_pay'
     | 'zip'
     | OtherString;
@@ -1194,6 +1296,8 @@ export namespace PaymentIntent {
     upi?: PaymentMethodOptions.Upi;
 
     us_bank_account?: PaymentMethodOptions.UsBankAccount;
+
+    vipps?: PaymentMethodOptions.Vipps;
 
     wechat_pay?: PaymentMethodOptions.WechatPay;
 
@@ -3351,7 +3455,7 @@ export namespace PaymentIntent {
           /**
            * Tax details.
            */
-          taxes?: Array<Tax.Tax>;
+          tax_items?: Array<Tax.TaxItem>;
         }
 
         export namespace ExtraCharge {
@@ -3370,7 +3474,7 @@ export namespace PaymentIntent {
         }
 
         export namespace Tax {
-          export interface Tax {
+          export interface TaxItem {
             /**
              * Tax amount.
              */
@@ -3766,7 +3870,7 @@ export namespace PaymentIntent {
           /**
            * Tax details.
            */
-          taxes?: Array<Tax.Tax>;
+          tax_items?: Array<Tax.TaxItem>;
         }
 
         export namespace ExtraCharge {
@@ -3778,7 +3882,7 @@ export namespace PaymentIntent {
         }
 
         export namespace Tax {
-          export interface Tax {
+          export interface TaxItem {
             /**
              * Tax amount.
              */
@@ -4012,7 +4116,7 @@ export namespace PaymentIntent {
           /**
            * Tax details.
            */
-          taxes?: Array<Tax.Tax>;
+          tax_items?: Array<Tax.TaxItem>;
         }
 
         export namespace ExtraCharge {
@@ -4027,7 +4131,7 @@ export namespace PaymentIntent {
         }
 
         export namespace Tax {
-          export interface Tax {
+          export interface TaxItem {
             /**
              * Tax amount in cents.
              */
@@ -5380,6 +5484,26 @@ export namespace PaymentIntent {
       verification_method?: UsBankAccount.VerificationMethod;
     }
 
+    export interface Vipps {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      payment_details?: Vipps.PaymentDetails;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
     export interface WechatPay {
       /**
        * The app ID registered with WeChat Pay. Only required when client is ios, android, or mini_program.
@@ -6323,6 +6447,36 @@ export namespace PaymentIntent {
       }
     }
 
+    export namespace Vipps {
+      export interface PaymentDetails {
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {
+            /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+          }
+
+          export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin'
+              | OtherString;
+          }
+        }
+      }
+    }
+
     export namespace WechatPay {
       export type Client =
         | 'android'
@@ -6844,6 +6998,7 @@ export namespace PaymentIntentCreateParams {
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'vipps'
     | 'wechat_pay'
     | 'zip'
     | OtherString;
@@ -7277,6 +7432,11 @@ export namespace PaymentIntentCreateParams {
     us_bank_account?: PaymentMethodData.UsBankAccount;
 
     /**
+     * If this is a `vipps` PaymentMethod, this hash contains details about the Vipps payment method.
+     */
+    vipps?: PaymentMethodData.Vipps;
+
+    /**
      * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
      */
     wechat_pay?: PaymentMethodData.WechatPay;
@@ -7599,6 +7759,11 @@ export namespace PaymentIntentCreateParams {
     us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
 
     /**
+     * If this is a `Vipps` PaymentMethod, this sub-hash contains details about the Vipps payment method options.
+     */
+    vipps?: Emptyable<PaymentMethodOptions.Vipps>;
+
+    /**
      * If this is a `wechat_pay` PaymentMethod, this sub-hash contains details about the WeChat Pay payment method options.
      */
     wechat_pay?: Emptyable<PaymentMethodOptions.WechatPay>;
@@ -7832,6 +7997,11 @@ export namespace PaymentIntentCreateParams {
           commodity_code?: string;
 
           /**
+           * EV charging data for this line item.
+           */
+          ev_charging?: Card.EvCharging;
+
+          /**
            * Fleet data for this line item.
            */
           fleet_data?: Card.FleetData;
@@ -7884,6 +8054,48 @@ export namespace PaymentIntentCreateParams {
         }
 
         export namespace Card {
+          export interface EvCharging {
+            /**
+             * The carbon footprint avoided by the charging session, in grams of CO2.
+             */
+            carbon_footprint_avoided_grams_co2?: number;
+
+            /**
+             * The time the charging session ended, measured in seconds since the Unix epoch.
+             */
+            charging_ended_at: number;
+
+            /**
+             * The power output capacity of the charging station, in kilowatts (kW).
+             */
+            charging_power_output_capacity_kw: number;
+
+            /**
+             * The time the charging session started, measured in seconds since the Unix epoch.
+             */
+            charging_started_at: number;
+
+            /**
+             * The type of connector used for the charging session.
+             */
+            connector_type: EvCharging.ConnectorType;
+
+            /**
+             * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+             */
+            estimated_range_added?: number;
+
+            /**
+             * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+             */
+            estimated_range_left?: number;
+
+            /**
+             * The maximum power dispensed during the charging session, in kilowatts (kW).
+             */
+            maximum_power_dispensed_kw: number;
+          }
+
           export interface FleetData {
             /**
              * The type of product being purchased at this line item.
@@ -7896,6 +8108,20 @@ export namespace PaymentIntentCreateParams {
             service_type?: FleetData.ServiceType;
           }
 
+          export namespace EvCharging {
+            export type ConnectorType =
+              | 'ac_gb_t'
+              | 'ac_j1772'
+              | 'ac_mennekes'
+              | 'dc_ccs1'
+              | 'dc_ccs2'
+              | 'dc_chademo'
+              | 'dc_gb_t'
+              | 'dc_mcs'
+              | 'nacs'
+              | OtherString;
+          }
+
           export namespace FleetData {
             export type ProductType =
               | 'air_conditioning_service'
@@ -7905,6 +8131,13 @@ export namespace PaymentIntentCreateParams {
               | 'car_care_detailing'
               | 'compressed_natural_gas'
               | 'deli'
+              | 'ev_battery_exchanges'
+              | 'ev_charging_fee'
+              | 'evc_level_1'
+              | 'evc_level_2'
+              | 'evc_level_3'
+              | 'evc_level_4'
+              | 'evc_level_5'
               | 'food_service'
               | 'green_gasoline_mid_plus'
               | 'green_gasoline_premium_super'
@@ -10624,6 +10857,7 @@ export namespace PaymentIntentCreateParams {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
+      | 'vipps'
       | 'wechat_pay'
       | 'zip'
       | OtherString;
@@ -10661,6 +10895,8 @@ export namespace PaymentIntentCreateParams {
        */
       routing_number?: string;
     }
+
+    export interface Vipps {}
 
     export interface WechatPay {}
 
@@ -12275,6 +12511,35 @@ export namespace PaymentIntentCreateParams {
        * Bank account verification method. The default value is `automatic`.
        */
       verification_method?: UsBankAccount.VerificationMethod;
+    }
+
+    export interface Vipps {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Payment details for payment method specific funding transaction fields.
+       */
+      payment_details?: Vipps.PaymentDetails;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface WechatPay {
@@ -14725,6 +14990,42 @@ export namespace PaymentIntentCreateParams {
       }
     }
 
+    export namespace Vipps {
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {
+            /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+          }
+
+          export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin'
+              | OtherString;
+          }
+        }
+      }
+    }
+
     export namespace WechatPay {
       export type Client =
         | 'android'
@@ -15144,6 +15445,7 @@ export namespace PaymentIntentUpdateParams {
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'vipps'
     | 'wechat_pay'
     | 'zip'
     | OtherString;
@@ -15575,6 +15877,11 @@ export namespace PaymentIntentUpdateParams {
     us_bank_account?: PaymentMethodData.UsBankAccount;
 
     /**
+     * If this is a `vipps` PaymentMethod, this hash contains details about the Vipps payment method.
+     */
+    vipps?: PaymentMethodData.Vipps;
+
+    /**
      * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
      */
     wechat_pay?: PaymentMethodData.WechatPay;
@@ -15897,6 +16204,11 @@ export namespace PaymentIntentUpdateParams {
     us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
 
     /**
+     * If this is a `Vipps` PaymentMethod, this sub-hash contains details about the Vipps payment method options.
+     */
+    vipps?: Emptyable<PaymentMethodOptions.Vipps>;
+
+    /**
      * If this is a `wechat_pay` PaymentMethod, this sub-hash contains details about the WeChat Pay payment method options.
      */
     wechat_pay?: Emptyable<PaymentMethodOptions.WechatPay>;
@@ -16095,6 +16407,11 @@ export namespace PaymentIntentUpdateParams {
           commodity_code?: string;
 
           /**
+           * EV charging data for this line item.
+           */
+          ev_charging?: Card.EvCharging;
+
+          /**
            * Fleet data for this line item.
            */
           fleet_data?: Card.FleetData;
@@ -16147,6 +16464,48 @@ export namespace PaymentIntentUpdateParams {
         }
 
         export namespace Card {
+          export interface EvCharging {
+            /**
+             * The carbon footprint avoided by the charging session, in grams of CO2.
+             */
+            carbon_footprint_avoided_grams_co2?: number;
+
+            /**
+             * The time the charging session ended, measured in seconds since the Unix epoch.
+             */
+            charging_ended_at: number;
+
+            /**
+             * The power output capacity of the charging station, in kilowatts (kW).
+             */
+            charging_power_output_capacity_kw: number;
+
+            /**
+             * The time the charging session started, measured in seconds since the Unix epoch.
+             */
+            charging_started_at: number;
+
+            /**
+             * The type of connector used for the charging session.
+             */
+            connector_type: EvCharging.ConnectorType;
+
+            /**
+             * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+             */
+            estimated_range_added?: number;
+
+            /**
+             * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+             */
+            estimated_range_left?: number;
+
+            /**
+             * The maximum power dispensed during the charging session, in kilowatts (kW).
+             */
+            maximum_power_dispensed_kw: number;
+          }
+
           export interface FleetData {
             /**
              * The type of product being purchased at this line item.
@@ -16159,6 +16518,20 @@ export namespace PaymentIntentUpdateParams {
             service_type?: FleetData.ServiceType;
           }
 
+          export namespace EvCharging {
+            export type ConnectorType =
+              | 'ac_gb_t'
+              | 'ac_j1772'
+              | 'ac_mennekes'
+              | 'dc_ccs1'
+              | 'dc_ccs2'
+              | 'dc_chademo'
+              | 'dc_gb_t'
+              | 'dc_mcs'
+              | 'nacs'
+              | OtherString;
+          }
+
           export namespace FleetData {
             export type ProductType =
               | 'air_conditioning_service'
@@ -16168,6 +16541,13 @@ export namespace PaymentIntentUpdateParams {
               | 'car_care_detailing'
               | 'compressed_natural_gas'
               | 'deli'
+              | 'ev_battery_exchanges'
+              | 'ev_charging_fee'
+              | 'evc_level_1'
+              | 'evc_level_2'
+              | 'evc_level_3'
+              | 'evc_level_4'
+              | 'evc_level_5'
               | 'food_service'
               | 'green_gasoline_mid_plus'
               | 'green_gasoline_premium_super'
@@ -18869,6 +19249,7 @@ export namespace PaymentIntentUpdateParams {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
+      | 'vipps'
       | 'wechat_pay'
       | 'zip'
       | OtherString;
@@ -18906,6 +19287,8 @@ export namespace PaymentIntentUpdateParams {
        */
       routing_number?: string;
     }
+
+    export interface Vipps {}
 
     export interface WechatPay {}
 
@@ -20520,6 +20903,35 @@ export namespace PaymentIntentUpdateParams {
        * Bank account verification method. The default value is `automatic`.
        */
       verification_method?: UsBankAccount.VerificationMethod;
+    }
+
+    export interface Vipps {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Payment details for payment method specific funding transaction fields.
+       */
+      payment_details?: Vipps.PaymentDetails;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface WechatPay {
@@ -22970,6 +23382,42 @@ export namespace PaymentIntentUpdateParams {
       }
     }
 
+    export namespace Vipps {
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {
+            /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+          }
+
+          export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin'
+              | OtherString;
+          }
+        }
+      }
+    }
+
     export namespace WechatPay {
       export type Client =
         | 'android'
@@ -23368,6 +23816,11 @@ export namespace PaymentIntentCaptureParams {
           commodity_code?: string;
 
           /**
+           * EV charging data for this line item.
+           */
+          ev_charging?: Card.EvCharging;
+
+          /**
            * Fleet data for this line item.
            */
           fleet_data?: Card.FleetData;
@@ -23420,6 +23873,48 @@ export namespace PaymentIntentCaptureParams {
         }
 
         export namespace Card {
+          export interface EvCharging {
+            /**
+             * The carbon footprint avoided by the charging session, in grams of CO2.
+             */
+            carbon_footprint_avoided_grams_co2?: number;
+
+            /**
+             * The time the charging session ended, measured in seconds since the Unix epoch.
+             */
+            charging_ended_at: number;
+
+            /**
+             * The power output capacity of the charging station, in kilowatts (kW).
+             */
+            charging_power_output_capacity_kw: number;
+
+            /**
+             * The time the charging session started, measured in seconds since the Unix epoch.
+             */
+            charging_started_at: number;
+
+            /**
+             * The type of connector used for the charging session.
+             */
+            connector_type: EvCharging.ConnectorType;
+
+            /**
+             * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+             */
+            estimated_range_added?: number;
+
+            /**
+             * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+             */
+            estimated_range_left?: number;
+
+            /**
+             * The maximum power dispensed during the charging session, in kilowatts (kW).
+             */
+            maximum_power_dispensed_kw: number;
+          }
+
           export interface FleetData {
             /**
              * The type of product being purchased at this line item.
@@ -23432,6 +23927,20 @@ export namespace PaymentIntentCaptureParams {
             service_type?: FleetData.ServiceType;
           }
 
+          export namespace EvCharging {
+            export type ConnectorType =
+              | 'ac_gb_t'
+              | 'ac_j1772'
+              | 'ac_mennekes'
+              | 'dc_ccs1'
+              | 'dc_ccs2'
+              | 'dc_chademo'
+              | 'dc_gb_t'
+              | 'dc_mcs'
+              | 'nacs'
+              | OtherString;
+          }
+
           export namespace FleetData {
             export type ProductType =
               | 'air_conditioning_service'
@@ -23441,6 +23950,13 @@ export namespace PaymentIntentCaptureParams {
               | 'car_care_detailing'
               | 'compressed_natural_gas'
               | 'deli'
+              | 'ev_battery_exchanges'
+              | 'ev_charging_fee'
+              | 'evc_level_1'
+              | 'evc_level_2'
+              | 'evc_level_3'
+              | 'evc_level_4'
+              | 'evc_level_5'
               | 'food_service'
               | 'green_gasoline_mid_plus'
               | 'green_gasoline_premium_super'
@@ -25682,7 +26198,7 @@ export interface PaymentIntentConfirmParams {
   payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
 
   /**
-   * The list of payment method types (for example, a card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
+   * The list of payment method types (for example, a card) that this PaymentIntent can use. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
    */
   payment_method_types?: Array<string>;
 
@@ -25943,6 +26459,7 @@ export namespace PaymentIntentConfirmParams {
     | 'twint'
     | 'upi'
     | 'us_bank_account'
+    | 'vipps'
     | 'wechat_pay'
     | 'zip'
     | OtherString;
@@ -26376,6 +26893,11 @@ export namespace PaymentIntentConfirmParams {
     us_bank_account?: PaymentMethodData.UsBankAccount;
 
     /**
+     * If this is a `vipps` PaymentMethod, this hash contains details about the Vipps payment method.
+     */
+    vipps?: PaymentMethodData.Vipps;
+
+    /**
      * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
      */
     wechat_pay?: PaymentMethodData.WechatPay;
@@ -26698,6 +27220,11 @@ export namespace PaymentIntentConfirmParams {
     us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
 
     /**
+     * If this is a `Vipps` PaymentMethod, this sub-hash contains details about the Vipps payment method options.
+     */
+    vipps?: Emptyable<PaymentMethodOptions.Vipps>;
+
+    /**
      * If this is a `wechat_pay` PaymentMethod, this sub-hash contains details about the WeChat Pay payment method options.
      */
     wechat_pay?: Emptyable<PaymentMethodOptions.WechatPay>;
@@ -26881,6 +27408,11 @@ export namespace PaymentIntentConfirmParams {
           commodity_code?: string;
 
           /**
+           * EV charging data for this line item.
+           */
+          ev_charging?: Card.EvCharging;
+
+          /**
            * Fleet data for this line item.
            */
           fleet_data?: Card.FleetData;
@@ -26933,6 +27465,48 @@ export namespace PaymentIntentConfirmParams {
         }
 
         export namespace Card {
+          export interface EvCharging {
+            /**
+             * The carbon footprint avoided by the charging session, in grams of CO2.
+             */
+            carbon_footprint_avoided_grams_co2?: number;
+
+            /**
+             * The time the charging session ended, measured in seconds since the Unix epoch.
+             */
+            charging_ended_at: number;
+
+            /**
+             * The power output capacity of the charging station, in kilowatts (kW).
+             */
+            charging_power_output_capacity_kw: number;
+
+            /**
+             * The time the charging session started, measured in seconds since the Unix epoch.
+             */
+            charging_started_at: number;
+
+            /**
+             * The type of connector used for the charging session.
+             */
+            connector_type: EvCharging.ConnectorType;
+
+            /**
+             * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+             */
+            estimated_range_added?: number;
+
+            /**
+             * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+             */
+            estimated_range_left?: number;
+
+            /**
+             * The maximum power dispensed during the charging session, in kilowatts (kW).
+             */
+            maximum_power_dispensed_kw: number;
+          }
+
           export interface FleetData {
             /**
              * The type of product being purchased at this line item.
@@ -26945,6 +27519,20 @@ export namespace PaymentIntentConfirmParams {
             service_type?: FleetData.ServiceType;
           }
 
+          export namespace EvCharging {
+            export type ConnectorType =
+              | 'ac_gb_t'
+              | 'ac_j1772'
+              | 'ac_mennekes'
+              | 'dc_ccs1'
+              | 'dc_ccs2'
+              | 'dc_chademo'
+              | 'dc_gb_t'
+              | 'dc_mcs'
+              | 'nacs'
+              | OtherString;
+          }
+
           export namespace FleetData {
             export type ProductType =
               | 'air_conditioning_service'
@@ -26954,6 +27542,13 @@ export namespace PaymentIntentConfirmParams {
               | 'car_care_detailing'
               | 'compressed_natural_gas'
               | 'deli'
+              | 'ev_battery_exchanges'
+              | 'ev_charging_fee'
+              | 'evc_level_1'
+              | 'evc_level_2'
+              | 'evc_level_3'
+              | 'evc_level_4'
+              | 'evc_level_5'
               | 'food_service'
               | 'green_gasoline_mid_plus'
               | 'green_gasoline_premium_super'
@@ -29669,6 +30264,7 @@ export namespace PaymentIntentConfirmParams {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
+      | 'vipps'
       | 'wechat_pay'
       | 'zip'
       | OtherString;
@@ -29706,6 +30302,8 @@ export namespace PaymentIntentConfirmParams {
        */
       routing_number?: string;
     }
+
+    export interface Vipps {}
 
     export interface WechatPay {}
 
@@ -31320,6 +31918,35 @@ export namespace PaymentIntentConfirmParams {
        * Bank account verification method. The default value is `automatic`.
        */
       verification_method?: UsBankAccount.VerificationMethod;
+    }
+
+    export interface Vipps {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Payment details for payment method specific funding transaction fields.
+       */
+      payment_details?: Vipps.PaymentDetails;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface WechatPay {
@@ -33770,6 +34397,42 @@ export namespace PaymentIntentConfirmParams {
       }
     }
 
+    export namespace Vipps {
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {
+            /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+          }
+
+          export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin'
+              | OtherString;
+          }
+        }
+      }
+    }
+
     export namespace WechatPay {
       export type Client =
         | 'android'
@@ -34038,6 +34701,11 @@ export namespace PaymentIntentDecrementAuthorizationParams {
           commodity_code?: string;
 
           /**
+           * EV charging data for this line item.
+           */
+          ev_charging?: Card.EvCharging;
+
+          /**
            * Fleet data for this line item.
            */
           fleet_data?: Card.FleetData;
@@ -34090,6 +34758,48 @@ export namespace PaymentIntentDecrementAuthorizationParams {
         }
 
         export namespace Card {
+          export interface EvCharging {
+            /**
+             * The carbon footprint avoided by the charging session, in grams of CO2.
+             */
+            carbon_footprint_avoided_grams_co2?: number;
+
+            /**
+             * The time the charging session ended, measured in seconds since the Unix epoch.
+             */
+            charging_ended_at: number;
+
+            /**
+             * The power output capacity of the charging station, in kilowatts (kW).
+             */
+            charging_power_output_capacity_kw: number;
+
+            /**
+             * The time the charging session started, measured in seconds since the Unix epoch.
+             */
+            charging_started_at: number;
+
+            /**
+             * The type of connector used for the charging session.
+             */
+            connector_type: EvCharging.ConnectorType;
+
+            /**
+             * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+             */
+            estimated_range_added?: number;
+
+            /**
+             * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+             */
+            estimated_range_left?: number;
+
+            /**
+             * The maximum power dispensed during the charging session, in kilowatts (kW).
+             */
+            maximum_power_dispensed_kw: number;
+          }
+
           export interface FleetData {
             /**
              * The type of product being purchased at this line item.
@@ -34102,6 +34812,20 @@ export namespace PaymentIntentDecrementAuthorizationParams {
             service_type?: FleetData.ServiceType;
           }
 
+          export namespace EvCharging {
+            export type ConnectorType =
+              | 'ac_gb_t'
+              | 'ac_j1772'
+              | 'ac_mennekes'
+              | 'dc_ccs1'
+              | 'dc_ccs2'
+              | 'dc_chademo'
+              | 'dc_gb_t'
+              | 'dc_mcs'
+              | 'nacs'
+              | OtherString;
+          }
+
           export namespace FleetData {
             export type ProductType =
               | 'air_conditioning_service'
@@ -34111,6 +34835,13 @@ export namespace PaymentIntentDecrementAuthorizationParams {
               | 'car_care_detailing'
               | 'compressed_natural_gas'
               | 'deli'
+              | 'ev_battery_exchanges'
+              | 'ev_charging_fee'
+              | 'evc_level_1'
+              | 'evc_level_2'
+              | 'evc_level_3'
+              | 'evc_level_4'
+              | 'evc_level_5'
               | 'food_service'
               | 'green_gasoline_mid_plus'
               | 'green_gasoline_premium_super'
@@ -34468,6 +35199,11 @@ export namespace PaymentIntentIncrementAuthorizationParams {
           commodity_code?: string;
 
           /**
+           * EV charging data for this line item.
+           */
+          ev_charging?: Card.EvCharging;
+
+          /**
            * Fleet data for this line item.
            */
           fleet_data?: Card.FleetData;
@@ -34520,6 +35256,48 @@ export namespace PaymentIntentIncrementAuthorizationParams {
         }
 
         export namespace Card {
+          export interface EvCharging {
+            /**
+             * The carbon footprint avoided by the charging session, in grams of CO2.
+             */
+            carbon_footprint_avoided_grams_co2?: number;
+
+            /**
+             * The time the charging session ended, measured in seconds since the Unix epoch.
+             */
+            charging_ended_at: number;
+
+            /**
+             * The power output capacity of the charging station, in kilowatts (kW).
+             */
+            charging_power_output_capacity_kw: number;
+
+            /**
+             * The time the charging session started, measured in seconds since the Unix epoch.
+             */
+            charging_started_at: number;
+
+            /**
+             * The type of connector used for the charging session.
+             */
+            connector_type: EvCharging.ConnectorType;
+
+            /**
+             * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+             */
+            estimated_range_added?: number;
+
+            /**
+             * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+             */
+            estimated_range_left?: number;
+
+            /**
+             * The maximum power dispensed during the charging session, in kilowatts (kW).
+             */
+            maximum_power_dispensed_kw: number;
+          }
+
           export interface FleetData {
             /**
              * The type of product being purchased at this line item.
@@ -34532,6 +35310,20 @@ export namespace PaymentIntentIncrementAuthorizationParams {
             service_type?: FleetData.ServiceType;
           }
 
+          export namespace EvCharging {
+            export type ConnectorType =
+              | 'ac_gb_t'
+              | 'ac_j1772'
+              | 'ac_mennekes'
+              | 'dc_ccs1'
+              | 'dc_ccs2'
+              | 'dc_chademo'
+              | 'dc_gb_t'
+              | 'dc_mcs'
+              | 'nacs'
+              | OtherString;
+          }
+
           export namespace FleetData {
             export type ProductType =
               | 'air_conditioning_service'
@@ -34541,6 +35333,13 @@ export namespace PaymentIntentIncrementAuthorizationParams {
               | 'car_care_detailing'
               | 'compressed_natural_gas'
               | 'deli'
+              | 'ev_battery_exchanges'
+              | 'ev_charging_fee'
+              | 'evc_level_1'
+              | 'evc_level_2'
+              | 'evc_level_3'
+              | 'evc_level_4'
+              | 'evc_level_5'
               | 'food_service'
               | 'green_gasoline_mid_plus'
               | 'green_gasoline_premium_super'

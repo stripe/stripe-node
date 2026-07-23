@@ -230,6 +230,8 @@ export interface PaymentMethodConfiguration {
 
   us_bank_account?: PaymentMethodConfiguration.UsBankAccount;
 
+  vipps?: PaymentMethodConfiguration.Vipps;
+
   wechat_pay?: PaymentMethodConfiguration.WechatPay;
 
   zip?: PaymentMethodConfiguration.Zip;
@@ -782,6 +784,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: UsBankAccount.DisplayPreference;
+  }
+
+  export interface Vipps {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Vipps.DisplayPreference;
   }
 
   export interface WechatPay {
@@ -2327,6 +2338,31 @@ export namespace PaymentMethodConfiguration {
     }
   }
 
+  export namespace Vipps {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace WechatPay {
     export interface DisplayPreference {
       /**
@@ -2707,6 +2743,11 @@ export interface PaymentMethodConfigurationCreateParams {
    * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://docs.stripe.com/payments/ach-direct-debit) for more details.
    */
   us_bank_account?: PaymentMethodConfigurationCreateParams.UsBankAccount;
+
+  /**
+   * Vipps is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) card wallet payment method used in Norway. It allows customers to [authenticate and approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the Vipps app. Check this [page](https://docs.stripe.com/payments/vipps) for more details.
+   */
+  vipps?: PaymentMethodConfigurationCreateParams.Vipps;
 
   /**
    * WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users. Chinese consumers can use WeChat Pay to pay for goods and services inside of businesses' apps and websites. WeChat Pay users buy most frequently in gaming, e-commerce, travel, online education, and food/nutrition. Check this [page](https://docs.stripe.com/payments/wechat-pay) for more details.
@@ -3160,6 +3201,13 @@ export namespace PaymentMethodConfigurationCreateParams {
     display_preference?: UsBankAccount.DisplayPreference;
   }
 
+  export interface Vipps {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Vipps.DisplayPreference;
+  }
+
   export interface WechatPay {
     /**
      * Whether or not the payment method should be displayed.
@@ -3993,6 +4041,19 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
   }
 
+  export namespace Vipps {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace WechatPay {
     export interface DisplayPreference {
       /**
@@ -4355,6 +4416,11 @@ export interface PaymentMethodConfigurationUpdateParams {
    * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://docs.stripe.com/payments/ach-direct-debit) for more details.
    */
   us_bank_account?: PaymentMethodConfigurationUpdateParams.UsBankAccount;
+
+  /**
+   * Vipps is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) card wallet payment method used in Norway. It allows customers to [authenticate and approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the Vipps app. Check this [page](https://docs.stripe.com/payments/vipps) for more details.
+   */
+  vipps?: PaymentMethodConfigurationUpdateParams.Vipps;
 
   /**
    * WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users. Chinese consumers can use WeChat Pay to pay for goods and services inside of businesses' apps and websites. WeChat Pay users buy most frequently in gaming, e-commerce, travel, online education, and food/nutrition. Check this [page](https://docs.stripe.com/payments/wechat-pay) for more details.
@@ -4808,6 +4874,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
     display_preference?: UsBankAccount.DisplayPreference;
   }
 
+  export interface Vipps {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Vipps.DisplayPreference;
+  }
+
   export interface WechatPay {
     /**
      * Whether or not the payment method should be displayed.
@@ -5629,6 +5702,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 
   export namespace UsBankAccount {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Vipps {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.

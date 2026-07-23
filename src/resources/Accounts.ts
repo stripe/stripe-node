@@ -127,7 +127,7 @@ export class AccountResource extends StripeResource {
   /**
    * With [Connect](https://docs.stripe.com/connect), you can reject accounts that you have flagged as suspicious.
    *
-   * Only accounts where your platform is liable for negative account balances, which includes Custom and Express accounts, can be rejected. Test-mode accounts can be rejected at any time. Live-mode accounts can only be rejected after all balances are zero.
+   * Only accounts where your platform is liable for negative account balances, which includes Custom and Express accounts, can be rejected.
    */
   reject(
     id: string,
@@ -1931,6 +1931,10 @@ export namespace Account {
         | 'invalid_url_website_incomplete_under_construction'
         | 'invalid_url_website_other'
         | 'invalid_value_other'
+        | 'partner_disabled_dispute_rate'
+        | 'partner_disabled_responsibilities'
+        | 'partner_disabled_restricted_business'
+        | 'partner_disabled_suspected_fraud'
         | 'unsupported_business_type'
         | 'verification_data_not_found'
         | 'verification_directors_mismatch'
@@ -2081,6 +2085,10 @@ export namespace Account {
         | 'invalid_url_website_incomplete_under_construction'
         | 'invalid_url_website_other'
         | 'invalid_value_other'
+        | 'partner_disabled_dispute_rate'
+        | 'partner_disabled_responsibilities'
+        | 'partner_disabled_restricted_business'
+        | 'partner_disabled_suspected_fraud'
         | 'unsupported_business_type'
         | 'verification_data_not_found'
         | 'verification_directors_mismatch'

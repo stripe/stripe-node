@@ -6649,6 +6649,7 @@ export namespace V2CoreAccountIncludingConfigurationCardCreatorCapabilityStatusU
       | 'commercial.lead.prepaid_card'
       | 'commercial.stripe.charge_card'
       | 'commercial.stripe.prepaid_card'
+      | 'commercial.stripe.spend_card'
       | 'consumer.celtic.revolving_credit_card'
       | 'consumer.cross_river_bank.prepaid_card'
       | 'consumer.lead.debit_card'

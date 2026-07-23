@@ -832,6 +832,11 @@ export namespace Radar {
         billing_details?: PaymentMethodDetails.BillingDetails;
 
         /**
+         * Masked PAN card details to use as an alternative to a payment_method token.
+         */
+        card?: PaymentMethodDetails.Card;
+
+        /**
          * ID of the payment method used in this payment evaluation.
          */
         payment_method: string;
@@ -903,6 +908,28 @@ export namespace Radar {
            * Billing phone number (including extension).
            */
           phone?: string;
+        }
+
+        export interface Card {
+          /**
+           * Two-digit number representing the card's expiration month.
+           */
+          exp_month: number;
+
+          /**
+           * Four-digit number representing the card's expiration year.
+           */
+          exp_year: number;
+
+          /**
+           * First six digits of the card number.
+           */
+          first6: string;
+
+          /**
+           * Last four digits of the card number.
+           */
+          last4: string;
         }
       }
     }

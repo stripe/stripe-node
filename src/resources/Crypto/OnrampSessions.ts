@@ -240,6 +240,7 @@ export namespace OnrampSession {
       | 'polygon'
       | 'solana'
       | 'stellar'
+      | 'sui'
       | 'worldchain'
       | OtherString;
 
@@ -304,6 +305,11 @@ export namespace OnrampSession {
        * A stellar address
        */
       stellar: string | null;
+
+      /**
+       * A Sui address
+       */
+      sui: string | null;
 
       /**
        * A worldchain address
@@ -450,6 +456,7 @@ export namespace Crypto {
       | 'polygon'
       | 'solana'
       | 'stellar'
+      | 'sui'
       | 'worldchain'
       | OtherString;
 
@@ -532,6 +539,7 @@ export namespace Crypto {
       | 'polygon'
       | 'solana'
       | 'stellar'
+      | 'sui'
       | 'worldchain'
       | OtherString;
 

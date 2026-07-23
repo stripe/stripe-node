@@ -44,6 +44,7 @@ export namespace CustomerConsumerWallet {
     | 'polygon'
     | 'solana'
     | 'stellar'
+    | 'sui'
     | 'worldchain'
     | OtherString;
 }
