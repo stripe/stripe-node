@@ -156,7 +156,7 @@ export namespace ReceivedCredit {
     /**
      * The ID of the payout object that originated the ReceivedCredit.
      */
-    payout_v1?: string;
+    payout?: string;
 
     /**
      * The ID of the v1 transfer object that originated the ReceivedCredit.
@@ -327,6 +327,7 @@ export namespace ReceivedCredit {
     export type Type =
       | 'outbound_payment'
       | 'outbound_transfer'
+      | 'payout'
       | 'transfer'
       | 'payout_v1'
       | OtherString;

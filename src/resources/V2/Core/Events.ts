@@ -687,10 +687,17 @@ export type Event =
   | V2MoneyManagementReceivedCreditReturnedEvent
   | V2MoneyManagementReceivedCreditSucceededEvent
   | V2MoneyManagementReceivedDebitCanceledEvent
+  | V2MoneyManagementReceivedDebitCreatedEvent
   | V2MoneyManagementReceivedDebitFailedEvent
   | V2MoneyManagementReceivedDebitPendingEvent
+  | V2MoneyManagementReceivedDebitScheduledEvent
   | V2MoneyManagementReceivedDebitSucceededEvent
   | V2MoneyManagementReceivedDebitUpdatedEvent
+  | V2MoneyManagementReceivedDebitMandateCanceledEvent
+  | V2MoneyManagementReceivedDebitMandateCreatedEvent
+  | V2MoneyManagementReceivedDebitMandateExpiredEvent
+  | V2MoneyManagementReceivedDebitMandatePendingCancellationEvent
+  | V2MoneyManagementReceivedDebitMandateUpdatedEvent
   | V2MoneyManagementRecipientVerificationCreatedEvent
   | V2MoneyManagementRecipientVerificationUpdatedEvent
   | V2MoneyManagementTransactionCreatedEvent
@@ -726,7 +733,8 @@ export type Event =
   | V2ReportingReportRunSucceededEvent
   | V2ReportingReportRunUpdatedEvent
   | V2SignalsAccountSignalFraudulentMerchantReadyEvent
-  | V2SignalsAccountSignalMerchantDelinquencyReadyEvent;
+  | V2SignalsAccountSignalMerchantDelinquencyReadyEvent
+  | V2SignalsAccountSignalPaymentDelinquencyExposureReadyEvent;
 
 export type EventNotification =
   | V1AccountApplicationAuthorizedEventNotification
@@ -1106,10 +1114,17 @@ export type EventNotification =
   | V2MoneyManagementReceivedCreditReturnedEventNotification
   | V2MoneyManagementReceivedCreditSucceededEventNotification
   | V2MoneyManagementReceivedDebitCanceledEventNotification
+  | V2MoneyManagementReceivedDebitCreatedEventNotification
   | V2MoneyManagementReceivedDebitFailedEventNotification
   | V2MoneyManagementReceivedDebitPendingEventNotification
+  | V2MoneyManagementReceivedDebitScheduledEventNotification
   | V2MoneyManagementReceivedDebitSucceededEventNotification
   | V2MoneyManagementReceivedDebitUpdatedEventNotification
+  | V2MoneyManagementReceivedDebitMandateCanceledEventNotification
+  | V2MoneyManagementReceivedDebitMandateCreatedEventNotification
+  | V2MoneyManagementReceivedDebitMandateExpiredEventNotification
+  | V2MoneyManagementReceivedDebitMandatePendingCancellationEventNotification
+  | V2MoneyManagementReceivedDebitMandateUpdatedEventNotification
   | V2MoneyManagementRecipientVerificationCreatedEventNotification
   | V2MoneyManagementRecipientVerificationUpdatedEventNotification
   | V2MoneyManagementTransactionCreatedEventNotification
@@ -1145,7 +1160,8 @@ export type EventNotification =
   | V2ReportingReportRunSucceededEventNotification
   | V2ReportingReportRunUpdatedEventNotification
   | V2SignalsAccountSignalFraudulentMerchantReadyEventNotification
-  | V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification;
+  | V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification
+  | V2SignalsAccountSignalPaymentDelinquencyExposureReadyEventNotification;
 
 import {StripeContext} from '../../../StripeContext.js';
 
@@ -11345,6 +11361,26 @@ export interface V2MoneyManagementReceivedDebitCanceledEventNotification
 }
 
 /**
+ * Occurs when a ReceivedDebit is created.
+ */
+export interface V2MoneyManagementReceivedDebitCreatedEvent extends EventBase {
+  type: 'v2.money_management.received_debit.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebit>;
+}
+export interface V2MoneyManagementReceivedDebitCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.received_debit.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebit>;
+  fetchEvent(): Promise<V2MoneyManagementReceivedDebitCreatedEvent>;
+}
+
+/**
  * Occurs when a ReceivedDebit fails.
  */
 export interface V2MoneyManagementReceivedDebitFailedEvent extends EventBase {
@@ -11382,6 +11418,27 @@ export interface V2MoneyManagementReceivedDebitPendingEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebit>;
   fetchEvent(): Promise<V2MoneyManagementReceivedDebitPendingEvent>;
+}
+
+/**
+ * Occurs when a ReceivedDebit is scheduled for future settlement.
+ */
+export interface V2MoneyManagementReceivedDebitScheduledEvent
+  extends EventBase {
+  type: 'v2.money_management.received_debit.scheduled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebit>;
+}
+export interface V2MoneyManagementReceivedDebitScheduledEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.received_debit.scheduled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebit>;
+  fetchEvent(): Promise<V2MoneyManagementReceivedDebitScheduledEvent>;
 }
 
 /**
@@ -11423,6 +11480,113 @@ export interface V2MoneyManagementReceivedDebitUpdatedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebit>;
   fetchEvent(): Promise<V2MoneyManagementReceivedDebitUpdatedEvent>;
+}
+
+/**
+ * Occurs when a ReceivedDebitMandate is successfully canceled.
+ */
+export interface V2MoneyManagementReceivedDebitMandateCanceledEvent
+  extends EventBase {
+  type: 'v2.money_management.received_debit_mandate.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebitMandate>;
+}
+export interface V2MoneyManagementReceivedDebitMandateCanceledEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.received_debit_mandate.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebitMandate>;
+  fetchEvent(): Promise<V2MoneyManagementReceivedDebitMandateCanceledEvent>;
+}
+
+/**
+ * Occurs when a ReceivedDebitMandate is created by an external party.
+ */
+export interface V2MoneyManagementReceivedDebitMandateCreatedEvent
+  extends EventBase {
+  type: 'v2.money_management.received_debit_mandate.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebitMandate>;
+}
+export interface V2MoneyManagementReceivedDebitMandateCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.received_debit_mandate.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebitMandate>;
+  fetchEvent(): Promise<V2MoneyManagementReceivedDebitMandateCreatedEvent>;
+}
+
+/**
+ * Occurs when a ReceivedDebitMandate expires.
+ */
+export interface V2MoneyManagementReceivedDebitMandateExpiredEvent
+  extends EventBase {
+  type: 'v2.money_management.received_debit_mandate.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebitMandate>;
+}
+export interface V2MoneyManagementReceivedDebitMandateExpiredEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.received_debit_mandate.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebitMandate>;
+  fetchEvent(): Promise<V2MoneyManagementReceivedDebitMandateExpiredEvent>;
+}
+
+/**
+ * Occurs when a ReceivedDebitMandate transitions to pending_cancellation status.
+ */
+export interface V2MoneyManagementReceivedDebitMandatePendingCancellationEvent
+  extends EventBase {
+  type: 'v2.money_management.received_debit_mandate.pending_cancellation';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebitMandate>;
+}
+export interface V2MoneyManagementReceivedDebitMandatePendingCancellationEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.received_debit_mandate.pending_cancellation';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebitMandate>;
+  fetchEvent(): Promise<
+    V2MoneyManagementReceivedDebitMandatePendingCancellationEvent
+  >;
+}
+
+/**
+ * Occurs when a ReceivedDebitMandate is updated.
+ */
+export interface V2MoneyManagementReceivedDebitMandateUpdatedEvent
+  extends EventBase {
+  type: 'v2.money_management.received_debit_mandate.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebitMandate>;
+}
+export interface V2MoneyManagementReceivedDebitMandateUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.received_debit_mandate.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.ReceivedDebitMandate>;
+  fetchEvent(): Promise<V2MoneyManagementReceivedDebitMandateUpdatedEvent>;
 }
 
 /**
@@ -12431,10 +12595,18 @@ export interface V2SignalsAccountSignalFraudulentMerchantReadyEvent
   type: 'v2.signals.account_signal.fraudulent_merchant_ready';
   // Retrieves data specific to this event.
   data: V2SignalsAccountSignalFraudulentMerchantReadyEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.AccountSignal>;
 }
 export interface V2SignalsAccountSignalFraudulentMerchantReadyEventNotification
   extends EventNotificationBase {
   type: 'v2.signals.account_signal.fraudulent_merchant_ready';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.AccountSignal>;
   fetchEvent(): Promise<V2SignalsAccountSignalFraudulentMerchantReadyEvent>;
 }
 
@@ -12454,11 +12626,6 @@ export namespace V2SignalsAccountSignalFraudulentMerchantReadyEvent {
      * Fraudulent merchant signal data. Present when type is fraudulent_merchant.
      */
     fraudulent_merchant?: Data.FraudulentMerchant;
-
-    /**
-     * Unique identifier for this account signal.
-     */
-    id: string;
 
     /**
      * The type of account signal. Currently only fraudulent_merchant is supported.
@@ -12555,6 +12722,29 @@ export interface V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Signals.AccountSignal>;
   fetchEvent(): Promise<V2SignalsAccountSignalMerchantDelinquencyReadyEvent>;
+}
+
+/**
+ * Occurs when a loss exposure signal is ready for an account.
+ */
+export interface V2SignalsAccountSignalPaymentDelinquencyExposureReadyEvent
+  extends EventBase {
+  type: 'v2.signals.account_signal.payment_delinquency_exposure_ready';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.AccountSignal>;
+}
+export interface V2SignalsAccountSignalPaymentDelinquencyExposureReadyEventNotification
+  extends EventNotificationBase {
+  type: 'v2.signals.account_signal.payment_delinquency_exposure_ready';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.AccountSignal>;
+  fetchEvent(): Promise<
+    V2SignalsAccountSignalPaymentDelinquencyExposureReadyEvent
+  >;
 }
 
 export declare namespace Events {
@@ -12937,10 +13127,17 @@ export declare namespace Events {
     V2MoneyManagementReceivedCreditReturnedEvent,
     V2MoneyManagementReceivedCreditSucceededEvent,
     V2MoneyManagementReceivedDebitCanceledEvent,
+    V2MoneyManagementReceivedDebitCreatedEvent,
     V2MoneyManagementReceivedDebitFailedEvent,
     V2MoneyManagementReceivedDebitPendingEvent,
+    V2MoneyManagementReceivedDebitScheduledEvent,
     V2MoneyManagementReceivedDebitSucceededEvent,
     V2MoneyManagementReceivedDebitUpdatedEvent,
+    V2MoneyManagementReceivedDebitMandateCanceledEvent,
+    V2MoneyManagementReceivedDebitMandateCreatedEvent,
+    V2MoneyManagementReceivedDebitMandateExpiredEvent,
+    V2MoneyManagementReceivedDebitMandatePendingCancellationEvent,
+    V2MoneyManagementReceivedDebitMandateUpdatedEvent,
     V2MoneyManagementRecipientVerificationCreatedEvent,
     V2MoneyManagementRecipientVerificationUpdatedEvent,
     V2MoneyManagementTransactionCreatedEvent,
@@ -12977,6 +13174,7 @@ export declare namespace Events {
     V2ReportingReportRunUpdatedEvent,
     V2SignalsAccountSignalFraudulentMerchantReadyEvent,
     V2SignalsAccountSignalMerchantDelinquencyReadyEvent,
+    V2SignalsAccountSignalPaymentDelinquencyExposureReadyEvent,
     V1AccountApplicationAuthorizedEventNotification,
     V1AccountApplicationDeauthorizedEventNotification,
     V1AccountExternalAccountCreatedEventNotification,
@@ -13354,10 +13552,17 @@ export declare namespace Events {
     V2MoneyManagementReceivedCreditReturnedEventNotification,
     V2MoneyManagementReceivedCreditSucceededEventNotification,
     V2MoneyManagementReceivedDebitCanceledEventNotification,
+    V2MoneyManagementReceivedDebitCreatedEventNotification,
     V2MoneyManagementReceivedDebitFailedEventNotification,
     V2MoneyManagementReceivedDebitPendingEventNotification,
+    V2MoneyManagementReceivedDebitScheduledEventNotification,
     V2MoneyManagementReceivedDebitSucceededEventNotification,
     V2MoneyManagementReceivedDebitUpdatedEventNotification,
+    V2MoneyManagementReceivedDebitMandateCanceledEventNotification,
+    V2MoneyManagementReceivedDebitMandateCreatedEventNotification,
+    V2MoneyManagementReceivedDebitMandateExpiredEventNotification,
+    V2MoneyManagementReceivedDebitMandatePendingCancellationEventNotification,
+    V2MoneyManagementReceivedDebitMandateUpdatedEventNotification,
     V2MoneyManagementRecipientVerificationCreatedEventNotification,
     V2MoneyManagementRecipientVerificationUpdatedEventNotification,
     V2MoneyManagementTransactionCreatedEventNotification,
@@ -13394,5 +13599,6 @@ export declare namespace Events {
     V2ReportingReportRunUpdatedEventNotification,
     V2SignalsAccountSignalFraudulentMerchantReadyEventNotification,
     V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification,
+    V2SignalsAccountSignalPaymentDelinquencyExposureReadyEventNotification,
   };
 }

@@ -35,6 +35,24 @@ export class AccountSignalResource extends StripeResource {
                     kind: 'object',
                     fields: {probability: {kind: 'decimal_string'}},
                   },
+                  payment_delinquency_exposure: {
+                    kind: 'object',
+                    fields: {
+                      additional_details: {
+                        kind: 'object',
+                        fields: {
+                          gross_exposure_amount: {
+                            kind: 'object',
+                            fields: {value: {kind: 'int64_string'}},
+                          },
+                        },
+                      },
+                      exposure_amount: {
+                        kind: 'object',
+                        fields: {value: {kind: 'int64_string'}},
+                      },
+                    },
+                  },
                 },
               },
             },
@@ -67,6 +85,24 @@ export class AccountSignalResource extends StripeResource {
             merchant_delinquency: {
               kind: 'object',
               fields: {probability: {kind: 'decimal_string'}},
+            },
+            payment_delinquency_exposure: {
+              kind: 'object',
+              fields: {
+                additional_details: {
+                  kind: 'object',
+                  fields: {
+                    gross_exposure_amount: {
+                      kind: 'object',
+                      fields: {value: {kind: 'int64_string'}},
+                    },
+                  },
+                },
+                exposure_amount: {
+                  kind: 'object',
+                  fields: {value: {kind: 'int64_string'}},
+                },
+              },
             },
           },
         },
@@ -109,6 +145,11 @@ export interface AccountSignal {
    * Data for the merchant delinquency signal. Present only when type is merchant_delinquency.
    */
   merchant_delinquency?: AccountSignal.MerchantDelinquency;
+
+  /**
+   * Data for the payment delinquency exposure signal. Present only when type is payment_delinquency_exposure.
+   */
+  payment_delinquency_exposure?: AccountSignal.PaymentDelinquencyExposure;
 
   /**
    * The type of signal.
@@ -164,6 +205,18 @@ export namespace AccountSignal {
      * Categorical assessment of the delinquency risk based on probability.
      */
     risk_level: MerchantDelinquency.RiskLevel;
+  }
+
+  export interface PaymentDelinquencyExposure {
+    /**
+     * Additional details about the exposure assessment.
+     */
+    additional_details: PaymentDelinquencyExposure.AdditionalDetails;
+
+    /**
+     * The exposure amount if this account becomes delinquent.
+     */
+    exposure_amount: PaymentDelinquencyExposure.ExposureAmount;
   }
 
   export type Type =
@@ -268,6 +321,51 @@ export namespace AccountSignal {
         | 'related_accounts'
         | 'tenure'
         | 'transfers';
+    }
+  }
+
+  export namespace PaymentDelinquencyExposure {
+    export interface AdditionalDetails {
+      /**
+       * Total payments still exposed to dispute or refund risk in the event of delinquency.
+       */
+      gross_exposure_amount?: AdditionalDetails.GrossExposureAmount;
+
+      /**
+       * Percentage of Gross Exposure expected to be disputed or refunded and materialize as a loss in the event of delinquency.
+       */
+      loss_given_default_in_percentages?: number;
+
+      /**
+       * Predicted window size in days until dispute is raised.
+       */
+      predicted_dispute_window_in_days?: number;
+    }
+
+    export interface ExposureAmount {
+      /**
+       * ISO 4217 currency code.
+       */
+      currency: string;
+
+      /**
+       * Amount in minor units for the given currency.
+       */
+      value: bigint;
+    }
+
+    export namespace AdditionalDetails {
+      export interface GrossExposureAmount {
+        /**
+         * ISO 4217 currency code.
+         */
+        currency: string;
+
+        /**
+         * Amount in minor units for the given currency.
+         */
+        value: bigint;
+      }
     }
   }
 }

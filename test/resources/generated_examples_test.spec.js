@@ -4458,7 +4458,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/intents',
         response:
-          '{"data":[{"object":"v2.billing.intent","amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.billing.intent","amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const intents = await stripe.v2.billing.intents.list();
@@ -4471,7 +4471,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/intents',
         response:
-          '{"object":"v2.billing.intent","amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}',
+          '{"object":"v2.billing.intent","amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}',
       },
     ]);
     const intent = await stripe.v2.billing.intents.create({
@@ -4646,7 +4646,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/intents/id_123',
         response:
-          '{"object":"v2.billing.intent","amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}',
+          '{"object":"v2.billing.intent","amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}',
       },
     ]);
     const intent = await stripe.v2.billing.intents.retrieve('id_123');
@@ -4659,7 +4659,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/intents/id_123/cancel',
         response:
-          '{"object":"v2.billing.intent","amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}',
+          '{"object":"v2.billing.intent","amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}',
       },
     ]);
     const intent = await stripe.v2.billing.intents.cancel('id_123');
@@ -4672,7 +4672,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/intents/id_123/commit',
         response:
-          '{"object":"v2.billing.intent","amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}',
+          '{"object":"v2.billing.intent","amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}',
       },
     ]);
     const intent = await stripe.v2.billing.intents.commit('id_123');
@@ -4685,7 +4685,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/intents/id_123/release_reservation',
         response:
-          '{"object":"v2.billing.intent","amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}',
+          '{"object":"v2.billing.intent","amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}',
       },
     ]);
     const intent = await stripe.v2.billing.intents.releaseReservation('id_123');
@@ -4698,7 +4698,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/intents/id_123/reserve',
         response:
-          '{"object":"v2.billing.intent","amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}',
+          '{"object":"v2.billing.intent","amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","livemode":true,"status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"}}',
       },
     ]);
     const intent = await stripe.v2.billing.intents.reserve('id_123');
@@ -7759,6 +7759,49 @@ describe('Generated tests', function() {
     expect(receivedDebit).not.to.be.null;
   });
 
+  it('test_v2_money_management_received_debit_mandate_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/money_management/received_debit_mandates',
+        response:
+          '{"data":[{"object":"v2.money_management.received_debit_mandate","created":"1970-01-12T21:42:34.472Z","currency":"usd","financial_account":"financial_account","id":"obj_123","livemode":true,"status":"expired","type":"bank_transfer"}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const receivedDebitMandates = await stripe.v2.moneyManagement.receivedDebitMandates.list();
+    expect(receivedDebitMandates).not.to.be.null;
+  });
+
+  it('test_v2_money_management_received_debit_mandate_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/money_management/received_debit_mandates/id_123',
+        response:
+          '{"object":"v2.money_management.received_debit_mandate","created":"1970-01-12T21:42:34.472Z","currency":"usd","financial_account":"financial_account","id":"obj_123","livemode":true,"status":"expired","type":"bank_transfer"}',
+      },
+    ]);
+    const receivedDebitMandate = await stripe.v2.moneyManagement.receivedDebitMandates.retrieve(
+      'id_123'
+    );
+    expect(receivedDebitMandate).not.to.be.null;
+  });
+
+  it('test_v2_money_management_received_debit_mandate_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/money_management/received_debit_mandates/id_123/cancel',
+        response:
+          '{"object":"v2.money_management.received_debit_mandate","created":"1970-01-12T21:42:34.472Z","currency":"usd","financial_account":"financial_account","id":"obj_123","livemode":true,"status":"expired","type":"bank_transfer"}',
+      },
+    ]);
+    const receivedDebitMandate = await stripe.v2.moneyManagement.receivedDebitMandates.cancel(
+      'id_123'
+    );
+    expect(receivedDebitMandate).not.to.be.null;
+  });
+
   it('test_v2_money_management_recipient_verification_post', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -8316,6 +8359,47 @@ describe('Generated tests', function() {
     ]);
     const reportRun = await stripe.v2.reporting.reportRuns.retrieve('id_123');
     expect(reportRun).not.to.be.null;
+  });
+
+  it('test_v2_risk_inquiry_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/risk/inquiries?account=account',
+        response:
+          '{"data":[{"object":"v2.risk.inquiry","closed_at":"1970-01-06T13:53:35.258Z","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"opened_at":"1970-01-18T22:56:33.737Z","status":"closed","type":"appeal"}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const inquiries = await stripe.v2.risk.inquiries.list({
+      account: 'account',
+    });
+    expect(inquiries).not.to.be.null;
+  });
+
+  it('test_v2_risk_inquiry_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/risk/inquiries/id_123',
+        response:
+          '{"object":"v2.risk.inquiry","closed_at":"1970-01-06T13:53:35.258Z","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"opened_at":"1970-01-18T22:56:33.737Z","status":"closed","type":"appeal"}',
+      },
+    ]);
+    const inquiry = await stripe.v2.risk.inquiries.retrieve('id_123');
+    expect(inquiry).not.to.be.null;
+  });
+
+  it('test_v2_risk_inquiry_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/risk/inquiries/id_123',
+        response:
+          '{"object":"v2.risk.inquiry","closed_at":"1970-01-06T13:53:35.258Z","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"opened_at":"1970-01-18T22:56:33.737Z","status":"closed","type":"appeal"}',
+      },
+    ]);
+    const inquiry = await stripe.v2.risk.inquiries.update('id_123');
+    expect(inquiry).not.to.be.null;
   });
 
   it('test_v2_signals_account_signal_get', async function() {

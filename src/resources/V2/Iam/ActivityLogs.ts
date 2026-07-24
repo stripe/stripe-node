@@ -217,6 +217,11 @@ export namespace ActivityLog {
       old_roles: Array<string>;
 
       /**
+       * Source of the role change.
+       */
+      source: UserRoles.Source;
+
+      /**
        * Email address of the user whose roles were changed.
        */
       user_email: string;
@@ -245,6 +250,10 @@ export namespace ActivityLog {
           id: string;
         }
       }
+    }
+
+    export namespace UserRoles {
+      export type Source = 'dashboard' | 'scim' | 'sso' | OtherString;
     }
   }
 }

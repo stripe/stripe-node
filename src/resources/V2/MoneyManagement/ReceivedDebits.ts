@@ -107,6 +107,13 @@ export interface ReceivedDebit {
   receipt_url?: string;
 
   /**
+   * The time at which the scheduled ReceivedDebit is expected to settle.
+   * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
+   * Only present when status is `scheduled`.
+   */
+  settles_at?: string;
+
+  /**
    * Open Enum. The status of the ReceivedDebit.
    */
   status: ReceivedDebit.Status;
@@ -151,14 +158,20 @@ export namespace ReceivedDebit {
     financial_address: string;
 
     /**
+     * Object containing details of the GB Bank Account that originated the debit.
+     * Present when the debit was originated via BACS.
+     */
+    gb_bank_account?: BankTransfer.GbBankAccount;
+
+    /**
      * Open Enum. Indicates the origin type through which this debit was initiated.
      */
-    origin_type: 'us_bank_account';
+    origin_type: BankTransfer.OriginType;
 
     /**
      * Open Enum. The type of the payment method used to originate the debit.
      */
-    payment_method_type: 'us_bank_account';
+    payment_method_type: BankTransfer.PaymentMethodType;
 
     /**
      * The statement descriptor set by the originator of the debit.
@@ -166,9 +179,10 @@ export namespace ReceivedDebit {
     statement_descriptor?: string;
 
     /**
-     * The payment method used to originate the debit.
+     * Object containing details of the US Bank Account that originated the debit.
+     * Present when the debit was originated via ACH.
      */
-    us_bank_account: BankTransfer.UsBankAccount;
+    us_bank_account?: BankTransfer.UsBankAccount;
   }
 
   export interface CardSpend {
@@ -205,6 +219,7 @@ export namespace ReceivedDebit {
     | 'failed'
     | 'pending'
     | 'returned'
+    | 'scheduled'
     | 'succeeded'
     | OtherString;
 
@@ -269,6 +284,48 @@ export namespace ReceivedDebit {
     | OtherString;
 
   export namespace BankTransfer {
+    export interface GbBankAccount {
+      /**
+       * The name of the account holder that originated the debit.
+       */
+      account_holder_name?: string;
+
+      /**
+       * The name of the bank the debit originated from.
+       */
+      bank_name?: string;
+
+      /**
+       * Last 4 digits of the bank account number.
+       */
+      last4?: string;
+
+      /**
+       * Open Enum. The bank network the debit was originated on.
+       */
+      network: 'bacs';
+
+      /**
+       * The ID of the mandate associated with this debit.
+       */
+      received_debit_mandate?: string;
+
+      /**
+       * The sort code of the bank that originated the debit.
+       */
+      sort_code?: string;
+    }
+
+    export type OriginType =
+      | 'gb_bank_account'
+      | 'us_bank_account'
+      | OtherString;
+
+    export type PaymentMethodType =
+      | 'gb_bank_account'
+      | 'us_bank_account'
+      | OtherString;
+
     export interface UsBankAccount {
       /**
        * The name of the bank the debit originated from.
@@ -333,6 +390,7 @@ export namespace ReceivedDebit {
         | 'capability_inactive'
         | 'financial_address_inactive'
         | 'insufficient_funds'
+        | 'no_mandate'
         | 'stripe_rejected'
         | OtherString;
     }
@@ -350,6 +408,11 @@ export namespace V2 {
        * The page limit.
        */
       limit?: number;
+
+      /**
+       * Filter by the received debit mandate ID.
+       */
+      received_debit_mandate?: string;
     }
   }
 }
