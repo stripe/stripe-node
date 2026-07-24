@@ -10859,6 +10859,11 @@ export namespace Account {
       card_payments?: Merchant.CardPayments;
 
       /**
+       * Settings for gross settlement.
+       */
+      gross_settlement?: Merchant.GrossSettlement;
+
+      /**
        * Settings specific to Konbini payments on the account.
        */
       konbini_payments?: Merchant.KonbiniPayments;
@@ -12895,6 +12900,18 @@ export namespace Account {
          * Automatically declines certain charge types regardless of whether the card issuer accepted or declined the charge.
          */
         decline_on?: CardPayments.DeclineOn;
+      }
+
+      export interface GrossSettlement {
+        /**
+         * The ID of the payment method to use for gross settlement payouts.
+         */
+        payment_method?: string;
+
+        /**
+         * Whether to collect a payment method for gross settlement.
+         */
+        payment_method_collection?: GrossSettlement.PaymentMethodCollection;
       }
 
       export interface KonbiniPayments {
@@ -16989,6 +17006,10 @@ export namespace Account {
            */
           cvc_failure?: boolean;
         }
+      }
+
+      export namespace GrossSettlement {
+        export type PaymentMethodCollection = 'always' | 'never';
       }
 
       export namespace KonbiniPayments {
@@ -22233,6 +22254,11 @@ export namespace Account {
 
     export interface BusinessDetails {
       /**
+       * Additional addresses associated with the business.
+       */
+      additional_addresses?: Array<BusinessDetails.AdditionalAddress>;
+
+      /**
        * The company's primary address.
        */
       address?: BusinessDetails.Address;
@@ -23797,6 +23823,48 @@ export namespace Account {
     }
 
     export namespace BusinessDetails {
+      export interface AdditionalAddress {
+        /**
+         * City, district, suburb, town, or village.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Address line 1 (e.g., street, PO Box, or company name).
+         */
+        line1?: string;
+
+        /**
+         * Address line 2 (e.g., apartment, suite, unit, or building).
+         */
+        line2?: string;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * Purpose of additional address.
+         */
+        purpose: AdditionalAddress.Purpose;
+
+        /**
+         * State, county, province, or region.
+         */
+        state?: string;
+
+        /**
+         * Town or district.
+         */
+        town?: string;
+      }
+
       export interface Address {
         /**
          * City, district, suburb, town, or village.
@@ -23987,6 +24055,10 @@ export namespace Account {
         | 'unincorporated_non_profit'
         | 'unincorporated_partnership'
         | OtherString;
+
+      export namespace AdditionalAddress {
+        export type Purpose = 'administrative' | 'principal_place_of_business';
+      }
 
       export namespace Documents {
         export interface BankAccountOwnershipVerification {
@@ -25531,6 +25603,11 @@ export namespace V2 {
           card_payments?: Merchant.CardPayments;
 
           /**
+           * Settings for gross settlement.
+           */
+          gross_settlement?: Merchant.GrossSettlement;
+
+          /**
            * Settings specific to Konbini payments on the account.
            */
           konbini_payments?: Merchant.KonbiniPayments;
@@ -26626,6 +26703,18 @@ export namespace V2 {
              * Automatically declines certain charge types regardless of whether the card issuer accepted or declined the charge.
              */
             decline_on?: CardPayments.DeclineOn;
+          }
+
+          export interface GrossSettlement {
+            /**
+             * The ID of the payment method to use for gross settlement payouts.
+             */
+            payment_method?: string;
+
+            /**
+             * Whether to collect a payment method for gross settlement.
+             */
+            payment_method_collection?: GrossSettlement.PaymentMethodCollection;
           }
 
           export interface KonbiniPayments {
@@ -28052,6 +28141,10 @@ export namespace V2 {
                */
               cvc_failure?: boolean;
             }
+          }
+
+          export namespace GrossSettlement {
+            export type PaymentMethodCollection = 'always' | 'never';
           }
 
           export namespace KonbiniPayments {
@@ -30107,6 +30200,11 @@ export namespace V2 {
 
         export interface BusinessDetails {
           /**
+           * Additional addresses associated with the business.
+           */
+          additional_addresses?: Array<BusinessDetails.AdditionalAddress>;
+
+          /**
            * The business registration address of the business entity.
            */
           address?: BusinessDetails.Address;
@@ -31487,6 +31585,48 @@ export namespace V2 {
         }
 
         export namespace BusinessDetails {
+          export interface AdditionalAddress {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * Purpose of additional address.
+             */
+            purpose: AdditionalAddress.Purpose;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
+
           export interface Address {
             /**
              * City, district, suburb, town, or village.
@@ -31682,6 +31822,12 @@ export namespace V2 {
             | 'unincorporated_non_profit'
             | 'unincorporated_partnership'
             | OtherString;
+
+          export namespace AdditionalAddress {
+            export type Purpose =
+              | 'administrative'
+              | 'principal_place_of_business';
+          }
 
           export namespace Documents {
             export interface BankAccountOwnershipVerification {
@@ -32844,6 +32990,11 @@ export namespace V2 {
           card_payments?: Merchant.CardPayments;
 
           /**
+           * Settings for gross settlement.
+           */
+          gross_settlement?: Merchant.GrossSettlement;
+
+          /**
            * Settings specific to Konbini payments on the account.
            */
           konbini_payments?: Merchant.KonbiniPayments;
@@ -33966,6 +34117,18 @@ export namespace V2 {
              * Automatically declines certain charge types regardless of whether the card issuer accepted or declined the charge.
              */
             decline_on?: CardPayments.DeclineOn;
+          }
+
+          export interface GrossSettlement {
+            /**
+             * The ID of the payment method to use for gross settlement payouts.
+             */
+            payment_method?: string;
+
+            /**
+             * Whether to collect a payment method for gross settlement.
+             */
+            payment_method_collection?: GrossSettlement.PaymentMethodCollection;
           }
 
           export interface KonbiniPayments {
@@ -35392,6 +35555,10 @@ export namespace V2 {
                */
               cvc_failure?: boolean;
             }
+          }
+
+          export namespace GrossSettlement {
+            export type PaymentMethodCollection = 'always' | 'never';
           }
 
           export namespace KonbiniPayments {
@@ -37408,6 +37575,11 @@ export namespace V2 {
 
         export interface BusinessDetails {
           /**
+           * Additional addresses associated with the business.
+           */
+          additional_addresses?: Array<BusinessDetails.AdditionalAddress>;
+
+          /**
            * The business registration address of the business entity.
            */
           address?: JapanAddressParam;
@@ -38788,6 +38960,48 @@ export namespace V2 {
         }
 
         export namespace BusinessDetails {
+          export interface AdditionalAddress {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * Purpose of additional address.
+             */
+            purpose: AdditionalAddress.Purpose;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
+
           export interface AnnualRevenue {
             /**
              * A non-negative integer representing the amount in the smallest currency unit.
@@ -38946,6 +39160,12 @@ export namespace V2 {
             | 'unincorporated_non_profit'
             | 'unincorporated_partnership'
             | OtherString;
+
+          export namespace AdditionalAddress {
+            export type Purpose =
+              | 'administrative'
+              | 'principal_place_of_business';
+          }
 
           export namespace Documents {
             export interface BankAccountOwnershipVerification {

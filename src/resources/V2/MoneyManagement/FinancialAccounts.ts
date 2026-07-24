@@ -140,12 +140,6 @@ export interface FinancialAccount {
   livemode: boolean;
 
   /**
-   * If this is a managed FinancialAccount, `managed_by` indicates the product that created and manages this FinancialAccount. For managed FinancialAccounts,
-   * creation of money management resources can only be orchestrated by the managing product.
-   */
-  managed_by?: FinancialAccount.ManagedBy;
-
-  /**
    * Metadata associated with the FinancialAccount.
    */
   metadata?: Metadata;
@@ -232,13 +226,6 @@ export namespace FinancialAccount {
      * The currencies supported by this credit FinancialAccount.
      */
     supported_currencies: Array<string>;
-  }
-
-  export interface ManagedBy {
-    /**
-     * Enum describing the Stripe product that is managing this FinancialAccount.
-     */
-    type: 'multiprocessor_settlement';
   }
 
   export interface MultiprocessorSettlement {

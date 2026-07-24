@@ -176,6 +176,11 @@ export namespace V2 {
 
         export interface BusinessDetails {
           /**
+           * Additional addresses associated with the business.
+           */
+          additional_addresses?: Array<BusinessDetails.AdditionalAddress>;
+
+          /**
            * The business registration address of the business entity.
            */
           address?: JapanAddressParam;
@@ -655,6 +660,48 @@ export namespace V2 {
         }
 
         export namespace BusinessDetails {
+          export interface AdditionalAddress {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * Purpose of additional address.
+             */
+            purpose: AdditionalAddress.Purpose;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
+
           export interface AnnualRevenue {
             /**
              * A non-negative integer representing the amount in the smallest currency unit.
@@ -813,6 +860,12 @@ export namespace V2 {
             | 'unincorporated_non_profit'
             | 'unincorporated_partnership'
             | OtherString;
+
+          export namespace AdditionalAddress {
+            export type Purpose =
+              | 'administrative'
+              | 'principal_place_of_business';
+          }
 
           export namespace Documents {
             export interface BankAccountOwnershipVerification {

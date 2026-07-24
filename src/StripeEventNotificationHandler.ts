@@ -397,10 +397,17 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.money_management.received_credit.returned',
   'v2.money_management.received_credit.succeeded',
   'v2.money_management.received_debit.canceled',
+  'v2.money_management.received_debit.created',
   'v2.money_management.received_debit.failed',
   'v2.money_management.received_debit.pending',
+  'v2.money_management.received_debit.scheduled',
   'v2.money_management.received_debit.succeeded',
   'v2.money_management.received_debit.updated',
+  'v2.money_management.received_debit_mandate.canceled',
+  'v2.money_management.received_debit_mandate.created',
+  'v2.money_management.received_debit_mandate.expired',
+  'v2.money_management.received_debit_mandate.pending_cancellation',
+  'v2.money_management.received_debit_mandate.updated',
   'v2.money_management.recipient_verification.created',
   'v2.money_management.recipient_verification.updated',
   'v2.money_management.transaction.created',
@@ -437,6 +444,7 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.reporting.report_run.updated',
   'v2.signals.account_signal.fraudulent_merchant_ready',
   'v2.signals.account_signal.merchant_delinquency_ready',
+  'v2.signals.account_signal.payment_delinquency_exposure_ready',
   // event-types: The end of the section generated from our OpenAPI spec
 ]);
 
