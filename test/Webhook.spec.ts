@@ -203,7 +203,7 @@ function createWebhooksTestSuite(stripe) {
           SECRET
         ).catch((e: Error) => e);
         expect(err).to.be.instanceOf(Error);
-        expect(err.message).to.contain('stripe.parseEventNotification');
+        expect(err.message).to.contain('corresponding EventNotification');
       });
     };
   };

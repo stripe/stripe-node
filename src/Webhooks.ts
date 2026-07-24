@@ -84,6 +84,15 @@ export type WebhookObject = {
 export function createWebhooks(
   platformFunctions: PlatformFunctions
 ): WebhookObject {
+  function buildEvent(jsonPayload: Record<string, unknown>): Event {
+    if (jsonPayload && jsonPayload.object === 'v2.core.event') {
+      throw new Error(
+        'You passed a thin event notification to a function that expects a webhook. Use the corresponding EventNotification method instead.'
+      );
+    }
+    return (jsonPayload as unknown) as Event;
+  }
+
   const Webhook: WebhookObject = {
     DEFAULT_TOLERANCE: 300, // 5 minutes
     signature: null,
@@ -122,12 +131,7 @@ export function createWebhooks(
         payload instanceof Uint8Array
           ? JSON.parse(new TextDecoder('utf8').decode(payload))
           : JSON.parse(payload);
-      if (jsonPayload && jsonPayload.object === 'v2.core.event') {
-        throw new Error(
-          'You passed an event notification to stripe.webhooks.constructEvent, which expects a webhook payload. Use stripe.parseEventNotification instead.'
-        );
-      }
-      return jsonPayload;
+      return buildEvent(jsonPayload);
     },
 
     async constructEventAsync(
@@ -157,12 +161,7 @@ export function createWebhooks(
         payload instanceof Uint8Array
           ? JSON.parse(new TextDecoder('utf8').decode(payload))
           : JSON.parse(payload);
-      if (jsonPayload && jsonPayload.object === 'v2.core.event') {
-        throw new Error(
-          'You passed an event notification to stripe.webhooks.constructEvent, which expects a webhook payload. Use stripe.parseEventNotificationAsync instead.'
-        );
-      }
-      return jsonPayload;
+      return buildEvent(jsonPayload);
     },
 
     /**

@@ -20,6 +20,7 @@ import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
   detectAIAgent,
+  extractFromCloudProviderEnvelope,
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
@@ -1565,6 +1566,50 @@ export class Stripe {
     return this._api[key];
   }
 
+  _buildEventNotification(
+    parsed: Record<string, unknown>
+  ): V2.Core.EventNotification {
+    if (parsed.context) {
+      parsed.context = StripeContext.parse(parsed.context as string);
+    }
+
+    parsed.fetchEvent = (): Promise<unknown> => {
+      return this._requestSender._rawRequest(
+        'GET',
+        `/v2/core/events/${parsed.id}`,
+        undefined,
+        {
+          stripeContext: parsed.context as any,
+          headers: {
+            'Stripe-Request-Trigger': `event=${parsed.id}`,
+          },
+        },
+        ['fetch_event']
+      );
+    };
+
+    parsed.fetchRelatedObject = (): Promise<unknown> => {
+      if (!parsed.related_object) {
+        return Promise.resolve(null);
+      }
+
+      return this._requestSender._rawRequest(
+        'GET',
+        (parsed.related_object as any).url,
+        undefined,
+        {
+          stripeContext: parsed.context as any,
+          headers: {
+            'Stripe-Request-Trigger': `event=${parsed.id}`,
+          },
+        },
+        ['fetch_related_object']
+      );
+    };
+
+    return (parsed as unknown) as V2.Core.EventNotification;
+  }
+
   parseEventNotification(
     payload: string | Uint8Array,
     header: string | Uint8Array,
@@ -1600,48 +1645,7 @@ export class Stripe {
       );
     }
 
-    // Parse string context into StripeContext object if present
-    if (eventNotification.context) {
-      eventNotification.context = StripeContext.parse(
-        eventNotification.context
-      );
-    }
-
-    eventNotification.fetchEvent = (): Promise<unknown> => {
-      return this._requestSender._rawRequest(
-        'GET',
-        `/v2/core/events/${eventNotification.id}`,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_event']
-      );
-    };
-
-    eventNotification.fetchRelatedObject = (): Promise<unknown> => {
-      if (!eventNotification.related_object) {
-        return Promise.resolve(null);
-      }
-
-      return this._requestSender._rawRequest(
-        'GET',
-        eventNotification.related_object.url,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_related_object']
-      );
-    };
-
-    return eventNotification;
+    return this._buildEventNotification(eventNotification);
   }
 
   async parseEventNotificationAsync(
@@ -1679,48 +1683,37 @@ export class Stripe {
       );
     }
 
-    // Parse string context into StripeContext object if present
-    if (eventNotification.context) {
-      eventNotification.context = StripeContext.parse(
-        eventNotification.context
+    return this._buildEventNotification(eventNotification);
+  }
+
+  /**
+   * Constructs an Event from an [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
+   * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload.
+   */
+  constructEventFromCloudProvider(payload: string): Event {
+    const inner = extractFromCloudProviderEnvelope(payload);
+    if (inner && inner.object === 'v2.core.event') {
+      throw new Error(
+        'It looks like this cloud event contains a thin event notification instead of a webhook body. Use parseEventNotificationFromCloudProvider instead.'
       );
     }
+    return (inner as unknown) as Event;
+  }
 
-    eventNotification.fetchEvent = (): Promise<unknown> => {
-      return this._requestSender._rawRequest(
-        'GET',
-        `/v2/core/events/${eventNotification.id}`,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_event']
+  /**
+   * Parses an EventNotification from an [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
+   * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload.
+   */
+  parseEventNotificationFromCloudProvider(
+    payload: string
+  ): V2.Core.EventNotification {
+    const inner = extractFromCloudProviderEnvelope(payload);
+    if (inner && inner.object === 'event') {
+      throw new Error(
+        'It looks like this cloud event contains a webhook body instead of a thin event notification. Use constructEventFromCloudProvider instead.'
       );
-    };
-
-    eventNotification.fetchRelatedObject = (): Promise<unknown> => {
-      if (!eventNotification.related_object) {
-        return Promise.resolve(null);
-      }
-
-      return this._requestSender._rawRequest(
-        'GET',
-        eventNotification.related_object.url,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_related_object']
-      );
-    };
-
-    return eventNotification;
+    }
+    return this._buildEventNotification(inner);
   }
 }
 
