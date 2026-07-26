@@ -34,6 +34,11 @@ export class NodePlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
+  writeStderr(msg: string): void {
+    process.stderr.write(msg);
+  }
+
+  /** @override */
   emitWarning(warning: string): void {
     if (typeof process.emitWarning === 'function') {
       process.emitWarning(warning, 'Stripe');
