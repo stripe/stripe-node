@@ -21,6 +21,7 @@ import {
   RangeQueryParam,
   Metadata,
   Address,
+  OtherString,
 } from '../shared.js';
 import {
   RequestOptions,
@@ -631,7 +632,7 @@ export namespace Charge {
     tracking_number?: string | null;
   }
 
-  export type Status = 'failed' | 'pending' | 'succeeded';
+  export type Status = 'failed' | 'pending' | 'succeeded' | OtherString;
 
   export interface TransferData {
     /**
@@ -1304,7 +1305,7 @@ export namespace Charge {
       account_holder_type: Fpx.AccountHolderType | null;
 
       /**
-       * The customer's bank. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, `pb_enterprise`, or `bank_of_china`.
+       * The customer's bank. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bnp_paribas`, `bank_rakyat`, `bsn`, `cimb`, `citibank`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, `mbsb_bank`, `pb_enterprise`, or `bank_of_china`.
        */
       bank: Fpx.Bank;
 
@@ -2049,7 +2050,7 @@ export namespace Charge {
       export namespace Funding {
         export interface Card {
           /**
-           * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
+           * Card brand. Can be `American Express`, `Cartes Bancaires`, `Diners Club`, `Discover`, `Eftpos Australia`, `Girocard`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
            */
           brand: string | null;
 
@@ -2150,7 +2151,7 @@ export namespace Charge {
         status: Overcapture.Status;
       }
 
-      export type RegulatedStatus = 'regulated' | 'unregulated';
+      export type RegulatedStatus = 'regulated' | 'unregulated' | OtherString;
 
       export interface ThreeDSecure {
         /**
@@ -2226,11 +2227,11 @@ export namespace Charge {
       }
 
       export namespace ExtendedAuthorization {
-        export type Status = 'disabled' | 'enabled';
+        export type Status = 'disabled' | 'enabled' | OtherString;
       }
 
       export namespace IncrementalAuthorization {
-        export type Status = 'available' | 'unavailable';
+        export type Status = 'available' | 'unavailable' | OtherString;
       }
 
       export namespace Installments {
@@ -2253,37 +2254,47 @@ export namespace Charge {
         }
 
         export namespace Plan {
-          export type Type = 'bonus' | 'fixed_count' | 'revolving';
+          export type Type =
+            | 'bonus'
+            | 'fixed_count'
+            | 'revolving'
+            | OtherString;
         }
       }
 
       export namespace Multicapture {
-        export type Status = 'available' | 'unavailable';
+        export type Status = 'available' | 'unavailable' | OtherString;
       }
 
       export namespace Overcapture {
-        export type Status = 'available' | 'unavailable';
+        export type Status = 'available' | 'unavailable' | OtherString;
       }
 
       export namespace ThreeDSecure {
-        export type AuthenticationFlow = 'challenge' | 'frictionless';
+        export type AuthenticationFlow =
+          | 'challenge'
+          | 'frictionless'
+          | OtherString;
 
         export type ElectronicCommerceIndicator =
           | '01'
           | '02'
           | '05'
           | '06'
-          | '07';
+          | '07'
+          | OtherString;
 
-        export type ExemptionIndicator = 'low_risk' | 'none';
+        export type ExemptionIndicator = 'low_risk' | 'none' | OtherString;
 
         export type Result =
           | 'attempt_acknowledged'
           | 'authenticated'
+          | 'data_share_only'
           | 'exempted'
           | 'failed'
           | 'not_supported'
-          | 'processing_error';
+          | 'processing_error'
+          | OtherString;
 
         export type ResultReason =
           | 'abandoned'
@@ -2292,9 +2303,16 @@ export namespace Charge {
           | 'card_not_enrolled'
           | 'network_not_supported'
           | 'protocol_error'
-          | 'rejected';
+          | 'rejected'
+          | OtherString;
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
       }
 
       export namespace Wallet {
@@ -2381,7 +2399,8 @@ export namespace Charge {
         | 'contactless_emv'
         | 'contactless_magstripe_mode'
         | 'magnetic_stripe_fallback'
-        | 'magnetic_stripe_track2';
+        | 'magnetic_stripe_track2'
+        | OtherString;
 
       export interface Receipt {
         /**
@@ -2438,7 +2457,12 @@ export namespace Charge {
       }
 
       export namespace Receipt {
-        export type AccountType = 'checking' | 'credit' | 'prepaid' | 'unknown';
+        export type AccountType =
+          | 'checking'
+          | 'credit'
+          | 'prepaid'
+          | 'unknown'
+          | OtherString;
       }
 
       export namespace Wallet {
@@ -2446,7 +2470,8 @@ export namespace Charge {
           | 'apple_pay'
           | 'google_pay'
           | 'samsung_pay'
-          | 'unknown';
+          | 'unknown'
+          | OtherString;
       }
     }
 
@@ -2457,7 +2482,8 @@ export namespace Charge {
         | 'polygon'
         | 'solana'
         | 'sui'
-        | 'tempo';
+        | 'tempo'
+        | OtherString;
 
       export type TokenCurrency =
         | 'phantom_cash'
@@ -2465,7 +2491,8 @@ export namespace Charge {
         | 'usdg'
         | 'usdp'
         | 'usdsui'
-        | 'usdt';
+        | 'usdt'
+        | OtherString;
     }
 
     export namespace Eps {
@@ -2512,14 +2539,17 @@ export namespace Charge {
         | 'bank_muamalat'
         | 'bank_of_china'
         | 'bank_rakyat'
+        | 'bnp_paribas'
         | 'bsn'
         | 'cimb'
+        | 'citibank'
         | 'deutsche_bank'
         | 'hong_leong_bank'
         | 'hsbc'
         | 'kfh'
         | 'maybank2e'
         | 'maybank2u'
+        | 'mbsb_bank'
         | 'ocbc'
         | 'pb_enterprise'
         | 'public_bank'
@@ -2581,7 +2611,8 @@ export namespace Charge {
         | 'contactless_emv'
         | 'contactless_magstripe_mode'
         | 'magnetic_stripe_fallback'
-        | 'magnetic_stripe_track2';
+        | 'magnetic_stripe_track2'
+        | OtherString;
 
       export interface Receipt {
         /**
@@ -2631,7 +2662,11 @@ export namespace Charge {
       }
 
       export namespace Receipt {
-        export type AccountType = 'checking' | 'savings' | 'unknown';
+        export type AccountType =
+          | 'checking'
+          | 'savings'
+          | 'unknown'
+          | OtherString;
       }
     }
 
@@ -2689,7 +2724,8 @@ export namespace Charge {
         | 'shinhyup'
         | 'suhyup'
         | 'tossbank'
-        | 'woori';
+        | 'woori'
+        | OtherString;
     }
 
     export namespace Mobilepay {
@@ -2765,9 +2801,16 @@ export namespace Charge {
       }
 
       export namespace SellerProtection {
-        export type DisputeCategory = 'fraudulent' | 'product_not_received';
+        export type DisputeCategory =
+          | 'fraudulent'
+          | 'product_not_received'
+          | OtherString;
 
-        export type Status = 'eligible' | 'not_eligible' | 'partially_eligible';
+        export type Status =
+          | 'eligible'
+          | 'not_eligible'
+          | 'partially_eligible'
+          | OtherString;
       }
     }
 
@@ -2784,7 +2827,7 @@ export namespace Charge {
       export namespace Funding {
         export interface Card {
           /**
-           * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
+           * Card brand. Can be `American Express`, `Cartes Bancaires`, `Diners Club`, `Discover`, `Eftpos Australia`, `Girocard`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
            */
           brand: string | null;
 
@@ -2828,9 +2871,9 @@ export namespace Charge {
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
     }
   }
 }

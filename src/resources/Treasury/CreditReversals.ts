@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Transaction} from './Transactions.js';
-import {MetadataParam, PaginationParams, Metadata} from '../../shared.js';
+import {
+  MetadataParam,
+  PaginationParams,
+  OtherString,
+  Metadata,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class CreditReversalResource extends StripeResource {
@@ -122,9 +127,9 @@ export interface CreditReversal {
   transaction: string | Transaction | null;
 }
 export namespace CreditReversal {
-  export type Network = 'ach' | 'stripe';
+  export type Network = 'ach' | 'stripe' | OtherString;
 
-  export type Status = 'canceled' | 'posted' | 'processing';
+  export type Status = 'canceled' | 'posted' | 'processing' | OtherString;
 
   export interface StatusTransitions {
     /**
@@ -183,6 +188,6 @@ export namespace Treasury {
   }
 
   export namespace CreditReversalListParams {
-    export type Status = 'canceled' | 'posted' | 'processing';
+    export type Status = 'canceled' | 'posted' | 'processing' | OtherString;
   }
 }

@@ -10,7 +10,7 @@ import {OutboundTransfer} from './OutboundTransfers.js';
 import {ReceivedCredit} from './ReceivedCredits.js';
 import {ReceivedDebit} from './ReceivedDebits.js';
 import * as Issuing from './../Issuing/index.js';
-import {PaginationParams, RangeQueryParam} from '../../shared.js';
+import {PaginationParams, RangeQueryParam, OtherString} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../../lib.js';
 
 export class TransactionResource extends StripeResource {
@@ -668,9 +668,10 @@ export namespace Transaction {
     | 'outbound_payment'
     | 'outbound_transfer'
     | 'received_credit'
-    | 'received_debit';
+    | 'received_debit'
+    | OtherString;
 
-  export type Status = 'open' | 'posted' | 'void';
+  export type Status = 'open' | 'posted' | 'void' | OtherString;
 
   export interface StatusTransitions {
     /**
@@ -694,7 +695,8 @@ export namespace Transaction {
       | 'outbound_payment'
       | 'outbound_transfer'
       | 'received_credit'
-      | 'received_debit';
+      | 'received_debit'
+      | OtherString;
   }
 }
 export namespace Treasury {
@@ -739,9 +741,9 @@ export namespace Treasury {
   }
 
   export namespace TransactionListParams {
-    export type OrderBy = 'created' | 'posted_at';
+    export type OrderBy = 'created' | 'posted_at' | OtherString;
 
-    export type Status = 'open' | 'posted' | 'void';
+    export type Status = 'open' | 'posted' | 'void' | OtherString;
 
     export interface StatusTransitions {
       /**
