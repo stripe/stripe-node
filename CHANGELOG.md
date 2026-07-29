@@ -1,5 +1,35 @@
 # Changelog
 
+## 22.5.0-beta.1 - 2026-07-29
+This release changes the pinned API version to 2026-07-29.preview.
+
+* [#2772](https://github.com/stripe/stripe-node/pull/2772) Update generated code for beta
+  * Add support for `list` and `retrieve` methods on resource `ProductCatalog.TrialOffer`
+  * Add support for `tax_items` on `ChargeCaptureParams.payment_details.car_rental_data[].total.tax`, `ChargeCaptureParams.payment_details.flight_data[].total.tax`, `ChargeCaptureParams.payment_details.lodging_data[].total.tax`, `ChargeUpdateParams.payment_details.car_rental_data[].total.tax`, `ChargeUpdateParams.payment_details.flight_data[].total.tax`, `ChargeUpdateParams.payment_details.lodging_data[].total.tax`, `PaymentIntent.payment_details.car_rental_data[].total.tax`, `PaymentIntent.payment_details.flight_data[].total.tax`, `PaymentIntent.payment_details.lodging_data[].total.tax`, `PaymentIntentCaptureParams.payment_details.car_rental_data[].total.tax`, `PaymentIntentCaptureParams.payment_details.flight_data[].total.tax`, `PaymentIntentCaptureParams.payment_details.lodging_data[].total.tax`, `PaymentIntentConfirmParams.payment_details.car_rental_data[].total.tax`, `PaymentIntentConfirmParams.payment_details.flight_data[].total.tax`, `PaymentIntentConfirmParams.payment_details.lodging_data[].total.tax`, `PaymentIntentCreateParams.payment_details.car_rental_data[].total.tax`, `PaymentIntentCreateParams.payment_details.flight_data[].total.tax`, `PaymentIntentCreateParams.payment_details.lodging_data[].total.tax`, `PaymentIntentUpdateParams.payment_details.car_rental_data[].total.tax`, `PaymentIntentUpdateParams.payment_details.flight_data[].total.tax`, and `PaymentIntentUpdateParams.payment_details.lodging_data[].total.tax`
+  * ⚠️ Remove support for `taxes` on `ChargeCaptureParams.payment_details.car_rental_data[].total.tax`, `ChargeCaptureParams.payment_details.flight_data[].total.tax`, `ChargeCaptureParams.payment_details.lodging_data[].total.tax`, `ChargeUpdateParams.payment_details.car_rental_data[].total.tax`, `ChargeUpdateParams.payment_details.flight_data[].total.tax`, `ChargeUpdateParams.payment_details.lodging_data[].total.tax`, `PaymentIntent.payment_details.car_rental_data[].total.tax`, `PaymentIntent.payment_details.flight_data[].total.tax`, `PaymentIntent.payment_details.lodging_data[].total.tax`, `PaymentIntentCaptureParams.payment_details.car_rental_data[].total.tax`, `PaymentIntentCaptureParams.payment_details.flight_data[].total.tax`, `PaymentIntentCaptureParams.payment_details.lodging_data[].total.tax`, `PaymentIntentConfirmParams.payment_details.car_rental_data[].total.tax`, `PaymentIntentConfirmParams.payment_details.flight_data[].total.tax`, `PaymentIntentConfirmParams.payment_details.lodging_data[].total.tax`, `PaymentIntentCreateParams.payment_details.car_rental_data[].total.tax`, `PaymentIntentCreateParams.payment_details.flight_data[].total.tax`, `PaymentIntentCreateParams.payment_details.lodging_data[].total.tax`, `PaymentIntentUpdateParams.payment_details.car_rental_data[].total.tax`, `PaymentIntentUpdateParams.payment_details.flight_data[].total.tax`, and `PaymentIntentUpdateParams.payment_details.lodging_data[].total.tax`
+  * Add support for `tax_id` on `Checkout.Session.collected_information`
+  * ⚠️ Remove support for `tax_ids` on `Checkout.Session.collected_information`
+  * Add support for new value `disabled` on enum `FinancialConnections.SessionCreateParams.manual_entry.mode`
+  * Add support for `mode` on `FinancialConnections.Session.manual_entry`
+  * Add support for `name` on `Issuing.CardholderUpdateParams`
+  * Add support for new value `ic_nif` on enums `OrderCreateParams.tax_details.tax_ids[].type` and `OrderUpdateParams.tax_details.tax_ids[].type`
+  * ⚠️ Add support for new value `ic_nif` on enums `Order.tax_details.tax_ids[].type` and `QuotePreviewInvoice.customer_tax_ids[].type`
+  * Add support for new values `alipay` and `mb_way` on enum `QuotePreviewInvoice.payment_settings.payment_method_types`
+  * Add support for `custom_fields`, `description`, and `footer` on `QuotePreviewSubscriptionSchedule.default_settings.invoice_settings` and `QuotePreviewSubscriptionSchedule.phases[].invoice_settings`
+  * Add support for `trial` on `QuotePreviewSubscriptionSchedule.phases[]`
+  * ⚠️ Remove support for `acss_debit`, `afterpay_clearpay`, `alipay`, `alma`, `amazon_pay`, `au_becs_debit`, `bacs_debit`, `bancontact`, `billie`, `bizum`, `blik`, `boleto`, `card_present`, `cashapp`, `crypto`, `customer_balance`, `eps`, `fpx`, `giropay`, `gopay`, `grabpay`, `id_bank_transfer`, `ideal`, `interac_present`, `kakao_pay`, `konbini`, `kr_card`, `mb_way`, `mobilepay`, `multibanco`, `naver_pay`, `nz_bank_account`, `oxxo`, `p24`, `pay_by_bank`, `payco`, `paynow`, `paypal`, `paypay`, `payto`, `pix`, `promptpay`, `qris`, `rechnung`, `revolut_pay`, `samsung_pay`, `satispay`, `scalapay`, `sepa_debit`, `shopeepay`, `sofort`, `stripe_balance`, `sunbit`, `swish`, `twint`, `upi`, `us_bank_account`, `wechat_pay`, and `zip` on `SharedPayment.GrantedToken.payment_method_details`
+  * ⚠️ Remove support for values `acss_debit`, `afterpay_clearpay`, `alipay`, `alma`, `amazon_pay`, `au_becs_debit`, `bacs_debit`, `bancontact`, `billie`, `bizum`, `blik`, `boleto`, `card_present`, `cashapp`, `crypto`, `custom`, `customer_balance`, `eps`, `fpx`, `giropay`, `gopay`, `grabpay`, `id_bank_transfer`, `ideal`, `interac_present`, `kakao_pay`, `konbini`, `kr_card`, `mb_way`, `mobilepay`, `multibanco`, `naver_pay`, `nz_bank_account`, `oxxo`, `p24`, `pay_by_bank`, `payco`, `paynow`, `paypal`, `paypay`, `payto`, `pix`, `promptpay`, `qris`, `rechnung`, `revolut_pay`, `samsung_pay`, `satispay`, `scalapay`, `sepa_debit`, `shopeepay`, `sofort`, `stripe_balance`, `sunbit`, `swish`, `twint`, `upi`, `us_bank_account`, `wechat_pay`, and `zip` from enum `SharedPayment.GrantedToken.payment_method_details.type`
+  * Add support for `use_stripe_sdk` on `SharedPayment.IssuedTokenCreateParams` and `SharedPayment.IssuedToken`
+  * Add support for `redirect_to_url` on `SharedPayment.IssuedToken.next_action`
+  * ⚠️ Change type of `SharedPayment.IssuedToken.next_action.type` from `literal('use_stripe_sdk')` to `enum('redirect_to_url'|'use_stripe_sdk')`
+  * Add support for `livemode` on `Tax.Location`
+  * Add support for `source` on `V2.Iam.ActivityLog.details.user_roles`
+  * Add support for `payout` on `V2.MoneyManagement.ReceivedCredit.balance_transfer`
+  * ⚠️ Remove support for `payout_v1` on `V2.MoneyManagement.ReceivedCredit.balance_transfer`
+  * Add support for new value `payout` on enum `V2.MoneyManagement.ReceivedCredit.balance_transfer.type`
+  * ⚠️ Change `V2.MoneyManagement.ReceivedDebit.bank_transfer.us_bank_account` to be optional
+  * Add support for error codes `us_bank_account_microdeposits_cannot_be_confirmed` and `us_bank_account_microdeposits_cannot_be_sent` on `ControlledByAlternateResourceError`
+
 ## 22.4.0-beta.1 - 2026-06-24
 This release changes the pinned API version to 2026-06-24.preview.
 
