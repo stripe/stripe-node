@@ -12,6 +12,7 @@ import {
   MetadataParam,
   PaginationParams,
   RangeQueryParam,
+  OtherString,
   Metadata,
   Decimal,
 } from '../../shared.js';
@@ -563,9 +564,9 @@ export namespace Transaction {
     received_debit: string | null;
   }
 
-  export type Type = 'capture' | 'refund';
+  export type Type = 'capture' | 'refund' | OtherString;
 
-  export type Wallet = 'apple_pay' | 'google_pay' | 'samsung_pay';
+  export type Wallet = 'apple_pay' | 'google_pay' | 'samsung_pay' | OtherString;
 
   export namespace PurchaseDetails {
     export interface Fleet {
@@ -726,7 +727,7 @@ export namespace Transaction {
       export namespace ReportedBreakdown {
         export interface Fuel {
           /**
-           * Gross fuel amount that should equal Fuel Volume multipled by Fuel Unit Cost, inclusive of taxes.
+           * Gross fuel amount that should equal Fuel Volume multiplied by Fuel Unit Cost, inclusive of taxes.
            */
           gross_amount_decimal: Decimal | null;
         }
@@ -837,6 +838,6 @@ export namespace Issuing {
   }
 
   export namespace TransactionListParams {
-    export type Type = 'capture' | 'refund';
+    export type Type = 'capture' | 'refund' | OtherString;
   }
 }

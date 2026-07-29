@@ -11,6 +11,7 @@ import {
   MetadataParam,
   PaginationParams,
   RangeQueryParam,
+  OtherString,
   Metadata,
   Decimal,
 } from '../../shared.js';
@@ -1096,9 +1097,10 @@ export namespace Authorization {
     | 'contactless'
     | 'keyed_in'
     | 'online'
-    | 'swipe';
+    | 'swipe'
+    | OtherString;
 
-  export type CardPresence = 'not_present' | 'present';
+  export type CardPresence = 'not_present' | 'present' | OtherString;
 
   export interface Fleet {
     /**
@@ -1339,7 +1341,12 @@ export namespace Authorization {
     requested_at: number | null;
   }
 
-  export type Status = 'closed' | 'expired' | 'pending' | 'reversed';
+  export type Status =
+    | 'closed'
+    | 'expired'
+    | 'pending'
+    | 'reversed'
+    | OtherString;
 
   export interface Treasury {
     /**
@@ -1432,7 +1439,8 @@ export namespace Authorization {
     export type PurchaseType =
       | 'fuel_and_non_fuel_purchase'
       | 'fuel_purchase'
-      | 'non_fuel_purchase';
+      | 'non_fuel_purchase'
+      | OtherString;
 
     export interface ReportedBreakdown {
       /**
@@ -1454,7 +1462,8 @@ export namespace Authorization {
     export type ServiceType =
       | 'full_service'
       | 'non_fuel_transaction'
-      | 'self_service';
+      | 'self_service'
+      | OtherString;
 
     export namespace ReportedBreakdown {
       export interface Fuel {
@@ -1491,11 +1500,13 @@ export namespace Authorization {
       | 'pending'
       | 'rejected'
       | 'undeliverable'
-      | 'verified';
+      | 'verified'
+      | OtherString;
 
     export type UndeliverableReason =
       | 'no_phone_number'
-      | 'unsupported_phone_number';
+      | 'unsupported_phone_number'
+      | OtherString;
   }
 
   export namespace Fuel {
@@ -1504,7 +1515,8 @@ export namespace Authorization {
       | 'other'
       | 'unleaded_plus'
       | 'unleaded_regular'
-      | 'unleaded_super';
+      | 'unleaded_super'
+      | OtherString;
 
     export type Unit =
       | 'charging_minute'
@@ -1514,7 +1526,8 @@ export namespace Authorization {
       | 'liter'
       | 'other'
       | 'pound'
-      | 'us_gallon';
+      | 'us_gallon'
+      | OtherString;
   }
 
   export namespace PendingRequest {
@@ -1559,18 +1572,28 @@ export namespace Authorization {
       | 'not_allowed'
       | 'pin_blocked'
       | 'spending_controls'
+      | 'stripe_internal_error'
       | 'suspected_fraud'
       | 'verification_failed'
       | 'webhook_approved'
       | 'webhook_declined'
       | 'webhook_error'
-      | 'webhook_timeout';
+      | 'webhook_timeout'
+      | OtherString;
   }
 
   export namespace VerificationData {
-    export type AddressLine1Check = 'match' | 'mismatch' | 'not_provided';
+    export type AddressLine1Check =
+      | 'match'
+      | 'mismatch'
+      | 'not_provided'
+      | OtherString;
 
-    export type AddressPostalCodeCheck = 'match' | 'mismatch' | 'not_provided';
+    export type AddressPostalCodeCheck =
+      | 'match'
+      | 'mismatch'
+      | 'not_provided'
+      | OtherString;
 
     export interface AuthenticationExemption {
       /**
@@ -1584,9 +1607,13 @@ export namespace Authorization {
       type: AuthenticationExemption.Type;
     }
 
-    export type CvcCheck = 'match' | 'mismatch' | 'not_provided';
+    export type CvcCheck = 'match' | 'mismatch' | 'not_provided' | OtherString;
 
-    export type ExpiryCheck = 'match' | 'mismatch' | 'not_provided';
+    export type ExpiryCheck =
+      | 'match'
+      | 'mismatch'
+      | 'not_provided'
+      | OtherString;
 
     export interface ThreeDSecure {
       /**
@@ -1596,12 +1623,13 @@ export namespace Authorization {
     }
 
     export namespace AuthenticationExemption {
-      export type ClaimedBy = 'acquirer' | 'issuer';
+      export type ClaimedBy = 'acquirer' | 'issuer' | OtherString;
 
       export type Type =
         | 'low_value_transaction'
         | 'transaction_risk_analysis'
-        | 'unknown';
+        | 'unknown'
+        | OtherString;
     }
 
     export namespace ThreeDSecure {
@@ -1609,7 +1637,8 @@ export namespace Authorization {
         | 'attempt_acknowledged'
         | 'authenticated'
         | 'failed'
-        | 'required';
+        | 'required'
+        | OtherString;
     }
   }
 }
@@ -1663,7 +1692,12 @@ export namespace Issuing {
   }
 
   export namespace AuthorizationListParams {
-    export type Status = 'closed' | 'expired' | 'pending' | 'reversed';
+    export type Status =
+      | 'closed'
+      | 'expired'
+      | 'pending'
+      | 'reversed'
+      | OtherString;
   }
 }
 export namespace Issuing {

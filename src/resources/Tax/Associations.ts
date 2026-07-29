@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class AssociationResource extends StripeResource {
@@ -83,7 +84,8 @@ export namespace Association {
         | 'calculation_expired'
         | 'currency_mismatch'
         | 'original_transaction_voided'
-        | 'unique_reference_violation';
+        | 'unique_reference_violation'
+        | OtherString;
     }
   }
 }

@@ -18,6 +18,7 @@ import * as TestHelpers from './TestHelpers/index.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   Decimal,
   PaginationParams,
   RangeQueryParam,
@@ -1527,7 +1528,8 @@ export namespace Subscription {
     | 'past_due'
     | 'paused'
     | 'trialing'
-    | 'unpaid';
+    | 'unpaid'
+    | OtherString;
 
   export interface TransferData {
     /**
@@ -1562,7 +1564,7 @@ export namespace Subscription {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'self' | OtherString;
     }
   }
 
@@ -1574,7 +1576,7 @@ export namespace Subscription {
       proration_discounts?: Flexible.ProrationDiscounts;
     }
 
-    export type Type = 'classic' | 'flexible';
+    export type Type = 'classic' | 'flexible' | OtherString;
 
     export namespace Flexible {
       export type ProrationDiscounts = 'included' | 'itemized';
@@ -1629,7 +1631,7 @@ export namespace Subscription {
         interval_count: number | null;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
         export type Interval = 'day' | 'month' | 'week' | 'year';
@@ -1646,13 +1648,15 @@ export namespace Subscription {
       | 'switched_service'
       | 'too_complex'
       | 'too_expensive'
-      | 'unused';
+      | 'unused'
+      | OtherString;
 
     export type Reason =
       | 'canceled_by_retention_policy'
       | 'cancellation_requested'
       | 'payment_disputed'
-      | 'payment_failed';
+      | 'payment_failed'
+      | OtherString;
   }
 
   export namespace InvoiceSettings {
@@ -1681,7 +1685,7 @@ export namespace Subscription {
     }
 
     export namespace Issuer {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'self' | OtherString;
     }
   }
 
@@ -1747,6 +1751,7 @@ export namespace Subscription {
       | 'ach_debit'
       | 'acss_debit'
       | 'affirm'
+      | 'alipay'
       | 'amazon_pay'
       | 'au_becs_debit'
       | 'bacs_debit'
@@ -1768,6 +1773,7 @@ export namespace Subscription {
       | 'konbini'
       | 'kr_card'
       | 'link'
+      | 'mb_way'
       | 'multibanco'
       | 'naver_pay'
       | 'nz_bank_account'
@@ -1788,9 +1794,13 @@ export namespace Subscription {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
-      | 'wechat_pay';
+      | 'wechat_pay'
+      | OtherString;
 
-    export type SaveDefaultPaymentMethod = 'off' | 'on_subscription';
+    export type SaveDefaultPaymentMethod =
+      | 'off'
+      | 'on_subscription'
+      | OtherString;
 
     export namespace PaymentMethodOptions {
       export interface AcssDebit {
@@ -1873,15 +1883,16 @@ export namespace Subscription {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace MandateOptions {
-          export type TransactionType = 'business' | 'personal';
+          export type TransactionType = 'business' | 'personal' | OtherString;
         }
       }
 
       export namespace Bancontact {
-        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
       }
 
       export namespace Card {
@@ -1917,10 +1928,14 @@ export namespace Subscription {
           | 'unknown'
           | 'visa';
 
-        export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+        export type RequestThreeDSecure =
+          | 'any'
+          | 'automatic'
+          | 'challenge'
+          | OtherString;
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
         }
       }
 
@@ -1967,7 +1982,7 @@ export namespace Subscription {
         }
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
 
           export type Purpose =
             | 'dependant_support'
@@ -1980,7 +1995,8 @@ export namespace Subscription {
             | 'retail'
             | 'salary'
             | 'tax'
-            | 'utility';
+            | 'utility'
+            | OtherString;
         }
       }
 
@@ -2008,14 +2024,15 @@ export namespace Subscription {
         }
 
         export namespace MandateOptions {
-          export type AmountIncludesIof = 'always' | 'never';
+          export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
           export type PaymentSchedule =
             | 'halfyearly'
             | 'monthly'
             | 'quarterly'
             | 'weekly'
-            | 'yearly';
+            | 'yearly'
+            | OtherString;
         }
       }
 
@@ -2043,7 +2060,7 @@ export namespace Subscription {
         }
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
         }
       }
 
@@ -2065,7 +2082,8 @@ export namespace Subscription {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace FinancialConnections {
           export interface Filters {
@@ -2079,12 +2097,20 @@ export namespace Subscription {
             | 'balances'
             | 'ownership'
             | 'payment_method'
-            | 'transactions';
+            | 'transactions'
+            | OtherString;
 
-          export type Prefetch = 'balances' | 'ownership' | 'transactions';
+          export type Prefetch =
+            | 'balances'
+            | 'ownership'
+            | 'transactions'
+            | OtherString;
 
           export namespace Filters {
-            export type AccountSubcategory = 'checking' | 'savings';
+            export type AccountSubcategory =
+              | 'checking'
+              | 'savings'
+              | OtherString;
           }
         }
       }
@@ -2104,7 +2130,11 @@ export namespace Subscription {
     }
 
     export namespace EndBehavior {
-      export type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
+      export type MissingPaymentMethod =
+        | 'cancel'
+        | 'create_invoice'
+        | 'pause'
+        | OtherString;
     }
   }
 }
@@ -2417,7 +2447,8 @@ export namespace SubscriptionCreateParams {
   export type CancelAt =
     | 'max_billed_until'
     | 'max_period_end'
-    | 'min_period_end';
+    | 'min_period_end'
+    | OtherString;
 
   export type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
@@ -2545,7 +2576,8 @@ export namespace SubscriptionCreateParams {
   export type ProrationBehavior =
     | 'always_invoice'
     | 'create_prorations'
-    | 'none';
+    | 'none'
+    | OtherString;
 
   export interface TransferData {
     /**
@@ -2649,11 +2681,15 @@ export namespace SubscriptionCreateParams {
       }
 
       export namespace End {
-        export type Type = 'min_item_period_end' | 'timestamp';
+        export type Type = 'min_item_period_end' | 'timestamp' | OtherString;
       }
 
       export namespace Start {
-        export type Type = 'max_item_period_start' | 'now' | 'timestamp';
+        export type Type =
+          | 'max_item_period_start'
+          | 'now'
+          | 'timestamp'
+          | OtherString;
       }
     }
 
@@ -2676,7 +2712,7 @@ export namespace SubscriptionCreateParams {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'self' | OtherString;
     }
   }
 
@@ -2688,7 +2724,7 @@ export namespace SubscriptionCreateParams {
       proration_discounts?: Flexible.ProrationDiscounts;
     }
 
-    export type Type = 'classic' | 'flexible';
+    export type Type = 'classic' | 'flexible' | OtherString;
 
     export namespace Flexible {
       export type ProrationDiscounts = 'included' | 'itemized';
@@ -2738,7 +2774,7 @@ export namespace SubscriptionCreateParams {
         interval_count?: number;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
         export type Interval = 'day' | 'month' | 'week' | 'year';
@@ -2772,7 +2808,7 @@ export namespace SubscriptionCreateParams {
     }
 
     export namespace Issuer {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'self' | OtherString;
     }
   }
 
@@ -2912,6 +2948,7 @@ export namespace SubscriptionCreateParams {
       | 'ach_debit'
       | 'acss_debit'
       | 'affirm'
+      | 'alipay'
       | 'amazon_pay'
       | 'au_becs_debit'
       | 'bacs_debit'
@@ -2933,6 +2970,7 @@ export namespace SubscriptionCreateParams {
       | 'konbini'
       | 'kr_card'
       | 'link'
+      | 'mb_way'
       | 'multibanco'
       | 'naver_pay'
       | 'nz_bank_account'
@@ -2953,9 +2991,13 @@ export namespace SubscriptionCreateParams {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
-      | 'wechat_pay';
+      | 'wechat_pay'
+      | OtherString;
 
-    export type SaveDefaultPaymentMethod = 'off' | 'on_subscription';
+    export type SaveDefaultPaymentMethod =
+      | 'off'
+      | 'on_subscription'
+      | OtherString;
 
     export namespace PaymentMethodOptions {
       export interface AcssDebit {
@@ -3059,15 +3101,16 @@ export namespace SubscriptionCreateParams {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace MandateOptions {
-          export type TransactionType = 'business' | 'personal';
+          export type TransactionType = 'business' | 'personal' | OtherString;
         }
       }
 
       export namespace Bancontact {
-        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
       }
 
       export namespace Card {
@@ -3103,10 +3146,14 @@ export namespace SubscriptionCreateParams {
           | 'unknown'
           | 'visa';
 
-        export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+        export type RequestThreeDSecure =
+          | 'any'
+          | 'automatic'
+          | 'challenge'
+          | OtherString;
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
         }
       }
 
@@ -3158,7 +3205,8 @@ export namespace SubscriptionCreateParams {
             | 'retail'
             | 'salary'
             | 'tax'
-            | 'utility';
+            | 'utility'
+            | OtherString;
         }
       }
 
@@ -3186,14 +3234,15 @@ export namespace SubscriptionCreateParams {
         }
 
         export namespace MandateOptions {
-          export type AmountIncludesIof = 'always' | 'never';
+          export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
           export type PaymentSchedule =
             | 'halfyearly'
             | 'monthly'
             | 'quarterly'
             | 'weekly'
-            | 'yearly';
+            | 'yearly'
+            | OtherString;
         }
       }
 
@@ -3221,7 +3270,7 @@ export namespace SubscriptionCreateParams {
         }
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
         }
       }
 
@@ -3246,7 +3295,8 @@ export namespace SubscriptionCreateParams {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace FinancialConnections {
           export interface Filters {
@@ -3262,10 +3312,17 @@ export namespace SubscriptionCreateParams {
             | 'payment_method'
             | 'transactions';
 
-          export type Prefetch = 'balances' | 'ownership' | 'transactions';
+          export type Prefetch =
+            | 'balances'
+            | 'ownership'
+            | 'transactions'
+            | OtherString;
 
           export namespace Filters {
-            export type AccountSubcategory = 'checking' | 'savings';
+            export type AccountSubcategory =
+              | 'checking'
+              | 'savings'
+              | OtherString;
           }
         }
       }
@@ -3285,7 +3342,11 @@ export namespace SubscriptionCreateParams {
     }
 
     export namespace EndBehavior {
-      export type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
+      export type MissingPaymentMethod =
+        | 'cancel'
+        | 'create_invoice'
+        | 'pause'
+        | OtherString;
     }
   }
 }
@@ -3334,7 +3395,7 @@ export interface SubscriptionUpdateParams {
   cancel_at?: Emptyable<number | SubscriptionUpdateParams.CancelAt>;
 
   /**
-   * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
+   * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`).
    */
   cancel_at_period_end?: boolean;
 
@@ -3549,7 +3610,8 @@ export namespace SubscriptionUpdateParams {
   export type CancelAt =
     | 'max_billed_until'
     | 'max_period_end'
-    | 'min_period_end';
+    | 'min_period_end'
+    | OtherString;
 
   export interface CancellationDetails {
     /**
@@ -3716,7 +3778,8 @@ export namespace SubscriptionUpdateParams {
   export type ProrationBehavior =
     | 'always_invoice'
     | 'create_prorations'
-    | 'none';
+    | 'none'
+    | OtherString;
 
   export interface TransferData {
     /**
@@ -3820,11 +3883,15 @@ export namespace SubscriptionUpdateParams {
       }
 
       export namespace End {
-        export type Type = 'min_item_period_end' | 'timestamp';
+        export type Type = 'min_item_period_end' | 'timestamp' | OtherString;
       }
 
       export namespace Start {
-        export type Type = 'max_item_period_start' | 'now' | 'timestamp';
+        export type Type =
+          | 'max_item_period_start'
+          | 'now'
+          | 'timestamp'
+          | OtherString;
       }
     }
 
@@ -3847,7 +3914,7 @@ export namespace SubscriptionUpdateParams {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'self' | OtherString;
     }
   }
 
@@ -3894,7 +3961,7 @@ export namespace SubscriptionUpdateParams {
         interval_count?: number;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
         export type Interval = 'day' | 'month' | 'week' | 'year';
@@ -3911,7 +3978,8 @@ export namespace SubscriptionUpdateParams {
       | 'switched_service'
       | 'too_complex'
       | 'too_expensive'
-      | 'unused';
+      | 'unused'
+      | OtherString;
   }
 
   export namespace InvoiceSettings {
@@ -3940,7 +4008,7 @@ export namespace SubscriptionUpdateParams {
     }
 
     export namespace Issuer {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'self' | OtherString;
     }
   }
 
@@ -4084,6 +4152,7 @@ export namespace SubscriptionUpdateParams {
       | 'ach_debit'
       | 'acss_debit'
       | 'affirm'
+      | 'alipay'
       | 'amazon_pay'
       | 'au_becs_debit'
       | 'bacs_debit'
@@ -4105,6 +4174,7 @@ export namespace SubscriptionUpdateParams {
       | 'konbini'
       | 'kr_card'
       | 'link'
+      | 'mb_way'
       | 'multibanco'
       | 'naver_pay'
       | 'nz_bank_account'
@@ -4125,9 +4195,13 @@ export namespace SubscriptionUpdateParams {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
-      | 'wechat_pay';
+      | 'wechat_pay'
+      | OtherString;
 
-    export type SaveDefaultPaymentMethod = 'off' | 'on_subscription';
+    export type SaveDefaultPaymentMethod =
+      | 'off'
+      | 'on_subscription'
+      | OtherString;
 
     export namespace PaymentMethodOptions {
       export interface AcssDebit {
@@ -4231,15 +4305,16 @@ export namespace SubscriptionUpdateParams {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace MandateOptions {
-          export type TransactionType = 'business' | 'personal';
+          export type TransactionType = 'business' | 'personal' | OtherString;
         }
       }
 
       export namespace Bancontact {
-        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
       }
 
       export namespace Card {
@@ -4275,10 +4350,14 @@ export namespace SubscriptionUpdateParams {
           | 'unknown'
           | 'visa';
 
-        export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+        export type RequestThreeDSecure =
+          | 'any'
+          | 'automatic'
+          | 'challenge'
+          | OtherString;
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
         }
       }
 
@@ -4330,7 +4409,8 @@ export namespace SubscriptionUpdateParams {
             | 'retail'
             | 'salary'
             | 'tax'
-            | 'utility';
+            | 'utility'
+            | OtherString;
         }
       }
 
@@ -4358,14 +4438,15 @@ export namespace SubscriptionUpdateParams {
         }
 
         export namespace MandateOptions {
-          export type AmountIncludesIof = 'always' | 'never';
+          export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
           export type PaymentSchedule =
             | 'halfyearly'
             | 'monthly'
             | 'quarterly'
             | 'weekly'
-            | 'yearly';
+            | 'yearly'
+            | OtherString;
         }
       }
 
@@ -4393,7 +4474,7 @@ export namespace SubscriptionUpdateParams {
         }
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
         }
       }
 
@@ -4418,7 +4499,8 @@ export namespace SubscriptionUpdateParams {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace FinancialConnections {
           export interface Filters {
@@ -4434,10 +4516,17 @@ export namespace SubscriptionUpdateParams {
             | 'payment_method'
             | 'transactions';
 
-          export type Prefetch = 'balances' | 'ownership' | 'transactions';
+          export type Prefetch =
+            | 'balances'
+            | 'ownership'
+            | 'transactions'
+            | OtherString;
 
           export namespace Filters {
-            export type AccountSubcategory = 'checking' | 'savings';
+            export type AccountSubcategory =
+              | 'checking'
+              | 'savings'
+              | OtherString;
           }
         }
       }
@@ -4457,7 +4546,11 @@ export namespace SubscriptionUpdateParams {
     }
 
     export namespace EndBehavior {
-      export type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
+      export type MissingPaymentMethod =
+        | 'cancel'
+        | 'create_invoice'
+        | 'pause'
+        | OtherString;
     }
   }
 }
@@ -4542,7 +4635,8 @@ export namespace SubscriptionListParams {
     | 'past_due'
     | 'paused'
     | 'trialing'
-    | 'unpaid';
+    | 'unpaid'
+    | OtherString;
 }
 export interface SubscriptionCancelParams {
   /**
@@ -4587,7 +4681,8 @@ export namespace SubscriptionCancelParams {
       | 'switched_service'
       | 'too_complex'
       | 'too_expensive'
-      | 'unused';
+      | 'unused'
+      | OtherString;
   }
 }
 export interface SubscriptionDeleteDiscountParams {}
@@ -4650,12 +4745,13 @@ export interface SubscriptionResumeParams {
   proration_date?: number;
 }
 export namespace SubscriptionResumeParams {
-  export type BillingCycleAnchor = 'now' | 'unchanged';
+  export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
   export type ProrationBehavior =
     | 'always_invoice'
     | 'create_prorations'
-    | 'none';
+    | 'none'
+    | OtherString;
 }
 export interface SubscriptionSearchParams {
   /**

@@ -2,7 +2,7 @@
 
 import {Plan} from './Plans.js';
 import {Charge} from './../Charges.js';
-import {Metadata} from '../../shared.js';
+import {Metadata, OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface Hold {
   /**
@@ -83,9 +83,9 @@ export interface Hold {
   source_type: Hold.SourceType;
 }
 export namespace Hold {
-  export type CreatedBy = 'application' | 'stripe';
+  export type CreatedBy = 'application' | 'stripe' | OtherString;
 
-  export type Reason = 'charge' | 'standalone';
+  export type Reason = 'charge' | 'standalone' | OtherString;
 
   export interface ReleaseDetail {
     /**
@@ -111,5 +111,5 @@ export namespace Hold {
     scheduled_release: number | null;
   }
 
-  export type SourceType = 'bank_account' | 'card' | 'fpx';
+  export type SourceType = 'bank_account' | 'card' | 'fpx' | OtherString;
 }

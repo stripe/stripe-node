@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class MeterEventAdjustmentResource extends StripeResource {
@@ -58,7 +59,7 @@ export namespace MeterEventAdjustment {
     identifier: string | null;
   }
 
-  export type Status = 'complete' | 'pending';
+  export type Status = 'complete' | 'pending' | OtherString;
 }
 export namespace Billing {
   export interface MeterEventAdjustmentCreateParams {
