@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   PaginationParams,
   Metadata,
 } from '../shared.js';
@@ -301,12 +302,17 @@ export namespace WebhookEndpointCreateParams {
     | 'financial_connections.account.created'
     | 'financial_connections.account.deactivated'
     | 'financial_connections.account.disconnected'
+    | 'financial_connections.account.expected_deactivation_date_updated'
     | 'financial_connections.account.reactivated'
     | 'financial_connections.account.refreshed_balance'
     | 'financial_connections.account.refreshed_inferred_balances'
     | 'financial_connections.account.refreshed_ownership'
     | 'financial_connections.account.refreshed_transactions'
+    | 'financial_connections.account.supported_payment_method_types_updated'
     | 'financial_connections.account.upcoming_account_number_expiry'
+    | 'financial_connections.account.upcoming_deactivation'
+    | 'financial_connections.authorization.expected_deactivation_date_updated'
+    | 'financial_connections.authorization.upcoming_deactivation'
     | 'financial_connections.session.updated'
     | 'fx_quote.expired'
     | 'identity.verification_session.canceled'
@@ -500,7 +506,8 @@ export namespace WebhookEndpointCreateParams {
     | 'treasury.received_credit.created'
     | 'treasury.received_credit.failed'
     | 'treasury.received_credit.succeeded'
-    | 'treasury.received_debit.created';
+    | 'treasury.received_debit.created'
+    | OtherString;
 
   export type ApiVersion =
     | '2011-01-01'
@@ -627,7 +634,8 @@ export namespace WebhookEndpointCreateParams {
     | '2026-03-25.dahlia'
     | '2026-04-22.dahlia'
     | '2026-05-27.dahlia'
-    | '2026-06-24.dahlia';
+    | '2026-06-24.dahlia'
+    | '2026-07-29.dahlia';
 }
 export interface WebhookEndpointRetrieveParams {
   /**
@@ -768,12 +776,17 @@ export namespace WebhookEndpointUpdateParams {
     | 'financial_connections.account.created'
     | 'financial_connections.account.deactivated'
     | 'financial_connections.account.disconnected'
+    | 'financial_connections.account.expected_deactivation_date_updated'
     | 'financial_connections.account.reactivated'
     | 'financial_connections.account.refreshed_balance'
     | 'financial_connections.account.refreshed_inferred_balances'
     | 'financial_connections.account.refreshed_ownership'
     | 'financial_connections.account.refreshed_transactions'
+    | 'financial_connections.account.supported_payment_method_types_updated'
     | 'financial_connections.account.upcoming_account_number_expiry'
+    | 'financial_connections.account.upcoming_deactivation'
+    | 'financial_connections.authorization.expected_deactivation_date_updated'
+    | 'financial_connections.authorization.upcoming_deactivation'
     | 'financial_connections.session.updated'
     | 'fx_quote.expired'
     | 'identity.verification_session.canceled'
@@ -967,7 +980,8 @@ export namespace WebhookEndpointUpdateParams {
     | 'treasury.received_credit.created'
     | 'treasury.received_credit.failed'
     | 'treasury.received_credit.succeeded'
-    | 'treasury.received_debit.created';
+    | 'treasury.received_debit.created'
+    | OtherString;
 }
 export interface WebhookEndpointListParams extends PaginationParams {
   /**

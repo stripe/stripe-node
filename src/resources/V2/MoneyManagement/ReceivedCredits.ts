@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ReceivedCreditResource extends StripeResource {
@@ -130,7 +131,7 @@ export namespace ReceivedCredit {
     /**
      * The ID of the payout object that originated the ReceivedCredit.
      */
-    payout_v1?: string;
+    payout?: string;
 
     /**
      * The ID of the v1 transfer object that originated the ReceivedCredit.
@@ -175,7 +176,12 @@ export namespace ReceivedCredit {
     us_bank_account?: BankTransfer.UsBankAccount;
   }
 
-  export type Status = 'failed' | 'pending' | 'returned' | 'succeeded';
+  export type Status =
+    | 'failed'
+    | 'pending'
+    | 'returned'
+    | 'succeeded'
+    | OtherString;
 
   export interface StatusDetails {
     /**
@@ -209,14 +215,20 @@ export namespace ReceivedCredit {
     succeeded_at?: string;
   }
 
-  export type Type = 'balance_transfer' | 'bank_transfer' | 'external_credit';
+  export type Type =
+    | 'balance_transfer'
+    | 'bank_transfer'
+    | 'external_credit'
+    | OtherString;
 
   export namespace BalanceTransfer {
     export type Type =
       | 'outbound_payment'
       | 'outbound_transfer'
+      | 'payout'
       | 'transfer'
-      | 'payout_v1';
+      | 'payout_v1'
+      | OtherString;
   }
 
   export namespace BankTransfer {
@@ -250,7 +262,8 @@ export namespace ReceivedCredit {
     export type OriginType =
       | 'gb_bank_account'
       | 'sepa_bank_account'
-      | 'us_bank_account';
+      | 'us_bank_account'
+      | OtherString;
 
     export interface SepaBankAccount {
       /**
@@ -312,11 +325,11 @@ export namespace ReceivedCredit {
     }
 
     export namespace GbBankAccount {
-      export type Network = 'chaps' | 'fps';
+      export type Network = 'chaps' | 'fps' | OtherString;
     }
 
     export namespace UsBankAccount {
-      export type Network = 'ach' | 'rtp' | 'us_domestic_wire';
+      export type Network = 'ach' | 'rtp' | 'us_domestic_wire' | OtherString;
     }
   }
 
@@ -340,7 +353,8 @@ export namespace ReceivedCredit {
         | 'capability_inactive'
         | 'currency_unsupported_on_financial_address'
         | 'financial_address_inactive'
-        | 'stripe_rejected';
+        | 'stripe_rejected'
+        | OtherString;
     }
   }
 }

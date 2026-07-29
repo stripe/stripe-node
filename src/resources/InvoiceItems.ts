@@ -12,6 +12,7 @@ import {
   Emptyable,
   MetadataParam,
   Decimal,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -659,10 +660,10 @@ export namespace InvoiceItemCreateParams {
         interval_count: number;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -860,10 +861,10 @@ export namespace InvoiceItemUpdateParams {
         interval_count: number;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams} from '../../shared.js';
+import {PaginationParams, OtherString} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class InstitutionResource extends StripeResource {
@@ -92,7 +92,7 @@ export namespace Institution {
     transactions: Features.Transactions;
   }
 
-  export type Status = 'active' | 'degraded' | 'inactive';
+  export type Status = 'active' | 'degraded' | 'inactive' | OtherString;
 
   export namespace Features {
     export interface Balances {

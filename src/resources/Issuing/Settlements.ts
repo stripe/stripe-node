@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Metadata} from '../../shared.js';
+import {Metadata, OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface Settlement {
   /**
@@ -101,5 +101,5 @@ export interface Settlement {
 export namespace Settlement {
   export type Network = 'maestro' | 'mastercard' | 'visa';
 
-  export type Status = 'complete' | 'pending';
+  export type Status = 'complete' | 'pending' | OtherString;
 }

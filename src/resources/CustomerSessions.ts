@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {Customer} from './Customers.js';
+import {OtherString} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class CustomerSessionResource extends StripeResource {
@@ -182,9 +183,10 @@ export namespace CustomerSession {
         export type PaymentMethodAllowRedisplayFilter =
           | 'always'
           | 'limited'
-          | 'unspecified';
+          | 'unspecified'
+          | OtherString;
 
-        export type PaymentMethodRemove = 'disabled' | 'enabled';
+        export type PaymentMethodRemove = 'disabled' | 'enabled' | OtherString;
       }
     }
 
@@ -230,18 +232,23 @@ export namespace CustomerSession {
         export type PaymentMethodAllowRedisplayFilter =
           | 'always'
           | 'limited'
-          | 'unspecified';
+          | 'unspecified'
+          | OtherString;
 
-        export type PaymentMethodRedisplay = 'disabled' | 'enabled';
+        export type PaymentMethodRedisplay =
+          | 'disabled'
+          | 'enabled'
+          | OtherString;
 
-        export type PaymentMethodRemove = 'disabled' | 'enabled';
+        export type PaymentMethodRemove = 'disabled' | 'enabled' | OtherString;
 
-        export type PaymentMethodSave = 'disabled' | 'enabled';
+        export type PaymentMethodSave = 'disabled' | 'enabled' | OtherString;
 
         export type PaymentMethodSaveAllowRedisplayOverride =
           | 'always'
           | 'limited'
-          | 'unspecified';
+          | 'unspecified'
+          | OtherString;
       }
     }
 
@@ -292,15 +299,22 @@ export namespace CustomerSession {
         export type PaymentMethodAllowRedisplayFilter =
           | 'always'
           | 'limited'
-          | 'unspecified';
+          | 'unspecified'
+          | OtherString;
 
-        export type PaymentMethodRedisplay = 'disabled' | 'enabled';
+        export type PaymentMethodRedisplay =
+          | 'disabled'
+          | 'enabled'
+          | OtherString;
 
-        export type PaymentMethodRemove = 'disabled' | 'enabled';
+        export type PaymentMethodRemove = 'disabled' | 'enabled' | OtherString;
 
-        export type PaymentMethodSave = 'disabled' | 'enabled';
+        export type PaymentMethodSave = 'disabled' | 'enabled' | OtherString;
 
-        export type PaymentMethodSaveUsage = 'off_session' | 'on_session';
+        export type PaymentMethodSaveUsage =
+          | 'off_session'
+          | 'on_session'
+          | OtherString;
       }
     }
 
@@ -322,9 +336,9 @@ export namespace CustomerSession {
       }
 
       export namespace Features {
-        export type TaxIdRedisplay = 'disabled' | 'enabled';
+        export type TaxIdRedisplay = 'disabled' | 'enabled' | OtherString;
 
-        export type TaxIdSave = 'disabled' | 'enabled';
+        export type TaxIdSave = 'disabled' | 'enabled' | OtherString;
       }
     }
   }
@@ -469,9 +483,10 @@ export namespace CustomerSessionCreateParams {
         export type PaymentMethodAllowRedisplayFilter =
           | 'always'
           | 'limited'
-          | 'unspecified';
+          | 'unspecified'
+          | OtherString;
 
-        export type PaymentMethodRemove = 'disabled' | 'enabled';
+        export type PaymentMethodRemove = 'disabled' | 'enabled' | OtherString;
       }
     }
 
@@ -517,18 +532,23 @@ export namespace CustomerSessionCreateParams {
         export type PaymentMethodAllowRedisplayFilter =
           | 'always'
           | 'limited'
-          | 'unspecified';
+          | 'unspecified'
+          | OtherString;
 
-        export type PaymentMethodRedisplay = 'disabled' | 'enabled';
+        export type PaymentMethodRedisplay =
+          | 'disabled'
+          | 'enabled'
+          | OtherString;
 
-        export type PaymentMethodRemove = 'disabled' | 'enabled';
+        export type PaymentMethodRemove = 'disabled' | 'enabled' | OtherString;
 
-        export type PaymentMethodSave = 'disabled' | 'enabled';
+        export type PaymentMethodSave = 'disabled' | 'enabled' | OtherString;
 
         export type PaymentMethodSaveAllowRedisplayOverride =
           | 'always'
           | 'limited'
-          | 'unspecified';
+          | 'unspecified'
+          | OtherString;
       }
     }
 
@@ -579,15 +599,22 @@ export namespace CustomerSessionCreateParams {
         export type PaymentMethodAllowRedisplayFilter =
           | 'always'
           | 'limited'
-          | 'unspecified';
+          | 'unspecified'
+          | OtherString;
 
-        export type PaymentMethodRedisplay = 'disabled' | 'enabled';
+        export type PaymentMethodRedisplay =
+          | 'disabled'
+          | 'enabled'
+          | OtherString;
 
-        export type PaymentMethodRemove = 'disabled' | 'enabled';
+        export type PaymentMethodRemove = 'disabled' | 'enabled' | OtherString;
 
-        export type PaymentMethodSave = 'disabled' | 'enabled';
+        export type PaymentMethodSave = 'disabled' | 'enabled' | OtherString;
 
-        export type PaymentMethodSaveUsage = 'off_session' | 'on_session';
+        export type PaymentMethodSaveUsage =
+          | 'off_session'
+          | 'on_session'
+          | OtherString;
       }
     }
 
@@ -609,9 +636,9 @@ export namespace CustomerSessionCreateParams {
       }
 
       export namespace Features {
-        export type TaxIdRedisplay = 'disabled' | 'enabled';
+        export type TaxIdRedisplay = 'disabled' | 'enabled' | OtherString;
 
-        export type TaxIdSave = 'disabled' | 'enabled';
+        export type TaxIdSave = 'disabled' | 'enabled' | OtherString;
       }
     }
   }

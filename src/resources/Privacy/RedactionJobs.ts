@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {RedactionJobValidationError} from './RedactionJobValidationErrors.js';
-import {PaginationParams} from '../../shared.js';
+import {OtherString, PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../../lib.js';
 
 export class RedactionJobResource extends StripeResource {
@@ -240,9 +240,10 @@ export namespace RedactionJob {
     | 'ready'
     | 'redacting'
     | 'succeeded'
-    | 'validating';
+    | 'validating'
+    | OtherString;
 
-  export type ValidationBehavior = 'error' | 'fix';
+  export type ValidationBehavior = 'error' | 'fix' | OtherString;
 }
 export namespace Privacy {
   export interface RedactionJobCreateParams {
@@ -285,7 +286,7 @@ export namespace Privacy {
       setup_intents?: Array<string>;
     }
 
-    export type ValidationBehavior = 'error' | 'fix';
+    export type ValidationBehavior = 'error' | 'fix' | OtherString;
   }
 }
 export namespace Privacy {
@@ -310,7 +311,7 @@ export namespace Privacy {
   }
 
   export namespace RedactionJobUpdateParams {
-    export type ValidationBehavior = 'error' | 'fix';
+    export type ValidationBehavior = 'error' | 'fix' | OtherString;
   }
 }
 export namespace Privacy {
@@ -335,7 +336,8 @@ export namespace Privacy {
       | 'ready'
       | 'redacting'
       | 'succeeded'
-      | 'validating';
+      | 'validating'
+      | OtherString;
   }
 }
 export namespace Privacy {

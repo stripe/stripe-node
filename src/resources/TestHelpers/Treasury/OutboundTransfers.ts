@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {OutboundTransfer} from './../../Treasury/OutboundTransfers.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class OutboundTransferResource extends StripeResource {
@@ -112,7 +113,7 @@ export namespace TestHelpers {
           trace_id: string;
         }
 
-        export type Type = 'ach' | 'us_domestic_wire';
+        export type Type = 'ach' | 'us_domestic_wire' | OtherString;
 
         export interface UsDomesticWire {
           /**
@@ -187,7 +188,8 @@ export namespace TestHelpers {
           | 'invalid_account_number'
           | 'invalid_currency'
           | 'no_account'
-          | 'other';
+          | 'other'
+          | OtherString;
       }
     }
   }

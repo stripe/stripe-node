@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams} from '../../shared.js';
+import {PaginationParams, OtherString} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class FinancingTransactionResource extends StripeResource {
@@ -110,7 +110,7 @@ export namespace FinancingTransaction {
     fee_amount: number;
 
     /**
-     * The linked payment for the transaction. This field only applies to financing transactions of type `paydown` and reason `automatic_withholding`.
+     * The linked payment for the transaction. This field only applies to financing transactions of type `payment` and reason `automatic_withholding`.
      */
     linked_payment?: string;
 
@@ -136,7 +136,7 @@ export namespace FinancingTransaction {
     transaction?: Details.Transaction;
   }
 
-  export type Type = 'payment' | 'payout' | 'reversal';
+  export type Type = 'payment' | 'payout' | 'reversal' | OtherString;
 
   export namespace Details {
     export type Reason =
@@ -147,7 +147,8 @@ export namespace FinancingTransaction {
       | 'financing_cancellation'
       | 'refill'
       | 'requested_by_user'
-      | 'user_initiated';
+      | 'user_initiated'
+      | OtherString;
 
     export interface Transaction {
       /**
@@ -173,7 +174,7 @@ export namespace Capital {
 export namespace Capital {
   export interface FinancingTransactionListParams extends PaginationParams {
     /**
-     * For transactions of type `paydown` and reason `automatic_withholding` only, only returns transactions that were created as a result of this charge.
+     * For transactions of type `payment` and reason `automatic_withholding` only, only returns transactions that were created as a result of this charge.
      */
     charge?: string;
 
@@ -193,7 +194,7 @@ export namespace Capital {
     reversed_transaction?: string;
 
     /**
-     * For transactions of type `paydown` and reason `automatic_withholding` only, only returns transactions that were created as a result of this Treasury Transaction.
+     * For transactions of type `payment` and reason `automatic_withholding` only, only returns transactions that were created as a result of this Treasury Transaction.
      */
     treasury_transaction?: string;
   }

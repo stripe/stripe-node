@@ -1,7 +1,12 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams, MetadataParam, Metadata} from '../../shared.js';
+import {
+  PaginationParams,
+  MetadataParam,
+  OtherString,
+  Metadata,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class CreditUnderwritingRecordResource extends StripeResource {
@@ -181,7 +186,7 @@ export namespace CreditUnderwritingRecord {
     submitted_at: number;
   }
 
-  export type CreatedFrom = 'application' | 'proactive_review';
+  export type CreatedFrom = 'application' | 'proactive_review' | OtherString;
 
   export interface CreditUser {
     /**
@@ -235,9 +240,17 @@ export namespace CreditUnderwritingRecord {
   }
 
   export namespace Application {
-    export type ApplicationMethod = 'in_person' | 'mail' | 'online' | 'phone';
+    export type ApplicationMethod =
+      | 'in_person'
+      | 'mail'
+      | 'online'
+      | 'phone'
+      | OtherString;
 
-    export type Purpose = 'credit_limit_increase' | 'credit_line_opening';
+    export type Purpose =
+      | 'credit_limit_increase'
+      | 'credit_line_opening'
+      | OtherString;
   }
 
   export namespace Decision {
@@ -306,7 +319,8 @@ export namespace CreditUnderwritingRecord {
       | 'credit_limit_decreased'
       | 'credit_line_closed'
       | 'no_changes'
-      | 'withdrawn_by_applicant';
+      | 'withdrawn_by_applicant'
+      | OtherString;
 
     export namespace ApplicationRejected {
       export type Reason =
@@ -372,7 +386,8 @@ export namespace CreditUnderwritingRecord {
         | 'unable_to_verify_identity'
         | 'unable_to_verify_income_or_revenue'
         | 'unprofitable'
-        | 'unsupportable_business_type';
+        | 'unsupportable_business_type'
+        | OtherString;
     }
 
     export namespace CreditLimitDecreased {
@@ -447,7 +462,8 @@ export namespace CreditUnderwritingRecord {
         | 'unable_to_verify_identity'
         | 'unable_to_verify_income_or_revenue'
         | 'unprofitable'
-        | 'unsupportable_business_type';
+        | 'unsupportable_business_type'
+        | OtherString;
     }
 
     export namespace CreditLineClosed {
@@ -522,7 +538,8 @@ export namespace CreditUnderwritingRecord {
         | 'unable_to_verify_identity'
         | 'unable_to_verify_income_or_revenue'
         | 'unprofitable'
-        | 'unsupportable_business_type';
+        | 'unsupportable_business_type'
+        | OtherString;
     }
   }
 
@@ -534,7 +551,8 @@ export namespace CreditUnderwritingRecord {
       | 'credit_limit_decreased'
       | 'credit_line_closed'
       | 'no_changes'
-      | 'withdrawn_by_applicant';
+      | 'withdrawn_by_applicant'
+      | OtherString;
   }
 }
 export namespace Issuing {
@@ -666,9 +684,17 @@ export namespace Issuing {
     }
 
     export namespace Application {
-      export type ApplicationMethod = 'in_person' | 'mail' | 'online' | 'phone';
+      export type ApplicationMethod =
+        | 'in_person'
+        | 'mail'
+        | 'online'
+        | 'phone'
+        | OtherString;
 
-      export type Purpose = 'credit_limit_increase' | 'credit_line_opening';
+      export type Purpose =
+        | 'credit_limit_increase'
+        | 'credit_line_opening'
+        | OtherString;
     }
 
     export namespace Decision {
@@ -737,7 +763,8 @@ export namespace Issuing {
         | 'credit_limit_decreased'
         | 'credit_line_closed'
         | 'no_changes'
-        | 'withdrawn_by_applicant';
+        | 'withdrawn_by_applicant'
+        | OtherString;
 
       export namespace ApplicationRejected {
         export type Reason =
@@ -803,7 +830,8 @@ export namespace Issuing {
           | 'unable_to_verify_identity'
           | 'unable_to_verify_income_or_revenue'
           | 'unprofitable'
-          | 'unsupportable_business_type';
+          | 'unsupportable_business_type'
+          | OtherString;
       }
 
       export namespace CreditLimitDecreased {
@@ -878,7 +906,8 @@ export namespace Issuing {
           | 'unable_to_verify_identity'
           | 'unable_to_verify_income_or_revenue'
           | 'unprofitable'
-          | 'unsupportable_business_type';
+          | 'unsupportable_business_type'
+          | OtherString;
       }
 
       export namespace CreditLineClosed {
@@ -953,7 +982,8 @@ export namespace Issuing {
           | 'unable_to_verify_identity'
           | 'unable_to_verify_income_or_revenue'
           | 'unprofitable'
-          | 'unsupportable_business_type';
+          | 'unsupportable_business_type'
+          | OtherString;
       }
     }
 
@@ -965,7 +995,8 @@ export namespace Issuing {
         | 'credit_limit_decreased'
         | 'credit_line_closed'
         | 'no_changes'
-        | 'withdrawn_by_applicant';
+        | 'withdrawn_by_applicant'
+        | OtherString;
     }
   }
 }
@@ -1023,9 +1054,17 @@ export namespace Issuing {
     }
 
     export namespace Application {
-      export type ApplicationMethod = 'in_person' | 'mail' | 'online' | 'phone';
+      export type ApplicationMethod =
+        | 'in_person'
+        | 'mail'
+        | 'online'
+        | 'phone'
+        | OtherString;
 
-      export type Purpose = 'credit_limit_increase' | 'credit_line_opening';
+      export type Purpose =
+        | 'credit_limit_increase'
+        | 'credit_line_opening'
+        | OtherString;
     }
   }
 }
@@ -1165,7 +1204,8 @@ export namespace Issuing {
         | 'credit_limit_approved'
         | 'credit_limit_decreased'
         | 'credit_line_closed'
-        | 'no_changes';
+        | 'no_changes'
+        | OtherString;
 
       export namespace CreditLimitDecreased {
         export type Reason =
@@ -1239,7 +1279,8 @@ export namespace Issuing {
           | 'unable_to_verify_identity'
           | 'unable_to_verify_income_or_revenue'
           | 'unprofitable'
-          | 'unsupportable_business_type';
+          | 'unsupportable_business_type'
+          | OtherString;
       }
 
       export namespace CreditLineClosed {
@@ -1314,7 +1355,8 @@ export namespace Issuing {
           | 'unable_to_verify_identity'
           | 'unable_to_verify_income_or_revenue'
           | 'unprofitable'
-          | 'unsupportable_business_type';
+          | 'unsupportable_business_type'
+          | OtherString;
       }
     }
 
@@ -1326,7 +1368,8 @@ export namespace Issuing {
         | 'credit_limit_decreased'
         | 'credit_line_closed'
         | 'no_changes'
-        | 'withdrawn_by_applicant';
+        | 'withdrawn_by_applicant'
+        | OtherString;
     }
   }
 }
@@ -1422,7 +1465,8 @@ export namespace Issuing {
         | 'additional_information_requested'
         | 'application_rejected'
         | 'credit_limit_approved'
-        | 'withdrawn_by_applicant';
+        | 'withdrawn_by_applicant'
+        | OtherString;
 
       export namespace ApplicationRejected {
         export type Reason =
@@ -1488,7 +1532,8 @@ export namespace Issuing {
           | 'unable_to_verify_identity'
           | 'unable_to_verify_income_or_revenue'
           | 'unprofitable'
-          | 'unsupportable_business_type';
+          | 'unsupportable_business_type'
+          | OtherString;
       }
     }
 
@@ -1500,7 +1545,8 @@ export namespace Issuing {
         | 'credit_limit_decreased'
         | 'credit_line_closed'
         | 'no_changes'
-        | 'withdrawn_by_applicant';
+        | 'withdrawn_by_applicant'
+        | OtherString;
     }
   }
 }

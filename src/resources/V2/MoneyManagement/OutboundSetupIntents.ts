@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {PayoutMethod} from './PayoutMethods.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class OutboundSetupIntentResource extends StripeResource {
@@ -277,7 +278,11 @@ export namespace V2 {
           number: string;
         }
 
-        export type Type = 'bank_account' | 'card' | 'crypto_wallet';
+        export type Type =
+          | 'bank_account'
+          | 'card'
+          | 'crypto_wallet'
+          | OtherString;
 
         export namespace BankAccount {
           export type BankAccountType =
@@ -389,7 +394,11 @@ export namespace V2 {
           number?: string;
         }
 
-        export type Type = 'bank_account' | 'card' | 'crypto_wallet';
+        export type Type =
+          | 'bank_account'
+          | 'card'
+          | 'crypto_wallet'
+          | OtherString;
 
         export namespace BankAccount {
           export type BankAccountType =

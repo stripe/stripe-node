@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../../../shared.js';
 import {RequestOptions} from '../../../lib.js';
 export interface CollectionSettingVersion {
   /**
@@ -185,15 +186,16 @@ export namespace CollectionSettingVersion {
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type TransactionType = 'business' | 'personal';
+        export type TransactionType = 'business' | 'personal' | OtherString;
       }
     }
 
     export namespace Bancontact {
-      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
     }
 
     export namespace Card {
@@ -214,10 +216,14 @@ export namespace CollectionSettingVersion {
         description?: string;
       }
 
-      export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+      export type RequestThreeDSecure =
+        | 'any'
+        | 'automatic'
+        | 'challenge'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
@@ -247,10 +253,18 @@ export namespace CollectionSettingVersion {
           | 'gb_bank_transfer'
           | 'jp_bank_transfer'
           | 'mx_bank_transfer'
-          | 'us_bank_transfer';
+          | 'us_bank_transfer'
+          | OtherString;
 
         export namespace EuBankTransfer {
-          export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+          export type Country =
+            | 'BE'
+            | 'DE'
+            | 'ES'
+            | 'FR'
+            | 'IE'
+            | 'NL'
+            | OtherString;
         }
       }
     }
@@ -276,7 +290,8 @@ export namespace CollectionSettingVersion {
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace FinancialConnections {
         export interface Filters {
@@ -290,12 +305,17 @@ export namespace CollectionSettingVersion {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
-        export type Prefetch = 'balances' | 'ownership' | 'transactions';
+        export type Prefetch =
+          | 'balances'
+          | 'ownership'
+          | 'transactions'
+          | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
       }
     }

@@ -1,7 +1,12 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams, RangeQueryParam, Metadata} from '../../shared.js';
+import {
+  PaginationParams,
+  RangeQueryParam,
+  Metadata,
+  OtherString,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class FinancingOfferResource extends StripeResource {
@@ -182,7 +187,7 @@ export namespace FinancingOffer {
     | 'youlend_uk_mca'
     | 'youlend_us_mca';
 
-  export type FinancingType = 'cash_advance' | 'flex_loan';
+  export type FinancingType = 'cash_advance' | 'flex_loan' | OtherString;
 
   export interface OfferedTerms {
     /**
@@ -219,7 +224,7 @@ export namespace FinancingOffer {
     withhold_rate: number;
   }
 
-  export type ProductType = 'refill' | 'standard';
+  export type ProductType = 'refill' | 'standard' | OtherString;
 
   export type Status =
     | 'accepted'
@@ -231,7 +236,8 @@ export namespace FinancingOffer {
     | 'paid_out'
     | 'rejected'
     | 'replaced'
-    | 'undelivered';
+    | 'undelivered'
+    | OtherString;
 
   export type Type = 'cash_advance' | 'fixed_term_loan' | 'flex_loan';
 
@@ -239,7 +245,8 @@ export namespace FinancingOffer {
     export type CampaignType =
       | 'newly_eligible_user'
       | 'previously_eligible_user'
-      | 'repeat_user';
+      | 'repeat_user'
+      | OtherString;
   }
 }
 export namespace Capital {

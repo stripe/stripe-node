@@ -6,6 +6,7 @@ import {
   MetadataParam,
   Address,
   Emptyable,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -195,7 +196,7 @@ export namespace Cardholder {
     verification: Individual.Verification | null;
   }
 
-  export type PreferredLocale = 'de' | 'en' | 'es' | 'fr' | 'it';
+  export type PreferredLocale = 'de' | 'en' | 'es' | 'fr' | 'it' | OtherString;
 
   export interface Redaction {
     /**
@@ -258,9 +259,9 @@ export namespace Cardholder {
     spending_limits_currency: string | null;
   }
 
-  export type Status = 'active' | 'blocked' | 'inactive';
+  export type Status = 'active' | 'blocked' | 'inactive' | OtherString;
 
-  export type Type = 'company' | 'individual';
+  export type Type = 'company' | 'individual' | OtherString;
 
   export namespace Individual {
     export interface CardIssuing {
@@ -329,7 +330,7 @@ export namespace Cardholder {
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 
   export namespace Requirements {
@@ -337,7 +338,8 @@ export namespace Cardholder {
       | 'listed'
       | 'rejected.listed'
       | 'requirements.past_due'
-      | 'under_review';
+      | 'under_review'
+      | OtherString;
 
     export type PastDue =
       | 'company.tax_id'
@@ -348,7 +350,8 @@ export namespace Cardholder {
       | 'individual.dob.year'
       | 'individual.first_name'
       | 'individual.last_name'
-      | 'individual.verification.document';
+      | 'individual.verification.document'
+      | OtherString;
   }
 
   export namespace SpendingControls {
@@ -1271,7 +1274,8 @@ export namespace Cardholder {
         | 'monthly'
         | 'per_authorization'
         | 'weekly'
-        | 'yearly';
+        | 'yearly'
+        | OtherString;
     }
   }
 }
@@ -1382,7 +1386,13 @@ export namespace Issuing {
       verification?: Individual.Verification;
     }
 
-    export type PreferredLocale = 'de' | 'en' | 'es' | 'fr' | 'it';
+    export type PreferredLocale =
+      | 'de'
+      | 'en'
+      | 'es'
+      | 'fr'
+      | 'it'
+      | OtherString;
 
     export interface SpendingControls {
       /**
@@ -1426,9 +1436,9 @@ export namespace Issuing {
       spending_limits_currency?: string;
     }
 
-    export type Status = 'active' | 'inactive';
+    export type Status = 'active' | 'inactive' | OtherString;
 
-    export type Type = 'company' | 'individual';
+    export type Type = 'company' | 'individual' | OtherString;
 
     export namespace Billing {
       export interface Address {
@@ -2450,7 +2460,8 @@ export namespace Issuing {
           | 'monthly'
           | 'per_authorization'
           | 'weekly'
-          | 'yearly';
+          | 'yearly'
+          | OtherString;
       }
     }
   }
@@ -2494,6 +2505,11 @@ export namespace Issuing {
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
+
+    /**
+     * The cardholder's name. This will be printed on cards issued to them.
+     */
+    name?: string;
 
     /**
      * The cardholder's phone number. This is required for all cardholders who will be creating EU cards. See the [3D Secure documentation](https://docs.stripe.com/issuing/3d-secure) for more details.
@@ -2559,7 +2575,13 @@ export namespace Issuing {
       verification?: Individual.Verification;
     }
 
-    export type PreferredLocale = 'de' | 'en' | 'es' | 'fr' | 'it';
+    export type PreferredLocale =
+      | 'de'
+      | 'en'
+      | 'es'
+      | 'fr'
+      | 'it'
+      | OtherString;
 
     export interface SpendingControls {
       /**
@@ -2603,7 +2625,7 @@ export namespace Issuing {
       spending_limits_currency?: string;
     }
 
-    export type Status = 'active' | 'inactive';
+    export type Status = 'active' | 'inactive' | OtherString;
 
     export namespace Billing {
       export interface Address {
@@ -3625,7 +3647,8 @@ export namespace Issuing {
           | 'monthly'
           | 'per_authorization'
           | 'weekly'
-          | 'yearly';
+          | 'yearly'
+          | OtherString;
       }
     }
   }
@@ -3664,8 +3687,8 @@ export namespace Issuing {
   }
 
   export namespace CardholderListParams {
-    export type Status = 'active' | 'blocked' | 'inactive';
+    export type Status = 'active' | 'blocked' | 'inactive' | OtherString;
 
-    export type Type = 'company' | 'individual';
+    export type Type = 'company' | 'individual' | OtherString;
   }
 }

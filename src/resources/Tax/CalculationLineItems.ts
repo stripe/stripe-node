@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Metadata} from '../../shared.js';
+import {Metadata, OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface CalculationLineItem {
   /**
@@ -69,7 +69,7 @@ export interface CalculationLineItem {
   tax_code: string;
 }
 export namespace CalculationLineItem {
-  export type TaxBehavior = 'exclusive' | 'inclusive';
+  export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
 
   export interface TaxBreakdown {
     /**
@@ -157,10 +157,17 @@ export namespace CalculationLineItem {
       | 'reverse_charge'
       | 'standard_rated'
       | 'taxable_basis_reduced'
-      | 'zero_rated';
+      | 'zero_rated'
+      | OtherString;
 
     export namespace Jurisdiction {
-      export type Level = 'city' | 'country' | 'county' | 'district' | 'state';
+      export type Level =
+        | 'city'
+        | 'country'
+        | 'county'
+        | 'district'
+        | 'state'
+        | OtherString;
     }
 
     export namespace TaxRateDetails {
@@ -178,6 +185,8 @@ export namespace CalculationLineItem {
         | 'jct'
         | 'lease_tax'
         | 'luxury_tax'
+        | 'mass_transit_parking_tax'
+        | 'parking_tax'
         | 'pst'
         | 'qst'
         | 'resort_tax'

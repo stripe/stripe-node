@@ -5,6 +5,7 @@ import {AccountPerson} from './../../../V2/Core/AccountPersons.js';
 import {
   Address,
   MetadataParam,
+  OtherString,
   Decimal,
   JapanAddressParam,
 } from '../../../../shared.js';
@@ -438,9 +439,9 @@ export namespace V2 {
           value: string;
         }
 
-        export type LegalGender = 'female' | 'male';
+        export type LegalGender = 'female' | 'male' | OtherString;
 
-        export type PoliticalExposure = 'existing' | 'none';
+        export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
         export interface Relationship {
           /**
@@ -699,7 +700,8 @@ export namespace V2 {
             | 'us_ssn'
             | 'us_ssn_last_4'
             | 'uy_dni'
-            | 'za_id';
+            | 'za_id'
+            | OtherString;
         }
 
         export namespace ScriptAddresses {
@@ -1042,9 +1044,9 @@ export namespace V2 {
           value: string;
         }
 
-        export type LegalGender = 'female' | 'male';
+        export type LegalGender = 'female' | 'male' | OtherString;
 
-        export type PoliticalExposure = 'existing' | 'none';
+        export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
         export interface Relationship {
           /**
@@ -1303,7 +1305,8 @@ export namespace V2 {
             | 'us_ssn'
             | 'us_ssn_last_4'
             | 'uy_dni'
-            | 'za_id';
+            | 'za_id'
+            | OtherString;
         }
 
         export namespace ScriptNames {

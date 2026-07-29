@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, Metadata} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class OutboundPaymentResource extends StripeResource {
@@ -296,7 +296,7 @@ export namespace OutboundPayment {
   }
 
   export namespace DeliveryOptions {
-    export type BankAccount = 'automatic' | 'local' | 'wire';
+    export type BankAccount = 'automatic' | 'local' | 'wire' | OtherString;
   }
 
   export namespace RecipientNotification {
@@ -335,7 +335,8 @@ export namespace OutboundPayment {
         | 'payout_method_unsupported'
         | 'payout_method_usage_frequency_limit_exceeded'
         | 'review_rejected'
-        | 'unknown_failure';
+        | 'unknown_failure'
+        | OtherString;
     }
 
     export namespace Returned {
@@ -350,12 +351,13 @@ export namespace OutboundPayment {
         | 'payout_method_invalid_account_number'
         | 'payout_method_restricted'
         | 'recalled'
-        | 'unknown_failure';
+        | 'unknown_failure'
+        | OtherString;
     }
   }
 
   export namespace TraceId {
-    export type Status = 'pending' | 'supported' | 'unsupported';
+    export type Status = 'pending' | 'supported' | 'unsupported' | OtherString;
   }
 }
 export namespace V2 {
@@ -459,7 +461,7 @@ export namespace V2 {
       }
 
       export namespace DeliveryOptions {
-        export type BankAccount = 'automatic' | 'local' | 'wire';
+        export type BankAccount = 'automatic' | 'local' | 'wire' | OtherString;
       }
 
       export namespace RecipientNotification {

@@ -6,7 +6,7 @@ import {Subscription} from './Subscriptions.js';
 import {Price} from './Prices.js';
 import {TaxRate} from './TaxRates.js';
 import * as Billing from './Billing/index.js';
-import {Metadata, Decimal} from '../shared.js';
+import {Metadata, Decimal, OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface InvoiceLineItem {
   /**
@@ -310,7 +310,10 @@ export namespace InvoiceLineItem {
       subscription_item: string;
     }
 
-    export type Type = 'invoice_item_details' | 'subscription_item_details';
+    export type Type =
+      | 'invoice_item_details'
+      | 'subscription_item_details'
+      | OtherString;
 
     export namespace InvoiceItemDetails {
       export interface ProrationDetails {
@@ -360,7 +363,11 @@ export namespace InvoiceLineItem {
   }
 
   export namespace PretaxCreditAmount {
-    export type Type = 'credit_balance_transaction' | 'discount' | 'margin';
+    export type Type =
+      | 'credit_balance_transaction'
+      | 'discount'
+      | 'margin'
+      | OtherString;
   }
 
   export namespace Pricing {
@@ -403,6 +410,7 @@ export namespace InvoiceLineItem {
       | 'reverse_charge'
       | 'standard_rated'
       | 'taxable_basis_reduced'
-      | 'zero_rated';
+      | 'zero_rated'
+      | OtherString;
   }
 }

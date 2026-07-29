@@ -6,7 +6,7 @@ import {CreditReversal} from './CreditReversals.js';
 import {OutboundPayment} from './OutboundPayments.js';
 import {OutboundTransfer} from './OutboundTransfers.js';
 import {Payout} from './../Payouts.js';
-import {PaginationParams, Address} from '../../shared.js';
+import {PaginationParams, OtherString, Address} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class ReceivedCreditResource extends StripeResource {
@@ -128,7 +128,8 @@ export namespace ReceivedCredit {
     | 'account_closed'
     | 'account_frozen'
     | 'international_transaction'
-    | 'other';
+    | 'other'
+    | OtherString;
 
   export interface InitiatingPaymentMethodDetails {
     /**
@@ -185,7 +186,12 @@ export namespace ReceivedCredit {
     source_flow_type: string | null;
   }
 
-  export type Network = 'ach' | 'card' | 'stripe' | 'us_domestic_wire';
+  export type Network =
+    | 'ach'
+    | 'card'
+    | 'stripe'
+    | 'us_domestic_wire'
+    | OtherString;
 
   export interface NetworkDetails {
     /**
@@ -211,7 +217,7 @@ export namespace ReceivedCredit {
     restricted_reason: ReversalDetails.RestrictedReason | null;
   }
 
-  export type Status = 'failed' | 'succeeded';
+  export type Status = 'failed' | 'succeeded' | OtherString;
 
   export namespace InitiatingPaymentMethodDetails {
     export interface BillingDetails {
@@ -245,7 +251,8 @@ export namespace ReceivedCredit {
       | 'financial_account'
       | 'issuing_card'
       | 'stripe'
-      | 'us_bank_account';
+      | 'us_bank_account'
+      | OtherString;
 
     export interface UsBankAccount {
       /**
@@ -314,7 +321,8 @@ export namespace ReceivedCredit {
         | 'other'
         | 'outbound_payment'
         | 'outbound_transfer'
-        | 'payout';
+        | 'payout'
+        | OtherString;
     }
   }
 
@@ -333,7 +341,8 @@ export namespace ReceivedCredit {
       | 'deadline_passed'
       | 'network_restricted'
       | 'other'
-      | 'source_flow_restricted';
+      | 'source_flow_restricted'
+      | OtherString;
   }
 }
 export namespace Treasury {
@@ -375,7 +384,7 @@ export namespace Treasury {
       source_flow_type: LinkedFlows.SourceFlowType;
     }
 
-    export type Status = 'failed' | 'succeeded';
+    export type Status = 'failed' | 'succeeded' | OtherString;
 
     export namespace LinkedFlows {
       export type SourceFlowType =
@@ -383,7 +392,8 @@ export namespace Treasury {
         | 'other'
         | 'outbound_payment'
         | 'outbound_transfer'
-        | 'payout';
+        | 'payout'
+        | OtherString;
     }
   }
 }

@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {ReceivedCredit} from './../../Treasury/ReceivedCredits.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class ReceivedCreditResource extends StripeResource {
@@ -65,7 +66,7 @@ export namespace TestHelpers {
     }
 
     export namespace ReceivedCreditCreateParams {
-      export type Network = 'ach' | 'us_domestic_wire';
+      export type Network = 'ach' | 'us_domestic_wire' | OtherString;
 
       export interface InitiatingPaymentMethodDetails {
         /**

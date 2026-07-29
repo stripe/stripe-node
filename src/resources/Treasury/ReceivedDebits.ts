@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Transaction} from './Transactions.js';
-import {PaginationParams, Address} from '../../shared.js';
+import {PaginationParams, OtherString, Address} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class ReceivedDebitResource extends StripeResource {
@@ -125,7 +125,8 @@ export namespace ReceivedDebit {
     | 'account_frozen'
     | 'insufficient_funds'
     | 'international_transaction'
-    | 'other';
+    | 'other'
+    | OtherString;
 
   export interface InitiatingPaymentMethodDetails {
     /**
@@ -187,7 +188,7 @@ export namespace ReceivedDebit {
     topup: string | null;
   }
 
-  export type Network = 'ach' | 'card' | 'stripe';
+  export type Network = 'ach' | 'card' | 'stripe' | OtherString;
 
   export interface NetworkDetails {
     /**
@@ -213,7 +214,7 @@ export namespace ReceivedDebit {
     restricted_reason: ReversalDetails.RestrictedReason | null;
   }
 
-  export type Status = 'failed' | 'succeeded';
+  export type Status = 'failed' | 'succeeded' | OtherString;
 
   export namespace InitiatingPaymentMethodDetails {
     export interface BillingDetails {
@@ -247,7 +248,8 @@ export namespace ReceivedDebit {
       | 'financial_account'
       | 'issuing_card'
       | 'stripe'
-      | 'us_bank_account';
+      | 'us_bank_account'
+      | OtherString;
 
     export interface UsBankAccount {
       /**
@@ -282,7 +284,8 @@ export namespace ReceivedDebit {
       | 'deadline_passed'
       | 'network_restricted'
       | 'other'
-      | 'source_flow_restricted';
+      | 'source_flow_restricted'
+      | OtherString;
   }
 }
 export namespace Treasury {
@@ -312,6 +315,6 @@ export namespace Treasury {
   }
 
   export namespace ReceivedDebitListParams {
-    export type Status = 'failed' | 'succeeded';
+    export type Status = 'failed' | 'succeeded' | OtherString;
   }
 }

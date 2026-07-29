@@ -9,6 +9,7 @@ import {
   ShippingAddressParam,
   PaginationParams,
   Metadata,
+  OtherString,
   Address,
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
@@ -286,7 +287,11 @@ export namespace Source {
     statement_descriptor?: string | null;
   }
 
-  export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+  export type AllowRedisplay =
+    | 'always'
+    | 'limited'
+    | 'unspecified'
+    | OtherString;
 
   export interface AuBecsDebit {
     bsb_number?: string | null;
@@ -800,7 +805,7 @@ export namespace Source {
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 
   export namespace SourceOrder {

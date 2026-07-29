@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class InboundTransferResource extends StripeResource {
@@ -100,7 +101,7 @@ export interface InboundTransfer {
   to: InboundTransfer.To;
 
   /**
-   * A list of history objects, representing changes in the state of the InboundTransfer.
+   * A list of history objects, representing changes in the state of the InboundTransfer. The most recent entry's type indicates the current status of the InboundTransfer.
    */
   transfer_history: Array<InboundTransfer.TransferHistory>;
 }
@@ -216,14 +217,15 @@ export namespace InboundTransfer {
 
     export interface BankDebitSucceeded {}
 
-    export type Level = 'canonical' | 'debug';
+    export type Level = 'canonical' | 'debug' | OtherString;
 
     export type Type =
       | 'bank_debit_failed'
       | 'bank_debit_processing'
       | 'bank_debit_queued'
       | 'bank_debit_returned'
-      | 'bank_debit_succeeded';
+      | 'bank_debit_succeeded'
+      | OtherString;
 
     export namespace BankDebitFailed {
       export type FailureReason =
@@ -231,7 +233,8 @@ export namespace InboundTransfer {
         | 'bank_account_not_found'
         | 'bank_debit_could_not_be_processed'
         | 'bank_debit_not_authorized'
-        | 'insufficient_funds';
+        | 'insufficient_funds'
+        | OtherString;
     }
 
     export namespace BankDebitReturned {
@@ -240,7 +243,8 @@ export namespace InboundTransfer {
         | 'bank_account_not_found'
         | 'bank_debit_could_not_be_processed'
         | 'bank_debit_not_authorized'
-        | 'insufficient_funds';
+        | 'insufficient_funds'
+        | OtherString;
     }
   }
 }

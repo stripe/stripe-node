@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../../StripeResource.js';
+import {OtherString} from '../../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 
 export class GbBankAccountResource extends StripeResource {
@@ -199,7 +200,7 @@ export namespace GbBankAccount {
   }
 
   export namespace AlternativeReference {
-    export type Type = 'external_account' | 'payment_method';
+    export type Type = 'external_account' | 'payment_method' | OtherString;
   }
 
   export namespace ConfirmationOfPayee {

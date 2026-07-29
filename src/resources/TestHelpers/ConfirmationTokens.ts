@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {ConfirmationToken} from './../ConfirmationTokens.js';
-import {MetadataParam, Emptyable, AddressParam} from '../../shared.js';
+import {
+  MetadataParam,
+  OtherString,
+  Emptyable,
+  AddressParam,
+} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class ConfirmationTokenResource extends StripeResource {
@@ -406,7 +411,7 @@ export namespace TestHelpers {
       card?: PaymentMethodOptions.Card;
     }
 
-    export type SetupFutureUsage = 'off_session' | 'on_session';
+    export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
 
     export interface Shipping {
       /**
@@ -449,7 +454,11 @@ export namespace TestHelpers {
 
       export interface Alipay {}
 
-      export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+      export type AllowRedisplay =
+        | 'always'
+        | 'limited'
+        | 'unspecified'
+        | OtherString;
 
       export interface Alma {}
 
@@ -778,7 +787,8 @@ export namespace TestHelpers {
         | 'upi'
         | 'us_bank_account'
         | 'wechat_pay'
-        | 'zip';
+        | 'zip'
+        | OtherString;
 
       export interface Upi {
         /**
@@ -862,14 +872,17 @@ export namespace TestHelpers {
           | 'bank_muamalat'
           | 'bank_of_china'
           | 'bank_rakyat'
+          | 'bnp_paribas'
           | 'bsn'
           | 'cimb'
+          | 'citibank'
           | 'deutsche_bank'
           | 'hong_leong_bank'
           | 'hsbc'
           | 'kfh'
           | 'maybank2e'
           | 'maybank2u'
+          | 'mbsb_bank'
           | 'ocbc'
           | 'pb_enterprise'
           | 'public_bank'
@@ -879,7 +892,13 @@ export namespace TestHelpers {
       }
 
       export namespace IdBankTransfer {
-        export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+        export type Bank =
+          | 'bca'
+          | 'bni'
+          | 'bri'
+          | 'cimb'
+          | 'permata'
+          | OtherString;
       }
 
       export namespace Ideal {
@@ -926,7 +945,7 @@ export namespace TestHelpers {
       }
 
       export namespace NaverPay {
-        export type Funding = 'card' | 'points';
+        export type Funding = 'card' | 'points' | OtherString;
       }
 
       export namespace P24 {
@@ -956,7 +975,8 @@ export namespace TestHelpers {
           | 'tmobile_usbugi_bankowe'
           | 'toyota_bank'
           | 'velobank'
-          | 'volkswagen_bank';
+          | 'volkswagen_bank'
+          | OtherString;
       }
 
       export namespace Rechnung {
@@ -979,7 +999,14 @@ export namespace TestHelpers {
       }
 
       export namespace Sofort {
-        export type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+        export type Country =
+          | 'AT'
+          | 'BE'
+          | 'DE'
+          | 'ES'
+          | 'IT'
+          | 'NL'
+          | OtherString;
       }
 
       export namespace Upi {
@@ -1006,14 +1033,14 @@ export namespace TestHelpers {
         }
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
         }
       }
 
       export namespace UsBankAccount {
-        export type AccountHolderType = 'company' | 'individual';
+        export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-        export type AccountType = 'checking' | 'savings';
+        export type AccountType = 'checking' | 'savings' | OtherString;
       }
     }
 
@@ -1054,7 +1081,11 @@ export namespace TestHelpers {
           }
 
           export namespace Plan {
-            export type Type = 'bonus' | 'fixed_count' | 'revolving';
+            export type Type =
+              | 'bonus'
+              | 'fixed_count'
+              | 'revolving'
+              | OtherString;
           }
         }
       }

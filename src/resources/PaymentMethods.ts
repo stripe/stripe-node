@@ -7,6 +7,7 @@ import {SetupAttempt} from './SetupAttempts.js';
 import {Charge} from './Charges.js';
 import {
   MetadataParam,
+  OtherString,
   Emptyable,
   AddressParam,
   PaginationParams,
@@ -101,7 +102,7 @@ export class PaymentMethodResource extends StripeResource {
     ) as any;
   }
   /**
-   * Detaches a PaymentMethod object from a Customer. After a PaymentMethod is detached, it can no longer be used for a payment or re-attached to a Customer.
+   * Detaches a PaymentMethod object from a Customer. Detachment is permanent and irreversible — once detached, a PaymentMethod can no longer be used for payments or re-attached to a Customer.
    */
   detach(
     id: string,
@@ -348,7 +349,11 @@ export namespace PaymentMethod {
 
   export interface Alipay {}
 
-  export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+  export type AllowRedisplay =
+    | 'always'
+    | 'limited'
+    | 'unspecified'
+    | OtherString;
 
   export interface Alma {}
 
@@ -662,7 +667,7 @@ export namespace PaymentMethod {
     account_holder_type: Fpx.AccountHolderType | null;
 
     /**
-     * The customer's bank, if provided. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, `pb_enterprise`, or `bank_of_china`.
+     * The customer's bank, if provided. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bnp_paribas`, `bank_rakyat`, `bsn`, `cimb`, `citibank`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, `mbsb_bank`, `pb_enterprise`, or `bank_of_china`.
      */
     bank: Fpx.Bank;
   }
@@ -1073,7 +1078,8 @@ export namespace PaymentMethod {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export interface Upi {
     /**
@@ -1185,7 +1191,7 @@ export namespace PaymentMethod {
       preferred: string | null;
     }
 
-    export type RegulatedStatus = 'regulated' | 'unregulated';
+    export type RegulatedStatus = 'regulated' | 'unregulated' | OtherString;
 
     export interface ThreeDSecureUsage {
       /**
@@ -1385,7 +1391,8 @@ export namespace PaymentMethod {
             | 'contactless_emv'
             | 'contactless_magstripe_mode'
             | 'magnetic_stripe_fallback'
-            | 'magnetic_stripe_track2';
+            | 'magnetic_stripe_track2'
+            | OtherString;
 
           export interface Receipt {
             /**
@@ -1446,7 +1453,8 @@ export namespace PaymentMethod {
               | 'checking'
               | 'credit'
               | 'prepaid'
-              | 'unknown';
+              | 'unknown'
+              | OtherString;
           }
 
           export namespace Wallet {
@@ -1454,7 +1462,8 @@ export namespace PaymentMethod {
               | 'apple_pay'
               | 'google_pay'
               | 'samsung_pay'
-              | 'unknown';
+              | 'unknown'
+              | OtherString;
           }
         }
       }
@@ -1556,7 +1565,8 @@ export namespace PaymentMethod {
       | 'contactless_emv'
       | 'contactless_magstripe_mode'
       | 'magnetic_stripe_fallback'
-      | 'magnetic_stripe_track2';
+      | 'magnetic_stripe_track2'
+      | OtherString;
 
     export interface Wallet {
       /**
@@ -1566,7 +1576,12 @@ export namespace PaymentMethod {
     }
 
     export namespace Wallet {
-      export type Type = 'apple_pay' | 'google_pay' | 'samsung_pay' | 'unknown';
+      export type Type =
+        | 'apple_pay'
+        | 'google_pay'
+        | 'samsung_pay'
+        | 'unknown'
+        | OtherString;
     }
   }
 
@@ -1628,14 +1643,17 @@ export namespace PaymentMethod {
       | 'bank_muamalat'
       | 'bank_of_china'
       | 'bank_rakyat'
+      | 'bnp_paribas'
       | 'bsn'
       | 'cimb'
+      | 'citibank'
       | 'deutsche_bank'
       | 'hong_leong_bank'
       | 'hsbc'
       | 'kfh'
       | 'maybank2e'
       | 'maybank2u'
+      | 'mbsb_bank'
       | 'ocbc'
       | 'pb_enterprise'
       | 'public_bank'
@@ -1645,7 +1663,7 @@ export namespace PaymentMethod {
   }
 
   export namespace IdBankTransfer {
-    export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+    export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata' | OtherString;
   }
 
   export namespace Ideal {
@@ -1713,7 +1731,8 @@ export namespace PaymentMethod {
       | 'contactless_emv'
       | 'contactless_magstripe_mode'
       | 'magnetic_stripe_fallback'
-      | 'magnetic_stripe_track2';
+      | 'magnetic_stripe_track2'
+      | OtherString;
   }
 
   export namespace Klarna {
@@ -1758,11 +1777,12 @@ export namespace PaymentMethod {
       | 'shinhyup'
       | 'suhyup'
       | 'tossbank'
-      | 'woori';
+      | 'woori'
+      | OtherString;
   }
 
   export namespace NaverPay {
-    export type Funding = 'card' | 'points';
+    export type Funding = 'card' | 'points' | OtherString;
   }
 
   export namespace P24 {
@@ -1792,7 +1812,8 @@ export namespace PaymentMethod {
       | 'tmobile_usbugi_bankowe'
       | 'toyota_bank'
       | 'velobank'
-      | 'volkswagen_bank';
+      | 'volkswagen_bank'
+      | OtherString;
   }
 
   export namespace Rechnung {
@@ -1815,7 +1836,7 @@ export namespace PaymentMethod {
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 
   export namespace SepaDebit {
@@ -1833,9 +1854,9 @@ export namespace PaymentMethod {
   }
 
   export namespace UsBankAccount {
-    export type AccountHolderType = 'company' | 'individual';
+    export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-    export type AccountType = 'checking' | 'savings';
+    export type AccountType = 'checking' | 'savings' | OtherString;
 
     export interface Networks {
       /**
@@ -1883,7 +1904,8 @@ export namespace PaymentMethod {
           | 'R16'
           | 'R20'
           | 'R29'
-          | 'R31';
+          | 'R31'
+          | OtherString;
 
         export type Reason =
           | 'bank_account_closed'
@@ -1892,7 +1914,8 @@ export namespace PaymentMethod {
           | 'bank_account_restricted'
           | 'bank_account_unusable'
           | 'debit_not_authorized'
-          | 'tokenized_account_number_deactivated';
+          | 'tokenized_account_number_deactivated'
+          | OtherString;
       }
     }
   }
@@ -2277,7 +2300,11 @@ export namespace PaymentMethodCreateParams {
 
   export interface Alipay {}
 
-  export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+  export type AllowRedisplay =
+    | 'always'
+    | 'limited'
+    | 'unspecified'
+    | OtherString;
 
   export interface Alma {}
 
@@ -2647,7 +2674,8 @@ export namespace PaymentMethodCreateParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export interface Upi {
     /**
@@ -2696,7 +2724,11 @@ export namespace PaymentMethodCreateParams {
     }
 
     export namespace Networks {
-      export type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
+      export type Preferred =
+        | 'cartes_bancaires'
+        | 'mastercard'
+        | 'visa'
+        | OtherString;
     }
   }
 
@@ -2744,14 +2776,17 @@ export namespace PaymentMethodCreateParams {
       | 'bank_muamalat'
       | 'bank_of_china'
       | 'bank_rakyat'
+      | 'bnp_paribas'
       | 'bsn'
       | 'cimb'
+      | 'citibank'
       | 'deutsche_bank'
       | 'hong_leong_bank'
       | 'hsbc'
       | 'kfh'
       | 'maybank2e'
       | 'maybank2u'
+      | 'mbsb_bank'
       | 'ocbc'
       | 'pb_enterprise'
       | 'public_bank'
@@ -2761,7 +2796,7 @@ export namespace PaymentMethodCreateParams {
   }
 
   export namespace IdBankTransfer {
-    export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+    export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata' | OtherString;
   }
 
   export namespace Ideal {
@@ -2808,7 +2843,7 @@ export namespace PaymentMethodCreateParams {
   }
 
   export namespace NaverPay {
-    export type Funding = 'card' | 'points';
+    export type Funding = 'card' | 'points' | OtherString;
   }
 
   export namespace P24 {
@@ -2838,7 +2873,8 @@ export namespace PaymentMethodCreateParams {
       | 'tmobile_usbugi_bankowe'
       | 'toyota_bank'
       | 'velobank'
-      | 'volkswagen_bank';
+      | 'volkswagen_bank'
+      | OtherString;
   }
 
   export namespace Rechnung {
@@ -2861,7 +2897,7 @@ export namespace PaymentMethodCreateParams {
   }
 
   export namespace Sofort {
-    export type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+    export type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL' | OtherString;
   }
 
   export namespace Upi {
@@ -2888,14 +2924,14 @@ export namespace PaymentMethodCreateParams {
     }
 
     export namespace MandateOptions {
-      export type AmountType = 'fixed' | 'maximum';
+      export type AmountType = 'fixed' | 'maximum' | OtherString;
     }
   }
 
   export namespace UsBankAccount {
-    export type AccountHolderType = 'company' | 'individual';
+    export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-    export type AccountType = 'checking' | 'savings';
+    export type AccountType = 'checking' | 'savings' | OtherString;
   }
 }
 export interface PaymentMethodRetrieveParams {
@@ -2941,7 +2977,11 @@ export interface PaymentMethodUpdateParams {
   us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
 }
 export namespace PaymentMethodUpdateParams {
-  export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+  export type AllowRedisplay =
+    | 'always'
+    | 'limited'
+    | 'unspecified'
+    | OtherString;
 
   export interface BillingDetails {
     /**
@@ -3025,14 +3065,18 @@ export namespace PaymentMethodUpdateParams {
     }
 
     export namespace Networks {
-      export type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
+      export type Preferred =
+        | 'cartes_bancaires'
+        | 'mastercard'
+        | 'visa'
+        | OtherString;
     }
   }
 
   export namespace UsBankAccount {
-    export type AccountHolderType = 'company' | 'individual';
+    export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-    export type AccountType = 'checking' | 'savings';
+    export type AccountType = 'checking' | 'savings' | OtherString;
   }
 }
 export interface PaymentMethodListParams extends PaginationParams {
@@ -3062,7 +3106,11 @@ export interface PaymentMethodListParams extends PaginationParams {
   type?: PaymentMethodListParams.Type;
 }
 export namespace PaymentMethodListParams {
-  export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+  export type AllowRedisplay =
+    | 'always'
+    | 'limited'
+    | 'unspecified'
+    | OtherString;
 
   export type Type =
     | 'acss_debit'
@@ -3126,7 +3174,8 @@ export namespace PaymentMethodListParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 }
 export interface PaymentMethodAttachParams {
   /**

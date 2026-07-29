@@ -977,7 +977,7 @@ export namespace TestHelpers {
           export namespace ReportedBreakdown {
             export interface Fuel {
               /**
-               * Gross fuel amount that should equal Fuel Volume multipled by Fuel Unit Cost, inclusive of taxes.
+               * Gross fuel amount that should equal Fuel Volume multiplied by Fuel Unit Cost, inclusive of taxes.
                */
               gross_amount_decimal?: Decimal;
             }
@@ -1628,7 +1628,7 @@ export namespace TestHelpers {
           export namespace ReportedBreakdown {
             export interface Fuel {
               /**
-               * Gross fuel amount that should equal Fuel Volume multipled by Fuel Unit Cost, inclusive of taxes.
+               * Gross fuel amount that should equal Fuel Volume multiplied by Fuel Unit Cost, inclusive of taxes.
                */
               gross_amount_decimal?: Decimal;
             }

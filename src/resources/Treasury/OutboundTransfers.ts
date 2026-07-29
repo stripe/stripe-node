@@ -6,6 +6,7 @@ import {Mandate} from './../Mandates.js';
 import {
   MetadataParam,
   Emptyable,
+  OtherString,
   PaginationParams,
   Metadata,
   Address,
@@ -218,7 +219,8 @@ export namespace OutboundTransfer {
     | 'failed'
     | 'posted'
     | 'processing'
-    | 'returned';
+    | 'returned'
+    | OtherString;
 
   export interface StatusTransitions {
     /**
@@ -280,7 +282,7 @@ export namespace OutboundTransfer {
       network: 'stripe';
     }
 
-    export type Type = 'financial_account' | 'us_bank_account';
+    export type Type = 'financial_account' | 'us_bank_account' | OtherString;
 
     export interface UsBankAccount {
       /**
@@ -325,11 +327,11 @@ export namespace OutboundTransfer {
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
 
-      export type Network = 'ach' | 'us_domestic_wire';
+      export type Network = 'ach' | 'us_domestic_wire' | OtherString;
     }
   }
 
@@ -353,7 +355,8 @@ export namespace OutboundTransfer {
       | 'invalid_account_number'
       | 'invalid_currency'
       | 'no_account'
-      | 'other';
+      | 'other'
+      | OtherString;
   }
 
   export namespace TrackingDetails {
@@ -364,7 +367,7 @@ export namespace OutboundTransfer {
       trace_id: string;
     }
 
-    export type Type = 'ach' | 'us_domestic_wire';
+    export type Type = 'ach' | 'us_domestic_wire' | OtherString;
 
     export interface UsDomesticWire {
       /**
@@ -485,7 +488,7 @@ export namespace Treasury {
       }
 
       export namespace UsBankAccount {
-        export type Network = 'ach' | 'us_domestic_wire';
+        export type Network = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
 
@@ -531,7 +534,8 @@ export namespace Treasury {
       | 'failed'
       | 'posted'
       | 'processing'
-      | 'returned';
+      | 'returned'
+      | OtherString;
   }
 }
 export namespace Treasury {

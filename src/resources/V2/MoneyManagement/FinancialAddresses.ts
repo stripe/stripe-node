@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {JapanAddress} from '../../../shared.js';
+import {OtherString, JapanAddress} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FinancialAddressResource extends StripeResource {
@@ -184,7 +184,7 @@ export namespace FinancialAddress {
       last4: string;
     }
 
-    export type Type = 'gb_bank_account' | 'us_bank_account';
+    export type Type = 'gb_bank_account' | 'us_bank_account' | OtherString;
 
     export interface UsBankAccount {
       /**
@@ -240,7 +240,7 @@ export namespace V2 {
     }
 
     export namespace FinancialAddressCreateParams {
-      export type Type = 'gb_bank_account' | 'us_bank_account';
+      export type Type = 'gb_bank_account' | 'us_bank_account' | OtherString;
     }
   }
 }
@@ -256,7 +256,8 @@ export namespace V2 {
     export namespace FinancialAddressRetrieveParams {
       export type Include =
         | 'credentials.gb_bank_account.account_number'
-        | 'credentials.us_bank_account.account_number';
+        | 'credentials.us_bank_account.account_number'
+        | OtherString;
     }
   }
 }
@@ -282,7 +283,8 @@ export namespace V2 {
     export namespace FinancialAddressListParams {
       export type Include =
         | 'credentials.gb_bank_account.account_number'
-        | 'credentials.us_bank_account.account_number';
+        | 'credentials.us_bank_account.account_number'
+        | OtherString;
     }
   }
 }
