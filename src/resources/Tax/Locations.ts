@@ -69,6 +69,11 @@ export interface Location {
   description: string | null;
 
   /**
+   * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
+   */
+  livemode: boolean;
+
+  /**
    * The type of tax location to be defined. Currently the only option is `performance`.
    */
   type: 'performance';

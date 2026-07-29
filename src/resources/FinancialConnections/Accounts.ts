@@ -6,7 +6,7 @@ import {AccountOwner} from './AccountOwners.js';
 import {Institution} from './Institutions.js';
 import {AccountOwnership} from './AccountOwnerships.js';
 import {Customer} from './../Customers.js';
-import {PaginationParams} from '../../shared.js';
+import {PaginationParams, OtherString} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class AccountResource extends StripeResource {
@@ -360,7 +360,12 @@ export namespace Account {
     status: BalanceRefresh.Status;
   }
 
-  export type Category = 'cash' | 'credit' | 'investment' | 'other';
+  export type Category =
+    | 'cash'
+    | 'credit'
+    | 'investment'
+    | 'other'
+    | OtherString;
 
   export interface InferredBalancesRefresh {
     /**
@@ -400,9 +405,10 @@ export namespace Account {
     | 'balances'
     | 'ownership'
     | 'payment_method'
-    | 'transactions';
+    | 'transactions'
+    | OtherString;
 
-  export type Status = 'active' | 'disconnected' | 'inactive';
+  export type Status = 'active' | 'disconnected' | 'inactive' | OtherString;
 
   export interface StatusDetails {
     active?: StatusDetails.Active;
@@ -416,11 +422,19 @@ export namespace Account {
     | 'line_of_credit'
     | 'mortgage'
     | 'other'
-    | 'savings';
+    | 'savings'
+    | OtherString;
 
-  export type Subscription = 'balance' | 'inferred_balances' | 'transactions';
+  export type Subscription =
+    | 'balance'
+    | 'inferred_balances'
+    | 'transactions'
+    | OtherString;
 
-  export type SupportedPaymentMethodType = 'link' | 'us_bank_account';
+  export type SupportedPaymentMethodType =
+    | 'link'
+    | 'us_bank_account'
+    | OtherString;
 
   export interface TransactionRefresh {
     /**
@@ -445,13 +459,16 @@ export namespace Account {
   }
 
   export namespace AccountHolder {
-    export type Type = 'account' | 'customer';
+    export type Type = 'account' | 'customer' | OtherString;
   }
 
   export namespace AccountNumber {
-    export type IdentifierType = 'account_number' | 'tokenized_account_number';
+    export type IdentifierType =
+      | 'account_number'
+      | 'tokenized_account_number'
+      | OtherString;
 
-    export type Status = 'deactivated' | 'transactable';
+    export type Status = 'deactivated' | 'transactable' | OtherString;
   }
 
   export namespace Balance {
@@ -481,19 +498,19 @@ export namespace Account {
       } | null;
     }
 
-    export type Type = 'cash' | 'credit';
+    export type Type = 'cash' | 'credit' | OtherString;
   }
 
   export namespace BalanceRefresh {
-    export type Status = 'failed' | 'pending' | 'succeeded';
+    export type Status = 'failed' | 'pending' | 'succeeded' | OtherString;
   }
 
   export namespace InferredBalancesRefresh {
-    export type Status = 'failed' | 'pending' | 'succeeded';
+    export type Status = 'failed' | 'pending' | 'succeeded' | OtherString;
   }
 
   export namespace OwnershipRefresh {
-    export type Status = 'failed' | 'pending' | 'succeeded';
+    export type Status = 'failed' | 'pending' | 'succeeded' | OtherString;
   }
 
   export namespace StatusDetails {
@@ -527,16 +544,17 @@ export namespace Account {
     }
 
     export namespace Active {
-      export type Action = 'none' | 'relink_required';
+      export type Action = 'none' | 'relink_required' | OtherString;
 
       export type Cause =
         | 'access_expired'
         | 'institution_requirement'
-        | 'unspecified';
+        | 'unspecified'
+        | OtherString;
     }
 
     export namespace Inactive {
-      export type Action = 'none' | 'relink_required';
+      export type Action = 'none' | 'relink_required' | OtherString;
 
       export type Cause =
         | 'access_denied'
@@ -544,12 +562,13 @@ export namespace Account {
         | 'account_closed'
         | 'account_unavailable'
         | 'institution_requirement'
-        | 'unspecified';
+        | 'unspecified'
+        | OtherString;
     }
   }
 
   export namespace TransactionRefresh {
-    export type Status = 'failed' | 'pending' | 'succeeded';
+    export type Status = 'failed' | 'pending' | 'succeeded' | OtherString;
   }
 }
 export namespace FinancialConnections {
@@ -644,7 +663,8 @@ export namespace FinancialConnections {
       | 'balance'
       | 'inferred_balances'
       | 'ownership'
-      | 'transactions';
+      | 'transactions'
+      | OtherString;
   }
 }
 export namespace FinancialConnections {
@@ -661,7 +681,11 @@ export namespace FinancialConnections {
   }
 
   export namespace AccountSubscribeParams {
-    export type Feature = 'balance' | 'inferred_balances' | 'transactions';
+    export type Feature =
+      | 'balance'
+      | 'inferred_balances'
+      | 'transactions'
+      | OtherString;
   }
 }
 export namespace FinancialConnections {
@@ -678,6 +702,10 @@ export namespace FinancialConnections {
   }
 
   export namespace AccountUnsubscribeParams {
-    export type Feature = 'balance' | 'inferred_balances' | 'transactions';
+    export type Feature =
+      | 'balance'
+      | 'inferred_balances'
+      | 'transactions'
+      | OtherString;
   }
 }

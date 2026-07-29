@@ -3,7 +3,7 @@
 import {StripeResource} from '../StripeResource.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {Mandate} from './Mandates.js';
-import {Metadata, Address} from '../shared.js';
+import {Metadata, OtherString, Address} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class PaymentAttemptRecordResource extends StripeResource {
@@ -253,7 +253,7 @@ export namespace PaymentAttemptRecord {
     phone: string | null;
   }
 
-  export type CustomerPresence = 'off_session' | 'on_session';
+  export type CustomerPresence = 'off_session' | 'on_session' | OtherString;
 
   export interface PaymentMethodDetails {
     ach_credit_transfer?: PaymentMethodDetails.AchCreditTransfer;
@@ -434,7 +434,7 @@ export namespace PaymentAttemptRecord {
     type: 'custom';
   }
 
-  export type ReportedBy = 'self' | 'stripe';
+  export type ReportedBy = 'self' | 'stripe' | OtherString;
 
   export interface ShippingDetails {
     /**
@@ -1082,7 +1082,7 @@ export namespace PaymentAttemptRecord {
       account_holder_type: Fpx.AccountHolderType | null;
 
       /**
-       * The customer's bank. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, `pb_enterprise`, or `bank_of_china`.
+       * The customer's bank. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bnp_paribas`, `bank_rakyat`, `bsn`, `cimb`, `citibank`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, `mbsb_bank`, `pb_enterprise`, or `bank_of_china`.
        */
       bank: Fpx.Bank;
 
@@ -1887,7 +1887,7 @@ export namespace PaymentAttemptRecord {
       export namespace Funding {
         export interface Card {
           /**
-           * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
+           * Card brand. Can be `American Express`, `Cartes Bancaires`, `Diners Club`, `Discover`, `Eftpos Australia`, `Girocard`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
            */
           brand: string | null;
 
@@ -1941,7 +1941,8 @@ export namespace PaymentAttemptRecord {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export interface Checks {
         /**
@@ -1960,7 +1961,12 @@ export namespace PaymentAttemptRecord {
         cvc_check: Checks.CvcCheck | null;
       }
 
-      export type Funding = 'credit' | 'debit' | 'prepaid' | 'unknown';
+      export type Funding =
+        | 'credit'
+        | 'debit'
+        | 'prepaid'
+        | 'unknown'
+        | OtherString;
 
       export interface Installments {
         /**
@@ -1981,7 +1987,8 @@ export namespace PaymentAttemptRecord {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export interface NetworkToken {
         /**
@@ -2053,15 +2060,22 @@ export namespace PaymentAttemptRecord {
           | 'fail'
           | 'pass'
           | 'unavailable'
-          | 'unchecked';
+          | 'unchecked'
+          | OtherString;
 
         export type AddressPostalCodeCheck =
           | 'fail'
           | 'pass'
           | 'unavailable'
-          | 'unchecked';
+          | 'unchecked'
+          | OtherString;
 
-        export type CvcCheck = 'fail' | 'pass' | 'unavailable' | 'unchecked';
+        export type CvcCheck =
+          | 'fail'
+          | 'pass'
+          | 'unavailable'
+          | 'unchecked'
+          | OtherString;
       }
 
       export namespace Installments {
@@ -2083,12 +2097,19 @@ export namespace PaymentAttemptRecord {
         }
 
         export namespace Plan {
-          export type Type = 'bonus' | 'fixed_count' | 'revolving';
+          export type Type =
+            | 'bonus'
+            | 'fixed_count'
+            | 'revolving'
+            | OtherString;
         }
       }
 
       export namespace ThreeDSecure {
-        export type AuthenticationFlow = 'challenge' | 'frictionless';
+        export type AuthenticationFlow =
+          | 'challenge'
+          | 'frictionless'
+          | OtherString;
 
         export type ElectronicCommerceIndicator =
           | '01'
@@ -2104,10 +2125,12 @@ export namespace PaymentAttemptRecord {
         export type Result =
           | 'attempt_acknowledged'
           | 'authenticated'
+          | 'data_share_only'
           | 'exempted'
           | 'failed'
           | 'not_supported'
-          | 'processing_error';
+          | 'processing_error'
+          | OtherString;
 
         export type ResultReason =
           | 'abandoned'
@@ -2116,9 +2139,10 @@ export namespace PaymentAttemptRecord {
           | 'card_not_enrolled'
           | 'network_not_supported'
           | 'protocol_error'
-          | 'rejected';
+          | 'rejected'
+          | OtherString;
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0';
+        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | OtherString;
       }
 
       export namespace Wallet {
@@ -2151,7 +2175,8 @@ export namespace PaymentAttemptRecord {
         | 'contactless_emv'
         | 'contactless_magstripe_mode'
         | 'magnetic_stripe_fallback'
-        | 'magnetic_stripe_track2';
+        | 'magnetic_stripe_track2'
+        | OtherString;
 
       export interface Receipt {
         /**
@@ -2208,7 +2233,12 @@ export namespace PaymentAttemptRecord {
       }
 
       export namespace Receipt {
-        export type AccountType = 'checking' | 'credit' | 'prepaid' | 'unknown';
+        export type AccountType =
+          | 'checking'
+          | 'credit'
+          | 'prepaid'
+          | 'unknown'
+          | OtherString;
       }
 
       export namespace Wallet {
@@ -2216,7 +2246,8 @@ export namespace PaymentAttemptRecord {
           | 'apple_pay'
           | 'google_pay'
           | 'samsung_pay'
-          | 'unknown';
+          | 'unknown'
+          | OtherString;
       }
     }
 
@@ -2227,7 +2258,8 @@ export namespace PaymentAttemptRecord {
         | 'polygon'
         | 'solana'
         | 'sui'
-        | 'tempo';
+        | 'tempo'
+        | OtherString;
 
       export type TokenCurrency =
         | 'phantom_cash'
@@ -2235,7 +2267,8 @@ export namespace PaymentAttemptRecord {
         | 'usdg'
         | 'usdp'
         | 'usdsui'
-        | 'usdt';
+        | 'usdt'
+        | OtherString;
     }
 
     export namespace Eps {
@@ -2282,14 +2315,17 @@ export namespace PaymentAttemptRecord {
         | 'bank_muamalat'
         | 'bank_of_china'
         | 'bank_rakyat'
+        | 'bnp_paribas'
         | 'bsn'
         | 'cimb'
+        | 'citibank'
         | 'deutsche_bank'
         | 'hong_leong_bank'
         | 'hsbc'
         | 'kfh'
         | 'maybank2e'
         | 'maybank2u'
+        | 'mbsb_bank'
         | 'ocbc'
         | 'pb_enterprise'
         | 'public_bank'
@@ -2299,7 +2335,13 @@ export namespace PaymentAttemptRecord {
     }
 
     export namespace IdBankTransfer {
-      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      export type Bank =
+        | 'bca'
+        | 'bni'
+        | 'bri'
+        | 'cimb'
+        | 'permata'
+        | OtherString;
     }
 
     export namespace Ideal {
@@ -2355,7 +2397,8 @@ export namespace PaymentAttemptRecord {
         | 'contactless_emv'
         | 'contactless_magstripe_mode'
         | 'magnetic_stripe_fallback'
-        | 'magnetic_stripe_track2';
+        | 'magnetic_stripe_track2'
+        | OtherString;
 
       export interface Receipt {
         /**
@@ -2405,7 +2448,11 @@ export namespace PaymentAttemptRecord {
       }
 
       export namespace Receipt {
-        export type AccountType = 'checking' | 'savings' | 'unknown';
+        export type AccountType =
+          | 'checking'
+          | 'savings'
+          | 'unknown'
+          | OtherString;
       }
     }
 
@@ -2436,7 +2483,12 @@ export namespace PaymentAttemptRecord {
       }
 
       export namespace Store {
-        export type Chain = 'familymart' | 'lawson' | 'ministop' | 'seicomart';
+        export type Chain =
+          | 'familymart'
+          | 'lawson'
+          | 'ministop'
+          | 'seicomart'
+          | OtherString;
       }
     }
 
@@ -2463,7 +2515,8 @@ export namespace PaymentAttemptRecord {
         | 'shinhyup'
         | 'suhyup'
         | 'tossbank'
-        | 'woori';
+        | 'woori'
+        | OtherString;
     }
 
     export namespace Mobilepay {
@@ -2539,9 +2592,16 @@ export namespace PaymentAttemptRecord {
       }
 
       export namespace SellerProtection {
-        export type DisputeCategory = 'fraudulent' | 'product_not_received';
+        export type DisputeCategory =
+          | 'fraudulent'
+          | 'product_not_received'
+          | OtherString;
 
-        export type Status = 'eligible' | 'not_eligible' | 'partially_eligible';
+        export type Status =
+          | 'eligible'
+          | 'not_eligible'
+          | 'partially_eligible'
+          | OtherString;
       }
     }
 
@@ -2607,9 +2667,9 @@ export namespace PaymentAttemptRecord {
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
     }
   }
 

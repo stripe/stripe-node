@@ -180,3 +180,9 @@ export interface PaginationParams {
  * in url-encoding. Both `null` and `''` behave identically.
  */
 export type Emptyable<T> = null | '' | T;
+
+/**
+ * Marker type to append to "open" string unions so IntelliSense keeps known literals
+ * while still allowing arbitrary strings.
+ */
+export type OtherString = string & Record<never, never>;

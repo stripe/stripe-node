@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class WorkflowRunResource extends StripeResource {
@@ -84,7 +85,7 @@ export interface WorkflowRun {
   workflow: string;
 }
 export namespace WorkflowRun {
-  export type Status = 'failed' | 'started' | 'succeeded';
+  export type Status = 'failed' | 'started' | 'succeeded' | OtherString;
 
   export interface StatusDetails {
     /**
@@ -175,7 +176,7 @@ export namespace WorkflowRun {
       input_parameters: Manual.InputParameters;
     }
 
-    export type Type = 'event_trigger' | 'manual';
+    export type Type = 'event_trigger' | 'manual' | OtherString;
 
     export namespace Manual {
       export type InputParameters = {
@@ -209,7 +210,7 @@ export namespace V2 {
     }
 
     export namespace WorkflowRunListParams {
-      export type Status = 'failed' | 'started' | 'succeeded';
+      export type Status = 'failed' | 'started' | 'succeeded' | OtherString;
     }
   }
 }

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Metadata} from '../../shared.js';
+import {Metadata, OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface TransactionLineItem {
   /**
@@ -76,7 +76,7 @@ export namespace TransactionLineItem {
     original_line_item: string;
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive';
+  export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
 
-  export type Type = 'reversal' | 'transaction';
+  export type Type = 'reversal' | 'transaction' | OtherString;
 }

@@ -4,6 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {Institution} from './Institutions.js';
 import {Account} from './../Accounts.js';
 import {Customer} from './../Customers.js';
+import {OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class AuthorizationResource extends StripeResource {
@@ -81,7 +82,7 @@ export namespace Authorization {
     type: AccountHolder.Type;
   }
 
-  export type Status = 'active' | 'disconnected' | 'inactive';
+  export type Status = 'active' | 'disconnected' | 'inactive' | OtherString;
 
   export interface StatusDetails {
     active?: StatusDetails.Active;
@@ -90,7 +91,7 @@ export namespace Authorization {
   }
 
   export namespace AccountHolder {
-    export type Type = 'account' | 'customer';
+    export type Type = 'account' | 'customer' | OtherString;
   }
 
   export namespace StatusDetails {
@@ -114,11 +115,11 @@ export namespace Authorization {
     }
 
     export namespace Active {
-      export type Action = 'none' | 'relink_required';
+      export type Action = 'none' | 'relink_required' | OtherString;
     }
 
     export namespace Inactive {
-      export type Action = 'none' | 'relink_required';
+      export type Action = 'none' | 'relink_required' | OtherString;
     }
   }
 }

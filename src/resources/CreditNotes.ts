@@ -12,6 +12,7 @@ import {TaxRate} from './TaxRates.js';
 import * as Billing from './Billing/index.js';
 import {
   MetadataParam,
+  OtherString,
   Emptyable,
   Decimal,
   PaginationParams,
@@ -579,7 +580,8 @@ export namespace CreditNote {
     | 'duplicate'
     | 'fraudulent'
     | 'order_change'
-    | 'product_unsatisfactory';
+    | 'product_unsatisfactory'
+    | OtherString;
 
   export interface Refund {
     /**
@@ -630,7 +632,7 @@ export namespace CreditNote {
     taxes?: Array<ShippingCost.Tax>;
   }
 
-  export type Status = 'issued' | 'void';
+  export type Status = 'issued' | 'void' | OtherString;
 
   export interface TotalTax {
     /**
@@ -667,7 +669,7 @@ export namespace CreditNote {
   export type Type = 'mixed' | 'post_payment' | 'pre_payment';
 
   export namespace PretaxCreditAmount {
-    export type Type = 'credit_balance_transaction' | 'discount';
+    export type Type = 'credit_balance_transaction' | 'discount' | OtherString;
   }
 
   export namespace Refund {
@@ -683,7 +685,7 @@ export namespace CreditNote {
       refund_group: string;
     }
 
-    export type Type = 'payment_record_refund' | 'refund';
+    export type Type = 'payment_record_refund' | 'refund' | OtherString;
   }
 
   export namespace ShippingCost {
@@ -727,7 +729,8 @@ export namespace CreditNote {
         | 'reverse_charge'
         | 'standard_rated'
         | 'taxable_basis_reduced'
-        | 'zero_rated';
+        | 'zero_rated'
+        | OtherString;
     }
   }
 
@@ -757,7 +760,8 @@ export namespace CreditNote {
       | 'reverse_charge'
       | 'standard_rated'
       | 'taxable_basis_reduced'
-      | 'zero_rated';
+      | 'zero_rated'
+      | OtherString;
   }
 }
 export interface CreditNoteCreateParams {
@@ -832,7 +836,7 @@ export interface CreditNoteCreateParams {
   shipping_cost?: CreditNoteCreateParams.ShippingCost;
 }
 export namespace CreditNoteCreateParams {
-  export type EmailType = 'credit_note' | 'none';
+  export type EmailType = 'credit_note' | 'none' | OtherString;
 
   export interface Line {
     /**
@@ -890,7 +894,8 @@ export namespace CreditNoteCreateParams {
     | 'duplicate'
     | 'fraudulent'
     | 'order_change'
-    | 'product_unsatisfactory';
+    | 'product_unsatisfactory'
+    | OtherString;
 
   export interface Refund {
     /**
@@ -955,7 +960,7 @@ export namespace CreditNoteCreateParams {
       refund_group: string;
     }
 
-    export type Type = 'payment_record_refund' | 'refund';
+    export type Type = 'payment_record_refund' | 'refund' | OtherString;
   }
 }
 export interface CreditNoteRetrieveParams {
@@ -1084,7 +1089,7 @@ export interface CreditNoteListPreviewLineItemsParams extends PaginationParams {
   shipping_cost?: CreditNoteListPreviewLineItemsParams.ShippingCost;
 }
 export namespace CreditNoteListPreviewLineItemsParams {
-  export type EmailType = 'credit_note' | 'none';
+  export type EmailType = 'credit_note' | 'none' | OtherString;
 
   export interface Line {
     /**
@@ -1142,7 +1147,8 @@ export namespace CreditNoteListPreviewLineItemsParams {
     | 'duplicate'
     | 'fraudulent'
     | 'order_change'
-    | 'product_unsatisfactory';
+    | 'product_unsatisfactory'
+    | OtherString;
 
   export interface Refund {
     /**
@@ -1207,7 +1213,7 @@ export namespace CreditNoteListPreviewLineItemsParams {
       refund_group: string;
     }
 
-    export type Type = 'payment_record_refund' | 'refund';
+    export type Type = 'payment_record_refund' | 'refund' | OtherString;
   }
 }
 export interface CreditNotePreviewParams {
@@ -1282,7 +1288,7 @@ export interface CreditNotePreviewParams {
   shipping_cost?: CreditNotePreviewParams.ShippingCost;
 }
 export namespace CreditNotePreviewParams {
-  export type EmailType = 'credit_note' | 'none';
+  export type EmailType = 'credit_note' | 'none' | OtherString;
 
   export interface Line {
     /**
@@ -1340,7 +1346,8 @@ export namespace CreditNotePreviewParams {
     | 'duplicate'
     | 'fraudulent'
     | 'order_change'
-    | 'product_unsatisfactory';
+    | 'product_unsatisfactory'
+    | OtherString;
 
   export interface Refund {
     /**
@@ -1405,7 +1412,7 @@ export namespace CreditNotePreviewParams {
       refund_group: string;
     }
 
-    export type Type = 'payment_record_refund' | 'refund';
+    export type Type = 'payment_record_refund' | 'refund' | OtherString;
   }
 }
 export interface CreditNoteVoidCreditNoteParams {

@@ -14,6 +14,7 @@ import {
   MetadataParam,
   Decimal,
   AddressParam,
+  OtherString,
   Address,
   PaginationParams,
   Metadata,
@@ -715,7 +716,8 @@ export namespace Order {
     | 'complete'
     | 'open'
     | 'processing'
-    | 'submitted';
+    | 'submitted'
+    | OtherString;
 
   export interface TaxDetails {
     /**
@@ -749,7 +751,11 @@ export namespace Order {
   }
 
   export namespace AutomaticTax {
-    export type Status = 'complete' | 'failed' | 'requires_location_inputs';
+    export type Status =
+      | 'complete'
+      | 'failed'
+      | 'requires_location_inputs'
+      | OtherString;
   }
 
   export namespace Payment {
@@ -803,7 +809,8 @@ export namespace Order {
       | 'requires_action'
       | 'requires_capture'
       | 'requires_confirmation'
-      | 'requires_payment_method';
+      | 'requires_payment_method'
+      | OtherString;
 
     export namespace Settings {
       export interface AutomaticPaymentMethods {
@@ -866,7 +873,8 @@ export namespace Order {
         | 'paypal'
         | 'sepa_debit'
         | 'sofort'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | OtherString;
 
       export interface TransferData {
         /**
@@ -1216,17 +1224,26 @@ export namespace Order {
             transaction_type: MandateOptions.TransactionType | null;
           }
 
-          export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          export type SetupFutureUsage =
+            | 'none'
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
 
           export type VerificationMethod =
             | 'automatic'
             | 'instant'
-            | 'microdeposits';
+            | 'microdeposits'
+            | OtherString;
 
           export namespace MandateOptions {
-            export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+            export type PaymentSchedule =
+              | 'combined'
+              | 'interval'
+              | 'sporadic'
+              | OtherString;
 
-            export type TransactionType = 'business' | 'personal';
+            export type TransactionType = 'business' | 'personal' | OtherString;
           }
         }
 
@@ -1234,26 +1251,32 @@ export namespace Order {
           export type CaptureMethod =
             | 'automatic'
             | 'automatic_async'
-            | 'manual';
+            | 'manual'
+            | OtherString;
         }
 
         export namespace Alipay {
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace Bancontact {
           export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
 
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace Card {
           export type CaptureMethod =
             | 'automatic'
             | 'automatic_async'
-            | 'manual';
+            | 'manual'
+            | OtherString;
 
-          export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          export type SetupFutureUsage =
+            | 'none'
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
         }
 
         export namespace CustomerBalance {
@@ -1288,14 +1311,16 @@ export namespace Order {
               | 'sort_code'
               | 'spei'
               | 'swift'
-              | 'zengin';
+              | 'zengin'
+              | OtherString;
 
             export type Type =
               | 'eu_bank_transfer'
               | 'gb_bank_transfer'
               | 'jp_bank_transfer'
               | 'mx_bank_transfer'
-              | 'us_bank_transfer';
+              | 'us_bank_transfer'
+              | OtherString;
 
             export namespace EuBankTransfer {
               export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
@@ -1304,15 +1329,19 @@ export namespace Order {
         }
 
         export namespace Ideal {
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace Klarna {
-          export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          export type SetupFutureUsage =
+            | 'none'
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
         }
 
         export namespace Link {
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace Paypal {
@@ -1355,13 +1384,14 @@ export namespace Order {
             unit_amount: number;
           }
 
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
           export namespace LineItem {
             export type Category =
               | 'digital_goods'
               | 'donation'
-              | 'physical_goods';
+              | 'physical_goods'
+              | OtherString;
 
             export interface Tax {
               /**
@@ -1376,7 +1406,7 @@ export namespace Order {
             }
 
             export namespace Tax {
-              export type Behavior = 'exclusive' | 'inclusive';
+              export type Behavior = 'exclusive' | 'inclusive' | OtherString;
             }
           }
         }
@@ -1389,7 +1419,11 @@ export namespace Order {
             reference_prefix?: string;
           }
 
-          export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          export type SetupFutureUsage =
+            | 'none'
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
         }
 
         export namespace Sofort {
@@ -1402,11 +1436,11 @@ export namespace Order {
             | 'nl'
             | 'pl';
 
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace WechatPay {
-          export type Client = 'android' | 'ios' | 'web';
+          export type Client = 'android' | 'ios' | 'web' | OtherString;
         }
       }
     }
@@ -1453,7 +1487,8 @@ export namespace Order {
         | 'reverse_charge'
         | 'standard_rated'
         | 'taxable_basis_reduced'
-        | 'zero_rated';
+        | 'zero_rated'
+        | OtherString;
     }
   }
 
@@ -1462,7 +1497,7 @@ export namespace Order {
 
     export interface TaxId {
       /**
-       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`
+       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
        */
       type: TaxId.Type;
 
@@ -1527,6 +1562,7 @@ export namespace Order {
         | 'hk_br'
         | 'hr_oib'
         | 'hu_tin'
+        | 'ic_nif'
         | 'id_npwp'
         | 'il_vat'
         | 'in_gst'
@@ -1663,7 +1699,8 @@ export namespace Order {
           | 'reverse_charge'
           | 'standard_rated'
           | 'taxable_basis_reduced'
-          | 'zero_rated';
+          | 'zero_rated'
+          | OtherString;
       }
     }
   }
@@ -2145,7 +2182,8 @@ export namespace OrderCreateParams {
         | 'paypal'
         | 'sepa_debit'
         | 'sofort'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | OtherString;
 
       export interface TransferData {
         /**
@@ -2571,17 +2609,26 @@ export namespace OrderCreateParams {
             transaction_type?: MandateOptions.TransactionType;
           }
 
-          export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          export type SetupFutureUsage =
+            | 'none'
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
 
           export type VerificationMethod =
             | 'automatic'
             | 'instant'
-            | 'microdeposits';
+            | 'microdeposits'
+            | OtherString;
 
           export namespace MandateOptions {
-            export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+            export type PaymentSchedule =
+              | 'combined'
+              | 'interval'
+              | 'sporadic'
+              | OtherString;
 
-            export type TransactionType = 'business' | 'personal';
+            export type TransactionType = 'business' | 'personal' | OtherString;
           }
         }
 
@@ -2589,26 +2636,37 @@ export namespace OrderCreateParams {
           export type CaptureMethod =
             | 'automatic'
             | 'automatic_async'
-            | 'manual';
+            | 'manual'
+            | OtherString;
         }
 
         export namespace Alipay {
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace Bancontact {
-          export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+          export type PreferredLanguage =
+            | 'de'
+            | 'en'
+            | 'fr'
+            | 'nl'
+            | OtherString;
 
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace Card {
           export type CaptureMethod =
             | 'automatic'
             | 'automatic_async'
-            | 'manual';
+            | 'manual'
+            | OtherString;
 
-          export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          export type SetupFutureUsage =
+            | 'none'
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
         }
 
         export namespace CustomerBalance {
@@ -2646,19 +2704,21 @@ export namespace OrderCreateParams {
               | 'sort_code'
               | 'spei'
               | 'swift'
-              | 'zengin';
+              | 'zengin'
+              | OtherString;
 
             export type Type =
               | 'eu_bank_transfer'
               | 'gb_bank_transfer'
               | 'jp_bank_transfer'
               | 'mx_bank_transfer'
-              | 'us_bank_transfer';
+              | 'us_bank_transfer'
+              | OtherString;
           }
         }
 
         export namespace Ideal {
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace Klarna {
@@ -2735,9 +2795,14 @@ export namespace OrderCreateParams {
             | 'pt-PT'
             | 'ro-RO'
             | 'sv-FI'
-            | 'sv-SE';
+            | 'sv-SE'
+            | OtherString;
 
-          export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          export type SetupFutureUsage =
+            | 'none'
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
 
           export interface Subscription {
             /**
@@ -2821,11 +2886,21 @@ export namespace OrderCreateParams {
           }
 
           export namespace OnDemand {
-            export type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+            export type PurchaseInterval =
+              | 'day'
+              | 'month'
+              | 'week'
+              | 'year'
+              | OtherString;
           }
 
           export namespace Subscription {
-            export type Interval = 'day' | 'month' | 'week' | 'year';
+            export type Interval =
+              | 'day'
+              | 'month'
+              | 'week'
+              | 'year'
+              | OtherString;
 
             export interface NextBilling {
               /**
@@ -3265,7 +3340,8 @@ export namespace OrderCreateParams {
                 | 'business'
                 | 'economy'
                 | 'first_class'
-                | 'premium_economy';
+                | 'premium_economy'
+                | OtherString;
 
               export namespace Arrival {
                 export interface Address {
@@ -3341,7 +3417,8 @@ export namespace OrderCreateParams {
                   | 'bankruptcy'
                   | 'cancelation'
                   | 'emergency'
-                  | 'medical';
+                  | 'medical'
+                  | OtherString;
               }
             }
 
@@ -3386,7 +3463,8 @@ export namespace OrderCreateParams {
                 | 'festival'
                 | 'in_person_education'
                 | 'sport'
-                | 'tour';
+                | 'tour'
+                | OtherString;
 
               export interface Insurance {
                 /**
@@ -3415,7 +3493,8 @@ export namespace OrderCreateParams {
                   | 'bankruptcy'
                   | 'cancelation'
                   | 'emergency'
-                  | 'medical';
+                  | 'medical'
+                  | OtherString;
               }
             }
 
@@ -3487,7 +3566,8 @@ export namespace OrderCreateParams {
                 | 'business'
                 | 'economy'
                 | 'first_class'
-                | 'premium_economy';
+                | 'premium_economy'
+                | OtherString;
 
               export namespace Arrival {
                 export interface Address {
@@ -3563,7 +3643,8 @@ export namespace OrderCreateParams {
                   | 'bankruptcy'
                   | 'cancelation'
                   | 'emergency'
-                  | 'medical';
+                  | 'medical'
+                  | OtherString;
               }
             }
 
@@ -3572,7 +3653,8 @@ export namespace OrderCreateParams {
                 | 'bankruptcy'
                 | 'cancelation'
                 | 'emergency'
-                | 'medical';
+                | 'medical'
+                | OtherString;
             }
 
             export namespace MarketplaceSeller {
@@ -3642,14 +3724,16 @@ export namespace OrderCreateParams {
                 | 'tools_and_home_improvement'
                 | 'toys_and_games'
                 | 'video_games'
-                | 'women_clothing';
+                | 'women_clothing'
+                | OtherString;
 
               export type SellerRating =
                 | 'high'
                 | 'low'
                 | 'medium'
                 | 'very_high'
-                | 'very_low';
+                | 'very_low'
+                | OtherString;
             }
 
             export namespace RoundTripReservationDetail {
@@ -3720,7 +3804,8 @@ export namespace OrderCreateParams {
                 | 'business'
                 | 'economy'
                 | 'first_class'
-                | 'premium_economy';
+                | 'premium_economy'
+                | OtherString;
 
               export namespace Arrival {
                 export interface Address {
@@ -3796,7 +3881,8 @@ export namespace OrderCreateParams {
                   | 'bankruptcy'
                   | 'cancelation'
                   | 'emergency'
-                  | 'medical';
+                  | 'medical'
+                  | OtherString;
               }
             }
 
@@ -3868,7 +3954,8 @@ export namespace OrderCreateParams {
                 | 'business'
                 | 'economy'
                 | 'first_class'
-                | 'premium_economy';
+                | 'premium_economy'
+                | OtherString;
 
               export namespace Arrival {
                 export interface Address {
@@ -3944,7 +4031,8 @@ export namespace OrderCreateParams {
                   | 'bankruptcy'
                   | 'cancelation'
                   | 'emergency'
-                  | 'medical';
+                  | 'medical'
+                  | OtherString;
               }
             }
 
@@ -3954,13 +4042,14 @@ export namespace OrderCreateParams {
                 | 'discount'
                 | 'gift_card'
                 | 'physical_product'
-                | 'services';
+                | 'services'
+                | OtherString;
             }
           }
         }
 
         export namespace Link {
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace Paypal {
@@ -4027,15 +4116,17 @@ export namespace OrderCreateParams {
             | 'pl-PL'
             | 'pt-PT'
             | 'sk-SK'
-            | 'sv-SE';
+            | 'sv-SE'
+            | OtherString;
 
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
           export namespace LineItem {
             export type Category =
               | 'digital_goods'
               | 'donation'
-              | 'physical_goods';
+              | 'physical_goods'
+              | OtherString;
 
             export interface Tax {
               /**
@@ -4050,7 +4141,7 @@ export namespace OrderCreateParams {
             }
 
             export namespace Tax {
-              export type Behavior = 'exclusive' | 'inclusive';
+              export type Behavior = 'exclusive' | 'inclusive' | OtherString;
             }
           }
         }
@@ -4063,7 +4154,11 @@ export namespace OrderCreateParams {
             reference_prefix?: Emptyable<string>;
           }
 
-          export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          export type SetupFutureUsage =
+            | 'none'
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
         }
 
         export namespace Sofort {
@@ -4074,13 +4169,14 @@ export namespace OrderCreateParams {
             | 'fr'
             | 'it'
             | 'nl'
-            | 'pl';
+            | 'pl'
+            | OtherString;
 
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace WechatPay {
-          export type Client = 'android' | 'ios' | 'web';
+          export type Client = 'android' | 'ios' | 'web' | OtherString;
         }
       }
     }
@@ -4184,11 +4280,23 @@ export namespace OrderCreateParams {
         }
 
         export namespace Maximum {
-          export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+          export type Unit =
+            | 'business_day'
+            | 'day'
+            | 'hour'
+            | 'month'
+            | 'week'
+            | OtherString;
         }
 
         export namespace Minimum {
-          export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+          export type Unit =
+            | 'business_day'
+            | 'day'
+            | 'hour'
+            | 'month'
+            | 'week'
+            | OtherString;
         }
       }
 
@@ -4217,7 +4325,7 @@ export namespace OrderCreateParams {
 
     export interface TaxId {
       /**
-       * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
+       * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
        */
       type: TaxId.Type;
 
@@ -4282,6 +4390,7 @@ export namespace OrderCreateParams {
         | 'hk_br'
         | 'hr_oib'
         | 'hu_tin'
+        | 'ic_nif'
         | 'id_npwp'
         | 'il_vat'
         | 'in_gst'
@@ -4836,7 +4945,8 @@ export namespace OrderUpdateParams {
         | 'paypal'
         | 'sepa_debit'
         | 'sofort'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | OtherString;
 
       export interface TransferData {
         /**
@@ -5262,17 +5372,26 @@ export namespace OrderUpdateParams {
             transaction_type?: MandateOptions.TransactionType;
           }
 
-          export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          export type SetupFutureUsage =
+            | 'none'
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
 
           export type VerificationMethod =
             | 'automatic'
             | 'instant'
-            | 'microdeposits';
+            | 'microdeposits'
+            | OtherString;
 
           export namespace MandateOptions {
-            export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+            export type PaymentSchedule =
+              | 'combined'
+              | 'interval'
+              | 'sporadic'
+              | OtherString;
 
-            export type TransactionType = 'business' | 'personal';
+            export type TransactionType = 'business' | 'personal' | OtherString;
           }
         }
 
@@ -5280,26 +5399,37 @@ export namespace OrderUpdateParams {
           export type CaptureMethod =
             | 'automatic'
             | 'automatic_async'
-            | 'manual';
+            | 'manual'
+            | OtherString;
         }
 
         export namespace Alipay {
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace Bancontact {
-          export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+          export type PreferredLanguage =
+            | 'de'
+            | 'en'
+            | 'fr'
+            | 'nl'
+            | OtherString;
 
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace Card {
           export type CaptureMethod =
             | 'automatic'
             | 'automatic_async'
-            | 'manual';
+            | 'manual'
+            | OtherString;
 
-          export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          export type SetupFutureUsage =
+            | 'none'
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
         }
 
         export namespace CustomerBalance {
@@ -5337,19 +5467,21 @@ export namespace OrderUpdateParams {
               | 'sort_code'
               | 'spei'
               | 'swift'
-              | 'zengin';
+              | 'zengin'
+              | OtherString;
 
             export type Type =
               | 'eu_bank_transfer'
               | 'gb_bank_transfer'
               | 'jp_bank_transfer'
               | 'mx_bank_transfer'
-              | 'us_bank_transfer';
+              | 'us_bank_transfer'
+              | OtherString;
           }
         }
 
         export namespace Ideal {
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace Klarna {
@@ -5426,9 +5558,14 @@ export namespace OrderUpdateParams {
             | 'pt-PT'
             | 'ro-RO'
             | 'sv-FI'
-            | 'sv-SE';
+            | 'sv-SE'
+            | OtherString;
 
-          export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          export type SetupFutureUsage =
+            | 'none'
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
 
           export interface Subscription {
             /**
@@ -5512,11 +5649,21 @@ export namespace OrderUpdateParams {
           }
 
           export namespace OnDemand {
-            export type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+            export type PurchaseInterval =
+              | 'day'
+              | 'month'
+              | 'week'
+              | 'year'
+              | OtherString;
           }
 
           export namespace Subscription {
-            export type Interval = 'day' | 'month' | 'week' | 'year';
+            export type Interval =
+              | 'day'
+              | 'month'
+              | 'week'
+              | 'year'
+              | OtherString;
 
             export interface NextBilling {
               /**
@@ -5956,7 +6103,8 @@ export namespace OrderUpdateParams {
                 | 'business'
                 | 'economy'
                 | 'first_class'
-                | 'premium_economy';
+                | 'premium_economy'
+                | OtherString;
 
               export namespace Arrival {
                 export interface Address {
@@ -6032,7 +6180,8 @@ export namespace OrderUpdateParams {
                   | 'bankruptcy'
                   | 'cancelation'
                   | 'emergency'
-                  | 'medical';
+                  | 'medical'
+                  | OtherString;
               }
             }
 
@@ -6077,7 +6226,8 @@ export namespace OrderUpdateParams {
                 | 'festival'
                 | 'in_person_education'
                 | 'sport'
-                | 'tour';
+                | 'tour'
+                | OtherString;
 
               export interface Insurance {
                 /**
@@ -6106,7 +6256,8 @@ export namespace OrderUpdateParams {
                   | 'bankruptcy'
                   | 'cancelation'
                   | 'emergency'
-                  | 'medical';
+                  | 'medical'
+                  | OtherString;
               }
             }
 
@@ -6178,7 +6329,8 @@ export namespace OrderUpdateParams {
                 | 'business'
                 | 'economy'
                 | 'first_class'
-                | 'premium_economy';
+                | 'premium_economy'
+                | OtherString;
 
               export namespace Arrival {
                 export interface Address {
@@ -6254,7 +6406,8 @@ export namespace OrderUpdateParams {
                   | 'bankruptcy'
                   | 'cancelation'
                   | 'emergency'
-                  | 'medical';
+                  | 'medical'
+                  | OtherString;
               }
             }
 
@@ -6263,7 +6416,8 @@ export namespace OrderUpdateParams {
                 | 'bankruptcy'
                 | 'cancelation'
                 | 'emergency'
-                | 'medical';
+                | 'medical'
+                | OtherString;
             }
 
             export namespace MarketplaceSeller {
@@ -6333,14 +6487,16 @@ export namespace OrderUpdateParams {
                 | 'tools_and_home_improvement'
                 | 'toys_and_games'
                 | 'video_games'
-                | 'women_clothing';
+                | 'women_clothing'
+                | OtherString;
 
               export type SellerRating =
                 | 'high'
                 | 'low'
                 | 'medium'
                 | 'very_high'
-                | 'very_low';
+                | 'very_low'
+                | OtherString;
             }
 
             export namespace RoundTripReservationDetail {
@@ -6411,7 +6567,8 @@ export namespace OrderUpdateParams {
                 | 'business'
                 | 'economy'
                 | 'first_class'
-                | 'premium_economy';
+                | 'premium_economy'
+                | OtherString;
 
               export namespace Arrival {
                 export interface Address {
@@ -6487,7 +6644,8 @@ export namespace OrderUpdateParams {
                   | 'bankruptcy'
                   | 'cancelation'
                   | 'emergency'
-                  | 'medical';
+                  | 'medical'
+                  | OtherString;
               }
             }
 
@@ -6559,7 +6717,8 @@ export namespace OrderUpdateParams {
                 | 'business'
                 | 'economy'
                 | 'first_class'
-                | 'premium_economy';
+                | 'premium_economy'
+                | OtherString;
 
               export namespace Arrival {
                 export interface Address {
@@ -6635,7 +6794,8 @@ export namespace OrderUpdateParams {
                   | 'bankruptcy'
                   | 'cancelation'
                   | 'emergency'
-                  | 'medical';
+                  | 'medical'
+                  | OtherString;
               }
             }
 
@@ -6645,13 +6805,14 @@ export namespace OrderUpdateParams {
                 | 'discount'
                 | 'gift_card'
                 | 'physical_product'
-                | 'services';
+                | 'services'
+                | OtherString;
             }
           }
         }
 
         export namespace Link {
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace Paypal {
@@ -6718,15 +6879,17 @@ export namespace OrderUpdateParams {
             | 'pl-PL'
             | 'pt-PT'
             | 'sk-SK'
-            | 'sv-SE';
+            | 'sv-SE'
+            | OtherString;
 
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
 
           export namespace LineItem {
             export type Category =
               | 'digital_goods'
               | 'donation'
-              | 'physical_goods';
+              | 'physical_goods'
+              | OtherString;
 
             export interface Tax {
               /**
@@ -6741,7 +6904,7 @@ export namespace OrderUpdateParams {
             }
 
             export namespace Tax {
-              export type Behavior = 'exclusive' | 'inclusive';
+              export type Behavior = 'exclusive' | 'inclusive' | OtherString;
             }
           }
         }
@@ -6754,7 +6917,11 @@ export namespace OrderUpdateParams {
             reference_prefix?: Emptyable<string>;
           }
 
-          export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          export type SetupFutureUsage =
+            | 'none'
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
         }
 
         export namespace Sofort {
@@ -6765,13 +6932,14 @@ export namespace OrderUpdateParams {
             | 'fr'
             | 'it'
             | 'nl'
-            | 'pl';
+            | 'pl'
+            | OtherString;
 
-          export type SetupFutureUsage = 'none' | 'off_session';
+          export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
 
         export namespace WechatPay {
-          export type Client = 'android' | 'ios' | 'web';
+          export type Client = 'android' | 'ios' | 'web' | OtherString;
         }
       }
     }
@@ -6875,11 +7043,23 @@ export namespace OrderUpdateParams {
         }
 
         export namespace Maximum {
-          export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+          export type Unit =
+            | 'business_day'
+            | 'day'
+            | 'hour'
+            | 'month'
+            | 'week'
+            | OtherString;
         }
 
         export namespace Minimum {
-          export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+          export type Unit =
+            | 'business_day'
+            | 'day'
+            | 'hour'
+            | 'month'
+            | 'week'
+            | OtherString;
         }
       }
 
@@ -6908,7 +7088,7 @@ export namespace OrderUpdateParams {
 
     export interface TaxId {
       /**
-       * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
+       * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
        */
       type: TaxId.Type;
 
@@ -6973,6 +7153,7 @@ export namespace OrderUpdateParams {
         | 'hk_br'
         | 'hr_oib'
         | 'hu_tin'
+        | 'ic_nif'
         | 'id_npwp'
         | 'il_vat'
         | 'in_gst'

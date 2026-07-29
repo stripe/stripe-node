@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class FinancingSummaryResource extends StripeResource {
@@ -97,7 +98,7 @@ export namespace FinancingSummary {
     withhold_rate: number;
   }
 
-  export type Status = 'accepted' | 'delivered' | 'none';
+  export type Status = 'accepted' | 'delivered' | 'none' | OtherString;
 
   export namespace Details {
     export interface CurrentRepaymentInterval {

@@ -16,6 +16,7 @@ import {
   Emptyable,
   AddressParam,
   MetadataParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Address,
@@ -1269,7 +1270,7 @@ export namespace Customer {
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted' | 'validated';
+    export type Status = 'processing' | 'redacted' | 'validated' | OtherString;
   }
 
   export namespace Tax {
@@ -1277,7 +1278,8 @@ export namespace Customer {
       | 'failed'
       | 'not_collecting'
       | 'supported'
-      | 'unrecognized_location';
+      | 'unrecognized_location'
+      | OtherString;
 
     export interface Location {
       /**
@@ -1296,14 +1298,20 @@ export namespace Customer {
       state: string | null;
     }
 
-    export type Provider = 'anrok' | 'avalara' | 'sphere' | 'stripe';
+    export type Provider =
+      | 'anrok'
+      | 'avalara'
+      | 'sphere'
+      | 'stripe'
+      | OtherString;
 
     export namespace Location {
       export type Source =
         | 'billing_address'
         | 'ip_address'
         | 'payment_method'
-        | 'shipping_destination';
+        | 'shipping_destination'
+        | OtherString;
     }
   }
 }
@@ -1478,7 +1486,7 @@ export namespace CustomerCreateParams {
 
   export interface TaxIdDatum {
     /**
-     * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
+     * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
      */
     type: TaxIdDatum.Type;
 
@@ -1535,7 +1543,7 @@ export namespace CustomerCreateParams {
   }
 
   export namespace Tax {
-    export type ValidateLocation = 'deferred' | 'immediately';
+    export type ValidateLocation = 'deferred' | 'immediately' | OtherString;
   }
 
   export namespace TaxIdDatum {
@@ -1593,6 +1601,7 @@ export namespace CustomerCreateParams {
       | 'hk_br'
       | 'hr_oib'
       | 'hu_tin'
+      | 'ic_nif'
       | 'id_npwp'
       | 'il_vat'
       | 'in_gst'
@@ -1877,7 +1886,11 @@ export namespace CustomerUpdateParams {
   }
 
   export namespace Tax {
-    export type ValidateLocation = 'auto' | 'deferred' | 'immediately';
+    export type ValidateLocation =
+      | 'auto'
+      | 'deferred'
+      | 'immediately'
+      | OtherString;
   }
 }
 export interface CustomerListParams extends PaginationParams {
@@ -1977,14 +1990,20 @@ export namespace CustomerCreateFundingInstructionsParams {
       country: string;
     }
 
-    export type RequestedAddressType = 'iban' | 'sort_code' | 'spei' | 'zengin';
+    export type RequestedAddressType =
+      | 'iban'
+      | 'sort_code'
+      | 'spei'
+      | 'zengin'
+      | OtherString;
 
     export type Type =
       | 'eu_bank_transfer'
       | 'gb_bank_transfer'
       | 'jp_bank_transfer'
       | 'mx_bank_transfer'
-      | 'us_bank_transfer';
+      | 'us_bank_transfer'
+      | OtherString;
   }
 }
 export interface CustomerCreateSourceParams {
@@ -2007,7 +2026,7 @@ export interface CustomerCreateSourceParams {
 }
 export interface CustomerCreateTaxIdParams {
   /**
-   * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
+   * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
    */
   type: CustomerCreateTaxIdParams.Type;
 
@@ -2076,6 +2095,7 @@ export namespace CustomerCreateTaxIdParams {
     | 'hk_br'
     | 'hr_oib'
     | 'hu_tin'
+    | 'ic_nif'
     | 'id_npwp'
     | 'il_vat'
     | 'in_gst'
@@ -2189,7 +2209,11 @@ export interface CustomerListPaymentMethodsParams extends PaginationParams {
   type?: CustomerListPaymentMethodsParams.Type;
 }
 export namespace CustomerListPaymentMethodsParams {
-  export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+  export type AllowRedisplay =
+    | 'always'
+    | 'limited'
+    | 'unspecified'
+    | OtherString;
 
   export type Type =
     | 'acss_debit'
@@ -2253,7 +2277,8 @@ export namespace CustomerListPaymentMethodsParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 }
 export interface CustomerListSourcesParams extends PaginationParams {
   /**

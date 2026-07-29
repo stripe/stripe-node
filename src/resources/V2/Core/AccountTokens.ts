@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {JapanAddressParam, MetadataParam, Decimal} from '../../../shared.js';
+import {
+  JapanAddressParam,
+  OtherString,
+  MetadataParam,
+  Decimal,
+} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class AccountTokenResource extends StripeResource {
@@ -171,6 +176,11 @@ export namespace V2 {
 
         export interface BusinessDetails {
           /**
+           * Additional addresses associated with the business.
+           */
+          additional_addresses?: Array<BusinessDetails.AdditionalAddress>;
+
+          /**
            * The business registration address of the business entity.
            */
           address?: JapanAddressParam;
@@ -235,7 +245,8 @@ export namespace V2 {
           | 'company'
           | 'government_entity'
           | 'individual'
-          | 'non_profit';
+          | 'non_profit'
+          | OtherString;
 
         export interface Individual {
           /**
@@ -404,6 +415,48 @@ export namespace V2 {
         }
 
         export namespace BusinessDetails {
+          export interface AdditionalAddress {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * Purpose of additional address.
+             */
+            purpose: AdditionalAddress.Purpose;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
+
           export interface AnnualRevenue {
             /**
              * A non-negative integer representing the amount in the smallest currency unit.
@@ -560,7 +613,14 @@ export namespace V2 {
             | 'trust'
             | 'unincorporated_association'
             | 'unincorporated_non_profit'
-            | 'unincorporated_partnership';
+            | 'unincorporated_partnership'
+            | OtherString;
+
+          export namespace AdditionalAddress {
+            export type Purpose =
+              | 'administrative'
+              | 'principal_place_of_business';
+          }
 
           export namespace Documents {
             export interface BankAccountOwnershipVerification {
@@ -842,7 +902,8 @@ export namespace V2 {
               | 'th_crn'
               | 'th_prn'
               | 'th_tin'
-              | 'us_ein';
+              | 'us_ein'
+              | OtherString;
           }
 
           export namespace ScriptNames {
@@ -983,9 +1044,9 @@ export namespace V2 {
             value: string;
           }
 
-          export type LegalGender = 'female' | 'male';
+          export type LegalGender = 'female' | 'male' | OtherString;
 
-          export type PoliticalExposure = 'existing' | 'none';
+          export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
           export interface Relationship {
             /**
@@ -1210,7 +1271,8 @@ export namespace V2 {
               | 'us_ssn'
               | 'us_ssn_last_4'
               | 'uy_dni'
-              | 'za_id';
+              | 'za_id'
+              | OtherString;
           }
 
           export namespace ScriptNames {

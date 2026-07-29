@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Address} from '../shared.js';
+import {Address, OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface FundingInstructions {
   /**
@@ -86,7 +86,7 @@ export namespace FundingInstructions {
       zengin?: FinancialAddress.Zengin;
     }
 
-    export type Type = 'eu_bank_transfer' | 'jp_bank_transfer';
+    export type Type = 'eu_bank_transfer' | 'jp_bank_transfer' | OtherString;
 
     export namespace FinancialAddress {
       export interface Aba {
@@ -196,12 +196,14 @@ export namespace FundingInstructions {
       export type SupportedNetwork =
         | 'ach'
         | 'bacs'
+        | 'chaps'
         | 'domestic_wire_us'
         | 'fps'
         | 'sepa'
         | 'spei'
         | 'swift'
-        | 'zengin';
+        | 'zengin'
+        | OtherString;
 
       export interface Swift {
         account_holder_address: Address;
@@ -240,7 +242,8 @@ export namespace FundingInstructions {
         | 'sort_code'
         | 'spei'
         | 'swift'
-        | 'zengin';
+        | 'zengin'
+        | OtherString;
 
       export interface Zengin {
         account_holder_address: Address;

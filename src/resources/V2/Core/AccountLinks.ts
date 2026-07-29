@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class AccountLinkResource extends StripeResource {
@@ -119,7 +120,7 @@ export namespace AccountLink {
       return_url?: string;
     }
 
-    export type Type = 'account_onboarding' | 'account_update';
+    export type Type = 'account_onboarding' | 'account_update' | OtherString;
 
     export namespace AccountOnboarding {
       export interface CollectionOptions {
@@ -139,12 +140,13 @@ export namespace AccountLink {
         | 'merchant'
         | 'money_manager'
         | 'recipient'
-        | 'storer';
+        | 'storer'
+        | OtherString;
 
       export namespace CollectionOptions {
-        export type Fields = 'currently_due' | 'eventually_due';
+        export type Fields = 'currently_due' | 'eventually_due' | OtherString;
 
-        export type FutureRequirements = 'include' | 'omit';
+        export type FutureRequirements = 'include' | 'omit' | OtherString;
       }
     }
 
@@ -166,12 +168,13 @@ export namespace AccountLink {
         | 'merchant'
         | 'money_manager'
         | 'recipient'
-        | 'storer';
+        | 'storer'
+        | OtherString;
 
       export namespace CollectionOptions {
-        export type Fields = 'currently_due' | 'eventually_due';
+        export type Fields = 'currently_due' | 'eventually_due' | OtherString;
 
-        export type FutureRequirements = 'include' | 'omit';
+        export type FutureRequirements = 'include' | 'omit' | OtherString;
       }
     }
   }
@@ -253,7 +256,10 @@ export namespace V2 {
           return_url?: string;
         }
 
-        export type Type = 'account_onboarding' | 'account_update';
+        export type Type =
+          | 'account_onboarding'
+          | 'account_update'
+          | OtherString;
 
         export namespace AccountOnboarding {
           export interface CollectionOptions {
@@ -273,12 +279,16 @@ export namespace V2 {
             | 'merchant'
             | 'money_manager'
             | 'recipient'
-            | 'storer';
+            | 'storer'
+            | OtherString;
 
           export namespace CollectionOptions {
-            export type Fields = 'currently_due' | 'eventually_due';
+            export type Fields =
+              | 'currently_due'
+              | 'eventually_due'
+              | OtherString;
 
-            export type FutureRequirements = 'include' | 'omit';
+            export type FutureRequirements = 'include' | 'omit' | OtherString;
           }
         }
 
@@ -300,12 +310,16 @@ export namespace V2 {
             | 'merchant'
             | 'money_manager'
             | 'recipient'
-            | 'storer';
+            | 'storer'
+            | OtherString;
 
           export namespace CollectionOptions {
-            export type Fields = 'currently_due' | 'eventually_due';
+            export type Fields =
+              | 'currently_due'
+              | 'eventually_due'
+              | OtherString;
 
-            export type FutureRequirements = 'include' | 'omit';
+            export type FutureRequirements = 'include' | 'omit' | OtherString;
           }
         }
       }

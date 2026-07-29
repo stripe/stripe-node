@@ -8,6 +8,7 @@ import {TaxRate} from './TaxRates.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   Decimal,
   PaginationParams,
   Metadata,
@@ -593,7 +594,7 @@ export namespace SubscriptionItem {
   }
 
   export namespace Trial {
-    export type Type = 'free' | 'paid';
+    export type Type = 'free' | 'paid' | OtherString;
   }
 }
 export interface SubscriptionItemCreateParams {
@@ -757,7 +758,8 @@ export namespace SubscriptionItemCreateParams {
   export type ProrationBehavior =
     | 'always_invoice'
     | 'create_prorations'
-    | 'none';
+    | 'none'
+    | OtherString;
 
   export interface Trial {
     /**
@@ -802,10 +804,10 @@ export namespace SubscriptionItemCreateParams {
         interval_count: number;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -831,7 +833,7 @@ export namespace SubscriptionItemCreateParams {
   }
 
   export namespace Trial {
-    export type Type = 'free' | 'paid';
+    export type Type = 'free' | 'paid' | OtherString;
   }
 }
 export interface SubscriptionItemRetrieveParams {
@@ -996,7 +998,8 @@ export namespace SubscriptionItemUpdateParams {
   export type ProrationBehavior =
     | 'always_invoice'
     | 'create_prorations'
-    | 'none';
+    | 'none'
+    | OtherString;
 
   export namespace Discount {
     export interface DiscountEnd {
@@ -1029,10 +1032,10 @@ export namespace SubscriptionItemUpdateParams {
         interval_count: number;
       }
 
-      export type Type = 'duration' | 'timestamp';
+      export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -1099,5 +1102,6 @@ export namespace SubscriptionItemDeleteParams {
   export type ProrationBehavior =
     | 'always_invoice'
     | 'create_prorations'
-    | 'none';
+    | 'none'
+    | OtherString;
 }

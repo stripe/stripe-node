@@ -12,6 +12,7 @@ import {
   Emptyable,
   MetadataParam,
   PaginationParams,
+  OtherString,
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
@@ -94,7 +95,7 @@ export class ReaderResource extends StripeResource {
     id: string,
     params?: Terminal.ReaderCancelActionParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<Reader | DeletedReader>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}/cancel_action`,
@@ -325,7 +326,8 @@ export namespace DeletedReader {
     | 'verifone_m425'
     | 'verifone_p630'
     | 'verifone_ux700'
-    | 'verifone_v660p';
+    | 'verifone_v660p'
+    | OtherString;
 }
 export namespace Reader {
   export interface Action {
@@ -414,7 +416,8 @@ export namespace Reader {
     | 'verifone_m425'
     | 'verifone_p630'
     | 'verifone_ux700'
-    | 'verifone_v660p';
+    | 'verifone_v660p'
+    | OtherString;
 
   export type Status = 'offline' | 'online';
 
@@ -697,7 +700,7 @@ export namespace Reader {
       type: 'cart';
     }
 
-    export type Status = 'failed' | 'in_progress' | 'succeeded';
+    export type Status = 'failed' | 'in_progress' | 'succeeded' | OtherString;
 
     export type Type =
       | 'collect_inputs'
@@ -707,7 +710,8 @@ export namespace Reader {
       | 'process_payment_intent'
       | 'process_setup_intent'
       | 'refund_payment'
-      | 'set_reader_display';
+      | 'set_reader_display'
+      | OtherString;
 
     export namespace ApiError {
       export type Code =
@@ -1101,14 +1105,14 @@ export namespace Reader {
           }
 
           export namespace Choice {
-            export type Style = 'primary' | 'secondary';
+            export type Style = 'primary' | 'secondary' | OtherString;
           }
         }
 
         export namespace Toggle {
-          export type DefaultValue = 'disabled' | 'enabled';
+          export type DefaultValue = 'disabled' | 'enabled' | OtherString;
 
-          export type Value = 'disabled' | 'enabled';
+          export type Value = 'disabled' | 'enabled' | OtherString;
         }
       }
     }
@@ -1373,9 +1377,10 @@ export namespace Terminal {
       | 'verifone_m425'
       | 'verifone_p630'
       | 'verifone_ux700'
-      | 'verifone_v660p';
+      | 'verifone_v660p'
+      | OtherString;
 
-    export type Status = 'offline' | 'online';
+    export type Status = 'offline' | 'online' | OtherString;
   }
 }
 export namespace Terminal {
@@ -1488,7 +1493,8 @@ export namespace Terminal {
         | 'phone'
         | 'selection'
         | 'signature'
-        | 'text';
+        | 'text'
+        | OtherString;
 
       export namespace Selection {
         export interface Choice {
@@ -1509,12 +1515,12 @@ export namespace Terminal {
         }
 
         export namespace Choice {
-          export type Style = 'primary' | 'secondary';
+          export type Style = 'primary' | 'secondary' | OtherString;
         }
       }
 
       export namespace Toggle {
-        export type DefaultValue = 'disabled' | 'enabled';
+        export type DefaultValue = 'disabled' | 'enabled' | OtherString;
       }
     }
   }
@@ -1561,7 +1567,11 @@ export namespace Terminal {
     }
 
     export namespace CollectConfig {
-      export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+      export type AllowRedisplay =
+        | 'always'
+        | 'limited'
+        | 'unspecified'
+        | OtherString;
 
       export interface Tipping {
         /**
@@ -1646,7 +1656,11 @@ export namespace Terminal {
     }
 
     export namespace ProcessConfig {
-      export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+      export type AllowRedisplay =
+        | 'always'
+        | 'limited'
+        | 'unspecified'
+        | OtherString;
 
       export interface Tipping {
         /**
@@ -1681,7 +1695,11 @@ export namespace Terminal {
   }
 
   export namespace ReaderProcessSetupIntentParams {
-    export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+    export type AllowRedisplay =
+      | 'always'
+      | 'limited'
+      | 'unspecified'
+      | OtherString;
 
     export interface ProcessConfig {
       /**

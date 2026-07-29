@@ -1,7 +1,12 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {MetadataParam, PaginationParams, Metadata} from '../shared.js';
+import {
+  MetadataParam,
+  PaginationParams,
+  Metadata,
+  OtherString,
+} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class AccountNoticeResource extends StripeResource {
@@ -146,7 +151,8 @@ export namespace AccountNotice {
     | 'issuing.credit_line_closed'
     | 'issuing.dispute_lost'
     | 'issuing.dispute_submitted'
-    | 'issuing.dispute_won';
+    | 'issuing.dispute_won'
+    | OtherString;
 }
 export interface AccountNoticeRetrieveParams {
   /**

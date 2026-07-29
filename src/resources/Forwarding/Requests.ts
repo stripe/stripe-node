@@ -3,6 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {
   MetadataParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -119,7 +120,8 @@ export namespace Request {
     | 'card_expiry'
     | 'card_number'
     | 'cardholder_name'
-    | 'request_signature';
+    | 'request_signature'
+    | OtherString;
 
   export interface RequestContext {
     /**
@@ -234,7 +236,8 @@ export namespace Forwarding {
       | 'card_expiry'
       | 'card_number'
       | 'cardholder_name'
-      | 'request_signature';
+      | 'request_signature'
+      | OtherString;
 
     export interface Request {
       /**

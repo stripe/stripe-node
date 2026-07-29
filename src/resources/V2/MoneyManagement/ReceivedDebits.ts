@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ReceivedDebitResource extends StripeResource {
@@ -123,9 +124,10 @@ export namespace ReceivedDebit {
     statement_descriptor?: string;
 
     /**
-     * The payment method used to originate the debit.
+     * Object containing details of the US Bank Account that originated the debit.
+     * Present when the debit was originated via ACH.
      */
-    us_bank_account: BankTransfer.UsBankAccount;
+    us_bank_account?: BankTransfer.UsBankAccount;
   }
 
   export type Status =
@@ -133,7 +135,8 @@ export namespace ReceivedDebit {
     | 'failed'
     | 'pending'
     | 'returned'
-    | 'succeeded';
+    | 'succeeded'
+    | OtherString;
 
   export interface StatusDetails {
     /**
@@ -163,7 +166,7 @@ export namespace ReceivedDebit {
     succeeded_at?: string;
   }
 
-  export type Type = 'bank_transfer' | 'external_debit';
+  export type Type = 'bank_transfer' | 'external_debit' | OtherString;
 
   export namespace BankTransfer {
     export interface UsBankAccount {
@@ -197,7 +200,8 @@ export namespace ReceivedDebit {
         | 'capability_inactive'
         | 'financial_address_inactive'
         | 'insufficient_funds'
-        | 'stripe_rejected';
+        | 'stripe_rejected'
+        | OtherString;
     }
   }
 }

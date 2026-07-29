@@ -5,6 +5,7 @@ import {FinancialAccountFeatures} from './FinancialAccountFeatures.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -222,7 +223,8 @@ export namespace FinancialAccount {
     | 'outbound_payments.us_domestic_wire'
     | 'outbound_transfers.ach'
     | 'outbound_transfers.us_domestic_wire'
-    | 'remote_deposit_capture';
+    | 'remote_deposit_capture'
+    | OtherString;
 
   export interface Balance {
     /**
@@ -275,7 +277,8 @@ export namespace FinancialAccount {
     | 'outbound_payments.us_domestic_wire'
     | 'outbound_transfers.ach'
     | 'outbound_transfers.us_domestic_wire'
-    | 'remote_deposit_capture';
+    | 'remote_deposit_capture'
+    | OtherString;
 
   export interface PlatformRestrictions {
     /**
@@ -300,9 +303,10 @@ export namespace FinancialAccount {
     | 'outbound_payments.us_domestic_wire'
     | 'outbound_transfers.ach'
     | 'outbound_transfers.us_domestic_wire'
-    | 'remote_deposit_capture';
+    | 'remote_deposit_capture'
+    | OtherString;
 
-  export type Status = 'closed' | 'open';
+  export type Status = 'closed' | 'open' | OtherString;
 
   export interface StatusDetails {
     /**
@@ -339,13 +343,13 @@ export namespace FinancialAccount {
       routing_number: string;
     }
 
-    export type SupportedNetwork = 'ach' | 'us_domestic_wire';
+    export type SupportedNetwork = 'ach' | 'us_domestic_wire' | OtherString;
   }
 
   export namespace PlatformRestrictions {
-    export type InboundFlows = 'restricted' | 'unrestricted';
+    export type InboundFlows = 'restricted' | 'unrestricted' | OtherString;
 
-    export type OutboundFlows = 'restricted' | 'unrestricted';
+    export type OutboundFlows = 'restricted' | 'unrestricted' | OtherString;
   }
 
   export namespace StatusDetails {
@@ -357,7 +361,11 @@ export namespace FinancialAccount {
     }
 
     export namespace Closed {
-      export type Reason = 'account_rejected' | 'closed_by_platform' | 'other';
+      export type Reason =
+        | 'account_rejected'
+        | 'closed_by_platform'
+        | 'other'
+        | OtherString;
     }
   }
 }
@@ -523,7 +531,11 @@ export namespace Treasury {
         }
 
         export namespace Aba {
-          export type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
+          export type Bank =
+            | 'evolve'
+            | 'fifth_third'
+            | 'goldman_sachs'
+            | OtherString;
         }
       }
 
@@ -570,9 +582,9 @@ export namespace Treasury {
     }
 
     export namespace PlatformRestrictions {
-      export type InboundFlows = 'restricted' | 'unrestricted';
+      export type InboundFlows = 'restricted' | 'unrestricted' | OtherString;
 
-      export type OutboundFlows = 'restricted' | 'unrestricted';
+      export type OutboundFlows = 'restricted' | 'unrestricted' | OtherString;
     }
   }
 }
@@ -763,7 +775,11 @@ export namespace Treasury {
         }
 
         export namespace Aba {
-          export type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
+          export type Bank =
+            | 'evolve'
+            | 'fifth_third'
+            | 'goldman_sachs'
+            | OtherString;
         }
       }
 
@@ -810,13 +826,13 @@ export namespace Treasury {
     }
 
     export namespace ForwardingSettings {
-      export type Type = 'financial_account' | 'payment_method';
+      export type Type = 'financial_account' | 'payment_method' | OtherString;
     }
 
     export namespace PlatformRestrictions {
-      export type InboundFlows = 'restricted' | 'unrestricted';
+      export type InboundFlows = 'restricted' | 'unrestricted' | OtherString;
 
-      export type OutboundFlows = 'restricted' | 'unrestricted';
+      export type OutboundFlows = 'restricted' | 'unrestricted' | OtherString;
     }
   }
 }
@@ -839,7 +855,7 @@ export namespace Treasury {
   }
 
   export namespace FinancialAccountListParams {
-    export type Status = 'closed' | 'open';
+    export type Status = 'closed' | 'open' | OtherString;
   }
 }
 export namespace Treasury {
@@ -874,7 +890,7 @@ export namespace Treasury {
     }
 
     export namespace ForwardingSettings {
-      export type Type = 'financial_account' | 'payment_method';
+      export type Type = 'financial_account' | 'payment_method' | OtherString;
     }
   }
 }
@@ -1003,7 +1019,11 @@ export namespace Treasury {
       }
 
       export namespace Aba {
-        export type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
+        export type Bank =
+          | 'evolve'
+          | 'fifth_third'
+          | 'goldman_sachs'
+          | OtherString;
       }
     }
 

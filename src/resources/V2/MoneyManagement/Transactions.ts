@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class TransactionResource extends StripeResource {
@@ -142,7 +143,8 @@ export namespace Transaction {
     | 'received_debit'
     | 'received_debit_reversal'
     | 'stripe_fee'
-    | 'stripe_fee_tax';
+    | 'stripe_fee_tax'
+    | OtherString;
 
   export interface Counterparty {
     /**
@@ -221,7 +223,8 @@ export namespace Transaction {
       | 'outbound_payment'
       | 'outbound_transfer'
       | 'received_credit'
-      | 'received_debit';
+      | 'received_debit'
+      | OtherString;
   }
 }
 export namespace V2 {
