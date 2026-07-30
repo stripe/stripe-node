@@ -87,6 +87,7 @@ export namespace Crypto {
       | 'solana'
       | 'stellar'
       | 'sui'
+      | 'tempo'
       | 'worldchain'
       | OtherString;
   }

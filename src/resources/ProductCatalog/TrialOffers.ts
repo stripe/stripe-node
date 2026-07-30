@@ -2,10 +2,27 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Price} from './../Prices.js';
-import {OtherString} from '../../shared.js';
-import {RequestOptions, Response} from '../../lib.js';
+import {OtherString, PaginationParams, RangeQueryParam} from '../../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class TrialOfferResource extends StripeResource {
+  /**
+   * Returns a list of trial offers.
+   */
+  list(
+    params?: ProductCatalog.TrialOfferListParams,
+    options?: RequestOptions
+  ): ApiListPromise<TrialOffer> {
+    return this._makeRequest(
+      'GET',
+      '/v1/product_catalog/trial_offers',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
+  }
   /**
    * Creates a trial offer.
    */
@@ -16,6 +33,21 @@ export class TrialOfferResource extends StripeResource {
     return this._makeRequest(
       'POST',
       '/v1/product_catalog/trial_offers',
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Retrieves the trial offer with the given ID.
+   */
+  retrieve(
+    id: string,
+    params?: ProductCatalog.TrialOfferRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<TrialOffer>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/product_catalog/trial_offers/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -157,5 +189,31 @@ export namespace ProductCatalog {
         price: string;
       }
     }
+  }
+}
+export namespace ProductCatalog {
+  export interface TrialOfferRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+}
+export namespace ProductCatalog {
+  export interface TrialOfferListParams extends PaginationParams {
+    /**
+     * Only return trial offers that were created during the given date interval.
+     */
+    created?: RangeQueryParam | number;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Only return trial offers that reference these prices (during the trial period).
+     */
+    prices?: Array<string>;
   }
 }

@@ -3,11 +3,11 @@
 import {StripeResource} from '../StripeResource.js';
 import {
   MetadataParam,
+  OtherString,
   Emptyable,
   PaginationParams,
   RangeQueryParam,
   Metadata,
-  OtherString,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
@@ -225,13 +225,16 @@ export namespace TaxRate {
     | 'igst'
     | 'jct'
     | 'lease_tax'
+    | 'mass_transit_parking_tax'
+    | 'parking_tax'
     | 'pst'
     | 'qst'
     | 'retail_delivery_fee'
     | 'rst'
     | 'sales_tax'
     | 'service_tax'
-    | 'vat';
+    | 'vat'
+    | OtherString;
 }
 export interface TaxRateCreateParams {
   /**
@@ -298,13 +301,16 @@ export namespace TaxRateCreateParams {
     | 'igst'
     | 'jct'
     | 'lease_tax'
+    | 'mass_transit_parking_tax'
+    | 'parking_tax'
     | 'pst'
     | 'qst'
     | 'retail_delivery_fee'
     | 'rst'
     | 'sales_tax'
     | 'service_tax'
-    | 'vat';
+    | 'vat'
+    | OtherString;
 }
 export interface TaxRateRetrieveParams {
   /**
@@ -367,13 +373,16 @@ export namespace TaxRateUpdateParams {
     | 'igst'
     | 'jct'
     | 'lease_tax'
+    | 'mass_transit_parking_tax'
+    | 'parking_tax'
     | 'pst'
     | 'qst'
     | 'retail_delivery_fee'
     | 'rst'
     | 'sales_tax'
     | 'service_tax'
-    | 'vat';
+    | 'vat'
+    | OtherString;
 }
 export interface TaxRateListParams extends PaginationParams {
   /**

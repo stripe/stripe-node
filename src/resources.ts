@@ -1,8 +1,10 @@
 // File generated from our OpenAPI spec
 
 import {resourceNamespace} from './ResourceNamespace.js';
+import {AccountActivityResource as V2SignalsAccountActivity} from './resources/V2/Signals/AccountActivity.js';
 import {AccountEvaluationResource as RadarAccountEvaluations} from './resources/Radar/AccountEvaluations.js';
 import {AccountEvaluationResource as V2CoreAccountEvaluations} from './resources/V2/Core/AccountEvaluations.js';
+import {AccountEvaluationResource as V2SignalsAccountEvaluations} from './resources/V2/Signals/AccountEvaluations.js';
 import {AccountLinkResource as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
 import {AccountSignalResource as V2SignalsAccountSignals} from './resources/V2/Signals/AccountSignals.js';
 import {AccountTokenResource as V2CoreAccountTokens} from './resources/V2/Core/AccountTokens.js';
@@ -78,6 +80,7 @@ import {ImportResource as V2CommerceProductCatalogImports} from './resources/V2/
 import {InboundTransferResource as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransferResource as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {InboundTransferResource as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
+import {InquiryResource as V2RiskInquiries} from './resources/V2/Risk/Inquiries.js';
 import {InstitutionResource as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
 import {IntentResource as V2BillingIntents} from './resources/V2/Billing/Intents.js';
 import {IssuedTokenResource as SharedPaymentIssuedTokens} from './resources/SharedPayment/IssuedTokens.js';
@@ -137,6 +140,7 @@ import {ReaderResource as TestHelpersTerminalReaders} from './resources/TestHelp
 import {ReceivedCreditResource as TestHelpersTreasuryReceivedCredits} from './resources/TestHelpers/Treasury/ReceivedCredits.js';
 import {ReceivedCreditResource as TreasuryReceivedCredits} from './resources/Treasury/ReceivedCredits.js';
 import {ReceivedCreditResource as V2MoneyManagementReceivedCredits} from './resources/V2/MoneyManagement/ReceivedCredits.js';
+import {ReceivedDebitMandateResource as V2MoneyManagementReceivedDebitMandates} from './resources/V2/MoneyManagement/ReceivedDebitMandates.js';
 import {ReceivedDebitResource as TestHelpersTreasuryReceivedDebits} from './resources/TestHelpers/Treasury/ReceivedDebits.js';
 import {ReceivedDebitResource as TreasuryReceivedDebits} from './resources/Treasury/ReceivedDebits.js';
 import {ReceivedDebitResource as V2MoneyManagementReceivedDebits} from './resources/V2/MoneyManagement/ReceivedDebits.js';
@@ -491,6 +495,7 @@ export const V2 = resourceNamespace('v2', {
     PayoutMethods: V2MoneyManagementPayoutMethods,
     PayoutMethodsBankAccountSpec: V2MoneyManagementPayoutMethodsBankAccountSpec,
     ReceivedCredits: V2MoneyManagementReceivedCredits,
+    ReceivedDebitMandates: V2MoneyManagementReceivedDebitMandates,
     ReceivedDebits: V2MoneyManagementReceivedDebits,
     RecipientVerifications: V2MoneyManagementRecipientVerifications,
     TransactionEntries: V2MoneyManagementTransactionEntries,
@@ -513,7 +518,10 @@ export const V2 = resourceNamespace('v2', {
     ReportRuns: V2ReportingReportRuns,
     Reports: V2ReportingReports,
   }),
+  Risk: resourceNamespace('risk', {Inquiries: V2RiskInquiries}),
   Signals: resourceNamespace('signals', {
+    AccountActivity: V2SignalsAccountActivity,
+    AccountEvaluations: V2SignalsAccountEvaluations,
     AccountSignals: V2SignalsAccountSignals,
   }),
   Tax: resourceNamespace('tax', {ManualRules: V2TaxManualRules}),

@@ -2519,6 +2519,11 @@ export namespace Issuing {
     metadata?: MetadataParam;
 
     /**
+     * The cardholder's name. This will be printed on cards issued to them.
+     */
+    name?: string;
+
+    /**
      * The cardholder's phone number. This is required for all cardholders who will be creating EU cards. See the [3D Secure documentation](https://docs.stripe.com/issuing/3d-secure) for more details.
      */
     phone_number?: string;

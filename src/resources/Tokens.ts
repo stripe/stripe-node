@@ -481,6 +481,8 @@ export namespace TokenCreateParams {
        */
       address_kanji?: JapanAddressParam;
 
+      administrative_address?: AddressParam;
+
       /**
        * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://docs.stripe.com/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
        */
@@ -545,6 +547,8 @@ export namespace TokenCreateParams {
        * The company's phone number (used for verification).
        */
       phone?: string;
+
+      principal_place_of_business?: AddressParam;
 
       /**
        * When the business was incorporated or registered.

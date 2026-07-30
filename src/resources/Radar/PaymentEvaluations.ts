@@ -570,6 +570,11 @@ export namespace PaymentEvaluation {
       billing_details: PaymentMethodDetails.BillingDetails | null;
 
       /**
+       * Card details associated with the payment evaluation.
+       */
+      card?: PaymentMethodDetails.Card | null;
+
+      /**
        * The payment method used in this payment evaluation.
        */
       payment_method: string | PaymentMethod;
@@ -641,6 +646,28 @@ export namespace PaymentEvaluation {
          * Billing phone number (including extension).
          */
         phone: string | null;
+      }
+
+      export interface Card {
+        /**
+         * Two-digit number representing the card's expiration month.
+         */
+        exp_month: number;
+
+        /**
+         * Four-digit number representing the card's expiration year.
+         */
+        exp_year: number;
+
+        /**
+         * First six digits of the card number.
+         */
+        first6?: string;
+
+        /**
+         * Last four digits of the card number.
+         */
+        last4?: string;
       }
     }
   }
@@ -832,7 +859,7 @@ export namespace Radar {
         billing_details?: PaymentMethodDetails.BillingDetails;
 
         /**
-         * Masked PAN card details to use as an alternative to a payment_method token.
+         * Masked/raw PAN card details to use as an alternative to a payment_method token.
          */
         card?: PaymentMethodDetails.Card;
 
@@ -912,6 +939,11 @@ export namespace Radar {
 
         export interface Card {
           /**
+           * The CVC of the card.
+           */
+          cvc?: string;
+
+          /**
            * Two-digit number representing the card's expiration month.
            */
           exp_month: number;
@@ -924,12 +956,17 @@ export namespace Radar {
           /**
            * First six digits of the card number.
            */
-          first6: string;
+          first6?: string;
 
           /**
            * Last four digits of the card number.
            */
-          last4: string;
+          last4?: string;
+
+          /**
+           * The card number, as a string without any separators.
+           */
+          number?: string;
         }
       }
     }

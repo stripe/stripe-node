@@ -1549,7 +1549,7 @@ export namespace Terminal {
     /**
      * The brand of the gift card.
      */
-    brand: ReaderActivateGiftCardParams.Brand;
+    brand: 'svs';
 
     /**
      * The initial balance to set on the gift card.
@@ -1568,8 +1568,6 @@ export namespace Terminal {
   }
 
   export namespace ReaderActivateGiftCardParams {
-    export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
-
     export interface Balance {
       /**
        * The initial balance amount to be loaded when activating the gift card, in the smallest currency unit
@@ -1596,7 +1594,7 @@ export namespace Terminal {
     /**
      * The brand of the gift card.
      */
-    brand: ReaderCashoutGiftCardParams.Brand;
+    brand: 'svs';
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -1607,10 +1605,6 @@ export namespace Terminal {
      * The Stripe account ID to process the gift card operation on behalf of.
      */
     on_behalf_of?: string;
-  }
-
-  export namespace ReaderCashoutGiftCardParams {
-    export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
   }
 }
 export namespace Terminal {
@@ -1618,7 +1612,7 @@ export namespace Terminal {
     /**
      * The brand of the gift card.
      */
-    brand: ReaderCheckGiftCardBalanceParams.Brand;
+    brand: 'svs';
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -1629,10 +1623,6 @@ export namespace Terminal {
      * The Stripe account ID to process the gift card operation on behalf of.
      */
     on_behalf_of?: string;
-  }
-
-  export namespace ReaderCheckGiftCardBalanceParams {
-    export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
   }
 }
 export namespace Terminal {
@@ -1799,7 +1789,7 @@ export namespace Terminal {
       /**
        * The gift card brand to use in the transaction.
        */
-      gift_card_brand?: CollectConfig.GiftCardBrand;
+      gift_card_brand?: 'svs';
 
       /**
        * Override showing a tipping selection screen on this transaction.
@@ -1818,8 +1808,6 @@ export namespace Terminal {
         | 'limited'
         | 'unspecified'
         | OtherString;
-
-      export type GiftCardBrand = 'fiserv_valuelink' | 'givex' | 'svs';
 
       export interface Tipping {
         /**
@@ -1890,7 +1878,7 @@ export namespace Terminal {
       /**
        * The gift card brand to use in the transaction.
        */
-      gift_card_brand?: ProcessConfig.GiftCardBrand;
+      gift_card_brand?: 'svs';
 
       /**
        * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. If you'd prefer to redirect to a mobile application, you can alternatively supply an application URI scheme.
@@ -1914,8 +1902,6 @@ export namespace Terminal {
         | 'limited'
         | 'unspecified'
         | OtherString;
-
-      export type GiftCardBrand = 'fiserv_valuelink' | 'givex' | 'svs';
 
       export interface Tipping {
         /**
@@ -2026,7 +2012,7 @@ export namespace Terminal {
     /**
      * The brand of the gift card.
      */
-    brand: ReaderReloadGiftCardParams.Brand;
+    brand: 'svs';
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -2042,10 +2028,6 @@ export namespace Terminal {
      * The Stripe account ID to process the gift card operation on behalf of.
      */
     on_behalf_of?: string;
-  }
-
-  export namespace ReaderReloadGiftCardParams {
-    export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
   }
 }
 export namespace Terminal {

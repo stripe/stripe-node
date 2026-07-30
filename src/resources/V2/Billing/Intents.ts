@@ -190,9 +190,19 @@ export interface Intent {
 export namespace Intent {
   export interface AmountDetails {
     /**
+     * The outstanding amount after discount, tax, and customer balance application.
+     */
+    amount_due: string;
+
+    /**
      * Three-letter ISO currency code, in lowercase. Must be a supported currency.
      */
     currency: string;
+
+    /**
+     * The customer's account balance applied to the amount.
+     */
+    customer_balance_applied: string;
 
     /**
      * Amount of discount applied.

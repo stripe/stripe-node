@@ -186,6 +186,7 @@ export namespace GiftCardOperation {
     | 'stolen_card'
     | 'suspected_fraud'
     | 'timeout'
+    | 'try_again_later'
     | OtherString;
 
   export interface Reload {

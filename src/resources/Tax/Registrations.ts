@@ -3613,6 +3613,16 @@ export namespace Tax {
         luxury_tax?: Us.LuxuryTax;
 
         /**
+         * Options for the mass transit parking tax registration.
+         */
+        mass_transit_parking_tax?: Us.MassTransitParkingTax;
+
+        /**
+         * Options for the parking tax registration.
+         */
+        parking_tax?: Us.ParkingTax;
+
+        /**
          * Options for the resort tax registration.
          */
         resort_tax?: Us.ResortTax;
@@ -4850,6 +4860,20 @@ export namespace Tax {
         export interface LuxuryTax {
           /**
            * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=luxury_tax#registration-types).
+           */
+          jurisdiction: string;
+        }
+
+        export interface MassTransitParkingTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=mass_transit_parking_tax#registration-types).
+           */
+          jurisdiction: string;
+        }
+
+        export interface ParkingTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=parking_tax#registration-types).
            */
           jurisdiction: string;
         }

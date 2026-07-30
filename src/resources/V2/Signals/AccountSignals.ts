@@ -35,6 +35,32 @@ export class AccountSignalResource extends StripeResource {
                     kind: 'object',
                     fields: {probability: {kind: 'decimal_string'}},
                   },
+                  payment_delinquency_exposure: {
+                    kind: 'object',
+                    fields: {
+                      additional_details: {
+                        kind: 'object',
+                        fields: {
+                          gross_exposure_amount: {
+                            kind: 'object',
+                            fields: {value: {kind: 'int64_string'}},
+                          },
+                        },
+                      },
+                      exposure_amount: {
+                        kind: 'object',
+                        fields: {value: {kind: 'int64_string'}},
+                      },
+                    },
+                  },
+                  user_account_sharing: {
+                    kind: 'object',
+                    fields: {score: {kind: 'decimal_string'}},
+                  },
+                  user_multi_accounting: {
+                    kind: 'object',
+                    fields: {score: {kind: 'decimal_string'}},
+                  },
                 },
               },
             },
@@ -68,6 +94,32 @@ export class AccountSignalResource extends StripeResource {
               kind: 'object',
               fields: {probability: {kind: 'decimal_string'}},
             },
+            payment_delinquency_exposure: {
+              kind: 'object',
+              fields: {
+                additional_details: {
+                  kind: 'object',
+                  fields: {
+                    gross_exposure_amount: {
+                      kind: 'object',
+                      fields: {value: {kind: 'int64_string'}},
+                    },
+                  },
+                },
+                exposure_amount: {
+                  kind: 'object',
+                  fields: {value: {kind: 'int64_string'}},
+                },
+              },
+            },
+            user_account_sharing: {
+              kind: 'object',
+              fields: {score: {kind: 'decimal_string'}},
+            },
+            user_multi_accounting: {
+              kind: 'object',
+              fields: {score: {kind: 'decimal_string'}},
+            },
           },
         },
       }
@@ -91,6 +143,11 @@ export interface AccountSignal {
   account_details?: AccountSignal.AccountDetails;
 
   /**
+   * The account evaluation that produced this signal, if applicable.
+   */
+  account_evaluation?: string;
+
+  /**
    * Timestamp at which the signal was created.
    */
   created: string;
@@ -99,6 +156,11 @@ export interface AccountSignal {
    * Data for the fraudulent merchant signal. Present only when type is fraudulent_merchant.
    */
   fraudulent_merchant?: AccountSignal.FraudulentMerchant;
+
+  /**
+   * Data for the fraudulent website signal. Present only when type is fraudulent_website.
+   */
+  fraudulent_website?: AccountSignal.FraudulentWebsite;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -111,9 +173,24 @@ export interface AccountSignal {
   merchant_delinquency?: AccountSignal.MerchantDelinquency;
 
   /**
+   * Data for the payment delinquency exposure signal. Present only when type is payment_delinquency_exposure.
+   */
+  payment_delinquency_exposure?: AccountSignal.PaymentDelinquencyExposure;
+
+  /**
    * The type of signal.
    */
   type: AccountSignal.Type;
+
+  /**
+   * Data for the user account-sharing signal. Present only when type is user_account_sharing.
+   */
+  user_account_sharing?: AccountSignal.UserAccountSharing;
+
+  /**
+   * Data for the user multi-accounting signal. Present only when type is user_multi_accounting.
+   */
+  user_multi_accounting?: AccountSignal.UserMultiAccounting;
 }
 export namespace AccountSignal {
   export interface AccountDetails {
@@ -147,6 +224,18 @@ export namespace AccountSignal {
     risk_level: FraudulentMerchant.RiskLevel;
   }
 
+  export interface FraudulentWebsite {
+    /**
+     * Human-readable details about the fraudulent website evaluation.
+     */
+    details?: string;
+
+    /**
+     * Categorical assessment of the fraudulent website risk.
+     */
+    risk_level: FraudulentWebsite.RiskLevel;
+  }
+
   export interface MerchantDelinquency {
     /**
      * Array of objects representing individual factors that contributed to the calculated probability of delinquency. Absent when risk level is not_assessed or unknown,
@@ -166,11 +255,52 @@ export namespace AccountSignal {
     risk_level: MerchantDelinquency.RiskLevel;
   }
 
+  export interface PaymentDelinquencyExposure {
+    /**
+     * Additional details about the exposure assessment.
+     */
+    additional_details: PaymentDelinquencyExposure.AdditionalDetails;
+
+    /**
+     * The exposure amount if this account becomes delinquent.
+     */
+    exposure_amount: PaymentDelinquencyExposure.ExposureAmount;
+  }
+
   export type Type =
     | 'fraudulent_merchant'
+    | 'fraudulent_website'
     | 'merchant_delinquency'
     | 'payment_delinquency_exposure'
+    | 'user_account_sharing'
+    | 'user_multi_accounting'
     | OtherString;
+
+  export interface UserAccountSharing {
+    /**
+     * Categorical assessment of the account-sharing risk.
+     */
+    risk_level: UserAccountSharing.RiskLevel;
+
+    /**
+     * The specific risk score for the account, between 0.00 and 100.00. Absent when risk level is
+     * not_assessed or unknown, or when the user is not on a product tier that includes numeric scores.
+     */
+    score?: Decimal;
+  }
+
+  export interface UserMultiAccounting {
+    /**
+     * Categorical assessment of the multi-accounting risk.
+     */
+    risk_level: UserMultiAccounting.RiskLevel;
+
+    /**
+     * The specific risk score for the account, between 0.00 and 100.00. Absent when risk level is
+     * not_assessed or unknown, or when the user is not on a product tier that includes numeric scores.
+     */
+    score?: Decimal;
+  }
 
   export namespace FraudulentMerchant {
     export interface Indicator {
@@ -216,6 +346,16 @@ export namespace AccountSignal {
         | 'other_transaction_activity'
         | 'owner_email';
     }
+  }
+
+  export namespace FraudulentWebsite {
+    export type RiskLevel =
+      | 'elevated'
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'not_assessed'
+      | 'unknown';
   }
 
   export namespace MerchantDelinquency {
@@ -270,6 +410,71 @@ export namespace AccountSignal {
         | 'transfers';
     }
   }
+
+  export namespace PaymentDelinquencyExposure {
+    export interface AdditionalDetails {
+      /**
+       * Total payments still exposed to dispute or refund risk in the event of delinquency.
+       */
+      gross_exposure_amount?: AdditionalDetails.GrossExposureAmount;
+
+      /**
+       * Percentage of Gross Exposure expected to be disputed or refunded and materialize as a loss in the event of delinquency.
+       */
+      loss_given_default_in_percentages?: number;
+
+      /**
+       * Predicted window size in days until dispute is raised.
+       */
+      predicted_dispute_window_in_days?: number;
+    }
+
+    export interface ExposureAmount {
+      /**
+       * ISO 4217 currency code.
+       */
+      currency: string;
+
+      /**
+       * Amount in minor units for the given currency.
+       */
+      value: bigint;
+    }
+
+    export namespace AdditionalDetails {
+      export interface GrossExposureAmount {
+        /**
+         * ISO 4217 currency code.
+         */
+        currency: string;
+
+        /**
+         * Amount in minor units for the given currency.
+         */
+        value: bigint;
+      }
+    }
+  }
+
+  export namespace UserAccountSharing {
+    export type RiskLevel =
+      | 'elevated'
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'not_assessed'
+      | 'unknown';
+  }
+
+  export namespace UserMultiAccounting {
+    export type RiskLevel =
+      | 'elevated'
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'not_assessed'
+      | 'unknown';
+  }
 }
 export namespace V2 {
   export namespace Signals {
@@ -299,8 +504,11 @@ export namespace V2 {
     export namespace AccountSignalListParams {
       export type Type =
         | 'fraudulent_merchant'
+        | 'fraudulent_website'
         | 'merchant_delinquency'
         | 'payment_delinquency_exposure'
+        | 'user_account_sharing'
+        | 'user_multi_accounting'
         | OtherString;
 
       export interface AccountDetails {

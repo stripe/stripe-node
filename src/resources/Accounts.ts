@@ -141,6 +141,25 @@ export class AccountResource extends StripeResource {
       options
     ) as any;
   }
+  /**
+   * With Connect, you can unreject accounts that you have previously rejected.
+   *
+   * Only accounts that were rejected by your platform can be unrejected. This API cannot be used to unreject accounts that were rejected by Stripe.
+   *
+   * Unreject will only enable charges and/or payouts if there are no other restrictions other than those placed by a previous rejection. If you have separately paused charges and/or payouts outside of rejection, those pauses will remain in place after unrejection.
+   */
+  unreject(
+    id: string,
+    params?: AccountUnrejectParams,
+    options?: RequestOptions
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/accounts/${encodeURIComponent(id)}/unreject`,
+      params,
+      options
+    ) as any;
+  }
   serializeBatchDelete(
     account: string,
     params: Record<string, unknown> = {},
@@ -1266,7 +1285,7 @@ export namespace Account {
     current_deadline: number | null;
 
     /**
-     * Fields that need to be resolved to keep the account enabled. If not resolved by `current_deadline`, these fields will appear in `past_due` as well, and the account is disabled.
+     * Fields that need to be resolved to keep the account enabled. If not resolved by `current_deadline`, these fields will appear in `past_due` as well, and the account will be disabled.
      */
     currently_due: Array<string> | null;
 
@@ -3108,6 +3127,8 @@ export namespace AccountCreateParams {
      */
     address_kanji?: JapanAddressParam;
 
+    administrative_address?: AddressParam;
+
     /**
      * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://docs.stripe.com/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
      */
@@ -3167,6 +3188,8 @@ export namespace AccountCreateParams {
      * The company's phone number (used for verification).
      */
     phone?: string;
+
+    principal_place_of_business?: AddressParam;
 
     /**
      * When the business was incorporated or registered.
@@ -3278,11 +3301,6 @@ export namespace AccountCreateParams {
      * One or more documents that demonstrate proof of address.
      */
     proof_of_address?: Documents.ProofOfAddress;
-
-    /**
-     * One or more documents showing the company's proof of registration with the national business registry.
-     */
-    proof_of_registration?: Documents.ProofOfRegistration;
 
     /**
      * One or more documents that demonstrate proof of ultimate beneficial ownership.
@@ -4420,18 +4438,6 @@ export namespace AccountCreateParams {
       files?: Array<string>;
     }
 
-    export interface ProofOfRegistration {
-      /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
-       */
-      files?: Array<string>;
-
-      /**
-       * Information regarding the person signing the document if applicable.
-       */
-      signer?: ProofOfRegistration.Signer;
-    }
-
     export interface ProofOfUltimateBeneficialOwnership {
       /**
        * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
@@ -4442,15 +4448,6 @@ export namespace AccountCreateParams {
        * Information regarding the person signing the document if applicable.
        */
       signer?: ProofOfUltimateBeneficialOwnership.Signer;
-    }
-
-    export namespace ProofOfRegistration {
-      export interface Signer {
-        /**
-         * The token of the person signing the document, if applicable.
-         */
-        person?: string;
-      }
     }
 
     export namespace ProofOfUltimateBeneficialOwnership {
@@ -5533,6 +5530,8 @@ export namespace AccountUpdateParams {
      */
     address_kanji?: JapanAddressParam;
 
+    administrative_address?: AddressParam;
+
     /**
      * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://docs.stripe.com/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
      */
@@ -5592,6 +5591,8 @@ export namespace AccountUpdateParams {
      * The company's phone number (used for verification).
      */
     phone?: string;
+
+    principal_place_of_business?: AddressParam;
 
     registration_date?: Emptyable<Company.RegistrationDate>;
 
@@ -5955,6 +5956,11 @@ export namespace AccountUpdateParams {
      * Settings specific to the PayPay payments method.
      */
     paypay_payments?: Settings.PaypayPayments;
+
+    /**
+     * Settings specific to SEPA Direct Debit payments.
+     */
+    sepa_debit_payments?: Settings.SepaDebitPayments;
 
     /**
      * Settings specific to the account's use of Smart Disputes.
@@ -7113,6 +7119,13 @@ export namespace AccountUpdateParams {
       site?: PaypayPayments.Site;
     }
 
+    export interface SepaDebitPayments {
+      /**
+       * The business creditor id for european payments.
+       */
+      creditor_id?: string;
+    }
+
     export interface SmartDisputes {
       /**
        * Smart Disputes auto-respond settings for the account.
@@ -7954,6 +7967,14 @@ export interface AccountRejectParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * Whether to pause payouts on the account as part of the rejection. Defaults to `pause`. Use `none` to leave payouts enabled.
+   */
+  payouts_action?: AccountRejectParams.PayoutsAction;
+}
+export namespace AccountRejectParams {
+  export type PayoutsAction = 'none' | 'pause';
 }
 export interface AccountRetrieveCurrentParams {
   /**
@@ -7988,6 +8009,12 @@ export interface AccountRetrieveSignalsParams {
 export interface AccountSerializeBatchCreateParams {}
 export interface AccountSerializeBatchDeleteParams {}
 export interface AccountSerializeBatchUpdateParams {}
+export interface AccountUnrejectParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
 export interface AccountUpdateCapabilityParams {
   /**
    * Specifies which fields in the response should be expanded.

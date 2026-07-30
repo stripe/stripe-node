@@ -120,7 +120,7 @@ export namespace DebitDispute {
     /**
      * The bank network the dispute was originated on.
      */
-    network: 'ach';
+    network: BankTransfer.Network;
 
     /**
      * The reason for the dispute.
@@ -158,8 +158,16 @@ export namespace DebitDispute {
   }
 
   export namespace BankTransfer {
+    export type Network = 'ach' | 'bacs' | OtherString;
+
     export type Reason =
+      | 'beneficiary_unrecognized'
       | 'incorrect_amount_or_date'
+      | 'mandate_canceled'
+      | 'mandate_canceled_by_stripe'
+      | 'no_advance_notice'
+      | 'originator_requested'
+      | 'signature_invalid'
       | 'unauthorized'
       | OtherString;
   }

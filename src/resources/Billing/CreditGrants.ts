@@ -427,6 +427,11 @@ export namespace CreditGrant {
        * The prices that credit grants can apply to. We currently only support `metered` prices. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `price_type`.
        */
       prices?: Array<Scope.Price>;
+
+      /**
+       * The rate cards that credit grants can apply to. The credit grant applies to any metered item billed under one of these rate cards. Cannot be used in combination with `price_type`, `prices`, or `billable_items`.
+       */
+      rate_cards?: Array<Scope.RateCard>;
     }
 
     export namespace Scope {
@@ -438,6 +443,13 @@ export namespace CreditGrant {
       }
 
       export interface Price {
+        /**
+         * Unique identifier for the object.
+         */
+        id: string | null;
+      }
+
+      export interface RateCard {
         /**
          * Unique identifier for the object.
          */
@@ -575,6 +587,11 @@ export namespace Billing {
          * A list of prices that the credit grant can apply to. We currently only support the `metered` prices. Cannot be used in combination with `price_type`. Limit 20 prices.
          */
         prices?: Array<Scope.Price>;
+
+        /**
+         * A list of rate cards that the credit grant can apply to. The credit grant applies to any metered item billed under one of these rate cards. Cannot be used in combination with `price_type`, `prices`, or `billable_items`.
+         */
+        rate_cards?: Array<Scope.RateCard>;
       }
 
       export namespace Scope {
@@ -588,6 +605,13 @@ export namespace Billing {
         export interface Price {
           /**
            * The price ID this credit grant should apply to.
+           */
+          id: string;
+        }
+
+        export interface RateCard {
+          /**
+           * The rate card ID this credit grant should apply to.
            */
           id: string;
         }

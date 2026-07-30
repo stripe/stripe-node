@@ -45,6 +45,7 @@ export namespace CustomerConsumerWallet {
     | 'solana'
     | 'stellar'
     | 'sui'
+    | 'tempo'
     | 'worldchain'
     | OtherString;
 }

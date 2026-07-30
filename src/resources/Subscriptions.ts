@@ -4415,7 +4415,7 @@ export interface SubscriptionUpdateParams {
   cancel_at?: Emptyable<number | SubscriptionUpdateParams.CancelAt>;
 
   /**
-   * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
+   * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`).
    */
   cancel_at_period_end?: boolean;
 
