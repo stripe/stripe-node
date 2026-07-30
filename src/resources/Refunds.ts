@@ -3,7 +3,9 @@
 import {StripeResource} from '../StripeResource.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {Charge} from './Charges.js';
+import {Customer, DeletedCustomer} from './Customers.js';
 import {PaymentIntent} from './PaymentIntents.js';
+import {PaymentMethod} from './PaymentMethods.js';
 import {TransferReversal} from './TransferReversals.js';
 import {
   Emptyable,
@@ -171,6 +173,16 @@ export interface Refund {
   currency: string;
 
   /**
+   * ID of the customer of this refund.
+   */
+  customer: string | Customer | DeletedCustomer | null;
+
+  /**
+   * ID of the account of this refund.
+   */
+  customer_account: string | null;
+
+  /**
    * An arbitrary string attached to the object. You can use this for displaying to users (available on non-card refunds only).
    */
   description?: string;
@@ -203,6 +215,11 @@ export interface Refund {
    * ID of the PaymentIntent that's refunded.
    */
   payment_intent: string | PaymentIntent | null;
+
+  /**
+   * ID of the payment method associated with this refund.
+   */
+  payment_method: string | PaymentMethod | null;
 
   /**
    * Provides the reason for why the refund is pending. Possible values are: `processing`, `insufficient_funds`, or `charge_pending`.

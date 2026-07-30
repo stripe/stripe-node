@@ -730,7 +730,7 @@ export namespace PaymentMethod {
     /**
      * The brand of the gift card.
      */
-    brand: GiftCard.Brand;
+    brand: 'svs';
 
     /**
      * The expiration month of the gift card.
@@ -1794,10 +1794,6 @@ export namespace PaymentMethod {
       | 'rhb'
       | 'standard_chartered'
       | 'uob';
-  }
-
-  export namespace GiftCard {
-    export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
   }
 
   export namespace IdBankTransfer {
@@ -2948,14 +2944,17 @@ export namespace PaymentMethodCreateParams {
       | 'bank_muamalat'
       | 'bank_of_china'
       | 'bank_rakyat'
+      | 'bnp_paribas'
       | 'bsn'
       | 'cimb'
+      | 'citibank'
       | 'deutsche_bank'
       | 'hong_leong_bank'
       | 'hsbc'
       | 'kfh'
       | 'maybank2e'
       | 'maybank2u'
+      | 'mbsb_bank'
       | 'ocbc'
       | 'pb_enterprise'
       | 'public_bank'

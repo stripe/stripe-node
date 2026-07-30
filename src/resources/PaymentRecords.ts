@@ -7,13 +7,30 @@ import {
   Emptyable,
   MetadataParam,
   OtherString,
+  PaginationParams,
   AddressParam,
   Metadata,
   Address,
 } from '../shared.js';
-import {RequestOptions, Response, ApiSearchResultPromise} from '../lib.js';
+import {
+  RequestOptions,
+  ApiListPromise,
+  Response,
+  ApiSearchResultPromise,
+} from '../lib.js';
 
 export class PaymentRecordResource extends StripeResource {
+  /**
+   * List all the Payment Records for a given merchant.
+   */
+  list(
+    params?: PaymentRecordListParams,
+    options?: RequestOptions
+  ): ApiListPromise<PaymentRecord> {
+    return this._makeRequest('GET', '/v1/payment_records', params, options, {
+      methodType: 'list',
+    }) as any;
+  }
   /**
    * Retrieves a Payment Record with the given ID
    */
@@ -3125,6 +3142,22 @@ export namespace PaymentRecordCreateParams {
   }
 }
 export interface PaymentRecordRetrieveParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export interface PaymentRecordListParams extends PaginationParams {
+  /**
+   * Only return Payment Records that were created after this unix timestamp.
+   */
+  created_after?: number;
+
+  /**
+   * Only return Payment Records that were created before this unix timestamp.
+   */
+  created_before?: number;
+
   /**
    * Specifies which fields in the response should be expanded.
    */

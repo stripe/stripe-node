@@ -2995,6 +2995,11 @@ export interface PaymentLinkUpdateParams {
   billing_address_collection?: PaymentLinkUpdateParams.BillingAddressCollection;
 
   /**
+   * Configure fields to gather active consent from customers.
+   */
+  consent_collection?: PaymentLinkUpdateParams.ConsentCollection;
+
+  /**
    * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
    */
   custom_fields?: Emptyable<Array<PaymentLinkUpdateParams.CustomField>>;
@@ -3094,6 +3099,11 @@ export interface PaymentLinkUpdateParams {
   >;
 
   /**
+   * The shipping rate options to apply to [checkout sessions](https://docs.stripe.com/api/checkout/sessions) created by this payment link.
+   */
+  shipping_options?: Emptyable<Array<PaymentLinkUpdateParams.ShippingOption>>;
+
+  /**
    * Describes the type of transaction being performed in order to customize relevant text on the page, such as the submit button. Changing this value will also affect the hostname in the [url](https://docs.stripe.com/api/payment_links/payment_links/object#url) property (example: `donate.stripe.com`).
    */
   submit_type?: PaymentLinkUpdateParams.SubmitType;
@@ -3141,6 +3151,26 @@ export namespace PaymentLinkUpdateParams {
   }
 
   export type BillingAddressCollection = 'auto' | 'required' | OtherString;
+
+  export interface ConsentCollection {
+    /**
+     * Determines the display of payment method reuse agreement text in the UI. If set to `hidden`, it will hide legal text related to the reuse of a payment method.
+     */
+    payment_method_reuse_agreement?: ConsentCollection.PaymentMethodReuseAgreement;
+
+    /**
+     * If set to `auto`, enables the collection of customer consent for promotional communications. The Checkout
+     * Session will determine whether to display an option to opt into promotional communication
+     * from the merchant depending on the customer's locale. Only available to US merchants and US customers.
+     */
+    promotions?: ConsentCollection.Promotions;
+
+    /**
+     * If set to `required`, it requires customers to check a terms of service checkbox before being able to pay.
+     * There must be a valid terms of service URL set in your [Dashboard settings](https://dashboard.stripe.com/settings/public).
+     */
+    terms_of_service?: ConsentCollection.TermsOfService;
+  }
 
   export interface CustomField {
     /**
@@ -3275,6 +3305,21 @@ export namespace PaymentLinkUpdateParams {
     metadata?: Emptyable<MetadataParam>;
 
     /**
+     * Indicates that you intend to [make future payments](https://docs.stripe.com/payments/payment-intents#future-usage) with the payment method collected by this Checkout Session.
+     *
+     * When setting this to `on_session`, Checkout will show a notice to the customer that their payment details will be saved.
+     *
+     * When setting this to `off_session`, Checkout will show a notice to the customer that their payment details will be saved and used for future payments.
+     *
+     * If a Customer has been provided or Checkout creates a new Customer,Checkout will attach the payment method to the Customer.
+     *
+     * If Checkout does not create a Customer, the payment method is not attached to a Customer. To reuse the payment method, you can retrieve it from the Checkout Session's PaymentIntent.
+     *
+     * When processing card payments, Checkout also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as SCA.
+     */
+    setup_future_usage?: Emptyable<PaymentIntentData.SetupFutureUsage>;
+
+    /**
      * Text that appears on the customer's statement as the statement descriptor for a non-card charge. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
      *
      * Setting this value for a card charge returns an error. For card charges, set the [statement_descriptor_suffix](https://docs.stripe.com/get-started/account/statement-descriptors#dynamic) instead.
@@ -3373,6 +3418,13 @@ export namespace PaymentLinkUpdateParams {
     allowed_countries: Array<ShippingAddressCollection.AllowedCountry>;
   }
 
+  export interface ShippingOption {
+    /**
+     * The ID of the Shipping Rate to use for this shipping option.
+     */
+    shipping_rate?: string;
+  }
+
   export type SubmitType =
     | 'auto'
     | 'book'
@@ -3448,6 +3500,24 @@ export namespace PaymentLinkUpdateParams {
 
     export namespace Liability {
       export type Type = 'account' | 'application' | 'self' | OtherString;
+    }
+  }
+
+  export namespace ConsentCollection {
+    export interface PaymentMethodReuseAgreement {
+      /**
+       * Determines the position and visibility of the payment method reuse agreement in the UI. When set to `auto`, Stripe's
+       * defaults will be used. When set to `hidden`, the payment method reuse agreement text will always be hidden in the UI.
+       */
+      position: PaymentMethodReuseAgreement.Position;
+    }
+
+    export type Promotions = 'auto' | 'none' | OtherString;
+
+    export type TermsOfService = 'none' | 'required' | OtherString;
+
+    export namespace PaymentMethodReuseAgreement {
+      export type Position = 'auto' | 'hidden' | OtherString;
     }
   }
 
@@ -3704,6 +3774,10 @@ export namespace PaymentLinkUpdateParams {
        */
       minimum?: number;
     }
+  }
+
+  export namespace PaymentIntentData {
+    export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
   }
 
   export namespace PaymentMethodOptions {

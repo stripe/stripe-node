@@ -82,6 +82,11 @@ export namespace TestHelpers {
       expand?: Array<string>;
 
       /**
+       * Simulated data for the gift_card payment method.
+       */
+      gift_card?: ReaderPresentPaymentMethodParams.GiftCard;
+
+      /**
        * Simulated data for the interac_present payment method.
        */
       interac_present?: ReaderPresentPaymentMethodParams.InteracPresent;
@@ -122,6 +127,18 @@ export namespace TestHelpers {
         number?: string;
       }
 
+      export interface GiftCard {
+        /**
+         * The brand of the gift card.
+         */
+        brand: 'svs';
+
+        /**
+         * Simulated track 2 data for the gift card payment method.
+         */
+        track_2: string;
+      }
+
       export interface InteracPresent {
         /**
          * The Interac card number.
@@ -132,6 +149,7 @@ export namespace TestHelpers {
       export type Type =
         | 'card'
         | 'card_present'
+        | 'gift_card'
         | 'interac_present'
         | OtherString;
     }

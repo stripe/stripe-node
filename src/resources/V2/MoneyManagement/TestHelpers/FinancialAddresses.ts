@@ -3,6 +3,7 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {FinancialAddressDebitSimulation} from './../../../V2/MoneyManagement/FinancialAddressDebitSimulations.js';
 import {V2Amount} from './../../V2Amounts.js';
+import {OtherString} from '../../../../shared.js';
 import {RequestOptions, Response} from '../../../../lib.js';
 
 export class FinancialAddressResource extends StripeResource {
@@ -36,12 +37,16 @@ export namespace V2 {
         /**
          * The network to use in simulating the funds flow. This will be reflected in the resulting ReceivedDebit.
          */
-        network: 'ach';
+        network: FinancialAddressDebitParams.Network;
 
         /**
          * String explaining funds flow. Use this field to populate the statement descriptor of the ReceivedDebit created as an eventual result of this simulation.
          */
         statement_descriptor?: string;
+      }
+
+      export namespace FinancialAddressDebitParams {
+        export type Network = 'ach' | 'bacs' | OtherString;
       }
     }
   }

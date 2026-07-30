@@ -241,6 +241,7 @@ export namespace OnrampSession {
       | 'solana'
       | 'stellar'
       | 'sui'
+      | 'tempo'
       | 'worldchain'
       | OtherString;
 
@@ -310,6 +311,11 @@ export namespace OnrampSession {
        * A Sui address
        */
       sui: string | null;
+
+      /**
+       * A Tempo address
+       */
+      tempo: string | null;
 
       /**
        * A worldchain address
@@ -457,6 +463,7 @@ export namespace Crypto {
       | 'solana'
       | 'stellar'
       | 'sui'
+      | 'tempo'
       | 'worldchain'
       | OtherString;
 
@@ -540,6 +547,7 @@ export namespace Crypto {
       | 'solana'
       | 'stellar'
       | 'sui'
+      | 'tempo'
       | 'worldchain'
       | OtherString;
 

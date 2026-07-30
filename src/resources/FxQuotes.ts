@@ -6,7 +6,7 @@ import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class FxQuoteResource extends StripeResource {
   /**
-   * Returns a list of FX quotes that have been issued. The FX quotes are returned in sorted order, with the most recent FX quotes appearing first.
+   * Returns a list of active FX quotes. The FX quotes are returned in sorted order, with the most recent FX quotes appearing first.
    */
   list(
     params?: FxQuoteListParams,
@@ -58,7 +58,7 @@ export interface FxQuote {
   created: number;
 
   /**
-   * The duration the exchange rate quote remains valid from creation time. Allowed values are none, hour, and day. Note that for the test mode API available in alpha, you can request an extended quote, but it won't be usable for any transactions.
+   * The duration that the quote is locked for, from creation time. The quote will be usable for the duration specified.
    */
   lock_duration: FxQuote.LockDuration;
 

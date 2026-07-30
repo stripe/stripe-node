@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class AccountEvaluationResource extends StripeResource {
@@ -48,7 +49,7 @@ export interface AccountEvaluation {
   /**
    * List of signals that were triggered for evaluation.
    */
-  evaluations_triggered: Array<'fraudulent_website'>;
+  evaluations_triggered: Array<AccountEvaluation.EvaluationsTriggered>;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -67,6 +68,12 @@ export namespace AccountEvaluation {
      */
     identity?: AccountData.Identity;
   }
+
+  export type EvaluationsTriggered =
+    | 'fraudulent_website'
+    | 'user_account_sharing'
+    | 'user_multi_accounting'
+    | OtherString;
 
   export namespace AccountData {
     export interface Defaults {
@@ -118,7 +125,7 @@ export namespace V2 {
       /**
        * List of signals to evaluate.
        */
-      signals: Array<'fraudulent_website'>;
+      signals: Array<AccountEvaluationCreateParams.Signal>;
 
       /**
        * The account ID to evaluate. Exactly one of account or account_data must be provided.
@@ -132,6 +139,12 @@ export namespace V2 {
     }
 
     export namespace AccountEvaluationCreateParams {
+      export type Signal =
+        | 'fraudulent_website'
+        | 'user_account_sharing'
+        | 'user_multi_accounting'
+        | OtherString;
+
       export interface AccountData {
         /**
          * Default account settings.

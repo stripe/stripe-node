@@ -165,6 +165,16 @@ export interface Card {
   personalization_design: string | PersonalizationDesign | null;
 
   /**
+   * The product code the card is currently enrolled under. `product_graduation_state` reflects any in-flight product graduation and whether the card network has confirmed it.
+   */
+  product_code?: string | null;
+
+  /**
+   * State of the product graduation request on this card. Only present when a product graduation has been requested.
+   */
+  product_graduation_state?: Card.ProductGraduationState | null;
+
+  /**
    * The program that this card belongs to — will not be nil.
    */
   program?: string | null;
@@ -237,6 +247,18 @@ export namespace Card {
 
   export interface LifecycleControls {
     cancel_after: LifecycleControls.CancelAfter;
+  }
+
+  export interface ProductGraduationState {
+    /**
+     * Status of the product graduation request. `pending` while awaiting card network confirmation, `succeeded` once confirmed, `failed` if rejected.
+     */
+    state: ProductGraduationState.State;
+
+    /**
+     * The product code the card graduation is targeting.
+     */
+    target_product_code: string | null;
   }
 
   export interface Redaction {
@@ -395,6 +417,10 @@ export namespace Card {
        */
       payment_count: number;
     }
+  }
+
+  export namespace ProductGraduationState {
+    export type State = 'failed' | 'pending' | 'succeeded';
   }
 
   export namespace Redaction {
@@ -1498,6 +1524,11 @@ export namespace Issuing {
     pin?: CardCreateParams.Pin;
 
     /**
+     * The product code to request via product graduation.
+     */
+    product_code?: string;
+
+    /**
      * The card this is meant to be a replacement for (if any).
      */
     replacement_for?: string;
@@ -1557,6 +1588,11 @@ export namespace Issuing {
        * Address validation settings.
        */
       address_validation?: Shipping.AddressValidation;
+
+      /**
+       * The name of the business at the shipping address, used on the shipping label to ensure delivery when the card is shipped to a cardholder's workplace. Allowed characters: `A-Z`, `a-z`, `0-9`, ` `, `.`, `-`. All other characters are stripped or ASCII-normalized when printed.
+       */
+      business_name?: string;
 
       /**
        * Customs information for the shipment.
@@ -2656,6 +2692,11 @@ export namespace Issuing {
     pin?: CardUpdateParams.Pin;
 
     /**
+     * The product code to request via product graduation.
+     */
+    product_code?: string;
+
+    /**
      * Updated shipping information for the card.
      */
     shipping?: CardUpdateParams.Shipping;
@@ -2691,6 +2732,11 @@ export namespace Issuing {
        * Address validation settings.
        */
       address_validation?: Shipping.AddressValidation;
+
+      /**
+       * The name of the business at the shipping address, used on the shipping label to ensure delivery when the card is shipped to a cardholder's workplace. Allowed characters: `A-Z`, `a-z`, `0-9`, ` `, `.`, `-`. All other characters are stripped or ASCII-normalized when printed.
+       */
+      business_name?: string;
 
       /**
        * Customs information for the shipment.

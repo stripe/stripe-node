@@ -132,6 +132,11 @@ export interface IssuedToken {
    * Usage limits of the SharedPaymentIssuedToken.
    */
   usage_limits: IssuedToken.UsageLimits | null;
+
+  /**
+   * Set to true when using Stripe.js, iOS, or Android client-side SDKs to handle next actions.
+   */
+  use_stripe_sdk: boolean | null;
 }
 export namespace IssuedToken {
   export type DeactivatedReason =
@@ -382,6 +387,11 @@ export namespace SharedPayment {
     shared_metadata?: {
       [key: string]: string;
     };
+
+    /**
+     * Set to true when using Stripe.js, iOS, or Android client-side SDKs to handle next actions.
+     */
+    use_stripe_sdk?: boolean;
   }
 
   export namespace IssuedTokenCreateParams {

@@ -279,13 +279,7 @@ export namespace GrantedToken {
       persistent_token?: string;
     }
 
-    export type Type =
-      | 'affirm'
-      | 'card'
-      | 'klarna'
-      | 'link'
-      | 'shop_pay'
-      | OtherString;
+    export type Type = 'affirm' | 'card' | 'klarna' | 'link' | OtherString;
 
     export namespace Card {
       export interface Checks {

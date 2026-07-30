@@ -343,6 +343,11 @@ export namespace Billing {
          * A list of prices that the credit grant can apply to. We currently only support the `metered` prices. Cannot be used in combination with `price_type`. Limit 20 prices.
          */
         prices?: Array<ApplicabilityScope.Price>;
+
+        /**
+         * A list of rate cards that the credit grant can apply to. The credit grant applies to any metered item billed under one of these rate cards. Cannot be used in combination with `price_type`, `prices`, or `billable_items`.
+         */
+        rate_cards?: Array<ApplicabilityScope.RateCard>;
       }
 
       export type Type = 'applicability_scope' | 'credit_grant' | OtherString;
@@ -358,6 +363,13 @@ export namespace Billing {
         export interface Price {
           /**
            * The price ID this credit grant should apply to.
+           */
+          id: string;
+        }
+
+        export interface RateCard {
+          /**
+           * The rate card ID this credit grant should apply to.
            */
           id: string;
         }

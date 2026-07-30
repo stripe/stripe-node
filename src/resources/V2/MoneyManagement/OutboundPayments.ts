@@ -138,6 +138,11 @@ export interface OutboundPayment {
   outbound_payment_quote?: string;
 
   /**
+   * The PayoutIntent ID that triggered this OutboundPayment.
+   */
+  payout_intent?: string;
+
+  /**
    * The purpose of the OutboundPayment.
    */
   purpose?: 'payroll';
@@ -608,11 +613,6 @@ export namespace V2 {
        * The quote for this OutboundPayment. Only required for countries with regulatory mandates to display fee estimates before OutboundPayment creation.
        */
       outbound_payment_quote?: string;
-
-      /**
-       * The PayoutIntent ID that triggered this OutboundPayment.
-       */
-      payout_intent?: string;
 
       /**
        * The purpose of the OutboundPayment.

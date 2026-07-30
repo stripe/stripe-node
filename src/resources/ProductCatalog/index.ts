@@ -18,6 +18,8 @@ export class ProductCatalog {
 }
 
 export declare namespace ProductCatalog {
+  export import TrialOfferListParams = ProductCatalogNamespace0.TrialOfferListParams;
   export import TrialOfferCreateParams = ProductCatalogNamespace0.TrialOfferCreateParams;
+  export import TrialOfferRetrieveParams = ProductCatalogNamespace0.TrialOfferRetrieveParams;
   export {TrialOffer, TrialOfferResource};
 }

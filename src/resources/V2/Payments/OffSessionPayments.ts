@@ -255,6 +255,11 @@ export interface OffSessionPayment {
   status: OffSessionPayment.Status;
 
   /**
+   * Provides a way to schedule deferred payments for cards and debits, in YYYY-MM-DD format.
+   */
+  target_date?: string;
+
+  /**
    * Test clock that can be used to advance the retry attempts in a sandbox.
    */
   test_clock?: string;
@@ -587,6 +592,11 @@ export namespace V2 {
        * to form the complete statement descriptor that appears on the customer's statement.
        */
       statement_descriptor_suffix?: string;
+
+      /**
+       * Provides a way to schedule deferred payments for cards and debits, in YYYY-MM-DD format.
+       */
+      target_date?: string;
 
       /**
        * Test clock that can be used to advance the retry attempts in a sandbox.

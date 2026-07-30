@@ -119,7 +119,7 @@ export interface GiftCard {
   /**
    * The brand of the gift card.
    */
-  brand: GiftCard.Brand;
+  brand: 'svs';
 
   /**
    * The expiration month of the gift card.
@@ -151,14 +151,11 @@ export interface GiftCard {
    */
   livemode: boolean;
 }
-export namespace GiftCard {
-  export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
-}
 export interface GiftCardCreateParams {
   /**
    * The brand of the gift card.
    */
-  brand: GiftCardCreateParams.Brand;
+  brand: 'svs';
 
   /**
    * Two-digit number representing the gift card's expiration month.
@@ -184,9 +181,6 @@ export interface GiftCardCreateParams {
    * The gift card PIN.
    */
   pin?: string;
-}
-export namespace GiftCardCreateParams {
-  export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
 }
 export interface GiftCardRetrieveParams {
   /**

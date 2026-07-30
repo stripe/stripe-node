@@ -4502,7 +4502,7 @@ export namespace ChargeUpdateParams {
           /**
            * Array of tax details.
            */
-          taxes?: Array<Tax.Tax>;
+          tax_items?: Array<Tax.TaxItem>;
         }
 
         export namespace ExtraCharge {
@@ -4521,7 +4521,7 @@ export namespace ChargeUpdateParams {
         }
 
         export namespace Tax {
-          export interface Tax {
+          export interface TaxItem {
             /**
              * Tax amount.
              */
@@ -5180,7 +5180,7 @@ export namespace ChargeUpdateParams {
           /**
            * Array of tax details.
            */
-          taxes?: Array<Tax.Tax>;
+          tax_items?: Array<Tax.TaxItem>;
         }
 
         export namespace ExtraCharge {
@@ -5192,7 +5192,7 @@ export namespace ChargeUpdateParams {
         }
 
         export namespace Tax {
-          export interface Tax {
+          export interface TaxItem {
             /**
              * Tax amount.
              */
@@ -5527,7 +5527,7 @@ export namespace ChargeUpdateParams {
           /**
            * Tax details.
            */
-          taxes?: Array<Tax.Tax>;
+          tax_items?: Array<Tax.TaxItem>;
         }
 
         export namespace ExtraCharge {
@@ -5542,7 +5542,7 @@ export namespace ChargeUpdateParams {
         }
 
         export namespace Tax {
-          export interface Tax {
+          export interface TaxItem {
             /**
              * Tax amount in cents.
              */
@@ -6706,7 +6706,7 @@ export namespace ChargeCaptureParams {
           /**
            * Array of tax details.
            */
-          taxes?: Array<Tax.Tax>;
+          tax_items?: Array<Tax.TaxItem>;
         }
 
         export namespace ExtraCharge {
@@ -6725,7 +6725,7 @@ export namespace ChargeCaptureParams {
         }
 
         export namespace Tax {
-          export interface Tax {
+          export interface TaxItem {
             /**
              * Tax amount.
              */
@@ -7384,7 +7384,7 @@ export namespace ChargeCaptureParams {
           /**
            * Array of tax details.
            */
-          taxes?: Array<Tax.Tax>;
+          tax_items?: Array<Tax.TaxItem>;
         }
 
         export namespace ExtraCharge {
@@ -7396,7 +7396,7 @@ export namespace ChargeCaptureParams {
         }
 
         export namespace Tax {
-          export interface Tax {
+          export interface TaxItem {
             /**
              * Tax amount.
              */
@@ -7731,7 +7731,7 @@ export namespace ChargeCaptureParams {
           /**
            * Tax details.
            */
-          taxes?: Array<Tax.Tax>;
+          tax_items?: Array<Tax.TaxItem>;
         }
 
         export namespace ExtraCharge {
@@ -7746,7 +7746,7 @@ export namespace ChargeCaptureParams {
         }
 
         export namespace Tax {
-          export interface Tax {
+          export interface TaxItem {
             /**
              * Tax amount in cents.
              */
