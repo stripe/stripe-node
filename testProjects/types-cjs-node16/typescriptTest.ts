@@ -10,6 +10,9 @@ import Stripe from 'stripe';
 // Construction
 const stripe = new Stripe('sk_test_123');
 
+// Static members
+const majorApiVersion: string = Stripe.MAJOR_API_VERSION;
+
 // Top-level resource types
 let customer: Stripe.Customer;
 let charge: Stripe.Charge;

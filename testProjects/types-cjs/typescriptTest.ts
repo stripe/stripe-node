@@ -33,6 +33,7 @@ let opts: Stripe.RequestOptions;
 
 // Static members
 const version: typeof Stripe.API_VERSION = Stripe.API_VERSION;
+const majorApiVersion: string = Stripe.MAJOR_API_VERSION;
 Stripe.errors;
 Stripe.errors.StripeError;
 
