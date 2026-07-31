@@ -5,6 +5,7 @@ import {
 } from './crypto/CryptoProvider.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {Event} from './resources/Events.js';
+import {maybeExtractFromCloudProviderEnvelope, parsePayload} from './utils.js';
 
 /**
  * Value of the `stripe-signature` header from Stripe.
@@ -75,6 +76,7 @@ export type WebhookObject = {
     cryptoProvider?: CryptoProvider,
     receivedAt?: number
   ) => Promise<Event>;
+  constructEventWithoutVerification: (payload: string) => Event;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
   generateTestHeaderStringAsync: (
     opts: WebhookTestHeaderOptions
@@ -96,6 +98,12 @@ export function createWebhooks(
   const Webhook: WebhookObject = {
     DEFAULT_TOLERANCE: 300, // 5 minutes
     signature: null,
+    /**
+     * Constructs a [snapshot event](https://docs.stripe.com/event-destinations#snapshot-payload) from an
+     * incoming webhook after verifying its authenticity. To work with a webhook that has already been
+     * verified (i.e. one from a cloud provider, an asynchronous queue, or during testing), see
+     * `constructEventWithoutVerification`.
+     */
     constructEvent(
       payload: WebhookPayload,
       header: WebhookHeader,
@@ -127,11 +135,7 @@ export function createWebhooks(
         throw e;
       }
 
-      const jsonPayload =
-        payload instanceof Uint8Array
-          ? JSON.parse(new TextDecoder('utf8').decode(payload))
-          : JSON.parse(payload);
-      return buildEvent(jsonPayload);
+      return buildEvent(parsePayload(payload));
     },
 
     async constructEventAsync(
@@ -157,23 +161,24 @@ export function createWebhooks(
         receivedAt
       );
 
-      const jsonPayload =
-        payload instanceof Uint8Array
-          ? JSON.parse(new TextDecoder('utf8').decode(payload))
-          : JSON.parse(payload);
-      return buildEvent(jsonPayload);
+      return buildEvent(parsePayload(payload));
     },
 
     /**
-     * Generates a header to be used for webhook mocking
-     *
-     * @typedef {object} opts
-     * @property {number} timestamp - Timestamp of the header. Defaults to Date.now()
-     * @property {string} payload - JSON stringified payload object, containing the 'id' and 'object' parameters
-     * @property {string} secret - Stripe webhook secret 'whsec_...'
-     * @property {string} scheme - Version of API to hit. Defaults to 'v1'.
-     * @property {string} signature - Computed webhook signature
-     * @property {CryptoProvider} cryptoProvider - Crypto provider to use for computing the signature if none was provided. Defaults to NodeCryptoProvider.
+     * Constructs a [snapshot event](https://docs.stripe.com/event-destinations#snapshot-payload) from an
+     * incoming webhook without first verifying its authenticity. Should be used after calling
+     * `webhooks.verifySignatureHeader(...)` or with input from a trusted source (such as
+     * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge), or
+     * [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload). Or, to verify &
+     * construct in a single call, use `webhooks.constructEvent(...)` instead.
+     */
+    constructEventWithoutVerification(payload: string): Event {
+      return buildEvent(maybeExtractFromCloudProviderEnvelope(payload));
+    },
+
+    /**
+     * Compute the `Stripe-Signature` header for a given webhook body & secret. Useful for signing
+     * payloads in unit tests.
      */
     generateTestHeaderString: function(opts: WebhookTestHeaderOptions): string {
       const preparedOpts = prepareOptions(opts);
@@ -206,6 +211,11 @@ export function createWebhooks(
   const signature = {
     EXPECTED_SCHEME: 'v1',
 
+    /**
+     * Verifies the authenticity (and recency) of a webhook, throwing a `SignatureVerificationError`
+     * if there's a mismatch. Useful for quickly validating incoming webhooks before storing them for
+     * later processing (at which time you can use the `*WithoutVerification` methods for parsing).
+     */
     verifyHeader(
       encodedPayload: WebhookPayload,
       encodedHeader: WebhookHeader,

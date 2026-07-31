@@ -417,6 +417,14 @@ event = stripe.webhooks.constructEvent(
   'secret'
 );
 
+// constructEventWithoutVerification on webhooks object and client
+event = stripe.webhooks.constructEventWithoutVerification('payload');
+event = stripe.constructEventWithoutVerification('payload');
+
+// parseEventNotificationWithoutVerification on client
+const _notificationWV: Stripe.V2.Core.EventNotification =
+  stripe.parseEventNotificationWithoutVerification('payload');
+
 // Verify that nested types with names matching imported types resolve correctly.
 // e.g. Checkout.Session.TotalDetails.Breakdown.Discount.discount should be
 // Stripe.Discount, not a self-referential Breakdown.Discount. (DEVSDK-3139)

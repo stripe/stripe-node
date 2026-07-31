@@ -19,7 +19,8 @@ import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
   detectAIAgent,
-  extractFromCloudProviderEnvelope,
+  maybeExtractFromCloudProviderEnvelope,
+  parsePayload,
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
@@ -1575,6 +1576,12 @@ export class Stripe {
   _buildEventNotification(
     parsed: Record<string, unknown>
   ): V2.Core.EventNotification {
+    if (parsed && parsed.object === 'event') {
+      throw new Error(
+        'You passed a v1 Event to a method that expects a thin event notification. Use the corresponding constructEvent method instead.'
+      );
+    }
+
     if (parsed.context) {
       parsed.context = StripeContext.parse(parsed.context as string);
     }
@@ -1616,6 +1623,12 @@ export class Stripe {
     return (parsed as unknown) as V2.Core.EventNotification;
   }
 
+  /**
+   * Constructs a [thin event notification](https://docs.stripe.com/event-destinations#thin-payload) from an
+   * incoming webhook after verifying its authenticity. To work with a webhook that has already been
+   * verified (i.e. one from a cloud provider, an asynchronous queue, or during testing), see
+   * `parseEventNotificationWithoutVerification`.
+   */
   parseEventNotification(
     payload: string | Uint8Array,
     header: string | Uint8Array,
@@ -1640,18 +1653,7 @@ export class Stripe {
       receivedAt
     );
 
-    const eventNotification =
-      payload instanceof Uint8Array
-        ? JSON.parse(new TextDecoder('utf8').decode(payload))
-        : JSON.parse(payload as string);
-
-    if (eventNotification && eventNotification.object === 'event') {
-      throw new Error(
-        'You passed a webhook payload to stripe.parseEventNotification, which expects an event notification. Use stripe.webhooks.constructEvent instead.'
-      );
-    }
-
-    return this._buildEventNotification(eventNotification);
+    return this._buildEventNotification(parsePayload(payload));
   }
 
   async parseEventNotificationAsync(
@@ -1678,48 +1680,35 @@ export class Stripe {
       receivedAt
     );
 
-    const eventNotification =
-      payload instanceof Uint8Array
-        ? JSON.parse(new TextDecoder('utf8').decode(payload))
-        : JSON.parse(payload as string);
-
-    if (eventNotification && eventNotification.object === 'event') {
-      throw new Error(
-        'You passed a webhook payload to stripe.parseEventNotificationAsync, which expects an event notification. Use stripe.webhooks.constructEventAsync instead.'
-      );
-    }
-
-    return this._buildEventNotification(eventNotification);
+    return this._buildEventNotification(parsePayload(payload));
   }
 
   /**
-   * Constructs an Event from an [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
-   * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload.
+   * Constructs a [snapshot event](https://docs.stripe.com/event-destinations#snapshot-payload) from an
+   * incoming webhook without first verifying its authenticity. Should be used after calling
+   * `webhooks.verifySignatureHeader(...)` or with input from a trusted source (such as
+   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge), or
+   * [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload). Or, to verify &
+   * construct in a single call, use `webhooks.constructEvent(...)` instead.
    */
-  constructEventFromCloudProvider(payload: string): Event {
-    const inner = extractFromCloudProviderEnvelope(payload);
-    if (inner && inner.object === 'v2.core.event') {
-      throw new Error(
-        'It looks like this cloud event contains a thin event notification instead of a webhook body. Use parseEventNotificationFromCloudProvider instead.'
-      );
-    }
-    return (inner as unknown) as Event;
+  constructEventWithoutVerification(payload: string): Event {
+    return this.webhooks.constructEventWithoutVerification(payload);
   }
 
   /**
-   * Parses an EventNotification from an [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
-   * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload.
+   * Constructs a [thin event notification](https://docs.stripe.com/event-destinations#thin-payload) from an
+   * incoming webhook without first verifying its authenticity. Should be used after calling
+   * `webhooks.verifySignatureHeader(...)` or with input from a trusted source (such as
+   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge), or
+   * [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload). Or, to verify &
+   * parse in a single call, use `parseEventNotification(...)` instead.
    */
-  parseEventNotificationFromCloudProvider(
+  parseEventNotificationWithoutVerification(
     payload: string
   ): V2.Core.EventNotification {
-    const inner = extractFromCloudProviderEnvelope(payload);
-    if (inner && inner.object === 'event') {
-      throw new Error(
-        'It looks like this cloud event contains a webhook body instead of a thin event notification. Use constructEventFromCloudProvider instead.'
-      );
-    }
-    return this._buildEventNotification(inner);
+    return this._buildEventNotification(
+      maybeExtractFromCloudProviderEnvelope(payload)
+    );
   }
 }
 

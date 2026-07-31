@@ -60,6 +60,12 @@ let accountBizRevenue: Stripe.AccountCreateParams.BusinessProfile.AnnualRevenue;
 // @ts-expect-error - unknown config properties should be rejected
 const bad = new Stripe('sk_test_123', {unknownProperty: true});
 
+// Webhook methods: constructEventWithoutVerification and parseEventNotificationWithoutVerification
+event = stripe.webhooks.constructEventWithoutVerification('payload');
+event = stripe.constructEventWithoutVerification('payload');
+const _notificationWV: Stripe.V2.Core.EventNotification =
+  stripe.parseEventNotificationWithoutVerification('payload');
+
 // Namespace type exports that must remain accessible (v21 parity).
 const _stripeConfig: Stripe.StripeConfig = {maxNetworkRetries: 3};
 const _latestApiVersion: Stripe.LatestApiVersion = '' as any;

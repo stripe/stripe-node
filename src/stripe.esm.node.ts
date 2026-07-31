@@ -20,7 +20,7 @@ import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
   detectAIAgent,
-  extractFromCloudProviderEnvelope,
+  maybeExtractFromCloudProviderEnvelope,
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
@@ -1687,30 +1687,28 @@ export class Stripe {
   }
 
   /**
-   * Constructs an Event from an [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
-   * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload.
+   * Constructs an Event from a payload string, with no signature verification.
+   * Accepts raw Stripe Event JSON as well as payloads wrapped in an
+   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
+   * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) envelope.
    */
-  constructEventFromCloudProvider(payload: string): Event {
-    const inner = extractFromCloudProviderEnvelope(payload);
-    if (inner && inner.object === 'v2.core.event') {
-      throw new Error(
-        'It looks like this cloud event contains a thin event notification instead of a webhook body. Use parseEventNotificationFromCloudProvider instead.'
-      );
-    }
-    return (inner as unknown) as Event;
+  constructEventWithoutVerification(payload: string): Event {
+    return this.webhooks.constructEventWithoutVerification(payload);
   }
 
   /**
-   * Parses an EventNotification from an [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
-   * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload.
+   * Parses an EventNotification from a payload string, with no signature verification.
+   * Accepts raw Stripe Event Notification JSON as well as payloads wrapped in an
+   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
+   * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) envelope.
    */
-  parseEventNotificationFromCloudProvider(
+  parseEventNotificationWithoutVerification(
     payload: string
   ): V2.Core.EventNotification {
-    const inner = extractFromCloudProviderEnvelope(payload);
+    const inner = maybeExtractFromCloudProviderEnvelope(payload);
     if (inner && inner.object === 'event') {
       throw new Error(
-        'It looks like this cloud event contains a webhook body instead of a thin event notification. Use constructEventFromCloudProvider instead.'
+        'It looks like this cloud event contains a webhook body instead of a thin event notification. Use constructEventWithoutVerification instead.'
       );
     }
     return this._buildEventNotification(inner);

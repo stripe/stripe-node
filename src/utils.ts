@@ -465,32 +465,42 @@ export function parseHeadersForFetch(
   });
 }
 
-export function extractFromCloudProviderEnvelope(
+/**
+ * Parses a webhook payload (string or Uint8Array) into a plain object.
+ */
+export function parsePayload(
+  payload: string | Uint8Array
+): Record<string, unknown> {
+  const raw =
+    payload instanceof Uint8Array
+      ? new TextDecoder('utf8').decode(payload)
+      : payload;
+  return JSON.parse(raw) as Record<string, unknown>;
+}
+
+export function maybeExtractFromCloudProviderEnvelope(
   payload: string
 ): Record<string, unknown> {
-  const parsed = JSON.parse(payload) as Record<string, unknown>;
+  const parsed = parsePayload(payload);
 
   // Could add as many checks as we want here, but we'll start simple
   if ('detail' in parsed) {
     // AWS
     // https://docs.stripe.com/event-destinations/eventbridge#event-structure
     return parsed.detail as Record<string, unknown>;
-  } else if ('specversion' in parsed) {
+  }
+  if ('specversion' in parsed) {
     // Azure
     // https://docs.stripe.com/event-destinations/eventgrid#event-structure
     return parsed.data as Record<string, unknown>;
-  } else if (
-    typeof parsed.id === 'string' &&
-    (parsed.id as string).startsWith('evt_')
-  ) {
-    throw new Error(
-      'It looks like you passed a Stripe Event directly. Use constructEvent instead to parse a webhook payload with signature verification.'
-    );
-  } else {
-    throw new Error(
-      'Unrecognized cloud event format. The payload must be an AWS EventBridge or Azure Event Grid event envelope.'
-    );
   }
+  if (parsed.object === 'event' || parsed.object === 'v2.core.event') {
+    // Raw Stripe event passed directly: return it as-is (pass-through)
+    return parsed;
+  }
+  throw new Error(
+    'Unrecognized cloud event format. The payload must be an AWS EventBridge / Azure Event Grid event envelope or a Stripe webhook.'
+  );
 }
 
 const CALL_SITE_MARKER = '\nOriginating from:';

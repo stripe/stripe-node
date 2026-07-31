@@ -419,6 +419,14 @@ event = stripe.webhooks.constructEvent(
   'secret'
 );
 
+// constructEventWithoutVerification on webhooks object and client
+event = stripe.webhooks.constructEventWithoutVerification('payload');
+event = stripe.constructEventWithoutVerification('payload');
+
+// parseEventNotificationWithoutVerification on client
+const _notificationWV: Stripe.V2.Core.EventNotification =
+  stripe.parseEventNotificationWithoutVerification('payload');
+
 const taxExempt: Stripe.CustomerUpdateParams.TaxExempt = 'exempt';
 let subscription: Stripe.Subscription;
 let invoice: Stripe.Invoice;
