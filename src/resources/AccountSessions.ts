@@ -368,6 +368,11 @@ export namespace AccountSession {
          * Whether sending refunds is enabled. This is `true` by default.
          */
         refund_management: boolean;
+
+        /**
+         * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
+         */
+        smart_disputes_management: boolean;
       }
     }
 
@@ -515,6 +520,11 @@ export namespace AccountSession {
          * Whether sending refunds is enabled. This is `true` by default.
          */
         refund_management: boolean;
+
+        /**
+         * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
+         */
+        smart_disputes_management: boolean;
       }
     }
 
@@ -534,6 +544,11 @@ export namespace AccountSession {
          * Whether sending refunds is enabled. This is `true` by default.
          */
         refund_management: boolean;
+
+        /**
+         * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
+         */
+        smart_disputes_management: boolean;
       }
     }
 
@@ -558,6 +573,11 @@ export namespace AccountSession {
          * Whether sending refunds is enabled. This is `true` by default.
          */
         refund_management: boolean;
+
+        /**
+         * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
+         */
+        smart_disputes_management: boolean;
       }
     }
 
@@ -1070,6 +1090,11 @@ export namespace AccountSessionCreateParams {
          * Whether sending refunds is enabled. This is `true` by default.
          */
         refund_management?: boolean;
+
+        /**
+         * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
+         */
+        smart_disputes_management?: boolean;
       }
     }
 
@@ -1217,6 +1242,11 @@ export namespace AccountSessionCreateParams {
          * Whether sending refunds is enabled. This is `true` by default.
          */
         refund_management?: boolean;
+
+        /**
+         * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
+         */
+        smart_disputes_management?: boolean;
       }
     }
 
@@ -1236,6 +1266,11 @@ export namespace AccountSessionCreateParams {
          * Whether sending refunds is enabled. This is `true` by default.
          */
         refund_management?: boolean;
+
+        /**
+         * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
+         */
+        smart_disputes_management?: boolean;
       }
     }
 
@@ -1260,6 +1295,11 @@ export namespace AccountSessionCreateParams {
          * Whether sending refunds is enabled. This is `true` by default.
          */
         refund_management?: boolean;
+
+        /**
+         * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
+         */
+        smart_disputes_management?: boolean;
       }
     }
 

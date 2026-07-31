@@ -3,7 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Meter} from './Meters.js';
 import {Customer} from './../Customers.js';
-import {PaginationParams} from '../../shared.js';
+import {PaginationParams, OtherString} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class AlertResource extends StripeResource {
@@ -130,7 +130,7 @@ export interface Alert {
   usage_threshold: Alert.UsageThreshold | null;
 }
 export namespace Alert {
-  export type Status = 'active' | 'archived' | 'inactive';
+  export type Status = 'active' | 'archived' | 'inactive' | OtherString;
 
   export interface UsageThreshold {
     /**
@@ -196,7 +196,7 @@ export namespace Billing {
       filters?: Array<UsageThreshold.Filter>;
 
       /**
-       * Defines the threshold value that triggers the alert.
+       * Defines the threshold value that triggers the alert. The value must be greater than 0.
        */
       gte: number;
 

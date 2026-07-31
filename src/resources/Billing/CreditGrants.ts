@@ -5,6 +5,7 @@ import {Customer, DeletedCustomer} from './../Customers.js';
 import * as TestHelpers from './../TestHelpers/index.js';
 import {
   MetadataParam,
+  OtherString,
   Emptyable,
   PaginationParams,
   Metadata,
@@ -201,7 +202,7 @@ export namespace CreditGrant {
     scope: ApplicabilityConfig.Scope;
   }
 
-  export type Category = 'paid' | 'promotional';
+  export type Category = 'paid' | 'promotional' | OtherString;
 
   export namespace Amount {
     export interface Monetary {
@@ -318,7 +319,7 @@ export namespace Billing {
       scope: ApplicabilityConfig.Scope;
     }
 
-    export type Category = 'paid' | 'promotional';
+    export type Category = 'paid' | 'promotional' | OtherString;
 
     export namespace Amount {
       export interface Monetary {

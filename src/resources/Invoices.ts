@@ -20,6 +20,7 @@ import * as Billing from './Billing/index.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   AddressParam,
   PaginationParams,
   RangeQueryParam,
@@ -1500,7 +1501,10 @@ export namespace Invoice {
     | 'subscription_update'
     | 'upcoming';
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface ConfirmationSecret {
     /**
@@ -1554,7 +1558,7 @@ export namespace Invoice {
 
   export interface CustomerTaxId {
     /**
-     * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`
+     * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
      */
     type: CustomerTaxId.Type;
 
@@ -1808,7 +1812,13 @@ export namespace Invoice {
     tracking_number?: string | null;
   }
 
-  export type Status = 'draft' | 'open' | 'paid' | 'uncollectible' | 'void';
+  export type Status =
+    | 'draft'
+    | 'open'
+    | 'paid'
+    | 'uncollectible'
+    | 'void'
+    | OtherString;
 
   export interface StatusTransitions {
     /**
@@ -1916,7 +1926,8 @@ export namespace Invoice {
   export namespace AutomaticTax {
     export type DisabledReason =
       | 'finalization_requires_location_inputs'
-      | 'finalization_system_error';
+      | 'finalization_system_error'
+      | OtherString;
 
     export interface Liability {
       /**
@@ -1930,10 +1941,14 @@ export namespace Invoice {
       type: Liability.Type;
     }
 
-    export type Status = 'complete' | 'failed' | 'requires_location_inputs';
+    export type Status =
+      | 'complete'
+      | 'failed'
+      | 'requires_location_inputs'
+      | OtherString;
 
     export namespace Liability {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'self' | OtherString;
     }
   }
 
@@ -1992,6 +2007,7 @@ export namespace Invoice {
       | 'hk_br'
       | 'hr_oib'
       | 'hu_tin'
+      | 'ic_nif'
       | 'id_npwp'
       | 'il_vat'
       | 'in_gst'
@@ -2059,7 +2075,7 @@ export namespace Invoice {
   }
 
   export namespace Issuer {
-    export type Type = 'account' | 'self';
+    export type Type = 'account' | 'self' | OtherString;
   }
 
   export namespace LastFinalizationError {
@@ -2293,7 +2309,7 @@ export namespace Invoice {
       subscription_proration_date?: number;
     }
 
-    export type Type = 'quote_details' | 'subscription_details';
+    export type Type = 'quote_details' | 'subscription_details' | OtherString;
   }
 
   export namespace PaymentSettings {
@@ -2354,6 +2370,7 @@ export namespace Invoice {
       | 'ach_debit'
       | 'acss_debit'
       | 'affirm'
+      | 'alipay'
       | 'amazon_pay'
       | 'au_becs_debit'
       | 'bacs_debit'
@@ -2375,6 +2392,7 @@ export namespace Invoice {
       | 'konbini'
       | 'kr_card'
       | 'link'
+      | 'mb_way'
       | 'multibanco'
       | 'naver_pay'
       | 'nz_bank_account'
@@ -2395,7 +2413,8 @@ export namespace Invoice {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
-      | 'wechat_pay';
+      | 'wechat_pay'
+      | OtherString;
 
     export namespace PaymentMethodOptions {
       export interface AcssDebit {
@@ -2476,15 +2495,16 @@ export namespace Invoice {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace MandateOptions {
-          export type TransactionType = 'business' | 'personal';
+          export type TransactionType = 'business' | 'personal' | OtherString;
         }
       }
 
       export namespace Bancontact {
-        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
       }
 
       export namespace Card {
@@ -2495,7 +2515,11 @@ export namespace Invoice {
           enabled: boolean | null;
         }
 
-        export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+        export type RequestThreeDSecure =
+          | 'any'
+          | 'automatic'
+          | 'challenge'
+          | OtherString;
       }
 
       export namespace CustomerBalance {
@@ -2541,7 +2565,7 @@ export namespace Invoice {
         }
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
 
           export type Purpose =
             | 'dependant_support'
@@ -2554,12 +2578,13 @@ export namespace Invoice {
             | 'retail'
             | 'salary'
             | 'tax'
-            | 'utility';
+            | 'utility'
+            | OtherString;
         }
       }
 
       export namespace Pix {
-        export type AmountIncludesIof = 'always' | 'never';
+        export type AmountIncludesIof = 'always' | 'never' | OtherString;
       }
 
       export namespace Upi {
@@ -2586,7 +2611,7 @@ export namespace Invoice {
         }
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
         }
       }
 
@@ -2608,7 +2633,8 @@ export namespace Invoice {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace FinancialConnections {
           export interface Filters {
@@ -2622,12 +2648,20 @@ export namespace Invoice {
             | 'balances'
             | 'ownership'
             | 'payment_method'
-            | 'transactions';
+            | 'transactions'
+            | OtherString;
 
-          export type Prefetch = 'balances' | 'ownership' | 'transactions';
+          export type Prefetch =
+            | 'balances'
+            | 'ownership'
+            | 'transactions'
+            | OtherString;
 
           export namespace Filters {
-            export type AccountSubcategory = 'checking' | 'savings';
+            export type AccountSubcategory =
+              | 'checking'
+              | 'savings'
+              | OtherString;
           }
         }
       }
@@ -2688,7 +2722,8 @@ export namespace Invoice {
         | 'reverse_charge'
         | 'standard_rated'
         | 'taxable_basis_reduced'
-        | 'zero_rated';
+        | 'zero_rated'
+        | OtherString;
     }
   }
 
@@ -2707,7 +2742,7 @@ export namespace Invoice {
   }
 
   export namespace TotalPretaxCreditAmount {
-    export type Type = 'credit_balance_transaction' | 'discount';
+    export type Type = 'credit_balance_transaction' | 'discount' | OtherString;
   }
 
   export namespace TotalTax {
@@ -2736,7 +2771,8 @@ export namespace Invoice {
       | 'reverse_charge'
       | 'standard_rated'
       | 'taxable_basis_reduced'
-      | 'zero_rated';
+      | 'zero_rated'
+      | OtherString;
   }
 }
 export interface InvoiceCreateParams {
@@ -2990,7 +3026,7 @@ export namespace InvoiceCreateParams {
     payment_method_types?: Emptyable<Array<PaymentSettings.PaymentMethodType>>;
   }
 
-  export type PendingInvoiceItemsBehavior = 'exclude' | 'include';
+  export type PendingInvoiceItemsBehavior = 'exclude' | 'include' | OtherString;
 
   export interface Rendering {
     /**
@@ -3069,12 +3105,12 @@ export namespace InvoiceCreateParams {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'self' | OtherString;
     }
   }
 
   export namespace Issuer {
-    export type Type = 'account' | 'self';
+    export type Type = 'account' | 'self' | OtherString;
   }
 
   export namespace PaymentSettings {
@@ -3135,6 +3171,7 @@ export namespace InvoiceCreateParams {
       | 'ach_debit'
       | 'acss_debit'
       | 'affirm'
+      | 'alipay'
       | 'amazon_pay'
       | 'au_becs_debit'
       | 'bacs_debit'
@@ -3156,6 +3193,7 @@ export namespace InvoiceCreateParams {
       | 'konbini'
       | 'kr_card'
       | 'link'
+      | 'mb_way'
       | 'multibanco'
       | 'naver_pay'
       | 'nz_bank_account'
@@ -3176,7 +3214,8 @@ export namespace InvoiceCreateParams {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
-      | 'wechat_pay';
+      | 'wechat_pay'
+      | OtherString;
 
     export namespace PaymentMethodOptions {
       export interface AcssDebit {
@@ -3277,15 +3316,16 @@ export namespace InvoiceCreateParams {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace MandateOptions {
-          export type TransactionType = 'business' | 'personal';
+          export type TransactionType = 'business' | 'personal' | OtherString;
         }
       }
 
       export namespace Bancontact {
-        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
       }
 
       export namespace Card {
@@ -3302,7 +3342,11 @@ export namespace InvoiceCreateParams {
           plan?: Emptyable<Installments.Plan>;
         }
 
-        export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+        export type RequestThreeDSecure =
+          | 'any'
+          | 'automatic'
+          | 'challenge'
+          | OtherString;
 
         export namespace Installments {
           export interface Plan {
@@ -3324,7 +3368,11 @@ export namespace InvoiceCreateParams {
           }
 
           export namespace Plan {
-            export type Type = 'bonus' | 'fixed_count' | 'revolving';
+            export type Type =
+              | 'bonus'
+              | 'fixed_count'
+              | 'revolving'
+              | OtherString;
           }
         }
       }
@@ -3377,12 +3425,13 @@ export namespace InvoiceCreateParams {
             | 'retail'
             | 'salary'
             | 'tax'
-            | 'utility';
+            | 'utility'
+            | OtherString;
         }
       }
 
       export namespace Pix {
-        export type AmountIncludesIof = 'always' | 'never';
+        export type AmountIncludesIof = 'always' | 'never' | OtherString;
       }
 
       export namespace Upi {
@@ -3409,7 +3458,7 @@ export namespace InvoiceCreateParams {
         }
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
         }
       }
 
@@ -3434,7 +3483,8 @@ export namespace InvoiceCreateParams {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace FinancialConnections {
           export interface Filters {
@@ -3450,10 +3500,17 @@ export namespace InvoiceCreateParams {
             | 'payment_method'
             | 'transactions';
 
-          export type Prefetch = 'balances' | 'ownership' | 'transactions';
+          export type Prefetch =
+            | 'balances'
+            | 'ownership'
+            | 'transactions'
+            | OtherString;
 
           export namespace Filters {
-            export type AccountSubcategory = 'checking' | 'savings';
+            export type AccountSubcategory =
+              | 'checking'
+              | 'savings'
+              | OtherString;
           }
         }
       }
@@ -3575,11 +3632,23 @@ export namespace InvoiceCreateParams {
         }
 
         export namespace Maximum {
-          export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+          export type Unit =
+            | 'business_day'
+            | 'day'
+            | 'hour'
+            | 'month'
+            | 'week'
+            | OtherString;
         }
 
         export namespace Minimum {
-          export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+          export type Unit =
+            | 'business_day'
+            | 'day'
+            | 'hour'
+            | 'month'
+            | 'week'
+            | OtherString;
         }
       }
 
@@ -3895,12 +3964,12 @@ export namespace InvoiceUpdateParams {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'self' | OtherString;
     }
   }
 
   export namespace Issuer {
-    export type Type = 'account' | 'self';
+    export type Type = 'account' | 'self' | OtherString;
   }
 
   export namespace PaymentSettings {
@@ -3961,6 +4030,7 @@ export namespace InvoiceUpdateParams {
       | 'ach_debit'
       | 'acss_debit'
       | 'affirm'
+      | 'alipay'
       | 'amazon_pay'
       | 'au_becs_debit'
       | 'bacs_debit'
@@ -3982,6 +4052,7 @@ export namespace InvoiceUpdateParams {
       | 'konbini'
       | 'kr_card'
       | 'link'
+      | 'mb_way'
       | 'multibanco'
       | 'naver_pay'
       | 'nz_bank_account'
@@ -4002,7 +4073,8 @@ export namespace InvoiceUpdateParams {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
-      | 'wechat_pay';
+      | 'wechat_pay'
+      | OtherString;
 
     export namespace PaymentMethodOptions {
       export interface AcssDebit {
@@ -4103,15 +4175,16 @@ export namespace InvoiceUpdateParams {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace MandateOptions {
-          export type TransactionType = 'business' | 'personal';
+          export type TransactionType = 'business' | 'personal' | OtherString;
         }
       }
 
       export namespace Bancontact {
-        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
       }
 
       export namespace Card {
@@ -4128,7 +4201,11 @@ export namespace InvoiceUpdateParams {
           plan?: Emptyable<Installments.Plan>;
         }
 
-        export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+        export type RequestThreeDSecure =
+          | 'any'
+          | 'automatic'
+          | 'challenge'
+          | OtherString;
 
         export namespace Installments {
           export interface Plan {
@@ -4150,7 +4227,11 @@ export namespace InvoiceUpdateParams {
           }
 
           export namespace Plan {
-            export type Type = 'bonus' | 'fixed_count' | 'revolving';
+            export type Type =
+              | 'bonus'
+              | 'fixed_count'
+              | 'revolving'
+              | OtherString;
           }
         }
       }
@@ -4203,12 +4284,13 @@ export namespace InvoiceUpdateParams {
             | 'retail'
             | 'salary'
             | 'tax'
-            | 'utility';
+            | 'utility'
+            | OtherString;
         }
       }
 
       export namespace Pix {
-        export type AmountIncludesIof = 'always' | 'never';
+        export type AmountIncludesIof = 'always' | 'never' | OtherString;
       }
 
       export namespace Upi {
@@ -4235,7 +4317,7 @@ export namespace InvoiceUpdateParams {
         }
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
         }
       }
 
@@ -4260,7 +4342,8 @@ export namespace InvoiceUpdateParams {
         export type VerificationMethod =
           | 'automatic'
           | 'instant'
-          | 'microdeposits';
+          | 'microdeposits'
+          | OtherString;
 
         export namespace FinancialConnections {
           export interface Filters {
@@ -4276,10 +4359,17 @@ export namespace InvoiceUpdateParams {
             | 'payment_method'
             | 'transactions';
 
-          export type Prefetch = 'balances' | 'ownership' | 'transactions';
+          export type Prefetch =
+            | 'balances'
+            | 'ownership'
+            | 'transactions'
+            | OtherString;
 
           export namespace Filters {
-            export type AccountSubcategory = 'checking' | 'savings';
+            export type AccountSubcategory =
+              | 'checking'
+              | 'savings'
+              | OtherString;
           }
         }
       }
@@ -4401,11 +4491,23 @@ export namespace InvoiceUpdateParams {
         }
 
         export namespace Maximum {
-          export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+          export type Unit =
+            | 'business_day'
+            | 'day'
+            | 'hour'
+            | 'month'
+            | 'week'
+            | OtherString;
         }
 
         export namespace Minimum {
-          export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+          export type Unit =
+            | 'business_day'
+            | 'day'
+            | 'hour'
+            | 'month'
+            | 'week'
+            | OtherString;
         }
       }
 
@@ -4470,7 +4572,13 @@ export interface InvoiceListParams extends PaginationParams {
 export namespace InvoiceListParams {
   export type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
-  export type Status = 'draft' | 'open' | 'paid' | 'uncollectible' | 'void';
+  export type Status =
+    | 'draft'
+    | 'open'
+    | 'paid'
+    | 'uncollectible'
+    | 'void'
+    | OtherString;
 }
 export interface InvoiceDeleteParams {}
 export interface InvoiceAddLinesParams {
@@ -4751,7 +4859,8 @@ export namespace InvoiceAddLinesParams {
         | 'reverse_charge'
         | 'standard_rated'
         | 'taxable_basis_reduced'
-        | 'zero_rated';
+        | 'zero_rated'
+        | OtherString;
 
       export namespace TaxRateData {
         export type JurisdictionLevel =
@@ -4760,7 +4869,8 @@ export namespace InvoiceAddLinesParams {
           | 'county'
           | 'district'
           | 'multiple'
-          | 'state';
+          | 'state'
+          | OtherString;
 
         export type TaxType =
           | 'amusement_tax'
@@ -4770,13 +4880,16 @@ export namespace InvoiceAddLinesParams {
           | 'igst'
           | 'jct'
           | 'lease_tax'
+          | 'mass_transit_parking_tax'
+          | 'parking_tax'
           | 'pst'
           | 'qst'
           | 'retail_delivery_fee'
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
-          | 'vat';
+          | 'vat'
+          | OtherString;
       }
     }
   }
@@ -5029,7 +5142,7 @@ export namespace InvoiceCreatePreviewParams {
     type: Issuer.Type;
   }
 
-  export type PreviewMode = 'next' | 'recurring';
+  export type PreviewMode = 'next' | 'recurring' | OtherString;
 
   export interface ScheduleDetails {
     /**
@@ -5095,6 +5208,11 @@ export namespace InvoiceCreatePreviewParams {
     items?: Array<SubscriptionDetails.Item>;
 
     /**
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     */
+    metadata?: Emptyable<MetadataParam>;
+
+    /**
      * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
      */
     proration_behavior?: SubscriptionDetails.ProrationBehavior;
@@ -5134,7 +5252,7 @@ export namespace InvoiceCreatePreviewParams {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'self' | OtherString;
     }
   }
 
@@ -5167,7 +5285,7 @@ export namespace InvoiceCreatePreviewParams {
 
     export interface TaxId {
       /**
-       * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
+       * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
        */
       type: TaxId.Type;
 
@@ -5232,6 +5350,7 @@ export namespace InvoiceCreatePreviewParams {
         | 'hk_br'
         | 'hr_oib'
         | 'hu_tin'
+        | 'ic_nif'
         | 'id_npwp'
         | 'il_vat'
         | 'in_gst'
@@ -5363,7 +5482,7 @@ export namespace InvoiceCreatePreviewParams {
   }
 
   export namespace Issuer {
-    export type Type = 'account' | 'self';
+    export type Type = 'account' | 'self' | OtherString;
   }
 
   export namespace ScheduleDetails {
@@ -5473,7 +5592,7 @@ export namespace InvoiceCreatePreviewParams {
       proration_behavior?: Phase.ProrationBehavior;
 
       /**
-       * The date at which this phase of the subscription schedule starts or `now`. Must be set on the first phase.
+       * The date at which this phase of the subscription schedule starts or `now`. Must be set on the first phase. Prefer to specify `now` over an explicit timestamp when appropriate to avoid unexpected behavior due to request delays or clock skew resulting in the phase being slightly backdated or postdated.
        */
       start_date?: number | 'now';
 
@@ -5488,7 +5607,7 @@ export namespace InvoiceCreatePreviewParams {
       trial?: boolean;
 
       /**
-       * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
+       * Sets the phase to trialing from the start date to this date. Must be within the phase. When previewing an update, if combined with `trial=true`, it must match the phase end date.
        */
       trial_end?: number | 'now';
     }
@@ -5496,7 +5615,8 @@ export namespace InvoiceCreatePreviewParams {
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export namespace BillingMode {
       export interface Flexible {
@@ -5506,7 +5626,7 @@ export namespace InvoiceCreatePreviewParams {
         proration_discounts?: Flexible.ProrationDiscounts;
       }
 
-      export type Type = 'classic' | 'flexible';
+      export type Type = 'classic' | 'flexible' | OtherString;
 
       export namespace Flexible {
         export type ProrationDiscounts = 'included' | 'itemized';
@@ -5675,7 +5795,8 @@ export namespace InvoiceCreatePreviewParams {
       export type ProrationBehavior =
         | 'always_invoice'
         | 'create_prorations'
-        | 'none';
+        | 'none'
+        | OtherString;
 
       export interface TransferData {
         /**
@@ -5775,14 +5896,16 @@ export namespace InvoiceCreatePreviewParams {
             export type Type =
               | 'min_item_period_end'
               | 'phase_end'
-              | 'timestamp';
+              | 'timestamp'
+              | OtherString;
           }
 
           export namespace Start {
             export type Type =
               | 'max_item_period_start'
               | 'phase_start'
-              | 'timestamp';
+              | 'timestamp'
+              | OtherString;
           }
         }
 
@@ -5805,7 +5928,7 @@ export namespace InvoiceCreatePreviewParams {
         }
 
         export namespace Liability {
-          export type Type = 'account' | 'self';
+          export type Type = 'account' | 'self' | OtherString;
         }
       }
 
@@ -5827,7 +5950,7 @@ export namespace InvoiceCreatePreviewParams {
         }
 
         export namespace Issuer {
-          export type Type = 'account' | 'self';
+          export type Type = 'account' | 'self' | OtherString;
         }
       }
 
@@ -5946,7 +6069,8 @@ export namespace InvoiceCreatePreviewParams {
     export type CancelAt =
       | 'max_billed_until'
       | 'max_period_end'
-      | 'min_period_end';
+      | 'min_period_end'
+      | OtherString;
 
     export interface Item {
       /**
@@ -6008,7 +6132,8 @@ export namespace InvoiceCreatePreviewParams {
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export namespace BillingMode {
       export interface Flexible {
@@ -6018,7 +6143,7 @@ export namespace InvoiceCreatePreviewParams {
         proration_discounts?: Flexible.ProrationDiscounts;
       }
 
-      export type Type = 'classic' | 'flexible';
+      export type Type = 'classic' | 'flexible' | OtherString;
 
       export namespace Flexible {
         export type ProrationDiscounts = 'included' | 'itemized';
@@ -6068,7 +6193,7 @@ export namespace InvoiceCreatePreviewParams {
           interval_count?: number;
         }
 
-        export type Type = 'duration' | 'timestamp';
+        export type Type = 'duration' | 'timestamp' | OtherString;
 
         export namespace Duration {
           export type Interval = 'day' | 'month' | 'week' | 'year';
@@ -6248,7 +6373,7 @@ export namespace InvoiceRemoveLinesParams {
   }
 
   export namespace Line {
-    export type Behavior = 'delete' | 'unassign';
+    export type Behavior = 'delete' | 'unassign' | OtherString;
   }
 }
 export interface InvoiceSearchParams {
@@ -6556,7 +6681,8 @@ export namespace InvoiceUpdateLinesParams {
         | 'reverse_charge'
         | 'standard_rated'
         | 'taxable_basis_reduced'
-        | 'zero_rated';
+        | 'zero_rated'
+        | OtherString;
 
       export namespace TaxRateData {
         export type JurisdictionLevel =
@@ -6565,7 +6691,8 @@ export namespace InvoiceUpdateLinesParams {
           | 'county'
           | 'district'
           | 'multiple'
-          | 'state';
+          | 'state'
+          | OtherString;
 
         export type TaxType =
           | 'amusement_tax'
@@ -6575,13 +6702,16 @@ export namespace InvoiceUpdateLinesParams {
           | 'igst'
           | 'jct'
           | 'lease_tax'
+          | 'mass_transit_parking_tax'
+          | 'parking_tax'
           | 'pst'
           | 'qst'
           | 'retail_delivery_fee'
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
-          | 'vat';
+          | 'vat'
+          | OtherString;
       }
     }
   }
@@ -6844,7 +6974,8 @@ export namespace InvoiceUpdateLineItemParams {
       | 'reverse_charge'
       | 'standard_rated'
       | 'taxable_basis_reduced'
-      | 'zero_rated';
+      | 'zero_rated'
+      | OtherString;
 
     export namespace TaxRateData {
       export type JurisdictionLevel =
@@ -6853,7 +6984,8 @@ export namespace InvoiceUpdateLineItemParams {
         | 'county'
         | 'district'
         | 'multiple'
-        | 'state';
+        | 'state'
+        | OtherString;
 
       export type TaxType =
         | 'amusement_tax'
@@ -6863,13 +6995,16 @@ export namespace InvoiceUpdateLineItemParams {
         | 'igst'
         | 'jct'
         | 'lease_tax'
+        | 'mass_transit_parking_tax'
+        | 'parking_tax'
         | 'pst'
         | 'qst'
         | 'retail_delivery_fee'
         | 'rst'
         | 'sales_tax'
         | 'service_tax'
-        | 'vat';
+        | 'vat'
+        | OtherString;
     }
   }
 }

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Metadata} from '../../shared.js';
+import {Metadata, OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface Plan {
   /**
@@ -63,7 +63,7 @@ export interface Plan {
   type: Plan.Type;
 }
 export namespace Plan {
-  export type CreatedBy = 'application' | 'stripe';
+  export type CreatedBy = 'application' | 'stripe' | OtherString;
 
   export interface FixedRelease {
     /**
@@ -89,7 +89,7 @@ export namespace Plan {
     expires_on: number | null;
   }
 
-  export type Status = 'active' | 'disabled' | 'expired';
+  export type Status = 'active' | 'disabled' | 'expired' | OtherString;
 
-  export type Type = 'fixed_release' | 'rolling_release';
+  export type Type = 'fixed_release' | 'rolling_release' | OtherString;
 }

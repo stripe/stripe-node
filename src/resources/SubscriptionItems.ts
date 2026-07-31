@@ -9,6 +9,7 @@ import {
   Emptyable,
   MetadataParam,
   Decimal,
+  OtherString,
   PaginationParams,
   Metadata,
 } from '../shared.js';
@@ -696,7 +697,8 @@ export namespace SubscriptionItemCreateParams {
   export type ProrationBehavior =
     | 'always_invoice'
     | 'create_prorations'
-    | 'none';
+    | 'none'
+    | OtherString;
 
   export namespace PriceData {
     export interface Recurring {
@@ -858,7 +860,8 @@ export namespace SubscriptionItemUpdateParams {
   export type ProrationBehavior =
     | 'always_invoice'
     | 'create_prorations'
-    | 'none';
+    | 'none'
+    | OtherString;
 
   export namespace PriceData {
     export interface Recurring {
@@ -922,5 +925,6 @@ export namespace SubscriptionItemDeleteParams {
   export type ProrationBehavior =
     | 'always_invoice'
     | 'create_prorations'
-    | 'none';
+    | 'none'
+    | OtherString;
 }

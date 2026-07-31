@@ -3,6 +3,7 @@
 import {StripeResource} from '../StripeResource.js';
 import {
   MetadataParam,
+  OtherString,
   Emptyable,
   PaginationParams,
   RangeQueryParam,
@@ -176,7 +177,7 @@ export namespace TaxRate {
     | 'multiple'
     | 'state';
 
-  export type RateType = 'flat_amount' | 'percentage';
+  export type RateType = 'flat_amount' | 'percentage' | OtherString;
 
   export type TaxType =
     | 'amusement_tax'
@@ -186,13 +187,16 @@ export namespace TaxRate {
     | 'igst'
     | 'jct'
     | 'lease_tax'
+    | 'mass_transit_parking_tax'
+    | 'parking_tax'
     | 'pst'
     | 'qst'
     | 'retail_delivery_fee'
     | 'rst'
     | 'sales_tax'
     | 'service_tax'
-    | 'vat';
+    | 'vat'
+    | OtherString;
 }
 export interface TaxRateCreateParams {
   /**
@@ -259,13 +263,16 @@ export namespace TaxRateCreateParams {
     | 'igst'
     | 'jct'
     | 'lease_tax'
+    | 'mass_transit_parking_tax'
+    | 'parking_tax'
     | 'pst'
     | 'qst'
     | 'retail_delivery_fee'
     | 'rst'
     | 'sales_tax'
     | 'service_tax'
-    | 'vat';
+    | 'vat'
+    | OtherString;
 }
 export interface TaxRateRetrieveParams {
   /**
@@ -328,13 +335,16 @@ export namespace TaxRateUpdateParams {
     | 'igst'
     | 'jct'
     | 'lease_tax'
+    | 'mass_transit_parking_tax'
+    | 'parking_tax'
     | 'pst'
     | 'qst'
     | 'retail_delivery_fee'
     | 'rst'
     | 'sales_tax'
     | 'service_tax'
-    | 'vat';
+    | 'vat'
+    | OtherString;
 }
 export interface TaxRateListParams extends PaginationParams {
   /**
