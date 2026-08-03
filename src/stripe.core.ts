@@ -957,6 +957,10 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
 export class Stripe {
   static PACKAGE_VERSION = '22.4.0';
   static API_VERSION: typeof ApiVersion = ApiVersion;
+  /**
+   * The major API version that this SDK uses. Objects retrieved using the same
+   * major version are compatible. Is an empty string in preview versions of the SDK.
+   */
   static MAJOR_API_VERSION = ApiMajorVersion;
   static aiAgent = '';
   static AI_AGENT = '';
