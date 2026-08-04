@@ -55,6 +55,21 @@ export const coerceV2RequestData = (
 
     case 'nullable':
       return coerceV2RequestData(data, schema.inner);
+
+    case 'discriminatedUnion': {
+      if (typeof data !== 'object' || Array.isArray(data)) {
+        return data;
+      }
+      const obj = data as Record<string, unknown>;
+      const discriminatorValue = obj[schema.discriminator];
+      if (
+        typeof discriminatorValue === 'string' &&
+        discriminatorValue in schema.variants
+      ) {
+        return coerceV2RequestData(data, schema.variants[discriminatorValue]);
+      }
+      return data;
+    }
   }
 };
 
@@ -123,5 +138,20 @@ export const coerceV2ResponseData = (
 
     case 'nullable':
       return coerceV2ResponseData(data, schema.inner);
+
+    case 'discriminatedUnion': {
+      if (typeof data !== 'object' || Array.isArray(data)) {
+        return data;
+      }
+      const obj = data as Record<string, unknown>;
+      const discriminatorValue = obj[schema.discriminator];
+      if (
+        typeof discriminatorValue === 'string' &&
+        discriminatorValue in schema.variants
+      ) {
+        return coerceV2ResponseData(data, schema.variants[discriminatorValue]);
+      }
+      return data;
+    }
   }
 };
