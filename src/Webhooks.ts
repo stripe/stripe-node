@@ -202,16 +202,24 @@ export function createWebhooks(
     },
 
     generateTestHeaderString: function(opts: WebhookTestHeaderOptions): string {
-      const preparedOpts = prepareOptions(opts);
+      try {
+        const preparedOpts = prepareOptions(opts);
 
-      const signature =
-        preparedOpts.signature ||
-        preparedOpts.cryptoProvider.computeHMACSignature(
-          preparedOpts.payloadString,
-          preparedOpts.secret
-        );
+        const signature =
+          preparedOpts.signature ||
+          preparedOpts.cryptoProvider.computeHMACSignature(
+            preparedOpts.payloadString,
+            preparedOpts.secret
+          );
 
-      return preparedOpts.generateHeaderString(signature);
+        return preparedOpts.generateHeaderString(signature);
+      } catch (e) {
+        if (e instanceof CryptoProviderOnlySupportsAsyncError) {
+          e.message +=
+            '\nUse `await generateTestHeaderStringAsync(...)` instead of `generateTestHeaderString(...)`';
+        }
+        throw e;
+      }
     },
     generateTestHeaderStringAsync: async function(
       opts: WebhookTestHeaderOptions
