@@ -1096,7 +1096,7 @@ export class Stripe {
         platformFunctions.writeStderr(
           '<claude-code-hint v="1" type="plugin" value="stripe@claude-plugins-official" />\n'
         );
-      } catch (_) {
+      } catch {
         // never let hint emission crash the SDK
       }
     }
