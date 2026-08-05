@@ -327,18 +327,7 @@ export interface V2SearchResult<T> {
 }
 
 export interface V2SearchResultPromise<T>
-  extends Promise<Response<V2SearchResult<T>>>,
-    AsyncIterableIterator<T> {
-  autoPagingEach(
-    handler: (item: T) => boolean | void | Promise<boolean | void>,
-    onDone?: (err: any) => void
-  ): Promise<void>;
-
-  autoPagingToArray(
-    opts: {limit: number},
-    onDone?: (err: any) => void
-  ): Promise<Array<T>>;
-}
+  extends Promise<Response<V2SearchResult<T>>> {}
 
 /**
  * A container for paginated lists of search results.
