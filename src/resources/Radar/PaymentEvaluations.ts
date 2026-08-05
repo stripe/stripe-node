@@ -662,12 +662,12 @@ export namespace PaymentEvaluation {
         /**
          * First six digits of the card number.
          */
-        first6?: string;
+        first6: string;
 
         /**
          * Last four digits of the card number.
          */
-        last4?: string;
+        last4: string;
       }
     }
   }

@@ -481,6 +481,9 @@ export namespace TokenCreateParams {
        */
       address_kanji?: JapanAddressParam;
 
+      /**
+       * The location where the business is administered.
+       */
       administrative_address?: AddressParam;
 
       /**
@@ -548,6 +551,9 @@ export namespace TokenCreateParams {
        */
       phone?: string;
 
+      /**
+       * The primary location where the business conducts operations.
+       */
       principal_place_of_business?: AddressParam;
 
       /**

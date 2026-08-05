@@ -2532,6 +2532,7 @@ export namespace CustomerListPaymentMethodsParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'

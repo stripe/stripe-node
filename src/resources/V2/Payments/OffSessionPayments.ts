@@ -145,6 +145,11 @@ export interface OffSessionPayment {
   amount_requested: V2Amount;
 
   /**
+   * The application associated with this OffSessionPayment.
+   */
+  application?: string;
+
+  /**
    * The amount of the application fee requested to be applied to the payment.
    */
   application_fee_amount_requested?: V2Amount;

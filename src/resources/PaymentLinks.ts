@@ -998,7 +998,7 @@ export namespace PaymentLink {
   export namespace AutomaticSurcharge {
     export type CalculationBasis = 'total_after_tax' | 'total_before_tax';
 
-    export type Provider = 'interpayments' | 'proserv' | 'yeeld';
+    export type Provider = 'daikin' | 'interpayments' | 'proserv' | 'yeeld';
 
     export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
   }
@@ -2258,7 +2258,7 @@ export namespace PaymentLinkCreateParams {
   export namespace CustomField {
     export interface Dropdown {
       /**
-       * The value that pre-fills the field on the payment page.Must match a `value` in the `options` array.
+       * The value that pre-fills the field on the payment page. Must match a `value` in the `options` array.
        */
       default_value?: string;
 
@@ -3524,7 +3524,7 @@ export namespace PaymentLinkUpdateParams {
   export namespace CustomField {
     export interface Dropdown {
       /**
-       * The value that pre-fills the field on the payment page.Must match a `value` in the `options` array.
+       * The value that pre-fills the field on the payment page. Must match a `value` in the `options` array.
        */
       default_value?: string;
 

@@ -1153,6 +1153,7 @@ export namespace PaymentMethod {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -1481,6 +1482,11 @@ export namespace PaymentMethod {
            * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
            */
           receipt: CardPresent.Receipt | null;
+
+          /**
+           * The retrieval reference number assigned to this transaction.
+           */
+          retrieval_reference_number?: string;
 
           wallet?: CardPresent.Wallet;
         }
@@ -2829,6 +2835,7 @@ export namespace PaymentMethodCreateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -3351,6 +3358,7 @@ export namespace PaymentMethodListParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'

@@ -231,7 +231,7 @@ export interface Coupon {
   times_redeemed: number;
 
   /**
-   * One of `amount_off`, `percent_off`, or `script`. Describes the type of coupon logic used to calculate the discount.
+   * The type of coupon logic used to calculate the discount.
    */
   type?: Coupon.Type | null;
 

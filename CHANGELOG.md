@@ -101,7 +101,7 @@ This release changes the pinned API version to 2026-07-29.dahlia.
   * Add support for snapshot events `FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent`, `FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent`, and `FinancialConnectionsAccountUpcomingDeactivationEvent` with resource `FinancialConnections.Account`
   * Add support for snapshot events `FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent` and `FinancialConnectionsAuthorizationUpcomingDeactivationEvent` with resource `FinancialConnections.Authorization`
 * [#2790](https://github.com/stripe/stripe-node/pull/2790) Bump brace-expansion from 1.1.11 to 1.1.16
-* [#2786](https://github.com/stripe/stripe-node/pull/2786) Adds shared OtherString type to better annotate non-exhaustive enums
+* [#2786](https://github.com/stripe/stripe-node/pull/2786) Enum type annotations for non-exhaustive ("open") enums now include a shared `OtherString` type in their unions. Many Stripe enums are open, meaning new values may appear even on older API versions. This change ensures these fields have the correct type for both the values known at SDK release time and other values that may be added later. Refer to the [API Reference](https://docs.stripe.com) for the latest set of allowed values.
 
 ## 22.4.0-alpha.5 - 2026-07-22
 * [#2791](https://github.com/stripe/stripe-node/pull/2791) Update generated code for private-preview

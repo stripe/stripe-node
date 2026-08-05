@@ -1266,6 +1266,7 @@ declare namespace StripeConstructor {
       export type ScalapayPayments = Stripe_.Account.Capabilities.ScalapayPayments;
       export type SepaBankTransferPayments = Stripe_.Account.Capabilities.SepaBankTransferPayments;
       export type SepaDebitPayments = Stripe_.Account.Capabilities.SepaDebitPayments;
+      export type SequraPayments = Stripe_.Account.Capabilities.SequraPayments;
       export type ShopeepayPayments = Stripe_.Account.Capabilities.ShopeepayPayments;
       export type SofortPayments = Stripe_.Account.Capabilities.SofortPayments;
       export type StripeBalancePayments = Stripe_.Account.Capabilities.StripeBalancePayments;
@@ -2294,6 +2295,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.Charge.PaymentMethodDetails.Scalapay;
       export type SepaCreditTransfer = Stripe_.Charge.PaymentMethodDetails.SepaCreditTransfer;
       export type SepaDebit = Stripe_.Charge.PaymentMethodDetails.SepaDebit;
+      export type Sequra = Stripe_.Charge.PaymentMethodDetails.Sequra;
       export type Shopeepay = Stripe_.Charge.PaymentMethodDetails.Shopeepay;
       export type Sofort = Stripe_.Charge.PaymentMethodDetails.Sofort;
       export type StripeAccount = Stripe_.Charge.PaymentMethodDetails.StripeAccount;
@@ -2566,6 +2568,7 @@ declare namespace StripeConstructor {
       export type Satispay = Stripe_.ConfirmationToken.PaymentMethodPreview.Satispay;
       export type Scalapay = Stripe_.ConfirmationToken.PaymentMethodPreview.Scalapay;
       export type SepaDebit = Stripe_.ConfirmationToken.PaymentMethodPreview.SepaDebit;
+      export type Sequra = Stripe_.ConfirmationToken.PaymentMethodPreview.Sequra;
       export type Shopeepay = Stripe_.ConfirmationToken.PaymentMethodPreview.Shopeepay;
       export type Sofort = Stripe_.ConfirmationToken.PaymentMethodPreview.Sofort;
       export type StripeBalance = Stripe_.ConfirmationToken.PaymentMethodPreview.StripeBalance;
@@ -5078,6 +5081,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Scalapay;
       export type SepaCreditTransfer = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.SepaCreditTransfer;
       export type SepaDebit = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.SepaDebit;
+      export type Sequra = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Sequra;
       export type Shopeepay = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Shopeepay;
       export type Sofort = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Sofort;
       export type StripeAccount = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.StripeAccount;
@@ -8356,6 +8360,7 @@ declare namespace StripeConstructor {
       export type Satispay = Stripe_.PaymentIntent.PaymentMethodOptions.Satispay;
       export type Scalapay = Stripe_.PaymentIntent.PaymentMethodOptions.Scalapay;
       export type SepaDebit = Stripe_.PaymentIntent.PaymentMethodOptions.SepaDebit;
+      export type Sequra = Stripe_.PaymentIntent.PaymentMethodOptions.Sequra;
       export type Shopeepay = Stripe_.PaymentIntent.PaymentMethodOptions.Shopeepay;
       export type Sofort = Stripe_.PaymentIntent.PaymentMethodOptions.Sofort;
       export type StripeBalance = Stripe_.PaymentIntent.PaymentMethodOptions.StripeBalance;
@@ -8432,12 +8437,17 @@ declare namespace StripeConstructor {
         }
       }
       export namespace CardPresent {
+        export type AadeData = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.AadeData;
         export type CaptureBy = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.CaptureBy;
         export type CaptureDelay = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.CaptureDelay;
         export type CaptureMethod = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.CaptureMethod;
         export type RequestMulticapture = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.RequestMulticapture;
         export type RequestReauthorization = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.RequestReauthorization;
         export type Routing = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.Routing;
+        export namespace AadeData {
+          export type Mode = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.AadeData.Mode;
+          export type UnboundPos = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.AadeData.UnboundPos;
+        }
         export namespace Routing {
           export type RequestedPriority = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.Routing.RequestedPriority;
         }
@@ -11031,6 +11041,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.PaymentRecord.PaymentMethodDetails.Scalapay;
       export type SepaCreditTransfer = Stripe_.PaymentRecord.PaymentMethodDetails.SepaCreditTransfer;
       export type SepaDebit = Stripe_.PaymentRecord.PaymentMethodDetails.SepaDebit;
+      export type Sequra = Stripe_.PaymentRecord.PaymentMethodDetails.Sequra;
       export type Shopeepay = Stripe_.PaymentRecord.PaymentMethodDetails.Shopeepay;
       export type Sofort = Stripe_.PaymentRecord.PaymentMethodDetails.Sofort;
       export type StripeAccount = Stripe_.PaymentRecord.PaymentMethodDetails.StripeAccount;
@@ -15800,6 +15811,7 @@ declare namespace StripeConstructor {
     export type MeterEventAdjustmentResource = Stripe_.Billing.MeterEventAdjustmentResource;
     export type AlertRecovered = Stripe_.Billing.AlertRecovered;
     export type AlertTriggered = Stripe_.Billing.AlertTriggered;
+    export type FeedbackOptions = Stripe_.Billing.FeedbackOptions;
     export type AlertNotification = Stripe_.Billing.AlertNotification;
     export type MeterEventSummary = Stripe_.Billing.MeterEventSummary;
     export namespace AlertCreateParams {
@@ -16027,6 +16039,10 @@ declare namespace StripeConstructor {
       export namespace GroupBy {
         export type Type = Stripe_.Billing.AlertTriggered.GroupBy.Type;
       }
+    }
+    export namespace FeedbackOptions {
+      export type Status = Stripe_.Billing.FeedbackOptions.Status;
+      export type StatusTransitions = Stripe_.Billing.FeedbackOptions.StatusTransitions;
     }
     export namespace AlertNotification {
       export type Action = Stripe_.Billing.AlertNotification.Action;
@@ -16929,6 +16945,7 @@ declare namespace StripeConstructor {
         export type Satispay = Stripe_.Checkout.Session.PaymentMethodOptions.Satispay;
         export type Scalapay = Stripe_.Checkout.Session.PaymentMethodOptions.Scalapay;
         export type SepaDebit = Stripe_.Checkout.Session.PaymentMethodOptions.SepaDebit;
+        export type Sequra = Stripe_.Checkout.Session.PaymentMethodOptions.Sequra;
         export type Sofort = Stripe_.Checkout.Session.PaymentMethodOptions.Sofort;
         export type Sunbit = Stripe_.Checkout.Session.PaymentMethodOptions.Sunbit;
         export type Swish = Stripe_.Checkout.Session.PaymentMethodOptions.Swish;
@@ -16972,6 +16989,7 @@ declare namespace StripeConstructor {
           export type SetupFutureUsage = Stripe_.Checkout.Session.PaymentMethodOptions.Card.SetupFutureUsage;
           export namespace Restrictions {
             export type BrandsBlocked = Stripe_.Checkout.Session.PaymentMethodOptions.Card.Restrictions.BrandsBlocked;
+            export type FundingTypesBlocked = Stripe_.Checkout.Session.PaymentMethodOptions.Card.Restrictions.FundingTypesBlocked;
           }
         }
         export namespace CustomerBalance {
@@ -21034,10 +21052,10 @@ declare namespace StripeConstructor {
         }
       }
       export namespace ContractCreateParams {
-        export type PricingLine = Stripe_.V2.Billing.ContractCreateParams.PricingLine;
         export type BillingCycleAnchor = Stripe_.V2.Billing.ContractCreateParams.BillingCycleAnchor;
         export type BillingSettings = Stripe_.V2.Billing.ContractCreateParams.BillingSettings;
         export type Include = Stripe_.V2.Billing.ContractCreateParams.Include;
+        export type PricingLine = Stripe_.V2.Billing.ContractCreateParams.PricingLine;
         export type PricingOverride = Stripe_.V2.Billing.ContractCreateParams.PricingOverride;
         export namespace BillingCycleAnchor {
           export type Config = Stripe_.V2.Billing.ContractCreateParams.BillingCycleAnchor.Config;

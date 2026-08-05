@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Application, DeletedApplication} from './../Applications.js';
+import * as Billing from './../Billing/index.js';
 import {
   Emptyable,
   MetadataParam,
@@ -282,6 +283,11 @@ export namespace Configuration {
          * Whether the feature is enabled.
          */
         enabled: boolean;
+
+        /**
+         * The IDs of custom feedback options configured for this cancellation reason.
+         */
+        feedback_options?: Array<string | Billing.FeedbackOptions> | null;
 
         /**
          * Which cancellation reasons will be given as options to the customer.

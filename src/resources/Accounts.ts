@@ -1002,6 +1002,11 @@ export namespace Account {
     sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
     /**
+     * The status of the Sequra capability of the account, or whether the account can directly process Sequra payments.
+     */
+    sequra_payments?: Capabilities.SequraPayments;
+
+    /**
      * The status of the ShopeePay capability of the account, or whether the account can directly process ShopeePay payments.
      */
     shopeepay_payments?: Capabilities.ShopeepayPayments;
@@ -1546,6 +1551,8 @@ export namespace Account {
     export type SepaBankTransferPayments = 'active' | 'inactive' | 'pending';
 
     export type SepaDebitPayments = 'active' | 'inactive' | 'pending';
+
+    export type SequraPayments = 'active' | 'inactive' | 'pending';
 
     export type ShopeepayPayments = 'active' | 'inactive' | 'pending';
 
@@ -3127,6 +3134,9 @@ export namespace AccountCreateParams {
      */
     address_kanji?: JapanAddressParam;
 
+    /**
+     * The location where the business is administered.
+     */
     administrative_address?: AddressParam;
 
     /**
@@ -3189,6 +3199,9 @@ export namespace AccountCreateParams {
      */
     phone?: string;
 
+    /**
+     * The primary location where the business conducts operations.
+     */
     principal_place_of_business?: AddressParam;
 
     /**
@@ -5530,6 +5543,9 @@ export namespace AccountUpdateParams {
      */
     address_kanji?: JapanAddressParam;
 
+    /**
+     * The location where the business is administered.
+     */
     administrative_address?: AddressParam;
 
     /**
@@ -5592,6 +5608,9 @@ export namespace AccountUpdateParams {
      */
     phone?: string;
 
+    /**
+     * The primary location where the business conducts operations.
+     */
     principal_place_of_business?: AddressParam;
 
     registration_date?: Emptyable<Company.RegistrationDate>;

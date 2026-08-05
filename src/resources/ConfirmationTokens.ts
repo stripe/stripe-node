@@ -236,6 +236,8 @@ export namespace ConfirmationToken {
 
     sepa_debit?: PaymentMethodPreview.SepaDebit;
 
+    sequra?: PaymentMethodPreview.Sequra;
+
     shopeepay?: PaymentMethodPreview.Shopeepay;
 
     sofort?: PaymentMethodPreview.Sofort;
@@ -1038,6 +1040,8 @@ export namespace ConfirmationToken {
       last4: string | null;
     }
 
+    export interface Sequra {}
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -1118,6 +1122,7 @@ export namespace ConfirmationToken {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -1446,6 +1451,11 @@ export namespace ConfirmationToken {
              * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
              */
             receipt: CardPresent.Receipt | null;
+
+            /**
+             * The retrieval reference number assigned to this transaction.
+             */
+            retrieval_reference_number?: string;
 
             wallet?: CardPresent.Wallet;
           }

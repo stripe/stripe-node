@@ -1677,6 +1677,8 @@ export namespace Session {
 
     sepa_debit?: PaymentMethodOptions.SepaDebit;
 
+    sequra?: PaymentMethodOptions.Sequra;
+
     sofort?: PaymentMethodOptions.Sofort;
 
     sunbit?: PaymentMethodOptions.Sunbit;
@@ -1819,6 +1821,11 @@ export namespace Session {
      * The shipping rate.
      */
     shipping_rate: string | ShippingRate;
+
+    /**
+     * The tax rates applied to this shipping option.
+     */
+    tax_rates?: Array<string>;
   }
 
   export type Status = 'complete' | 'expired' | 'open';
@@ -1924,7 +1931,7 @@ export namespace Session {
   export namespace AutomaticSurcharge {
     export type CalculationBasis = 'total_after_tax' | 'total_before_tax';
 
-    export type Provider = 'interpayments' | 'proserv' | 'yeeld';
+    export type Provider = 'daikin' | 'interpayments' | 'proserv' | 'yeeld';
 
     export type Status = 'complete' | 'failed' | 'requires_input';
 
@@ -3583,6 +3590,13 @@ export namespace Session {
       target_date?: string;
     }
 
+    export interface Sequra {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+    }
+
     export interface Sofort {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -3821,6 +3835,11 @@ export namespace Session {
          * The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they can't complete the payment.
          */
         brands_blocked?: Array<Restrictions.BrandsBlocked>;
+
+        /**
+         * Card funding types to block for this Checkout Session. Supported values are `credit`, `debit`, and `prepaid`.
+         */
+        funding_types_blocked?: Array<Restrictions.FundingTypesBlocked>;
       }
 
       export type SetupFutureUsage =
@@ -3835,6 +3854,8 @@ export namespace Session {
           | 'discover_global_network'
           | 'mastercard'
           | 'visa';
+
+        export type FundingTypesBlocked = 'credit' | 'debit' | 'prepaid';
       }
     }
 
@@ -5914,6 +5935,11 @@ export namespace Checkout {
        * Parameters to be passed to Shipping Rate creation for this shipping option.
        */
       shipping_rate_data?: ShippingOption.ShippingRateData;
+
+      /**
+       * The tax rates that will be applied to this shipping option. This parameter is only supported for Checkout Sessions with `ui_mode` set to `form` or `elements`.
+       */
+      tax_rates?: Array<string>;
     }
 
     export type SubmitType =
@@ -6221,7 +6247,7 @@ export namespace Checkout {
     export namespace CustomField {
       export interface Dropdown {
         /**
-         * The value that pre-fills the field on the payment page.Must match a `value` in the `options` array.
+         * The value that pre-fills the field on the payment page. Must match a `value` in the `options` array.
          */
         default_value?: string;
 
@@ -6549,12 +6575,12 @@ export namespace Checkout {
 
         export interface Item {
           /**
-           * The ID of the price for this subscription item.
+           * The ID of the [Price](https://docs.stripe.com/api/prices). One of `price` or `price_data` is required.
            */
           price?: string;
 
           /**
-           * Data used to generate a new Price object inline.
+           * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
            */
           price_data?: Item.PriceData;
 
@@ -9144,6 +9170,11 @@ export namespace Checkout {
        * Parameters to be passed to Shipping Rate creation for this shipping option.
        */
       shipping_rate_data?: ShippingOption.ShippingRateData;
+
+      /**
+       * The tax rates that will be applied to this shipping option. This parameter is only supported for Checkout Sessions with `ui_mode` set to `form` or `elements`.
+       */
+      tax_rates?: Emptyable<Array<string>>;
     }
 
     export interface SubscriptionData {
