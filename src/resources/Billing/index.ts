@@ -30,6 +30,7 @@ import {
 } from './MeterEventAdjustments.js';
 import {AlertRecovered} from './AlertRecovereds.js';
 import {AlertTriggered} from './AlertTriggereds.js';
+import {FeedbackOptions} from './FeedbackOptions.js';
 import {AlertNotification} from './AlertNotifications.js';
 import {MeterEventSummary} from './MeterEventSummaries.js';
 import {Analytics} from './Analytics/index.js';
@@ -43,6 +44,7 @@ export {MeterEvent} from './MeterEvents.js';
 export {MeterEventAdjustment} from './MeterEventAdjustments.js';
 export {AlertRecovered} from './AlertRecovereds.js';
 export {AlertTriggered} from './AlertTriggereds.js';
+export {FeedbackOptions} from './FeedbackOptions.js';
 export {AlertNotification} from './AlertNotifications.js';
 export {MeterEventSummary} from './MeterEventSummaries.js';
 
@@ -105,6 +107,7 @@ export declare namespace Billing {
   export {MeterEventAdjustment, MeterEventAdjustmentResource};
   export {AlertRecovered};
   export {AlertTriggered};
+  export {FeedbackOptions};
   export {AlertNotification};
   export {MeterEventSummary};
   export {Analytics};

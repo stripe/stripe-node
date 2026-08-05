@@ -1447,6 +1447,11 @@ export namespace TestHelpers {
       fuel?: AuthorizationCreateParams.Fuel;
 
       /**
+       * Healthcare-specific information for IIAS-eligible authorizations.
+       */
+      healthcare?: AuthorizationCreateParams.Healthcare;
+
+      /**
        * If set `true`, you may provide [amount](https://docs.stripe.com/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
        */
       is_amount_controllable?: boolean;
@@ -1562,6 +1567,48 @@ export namespace TestHelpers {
          * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
          */
         unit_cost_decimal?: Decimal;
+      }
+
+      export interface Healthcare {
+        /**
+         * Clinic and urgent care sub-amount for Visa only.
+         */
+        clinic_amount?: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * Dental care sub-amount for Visa only.
+         */
+        dental_amount?: number;
+
+        /**
+         * Prescription drug sub-amount. Null if the merchant did not send this amount.
+         */
+        prescription_amount?: number;
+
+        /**
+         * The type of healthcare transaction. `medical` for FSA/HSA-eligible healthcare purchases; `transit_for_healthcare` for FSA/HSA-eligible transit for healthcare purchases.
+         */
+        purchase_type?: Healthcare.PurchaseType;
+
+        /**
+         * Total FSA/HSA-eligible amount in the smallest currency unit.
+         */
+        total_qualified_amount: number;
+
+        /**
+         * IIAS verification status from the merchant terminal. For Visa, this is always iias_verified.
+         */
+        verification_status: Healthcare.VerificationStatus;
+
+        /**
+         * Vision/optical sub-amount. Null if the merchant did not send this amount.
+         */
+        vision_amount?: number;
       }
 
       export interface MerchantData {
@@ -1784,6 +1831,16 @@ export namespace TestHelpers {
           | 'other'
           | 'pound'
           | 'us_gallon';
+      }
+
+      export namespace Healthcare {
+        export type PurchaseType = 'medical' | 'transit_for_healthcare';
+
+        export type VerificationStatus =
+          | 'iias_merchant_exempt'
+          | 'iias_merchant_not_certified'
+          | 'iias_verified'
+          | 'not_verified';
       }
 
       export namespace MerchantData {
@@ -2280,6 +2337,11 @@ export namespace TestHelpers {
         fuel?: PurchaseDetails.Fuel;
 
         /**
+         * Healthcare sub-amounts for IIAS-eligible transactions.
+         */
+        healthcare?: PurchaseDetails.Healthcare;
+
+        /**
          * Information about lodging that was purchased with this transaction.
          */
         lodging?: PurchaseDetails.Lodging;
@@ -2370,6 +2432,48 @@ export namespace TestHelpers {
            * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
            */
           unit_cost_decimal?: Decimal;
+        }
+
+        export interface Healthcare {
+          /**
+           * Clinic and urgent care sub-amount for Visa only.
+           */
+          clinic_amount?: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * Dental care sub-amount for Visa only.
+           */
+          dental_amount?: number;
+
+          /**
+           * Prescription drug sub-amount. Null if the merchant did not send this amount.
+           */
+          prescription_amount?: number;
+
+          /**
+           * The type of healthcare transaction. `medical` for FSA/HSA-eligible healthcare purchases; `transit_for_healthcare` for FSA/HSA-eligible transit for healthcare purchases.
+           */
+          purchase_type?: Healthcare.PurchaseType;
+
+          /**
+           * Total FSA/HSA-eligible amount in the smallest currency unit.
+           */
+          total_qualified_amount: number;
+
+          /**
+           * IIAS verification status from the merchant terminal. For Visa, this is always iias_verified.
+           */
+          verification_status: Healthcare.VerificationStatus;
+
+          /**
+           * Vision/optical sub-amount. Null if the merchant did not send this amount.
+           */
+          vision_amount?: number;
         }
 
         export interface Lodging {
@@ -2529,6 +2633,16 @@ export namespace TestHelpers {
             | 'other'
             | 'pound'
             | 'us_gallon';
+        }
+
+        export namespace Healthcare {
+          export type PurchaseType = 'medical' | 'transit_for_healthcare';
+
+          export type VerificationStatus =
+            | 'iias_merchant_exempt'
+            | 'iias_merchant_not_certified'
+            | 'iias_verified'
+            | 'not_verified';
         }
       }
     }

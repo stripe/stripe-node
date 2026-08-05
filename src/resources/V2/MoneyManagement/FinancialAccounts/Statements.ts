@@ -100,10 +100,17 @@ export namespace V2 {
          * The field by which to sort results. Defaults to "created".
          */
         order_by?: StatementListParams.OrderBy;
+
+        /**
+         * Filter results by status. If omitted, statements of all statuses are returned.
+         */
+        status?: StatementListParams.Status;
       }
 
       export namespace StatementListParams {
         export type OrderBy = 'created' | 'period_end_date';
+
+        export type Status = 'active' | 'restated';
       }
     }
   }

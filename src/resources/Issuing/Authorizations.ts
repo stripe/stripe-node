@@ -1286,9 +1286,9 @@ export namespace Authorization {
     total_qualified_amount?: number;
 
     /**
-     * IIAS verification status from the merchant terminal. For Visa, this value will always be iias_verified.
+     * IIAS verification status from the merchant terminal. For Visa, this value will always be iias_verified. Defaults to not_verified when the network does not provide IIAS status.
      */
-    verification_status?: Healthcare.VerificationStatus | null;
+    verification_status?: Healthcare.VerificationStatus;
 
     /**
      * Vision/optical sub-amount. Null if the merchant did not include this amount.

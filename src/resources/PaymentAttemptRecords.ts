@@ -523,6 +523,8 @@ export namespace PaymentAttemptRecord {
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
+    sequra?: PaymentMethodDetails.Sequra;
+
     shopeepay?: PaymentMethodDetails.Shopeepay;
 
     sofort?: PaymentMethodDetails.Sofort;
@@ -1170,6 +1172,11 @@ export namespace PaymentAttemptRecord {
        * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
        */
       receipt: CardPresent.Receipt | null;
+
+      /**
+       * The retrieval reference number assigned to this transaction.
+       */
+      retrieval_reference_number?: string;
 
       wallet?: CardPresent.Wallet;
     }
@@ -1916,6 +1923,13 @@ export namespace PaymentAttemptRecord {
        * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://docs.stripe.com/api/mandates/retrieve).
        */
       mandate: string | null;
+    }
+
+    export interface Sequra {
+      /**
+       * The Sequra transaction ID associated with this payment.
+       */
+      transaction_id: string | null;
     }
 
     export interface Shopeepay {}
@@ -3258,6 +3272,11 @@ export interface PaymentAttemptRecordReportGuaranteedParams {
    * When the reported payment was guaranteed. Measured in seconds since the Unix epoch.
    */
   guaranteed_at?: number;
+
+  /**
+   * Set to `true` to enable writing an anomalous guaranteed payment to an outdated PaymentAttemptRecord. This parameter defaults to `false`.
+   */
+  is_anomalous?: boolean;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

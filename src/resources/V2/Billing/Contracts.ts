@@ -3,8 +3,8 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {
   MetadataParam,
-  Decimal,
   OtherString,
+  Decimal,
   Metadata,
 } from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
@@ -864,11 +864,6 @@ export namespace V2 {
       currency: string;
 
       /**
-       * A list of pricing lines to create with the contract.
-       */
-      pricing_lines: Array<ContractCreateParams.PricingLine>;
-
-      /**
        * The billing cycle anchor for the contract. If not provided, defaults to the pricing line start time.
        * It is only at the top-level of the contract with no option to override at the pricing line level.
        */
@@ -890,39 +885,17 @@ export namespace V2 {
       metadata?: MetadataParam;
 
       /**
+       * A list of pricing lines to create with the contract.
+       */
+      pricing_lines?: Array<ContractCreateParams.PricingLine>;
+
+      /**
        * A list of pricing overrides to create with the contract.
        */
       pricing_overrides?: Array<ContractCreateParams.PricingOverride>;
     }
 
     export namespace ContractCreateParams {
-      export interface PricingLine {
-        /**
-         * When the pricing line ends.
-         */
-        ends_at: PricingLine.EndsAt;
-
-        /**
-         * A user-provided lookup key to reference this pricing line.
-         */
-        lookup_key?: string;
-
-        /**
-         * Set of key-value pairs that you can attach to an object.
-         */
-        metadata?: MetadataParam;
-
-        /**
-         * The pricing configuration for the pricing line.
-         */
-        pricing: PricingLine.Pricing;
-
-        /**
-         * When the pricing line starts.
-         */
-        starts_at: PricingLine.StartsAt;
-      }
-
       export interface BillingCycleAnchor {
         /**
          * Configuration for determining the billing cycle anchor by calendar fields.
@@ -962,6 +935,33 @@ export namespace V2 {
         | 'pricing_lines'
         | 'pricing_overrides'
         | OtherString;
+
+      export interface PricingLine {
+        /**
+         * When the pricing line ends.
+         */
+        ends_at: PricingLine.EndsAt;
+
+        /**
+         * A user-provided lookup key to reference this pricing line.
+         */
+        lookup_key?: string;
+
+        /**
+         * Set of key-value pairs that you can attach to an object.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * The pricing configuration for the pricing line.
+         */
+        pricing: PricingLine.Pricing;
+
+        /**
+         * When the pricing line starts.
+         */
+        starts_at: PricingLine.StartsAt;
+      }
 
       export interface PricingOverride {
         /**

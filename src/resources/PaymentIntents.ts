@@ -918,6 +918,7 @@ export namespace PaymentIntent {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -1280,6 +1281,8 @@ export namespace PaymentIntent {
     scalapay?: PaymentMethodOptions.Scalapay;
 
     sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+    sequra?: PaymentMethodOptions.Sequra;
 
     shopeepay?: PaymentMethodOptions.Shopeepay;
 
@@ -4655,6 +4658,8 @@ export namespace PaymentIntent {
     }
 
     export interface CardPresent {
+      aade_data?: CardPresent.AadeData;
+
       /**
        * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
        *
@@ -5344,6 +5349,13 @@ export namespace PaymentIntent {
       target_date?: string;
     }
 
+    export interface Sequra {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+    }
+
     export interface Shopeepay {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -5882,6 +5894,33 @@ export namespace PaymentIntent {
     }
 
     export namespace CardPresent {
+      export interface AadeData {
+        /**
+         * The canonical string that was signed by the e-invoicing provider to produce `signed_mark`, formatted per Appendix A of A.1155/2023. Required when `mode` is `standard`.
+         */
+        mark_data?: string;
+
+        /**
+         * The e-invoicing mode under which the mark was generated.
+         */
+        mode: AadeData.Mode;
+
+        /**
+         * The AADE-assigned approval number of the e-invoicing provider that generated the mark. Required when `mode` is `standard`.
+         */
+        provider_id?: number;
+
+        /**
+         * The cryptographic signature returned by the e-invoicing provider for this transaction, hex-encoded. Required when `mode` is `standard`.
+         */
+        signed_mark?: string;
+
+        /**
+         * The reason for entering autonomous mode. Required when `mode` is `autonomous`.
+         */
+        unbound_pos?: AadeData.UnboundPos;
+      }
+
       export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
 
       export interface CaptureDelay {
@@ -5917,6 +5956,15 @@ export namespace PaymentIntent {
          * Requested routing priority
          */
         requested_priority: Routing.RequestedPriority | null;
+      }
+
+      export namespace AadeData {
+        export type Mode = 'autonomous' | 'standard';
+
+        export type UnboundPos =
+          | 'interconnection_loss'
+          | 'lock'
+          | 'replacement_cash_system';
       }
 
       export namespace Routing {
@@ -6989,6 +7037,7 @@ export namespace PaymentIntentCreateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -10853,6 +10902,7 @@ export namespace PaymentIntentCreateParams {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -15466,6 +15516,7 @@ export namespace PaymentIntentUpdateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -19270,6 +19321,7 @@ export namespace PaymentIntentUpdateParams {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -26505,6 +26557,7 @@ export namespace PaymentIntentConfirmParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -30315,6 +30368,7 @@ export namespace PaymentIntentConfirmParams {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'

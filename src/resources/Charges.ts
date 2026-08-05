@@ -585,6 +585,8 @@ export namespace Charge {
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
+    sequra?: PaymentMethodDetails.Sequra;
+
     shopeepay?: PaymentMethodDetails.Shopeepay;
 
     sofort?: PaymentMethodDetails.Sofort;
@@ -1317,6 +1319,11 @@ export namespace Charge {
        */
       receipt: CardPresent.Receipt | null;
 
+      /**
+       * The retrieval reference number assigned to this transaction.
+       */
+      retrieval_reference_number?: string;
+
       wallet?: CardPresent.Wallet;
     }
 
@@ -1729,6 +1736,11 @@ export namespace Charge {
        * You could use this attribute to get a sense of international fees.
        */
       country: string | null;
+
+      /**
+       * The pricing bundle applied to this Link payment at confirmation time. Maps to a bundle in your Stripe pricing contract and on Stripe's published pricing page. Omitted if bundle lookup failed at confirmation time.
+       */
+      pricing_group?: string;
     }
 
     export interface MbWay {}
@@ -2062,6 +2074,13 @@ export namespace Charge {
        * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://docs.stripe.com/api/mandates/retrieve).
        */
       mandate: string | null;
+    }
+
+    export interface Sequra {
+      /**
+       * The Sequra transaction ID associated with this payment.
+       */
+      transaction_id: string | null;
     }
 
     export interface Shopeepay {}

@@ -552,6 +552,8 @@ export namespace PaymentRecord {
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
+    sequra?: PaymentMethodDetails.Sequra;
+
     shopeepay?: PaymentMethodDetails.Shopeepay;
 
     sofort?: PaymentMethodDetails.Sofort;
@@ -1199,6 +1201,11 @@ export namespace PaymentRecord {
        * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
        */
       receipt: CardPresent.Receipt | null;
+
+      /**
+       * The retrieval reference number assigned to this transaction.
+       */
+      retrieval_reference_number?: string;
 
       wallet?: CardPresent.Wallet;
     }
@@ -1945,6 +1952,13 @@ export namespace PaymentRecord {
        * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://docs.stripe.com/api/mandates/retrieve).
        */
       mandate: string | null;
+    }
+
+    export interface Sequra {
+      /**
+       * The Sequra transaction ID associated with this payment.
+       */
+      transaction_id: string | null;
     }
 
     export interface Shopeepay {}
