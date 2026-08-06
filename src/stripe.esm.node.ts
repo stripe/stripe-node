@@ -78,6 +78,7 @@ import {
   AccountRetrieveCapabilityParams,
   AccountRetrieveExternalAccountParams,
   AccountRetrievePersonParams,
+  AccountUnrejectParams,
   AccountUpdateCapabilityParams,
   AccountUpdateExternalAccountParams,
   AccountUpdatePersonParams,
@@ -358,6 +359,7 @@ import {
 import {
   PaymentRecord,
   PaymentRecordRetrieveParams,
+  PaymentRecordListParams,
   PaymentRecordReportPaymentParams,
   PaymentRecordReportPaymentAttemptParams,
   PaymentRecordReportPaymentAttemptCanceledParams,
@@ -716,11 +718,16 @@ import {
   FinancialConnectionsAccountCreatedEvent,
   FinancialConnectionsAccountDeactivatedEvent,
   FinancialConnectionsAccountDisconnectedEvent,
+  FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent,
   FinancialConnectionsAccountReactivatedEvent,
   FinancialConnectionsAccountRefreshedBalanceEvent,
   FinancialConnectionsAccountRefreshedOwnershipEvent,
   FinancialConnectionsAccountRefreshedTransactionsEvent,
+  FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent,
   FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent,
+  FinancialConnectionsAccountUpcomingDeactivationEvent,
+  FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent,
+  FinancialConnectionsAuthorizationUpcomingDeactivationEvent,
   IdentityVerificationSessionCanceledEvent,
   IdentityVerificationSessionCreatedEvent,
   IdentityVerificationSessionProcessingEvent,
@@ -951,7 +958,7 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 export class Stripe {
-  static PACKAGE_VERSION = '22.3.2';
+  static PACKAGE_VERSION = '22.4.0';
   static API_VERSION: typeof ApiVersion = ApiVersion;
   static aiAgent = '';
   static AI_AGENT = '';
@@ -1749,6 +1756,7 @@ export declare namespace Stripe {
     AccountRetrieveCapabilityParams,
     AccountRetrieveExternalAccountParams,
     AccountRetrievePersonParams,
+    AccountUnrejectParams,
     AccountUpdateCapabilityParams,
     AccountUpdateExternalAccountParams,
     AccountUpdatePersonParams,
@@ -2020,6 +2028,7 @@ export declare namespace Stripe {
   export {
     PaymentRecord,
     PaymentRecordRetrieveParams,
+    PaymentRecordListParams,
     PaymentRecordReportPaymentParams,
     PaymentRecordReportPaymentAttemptParams,
     PaymentRecordReportPaymentAttemptCanceledParams,
@@ -2354,11 +2363,16 @@ export declare namespace Stripe {
     FinancialConnectionsAccountCreatedEvent,
     FinancialConnectionsAccountDeactivatedEvent,
     FinancialConnectionsAccountDisconnectedEvent,
+    FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent,
     FinancialConnectionsAccountReactivatedEvent,
     FinancialConnectionsAccountRefreshedBalanceEvent,
     FinancialConnectionsAccountRefreshedOwnershipEvent,
     FinancialConnectionsAccountRefreshedTransactionsEvent,
+    FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent,
     FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent,
+    FinancialConnectionsAccountUpcomingDeactivationEvent,
+    FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent,
+    FinancialConnectionsAuthorizationUpcomingDeactivationEvent,
     IdentityVerificationSessionCanceledEvent,
     IdentityVerificationSessionCreatedEvent,
     IdentityVerificationSessionProcessingEvent,

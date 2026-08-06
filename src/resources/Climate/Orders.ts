@@ -9,6 +9,7 @@ import {
   Emptyable,
   PaginationParams,
   Metadata,
+  OtherString,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
@@ -242,7 +243,8 @@ export namespace Order {
   export type CancellationReason =
     | 'expired'
     | 'product_unavailable'
-    | 'requested';
+    | 'requested'
+    | OtherString;
 
   export interface DeliveryDetail {
     /**
@@ -276,7 +278,8 @@ export namespace Order {
     | 'canceled'
     | 'confirmed'
     | 'delivered'
-    | 'open';
+    | 'open'
+    | OtherString;
 
   export namespace DeliveryDetail {
     export interface Location {

@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {Reader} from './../../Terminal/Readers.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class ReaderResource extends StripeResource {
@@ -128,7 +129,11 @@ export namespace TestHelpers {
         number?: string;
       }
 
-      export type Type = 'card' | 'card_present' | 'interac_present';
+      export type Type =
+        | 'card'
+        | 'card_present'
+        | 'interac_present'
+        | OtherString;
     }
   }
 }
@@ -147,7 +152,7 @@ export namespace TestHelpers {
     }
 
     export namespace ReaderSucceedInputCollectionParams {
-      export type SkipNonRequiredInputs = 'all' | 'none';
+      export type SkipNonRequiredInputs = 'all' | 'none' | OtherString;
     }
   }
 }

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RangeQueryParam, Decimal} from '../../../shared.js';
+import {RangeQueryParam, Decimal, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class EventResource extends StripeResource {
@@ -354,7 +354,8 @@ export namespace V1BillingMeterErrorReportTriggeredEvent {
           | 'missing_dimension_payload_keys'
           | 'no_meter'
           | 'timestamp_in_future'
-          | 'timestamp_too_far_in_past';
+          | 'timestamp_too_far_in_past'
+          | OtherString;
 
         export interface SampleError {
           /**
@@ -460,7 +461,8 @@ export namespace V1BillingMeterNoMeterFoundEvent {
           | 'missing_dimension_payload_keys'
           | 'no_meter'
           | 'timestamp_in_future'
-          | 'timestamp_too_far_in_past';
+          | 'timestamp_too_far_in_past'
+          | OtherString;
 
         export interface SampleError {
           /**
@@ -769,7 +771,8 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'swish_payments'
       | 'twint_payments'
       | 'us_bank_transfer_payments'
-      | 'zip_payments';
+      | 'zip_payments'
+      | OtherString;
   }
 }
 
@@ -836,7 +839,8 @@ export namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpd
       | 'cards'
       | 'stripe_balance.payouts'
       | 'stripe_balance.stripe_transfers'
-      | 'stripe.transfers';
+      | 'stripe.transfers'
+      | OtherString;
   }
 }
 
@@ -978,9 +982,13 @@ export namespace V2CoreAccountLinkReturnedEvent {
   }
 
   export namespace Data {
-    export type Configuration = 'customer' | 'merchant' | 'recipient';
+    export type Configuration =
+      | 'customer'
+      | 'merchant'
+      | 'recipient'
+      | OtherString;
 
-    export type UseCase = 'account_onboarding' | 'account_update';
+    export type UseCase = 'account_onboarding' | 'account_update' | OtherString;
   }
 }
 
