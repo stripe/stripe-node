@@ -65,7 +65,7 @@ export class EndpointFetchHttpClient extends HttpClient {
 
     if (typeof endpointFetch !== 'function') {
       throw new HttpClientRuntimeError(
-        'Stripe: `endpointFetch()` is not available.'
+        'Stripe: EndpointFetchHttpClient requires `endpointFetch()` from a Stripe Script runtime or a test mock.'
       );
     }
 
@@ -137,7 +137,7 @@ export class EndpointFetchHttpClientResponse extends HttpClientResponse {
 
   toStream(streamCompleteCallback: () => void): never {
     throw new HttpClientRuntimeError(
-      'Stripe: Streaming responses are not supported in this runtime.'
+      'Stripe: EndpointFetchHttpClient does not support streaming responses.'
     );
   }
 

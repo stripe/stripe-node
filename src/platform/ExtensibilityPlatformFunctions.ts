@@ -26,7 +26,7 @@ const unsupportedRuntimeError = (method: string, alternative?: string): Error =>
 export class ExtensibilityPlatformFunctions extends PlatformFunctions {
   /** @override */
   emitWarning(_warning: string): void {
-    // Warnings have no host-visible sink in this runtime.
+    // Extensibility runtime has no user-visible warning target.
   }
 
   /** @override */

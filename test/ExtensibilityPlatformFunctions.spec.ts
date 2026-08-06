@@ -181,7 +181,7 @@ describe('ExtensibilityPlatformFunctions', () => {
     } catch (err) {
       const error = err as StripeError;
       expect(error.message).to.equal(
-        'Stripe: Streaming responses are not supported in this runtime.'
+        'Stripe: EndpointFetchHttpClient does not support streaming responses.'
       );
       expect(error.type).to.be.undefined;
     }
@@ -197,7 +197,7 @@ describe('ExtensibilityPlatformFunctions', () => {
     } catch (err) {
       const error = err as StripeError;
       expect(error.message).to.equal(
-        'Stripe: `endpointFetch()` is not available.'
+        'Stripe: EndpointFetchHttpClient requires `endpointFetch()` from a Stripe Script runtime or a test mock.'
       );
       expect(error.type).to.be.undefined;
     }

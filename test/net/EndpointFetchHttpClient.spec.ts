@@ -127,7 +127,7 @@ describe('EndpointFetchHttpClient', () => {
 
     expect(() => response.toStream(() => {})).to.throw(
       HttpClientRuntimeError,
-      /Streaming responses are not supported/
+      'Stripe: EndpointFetchHttpClient does not support streaming responses.'
     );
   });
 
@@ -245,7 +245,9 @@ describe('EndpointFetchHttpClient', () => {
       fail();
     } catch (e) {
       const error = e as Error;
-      expect(error.message).to.contain('`endpointFetch()` is not available');
+      expect(error.message).to.equal(
+        'Stripe: EndpointFetchHttpClient requires `endpointFetch()` from a Stripe Script runtime or a test mock.'
+      );
       expect(error).to.be.an.instanceOf(HttpClientRuntimeError);
     }
   });
