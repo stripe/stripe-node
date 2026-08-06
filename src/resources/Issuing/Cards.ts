@@ -6,6 +6,7 @@ import {PersonalizationDesign} from './PersonalizationDesigns.js';
 import {
   MetadataParam,
   Emptyable,
+  OtherString,
   Address,
   PaginationParams,
   RangeQueryParam,
@@ -244,6 +245,11 @@ export namespace Card {
     address_validation: Shipping.AddressValidation | null;
 
     /**
+     * The name of the business at the shipping address, used on the shipping label to ensure delivery when the card is shipped to a cardholder's workplace.
+     */
+    business_name: string | null;
+
+    /**
      * The delivery company that shipped a card.
      */
     carrier: Shipping.Carrier | null;
@@ -341,9 +347,9 @@ export namespace Card {
     spending_limits_currency: string | null;
   }
 
-  export type Status = 'active' | 'canceled' | 'inactive';
+  export type Status = 'active' | 'canceled' | 'inactive' | OtherString;
 
-  export type Type = 'physical' | 'virtual';
+  export type Type = 'physical' | 'virtual' | OtherString;
 
   export interface Wallets {
     apple_pay: Wallets.ApplePay;
@@ -361,7 +367,8 @@ export namespace Card {
       | 'card_testing_exposure'
       | 'fraud_dispute_filed'
       | 'third_party_reported'
-      | 'user_indicated_fraud';
+      | 'user_indicated_fraud'
+      | OtherString;
   }
 
   export namespace LifecycleControls {
@@ -391,7 +398,13 @@ export namespace Card {
       result: AddressValidation.Result | null;
     }
 
-    export type Carrier = 'dhl' | 'fedex' | 'royal_mail' | 'usps';
+    export type Carrier =
+      | 'correos'
+      | 'dhl'
+      | 'fedex'
+      | 'royal_mail'
+      | 'usps'
+      | OtherString;
 
     export interface Customs {
       /**
@@ -400,7 +413,7 @@ export namespace Card {
       eori_number: string | null;
     }
 
-    export type Service = 'express' | 'priority' | 'standard';
+    export type Service = 'express' | 'priority' | 'standard' | OtherString;
 
     export type Status =
       | 'canceled'
@@ -409,20 +422,23 @@ export namespace Card {
       | 'pending'
       | 'returned'
       | 'shipped'
-      | 'submitted';
+      | 'submitted'
+      | OtherString;
 
-    export type Type = 'bulk' | 'individual';
+    export type Type = 'bulk' | 'individual' | OtherString;
 
     export namespace AddressValidation {
       export type Mode =
         | 'disabled'
         | 'normalization_only'
-        | 'validation_and_normalization';
+        | 'validation_and_normalization'
+        | OtherString;
 
       export type Result =
         | 'indeterminate'
         | 'likely_deliverable'
-        | 'likely_undeliverable';
+        | 'likely_undeliverable'
+        | OtherString;
     }
   }
 
@@ -1346,7 +1362,8 @@ export namespace Card {
         | 'monthly'
         | 'per_authorization'
         | 'weekly'
-        | 'yearly';
+        | 'yearly'
+        | OtherString;
     }
   }
 
@@ -1379,14 +1396,16 @@ export namespace Card {
       export type IneligibleReason =
         | 'missing_agreement'
         | 'missing_cardholder_contact'
-        | 'unsupported_region';
+        | 'unsupported_region'
+        | OtherString;
     }
 
     export namespace GooglePay {
       export type IneligibleReason =
         | 'missing_agreement'
         | 'missing_cardholder_contact'
-        | 'unsupported_region';
+        | 'unsupported_region'
+        | OtherString;
     }
   }
 }
@@ -1479,7 +1498,7 @@ export namespace Issuing {
   }
 
   export namespace CardCreateParams {
-    export type Type = 'physical' | 'virtual';
+    export type Type = 'physical' | 'virtual' | OtherString;
 
     export interface LifecycleControls {
       /**
@@ -1507,6 +1526,11 @@ export namespace Issuing {
        * Address validation settings.
        */
       address_validation?: Shipping.AddressValidation;
+
+      /**
+       * The name of the business at the shipping address, used on the shipping label to ensure delivery when the card is shipped to a cardholder's workplace. Allowed characters: `A-Z`, `a-z`, `0-9`, ` `, `.`, `-`. All other characters are stripped or ASCII-normalized when printed.
+       */
+      business_name?: string;
 
       /**
        * Customs information for the shipment.
@@ -1576,7 +1600,7 @@ export namespace Issuing {
       spending_limits?: Array<SpendingControls.SpendingLimit>;
     }
 
-    export type Status = 'active' | 'inactive';
+    export type Status = 'active' | 'inactive' | OtherString;
 
     export namespace LifecycleControls {
       export interface CancelAfter {
@@ -1634,15 +1658,16 @@ export namespace Issuing {
         eori_number?: string;
       }
 
-      export type Service = 'express' | 'priority' | 'standard';
+      export type Service = 'express' | 'priority' | 'standard' | OtherString;
 
-      export type Type = 'bulk' | 'individual';
+      export type Type = 'bulk' | 'individual' | OtherString;
 
       export namespace AddressValidation {
         export type Mode =
           | 'disabled'
           | 'normalization_only'
-          | 'validation_and_normalization';
+          | 'validation_and_normalization'
+          | OtherString;
       }
     }
 
@@ -2566,7 +2591,8 @@ export namespace Issuing {
           | 'monthly'
           | 'per_authorization'
           | 'weekly'
-          | 'yearly';
+          | 'yearly'
+          | OtherString;
       }
     }
   }
@@ -2641,6 +2667,11 @@ export namespace Issuing {
       address_validation?: Shipping.AddressValidation;
 
       /**
+       * The name of the business at the shipping address, used on the shipping label to ensure delivery when the card is shipped to a cardholder's workplace. Allowed characters: `A-Z`, `a-z`, `0-9`, ` `, `.`, `-`. All other characters are stripped or ASCII-normalized when printed.
+       */
+      business_name?: string;
+
+      /**
        * Customs information for the shipment.
        */
       customs?: Shipping.Customs;
@@ -2708,7 +2739,7 @@ export namespace Issuing {
       spending_limits?: Array<SpendingControls.SpendingLimit>;
     }
 
-    export type Status = 'active' | 'canceled' | 'inactive';
+    export type Status = 'active' | 'canceled' | 'inactive' | OtherString;
 
     export namespace Shipping {
       export interface Address {
@@ -2757,15 +2788,16 @@ export namespace Issuing {
         eori_number?: string;
       }
 
-      export type Service = 'express' | 'priority' | 'standard';
+      export type Service = 'express' | 'priority' | 'standard' | OtherString;
 
-      export type Type = 'bulk' | 'individual';
+      export type Type = 'bulk' | 'individual' | OtherString;
 
       export namespace AddressValidation {
         export type Mode =
           | 'disabled'
           | 'normalization_only'
-          | 'validation_and_normalization';
+          | 'validation_and_normalization'
+          | OtherString;
       }
     }
 
@@ -3689,7 +3721,8 @@ export namespace Issuing {
           | 'monthly'
           | 'per_authorization'
           | 'weekly'
-          | 'yearly';
+          | 'yearly'
+          | OtherString;
       }
     }
   }
@@ -3740,8 +3773,8 @@ export namespace Issuing {
   }
 
   export namespace CardListParams {
-    export type Status = 'active' | 'canceled' | 'inactive';
+    export type Status = 'active' | 'canceled' | 'inactive' | OtherString;
 
-    export type Type = 'physical' | 'virtual';
+    export type Type = 'physical' | 'virtual' | OtherString;
   }
 }

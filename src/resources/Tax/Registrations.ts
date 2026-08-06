@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {Emptyable, PaginationParams} from '../../shared.js';
+import {OtherString, Emptyable, PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class RegistrationResource extends StripeResource {
@@ -311,7 +311,7 @@ export namespace Registration {
     zw?: CountryOptions.Zw;
   }
 
-  export type Status = 'active' | 'expired' | 'scheduled';
+  export type Status = 'active' | 'expired' | 'scheduled' | OtherString;
 
   export namespace CountryOptions {
     export interface Ae {
@@ -1049,6 +1049,10 @@ export namespace Registration {
 
       local_lease_tax?: Us.LocalLeaseTax;
 
+      mass_transit_parking_tax?: Us.MassTransitParkingTax;
+
+      parking_tax?: Us.ParkingTax;
+
       /**
        * Two-letter US state code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
        */
@@ -1113,7 +1117,10 @@ export namespace Registration {
       }
 
       export namespace Standard {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1125,13 +1132,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1144,7 +1157,10 @@ export namespace Registration {
       }
 
       export namespace Standard {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1156,13 +1172,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1174,13 +1196,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1192,7 +1220,11 @@ export namespace Registration {
         province: string;
       }
 
-      export type Type = 'province_standard' | 'simplified' | 'standard';
+      export type Type =
+        | 'province_standard'
+        | 'simplified'
+        | 'standard'
+        | OtherString;
     }
 
     export namespace Ch {
@@ -1204,7 +1236,10 @@ export namespace Registration {
       }
 
       export namespace Standard {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1216,13 +1251,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1234,13 +1275,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1252,13 +1299,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1270,13 +1323,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1288,13 +1347,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1306,13 +1371,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1324,13 +1395,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1342,13 +1419,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1361,7 +1444,10 @@ export namespace Registration {
       }
 
       export namespace Standard {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1373,13 +1459,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1391,13 +1483,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1409,13 +1507,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1427,13 +1531,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1445,13 +1555,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1464,7 +1580,10 @@ export namespace Registration {
       }
 
       export namespace Standard {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1476,13 +1595,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1494,13 +1619,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1512,13 +1643,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1530,13 +1667,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1548,13 +1691,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1567,7 +1716,10 @@ export namespace Registration {
       }
 
       export namespace Standard {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1580,7 +1732,10 @@ export namespace Registration {
       }
 
       export namespace Standard {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1592,13 +1747,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1610,13 +1771,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1628,13 +1795,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1646,13 +1819,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1665,7 +1844,10 @@ export namespace Registration {
       }
 
       export namespace Standard {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1677,13 +1859,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1695,13 +1883,19 @@ export namespace Registration {
         place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+      export type Type =
+        | 'ioss'
+        | 'oss_non_union'
+        | 'oss_union'
+        | 'standard'
+        | OtherString;
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
           | 'inbound_goods'
           | 'small_seller'
-          | 'standard';
+          | 'standard'
+          | OtherString;
       }
     }
 
@@ -1720,6 +1914,20 @@ export namespace Registration {
         jurisdiction: string;
       }
 
+      export interface MassTransitParkingTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=mass_transit_parking_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
+
+      export interface ParkingTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=parking_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
+
       export interface StateSalesTax {
         /**
          * Elections for the state sales tax registration.
@@ -1730,6 +1938,8 @@ export namespace Registration {
       export type Type =
         | 'local_amusement_tax'
         | 'local_lease_tax'
+        | 'mass_transit_parking_tax'
+        | 'parking_tax'
         | 'state_communications_tax'
         | 'state_retail_delivery_fee'
         | 'state_sales_tax';
@@ -1751,7 +1961,8 @@ export namespace Registration {
           export type Type =
             | 'local_use_tax'
             | 'simplified_sellers_use_tax'
-            | 'single_local_use_tax';
+            | 'single_local_use_tax'
+            | OtherString;
         }
       }
     }
@@ -3239,6 +3450,16 @@ export namespace Tax {
         local_lease_tax?: Us.LocalLeaseTax;
 
         /**
+         * Options for the mass transit parking tax registration.
+         */
+        mass_transit_parking_tax?: Us.MassTransitParkingTax;
+
+        /**
+         * Options for the parking tax registration.
+         */
+        parking_tax?: Us.ParkingTax;
+
+        /**
          * Two-letter US state code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
          */
         state: string;
@@ -3320,7 +3541,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3333,7 +3557,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3346,7 +3573,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3358,13 +3588,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3377,7 +3613,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3390,7 +3629,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3403,7 +3645,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3416,7 +3661,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3429,7 +3677,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3441,13 +3692,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3460,7 +3717,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3472,13 +3732,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3491,7 +3757,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3504,7 +3773,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3516,7 +3788,11 @@ export namespace Tax {
           province: string;
         }
 
-        export type Type = 'province_standard' | 'simplified' | 'standard';
+        export type Type =
+          | 'province_standard'
+          | 'simplified'
+          | 'standard'
+          | OtherString;
       }
 
       export namespace Cd {
@@ -3528,7 +3804,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3541,7 +3820,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3553,13 +3835,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3571,13 +3859,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3589,13 +3883,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3607,13 +3907,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3625,13 +3931,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3643,13 +3955,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3662,7 +3980,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3674,13 +3995,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3692,13 +4019,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3711,7 +4044,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3724,7 +4060,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3736,13 +4075,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3754,13 +4099,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3772,13 +4123,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3790,13 +4147,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3809,7 +4172,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3821,13 +4187,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3840,7 +4212,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3852,13 +4227,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3870,13 +4251,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3888,13 +4275,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3907,7 +4300,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3920,7 +4316,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3933,7 +4332,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3945,13 +4347,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3963,13 +4371,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3982,7 +4396,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -3995,7 +4412,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4008,7 +4428,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4020,13 +4443,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4038,13 +4467,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4056,13 +4491,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4075,7 +4516,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4087,13 +4531,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4106,7 +4556,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4118,13 +4571,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4136,13 +4595,19 @@ export namespace Tax {
           place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
         }
 
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+        export type Type =
+          | 'ioss'
+          | 'oss_non_union'
+          | 'oss_union'
+          | 'standard'
+          | OtherString;
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =
             | 'inbound_goods'
             | 'small_seller'
-            | 'standard';
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4155,7 +4620,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4174,6 +4642,20 @@ export namespace Tax {
           jurisdiction: string;
         }
 
+        export interface MassTransitParkingTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=mass_transit_parking_tax#registration-types).
+           */
+          jurisdiction: string;
+        }
+
+        export interface ParkingTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=parking_tax#registration-types).
+           */
+          jurisdiction: string;
+        }
+
         export interface StateSalesTax {
           /**
            * Elections for the state sales tax registration.
@@ -4184,6 +4666,8 @@ export namespace Tax {
         export type Type =
           | 'local_amusement_tax'
           | 'local_lease_tax'
+          | 'mass_transit_parking_tax'
+          | 'parking_tax'
           | 'state_communications_tax'
           | 'state_retail_delivery_fee'
           | 'state_sales_tax';
@@ -4205,7 +4689,8 @@ export namespace Tax {
             export type Type =
               | 'local_use_tax'
               | 'simplified_sellers_use_tax'
-              | 'single_local_use_tax';
+              | 'single_local_use_tax'
+              | OtherString;
           }
         }
       }
@@ -4219,7 +4704,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4232,7 +4720,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
 
@@ -4245,7 +4736,10 @@ export namespace Tax {
         }
 
         export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+          export type PlaceOfSupplyScheme =
+            | 'inbound_goods'
+            | 'standard'
+            | OtherString;
         }
       }
     }
@@ -4291,6 +4785,11 @@ export namespace Tax {
   }
 
   export namespace RegistrationListParams {
-    export type Status = 'active' | 'all' | 'expired' | 'scheduled';
+    export type Status =
+      | 'active'
+      | 'all'
+      | 'expired'
+      | 'scheduled'
+      | OtherString;
   }
 }

@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface FinancialAccountFeatures {
   /**
@@ -133,7 +134,7 @@ export namespace FinancialAccountFeatures {
   }
 
   export namespace CardIssuing {
-    export type Status = 'active' | 'pending' | 'restricted';
+    export type Status = 'active' | 'pending' | 'restricted' | OtherString;
 
     export interface StatusDetail {
       /**
@@ -162,19 +163,24 @@ export namespace FinancialAccountFeatures {
         | 'requirements_past_due'
         | 'requirements_pending_verification'
         | 'restricted_by_platform'
-        | 'restricted_other';
+        | 'restricted_other'
+        | OtherString;
 
       export type Resolution =
         | 'contact_stripe'
         | 'provide_information'
-        | 'remove_restriction';
+        | 'remove_restriction'
+        | OtherString;
 
-      export type Restriction = 'inbound_flows' | 'outbound_flows';
+      export type Restriction =
+        | 'inbound_flows'
+        | 'outbound_flows'
+        | OtherString;
     }
   }
 
   export namespace DepositInsurance {
-    export type Status = 'active' | 'pending' | 'restricted';
+    export type Status = 'active' | 'pending' | 'restricted' | OtherString;
 
     export interface StatusDetail {
       /**
@@ -203,14 +209,19 @@ export namespace FinancialAccountFeatures {
         | 'requirements_past_due'
         | 'requirements_pending_verification'
         | 'restricted_by_platform'
-        | 'restricted_other';
+        | 'restricted_other'
+        | OtherString;
 
       export type Resolution =
         | 'contact_stripe'
         | 'provide_information'
-        | 'remove_restriction';
+        | 'remove_restriction'
+        | OtherString;
 
-      export type Restriction = 'inbound_flows' | 'outbound_flows';
+      export type Restriction =
+        | 'inbound_flows'
+        | 'outbound_flows'
+        | OtherString;
     }
   }
 
@@ -233,7 +244,7 @@ export namespace FinancialAccountFeatures {
     }
 
     export namespace Aba {
-      export type Status = 'active' | 'pending' | 'restricted';
+      export type Status = 'active' | 'pending' | 'restricted' | OtherString;
 
       export interface StatusDetail {
         /**
@@ -262,14 +273,19 @@ export namespace FinancialAccountFeatures {
           | 'requirements_past_due'
           | 'requirements_pending_verification'
           | 'restricted_by_platform'
-          | 'restricted_other';
+          | 'restricted_other'
+          | OtherString;
 
         export type Resolution =
           | 'contact_stripe'
           | 'provide_information'
-          | 'remove_restriction';
+          | 'remove_restriction'
+          | OtherString;
 
-        export type Restriction = 'inbound_flows' | 'outbound_flows';
+        export type Restriction =
+          | 'inbound_flows'
+          | 'outbound_flows'
+          | OtherString;
       }
     }
   }
@@ -293,7 +309,7 @@ export namespace FinancialAccountFeatures {
     }
 
     export namespace Ach {
-      export type Status = 'active' | 'pending' | 'restricted';
+      export type Status = 'active' | 'pending' | 'restricted' | OtherString;
 
       export interface StatusDetail {
         /**
@@ -322,20 +338,25 @@ export namespace FinancialAccountFeatures {
           | 'requirements_past_due'
           | 'requirements_pending_verification'
           | 'restricted_by_platform'
-          | 'restricted_other';
+          | 'restricted_other'
+          | OtherString;
 
         export type Resolution =
           | 'contact_stripe'
           | 'provide_information'
-          | 'remove_restriction';
+          | 'remove_restriction'
+          | OtherString;
 
-        export type Restriction = 'inbound_flows' | 'outbound_flows';
+        export type Restriction =
+          | 'inbound_flows'
+          | 'outbound_flows'
+          | OtherString;
       }
     }
   }
 
   export namespace IntraStripeFlows {
-    export type Status = 'active' | 'pending' | 'restricted';
+    export type Status = 'active' | 'pending' | 'restricted' | OtherString;
 
     export interface StatusDetail {
       /**
@@ -364,14 +385,19 @@ export namespace FinancialAccountFeatures {
         | 'requirements_past_due'
         | 'requirements_pending_verification'
         | 'restricted_by_platform'
-        | 'restricted_other';
+        | 'restricted_other'
+        | OtherString;
 
       export type Resolution =
         | 'contact_stripe'
         | 'provide_information'
-        | 'remove_restriction';
+        | 'remove_restriction'
+        | OtherString;
 
-      export type Restriction = 'inbound_flows' | 'outbound_flows';
+      export type Restriction =
+        | 'inbound_flows'
+        | 'outbound_flows'
+        | OtherString;
     }
   }
 
@@ -411,7 +437,7 @@ export namespace FinancialAccountFeatures {
     }
 
     export namespace Ach {
-      export type Status = 'active' | 'pending' | 'restricted';
+      export type Status = 'active' | 'pending' | 'restricted' | OtherString;
 
       export interface StatusDetail {
         /**
@@ -440,19 +466,24 @@ export namespace FinancialAccountFeatures {
           | 'requirements_past_due'
           | 'requirements_pending_verification'
           | 'restricted_by_platform'
-          | 'restricted_other';
+          | 'restricted_other'
+          | OtherString;
 
         export type Resolution =
           | 'contact_stripe'
           | 'provide_information'
-          | 'remove_restriction';
+          | 'remove_restriction'
+          | OtherString;
 
-        export type Restriction = 'inbound_flows' | 'outbound_flows';
+        export type Restriction =
+          | 'inbound_flows'
+          | 'outbound_flows'
+          | OtherString;
       }
     }
 
     export namespace UsDomesticWire {
-      export type Status = 'active' | 'pending' | 'restricted';
+      export type Status = 'active' | 'pending' | 'restricted' | OtherString;
 
       export interface StatusDetail {
         /**
@@ -481,14 +512,19 @@ export namespace FinancialAccountFeatures {
           | 'requirements_past_due'
           | 'requirements_pending_verification'
           | 'restricted_by_platform'
-          | 'restricted_other';
+          | 'restricted_other'
+          | OtherString;
 
         export type Resolution =
           | 'contact_stripe'
           | 'provide_information'
-          | 'remove_restriction';
+          | 'remove_restriction'
+          | OtherString;
 
-        export type Restriction = 'inbound_flows' | 'outbound_flows';
+        export type Restriction =
+          | 'inbound_flows'
+          | 'outbound_flows'
+          | OtherString;
       }
     }
   }
@@ -529,7 +565,7 @@ export namespace FinancialAccountFeatures {
     }
 
     export namespace Ach {
-      export type Status = 'active' | 'pending' | 'restricted';
+      export type Status = 'active' | 'pending' | 'restricted' | OtherString;
 
       export interface StatusDetail {
         /**
@@ -558,19 +594,24 @@ export namespace FinancialAccountFeatures {
           | 'requirements_past_due'
           | 'requirements_pending_verification'
           | 'restricted_by_platform'
-          | 'restricted_other';
+          | 'restricted_other'
+          | OtherString;
 
         export type Resolution =
           | 'contact_stripe'
           | 'provide_information'
-          | 'remove_restriction';
+          | 'remove_restriction'
+          | OtherString;
 
-        export type Restriction = 'inbound_flows' | 'outbound_flows';
+        export type Restriction =
+          | 'inbound_flows'
+          | 'outbound_flows'
+          | OtherString;
       }
     }
 
     export namespace UsDomesticWire {
-      export type Status = 'active' | 'pending' | 'restricted';
+      export type Status = 'active' | 'pending' | 'restricted' | OtherString;
 
       export interface StatusDetail {
         /**
@@ -599,14 +640,19 @@ export namespace FinancialAccountFeatures {
           | 'requirements_past_due'
           | 'requirements_pending_verification'
           | 'restricted_by_platform'
-          | 'restricted_other';
+          | 'restricted_other'
+          | OtherString;
 
         export type Resolution =
           | 'contact_stripe'
           | 'provide_information'
-          | 'remove_restriction';
+          | 'remove_restriction'
+          | OtherString;
 
-        export type Restriction = 'inbound_flows' | 'outbound_flows';
+        export type Restriction =
+          | 'inbound_flows'
+          | 'outbound_flows'
+          | OtherString;
       }
     }
   }

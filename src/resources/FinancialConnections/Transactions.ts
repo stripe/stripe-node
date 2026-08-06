@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams, RangeQueryParam} from '../../shared.js';
+import {PaginationParams, RangeQueryParam, OtherString} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class TransactionResource extends StripeResource {
@@ -97,7 +97,7 @@ export interface Transaction {
   updated: number;
 }
 export namespace Transaction {
-  export type Status = 'pending' | 'posted' | 'void';
+  export type Status = 'pending' | 'posted' | 'void' | OtherString;
 
   export interface StatusTransitions {
     /**

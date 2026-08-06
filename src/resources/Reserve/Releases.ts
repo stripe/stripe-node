@@ -4,7 +4,7 @@ import {Hold} from './Holds.js';
 import {Plan} from './Plans.js';
 import {Dispute} from './../Disputes.js';
 import {Refund} from './../Refunds.js';
-import {Metadata} from '../../shared.js';
+import {Metadata, OtherString} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface Release {
   /**
@@ -70,13 +70,14 @@ export interface Release {
   source_transaction?: Release.SourceTransaction;
 }
 export namespace Release {
-  export type CreatedBy = 'application' | 'stripe';
+  export type CreatedBy = 'application' | 'stripe' | OtherString;
 
   export type Reason =
     | 'bulk_hold_expiry'
     | 'hold_released_early'
     | 'hold_reversed'
-    | 'plan_disabled';
+    | 'plan_disabled'
+    | OtherString;
 
   export interface SourceTransaction {
     /**
@@ -96,6 +97,6 @@ export namespace Release {
   }
 
   export namespace SourceTransaction {
-    export type Type = 'dispute' | 'refund';
+    export type Type = 'dispute' | 'refund' | OtherString;
   }
 }

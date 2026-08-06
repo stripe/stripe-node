@@ -5,7 +5,7 @@ import {Invoice, DeletedInvoice} from './Invoices.js';
 import {Charge} from './Charges.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {PaymentRecord} from './PaymentRecords.js';
-import {PaginationParams, RangeQueryParam} from '../shared.js';
+import {PaginationParams, RangeQueryParam, OtherString} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class InvoicePaymentResource extends StripeResource {
@@ -180,9 +180,9 @@ export namespace InvoicePaymentListParams {
     type: Payment.Type;
   }
 
-  export type Status = 'canceled' | 'open' | 'paid';
+  export type Status = 'canceled' | 'open' | 'paid' | OtherString;
 
   export namespace Payment {
-    export type Type = 'payment_intent' | 'payment_record';
+    export type Type = 'payment_intent' | 'payment_record' | OtherString;
   }
 }

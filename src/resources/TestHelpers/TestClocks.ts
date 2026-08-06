@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams} from '../../shared.js';
+import {PaginationParams, OtherString} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 
 export class TestClockResource extends StripeResource {
@@ -147,7 +147,7 @@ export interface DeletedTestClock {
   deleted: true;
 }
 export namespace TestClock {
-  export type Status = 'advancing' | 'internal_failure' | 'ready';
+  export type Status = 'advancing' | 'internal_failure' | 'ready' | OtherString;
 
   export interface StatusDetails {
     advancing?: StatusDetails.Advancing;

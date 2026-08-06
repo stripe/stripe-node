@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {File} from './../Files.js';
-import {Emptyable, PaginationParams} from '../../shared.js';
+import {Emptyable, OtherString, PaginationParams} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 
 export class ConfigurationResource extends StripeResource {
@@ -729,7 +729,8 @@ export namespace Configuration {
     export type Type =
       | 'enterprise_eap_peap'
       | 'enterprise_eap_tls'
-      | 'personal_psk';
+      | 'personal_psk'
+      | OtherString;
   }
 }
 export namespace Terminal {
@@ -1458,7 +1459,8 @@ export namespace Terminal {
       export type Type =
         | 'enterprise_eap_peap'
         | 'enterprise_eap_tls'
-        | 'personal_psk';
+        | 'personal_psk'
+        | OtherString;
     }
   }
 }
@@ -2196,7 +2198,8 @@ export namespace Terminal {
       export type Type =
         | 'enterprise_eap_peap'
         | 'enterprise_eap_tls'
-        | 'personal_psk';
+        | 'personal_psk'
+        | OtherString;
     }
   }
 }

@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Customer, DeletedCustomer} from './../Customers.js';
+import {OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class CreditBalanceSummaryResource extends StripeResource {
@@ -161,7 +162,7 @@ export namespace Billing {
         prices?: Array<ApplicabilityScope.Price>;
       }
 
-      export type Type = 'applicability_scope' | 'credit_grant';
+      export type Type = 'applicability_scope' | 'credit_grant' | OtherString;
 
       export namespace ApplicabilityScope {
         export interface Price {

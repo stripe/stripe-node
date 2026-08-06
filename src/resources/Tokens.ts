@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {BankAccount} from './BankAccounts.js';
 import {Card} from './Cards.js';
 import {
+  OtherString,
   AddressParam,
   JapanAddressParam,
   Emptyable,
@@ -337,11 +338,15 @@ export namespace TokenCreateParams {
 
     /**
      * The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+     *
+     * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
      */
     id_number?: string;
 
     /**
      * The person's secondary ID number, as appropriate for their country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+     *
+     * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
      */
     id_number_secondary?: string;
 
@@ -397,6 +402,8 @@ export namespace TokenCreateParams {
 
     /**
      * The last four digits of the person's Social Security number (U.S. only).
+     *
+     * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
      */
     ssn_last_4?: string;
 
@@ -423,7 +430,8 @@ export namespace TokenCreateParams {
       | 'company'
       | 'government_entity'
       | 'individual'
-      | 'non_profit';
+      | 'non_profit'
+      | OtherString;
 
     export interface Company {
       /**
@@ -440,6 +448,8 @@ export namespace TokenCreateParams {
        * The Kanji variation of the company's primary address (Japan only).
        */
       address_kanji?: JapanAddressParam;
+
+      administrative_address?: AddressParam;
 
       /**
        * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://docs.stripe.com/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
@@ -506,6 +516,8 @@ export namespace TokenCreateParams {
        */
       phone?: string;
 
+      principal_place_of_business?: AddressParam;
+
       /**
        * When the business was incorporated or registered.
        */
@@ -528,6 +540,8 @@ export namespace TokenCreateParams {
 
       /**
        * The business ID number of the company, as appropriate for the company's country. (Examples are an Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
+       *
+       * Changing this value requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
        */
       tax_id?: string;
 
@@ -701,7 +715,8 @@ export namespace TokenCreateParams {
 
       export type OwnershipExemptionReason =
         | 'qualified_entity_exceeds_ownership_threshold'
-        | 'qualifies_as_financial_institution';
+        | 'qualifies_as_financial_institution'
+        | OtherString;
 
       export interface RegistrationDate {
         /**
@@ -760,7 +775,8 @@ export namespace TokenCreateParams {
         | 'tax_exempt_government_instrumentality'
         | 'unincorporated_association'
         | 'unincorporated_non_profit'
-        | 'unincorporated_partnership';
+        | 'unincorporated_partnership'
+        | OtherString;
 
       export interface Verification {
         /**
@@ -802,7 +818,7 @@ export namespace TokenCreateParams {
         year: number;
       }
 
-      export type PoliticalExposure = 'existing' | 'none';
+      export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
       export interface Relationship {
         /**
@@ -886,7 +902,11 @@ export namespace TokenCreateParams {
     }
 
     export namespace Networks {
-      export type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
+      export type Preferred =
+        | 'cartes_bancaires'
+        | 'mastercard'
+        | 'visa'
+        | OtherString;
     }
   }
 
@@ -932,7 +952,7 @@ export namespace TokenCreateParams {
       visa?: Documents.Visa;
     }
 
-    export type PoliticalExposure = 'existing' | 'none';
+    export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
     export interface Relationship {
       /**
@@ -1080,7 +1100,8 @@ export namespace TokenCreateParams {
           | 'not_hispanic_or_latino'
           | 'other_hispanic_or_latino'
           | 'prefer_not_to_answer'
-          | 'puerto_rican';
+          | 'puerto_rican'
+          | OtherString;
       }
 
       export namespace RaceDetails {
@@ -1108,7 +1129,8 @@ export namespace TokenCreateParams {
           | 'samoan'
           | 'somali'
           | 'vietnamese'
-          | 'white';
+          | 'white'
+          | OtherString;
       }
     }
 
