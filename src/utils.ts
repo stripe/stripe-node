@@ -489,7 +489,7 @@ export function maybeExtractFromCloudProviderEnvelope(
     // https://docs.stripe.com/event-destinations/eventbridge#event-structure
     return parsed.detail as Record<string, unknown>;
   }
-  if ('specversion' in parsed) {
+  if ('specversion' in parsed && 'data' in parsed) {
     // Azure
     // https://docs.stripe.com/event-destinations/eventgrid#event-structure
     return parsed.data as Record<string, unknown>;
@@ -499,7 +499,7 @@ export function maybeExtractFromCloudProviderEnvelope(
     return parsed;
   }
   throw new Error(
-    'Unrecognized cloud event format. The payload must be an AWS EventBridge / Azure Event Grid event envelope or a Stripe webhook.'
+    'Unrecognized event format. The payload must be an AWS EventBridge/Azure Event Grid event envelope or a Stripe webhook (thin event notification or snapshot).'
   );
 }
 

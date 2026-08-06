@@ -1583,9 +1583,14 @@ export class Stripe {
   _buildEventNotification(
     parsed: Record<string, unknown>
   ): V2.Core.EventNotification {
-    if (parsed && parsed.object === 'event') {
+    if (parsed.object === 'event') {
       throw new Error(
         'You passed a v1 Event to a method that expects a thin event notification. Use the corresponding constructEvent method instead.'
+      );
+    }
+    if (parsed.object != null && parsed.object !== 'v2.core.event') {
+      throw new Error(
+        `Unexpected object type '${parsed.object}'. Expected 'v2.core.event' for an event notification.`
       );
     }
 

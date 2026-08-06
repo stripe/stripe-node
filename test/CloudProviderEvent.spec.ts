@@ -127,13 +127,25 @@ describe('constructEventWithoutVerification', () => {
   it('throws on unrecognized format', () => {
     expect(() =>
       stripe.constructEventWithoutVerification('{"foo":"bar"}')
-    ).to.throw(/Unrecognized cloud event format/);
+    ).to.throw(/Unrecognized event format/);
   });
 
   it('throws when cloud envelope contains a v2 event notification', () => {
     expect(() =>
       stripe.constructEventWithoutVerification(EVENTBRIDGE_V2_PAYLOAD)
     ).to.throw(/EventNotification/);
+  });
+
+  it('throws on Azure envelope missing data field', () => {
+    const payload = JSON.stringify({
+      specversion: '1.0',
+      type: 'customer.created',
+      source: '/providers/stripe/ed_test_123',
+      id: 'test-missing-data',
+    });
+    expect(() => stripe.constructEventWithoutVerification(payload)).to.throw(
+      /Unrecognized event format/
+    );
   });
 });
 
@@ -287,6 +299,46 @@ describe('parseEventNotificationWithoutVerification', () => {
   it('throws on unrecognized format', () => {
     expect(() =>
       stripe.parseEventNotificationWithoutVerification('{"foo":"bar"}')
-    ).to.throw(/Unrecognized cloud event format/);
+    ).to.throw(/Unrecognized event format/);
+  });
+
+  it('throws on Azure envelope missing data field', () => {
+    const payload = JSON.stringify({
+      specversion: '1.0',
+      type: 'v2.billing.meter.error_report_triggered',
+      source: '/providers/stripe/ed_test_123',
+      id: 'test-missing-data',
+    });
+    expect(() =>
+      stripe.parseEventNotificationWithoutVerification(payload)
+    ).to.throw(/Unrecognized event format/);
+  });
+
+  it('throws on unrecognized raw payload with non-event object', () => {
+    const payload = JSON.stringify({
+      object: 'customer',
+      type: 'customer.created',
+      id: 'cus_123',
+    });
+    expect(() =>
+      stripe.parseEventNotificationWithoutVerification(payload)
+    ).to.throw(/Unrecognized event format/);
+  });
+
+  it('throws on unexpected object type in event notification', () => {
+    const payload = JSON.stringify({
+      version: '0',
+      id: 'test',
+      'detail-type': 'customer.created',
+      source: 'aws.partner/stripe.com/ed_123',
+      detail: {
+        object: 'customer',
+        type: 'customer.created',
+        id: 'cus_123',
+      },
+    });
+    expect(() =>
+      stripe.parseEventNotificationWithoutVerification(payload)
+    ).to.throw(/Unexpected object type/);
   });
 });

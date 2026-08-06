@@ -1646,9 +1646,14 @@ export class Stripe {
         ? JSON.parse(new TextDecoder('utf8').decode(payload))
         : JSON.parse(payload as string);
 
-    if (eventNotification && eventNotification.object === 'event') {
+    if (eventNotification.object === 'event') {
       throw new Error(
         'You passed a webhook payload to stripe.parseEventNotification, which expects an event notification. Use stripe.webhooks.constructEvent instead.'
+      );
+    }
+    if (eventNotification.object !== 'v2.core.event') {
+      throw new Error(
+        `Unexpected object type '${eventNotification.object}'. Expected 'v2.core.event' for an event notification.`
       );
     }
 
@@ -1689,6 +1694,11 @@ export class Stripe {
         'You passed a webhook payload to stripe.parseEventNotificationAsync, which expects an event notification. Use stripe.webhooks.constructEventAsync instead.'
       );
     }
+    if (eventNotification.object !== 'v2.core.event') {
+      throw new Error(
+        `Unexpected object type '${eventNotification.object}'. Expected 'v2.core.event' for an event notification.`
+      );
+    }
 
     return this._buildEventNotification(eventNotification);
   }
@@ -1713,9 +1723,14 @@ export class Stripe {
     payload: string
   ): V2.Core.EventNotification {
     const inner = maybeExtractFromCloudProviderEnvelope(payload);
-    if (inner && inner.object === 'event') {
+    if (inner.object === 'event') {
       throw new Error(
         'It looks like this cloud event contains a webhook body instead of a thin event notification. Use constructEventWithoutVerification instead.'
+      );
+    }
+    if (inner.object !== 'v2.core.event') {
+      throw new Error(
+        `Unexpected object type '${inner.object}'. Expected 'v2.core.event' for an event notification.`
       );
     }
     return this._buildEventNotification(inner);
