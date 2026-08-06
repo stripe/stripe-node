@@ -143,6 +143,17 @@ export class HttpClientResponse implements HttpClientResponseInterface {
   toJSON(): any {
     throw new Error('toJSON not implemented.');
   }
+
+  protected _parseResponseBody(body: string): any {
+    try {
+      return JSON.parse(body);
+    } catch (e) {
+      if (e instanceof Error) {
+        (e as any).rawBody = body;
+      }
+      throw e;
+    }
+  }
 }
 
 export class HttpClientRuntimeError extends Error {}

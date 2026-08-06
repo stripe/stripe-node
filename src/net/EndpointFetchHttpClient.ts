@@ -143,13 +143,6 @@ export class EndpointFetchHttpClientResponse extends HttpClientResponse {
 
   toJSON(): Promise<any> {
     const body = this._res.body || '';
-    try {
-      return Promise.resolve(JSON.parse(body));
-    } catch (e) {
-      if (e instanceof Error) {
-        (e as any).rawBody = body;
-      }
-      return Promise.reject(e);
-    }
+    return Promise.resolve().then(() => this._parseResponseBody(body));
   }
 }
