@@ -12,7 +12,7 @@ import {
   DEFAULT_BASE_ADDRESSES,
 } from './Types.js';
 import {createWebhooks} from './Webhooks.js';
-import {ApiVersion} from './apiVersion.js';
+import {ApiVersion, ApiMajorVersion} from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
@@ -960,6 +960,11 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
 export class Stripe {
   static PACKAGE_VERSION = '22.4.0';
   static API_VERSION: typeof ApiVersion = ApiVersion;
+  /**
+   * The major API version that this SDK uses. Objects retrieved using the same
+   * major version are compatible. Is an empty string in preview versions of the SDK.
+   */
+  static MAJOR_API_VERSION = ApiMajorVersion;
   static aiAgent = '';
   static AI_AGENT = '';
   static USER_AGENT: Record<string, string | boolean | null> = {

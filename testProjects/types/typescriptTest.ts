@@ -7,6 +7,8 @@
 
 import Stripe from 'stripe';
 
+const majorApiVersion: string = Stripe.MAJOR_API_VERSION;
+
 let stripe = new Stripe('sk_test_123', {
   apiVersion: Stripe.API_VERSION,
 });
@@ -282,7 +284,9 @@ const errorTypeInterchangeable = (
 ): Stripe.ErrorType.StripeError => e;
 
 // instanceof narrows to the correct type
-const instanceofNarrowing = (e: unknown): Stripe.ErrorType.StripeError | null => {
+const instanceofNarrowing = (
+  e: unknown
+): Stripe.ErrorType.StripeError | null => {
   if (e instanceof Stripe.errors.StripeError) {
     return e;
   }
@@ -513,5 +517,4 @@ const _signatureType: Stripe.Signature = null as any;
 
 // Factory function return types must be assignable to their interface types.
 const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
-const _nodeCryptoProvider: Stripe.CryptoProvider =
-  Stripe.createNodeCryptoProvider();
+const _nodeCryptoProvider: Stripe.CryptoProvider = Stripe.createNodeCryptoProvider();
