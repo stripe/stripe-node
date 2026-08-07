@@ -359,6 +359,8 @@ const v2ContextObj: Stripe.StripeContextType | undefined = v2EventNotif.context;
 async (): Promise<void> => {
   // parsing event notifications
   const eventNotification = stripe.parseEventNotification('', '', '');
+  // literal type, so this is really checking the (purported) value
+  eventNotification.object === 'v2.core.event';
 
   if (eventNotification.type === 'v1.billing.meter.error_report_triggered') {
     eventNotification.related_object;
@@ -426,8 +428,9 @@ event = stripe.webhooks.constructEventWithoutVerification('payload');
 event = stripe.constructEventWithoutVerification('payload');
 
 // parseEventNotificationWithoutVerification on client
-const _notificationWV: Stripe.V2.Core.EventNotification =
-  stripe.parseEventNotificationWithoutVerification('payload');
+const _notificationWV: Stripe.V2.Core.EventNotification = stripe.parseEventNotificationWithoutVerification(
+  'payload'
+);
 
 // Verify that nested types with names matching imported types resolve correctly.
 // e.g. Checkout.Session.TotalDetails.Breakdown.Discount.discount should be
