@@ -1,4 +1,5 @@
 import * as childProcess from 'child_process';
+import * as path from 'path';
 import {expect} from 'chai';
 
 describe('package exports', () => {
@@ -17,6 +18,7 @@ describe('package exports', () => {
       .toString()
       .trim();
 
-    expect(resolved).to.match(/cjs\/stripe\.cjs\.extensibility\.js$/);
+    expect(path.basename(path.dirname(resolved))).to.equal('cjs');
+    expect(path.basename(resolved)).to.equal('stripe.cjs.extensibility.js');
   });
 });
