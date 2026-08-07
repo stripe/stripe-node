@@ -50,6 +50,11 @@ export class PlatformFunctions {
   }
 
   /**
+   * Writes a message to stderr, or does nothing if unavailable.
+   */
+  writeStderr(_msg: string): void {}
+
+  /**
    * Emits a warning. Node.js uses process.emitWarning; other runtimes
    * fall back to console.warn.
    */
