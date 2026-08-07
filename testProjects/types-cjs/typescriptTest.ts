@@ -33,6 +33,7 @@ let opts: Stripe.RequestOptions;
 
 // Static members
 const version: typeof Stripe.API_VERSION = Stripe.API_VERSION;
+const majorApiVersion: string = Stripe.MAJOR_API_VERSION;
 Stripe.errors;
 Stripe.errors.StripeError;
 
@@ -418,6 +419,14 @@ event = stripe.webhooks.constructEvent(
   ['also_signature_but_does_not_work_at_runtime'],
   'secret'
 );
+
+// constructEventWithoutVerification on webhooks object and client
+event = stripe.webhooks.constructEventWithoutVerification('payload');
+event = stripe.constructEventWithoutVerification('payload');
+
+// parseEventNotificationWithoutVerification on client
+const _notificationWV: Stripe.V2.Core.EventNotification =
+  stripe.parseEventNotificationWithoutVerification('payload');
 
 const taxExempt: Stripe.CustomerUpdateParams.TaxExempt = 'exempt';
 let subscription: Stripe.Subscription;
