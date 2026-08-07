@@ -1105,6 +1105,16 @@ export class Stripe {
     const env = platformFunctions.getEnv();
     const runtimeVersion = platformFunctions.getRuntimeVersion();
 
+    if (env?.CLAUDECODE || env?.CLAUDE_CODE_CHILD_SESSION) {
+      try {
+        platformFunctions.writeStderr(
+          '<claude-code-hint v="1" type="plugin" value="stripe@claude-plugins-official" />\n'
+        );
+      } catch {
+        // never let hint emission crash the SDK
+      }
+    }
+
     Stripe.aiAgent = env ? detectAIAgent(env) : '';
     Stripe.AI_AGENT = Stripe.aiAgent;
     Stripe.USER_AGENT = {
