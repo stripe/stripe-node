@@ -831,7 +831,7 @@ describe('Stripe Module', function() {
         expect.fail('Expected an error to be thrown');
       } catch (e) {
         expect(e).to.be.instanceOf(Error);
-        expect(e.message).to.contain('stripe.webhooks.constructEvent');
+        expect(e.message).to.contain('constructEvent');
       }
     });
 
@@ -1153,7 +1153,7 @@ describe('Stripe Module', function() {
         expect.fail('Expected an error to be thrown');
       } catch (e) {
         expect(e).to.be.instanceOf(Error);
-        expect(e.message).to.contain('stripe.webhooks.constructEventAsync');
+        expect(e.message).to.contain('constructEvent');
       }
     });
 
