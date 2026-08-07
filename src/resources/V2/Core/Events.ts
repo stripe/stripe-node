@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RangeQueryParam, Decimal} from '../../../shared.js';
+import {RangeQueryParam, Decimal, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class EventResource extends StripeResource {
@@ -84,7 +84,7 @@ export interface EventBase {
   /**
    * Before and after changes for the primary related object.
    */
-  changes?: V2.Core.Event.Changes;
+  changes?: Event.Changes;
 
   /**
    * Authentication context needed to fetch the event or related object.
@@ -104,45 +104,41 @@ export interface EventBase {
   /**
    * Reason for the event.
    */
-  reason?: V2.Core.Event.Reason;
+  reason?: Event.Reason;
 
   /**
    * The type of the event.
    */
   type: string;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace Event {
-      export type Changes = {
-        [key: string]: unknown;
-      };
+export namespace Event {
+  export type Changes = {
+    [key: string]: unknown;
+  };
 
-      export interface Reason {
-        /**
-         * Information on the API request that instigated the event.
-         */
-        request?: Reason.Request;
+  export interface Reason {
+    /**
+     * Information on the API request that instigated the event.
+     */
+    request?: Reason.Request;
 
-        /**
-         * Event reason type.
-         */
-        type: 'request';
-      }
+    /**
+     * Event reason type.
+     */
+    type: 'request';
+  }
 
-      export namespace Reason {
-        export interface Request {
-          /**
-           * ID of the API request that caused the event.
-           */
-          id: string;
+  export namespace Reason {
+    export interface Request {
+      /**
+       * ID of the API request that caused the event.
+       */
+      id: string;
 
-          /**
-           * The idempotency key transmitted during the request.
-           */
-          idempotency_key: string;
-        }
-      }
+      /**
+       * The idempotency key transmitted during the request.
+       */
+      idempotency_key: string;
     }
   }
 }
@@ -358,7 +354,8 @@ export namespace V1BillingMeterErrorReportTriggeredEvent {
           | 'missing_dimension_payload_keys'
           | 'no_meter'
           | 'timestamp_in_future'
-          | 'timestamp_too_far_in_past';
+          | 'timestamp_too_far_in_past'
+          | OtherString;
 
         export interface SampleError {
           /**
@@ -464,7 +461,8 @@ export namespace V1BillingMeterNoMeterFoundEvent {
           | 'missing_dimension_payload_keys'
           | 'no_meter'
           | 'timestamp_in_future'
-          | 'timestamp_too_far_in_past';
+          | 'timestamp_too_far_in_past'
+          | OtherString;
 
         export interface SampleError {
           /**
@@ -769,10 +767,12 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'samsung_pay_payments'
       | 'sepa_bank_transfer_payments'
       | 'sepa_debit_payments'
+      | 'sunbit_payments'
       | 'swish_payments'
       | 'twint_payments'
       | 'us_bank_transfer_payments'
-      | 'zip_payments';
+      | 'zip_payments'
+      | OtherString;
   }
 }
 
@@ -839,7 +839,8 @@ export namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpd
       | 'cards'
       | 'stripe_balance.payouts'
       | 'stripe_balance.stripe_transfers'
-      | 'stripe.transfers';
+      | 'stripe.transfers'
+      | OtherString;
   }
 }
 
@@ -981,9 +982,13 @@ export namespace V2CoreAccountLinkReturnedEvent {
   }
 
   export namespace Data {
-    export type Configuration = 'customer' | 'merchant' | 'recipient';
+    export type Configuration =
+      | 'customer'
+      | 'merchant'
+      | 'recipient'
+      | OtherString;
 
-    export type UseCase = 'account_onboarding' | 'account_update';
+    export type UseCase = 'account_onboarding' | 'account_update' | OtherString;
   }
 }
 

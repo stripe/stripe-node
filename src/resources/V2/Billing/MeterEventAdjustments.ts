@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class MeterEventAdjustmentResource extends StripeResource {
@@ -33,7 +34,7 @@ export interface MeterEventAdjustment {
   /**
    * Specifies which event to cancel.
    */
-  cancel: V2.Billing.MeterEventAdjustment.Cancel;
+  cancel: MeterEventAdjustment.Cancel;
 
   /**
    * The time the adjustment was created.
@@ -53,26 +54,22 @@ export interface MeterEventAdjustment {
   /**
    * Open Enum. The meter event adjustment's status.
    */
-  status: V2.Billing.MeterEventAdjustment.Status;
+  status: MeterEventAdjustment.Status;
 
   /**
    * Open Enum. Specifies the type of cancellation. Currently supports canceling a single event.
    */
   type: 'cancel';
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace MeterEventAdjustment {
-      export interface Cancel {
-        /**
-         * The identifier that was originally assigned to the meter event. You can only cancel events within 24 hours of Stripe receiving them.
-         */
-        identifier: string;
-      }
-
-      export type Status = 'complete' | 'pending';
-    }
+export namespace MeterEventAdjustment {
+  export interface Cancel {
+    /**
+     * The identifier that was originally assigned to the meter event. You can only cancel events within 24 hours of Stripe receiving them.
+     */
+    identifier: string;
   }
+
+  export type Status = 'complete' | 'pending' | OtherString;
 }
 export namespace V2 {
   export namespace Billing {

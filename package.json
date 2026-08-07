@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "22.2.1",
+  "version": "22.4.0",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",
@@ -68,6 +68,10 @@
     "prepack": "just install && just build"
   },
   "exports": {
+    "extensibility": {
+      "import": "./esm/stripe.esm.extensibility.js",
+      "require": "./cjs/stripe.cjs.extensibility.js"
+    },
     "browser": {
       "import": "./esm/stripe.esm.worker.js",
       "require": "./cjs/stripe.cjs.worker.js"

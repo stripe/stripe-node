@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams, RangeQueryParam} from '../../shared.js';
+import {PaginationParams, RangeQueryParam, OtherString} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class TransactionResource extends StripeResource {
@@ -77,9 +77,9 @@ export interface Transaction {
   /**
    * The status of the transaction.
    */
-  status: FinancialConnections.Transaction.Status;
+  status: Transaction.Status;
 
-  status_transitions: FinancialConnections.Transaction.StatusTransitions;
+  status_transitions: Transaction.StatusTransitions;
 
   /**
    * Time at which the transaction was transacted. Measured in seconds since the Unix epoch.
@@ -96,21 +96,19 @@ export interface Transaction {
    */
   updated: number;
 }
-export namespace FinancialConnections {
-  export namespace Transaction {
-    export type Status = 'pending' | 'posted' | 'void';
+export namespace Transaction {
+  export type Status = 'pending' | 'posted' | 'void' | OtherString;
 
-    export interface StatusTransitions {
-      /**
-       * Time at which this transaction posted. Measured in seconds since the Unix epoch.
-       */
-      posted_at: number | null;
+  export interface StatusTransitions {
+    /**
+     * Time at which this transaction posted. Measured in seconds since the Unix epoch.
+     */
+    posted_at: number | null;
 
-      /**
-       * Time at which this transaction was voided. Measured in seconds since the Unix epoch.
-       */
-      void_at: number | null;
-    }
+    /**
+     * Time at which this transaction was voided. Measured in seconds since the Unix epoch.
+     */
+    void_at: number | null;
   }
 }
 export namespace FinancialConnections {

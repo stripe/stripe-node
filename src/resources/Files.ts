@@ -4,6 +4,7 @@ import {multipartRequestDataProcessor} from '../multipart.js';
 import {StripeResource} from '../StripeResource.js';
 import {FileLink} from './FileLinks.js';
 import {
+  OtherString,
   Emptyable,
   MetadataParam,
   PaginationParams,
@@ -140,7 +141,8 @@ export namespace File {
     | 'terminal_android_apk'
     | 'terminal_reader_splashscreen'
     | 'terminal_wifi_certificate'
-    | 'terminal_wifi_private_key';
+    | 'terminal_wifi_private_key'
+    | OtherString;
 }
 export interface FileCreateParams {
   /**
@@ -179,7 +181,8 @@ export namespace FileCreateParams {
     | 'terminal_android_apk'
     | 'terminal_reader_splashscreen'
     | 'terminal_wifi_certificate'
-    | 'terminal_wifi_private_key';
+    | 'terminal_wifi_private_key'
+    | OtherString;
 
   export interface FileLinkData {
     /**

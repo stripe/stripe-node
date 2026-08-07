@@ -457,30 +457,50 @@ export function parseHttpHeaderAsString<K extends keyof RequestHeaders>(
   return String(header);
 }
 
-export function parseHttpHeaderAsNumber<K extends keyof RequestHeaders>(
-  header: RequestHeaders[K] | null | undefined
-): number | undefined {
-  const value = Array.isArray(header) ? header[0] : header;
-  if (value == null) {
-    return undefined;
-  }
-  const trimmed = String(value).trim();
-  if (trimmed === '') {
-    return undefined;
-  }
-  const parsed = Number(trimmed);
-  if (!Number.isFinite(parsed)) {
-    return undefined;
-  }
-  return parsed;
-}
-
 export function parseHeadersForFetch(
   headers: RequestHeaders
 ): [string, string][] {
   return Object.entries(headers).map(([key, value]) => {
     return [key, parseHttpHeaderAsString(value)];
   });
+}
+
+/**
+ * Parses a webhook payload (string or Uint8Array) into a plain object.
+ */
+export function parsePayload(
+  payload: string | Uint8Array
+): Record<string, unknown> {
+  const raw =
+    payload instanceof Uint8Array
+      ? new TextDecoder('utf8').decode(payload)
+      : payload;
+  return JSON.parse(raw) as Record<string, unknown>;
+}
+
+export function maybeExtractFromCloudProviderEnvelope(
+  payload: string
+): Record<string, unknown> {
+  const parsed = parsePayload(payload);
+
+  // Could add as many checks as we want here, but we'll start simple
+  if ('detail' in parsed) {
+    // AWS
+    // https://docs.stripe.com/event-destinations/eventbridge#event-structure
+    return parsed.detail as Record<string, unknown>;
+  }
+  if ('specversion' in parsed && 'data' in parsed) {
+    // Azure
+    // https://docs.stripe.com/event-destinations/eventgrid#event-structure
+    return parsed.data as Record<string, unknown>;
+  }
+  if (parsed.object === 'event' || parsed.object === 'v2.core.event') {
+    // Raw Stripe event passed directly: return it as-is (pass-through)
+    return parsed;
+  }
+  throw new Error(
+    'Unrecognized event format. The payload must be an AWS EventBridge/Azure Event Grid event envelope or a Stripe webhook (thin event notification or snapshot).'
+  );
 }
 
 const CALL_SITE_MARKER = '\nOriginating from:';

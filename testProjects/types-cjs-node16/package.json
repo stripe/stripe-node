@@ -7,7 +7,7 @@
     "stripe": "file:../../"
   },
   "devDependencies": {
-    "@types/node": "~22",
+    "@types/node": "~22.19",
     "typescript": "^5.9.3"
   }
 }

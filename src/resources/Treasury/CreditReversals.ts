@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Transaction} from './Transactions.js';
-import {MetadataParam, PaginationParams, Metadata} from '../../shared.js';
+import {
+  MetadataParam,
+  PaginationParams,
+  OtherString,
+  Metadata,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class CreditReversalResource extends StripeResource {
@@ -102,7 +107,7 @@ export interface CreditReversal {
   /**
    * The rails used to reverse the funds.
    */
-  network: Treasury.CreditReversal.Network;
+  network: CreditReversal.Network;
 
   /**
    * The ReceivedCredit being reversed.
@@ -112,27 +117,25 @@ export interface CreditReversal {
   /**
    * Status of the CreditReversal
    */
-  status: Treasury.CreditReversal.Status;
+  status: CreditReversal.Status;
 
-  status_transitions: Treasury.CreditReversal.StatusTransitions;
+  status_transitions: CreditReversal.StatusTransitions;
 
   /**
    * The Transaction associated with this object.
    */
   transaction: string | Transaction | null;
 }
-export namespace Treasury {
-  export namespace CreditReversal {
-    export type Network = 'ach' | 'stripe';
+export namespace CreditReversal {
+  export type Network = 'ach' | 'stripe' | OtherString;
 
-    export type Status = 'canceled' | 'posted' | 'processing';
+  export type Status = 'canceled' | 'posted' | 'processing' | OtherString;
 
-    export interface StatusTransitions {
-      /**
-       * Timestamp describing when the CreditReversal changed status to `posted`
-       */
-      posted_at: number | null;
-    }
+  export interface StatusTransitions {
+    /**
+     * Timestamp describing when the CreditReversal changed status to `posted`
+     */
+    posted_at: number | null;
   }
 }
 export namespace Treasury {
@@ -185,6 +188,6 @@ export namespace Treasury {
   }
 
   export namespace CreditReversalListParams {
-    export type Status = 'canceled' | 'posted' | 'processing';
+    export type Status = 'canceled' | 'posted' | 'processing' | OtherString;
   }
 }

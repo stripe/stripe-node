@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams} from '../../shared.js';
+import {OtherString, PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class SecretResource extends StripeResource {
@@ -100,25 +100,23 @@ export interface Secret {
    */
   payload?: string | null;
 
-  scope: Apps.Secret.Scope;
+  scope: Secret.Scope;
 }
-export namespace Apps {
-  export namespace Secret {
-    export interface Scope {
-      /**
-       * The secret scope type.
-       */
-      type: Scope.Type;
+export namespace Secret {
+  export interface Scope {
+    /**
+     * The secret scope type.
+     */
+    type: Scope.Type;
 
-      /**
-       * The user ID, if type is set to "user"
-       */
-      user?: string;
-    }
+    /**
+     * The user ID, if type is set to "user"
+     */
+    user?: string;
+  }
 
-    export namespace Scope {
-      export type Type = 'account' | 'user';
-    }
+  export namespace Scope {
+    export type Type = 'account' | 'user' | OtherString;
   }
 }
 export namespace Apps {
@@ -163,7 +161,7 @@ export namespace Apps {
     }
 
     export namespace Scope {
-      export type Type = 'account' | 'user';
+      export type Type = 'account' | 'user' | OtherString;
     }
   }
 }
@@ -194,7 +192,7 @@ export namespace Apps {
     }
 
     export namespace Scope {
-      export type Type = 'account' | 'user';
+      export type Type = 'account' | 'user' | OtherString;
     }
   }
 }
@@ -230,7 +228,7 @@ export namespace Apps {
     }
 
     export namespace Scope {
-      export type Type = 'account' | 'user';
+      export type Type = 'account' | 'user' | OtherString;
     }
   }
 }
@@ -266,7 +264,7 @@ export namespace Apps {
     }
 
     export namespace Scope {
-      export type Type = 'account' | 'user';
+      export type Type = 'account' | 'user' | OtherString;
     }
   }
 }

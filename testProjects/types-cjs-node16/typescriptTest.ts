@@ -10,6 +10,9 @@ import Stripe from 'stripe';
 // Construction
 const stripe = new Stripe('sk_test_123');
 
+// Static members
+const majorApiVersion: string = Stripe.MAJOR_API_VERSION;
+
 // Top-level resource types
 let customer: Stripe.Customer;
 let charge: Stripe.Charge;
@@ -39,6 +42,51 @@ async (): Promise<void> => {
 let opts: Stripe.RequestOptions;
 let apiList: Stripe.ApiList<Stripe.Customer>;
 
+// Resource sub-types (companion namespace access)
+let priceRecurring: Stripe.Price.Recurring;
+let customerInvoiceSettings: Stripe.Customer.InvoiceSettings;
+let subscriptionBillingMode: Stripe.Subscription.BillingMode;
+
+// Deep resource sub-types (2+ levels)
+const billingModeType: Stripe.Subscription.BillingMode.Type = 'classic';
+
+// Nested resource sub-types (product namespace → resource → sub-type)
+let alertStatus: Stripe.Billing.Alert.Status;
+let terminalTipping: Stripe.Terminal.Configuration.Tipping;
+let appsSecretScope: Stripe.Apps.Secret.Scope;
+
+// Deep params sub-namespaces (2+ levels)
+let accountBizProfile: Stripe.AccountCreateParams.BusinessProfile;
+let accountBizRevenue: Stripe.AccountCreateParams.BusinessProfile.AnnualRevenue;
+
 // Config strictness
 // @ts-expect-error - unknown config properties should be rejected
 const bad = new Stripe('sk_test_123', {unknownProperty: true});
+
+// Webhook methods: constructEventWithoutVerification and parseEventNotificationWithoutVerification
+event = stripe.webhooks.constructEventWithoutVerification('payload');
+event = stripe.constructEventWithoutVerification('payload');
+const _notificationWV: Stripe.V2.Core.EventNotification =
+  stripe.parseEventNotificationWithoutVerification('payload');
+
+// Namespace type exports that must remain accessible (v21 parity).
+const _stripeConfig: Stripe.StripeConfig = {maxNetworkRetries: 3};
+const _latestApiVersion: Stripe.LatestApiVersion = '' as any;
+const _httpAgent: Stripe.HttpAgent = null as any;
+const _httpProtocol: Stripe.HttpProtocol = 'https';
+const _stripeResource: Stripe.StripeResource = null as any;
+const _cryptoProvider: Stripe.CryptoProvider = null as any;
+const _httpClient: Stripe.HttpClient = null as any;
+const _httpClientResponse: Stripe.HttpClientResponse = null as any;
+const _rawErrorType: Stripe.RawErrorType = 'card_error';
+const _webhooksType: Stripe.Webhooks = null as any;
+const _webhookTestHeaderOptions: Stripe.WebhookTestHeaderOptions = {
+  payload: '{}',
+  secret: 'whsec_test',
+};
+const _signatureType: Stripe.Signature = null as any;
+
+// Factory function return types must be assignable to their interface types.
+const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
+const _nodeCryptoProvider: Stripe.CryptoProvider =
+  Stripe.createNodeCryptoProvider();

@@ -9,7 +9,7 @@ import {SetupIntent} from './SetupIntents.js';
 import {Mandate} from './Mandates.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {CustomerSource} from './CustomerSources.js';
-import {PaginationParams, RangeQueryParam} from '../shared.js';
+import {PaginationParams, RangeQueryParam, OtherString} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class SetupAttemptResource extends StripeResource {
@@ -150,6 +150,8 @@ export namespace SetupAttempt {
     pix?: PaymentMethodDetails.Pix;
 
     revolut_pay?: PaymentMethodDetails.RevolutPay;
+
+    satispay?: PaymentMethodDetails.Satispay;
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
@@ -482,9 +484,16 @@ export namespace SetupAttempt {
 
     export interface Payto {}
 
-    export interface Pix {}
+    export interface Pix {
+      /**
+       * Uniquely identifies this particular Pix account. You can use this attribute to check whether two Pix accounts are the same.
+       */
+      fingerprint?: string | null;
+    }
 
     export interface RevolutPay {}
+
+    export interface Satispay {}
 
     export interface SepaDebit {}
 
@@ -608,22 +617,28 @@ export namespace SetupAttempt {
       }
 
       export namespace ThreeDSecure {
-        export type AuthenticationFlow = 'challenge' | 'frictionless';
+        export type AuthenticationFlow =
+          | 'challenge'
+          | 'frictionless'
+          | OtherString;
 
         export type ElectronicCommerceIndicator =
           | '01'
           | '02'
           | '05'
           | '06'
-          | '07';
+          | '07'
+          | OtherString;
 
         export type Result =
           | 'attempt_acknowledged'
           | 'authenticated'
+          | 'data_share_only'
           | 'exempted'
           | 'failed'
           | 'not_supported'
-          | 'processing_error';
+          | 'processing_error'
+          | OtherString;
 
         export type ResultReason =
           | 'abandoned'
@@ -632,9 +647,16 @@ export namespace SetupAttempt {
           | 'card_not_enrolled'
           | 'network_not_supported'
           | 'protocol_error'
-          | 'rejected';
+          | 'rejected'
+          | OtherString;
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
       }
 
       export namespace Wallet {
@@ -726,6 +748,7 @@ export namespace SetupAttempt {
       | 'alipay_upgrade_required'
       | 'amount_too_large'
       | 'amount_too_small'
+      | 'anomalous_money_movement_request'
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
@@ -765,6 +788,10 @@ export namespace SetupAttempt {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'failed_tax_calculation'
+      | 'financial_account_balance_does_not_support_currency'
+      | 'financial_account_capability_not_enabled'
+      | 'financial_account_capability_restricted'
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'

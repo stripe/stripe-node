@@ -3,7 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Meter} from './Meters.js';
 import {Customer} from './../Customers.js';
-import {PaginationParams} from '../../shared.js';
+import {PaginationParams, OtherString} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class AlertResource extends StripeResource {
@@ -117,7 +117,7 @@ export interface Alert {
   /**
    * Status of the alert. This can be active, inactive or archived.
    */
-  status: Billing.Alert.Status | null;
+  status: Alert.Status | null;
 
   /**
    * Title of the alert.
@@ -127,43 +127,41 @@ export interface Alert {
   /**
    * Encapsulates configuration of the alert to monitor usage on a specific [Billing Meter](https://docs.stripe.com/api/billing/meter).
    */
-  usage_threshold: Billing.Alert.UsageThreshold | null;
+  usage_threshold: Alert.UsageThreshold | null;
 }
-export namespace Billing {
-  export namespace Alert {
-    export type Status = 'active' | 'archived' | 'inactive';
+export namespace Alert {
+  export type Status = 'active' | 'archived' | 'inactive' | OtherString;
 
-    export interface UsageThreshold {
+  export interface UsageThreshold {
+    /**
+     * The filters allow limiting the scope of this usage alert. You can only specify up to one filter at this time.
+     */
+    filters: Array<UsageThreshold.Filter> | null;
+
+    /**
+     * The value at which this alert will trigger.
+     */
+    gte: number;
+
+    /**
+     * The [Billing Meter](https://docs.stripe.com/api/billing/meter) ID whose usage is monitored.
+     */
+    meter: string | Meter;
+
+    /**
+     * Defines how the alert will behave.
+     */
+    recurrence: 'one_time';
+  }
+
+  export namespace UsageThreshold {
+    export interface Filter {
       /**
-       * The filters allow limiting the scope of this usage alert. You can only specify up to one filter at this time.
+       * Limit the scope of the alert to this customer ID
        */
-      filters: Array<UsageThreshold.Filter> | null;
+      customer: string | Customer | null;
 
-      /**
-       * The value at which this alert will trigger.
-       */
-      gte: number;
-
-      /**
-       * The [Billing Meter](https://docs.stripe.com/api/billing/meter) ID whose usage is monitored.
-       */
-      meter: string | Meter;
-
-      /**
-       * Defines how the alert will behave.
-       */
-      recurrence: 'one_time';
-    }
-
-    export namespace UsageThreshold {
-      export interface Filter {
-        /**
-         * Limit the scope of the alert to this customer ID
-         */
-        customer: string | Customer | null;
-
-        type: 'customer';
-      }
+      type: 'customer';
     }
   }
 }
@@ -198,7 +196,7 @@ export namespace Billing {
       filters?: Array<UsageThreshold.Filter>;
 
       /**
-       * Defines the threshold value that triggers the alert.
+       * Defines the threshold value that triggers the alert. The value must be greater than 0.
        */
       gte: number;
 

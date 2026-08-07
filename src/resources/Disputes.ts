@@ -9,6 +9,7 @@ import {
   Emptyable,
   MetadataParam,
   AddressParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -61,7 +62,7 @@ export class DisputeResource extends StripeResource {
     ) as any;
   }
   /**
-   * Closing the dispute for a charge indicates that you do not have any evidence to submit and are essentially dismissing the dispute, acknowledging it as lost.
+   * Closing the dispute for a charge indicates that you do not have any evidence to submit and are essentially dismissing the dispute (accepting it), acknowledging it as lost.
    *
    * The status of the dispute will change from needs_response to lost. Closing a dispute is irreversible.
    */
@@ -162,8 +163,10 @@ export interface Dispute {
 }
 export namespace Dispute {
   export type EnhancedEligibilityType =
+    | 'mastercard_compliance'
     | 'visa_compelling_evidence_3'
-    | 'visa_compliance';
+    | 'visa_compliance'
+    | OtherString;
 
   export interface Evidence {
     /**
@@ -351,16 +354,26 @@ export namespace Dispute {
     | 'warning_closed'
     | 'warning_needs_response'
     | 'warning_under_review'
-    | 'won';
+    | 'won'
+    | OtherString;
 
   export namespace Evidence {
     export interface EnhancedEvidence {
+      mastercard_compliance?: EnhancedEvidence.MastercardCompliance;
+
       visa_compelling_evidence_3?: EnhancedEvidence.VisaCompellingEvidence3;
 
       visa_compliance?: EnhancedEvidence.VisaCompliance;
     }
 
     export namespace EnhancedEvidence {
+      export interface MastercardCompliance {
+        /**
+         * A field acknowledging the fee incurred when countering a Mastercard compliance dispute. If this field is set to true, evidence can be submitted for the compliance dispute.
+         */
+        fee_acknowledged: boolean;
+      }
+
       export interface VisaCompellingEvidence3 {
         /**
          * Disputed transaction details for Visa Compelling Evidence 3.0 evidence submission.
@@ -468,7 +481,10 @@ export namespace Dispute {
         }
 
         export namespace DisputedTransaction {
-          export type MerchandiseOrServices = 'merchandise' | 'services';
+          export type MerchandiseOrServices =
+            | 'merchandise'
+            | 'services'
+            | OtherString;
         }
       }
     }
@@ -476,12 +492,21 @@ export namespace Dispute {
 
   export namespace EvidenceDetails {
     export interface EnhancedEligibility {
+      mastercard_compliance?: EnhancedEligibility.MastercardCompliance;
+
       visa_compelling_evidence_3?: EnhancedEligibility.VisaCompellingEvidence3;
 
       visa_compliance?: EnhancedEligibility.VisaCompliance;
     }
 
     export namespace EnhancedEligibility {
+      export interface MastercardCompliance {
+        /**
+         * Mastercard compliance eligibility status.
+         */
+        status: MastercardCompliance.Status;
+      }
+
       export interface VisaCompellingEvidence3 {
         /**
          * List of actions required to qualify dispute for Visa Compelling Evidence 3.0 evidence submission.
@@ -501,21 +526,33 @@ export namespace Dispute {
         status: VisaCompliance.Status;
       }
 
+      export namespace MastercardCompliance {
+        export type Status =
+          | 'fee_acknowledged'
+          | 'requires_fee_acknowledgement';
+      }
+
       export namespace VisaCompellingEvidence3 {
         export type RequiredAction =
           | 'missing_customer_identifiers'
           | 'missing_disputed_transaction_description'
           | 'missing_merchandise_or_services'
           | 'missing_prior_undisputed_transaction_description'
-          | 'missing_prior_undisputed_transactions';
+          | 'missing_prior_undisputed_transactions'
+          | OtherString;
 
-        export type Status = 'not_qualified' | 'qualified' | 'requires_action';
+        export type Status =
+          | 'not_qualified'
+          | 'qualified'
+          | 'requires_action'
+          | OtherString;
       }
 
       export namespace VisaCompliance {
         export type Status =
           | 'fee_acknowledged'
-          | 'requires_fee_acknowledgement';
+          | 'requires_fee_acknowledgement'
+          | OtherString;
       }
     }
   }
@@ -538,6 +575,11 @@ export namespace Dispute {
        * The type of dispute opened. Different case types may have varying fees and financial impact.
        */
       case_type: Card.CaseType;
+
+      /**
+       * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+       */
+      network: string;
 
       /**
        * The card network's specific dispute reason code, which maps to one of Stripe's primary dispute categories to simplify response guidance. The [Network code map](https://stripe.com/docs/disputes/categories#network-code-map) lists all available dispute reason codes by network.
@@ -569,10 +611,15 @@ export namespace Dispute {
       reason_code: string | null;
     }
 
-    export type Type = 'amazon_pay' | 'card' | 'klarna' | 'paypal';
+    export type Type =
+      | 'amazon_pay'
+      | 'card'
+      | 'klarna'
+      | 'paypal'
+      | OtherString;
 
     export namespace AmazonPay {
-      export type DisputeType = 'chargeback' | 'claim';
+      export type DisputeType = 'chargeback' | 'claim' | OtherString;
     }
 
     export namespace Card {
@@ -581,7 +628,8 @@ export namespace Dispute {
         | 'chargeback'
         | 'compliance'
         | 'inquiry'
-        | 'resolution';
+        | 'resolution'
+        | OtherString;
     }
   }
 }
@@ -758,6 +806,11 @@ export namespace DisputeUpdateParams {
   export namespace Evidence {
     export interface EnhancedEvidence {
       /**
+       * Evidence provided for Mastercard compliance evidence submission.
+       */
+      mastercard_compliance?: EnhancedEvidence.MastercardCompliance;
+
+      /**
        * Evidence provided for Visa Compelling Evidence 3.0 evidence submission.
        */
       visa_compelling_evidence_3?: EnhancedEvidence.VisaCompellingEvidence3;
@@ -769,6 +822,13 @@ export namespace DisputeUpdateParams {
     }
 
     export namespace EnhancedEvidence {
+      export interface MastercardCompliance {
+        /**
+         * A field acknowledging the fee incurred when countering a Mastercard compliance dispute. If this field is set to true, evidence can be submitted for the compliance dispute.
+         */
+        fee_acknowledged?: boolean;
+      }
+
       export interface VisaCompellingEvidence3 {
         /**
          * Disputed transaction details for Visa Compelling Evidence 3.0 evidence submission.
@@ -876,7 +936,10 @@ export namespace DisputeUpdateParams {
         }
 
         export namespace DisputedTransaction {
-          export type MerchandiseOrServices = 'merchandise' | 'services';
+          export type MerchandiseOrServices =
+            | 'merchandise'
+            | 'services'
+            | OtherString;
         }
       }
     }

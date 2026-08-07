@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   PaginationParams,
   Metadata,
 } from '../shared.js';
@@ -214,7 +215,13 @@ export namespace WebhookEndpointCreateParams {
     | 'balance.available'
     | 'balance_settings.updated'
     | 'billing.alert.triggered'
+    | 'billing.credit_balance_transaction.created'
     | 'billing.credit_grant.created'
+    | 'billing.credit_grant.updated'
+    | 'billing.meter.created'
+    | 'billing.meter.deactivated'
+    | 'billing.meter.reactivated'
+    | 'billing.meter.updated'
     | 'billing_portal.configuration.created'
     | 'billing_portal.configuration.updated'
     | 'billing_portal.session.created'
@@ -278,11 +285,16 @@ export namespace WebhookEndpointCreateParams {
     | 'financial_connections.account.created'
     | 'financial_connections.account.deactivated'
     | 'financial_connections.account.disconnected'
+    | 'financial_connections.account.expected_deactivation_date_updated'
     | 'financial_connections.account.reactivated'
     | 'financial_connections.account.refreshed_balance'
     | 'financial_connections.account.refreshed_ownership'
     | 'financial_connections.account.refreshed_transactions'
+    | 'financial_connections.account.supported_payment_method_types_updated'
     | 'financial_connections.account.upcoming_account_number_expiry'
+    | 'financial_connections.account.upcoming_deactivation'
+    | 'financial_connections.authorization.expected_deactivation_date_updated'
+    | 'financial_connections.authorization.upcoming_deactivation'
     | 'identity.verification_session.canceled'
     | 'identity.verification_session.created'
     | 'identity.verification_session.processing'
@@ -456,12 +468,7 @@ export namespace WebhookEndpointCreateParams {
     | 'treasury.received_credit.failed'
     | 'treasury.received_credit.succeeded'
     | 'treasury.received_debit.created'
-    | 'billing.credit_balance_transaction.created'
-    | 'billing.credit_grant.updated'
-    | 'billing.meter.created'
-    | 'billing.meter.deactivated'
-    | 'billing.meter.reactivated'
-    | 'billing.meter.updated';
+    | OtherString;
 
   export type ApiVersion =
     | '2011-01-01'
@@ -587,7 +594,9 @@ export namespace WebhookEndpointCreateParams {
     | '2026-02-25.clover'
     | '2026-03-25.dahlia'
     | '2026-04-22.dahlia'
-    | '2026-05-27.dahlia';
+    | '2026-05-27.dahlia'
+    | '2026-06-24.dahlia'
+    | '2026-07-29.dahlia';
 }
 export interface WebhookEndpointRetrieveParams {
   /**
@@ -641,7 +650,13 @@ export namespace WebhookEndpointUpdateParams {
     | 'balance.available'
     | 'balance_settings.updated'
     | 'billing.alert.triggered'
+    | 'billing.credit_balance_transaction.created'
     | 'billing.credit_grant.created'
+    | 'billing.credit_grant.updated'
+    | 'billing.meter.created'
+    | 'billing.meter.deactivated'
+    | 'billing.meter.reactivated'
+    | 'billing.meter.updated'
     | 'billing_portal.configuration.created'
     | 'billing_portal.configuration.updated'
     | 'billing_portal.session.created'
@@ -705,11 +720,16 @@ export namespace WebhookEndpointUpdateParams {
     | 'financial_connections.account.created'
     | 'financial_connections.account.deactivated'
     | 'financial_connections.account.disconnected'
+    | 'financial_connections.account.expected_deactivation_date_updated'
     | 'financial_connections.account.reactivated'
     | 'financial_connections.account.refreshed_balance'
     | 'financial_connections.account.refreshed_ownership'
     | 'financial_connections.account.refreshed_transactions'
+    | 'financial_connections.account.supported_payment_method_types_updated'
     | 'financial_connections.account.upcoming_account_number_expiry'
+    | 'financial_connections.account.upcoming_deactivation'
+    | 'financial_connections.authorization.expected_deactivation_date_updated'
+    | 'financial_connections.authorization.upcoming_deactivation'
     | 'identity.verification_session.canceled'
     | 'identity.verification_session.created'
     | 'identity.verification_session.processing'
@@ -883,12 +903,7 @@ export namespace WebhookEndpointUpdateParams {
     | 'treasury.received_credit.failed'
     | 'treasury.received_credit.succeeded'
     | 'treasury.received_debit.created'
-    | 'billing.credit_balance_transaction.created'
-    | 'billing.credit_grant.updated'
-    | 'billing.meter.created'
-    | 'billing.meter.deactivated'
-    | 'billing.meter.reactivated'
-    | 'billing.meter.updated';
+    | OtherString;
 }
 export interface WebhookEndpointListParams extends PaginationParams {
   /**

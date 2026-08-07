@@ -183,16 +183,7 @@ export class FetchHttpClientResponse extends HttpClientResponse
   }
 
   toJSON(): Promise<any> {
-    return this._res.text().then((text) => {
-      try {
-        return JSON.parse(text);
-      } catch (e) {
-        if (e instanceof Error) {
-          (e as any).rawBody = text;
-        }
-        throw e;
-      }
-    });
+    return this._res.text().then((text) => this._parseResponseBody(text));
   }
 
   static _transformHeadersToObject(headers: Headers): ResponseHeaders {

@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {ProductCatalogImport} from './../../../V2/Commerce/ProductCatalogImports.js';
-import {MetadataParam} from '../../../../shared.js';
+import {MetadataParam, OtherString} from '../../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 
 export class ImportResource extends StripeResource {
@@ -203,9 +203,14 @@ export namespace V2 {
       }
 
       export namespace ImportCreateParams {
-        export type FeedType = 'inventory' | 'pricing' | 'product';
+        export type FeedType =
+          | 'inventory'
+          | 'pricing'
+          | 'product'
+          | 'promotion'
+          | OtherString;
 
-        export type Mode = 'replace' | 'upsert';
+        export type Mode = 'replace' | 'upsert' | OtherString;
       }
     }
   }
@@ -268,7 +273,12 @@ export namespace V2 {
       }
 
       export namespace ImportListParams {
-        export type FeedType = 'inventory' | 'pricing' | 'product';
+        export type FeedType =
+          | 'inventory'
+          | 'pricing'
+          | 'product'
+          | 'promotion'
+          | OtherString;
 
         export type Status =
           | 'awaiting_upload'

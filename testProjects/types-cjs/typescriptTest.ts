@@ -33,6 +33,7 @@ let opts: Stripe.RequestOptions;
 
 // Static members
 const version: typeof Stripe.API_VERSION = Stripe.API_VERSION;
+const majorApiVersion: string = Stripe.MAJOR_API_VERSION;
 Stripe.errors;
 Stripe.errors.StripeError;
 
@@ -419,6 +420,14 @@ event = stripe.webhooks.constructEvent(
   'secret'
 );
 
+// constructEventWithoutVerification on webhooks object and client
+event = stripe.webhooks.constructEventWithoutVerification('payload');
+event = stripe.constructEventWithoutVerification('payload');
+
+// parseEventNotificationWithoutVerification on client
+const _notificationWV: Stripe.V2.Core.EventNotification =
+  stripe.parseEventNotificationWithoutVerification('payload');
+
 const taxExempt: Stripe.CustomerUpdateParams.TaxExempt = 'exempt';
 let subscription: Stripe.Subscription;
 let invoice: Stripe.Invoice;
@@ -443,6 +452,23 @@ const oAuthAuthorizeUrlParams: Stripe.OAuthAuthorizeUrlParams = {};
 const oAuthDeauthorization: Stripe.OAuthDeauthorization = {stripe_user_id: ''};
 const oAuthDeauthorizeParams: Stripe.OAuthDeauthorizeParams = {};
 
+// Resource sub-types (companion namespace access)
+let priceRecurring: Stripe.Price.Recurring;
+let customerInvoiceSettings: Stripe.Customer.InvoiceSettings;
+let subscriptionBillingMode: Stripe.Subscription.BillingMode;
+
+// Deep resource sub-types (2+ levels)
+const billingModeType: Stripe.Subscription.BillingMode.Type = 'classic';
+
+// Nested resource sub-types (product namespace → resource → sub-type)
+let alertStatus: Stripe.Billing.Alert.Status;
+let terminalTipping: Stripe.Terminal.Configuration.Tipping;
+let appsSecretScope: Stripe.Apps.Secret.Scope;
+
+// Deep params sub-namespaces (2+ levels)
+let accountBizProfile: Stripe.AccountCreateParams.BusinessProfile;
+let accountBizRevenue: Stripe.AccountCreateParams.BusinessProfile.AnnualRevenue;
+
 // Access and type top level resources and nested resources
 const customerResource: Stripe.CustomerResource = new Stripe.CustomerResource(
   stripe
@@ -452,3 +478,25 @@ const customerResource: Stripe.CustomerResource = new Stripe.CustomerResource(
 const v2AccountResource: Stripe.V2.Billing.MeterEventResource = new Stripe.V2.Billing.MeterEventResource(
   stripe
 );
+
+// Namespace type exports that must remain accessible (v21 parity).
+const _stripeConfig: Stripe.StripeConfig = {maxNetworkRetries: 3};
+const _latestApiVersion: Stripe.LatestApiVersion = '' as any;
+const _httpAgent: Stripe.HttpAgent = null as any;
+const _httpProtocol: Stripe.HttpProtocol = 'https';
+const _stripeResource: Stripe.StripeResource = null as any;
+const _cryptoProvider: Stripe.CryptoProvider = null as any;
+const _httpClient: Stripe.HttpClient = null as any;
+const _httpClientResponse: Stripe.HttpClientResponse = null as any;
+const _rawErrorType: Stripe.RawErrorType = 'card_error';
+const _webhooksType: Stripe.Webhooks = null as any;
+const _webhookTestHeaderOptions: Stripe.WebhookTestHeaderOptions = {
+  payload: '{}',
+  secret: 'whsec_test',
+};
+const _signatureType: Stripe.Signature = null as any;
+
+// Factory function return types must be assignable to their interface types.
+const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
+const _nodeCryptoProvider: Stripe.CryptoProvider =
+  Stripe.createNodeCryptoProvider();

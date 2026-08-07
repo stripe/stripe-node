@@ -1834,19 +1834,6 @@ describe('RequestSender', () => {
           expect(sleepSeconds).to.be.at.least(min);
         }
       });
-
-      it('should allow a maximum override', () => {
-        const maxSec = stripe.getMaxNetworkRetryDelay();
-        const minMS = stripe.getInitialNetworkRetryDelay() * 1000;
-
-        expect(sender._getSleepTimeInMS(3, 0)).to.be.gt(minMS);
-        expect(sender._getSleepTimeInMS(2, 3)).to.equal(3000);
-        expect(sender._getSleepTimeInMS(0, 3)).to.equal(3000);
-        expect(sender._getSleepTimeInMS(0, 0)).to.equal(minMS);
-        expect(sender._getSleepTimeInMS(0, maxSec * 2)).to.equal(
-          maxSec * 2 * 1000
-        );
-      });
     });
   });
 

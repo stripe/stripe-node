@@ -18,12 +18,14 @@ import {
 } from './Transactions.js';
 import {AccountOwner} from './AccountOwners.js';
 import {AccountOwnership} from './AccountOwnerships.js';
+import {Authorization} from './Authorizations.js';
 
 export {Account} from './Accounts.js';
 export {Session} from './Sessions.js';
 export {Transaction} from './Transactions.js';
 export {AccountOwner} from './AccountOwners.js';
 export {AccountOwnership} from './AccountOwnerships.js';
+export {Authorization} from './Authorizations.js';
 
 export class FinancialConnections {
   accounts: AccountResource;
@@ -54,4 +56,5 @@ export declare namespace FinancialConnections {
   export {Transaction, TransactionResource};
   export {AccountOwner};
   export {AccountOwnership};
+  export {Authorization};
 }

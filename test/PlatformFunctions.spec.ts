@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 
 import {FetchHttpClient} from '../src/net/FetchHttpClient.js';
@@ -160,23 +161,61 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
       }
     });
 
-    describe('getSourceHash', () => {
+    describe('getTelemetryId', () => {
       if (isNodeEnvironment) {
-        it('returns a 32-character hex MD5 string', () => {
-          const hash = platformFunctions.getSourceHash();
-          expect(hash).to.be.a('string');
-          expect(hash).to.match(/^[0-9a-f]{32}$/);
+        const isWindows = process.platform === 'win32';
+        const envKey = isWindows ? 'APPDATA' : 'XDG_CONFIG_HOME';
+        const stripeDir = isWindows ? 'Stripe' : 'stripe';
+        let tmpDir: string;
+        let origEnv: string | undefined;
+
+        beforeEach(() => {
+          (platformFunctions as any)._telemetryId = undefined;
+          tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'stripe-telemetry-'));
+          origEnv = process.env[envKey];
+          process.env[envKey] = tmpDir;
+        });
+        afterEach(() => {
+          (platformFunctions as any)._telemetryId = undefined;
+          if (origEnv !== undefined) {
+            process.env[envKey] = origEnv;
+          } else {
+            delete process.env[envKey];
+          }
+          fs.rmSync(tmpDir, {recursive: true, force: true});
         });
 
-        it('returns null when getUname returns null', () => {
-          const orig = platformFunctions.getUname.bind(platformFunctions);
-          (platformFunctions as any).getUname = () => null;
-          expect(platformFunctions.getSourceHash()).to.be.null;
-          (platformFunctions as any).getUname = orig;
+        it('returns a 32-character hex string', () => {
+          const id = platformFunctions.getTelemetryId();
+          expect(id).to.be.a('string');
+          expect(id).to.match(/^[0-9a-f]{32}$/);
+        });
+
+        it('returns the same id on subsequent calls (caches in memory)', () => {
+          const id1 = platformFunctions.getTelemetryId();
+          const id2 = platformFunctions.getTelemetryId();
+          expect(id1).to.equal(id2);
+        });
+
+        it('reads an existing telemetry_id file', () => {
+          const idFile = path.join(tmpDir, stripeDir, 'telemetry_id');
+          fs.mkdirSync(path.dirname(idFile), {recursive: true});
+          fs.writeFileSync(idFile, 'deadbeef1234567890abcdef12345678', 'utf8');
+          const id = platformFunctions.getTelemetryId();
+          expect(id).to.equal('deadbeef1234567890abcdef12345678');
+        });
+
+        it('returns null when the path cannot be determined (no home dir on non-win32)', () => {
+          const orig = (platformFunctions as any)._getTelemetryIdPath.bind(
+            platformFunctions
+          );
+          (platformFunctions as any)._getTelemetryIdPath = () => null;
+          expect(platformFunctions.getTelemetryId()).to.be.null;
+          (platformFunctions as any)._getTelemetryIdPath = orig;
         });
       } else {
         it('returns null on non-Node environments', () => {
-          expect(platformFunctions.getSourceHash()).to.be.null;
+          expect(platformFunctions.getTelemetryId()).to.be.null;
         });
       }
     });

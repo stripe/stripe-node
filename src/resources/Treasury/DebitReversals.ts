@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Transaction} from './Transactions.js';
-import {MetadataParam, PaginationParams, Metadata} from '../../shared.js';
+import {
+  MetadataParam,
+  PaginationParams,
+  OtherString,
+  Metadata,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class DebitReversalResource extends StripeResource {
@@ -92,7 +97,7 @@ export interface DebitReversal {
   /**
    * Other flows linked to a DebitReversal.
    */
-  linked_flows: Treasury.DebitReversal.LinkedFlows | null;
+  linked_flows: DebitReversal.LinkedFlows | null;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -107,7 +112,7 @@ export interface DebitReversal {
   /**
    * The rails used to reverse the funds.
    */
-  network: Treasury.DebitReversal.Network;
+  network: DebitReversal.Network;
 
   /**
    * The ReceivedDebit being reversed.
@@ -117,34 +122,32 @@ export interface DebitReversal {
   /**
    * Status of the DebitReversal
    */
-  status: Treasury.DebitReversal.Status;
+  status: DebitReversal.Status;
 
-  status_transitions: Treasury.DebitReversal.StatusTransitions;
+  status_transitions: DebitReversal.StatusTransitions;
 
   /**
    * The Transaction associated with this object.
    */
   transaction: string | Transaction | null;
 }
-export namespace Treasury {
-  export namespace DebitReversal {
-    export interface LinkedFlows {
-      /**
-       * Set if there is an Issuing dispute associated with the DebitReversal.
-       */
-      issuing_dispute: string | null;
-    }
+export namespace DebitReversal {
+  export interface LinkedFlows {
+    /**
+     * Set if there is an Issuing dispute associated with the DebitReversal.
+     */
+    issuing_dispute: string | null;
+  }
 
-    export type Network = 'ach' | 'card';
+  export type Network = 'ach' | 'card' | OtherString;
 
-    export type Status = 'failed' | 'processing' | 'succeeded';
+  export type Status = 'failed' | 'processing' | 'succeeded' | OtherString;
 
-    export interface StatusTransitions {
-      /**
-       * Timestamp describing when the DebitReversal changed status to `completed`.
-       */
-      completed_at: number | null;
-    }
+  export interface StatusTransitions {
+    /**
+     * Timestamp describing when the DebitReversal changed status to `completed`.
+     */
+    completed_at: number | null;
   }
 }
 export namespace Treasury {
@@ -202,8 +205,8 @@ export namespace Treasury {
   }
 
   export namespace DebitReversalListParams {
-    export type Resolution = 'lost' | 'won';
+    export type Resolution = 'lost' | 'won' | OtherString;
 
-    export type Status = 'canceled' | 'completed' | 'processing';
+    export type Status = 'canceled' | 'completed' | 'processing' | OtherString;
   }
 }

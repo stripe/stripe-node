@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -200,7 +201,7 @@ export namespace Coupon {
     amount_off: number;
   }
 
-  export type Duration = 'forever' | 'once' | 'repeating';
+  export type Duration = 'forever' | 'once' | 'repeating' | OtherString;
 }
 export interface CouponCreateParams {
   /**
@@ -285,7 +286,7 @@ export namespace CouponCreateParams {
     amount_off: number;
   }
 
-  export type Duration = 'forever' | 'once' | 'repeating';
+  export type Duration = 'forever' | 'once' | 'repeating' | OtherString;
 }
 export interface CouponRetrieveParams {
   /**
