@@ -835,6 +835,7 @@ describe('Stripe Module', function() {
 
     it('can parse event from JSON payload', () => {
       const jsonPayload = {
+        object: 'v2.core.event',
         type: 'account.created',
         data: 'hello',
         related_object: {id: '123', url: 'hello_again'},
@@ -846,6 +847,7 @@ describe('Stripe Module', function() {
       });
       const event = stripe.parseEventNotification(payload, header, secret);
 
+      expect(event.object).to.equal('v2.core.event');
       expect(event.type).to.equal(jsonPayload.type);
       expect(event.data).to.equal(jsonPayload.data);
       expect(event.related_object.id).to.equal(jsonPayload.related_object.id);
