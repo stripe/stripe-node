@@ -1,5 +1,6 @@
 // @ts-nocheck
 import {expect} from 'chai';
+import {flattenAndStringify} from '../src/utils.js';
 
 // ---------------------------------------------------------------------------
 // Type definitions mirroring the shapes the codegen produces for discriminated
@@ -71,6 +72,30 @@ type HsvColorResponse = {
 };
 
 type ColorResponse = RgbColorResponse | HsvColorResponse;
+
+// --- response-side inline union (payment method model) ----------------------
+// Response inline unions share the same intersection shape as request inline
+// unions: base resource fields are intersected with a union of variant types.
+// Each variant carries the discriminator as a literal and one nested payload.
+
+type CardResource = {
+  brand: string;
+  last4: string;
+  exp_month: number;
+};
+
+type BankResource = {
+  bank_name: string;
+  routing_number: string;
+};
+
+type PaymentMethodResource = {
+  id: string;
+  object: 'payment_method';
+} & (
+  | {type: 'card'; card: CardResource}
+  | {type: 'us_bank_account'; us_bank_account: BankResource}
+);
 
 // ---------------------------------------------------------------------------
 // Tests
@@ -255,6 +280,167 @@ describe('Discriminated union type shapes', () => {
 
       const models = responses.map((r) => r.model);
       expect(models).to.deep.equal(['rgb', 'hsv']);
+    });
+  });
+
+  describe('response-side inline discriminated union', () => {
+    it('deserializes card variant with nested payload', () => {
+      const json = {
+        id: 'pm_123',
+        object: 'payment_method' as const,
+        type: 'card' as const,
+        card: {brand: 'visa', last4: '4242', exp_month: 12},
+      };
+      const pm: PaymentMethodResource = json;
+
+      expect(pm.type).to.equal('card');
+      expect(pm.card.brand).to.equal('visa');
+      expect(pm.card.last4).to.equal('4242');
+      expect(pm.card.exp_month).to.equal(12);
+    });
+
+    it('deserializes bank variant with nested payload', () => {
+      const json = {
+        id: 'pm_456',
+        object: 'payment_method' as const,
+        type: 'us_bank_account' as const,
+        us_bank_account: {bank_name: 'Chase', routing_number: '110000000'},
+      };
+      const pm: PaymentMethodResource = json;
+
+      expect(pm.type).to.equal('us_bank_account');
+      expect(pm.us_bank_account.bank_name).to.equal('Chase');
+      expect(pm.us_bank_account.routing_number).to.equal('110000000');
+    });
+
+    it('narrows type via discriminator check', () => {
+      const json = {
+        id: 'pm_789',
+        object: 'payment_method' as const,
+        type: 'card' as const,
+        card: {brand: 'mastercard', last4: '5555', exp_month: 6},
+      };
+      const pm: PaymentMethodResource = json;
+
+      if (pm.type === 'card') {
+        expect(pm.card.brand).to.equal('mastercard');
+      } else {
+        throw new Error('expected card branch');
+      }
+    });
+
+    it('round-trips through JSON serialization', () => {
+      const original: PaymentMethodResource = {
+        id: 'pm_abc',
+        object: 'payment_method',
+        type: 'card',
+        card: {brand: 'amex', last4: '0001', exp_month: 3},
+      };
+      const deserialized = JSON.parse(
+        JSON.stringify(original)
+      ) as PaymentMethodResource;
+
+      expect(deserialized.id).to.equal('pm_abc');
+      expect(deserialized.type).to.equal('card');
+      expect(deserialized.card.brand).to.equal('amex');
+    });
+
+    it('base fields are accessible regardless of variant', () => {
+      const json = {
+        id: 'pm_xyz',
+        object: 'payment_method' as const,
+        type: 'us_bank_account' as const,
+        us_bank_account: {
+          bank_name: 'Wells Fargo',
+          routing_number: '121000248',
+        },
+      };
+      const pm: PaymentMethodResource = json;
+
+      expect(pm.id).to.equal('pm_xyz');
+      expect(pm.object).to.equal('payment_method');
+    });
+  });
+
+  describe('Request standalone DU encoding via flattenAndStringify', () => {
+    it('encodes discriminator with bracket notation', () => {
+      const params = {color: {model: 'rgb', r: '255', g: '128', b: '0'}};
+      const encoded = flattenAndStringify(params);
+      expect(encoded['color[model]']).to.equal('rgb');
+    });
+
+    it('encodes variant payload fields with bracket notation', () => {
+      const params = {color: {model: 'rgb', r: '255', g: '128', b: '0'}};
+      const encoded = flattenAndStringify(params);
+      expect(encoded['color[r]']).to.equal('255');
+      expect(encoded['color[g]']).to.equal('128');
+      expect(encoded['color[b]']).to.equal('0');
+    });
+
+    it('encodes HSV variant correctly', () => {
+      const params = {color: {model: 'hsv', h: '180', s: '100', v: '50'}};
+      const encoded = flattenAndStringify(params);
+      expect(encoded['color[model]']).to.equal('hsv');
+      expect(encoded['color[h]']).to.equal('180');
+      expect(encoded['color[s]']).to.equal('100');
+      expect(encoded['color[v]']).to.equal('50');
+    });
+
+    it('does not include keys for absent variant fields', () => {
+      const params = {color: {model: 'rgb', r: '255'}};
+      const encoded = flattenAndStringify(params);
+      expect(encoded['color[model]']).to.equal('rgb');
+      expect(encoded['color[r]']).to.equal('255');
+      expect(encoded).to.not.have.property('color[g]');
+      expect(encoded).to.not.have.property('color[b]');
+    });
+  });
+
+  describe('Request inline DU encoding via flattenAndStringify', () => {
+    it('encodes discriminator at top level', () => {
+      const params = {
+        amount: '1000',
+        type: 'card',
+        card: {number: '4242424242424242', exp_month: '12'},
+      };
+      const encoded = flattenAndStringify(params);
+      expect(encoded['type']).to.equal('card');
+    });
+
+    it('encodes nested variant payload with bracket notation', () => {
+      const params = {
+        amount: '1000',
+        type: 'card',
+        card: {number: '4242424242424242', exp_month: '12'},
+      };
+      const encoded = flattenAndStringify(params);
+      expect(encoded['card[number]']).to.equal('4242424242424242');
+      expect(encoded['card[exp_month]']).to.equal('12');
+    });
+
+    it('encodes base fields alongside discriminator', () => {
+      const params = {amount: '1000', type: 'card', card: {number: '4242'}};
+      const encoded = flattenAndStringify(params);
+      expect(encoded['amount']).to.equal('1000');
+    });
+
+    it('does not include non-selected variant keys', () => {
+      const params = {amount: '1000', type: 'card', card: {number: '4242'}};
+      const encoded = flattenAndStringify(params);
+      expect(encoded).to.not.have.property('us_bank_account[bank_name]');
+      expect(encoded).to.not.have.property('us_bank_account[routing_number]');
+    });
+
+    it('encodes bank variant correctly', () => {
+      const params = {
+        amount: '500',
+        type: 'us_bank_account',
+        us_bank_account: {bank_name: 'Chase', routing_number: '110000000'},
+      };
+      const encoded = flattenAndStringify(params);
+      expect(encoded['type']).to.equal('us_bank_account');
+      expect(encoded['us_bank_account[bank_name]']).to.equal('Chase');
+      expect(encoded['us_bank_account[routing_number]']).to.equal('110000000');
     });
   });
 });
