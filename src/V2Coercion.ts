@@ -1,6 +1,42 @@
 import {Decimal} from './Decimal.js';
 import {V2RuntimeSchema} from './Types.js';
 
+const coerceV2RequestDiscriminatedUnion = (
+  data: unknown,
+  schema: V2RuntimeSchema & {kind: 'discriminatedUnion'}
+): unknown => {
+  if (typeof data !== 'object' || Array.isArray(data)) {
+    return data;
+  }
+  const obj = data as Record<string, unknown>;
+  const discriminatorValue = obj[schema.discriminator];
+  if (
+    typeof discriminatorValue === 'string' &&
+    discriminatorValue in schema.variants
+  ) {
+    return coerceV2RequestData(data, schema.variants[discriminatorValue]);
+  }
+  return data;
+};
+
+const coerceV2RequestObject = (
+  data: unknown,
+  schema: V2RuntimeSchema & {kind: 'object'}
+): unknown => {
+  if (typeof data !== 'object' || Array.isArray(data)) {
+    return data;
+  }
+  const obj = data as Record<string, unknown>;
+  const result: Record<string, unknown> = {};
+  for (const key of Object.keys(obj)) {
+    const fieldSchema = schema.fields[key];
+    result[key] = fieldSchema
+      ? coerceV2RequestData(obj[key], fieldSchema)
+      : obj[key];
+  }
+  return result;
+};
+
 /**
  * Coerces outbound V2 request data by converting bigint (or number)
  * int64_string fields to strings, matching the wire format expected by the API.
@@ -30,18 +66,7 @@ export const coerceV2RequestData = (
         : data;
 
     case 'object': {
-      if (typeof data !== 'object' || Array.isArray(data)) {
-        return data;
-      }
-      const obj = data as Record<string, unknown>;
-      const result: Record<string, unknown> = {};
-      for (const key of Object.keys(obj)) {
-        const fieldSchema = schema.fields[key];
-        result[key] = fieldSchema
-          ? coerceV2RequestData(obj[key], fieldSchema)
-          : obj[key];
-      }
-      return result;
+      return coerceV2RequestObject(data, schema);
     }
 
     case 'array': {
@@ -57,20 +82,47 @@ export const coerceV2RequestData = (
       return coerceV2RequestData(data, schema.inner);
 
     case 'discriminatedUnion': {
-      if (typeof data !== 'object' || Array.isArray(data)) {
-        return data;
-      }
-      const obj = data as Record<string, unknown>;
-      const discriminatorValue = obj[schema.discriminator];
-      if (
-        typeof discriminatorValue === 'string' &&
-        discriminatorValue in schema.variants
-      ) {
-        return coerceV2RequestData(data, schema.variants[discriminatorValue]);
-      }
-      return data;
+      return coerceV2RequestDiscriminatedUnion(data, schema);
     }
   }
+};
+
+// NOTE: these are separate from the request flavors above
+// because the caller to coerceV2ResponseData expects data
+// to be modified in place
+
+const coerceV2ResponseDiscriminatedUnion = (
+  data: unknown,
+  schema: V2RuntimeSchema & {kind: 'discriminatedUnion'}
+): unknown => {
+  if (typeof data !== 'object' || Array.isArray(data)) {
+    return data;
+  }
+  const obj = data as Record<string, unknown>;
+  const discriminatorValue = obj[schema.discriminator];
+  if (
+    typeof discriminatorValue === 'string' &&
+    discriminatorValue in schema.variants
+  ) {
+    return coerceV2ResponseData(data, schema.variants[discriminatorValue]);
+  }
+  return data;
+};
+
+const coerceV2ResponseObject = (
+  data: unknown,
+  schema: V2RuntimeSchema & {kind: 'object'}
+): unknown => {
+  if (typeof data !== 'object' || Array.isArray(data)) {
+    return data;
+  }
+  const obj = data as Record<string, unknown>;
+  for (const key of Object.keys(schema.fields)) {
+    if (key in obj) {
+      obj[key] = coerceV2ResponseData(obj[key], schema.fields[key]);
+    }
+  }
+  return obj;
 };
 
 /**
@@ -114,16 +166,7 @@ export const coerceV2ResponseData = (
       return data;
 
     case 'object': {
-      if (typeof data !== 'object' || Array.isArray(data)) {
-        return data;
-      }
-      const obj = data as Record<string, unknown>;
-      for (const key of Object.keys(schema.fields)) {
-        if (key in obj) {
-          obj[key] = coerceV2ResponseData(obj[key], schema.fields[key]);
-        }
-      }
-      return obj;
+      return coerceV2ResponseObject(data, schema);
     }
 
     case 'array': {
@@ -140,18 +183,7 @@ export const coerceV2ResponseData = (
       return coerceV2ResponseData(data, schema.inner);
 
     case 'discriminatedUnion': {
-      if (typeof data !== 'object' || Array.isArray(data)) {
-        return data;
-      }
-      const obj = data as Record<string, unknown>;
-      const discriminatorValue = obj[schema.discriminator];
-      if (
-        typeof discriminatorValue === 'string' &&
-        discriminatorValue in schema.variants
-      ) {
-        return coerceV2ResponseData(data, schema.variants[discriminatorValue]);
-      }
-      return data;
+      return coerceV2ResponseDiscriminatedUnion(data, schema);
     }
   }
 };

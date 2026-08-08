@@ -211,10 +211,7 @@ describe('V2Int64', () => {
       });
 
       it('coerces a different variant', () => {
-        const result = coerceV2RequestData(
-          {type: 'card', fee: 250n},
-          schema
-        );
+        const result = coerceV2RequestData({type: 'card', fee: 250n}, schema);
         expect(result).to.deep.equal({type: 'card', fee: '250'});
       });
 

@@ -50,7 +50,8 @@ type LlamaBaseParams = {
   color: ColorParams;
 };
 
-type CreateLlamaParams = LlamaBaseParams & (AlienLlamaVariant | EarthLlamaVariant);
+type CreateLlamaParams = LlamaBaseParams &
+  (AlienLlamaVariant | EarthLlamaVariant);
 
 // --- response object --------------------------------------------------------
 // The Node SDK returns plain objects from the API.  A discriminated union
@@ -107,11 +108,7 @@ describe('Discriminated union type shapes', () => {
       ];
 
       expect(variants).to.have.length(3);
-      expect(variants.map((v) => v.model)).to.deep.equal([
-        'rgb',
-        'hsv',
-        'hsl',
-      ]);
+      expect(variants.map((v) => v.model)).to.deep.equal(['rgb', 'hsv', 'hsl']);
     });
 
     it('discriminator can be used to narrow to the correct variant', () => {
