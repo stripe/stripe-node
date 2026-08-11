@@ -135,11 +135,8 @@ export class NodeHttpClientResponse extends HttpClientResponse
       });
       this._res.once('end', () => {
         try {
-          resolve(JSON.parse(response));
+          resolve(this._parseResponseBody(response));
         } catch (e) {
-          if (e instanceof Error) {
-            (e as any).rawBody = response;
-          }
           reject(e);
         }
       });

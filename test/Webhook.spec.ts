@@ -46,6 +46,20 @@ function createWebhooksTestSuite(stripe) {
       expect(header).to.not.be.undefined;
       expect(header.split(',')).to.have.lengthOf(2);
     });
+
+    it('should provide helpful information when CryptoProviderOnlySupportsAsyncError is thrown', () => {
+      expect(() => {
+        stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+          cryptoProvider: {
+            computeHMACSignature() {
+              throw new CryptoProviderOnlySupportsAsyncError('foobar');
+            },
+          },
+        });
+      }).to.throw(/foobar\nUse `await generateTestHeaderStringAsync/);
+    });
   });
 
   describe('.generateTestHeaderStringAsync', () => {
@@ -203,7 +217,7 @@ function createWebhooksTestSuite(stripe) {
           SECRET
         ).catch((e: Error) => e);
         expect(err).to.be.instanceOf(Error);
-        expect(err.message).to.contain('stripe.parseEventNotification');
+        expect(err.message).to.contain('corresponding EventNotification');
       });
     };
   };
