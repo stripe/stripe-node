@@ -7,6 +7,8 @@
 
 import Stripe from 'stripe';
 
+const majorApiVersion: string = Stripe.MAJOR_API_VERSION;
+
 let stripe = new Stripe('sk_test_123', {
   apiVersion: Stripe.API_VERSION,
 });
@@ -282,7 +284,9 @@ const errorTypeInterchangeable = (
 ): Stripe.ErrorType.StripeError => e;
 
 // instanceof narrows to the correct type
-const instanceofNarrowing = (e: unknown): Stripe.ErrorType.StripeError | null => {
+const instanceofNarrowing = (
+  e: unknown
+): Stripe.ErrorType.StripeError | null => {
   if (e instanceof Stripe.errors.StripeError) {
     return e;
   }
@@ -355,6 +359,8 @@ const v2ContextObj: Stripe.StripeContextType | undefined = v2EventNotif.context;
 async (): Promise<void> => {
   // parsing event notifications
   const eventNotification = stripe.parseEventNotification('', '', '');
+  // literal type, so this is really checking the (purported) value
+  eventNotification.object === 'v2.core.event';
 
   if (eventNotification.type === 'v1.billing.meter.error_report_triggered') {
     eventNotification.related_object;
@@ -442,6 +448,15 @@ event = stripe.webhooks.constructEvent(
   'payload',
   ['also_signature_but_does_not_work_at_runtime'],
   'secret'
+);
+
+// constructEventWithoutVerification on webhooks object and client
+event = stripe.webhooks.constructEventWithoutVerification('payload');
+event = stripe.constructEventWithoutVerification('payload');
+
+// parseEventNotificationWithoutVerification on client
+const _notificationWV: Stripe.V2.Core.EventNotification = stripe.parseEventNotificationWithoutVerification(
+  'payload'
 );
 
 // Verify that nested types with names matching imported types resolve correctly.
@@ -532,5 +547,4 @@ const _signatureType: Stripe.Signature = null as any;
 
 // Factory function return types must be assignable to their interface types.
 const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
-const _nodeCryptoProvider: Stripe.CryptoProvider =
-  Stripe.createNodeCryptoProvider();
+const _nodeCryptoProvider: Stripe.CryptoProvider = Stripe.createNodeCryptoProvider();

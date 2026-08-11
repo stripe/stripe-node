@@ -412,6 +412,51 @@ describe('Stripe Module', function() {
       expect(StripeCore.USER_AGENT).to.not.have.property('ai_agent');
       expect(StripeCore.USER_AGENT).to.not.have.property('lang_version');
     });
+
+    it('emits claude-code-hint to stderr when CLAUDECODE is set', () => {
+      const mockPlatform = new NodePlatformFunctions();
+      mockPlatform.getEnv = () => ({CLAUDECODE: '1'});
+      const written: string[] = [];
+      mockPlatform.writeStderr = (msg: string) => {
+        written.push(msg);
+      };
+
+      StripeCore.initialize(mockPlatform);
+
+      expect(written).to.have.length(1);
+      expect(written[0]).to.equal(
+        '<claude-code-hint v="1" type="plugin" value="stripe@claude-plugins-official" />\n'
+      );
+    });
+
+    it('emits claude-code-hint to stderr when CLAUDE_CODE_CHILD_SESSION is set', () => {
+      const mockPlatform = new NodePlatformFunctions();
+      mockPlatform.getEnv = () => ({CLAUDE_CODE_CHILD_SESSION: 'session-id'});
+      const written: string[] = [];
+      mockPlatform.writeStderr = (msg: string) => {
+        written.push(msg);
+      };
+
+      StripeCore.initialize(mockPlatform);
+
+      expect(written).to.have.length(1);
+      expect(written[0]).to.equal(
+        '<claude-code-hint v="1" type="plugin" value="stripe@claude-plugins-official" />\n'
+      );
+    });
+
+    it('does not emit claude-code-hint when no Claude env vars are set', () => {
+      const mockPlatform = new NodePlatformFunctions();
+      mockPlatform.getEnv = () => ({});
+      const written: string[] = [];
+      mockPlatform.writeStderr = (msg: string) => {
+        written.push(msg);
+      };
+
+      StripeCore.initialize(mockPlatform);
+
+      expect(written).to.have.length(0);
+    });
   });
 
   describe('timeout config', () => {
@@ -790,6 +835,7 @@ describe('Stripe Module', function() {
 
     it('can parse event from JSON payload', () => {
       const jsonPayload = {
+        object: 'v2.core.event',
         type: 'account.created',
         data: 'hello',
         related_object: {id: '123', url: 'hello_again'},
@@ -801,6 +847,7 @@ describe('Stripe Module', function() {
       });
       const event = stripe.parseEventNotification(payload, header, secret);
 
+      expect(event.object).to.equal('v2.core.event');
       expect(event.type).to.equal(jsonPayload.type);
       expect(event.data).to.equal(jsonPayload.data);
       expect(event.related_object.id).to.equal(jsonPayload.related_object.id);
@@ -831,7 +878,7 @@ describe('Stripe Module', function() {
         expect.fail('Expected an error to be thrown');
       } catch (e) {
         expect(e).to.be.instanceOf(Error);
-        expect(e.message).to.contain('stripe.webhooks.constructEvent');
+        expect(e.message).to.contain('constructEvent');
       }
     });
 
@@ -1153,7 +1200,7 @@ describe('Stripe Module', function() {
         expect.fail('Expected an error to be thrown');
       } catch (e) {
         expect(e).to.be.instanceOf(Error);
-        expect(e.message).to.contain('stripe.webhooks.constructEventAsync');
+        expect(e.message).to.contain('constructEvent');
       }
     });
 
