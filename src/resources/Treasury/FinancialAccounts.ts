@@ -5,6 +5,7 @@ import {FinancialAccountFeatures} from './FinancialAccountFeatures.js';
 import {
   MetadataParam,
   Emptyable,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -53,7 +54,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccount>> {
     return this._makeRequest(
       'GET',
-      `/v1/treasury/financial_accounts/${id}`,
+      `/v1/treasury/financial_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -68,7 +69,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccount>> {
     return this._makeRequest(
       'POST',
-      `/v1/treasury/financial_accounts/${id}`,
+      `/v1/treasury/financial_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -83,7 +84,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccount>> {
     return this._makeRequest(
       'POST',
-      `/v1/treasury/financial_accounts/${id}/close`,
+      `/v1/treasury/financial_accounts/${encodeURIComponent(id)}/close`,
       params,
       options
     ) as any;
@@ -98,7 +99,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccountFeatures>> {
     return this._makeRequest(
       'POST',
-      `/v1/treasury/financial_accounts/${id}/features`,
+      `/v1/treasury/financial_accounts/${encodeURIComponent(id)}/features`,
       params,
       options
     ) as any;
@@ -113,7 +114,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccountFeatures>> {
     return this._makeRequest(
       'GET',
-      `/v1/treasury/financial_accounts/${id}/features`,
+      `/v1/treasury/financial_accounts/${encodeURIComponent(id)}/features`,
       params,
       options
     ) as any;
@@ -133,12 +134,12 @@ export interface FinancialAccount {
   /**
    * The array of paths to active Features in the Features hash.
    */
-  active_features?: Array<Treasury.FinancialAccount.ActiveFeature>;
+  active_features?: Array<FinancialAccount.ActiveFeature>;
 
   /**
    * Balance information for the FinancialAccount
    */
-  balance: Treasury.FinancialAccount.Balance;
+  balance: FinancialAccount.Balance;
 
   /**
    * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -159,7 +160,7 @@ export interface FinancialAccount {
   /**
    * The set of credentials that resolve to a FinancialAccount.
    */
-  financial_addresses: Array<Treasury.FinancialAccount.FinancialAddress>;
+  financial_addresses: Array<FinancialAccount.FinancialAddress>;
 
   is_default?: boolean;
 
@@ -181,183 +182,185 @@ export interface FinancialAccount {
   /**
    * The array of paths to pending Features in the Features hash.
    */
-  pending_features?: Array<Treasury.FinancialAccount.PendingFeature>;
+  pending_features?: Array<FinancialAccount.PendingFeature>;
 
   /**
    * The set of functionalities that the platform can restrict on the FinancialAccount.
    */
-  platform_restrictions?: Treasury.FinancialAccount.PlatformRestrictions | null;
+  platform_restrictions?: FinancialAccount.PlatformRestrictions | null;
 
   /**
    * The array of paths to restricted Features in the Features hash.
    */
-  restricted_features?: Array<Treasury.FinancialAccount.RestrictedFeature>;
+  restricted_features?: Array<FinancialAccount.RestrictedFeature>;
 
   /**
    * Status of this FinancialAccount.
    */
-  status: Treasury.FinancialAccount.Status;
+  status: FinancialAccount.Status;
 
-  status_details: Treasury.FinancialAccount.StatusDetails;
+  status_details: FinancialAccount.StatusDetails;
 
   /**
    * The currencies the FinancialAccount can hold a balance in. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
    */
   supported_currencies: Array<string>;
 }
-export namespace Treasury {
-  export namespace FinancialAccount {
-    export type ActiveFeature =
-      | 'card_issuing'
-      | 'deposit_insurance'
-      | 'financial_addresses.aba'
-      | 'financial_addresses.aba.forwarding'
-      | 'inbound_transfers.ach'
-      | 'intra_stripe_flows'
-      | 'outbound_payments.ach'
-      | 'outbound_payments.us_domestic_wire'
-      | 'outbound_transfers.ach'
-      | 'outbound_transfers.us_domestic_wire'
-      | 'remote_deposit_capture';
+export namespace FinancialAccount {
+  export type ActiveFeature =
+    | 'card_issuing'
+    | 'deposit_insurance'
+    | 'financial_addresses.aba'
+    | 'financial_addresses.aba.forwarding'
+    | 'inbound_transfers.ach'
+    | 'intra_stripe_flows'
+    | 'outbound_payments.ach'
+    | 'outbound_payments.us_domestic_wire'
+    | 'outbound_transfers.ach'
+    | 'outbound_transfers.us_domestic_wire'
+    | 'remote_deposit_capture'
+    | OtherString;
 
-    export interface Balance {
+  export interface Balance {
+    /**
+     * Funds the user can spend right now.
+     */
+    cash: {
+      [key: string]: number;
+    };
+
+    /**
+     * Funds not spendable yet, but will become available at a later time.
+     */
+    inbound_pending: {
+      [key: string]: number;
+    };
+
+    /**
+     * Funds in the account, but not spendable because they are being held for pending outbound flows.
+     */
+    outbound_pending: {
+      [key: string]: number;
+    };
+  }
+
+  export interface FinancialAddress {
+    /**
+     * ABA Records contain U.S. bank account details per the ABA format.
+     */
+    aba?: FinancialAddress.Aba;
+
+    /**
+     * The list of networks that the address supports
+     */
+    supported_networks?: Array<FinancialAddress.SupportedNetwork>;
+
+    /**
+     * The type of financial address
+     */
+    type: 'aba';
+  }
+
+  export type PendingFeature =
+    | 'card_issuing'
+    | 'deposit_insurance'
+    | 'financial_addresses.aba'
+    | 'financial_addresses.aba.forwarding'
+    | 'inbound_transfers.ach'
+    | 'intra_stripe_flows'
+    | 'outbound_payments.ach'
+    | 'outbound_payments.us_domestic_wire'
+    | 'outbound_transfers.ach'
+    | 'outbound_transfers.us_domestic_wire'
+    | 'remote_deposit_capture'
+    | OtherString;
+
+  export interface PlatformRestrictions {
+    /**
+     * Restricts all inbound money movement.
+     */
+    inbound_flows: PlatformRestrictions.InboundFlows | null;
+
+    /**
+     * Restricts all outbound money movement.
+     */
+    outbound_flows: PlatformRestrictions.OutboundFlows | null;
+  }
+
+  export type RestrictedFeature =
+    | 'card_issuing'
+    | 'deposit_insurance'
+    | 'financial_addresses.aba'
+    | 'financial_addresses.aba.forwarding'
+    | 'inbound_transfers.ach'
+    | 'intra_stripe_flows'
+    | 'outbound_payments.ach'
+    | 'outbound_payments.us_domestic_wire'
+    | 'outbound_transfers.ach'
+    | 'outbound_transfers.us_domestic_wire'
+    | 'remote_deposit_capture'
+    | OtherString;
+
+  export type Status = 'closed' | 'open' | OtherString;
+
+  export interface StatusDetails {
+    /**
+     * Details related to the closure of this FinancialAccount
+     */
+    closed: StatusDetails.Closed | null;
+  }
+
+  export namespace FinancialAddress {
+    export interface Aba {
       /**
-       * Funds the user can spend right now.
+       * The name of the person or business that owns the bank account.
        */
-      cash: {
-        [key: string]: number;
-      };
+      account_holder_name: string;
 
       /**
-       * Funds not spendable yet, but will become available at a later time.
+       * The account number.
        */
-      inbound_pending: {
-        [key: string]: number;
-      };
+      account_number?: string | null;
 
       /**
-       * Funds in the account, but not spendable because they are being held for pending outbound flows.
+       * The last four characters of the account number.
        */
-      outbound_pending: {
-        [key: string]: number;
-      };
+      account_number_last4: string;
+
+      /**
+       * Name of the bank.
+       */
+      bank_name: string;
+
+      /**
+       * Routing number for the account.
+       */
+      routing_number: string;
     }
 
-    export interface FinancialAddress {
-      /**
-       * ABA Records contain U.S. bank account details per the ABA format.
-       */
-      aba?: FinancialAddress.Aba;
+    export type SupportedNetwork = 'ach' | 'us_domestic_wire' | OtherString;
+  }
 
-      /**
-       * The list of networks that the address supports
-       */
-      supported_networks?: Array<FinancialAddress.SupportedNetwork>;
+  export namespace PlatformRestrictions {
+    export type InboundFlows = 'restricted' | 'unrestricted' | OtherString;
 
+    export type OutboundFlows = 'restricted' | 'unrestricted' | OtherString;
+  }
+
+  export namespace StatusDetails {
+    export interface Closed {
       /**
-       * The type of financial address
+       * The array that contains reasons for a FinancialAccount closure.
        */
-      type: 'aba';
+      reasons: Array<Closed.Reason>;
     }
 
-    export type PendingFeature =
-      | 'card_issuing'
-      | 'deposit_insurance'
-      | 'financial_addresses.aba'
-      | 'financial_addresses.aba.forwarding'
-      | 'inbound_transfers.ach'
-      | 'intra_stripe_flows'
-      | 'outbound_payments.ach'
-      | 'outbound_payments.us_domestic_wire'
-      | 'outbound_transfers.ach'
-      | 'outbound_transfers.us_domestic_wire'
-      | 'remote_deposit_capture';
-
-    export interface PlatformRestrictions {
-      /**
-       * Restricts all inbound money movement.
-       */
-      inbound_flows: PlatformRestrictions.InboundFlows | null;
-
-      /**
-       * Restricts all outbound money movement.
-       */
-      outbound_flows: PlatformRestrictions.OutboundFlows | null;
-    }
-
-    export type RestrictedFeature =
-      | 'card_issuing'
-      | 'deposit_insurance'
-      | 'financial_addresses.aba'
-      | 'financial_addresses.aba.forwarding'
-      | 'inbound_transfers.ach'
-      | 'intra_stripe_flows'
-      | 'outbound_payments.ach'
-      | 'outbound_payments.us_domestic_wire'
-      | 'outbound_transfers.ach'
-      | 'outbound_transfers.us_domestic_wire'
-      | 'remote_deposit_capture';
-
-    export type Status = 'closed' | 'open';
-
-    export interface StatusDetails {
-      /**
-       * Details related to the closure of this FinancialAccount
-       */
-      closed: StatusDetails.Closed | null;
-    }
-
-    export namespace FinancialAddress {
-      export interface Aba {
-        /**
-         * The name of the person or business that owns the bank account.
-         */
-        account_holder_name: string;
-
-        /**
-         * The account number.
-         */
-        account_number?: string | null;
-
-        /**
-         * The last four characters of the account number.
-         */
-        account_number_last4: string;
-
-        /**
-         * Name of the bank.
-         */
-        bank_name: string;
-
-        /**
-         * Routing number for the account.
-         */
-        routing_number: string;
-      }
-
-      export type SupportedNetwork = 'ach' | 'us_domestic_wire';
-    }
-
-    export namespace PlatformRestrictions {
-      export type InboundFlows = 'restricted' | 'unrestricted';
-
-      export type OutboundFlows = 'restricted' | 'unrestricted';
-    }
-
-    export namespace StatusDetails {
-      export interface Closed {
-        /**
-         * The array that contains reasons for a FinancialAccount closure.
-         */
-        reasons: Array<Closed.Reason>;
-      }
-
-      export namespace Closed {
-        export type Reason =
-          | 'account_rejected'
-          | 'closed_by_platform'
-          | 'other';
-      }
+    export namespace Closed {
+      export type Reason =
+        | 'account_rejected'
+        | 'closed_by_platform'
+        | 'other'
+        | OtherString;
     }
   }
 }
@@ -556,9 +559,9 @@ export namespace Treasury {
     }
 
     export namespace PlatformRestrictions {
-      export type InboundFlows = 'restricted' | 'unrestricted';
+      export type InboundFlows = 'restricted' | 'unrestricted' | OtherString;
 
-      export type OutboundFlows = 'restricted' | 'unrestricted';
+      export type OutboundFlows = 'restricted' | 'unrestricted' | OtherString;
     }
   }
 }
@@ -782,13 +785,13 @@ export namespace Treasury {
     }
 
     export namespace ForwardingSettings {
-      export type Type = 'financial_account' | 'payment_method';
+      export type Type = 'financial_account' | 'payment_method' | OtherString;
     }
 
     export namespace PlatformRestrictions {
-      export type InboundFlows = 'restricted' | 'unrestricted';
+      export type InboundFlows = 'restricted' | 'unrestricted' | OtherString;
 
-      export type OutboundFlows = 'restricted' | 'unrestricted';
+      export type OutboundFlows = 'restricted' | 'unrestricted' | OtherString;
     }
   }
 }
@@ -811,7 +814,7 @@ export namespace Treasury {
   }
 
   export namespace FinancialAccountListParams {
-    export type Status = 'closed' | 'open';
+    export type Status = 'closed' | 'open' | OtherString;
   }
 }
 export namespace Treasury {
@@ -846,7 +849,7 @@ export namespace Treasury {
     }
 
     export namespace ForwardingSettings {
-      export type Type = 'financial_account' | 'payment_method';
+      export type Type = 'financial_account' | 'payment_method' | OtherString;
     }
   }
 }

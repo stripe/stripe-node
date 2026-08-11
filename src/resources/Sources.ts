@@ -9,6 +9,7 @@ import {
   ShippingAddressParam,
   PaginationParams,
   Metadata,
+  OtherString,
   Address,
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
@@ -24,7 +25,7 @@ export class SourceResource extends StripeResource {
   ): Promise<Response<Source>> {
     return this._makeRequest(
       'GET',
-      `/v1/sources/${id}`,
+      `/v1/sources/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -41,7 +42,7 @@ export class SourceResource extends StripeResource {
   ): Promise<Response<Source>> {
     return this._makeRequest(
       'POST',
-      `/v1/sources/${id}`,
+      `/v1/sources/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -65,7 +66,7 @@ export class SourceResource extends StripeResource {
   ): Promise<Response<Source>> {
     return this._makeRequest(
       'POST',
-      `/v1/sources/${id}/verify`,
+      `/v1/sources/${encodeURIComponent(id)}/verify`,
       params,
       options
     ) as any;
@@ -80,7 +81,7 @@ export class SourceResource extends StripeResource {
   ): ApiListPromise<SourceTransaction> {
     return this._makeRequest(
       'GET',
-      `/v1/sources/${id}/source_transactions`,
+      `/v1/sources/${encodeURIComponent(id)}/source_transactions`,
       params,
       options,
       {
@@ -279,7 +280,11 @@ export namespace Source {
     statement_descriptor?: string | null;
   }
 
-  export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+  export type AllowRedisplay =
+    | 'always'
+    | 'limited'
+    | 'unspecified'
+    | OtherString;
 
   export interface AuBecsDebit {
     bsb_number?: string | null;

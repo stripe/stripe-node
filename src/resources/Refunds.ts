@@ -3,7 +3,9 @@
 import {StripeResource} from '../StripeResource.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {Charge} from './Charges.js';
+import {Customer, DeletedCustomer} from './Customers.js';
 import {PaymentIntent} from './PaymentIntents.js';
+import {PaymentMethod} from './PaymentMethods.js';
 import {TransferReversal} from './TransferReversals.js';
 import {
   Emptyable,
@@ -11,6 +13,7 @@ import {
   PaginationParams,
   RangeQueryParam,
   Metadata,
+  OtherString,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
@@ -55,7 +58,7 @@ export class RefundResource extends StripeResource {
   ): Promise<Response<Refund>> {
     return this._makeRequest(
       'GET',
-      `/v1/refunds/${id}`,
+      `/v1/refunds/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -72,7 +75,7 @@ export class RefundResource extends StripeResource {
   ): Promise<Response<Refund>> {
     return this._makeRequest(
       'POST',
-      `/v1/refunds/${id}`,
+      `/v1/refunds/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -89,7 +92,7 @@ export class RefundResource extends StripeResource {
   ): Promise<Response<Refund>> {
     return this._makeRequest(
       'POST',
-      `/v1/refunds/${id}/cancel`,
+      `/v1/refunds/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -132,6 +135,16 @@ export interface Refund {
   currency: string;
 
   /**
+   * ID of the customer of this refund.
+   */
+  customer: string | Customer | DeletedCustomer | null;
+
+  /**
+   * ID of the account of this refund.
+   */
+  customer_account: string | null;
+
+  /**
    * An arbitrary string attached to the object. You can use this for displaying to users (available on non-card refunds only).
    */
   description?: string;
@@ -164,6 +177,11 @@ export interface Refund {
    * ID of the PaymentIntent that's refunded.
    */
   payment_intent: string | PaymentIntent | null;
+
+  /**
+   * ID of the payment method associated with this refund.
+   */
+  payment_method: string | PaymentMethod | null;
 
   /**
    * Provides the reason for why the refund is pending. Possible values are: `processing`, `insufficient_funds`, or `charge_pending`.
@@ -255,6 +273,8 @@ export namespace Refund {
 
     revolut?: DestinationDetails.Revolut;
 
+    scalapay?: DestinationDetails.Scalapay;
+
     sofort?: DestinationDetails.Sofort;
 
     swish?: DestinationDetails.Swish;
@@ -287,7 +307,8 @@ export namespace Refund {
   export type PendingReason =
     | 'charge_pending'
     | 'insufficient_funds'
-    | 'processing';
+    | 'processing'
+    | OtherString;
 
   export interface PresentmentDetails {
     /**
@@ -305,7 +326,8 @@ export namespace Refund {
     | 'duplicate'
     | 'expired_uncaptured_charge'
     | 'fraudulent'
-    | 'requested_by_customer';
+    | 'requested_by_customer'
+    | OtherString;
 
   export namespace DestinationDetails {
     export interface Affirm {}
@@ -489,6 +511,8 @@ export namespace Refund {
 
     export interface Revolut {}
 
+    export interface Scalapay {}
+
     export interface Sofort {}
 
     export interface Swish {
@@ -539,7 +563,7 @@ export namespace Refund {
     export interface Zip {}
 
     export namespace Card {
-      export type Type = 'pending' | 'refund' | 'reversal';
+      export type Type = 'pending' | 'refund' | 'reversal' | OtherString;
     }
   }
 

@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {Reader} from './../../Terminal/Readers.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class ReaderResource extends StripeResource {
@@ -15,7 +16,9 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/terminal/readers/${id}/present_payment_method`,
+      `/v1/test_helpers/terminal/readers/${encodeURIComponent(
+        id
+      )}/present_payment_method`,
       params,
       options
     ) as any;
@@ -30,7 +33,9 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/terminal/readers/${id}/succeed_input_collection`,
+      `/v1/test_helpers/terminal/readers/${encodeURIComponent(
+        id
+      )}/succeed_input_collection`,
       params,
       options
     ) as any;
@@ -45,7 +50,9 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/terminal/readers/${id}/timeout_input_collection`,
+      `/v1/test_helpers/terminal/readers/${encodeURIComponent(
+        id
+      )}/timeout_input_collection`,
       params,
       options
     ) as any;
@@ -122,7 +129,11 @@ export namespace TestHelpers {
         number?: string;
       }
 
-      export type Type = 'card' | 'card_present' | 'interac_present';
+      export type Type =
+        | 'card'
+        | 'card_present'
+        | 'interac_present'
+        | OtherString;
     }
   }
 }
@@ -141,7 +152,7 @@ export namespace TestHelpers {
     }
 
     export namespace ReaderSucceedInputCollectionParams {
-      export type SkipNonRequiredInputs = 'all' | 'none';
+      export type SkipNonRequiredInputs = 'all' | 'none' | OtherString;
     }
   }
 }

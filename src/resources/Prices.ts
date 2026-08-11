@@ -5,6 +5,7 @@ import {Product, DeletedProduct} from './Products.js';
 import {
   MetadataParam,
   Decimal,
+  OtherString,
   Emptyable,
   PaginationParams,
   RangeQueryParam,
@@ -196,61 +197,67 @@ export class PriceResource extends StripeResource {
     params?: PriceRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Price>> {
-    return this._makeRequest('GET', `/v1/prices/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          currency_options: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                tiers: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {
-                      flat_amount_decimal: {
-                        kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
-                      },
-                      unit_amount_decimal: {
-                        kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'GET',
+      `/v1/prices/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            currency_options: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  tiers: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {
+                        flat_amount_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
+                        unit_amount_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
                       },
                     },
                   },
-                },
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
-                },
-              },
-            },
-          },
-          tiers: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                flat_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
-                },
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
                 },
               },
             },
-          },
-          unit_amount_decimal: {
-            kind: 'nullable',
-            inner: {kind: 'decimal_string'},
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  flat_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
+                },
+              },
+            },
+            unit_amount_decimal: {
+              kind: 'nullable',
+              inner: {kind: 'decimal_string'},
+            },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Updates the specified price by setting the values of the parameters passed. Any parameters not provided are left unchanged.
@@ -260,61 +267,67 @@ export class PriceResource extends StripeResource {
     params?: PriceUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Price>> {
-    return this._makeRequest('POST', `/v1/prices/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          currency_options: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                tiers: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {
-                      flat_amount_decimal: {
-                        kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
-                      },
-                      unit_amount_decimal: {
-                        kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'POST',
+      `/v1/prices/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            currency_options: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  tiers: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {
+                        flat_amount_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
+                        unit_amount_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
                       },
                     },
                   },
-                },
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
-                },
-              },
-            },
-          },
-          tiers: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                flat_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
-                },
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
                 },
               },
             },
-          },
-          unit_amount_decimal: {
-            kind: 'nullable',
-            inner: {kind: 'decimal_string'},
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  flat_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
+                },
+              },
+            },
+            unit_amount_decimal: {
+              kind: 'nullable',
+              inner: {kind: 'decimal_string'},
+            },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Search for prices you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
@@ -689,13 +702,13 @@ export namespace Price {
   }
 
   export namespace Recurring {
-    export type Interval = 'day' | 'month' | 'week' | 'year';
+    export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
-    export type UsageType = 'licensed' | 'metered';
+    export type UsageType = 'licensed' | 'metered' | OtherString;
   }
 
   export namespace TransformQuantity {
-    export type Round = 'down' | 'up';
+    export type Round = 'down' | 'up' | OtherString;
   }
 }
 export interface PriceCreateParams {
@@ -943,7 +956,7 @@ export namespace PriceCreateParams {
     up_to: 'inf' | number;
   }
 
-  export type TiersMode = 'graduated' | 'volume';
+  export type TiersMode = 'graduated' | 'volume' | OtherString;
 
   export interface TransformQuantity {
     /**
@@ -1017,7 +1030,7 @@ export namespace PriceCreateParams {
   }
 
   export namespace TransformQuantity {
-    export type Round = 'down' | 'up';
+    export type Round = 'down' | 'up' | OtherString;
   }
 }
 export interface PriceRetrieveParams {

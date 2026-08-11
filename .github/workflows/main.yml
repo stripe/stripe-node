@@ -55,7 +55,7 @@ jobs:
         run: just format-check
 
   test:
-    name: Test (${{ matrix.node }})
+    name: Test (${{ matrix.node }}, ${{ matrix.os }})
     needs: [build]
     strategy:
       fail-fast: false
@@ -65,12 +65,19 @@ jobs:
         node:
           # should include even numbers >= 18
           # see: https://docs.stripe.com/sdks/versioning?lang=node#stripe-sdk-language-version-support-policy
-          # note that in Oct 2026, every version will be LTS, so it's not just even numbers anymore
+          # https://endoflife.date/nodejs
+
+          # note that starting in Oct 2026, every version will be LTS, so it's not just even numbers anymore
           # see: https://nodejs.org/en/blog/announcements/evolving-the-nodejs-release-schedule
+          # - '26' # not yet compatible with mocha's yargs dependency
           - '24'
           - '22'
           - '20'
           - '18'
+        include:
+          - os: windows-latest
+            # use any modern-ish version
+            node: '24'
     runs-on: ${{ matrix.os }}
     permissions:
       contents: read
@@ -96,10 +103,14 @@ jobs:
         run: deno -V
 
       - name: Get yarn cache directory path
+        # caches are platform-specific and there's only one windows job, so don't bother caching
+        if: runner.os != 'Windows'
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> "$GITHUB_OUTPUT"
 
       - uses: actions/cache@v4
+        # caches are platform-specific and there's only one windows job, so don't bother caching
+        if: runner.os != 'Windows'
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}

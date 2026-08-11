@@ -57,7 +57,7 @@ export class FetchHttpClient extends HttpClient
     fetchFn: typeof fetch
   ): FetchWithTimeout {
     return (url, init, timeout): Promise<Response> => {
-      let pendingTimeoutId: NodeJS.Timeout | null;
+      let pendingTimeoutId: ReturnType<typeof setTimeout> | null;
       const timeoutPromise = new Promise<never>((_, reject) => {
         pendingTimeoutId = setTimeout(() => {
           pendingTimeoutId = null;
@@ -80,7 +80,7 @@ export class FetchHttpClient extends HttpClient
     return async (url, init, timeout): Promise<Response> => {
       // Use AbortController because AbortSignal.timeout() was added later in Node v17.3.0, v16.14.0
       const abort = new AbortController();
-      let timeoutId: NodeJS.Timeout | null = setTimeout(() => {
+      let timeoutId: ReturnType<typeof setTimeout> | null = setTimeout(() => {
         timeoutId = null;
         abort.abort(HttpClient.makeTimeoutError());
       }, timeout);
@@ -183,16 +183,7 @@ export class FetchHttpClientResponse extends HttpClientResponse
   }
 
   toJSON(): Promise<any> {
-    return this._res.text().then((text) => {
-      try {
-        return JSON.parse(text);
-      } catch (e) {
-        if (e instanceof Error) {
-          (e as any).rawBody = text;
-        }
-        throw e;
-      }
-    });
+    return this._res.text().then((text) => this._parseResponseBody(text));
   }
 
   static _transformHeadersToObject(headers: Headers): ResponseHeaders {

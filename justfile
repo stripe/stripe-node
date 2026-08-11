@@ -21,8 +21,10 @@ test *args: install build
 
 # try to compile the example TS file to make sure exports work
 types-test: build
-    if [ ! -d testProjects/types/node_modules ]; then (cd testProjects/types && npm install); fi
-    tsc --build testProjects/types
+    for dir in types types-cjs types-cjs-node16; do \
+        if [ ! -d "testProjects/$dir/node_modules" ]; then (cd "testProjects/$dir" && npm install); fi; \
+        tsc --build "testProjects/$dir"; \
+    done
 
 # run full integration tests by installing a bunch of packages and starting servers (slow)
 integrations-test: build
@@ -53,7 +55,7 @@ lint: (lint-check "--fix")
 
 # run style checks without changing anything
 lint-check *args: install
-    eslint --ext .js,.ts . {{ args }}
+    eslint --rulesdir eslint-rules --ext .js,.ts . {{ args }}
 
 # reinstall dependencies, if needed
 install:
@@ -66,7 +68,7 @@ prettier *args: install
     prettier "{src,examples,scripts,test,types}/**/*.{ts,js}" {{ args }}
 
 # ⭐ format all files
-format: (prettier "--write --loglevel silent")
+format: (prettier "--write --loglevel error")
 
 # verify formatting of files (without changes)
 format-check: (prettier "--check")

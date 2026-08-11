@@ -11,6 +11,7 @@ import {
   Emptyable,
   MetadataParam,
   AddressParam,
+  OtherString,
   JapanAddressParam,
   PaginationParams,
   RangeQueryParam,
@@ -36,7 +37,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<DeletedAccount>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/accounts/${id}`,
+      `/v1/accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -52,7 +53,7 @@ export class AccountResource extends StripeResource {
     if (typeof id === 'string') {
       return this._makeRequest(
         'GET',
-        `/v1/accounts/${id}`,
+        `/v1/accounts/${encodeURIComponent(id)}`,
         params,
         options
       ) as any;
@@ -82,7 +83,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Account>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${id}`,
+      `/v1/accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -111,7 +112,7 @@ export class AccountResource extends StripeResource {
    * With [Connect](https://docs.stripe.com/docs/connect), you can create Stripe accounts for your users.
    * To do this, you'll first need to [register your platform](https://dashboard.stripe.com/account/applications/settings).
    *
-   * If you've already collected information for your connected accounts, you [can prefill that information](https://docs.stripe.com/docs/connect/best-practices#onboarding) when
+   * If you've already collected information for your connected accounts, you [can prefill that information](https://docs.stripe.com/connect/marketplace/tasks/create#prefill-account-information) when
    * creating the account. Connect Onboarding won't ask for the prefilled information during account onboarding.
    * You can prefill any information on the account.
    */
@@ -124,7 +125,7 @@ export class AccountResource extends StripeResource {
   /**
    * With [Connect](https://docs.stripe.com/connect), you can reject accounts that you have flagged as suspicious.
    *
-   * Only accounts where your platform is liable for negative account balances, which includes Custom and Express accounts, can be rejected. Test-mode accounts can be rejected at any time. Live-mode accounts can only be rejected after all balances are zero.
+   * Only accounts where your platform is liable for negative account balances, which includes Custom and Express accounts, can be rejected.
    */
   reject(
     id: string,
@@ -133,7 +134,26 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Account>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${id}/reject`,
+      `/v1/accounts/${encodeURIComponent(id)}/reject`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * With Connect, you can unreject accounts that you have previously rejected.
+   *
+   * Only accounts that were rejected by your platform can be unrejected. This API cannot be used to unreject accounts that were rejected by Stripe.
+   *
+   * Unreject will only enable charges and/or payouts if there are no other restrictions other than those placed by a previous rejection. If you have separately paused charges and/or payouts outside of rejection, those pauses will remain in place after unrejection.
+   */
+  unreject(
+    id: string,
+    params?: AccountUnrejectParams,
+    options?: RequestOptions
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/accounts/${encodeURIComponent(id)}/unreject`,
       params,
       options
     ) as any;
@@ -148,7 +168,7 @@ export class AccountResource extends StripeResource {
   ): ApiListPromise<Capability> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${id}/capabilities`,
+      `/v1/accounts/${encodeURIComponent(id)}/capabilities`,
       params,
       options,
       {
@@ -167,7 +187,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Capability>> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${accountId}/capabilities/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/capabilities/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -183,7 +205,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Capability>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${accountId}/capabilities/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/capabilities/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -199,7 +223,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<DeletedExternalAccount>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/accounts/${accountId}/external_accounts/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/external_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -215,7 +241,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<ExternalAccount>> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${accountId}/external_accounts/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/external_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -238,7 +266,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<ExternalAccount>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${accountId}/external_accounts/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/external_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -253,7 +283,7 @@ export class AccountResource extends StripeResource {
   ): ApiListPromise<ExternalAccount> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${id}/external_accounts`,
+      `/v1/accounts/${encodeURIComponent(id)}/external_accounts`,
       params,
       options,
       {
@@ -271,7 +301,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<ExternalAccount>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${id}/external_accounts`,
+      `/v1/accounts/${encodeURIComponent(id)}/external_accounts`,
       params,
       options
     ) as any;
@@ -288,13 +318,13 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<LoginLink>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${id}/login_links`,
+      `/v1/accounts/${encodeURIComponent(id)}/login_links`,
       params,
       options
     ) as any;
   }
   /**
-   * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
+   * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the representative. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
    */
   deletePerson(
     accountId: string,
@@ -304,7 +334,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<DeletedPerson>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/accounts/${accountId}/persons/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/persons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -320,7 +352,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Person>> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${accountId}/persons/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/persons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -336,7 +370,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Person>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${accountId}/persons/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/persons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -351,7 +387,7 @@ export class AccountResource extends StripeResource {
   ): ApiListPromise<Person> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${id}/persons`,
+      `/v1/accounts/${encodeURIComponent(id)}/persons`,
       params,
       options,
       {
@@ -369,7 +405,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Person>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${id}/persons`,
+      `/v1/accounts/${encodeURIComponent(id)}/persons`,
       params,
       options
     ) as any;
@@ -564,7 +600,8 @@ export namespace Account {
     | 'company'
     | 'government_entity'
     | 'individual'
-    | 'non_profit';
+    | 'non_profit'
+    | OtherString;
 
   export interface Capabilities {
     /**
@@ -621,6 +658,11 @@ export namespace Account {
      * The status of the Billie capability of the account, or whether the account can directly process Billie payments.
      */
     billie_payments?: Capabilities.BilliePayments;
+
+    /**
+     * The status of the Bizum capability of the account, or whether the account can directly process Bizum payments.
+     */
+    bizum_payments?: Capabilities.BizumPayments;
 
     /**
      * The status of the blik payments capability of the account, or whether the account can directly process blik charges.
@@ -818,6 +860,11 @@ export namespace Account {
     satispay_payments?: Capabilities.SatispayPayments;
 
     /**
+     * The status of the Scalapay capability of the account, or whether the account can directly process Scalapay payments.
+     */
+    scalapay_payments?: Capabilities.ScalapayPayments;
+
+    /**
      * The status of the SEPA customer_balance payments (EUR currency) capability of the account, or whether the account can directly process SEPA customer_balance charges.
      */
     sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -901,6 +948,8 @@ export namespace Account {
      */
     address_kanji?: Company.AddressKanji | null;
 
+    administrative_address?: Address;
+
     /**
      * Whether the company's directors have been provided. This Boolean will be `true` if you've manually indicated that all directors are provided via [the `directors_provided` parameter](https://docs.stripe.com/api/accounts/update#update_account-company-directors_provided).
      */
@@ -960,6 +1009,8 @@ export namespace Account {
      * The company's phone number (used for verification).
      */
     phone?: string | null;
+
+    principal_place_of_business?: Address;
 
     registration_date?: Company.RegistrationDate;
 
@@ -1039,7 +1090,7 @@ export namespace Account {
     disabled_reason: FutureRequirements.DisabledReason | null;
 
     /**
-     * Details about validation and verification failures for `due` requirements that must be resolved.
+     * Fields that are `currently_due` and need to be collected again because validation or verification failed.
      */
     errors: Array<FutureRequirements.Error> | null;
 
@@ -1078,7 +1129,7 @@ export namespace Account {
     current_deadline: number | null;
 
     /**
-     * Fields that need to be resolved to keep the account enabled. If not resolved by `current_deadline`, these fields will appear in `past_due` as well, and the account is disabled.
+     * Fields that need to be resolved to keep the account enabled. If not resolved by `current_deadline`, these fields will appear in `past_due` as well, and the account will be disabled.
      */
     currently_due: Array<string> | null;
 
@@ -1088,7 +1139,7 @@ export namespace Account {
     disabled_reason: Requirements.DisabledReason | null;
 
     /**
-     * Details about validation and verification failures for `due` requirements that must be resolved.
+     * Fields that are `currently_due` and need to be collected again because validation or verification failed.
      */
     errors: Array<Requirements.Error> | null;
 
@@ -1152,7 +1203,7 @@ export namespace Account {
     user_agent?: string | null;
   }
 
-  export type Type = 'custom' | 'express' | 'none' | 'standard';
+  export type Type = 'custom' | 'express' | 'none' | 'standard' | OtherString;
 
   export namespace BusinessProfile {
     export interface AnnualRevenue {
@@ -1177,7 +1228,8 @@ export namespace Account {
       | 'minority_owned_business'
       | 'none_of_these_apply'
       | 'prefer_not_to_answer'
-      | 'women_owned_business';
+      | 'women_owned_business'
+      | OtherString;
 
     export interface MonthlyEstimatedRevenue {
       /**
@@ -1214,6 +1266,8 @@ export namespace Account {
     export type BankTransferPayments = 'active' | 'inactive' | 'pending';
 
     export type BilliePayments = 'active' | 'inactive' | 'pending';
+
+    export type BizumPayments = 'active' | 'inactive' | 'pending';
 
     export type BlikPayments = 'active' | 'inactive' | 'pending';
 
@@ -1295,6 +1349,8 @@ export namespace Account {
     export type SamsungPayPayments = 'active' | 'inactive' | 'pending';
 
     export type SatispayPayments = 'active' | 'inactive' | 'pending';
+
+    export type ScalapayPayments = 'active' | 'inactive' | 'pending';
 
     export type SepaBankTransferPayments = 'active' | 'inactive' | 'pending';
 
@@ -1436,7 +1492,8 @@ export namespace Account {
 
     export type OwnershipExemptionReason =
       | 'qualified_entity_exceeds_ownership_threshold'
-      | 'qualifies_as_financial_institution';
+      | 'qualifies_as_financial_institution'
+      | OtherString;
 
     export interface RegistrationDate {
       /**
@@ -1495,7 +1552,8 @@ export namespace Account {
       | 'tax_exempt_government_instrumentality'
       | 'unincorporated_association'
       | 'unincorporated_non_profit'
-      | 'unincorporated_partnership';
+      | 'unincorporated_partnership'
+      | OtherString;
 
     export interface Verification {
       document: Verification.Document;
@@ -1541,7 +1599,7 @@ export namespace Account {
       payments: Losses.Payments;
     }
 
-    export type RequirementCollection = 'application' | 'stripe';
+    export type RequirementCollection = 'application' | 'stripe' | OtherString;
 
     export interface StripeDashboard {
       /**
@@ -1557,15 +1615,16 @@ export namespace Account {
         | 'account'
         | 'application'
         | 'application_custom'
-        | 'application_express';
+        | 'application_express'
+        | OtherString;
     }
 
     export namespace Losses {
-      export type Payments = 'application' | 'stripe';
+      export type Payments = 'application' | 'stripe' | OtherString;
     }
 
     export namespace StripeDashboard {
-      export type Type = 'express' | 'full' | 'none';
+      export type Type = 'express' | 'full' | 'none' | OtherString;
     }
   }
 
@@ -2077,7 +2136,8 @@ export namespace Account {
           | 'monday'
           | 'thursday'
           | 'tuesday'
-          | 'wednesday';
+          | 'wednesday'
+          | OtherString;
       }
     }
 
@@ -2270,7 +2330,8 @@ export namespace AccountCreateParams {
     | 'company'
     | 'government_entity'
     | 'individual'
-    | 'non_profit';
+    | 'non_profit'
+    | OtherString;
 
   export interface Capabilities {
     /**
@@ -2327,6 +2388,11 @@ export namespace AccountCreateParams {
      * The billie_payments capability.
      */
     billie_payments?: Capabilities.BilliePayments;
+
+    /**
+     * The bizum_payments capability.
+     */
+    bizum_payments?: Capabilities.BizumPayments;
 
     /**
      * The blik_payments capability.
@@ -2524,6 +2590,11 @@ export namespace AccountCreateParams {
     satispay_payments?: Capabilities.SatispayPayments;
 
     /**
+     * The scalapay_payments capability.
+     */
+    scalapay_payments?: Capabilities.ScalapayPayments;
+
+    /**
      * The sepa_bank_transfer_payments capability.
      */
     sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -2610,6 +2681,8 @@ export namespace AccountCreateParams {
      */
     address_kanji?: JapanAddressParam;
 
+    administrative_address?: AddressParam;
+
     /**
      * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://docs.stripe.com/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
      */
@@ -2670,6 +2743,8 @@ export namespace AccountCreateParams {
      */
     phone?: string;
 
+    principal_place_of_business?: AddressParam;
+
     /**
      * When the business was incorporated or registered.
      */
@@ -2692,6 +2767,8 @@ export namespace AccountCreateParams {
 
     /**
      * The business ID number of the company, as appropriate for the company's country. (Examples are an Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
+     *
+     * Changing this value requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
      */
     tax_id?: string;
 
@@ -2745,7 +2822,7 @@ export namespace AccountCreateParams {
     company_license?: Documents.CompanyLicense;
 
     /**
-     * One or more documents showing the company's Memorandum of Association.
+     * One or more documents showing the company's governing document (for example, a memorandum of association, constitution, or articles of association).
      */
     company_memorandum_of_association?: Documents.CompanyMemorandumOfAssociation;
 
@@ -2768,11 +2845,6 @@ export namespace AccountCreateParams {
      * One or more documents that demonstrate proof of address.
      */
     proof_of_address?: Documents.ProofOfAddress;
-
-    /**
-     * One or more documents showing the company's proof of registration with the national business registry.
-     */
-    proof_of_registration?: Documents.ProofOfRegistration;
 
     /**
      * One or more documents that demonstrate proof of ultimate beneficial ownership.
@@ -3030,7 +3102,8 @@ export namespace AccountCreateParams {
       | 'minority_owned_business'
       | 'none_of_these_apply'
       | 'prefer_not_to_answer'
-      | 'women_owned_business';
+      | 'women_owned_business'
+      | OtherString;
 
     export interface MonthlyEstimatedRevenue {
       /**
@@ -3117,6 +3190,13 @@ export namespace AccountCreateParams {
     }
 
     export interface BilliePayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface BizumPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -3396,6 +3476,13 @@ export namespace AccountCreateParams {
       requested?: boolean;
     }
 
+    export interface ScalapayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface SepaBankTransferPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -3532,7 +3619,8 @@ export namespace AccountCreateParams {
 
     export type OwnershipExemptionReason =
       | 'qualified_entity_exceeds_ownership_threshold'
-      | 'qualifies_as_financial_institution';
+      | 'qualifies_as_financial_institution'
+      | OtherString;
 
     export interface RegistrationDate {
       /**
@@ -3591,7 +3679,8 @@ export namespace AccountCreateParams {
       | 'tax_exempt_government_instrumentality'
       | 'unincorporated_association'
       | 'unincorporated_non_profit'
-      | 'unincorporated_partnership';
+      | 'unincorporated_partnership'
+      | OtherString;
 
     export interface Verification {
       /**
@@ -3630,7 +3719,7 @@ export namespace AccountCreateParams {
       payments?: Losses.Payments;
     }
 
-    export type RequirementCollection = 'application' | 'stripe';
+    export type RequirementCollection = 'application' | 'stripe' | OtherString;
 
     export interface StripeDashboard {
       /**
@@ -3640,15 +3729,15 @@ export namespace AccountCreateParams {
     }
 
     export namespace Fees {
-      export type Payer = 'account' | 'application';
+      export type Payer = 'account' | 'application' | OtherString;
     }
 
     export namespace Losses {
-      export type Payments = 'application' | 'stripe';
+      export type Payments = 'application' | 'stripe' | OtherString;
     }
 
     export namespace StripeDashboard {
-      export type Type = 'express' | 'full' | 'none';
+      export type Type = 'express' | 'full' | 'none' | OtherString;
     }
   }
 
@@ -3702,18 +3791,6 @@ export namespace AccountCreateParams {
       files?: Array<string>;
     }
 
-    export interface ProofOfRegistration {
-      /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
-       */
-      files?: Array<string>;
-
-      /**
-       * Information regarding the person signing the document if applicable.
-       */
-      signer?: ProofOfRegistration.Signer;
-    }
-
     export interface ProofOfUltimateBeneficialOwnership {
       /**
        * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
@@ -3724,15 +3801,6 @@ export namespace AccountCreateParams {
        * Information regarding the person signing the document if applicable.
        */
       signer?: ProofOfUltimateBeneficialOwnership.Signer;
-    }
-
-    export namespace ProofOfRegistration {
-      export interface Signer {
-        /**
-         * The token of the person signing the document, if applicable.
-         */
-        person?: string;
-      }
     }
 
     export namespace ProofOfUltimateBeneficialOwnership {
@@ -3763,7 +3831,7 @@ export namespace AccountCreateParams {
       year: number;
     }
 
-    export type PoliticalExposure = 'existing' | 'none';
+    export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
     export interface Relationship {
       /**
@@ -3972,7 +4040,11 @@ export namespace AccountCreateParams {
     }
 
     export namespace Invoices {
-      export type HostedPaymentMethodSave = 'always' | 'never' | 'offer';
+      export type HostedPaymentMethodSave =
+        | 'always'
+        | 'never'
+        | 'offer'
+        | OtherString;
     }
 
     export namespace Payouts {
@@ -4025,7 +4097,8 @@ export namespace AccountCreateParams {
           | 'monday'
           | 'thursday'
           | 'tuesday'
-          | 'wednesday';
+          | 'wednesday'
+          | OtherString;
       }
     }
 
@@ -4214,7 +4287,8 @@ export namespace AccountUpdateParams {
     | 'company'
     | 'government_entity'
     | 'individual'
-    | 'non_profit';
+    | 'non_profit'
+    | OtherString;
 
   export interface Capabilities {
     /**
@@ -4271,6 +4345,11 @@ export namespace AccountUpdateParams {
      * The billie_payments capability.
      */
     billie_payments?: Capabilities.BilliePayments;
+
+    /**
+     * The bizum_payments capability.
+     */
+    bizum_payments?: Capabilities.BizumPayments;
 
     /**
      * The blik_payments capability.
@@ -4468,6 +4547,11 @@ export namespace AccountUpdateParams {
     satispay_payments?: Capabilities.SatispayPayments;
 
     /**
+     * The scalapay_payments capability.
+     */
+    scalapay_payments?: Capabilities.ScalapayPayments;
+
+    /**
      * The sepa_bank_transfer_payments capability.
      */
     sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -4554,6 +4638,8 @@ export namespace AccountUpdateParams {
      */
     address_kanji?: JapanAddressParam;
 
+    administrative_address?: AddressParam;
+
     /**
      * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://docs.stripe.com/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
      */
@@ -4614,6 +4700,8 @@ export namespace AccountUpdateParams {
      */
     phone?: string;
 
+    principal_place_of_business?: AddressParam;
+
     registration_date?: Emptyable<Company.RegistrationDate>;
 
     /**
@@ -4633,6 +4721,8 @@ export namespace AccountUpdateParams {
 
     /**
      * The business ID number of the company, as appropriate for the company's country. (Examples are an Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
+     *
+     * Changing this value requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
      */
     tax_id?: string;
 
@@ -4664,7 +4754,7 @@ export namespace AccountUpdateParams {
     company_license?: Documents.CompanyLicense;
 
     /**
-     * One or more documents showing the company's Memorandum of Association.
+     * One or more documents showing the company's governing document (for example, a memorandum of association, constitution, or articles of association).
      */
     company_memorandum_of_association?: Documents.CompanyMemorandumOfAssociation;
 
@@ -4937,6 +5027,11 @@ export namespace AccountUpdateParams {
     payouts?: Settings.Payouts;
 
     /**
+     * Settings specific to SEPA Direct Debit payments.
+     */
+    sepa_debit_payments?: Settings.SepaDebitPayments;
+
+    /**
      * Settings specific to the account's Treasury FinancialAccounts.
      */
     treasury?: Settings.Treasury;
@@ -4991,7 +5086,8 @@ export namespace AccountUpdateParams {
       | 'minority_owned_business'
       | 'none_of_these_apply'
       | 'prefer_not_to_answer'
-      | 'women_owned_business';
+      | 'women_owned_business'
+      | OtherString;
 
     export interface MonthlyEstimatedRevenue {
       /**
@@ -5078,6 +5174,13 @@ export namespace AccountUpdateParams {
     }
 
     export interface BilliePayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface BizumPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -5357,6 +5460,13 @@ export namespace AccountUpdateParams {
       requested?: boolean;
     }
 
+    export interface ScalapayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface SepaBankTransferPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -5493,7 +5603,8 @@ export namespace AccountUpdateParams {
 
     export type OwnershipExemptionReason =
       | 'qualified_entity_exceeds_ownership_threshold'
-      | 'qualifies_as_financial_institution';
+      | 'qualifies_as_financial_institution'
+      | OtherString;
 
     export interface RegistrationDate {
       /**
@@ -5552,7 +5663,8 @@ export namespace AccountUpdateParams {
       | 'tax_exempt_government_instrumentality'
       | 'unincorporated_association'
       | 'unincorporated_non_profit'
-      | 'unincorporated_partnership';
+      | 'unincorporated_partnership'
+      | OtherString;
 
     export interface Verification {
       /**
@@ -5687,7 +5799,7 @@ export namespace AccountUpdateParams {
       year: number;
     }
 
-    export type PoliticalExposure = 'existing' | 'none';
+    export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
     export interface Relationship {
       /**
@@ -5860,6 +5972,13 @@ export namespace AccountUpdateParams {
       statement_descriptor?: string;
     }
 
+    export interface SepaDebitPayments {
+      /**
+       * The business creditor id for european payments.
+       */
+      creditor_id?: string;
+    }
+
     export interface Treasury {
       /**
        * Details on the account's acceptance of the Stripe Treasury Services Agreement.
@@ -5901,7 +6020,11 @@ export namespace AccountUpdateParams {
     }
 
     export namespace Invoices {
-      export type HostedPaymentMethodSave = 'always' | 'never' | 'offer';
+      export type HostedPaymentMethodSave =
+        | 'always'
+        | 'never'
+        | 'offer'
+        | OtherString;
     }
 
     export namespace Payouts {
@@ -5954,7 +6077,8 @@ export namespace AccountUpdateParams {
           | 'monday'
           | 'thursday'
           | 'tuesday'
-          | 'wednesday';
+          | 'wednesday'
+          | OtherString;
       }
     }
 
@@ -6169,11 +6293,15 @@ export interface AccountCreatePersonParams {
 
   /**
    * The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+   *
+   * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
    */
   id_number?: string;
 
   /**
    * The person's secondary ID number, as appropriate for their country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+   *
+   * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
    */
   id_number_secondary?: string;
 
@@ -6234,6 +6362,8 @@ export interface AccountCreatePersonParams {
 
   /**
    * The last four digits of the person's Social Security number (U.S. only).
+   *
+   * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
    */
   ssn_last_4?: string;
 
@@ -6289,7 +6419,7 @@ export namespace AccountCreatePersonParams {
     visa?: Documents.Visa;
   }
 
-  export type PoliticalExposure = 'existing' | 'none';
+  export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
   export interface Relationship {
     /**
@@ -6437,7 +6567,8 @@ export namespace AccountCreatePersonParams {
         | 'not_hispanic_or_latino'
         | 'other_hispanic_or_latino'
         | 'prefer_not_to_answer'
-        | 'puerto_rican';
+        | 'puerto_rican'
+        | OtherString;
     }
 
     export namespace RaceDetails {
@@ -6465,7 +6596,8 @@ export namespace AccountCreatePersonParams {
         | 'samoan'
         | 'somali'
         | 'vietnamese'
-        | 'white';
+        | 'white'
+        | OtherString;
     }
   }
 
@@ -6571,6 +6703,14 @@ export interface AccountRejectParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * Whether to pause payouts on the account as part of the rejection. Defaults to `pause`. Use `none` to leave payouts enabled.
+   */
+  payouts_action?: AccountRejectParams.PayoutsAction;
+}
+export namespace AccountRejectParams {
+  export type PayoutsAction = 'none' | 'pause';
 }
 export interface AccountRetrieveCurrentParams {
   /**
@@ -6591,6 +6731,12 @@ export interface AccountRetrieveExternalAccountParams {
   expand?: Array<string>;
 }
 export interface AccountRetrievePersonParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export interface AccountUnrejectParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
@@ -6781,11 +6927,15 @@ export interface AccountUpdatePersonParams {
 
   /**
    * The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+   *
+   * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
    */
   id_number?: string;
 
   /**
    * The person's secondary ID number, as appropriate for their country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+   *
+   * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
    */
   id_number_secondary?: string;
 
@@ -6846,6 +6996,8 @@ export interface AccountUpdatePersonParams {
 
   /**
    * The last four digits of the person's Social Security number (U.S. only).
+   *
+   * Changing this value for the account's representative requires that the account re-accept the [terms of service](https://docs.stripe.com/api/accounts/object#account_object-tos_acceptance).
    */
   ssn_last_4?: string;
 
@@ -6901,7 +7053,7 @@ export namespace AccountUpdatePersonParams {
     visa?: Documents.Visa;
   }
 
-  export type PoliticalExposure = 'existing' | 'none';
+  export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
   export interface Relationship {
     /**
@@ -7049,7 +7201,8 @@ export namespace AccountUpdatePersonParams {
         | 'not_hispanic_or_latino'
         | 'other_hispanic_or_latino'
         | 'prefer_not_to_answer'
-        | 'puerto_rican';
+        | 'puerto_rican'
+        | OtherString;
     }
 
     export namespace RaceDetails {
@@ -7077,7 +7230,8 @@ export namespace AccountUpdatePersonParams {
         | 'samoan'
         | 'somali'
         | 'vietnamese'
-        | 'white';
+        | 'white'
+        | OtherString;
     }
   }
 

@@ -7,6 +7,7 @@ import {
   PaginationParams,
   RangeQueryParam,
   Metadata,
+  OtherString,
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise, ApiList} from '../../lib.js';
 
@@ -18,10 +19,10 @@ export class ValueListResource extends StripeResource {
     id: string,
     params?: Radar.ValueListDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<Radar.DeletedValueList>> {
+  ): Promise<Response<DeletedValueList>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/radar/value_lists/${id}`,
+      `/v1/radar/value_lists/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -36,7 +37,7 @@ export class ValueListResource extends StripeResource {
   ): Promise<Response<ValueList>> {
     return this._makeRequest(
       'GET',
-      `/v1/radar/value_lists/${id}`,
+      `/v1/radar/value_lists/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -51,7 +52,7 @@ export class ValueListResource extends StripeResource {
   ): Promise<Response<ValueList>> {
     return this._makeRequest(
       'POST',
-      `/v1/radar/value_lists/${id}`,
+      `/v1/radar/value_lists/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -116,7 +117,7 @@ export interface ValueList {
   /**
    * The type of items in the value list. One of `card_fingerprint`, `card_bin`, `crypto_fingerprint`, `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, `customer_id`, `account`, `sepa_debit_fingerprint`, or `us_bank_account_fingerprint`.
    */
-  item_type: Radar.ValueList.ItemType;
+  item_type: ValueList.ItemType;
 
   /**
    * List of items contained within this value list.
@@ -138,39 +139,37 @@ export interface ValueList {
    */
   name: string;
 }
-export namespace Radar {
-  export interface DeletedValueList {
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
+export interface DeletedValueList {
+  /**
+   * Unique identifier for the object.
+   */
+  id: string;
 
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'radar.value_list';
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'radar.value_list';
 
-    /**
-     * Always true for a deleted object
-     */
-    deleted: true;
-  }
-
-  export namespace ValueList {
-    export type ItemType =
-      | 'account'
-      | 'card_bin'
-      | 'card_fingerprint'
-      | 'case_sensitive_string'
-      | 'country'
-      | 'crypto_fingerprint'
-      | 'customer_id'
-      | 'email'
-      | 'ip_address'
-      | 'sepa_debit_fingerprint'
-      | 'string'
-      | 'us_bank_account_fingerprint';
-  }
+  /**
+   * Always true for a deleted object
+   */
+  deleted: true;
+}
+export namespace ValueList {
+  export type ItemType =
+    | 'account'
+    | 'card_bin'
+    | 'card_fingerprint'
+    | 'case_sensitive_string'
+    | 'country'
+    | 'crypto_fingerprint'
+    | 'customer_id'
+    | 'email'
+    | 'ip_address'
+    | 'sepa_debit_fingerprint'
+    | 'string'
+    | 'us_bank_account_fingerprint'
+    | OtherString;
 }
 export namespace Radar {
   export interface ValueListCreateParams {

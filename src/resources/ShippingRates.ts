@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {TaxCode} from './TaxCodes.js';
 import {
   MetadataParam,
+  OtherString,
   Emptyable,
   PaginationParams,
   RangeQueryParam,
@@ -47,7 +48,7 @@ export class ShippingRateResource extends StripeResource {
   ): Promise<Response<ShippingRate>> {
     return this._makeRequest(
       'GET',
-      `/v1/shipping_rates/${id}`,
+      `/v1/shipping_rates/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -62,7 +63,7 @@ export class ShippingRateResource extends StripeResource {
   ): Promise<Response<ShippingRate>> {
     return this._makeRequest(
       'POST',
-      `/v1/shipping_rates/${id}`,
+      `/v1/shipping_rates/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -186,11 +187,23 @@ export namespace ShippingRate {
     }
 
     export namespace Maximum {
-      export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+      export type Unit =
+        | 'business_day'
+        | 'day'
+        | 'hour'
+        | 'month'
+        | 'week'
+        | OtherString;
     }
 
     export namespace Minimum {
-      export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+      export type Unit =
+        | 'business_day'
+        | 'day'
+        | 'hour'
+        | 'month'
+        | 'week'
+        | OtherString;
     }
   }
 
@@ -313,11 +326,23 @@ export namespace ShippingRateCreateParams {
     }
 
     export namespace Maximum {
-      export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+      export type Unit =
+        | 'business_day'
+        | 'day'
+        | 'hour'
+        | 'month'
+        | 'week'
+        | OtherString;
     }
 
     export namespace Minimum {
-      export type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+      export type Unit =
+        | 'business_day'
+        | 'day'
+        | 'hour'
+        | 'month'
+        | 'week'
+        | OtherString;
     }
   }
 

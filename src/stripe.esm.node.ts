@@ -12,7 +12,7 @@ import {
   DEFAULT_BASE_ADDRESSES,
 } from './Types.js';
 import {createWebhooks} from './Webhooks.js';
-import {ApiVersion} from './apiVersion.js';
+import {ApiVersion, ApiMajorVersion} from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
@@ -20,7 +20,7 @@ import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
   detectAIAgent,
-  determineProcessUserAgentProperties,
+  maybeExtractFromCloudProviderEnvelope,
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
@@ -30,6 +30,8 @@ import {
   RawRequestOptions,
   ApiList,
   ApiListPromise,
+  V2List,
+  V2ListPromise,
   ApiSearchResultPromise,
   ApiSearchResult,
   StripeStreamResponse,
@@ -76,6 +78,7 @@ import {
   AccountRetrieveCapabilityParams,
   AccountRetrieveExternalAccountParams,
   AccountRetrievePersonParams,
+  AccountUnrejectParams,
   AccountUpdateCapabilityParams,
   AccountUpdateExternalAccountParams,
   AccountUpdatePersonParams,
@@ -356,6 +359,7 @@ import {
 import {
   PaymentRecord,
   PaymentRecordRetrieveParams,
+  PaymentRecordListParams,
   PaymentRecordReportPaymentParams,
   PaymentRecordReportPaymentAttemptParams,
   PaymentRecordReportPaymentAttemptCanceledParams,
@@ -627,7 +631,9 @@ import {Terminal} from './resources/Terminal/index.js';
 import {TestHelpers} from './resources/TestHelpers/index.js';
 import {Treasury} from './resources/Treasury/index.js';
 import {V2} from './resources/V2/index.js';
+import {Reserve} from './resources/Reserve/index.js';
 // StripeInstanceImports: The end of the section generated from our OpenAPI spec
+
 // V1EventImports: The beginning of the section generated from our OpenAPI spec
 import {
   AccountApplicationAuthorizedEvent,
@@ -712,11 +718,16 @@ import {
   FinancialConnectionsAccountCreatedEvent,
   FinancialConnectionsAccountDeactivatedEvent,
   FinancialConnectionsAccountDisconnectedEvent,
+  FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent,
   FinancialConnectionsAccountReactivatedEvent,
   FinancialConnectionsAccountRefreshedBalanceEvent,
   FinancialConnectionsAccountRefreshedOwnershipEvent,
   FinancialConnectionsAccountRefreshedTransactionsEvent,
+  FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent,
   FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent,
+  FinancialConnectionsAccountUpcomingDeactivationEvent,
+  FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent,
+  FinancialConnectionsAuthorizationUpcomingDeactivationEvent,
   IdentityVerificationSessionCanceledEvent,
   IdentityVerificationSessionCreatedEvent,
   IdentityVerificationSessionProcessingEvent,
@@ -898,6 +909,14 @@ import {
 } from './resources/Events.js';
 // V1EventImports: The end of the section generated from our OpenAPI spec
 import {OAuthResource} from './resources.js';
+import {
+  OAuthToken,
+  OAuthTokenParams,
+  OAuthAuthorizeUrlOptions,
+  OAuthAuthorizeUrlParams,
+  OAuthDeauthorization,
+  OAuthDeauthorizeParams,
+} from './resources/OAuth.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -939,19 +958,19 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 export class Stripe {
-  static PACKAGE_VERSION = '22.1.0';
+  static PACKAGE_VERSION = '22.5.0';
   static API_VERSION: typeof ApiVersion = ApiVersion;
-  static aiAgent =
-    typeof process !== 'undefined' && process.env
-      ? detectAIAgent(process.env)
-      : '';
-  static AI_AGENT = Stripe.aiAgent;
-  static USER_AGENT = {
+  /**
+   * The major API version that this SDK uses. Objects retrieved using the same
+   * major version are compatible. Is an empty string in preview versions of the SDK.
+   */
+  static MAJOR_API_VERSION = ApiMajorVersion;
+  static aiAgent = '';
+  static AI_AGENT = '';
+  static USER_AGENT: Record<string, string | boolean | null> = {
     bindings_version: Stripe.PACKAGE_VERSION,
     lang: 'node',
     typescript: false,
-    ...determineProcessUserAgentProperties(),
-    ...(Stripe.aiAgent ? {ai_agent: Stripe.aiAgent} : {}),
   };
   static StripeResource = StripeResource;
   static resources = resources;
@@ -1082,6 +1101,29 @@ export class Stripe {
       platformFunctions.createNodeCryptoProvider;
     Stripe.createSubtleCryptoProvider =
       platformFunctions.createSubtleCryptoProvider;
+
+    const env = platformFunctions.getEnv();
+    const runtimeVersion = platformFunctions.getRuntimeVersion();
+
+    if (env?.CLAUDECODE || env?.CLAUDE_CODE_CHILD_SESSION) {
+      try {
+        platformFunctions.writeStderr(
+          '<claude-code-hint v="1" type="plugin" value="stripe@claude-plugins-official" />\n'
+        );
+      } catch {
+        // never let hint emission crash the SDK
+      }
+    }
+
+    Stripe.aiAgent = env ? detectAIAgent(env) : '';
+    Stripe.AI_AGENT = Stripe.aiAgent;
+    Stripe.USER_AGENT = {
+      bindings_version: Stripe.PACKAGE_VERSION,
+      lang: 'node',
+      typescript: false,
+      ...(runtimeVersion ? {lang_version: runtimeVersion} : {}),
+      ...(Stripe.aiAgent ? {ai_agent: Stripe.aiAgent} : {}),
+    };
   }
 
   constructor(key: string, config: StripeConfig = {}) {
@@ -1546,6 +1588,50 @@ export class Stripe {
     return this._api[key];
   }
 
+  _buildEventNotification(
+    parsed: Record<string, unknown>
+  ): V2.Core.EventNotification {
+    if (parsed.context) {
+      parsed.context = StripeContext.parse(parsed.context as string);
+    }
+
+    parsed.fetchEvent = (): Promise<unknown> => {
+      return this._requestSender._rawRequest(
+        'GET',
+        `/v2/core/events/${parsed.id}`,
+        undefined,
+        {
+          stripeContext: parsed.context as any,
+          headers: {
+            'Stripe-Request-Trigger': `event=${parsed.id}`,
+          },
+        },
+        ['fetch_event']
+      );
+    };
+
+    parsed.fetchRelatedObject = (): Promise<unknown> => {
+      if (!parsed.related_object) {
+        return Promise.resolve(null);
+      }
+
+      return this._requestSender._rawRequest(
+        'GET',
+        (parsed.related_object as any).url,
+        undefined,
+        {
+          stripeContext: parsed.context as any,
+          headers: {
+            'Stripe-Request-Trigger': `event=${parsed.id}`,
+          },
+        },
+        ['fetch_related_object']
+      );
+    };
+
+    return (parsed as unknown) as V2.Core.EventNotification;
+  }
+
   parseEventNotification(
     payload: string | Uint8Array,
     header: string | Uint8Array,
@@ -1575,54 +1661,18 @@ export class Stripe {
         ? JSON.parse(new TextDecoder('utf8').decode(payload))
         : JSON.parse(payload as string);
 
-    if (eventNotification && eventNotification.object === 'event') {
+    if (eventNotification.object === 'event') {
       throw new Error(
         'You passed a webhook payload to stripe.parseEventNotification, which expects an event notification. Use stripe.webhooks.constructEvent instead.'
       );
     }
-
-    // Parse string context into StripeContext object if present
-    if (eventNotification.context) {
-      eventNotification.context = StripeContext.parse(
-        eventNotification.context
+    if (eventNotification.object !== 'v2.core.event') {
+      throw new Error(
+        `Unexpected object type '${eventNotification.object}'. Expected 'v2.core.event' for an event notification.`
       );
     }
 
-    eventNotification.fetchEvent = (): Promise<unknown> => {
-      return this._requestSender._rawRequest(
-        'GET',
-        `/v2/core/events/${eventNotification.id}`,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_event']
-      );
-    };
-
-    eventNotification.fetchRelatedObject = (): Promise<unknown> => {
-      if (!eventNotification.related_object) {
-        return Promise.resolve(null);
-      }
-
-      return this._requestSender._rawRequest(
-        'GET',
-        eventNotification.related_object.url,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_related_object']
-      );
-    };
-
-    return eventNotification;
+    return this._buildEventNotification(eventNotification);
   }
 
   async parseEventNotificationAsync(
@@ -1659,49 +1709,46 @@ export class Stripe {
         'You passed a webhook payload to stripe.parseEventNotificationAsync, which expects an event notification. Use stripe.webhooks.constructEventAsync instead.'
       );
     }
-
-    // Parse string context into StripeContext object if present
-    if (eventNotification.context) {
-      eventNotification.context = StripeContext.parse(
-        eventNotification.context
+    if (eventNotification.object !== 'v2.core.event') {
+      throw new Error(
+        `Unexpected object type '${eventNotification.object}'. Expected 'v2.core.event' for an event notification.`
       );
     }
 
-    eventNotification.fetchEvent = (): Promise<unknown> => {
-      return this._requestSender._rawRequest(
-        'GET',
-        `/v2/core/events/${eventNotification.id}`,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_event']
+    return this._buildEventNotification(eventNotification);
+  }
+
+  /**
+   * Constructs an Event from a payload string, with no signature verification.
+   * Accepts raw Stripe Event JSON as well as payloads wrapped in an
+   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
+   * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) envelope.
+   */
+  constructEventWithoutVerification(payload: string): Event {
+    return this.webhooks.constructEventWithoutVerification(payload);
+  }
+
+  /**
+   * Parses an EventNotification from a payload string, with no signature verification.
+   * Accepts raw Stripe Event Notification JSON as well as payloads wrapped in an
+   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
+   * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) envelope.
+   */
+  parseEventNotificationWithoutVerification(
+    payload: string
+  ): V2.Core.EventNotification {
+    const inner = maybeExtractFromCloudProviderEnvelope(payload);
+    if (inner.object === 'event') {
+      throw new Error(
+        'It looks like this cloud event contains a webhook body instead of a thin event notification. Use constructEventWithoutVerification instead.'
       );
-    };
-
-    eventNotification.fetchRelatedObject = (): Promise<unknown> => {
-      if (!eventNotification.related_object) {
-        return Promise.resolve(null);
-      }
-
-      return this._requestSender._rawRequest(
-        'GET',
-        eventNotification.related_object.url,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_related_object']
+    }
+    if (inner.object !== 'v2.core.event') {
+      throw new Error(
+        `Unexpected object type '${inner.object}'. Expected 'v2.core.event' for an event notification.`
       );
-    };
-
-    return eventNotification;
+    }
+    return this._buildEventNotification(inner);
   }
 }
 
@@ -1739,6 +1786,7 @@ export declare namespace Stripe {
     AccountRetrieveCapabilityParams,
     AccountRetrieveExternalAccountParams,
     AccountRetrievePersonParams,
+    AccountUnrejectParams,
     AccountUpdateCapabilityParams,
     AccountUpdateExternalAccountParams,
     AccountUpdatePersonParams,
@@ -2010,6 +2058,7 @@ export declare namespace Stripe {
   export {
     PaymentRecord,
     PaymentRecordRetrieveParams,
+    PaymentRecordListParams,
     PaymentRecordReportPaymentParams,
     PaymentRecordReportPaymentAttemptParams,
     PaymentRecordReportPaymentAttemptCanceledParams,
@@ -2258,6 +2307,7 @@ export declare namespace Stripe {
   export {TestHelpers};
   export {Treasury};
   export {V2};
+  export {Reserve};
   // StripeInterfaceExports: The end of the section generated from our OpenAPI spec
   // V1EventExports: The beginning of the section generated from our OpenAPI spec
   export {
@@ -2343,11 +2393,16 @@ export declare namespace Stripe {
     FinancialConnectionsAccountCreatedEvent,
     FinancialConnectionsAccountDeactivatedEvent,
     FinancialConnectionsAccountDisconnectedEvent,
+    FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent,
     FinancialConnectionsAccountReactivatedEvent,
     FinancialConnectionsAccountRefreshedBalanceEvent,
     FinancialConnectionsAccountRefreshedOwnershipEvent,
     FinancialConnectionsAccountRefreshedTransactionsEvent,
+    FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent,
     FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent,
+    FinancialConnectionsAccountUpcomingDeactivationEvent,
+    FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent,
+    FinancialConnectionsAuthorizationUpcomingDeactivationEvent,
     IdentityVerificationSessionCanceledEvent,
     IdentityVerificationSessionCreatedEvent,
     IdentityVerificationSessionProcessingEvent,
@@ -2531,6 +2586,8 @@ export declare namespace Stripe {
     RawRequestOptions,
     ApiList,
     ApiListPromise,
+    V2List,
+    V2ListPromise,
     ApiSearchResultPromise,
     ApiSearchResult,
     StripeStreamResponse,
@@ -2553,9 +2610,133 @@ export declare namespace Stripe {
     Emptyable,
   };
 
+  export {
+    OAuthResource,
+    OAuthToken,
+    OAuthTokenParams,
+    OAuthAuthorizeUrlOptions,
+    OAuthAuthorizeUrlParams,
+    OAuthDeauthorization,
+    OAuthDeauthorizeParams,
+  };
+
+  export type Decimal = import('./shared.js').Decimal;
+
+  export type StripeConfig = import('./lib.js').StripeConfig;
+  export type LatestApiVersion = import('./lib.js').LatestApiVersion;
+  export type HttpAgent = import('./lib.js').HttpAgent;
+  export type HttpProtocol = import('./lib.js').HttpProtocol;
+  export type StripeResource = import('./StripeResource.js').StripeResource;
+  export type CryptoProvider = import('./crypto/CryptoProvider.js').CryptoProvider;
+  export type HttpClient = import('./net/HttpClient.js').HttpClientInterface;
+  export type HttpClientResponse = import('./net/HttpClient.js').HttpClientResponseInterface;
+  export type RawErrorType = import('./Types.js').RawErrorType;
+  export type Webhooks = import('./Webhooks.js').WebhookObject;
+  export type WebhookTestHeaderOptions = import('./Webhooks.js').WebhookTestHeaderOptions;
+  export type Signature = import('./Webhooks.js').WebhookSignatureObject;
+
   export {StripeContext as StripeContextType};
   export {StripeRawError};
-  export import ErrorType = _Error;
+  // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
+  export namespace ErrorType {
+    export type StripeError = InstanceType<typeof _Error.StripeError>;
+    export type StripeCardError = InstanceType<typeof _Error.StripeCardError>;
+    export type StripeInvalidRequestError = InstanceType<
+      typeof _Error.StripeInvalidRequestError
+    >;
+    export type StripeAPIError = InstanceType<typeof _Error.StripeAPIError>;
+    export type StripeAuthenticationError = InstanceType<
+      typeof _Error.StripeAuthenticationError
+    >;
+    export type StripePermissionError = InstanceType<
+      typeof _Error.StripePermissionError
+    >;
+    export type StripeRateLimitError = InstanceType<
+      typeof _Error.StripeRateLimitError
+    >;
+    export type StripeConnectionError = InstanceType<
+      typeof _Error.StripeConnectionError
+    >;
+    export type StripeSignatureVerificationError = InstanceType<
+      typeof _Error.StripeSignatureVerificationError
+    >;
+    export type StripeIdempotencyError = InstanceType<
+      typeof _Error.StripeIdempotencyError
+    >;
+    export type StripeOAuthError = InstanceType<typeof _Error.StripeOAuthError>;
+    export type StripeInvalidGrantError = InstanceType<
+      typeof _Error.StripeInvalidGrantError
+    >;
+    export type StripeInvalidClientError = InstanceType<
+      typeof _Error.StripeInvalidClientError
+    >;
+    export type StripeOAuthInvalidRequestError = InstanceType<
+      typeof _Error.StripeOAuthInvalidRequestError
+    >;
+    export type StripeInvalidScopeError = InstanceType<
+      typeof _Error.StripeInvalidScopeError
+    >;
+    export type StripeUnsupportedGrantTypeError = InstanceType<
+      typeof _Error.StripeUnsupportedGrantTypeError
+    >;
+    export type StripeUnsupportedResponseTypeError = InstanceType<
+      typeof _Error.StripeUnsupportedResponseTypeError
+    >;
+    export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
+    export type TemporarySessionExpiredError = InstanceType<
+      typeof _Error.TemporarySessionExpiredError
+    >;
+  }
+  export namespace errors {
+    export type StripeError = InstanceType<typeof _Error.StripeError>;
+    export type StripeCardError = InstanceType<typeof _Error.StripeCardError>;
+    export type StripeInvalidRequestError = InstanceType<
+      typeof _Error.StripeInvalidRequestError
+    >;
+    export type StripeAPIError = InstanceType<typeof _Error.StripeAPIError>;
+    export type StripeAuthenticationError = InstanceType<
+      typeof _Error.StripeAuthenticationError
+    >;
+    export type StripePermissionError = InstanceType<
+      typeof _Error.StripePermissionError
+    >;
+    export type StripeRateLimitError = InstanceType<
+      typeof _Error.StripeRateLimitError
+    >;
+    export type StripeConnectionError = InstanceType<
+      typeof _Error.StripeConnectionError
+    >;
+    export type StripeSignatureVerificationError = InstanceType<
+      typeof _Error.StripeSignatureVerificationError
+    >;
+    export type StripeIdempotencyError = InstanceType<
+      typeof _Error.StripeIdempotencyError
+    >;
+    export type StripeOAuthError = InstanceType<typeof _Error.StripeOAuthError>;
+    export type StripeInvalidGrantError = InstanceType<
+      typeof _Error.StripeInvalidGrantError
+    >;
+    export type StripeInvalidClientError = InstanceType<
+      typeof _Error.StripeInvalidClientError
+    >;
+    export type StripeOAuthInvalidRequestError = InstanceType<
+      typeof _Error.StripeOAuthInvalidRequestError
+    >;
+    export type StripeInvalidScopeError = InstanceType<
+      typeof _Error.StripeInvalidScopeError
+    >;
+    export type StripeUnsupportedGrantTypeError = InstanceType<
+      typeof _Error.StripeUnsupportedGrantTypeError
+    >;
+    export type StripeUnsupportedResponseTypeError = InstanceType<
+      typeof _Error.StripeUnsupportedResponseTypeError
+    >;
+    export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
+    export type TemporarySessionExpiredError = InstanceType<
+      typeof _Error.TemporarySessionExpiredError
+    >;
+  }
+  // ErrorTypeNamespaces: The end of the section generated from our OpenAPI spec
   export import Events = V2.Core.Events;
 }
 

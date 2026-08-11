@@ -25,7 +25,7 @@ export interface OnboardingLink {
   /**
    * Link type options associated with the current onboarding link object.
    */
-  link_options: Terminal.OnboardingLink.LinkOptions;
+  link_options: OnboardingLink.LinkOptions;
 
   /**
    * The type of link being generated.
@@ -42,27 +42,25 @@ export interface OnboardingLink {
    */
   redirect_url: string;
 }
-export namespace Terminal {
-  export namespace OnboardingLink {
-    export interface LinkOptions {
+export namespace OnboardingLink {
+  export interface LinkOptions {
+    /**
+     * The options associated with the Apple Terms and Conditions link type.
+     */
+    apple_terms_and_conditions: LinkOptions.AppleTermsAndConditions | null;
+  }
+
+  export namespace LinkOptions {
+    export interface AppleTermsAndConditions {
       /**
-       * The options associated with the Apple Terms and Conditions link type.
+       * Whether the link should also support users relinking their Apple account.
        */
-      apple_terms_and_conditions: LinkOptions.AppleTermsAndConditions | null;
-    }
+      allow_relinking: boolean | null;
 
-    export namespace LinkOptions {
-      export interface AppleTermsAndConditions {
-        /**
-         * Whether the link should also support users relinking their Apple account.
-         */
-        allow_relinking: boolean | null;
-
-        /**
-         * The business name of the merchant accepting Apple's Terms and Conditions.
-         */
-        merchant_display_name: string;
-      }
+      /**
+       * The business name of the merchant accepting Apple's Terms and Conditions.
+       */
+      merchant_display_name: string;
     }
   }
 }

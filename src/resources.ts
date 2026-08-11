@@ -30,6 +30,7 @@ import {EventDestinationResource as V2CoreEventDestinations} from './resources/V
 import {EventResource as V2CoreEvents} from './resources/V2/Core/Events.js';
 import {FeatureResource as EntitlementsFeatures} from './resources/Entitlements/Features.js';
 import {FinancialAccountResource as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
+import {ImportResource as V2CommerceProductCatalogImports} from './resources/V2/Commerce/ProductCatalog/Imports.js';
 import {InboundTransferResource as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransferResource as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {LocationResource as TerminalLocations} from './resources/Terminal/Locations.js';
@@ -254,6 +255,11 @@ export const V2 = resourceNamespace('v2', {
     MeterEventSession: V2BillingMeterEventSession,
     MeterEventStream: V2BillingMeterEventStream,
     MeterEvents: V2BillingMeterEvents,
+  }),
+  Commerce: resourceNamespace('commerce', {
+    ProductCatalog: resourceNamespace('productCatalog', {
+      Imports: V2CommerceProductCatalogImports,
+    }),
   }),
   Core: resourceNamespace('core', {
     AccountLinks: V2CoreAccountLinks,

@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {ConfirmationToken} from './../ConfirmationTokens.js';
-import {MetadataParam, Emptyable, AddressParam} from '../../shared.js';
+import {
+  MetadataParam,
+  OtherString,
+  Emptyable,
+  AddressParam,
+} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class ConfirmationTokenResource extends StripeResource {
@@ -124,6 +129,11 @@ export namespace TestHelpers {
       billing_details?: PaymentMethodData.BillingDetails;
 
       /**
+       * If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
+       */
+      bizum?: PaymentMethodData.Bizum;
+
+      /**
        * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
        */
       blik?: PaymentMethodData.Blik;
@@ -199,7 +209,7 @@ export namespace TestHelpers {
       kr_card?: PaymentMethodData.KrCard;
 
       /**
-       * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+       * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link is also known as Onelink in the UK).
        */
       link?: PaymentMethodData.Link;
 
@@ -299,6 +309,11 @@ export namespace TestHelpers {
       satispay?: PaymentMethodData.Satispay;
 
       /**
+       * If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
+       */
+      scalapay?: PaymentMethodData.Scalapay;
+
+      /**
        * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
        */
       sepa_debit?: PaymentMethodData.SepaDebit;
@@ -309,7 +324,7 @@ export namespace TestHelpers {
       sofort?: PaymentMethodData.Sofort;
 
       /**
-       * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+       * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
        */
       sunbit?: PaymentMethodData.Sunbit;
 
@@ -356,7 +371,7 @@ export namespace TestHelpers {
       card?: PaymentMethodOptions.Card;
     }
 
-    export type SetupFutureUsage = 'off_session' | 'on_session';
+    export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
 
     export interface Shipping {
       /**
@@ -399,7 +414,11 @@ export namespace TestHelpers {
 
       export interface Alipay {}
 
-      export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+      export type AllowRedisplay =
+        | 'always'
+        | 'limited'
+        | 'unspecified'
+        | OtherString;
 
       export interface Alma {}
 
@@ -459,6 +478,8 @@ export namespace TestHelpers {
          */
         tax_id?: string;
       }
+
+      export interface Bizum {}
 
       export interface Blik {}
 
@@ -615,6 +636,8 @@ export namespace TestHelpers {
 
       export interface Satispay {}
 
+      export interface Scalapay {}
+
       export interface SepaDebit {
         /**
          * IBAN of the bank account.
@@ -646,6 +669,7 @@ export namespace TestHelpers {
         | 'bacs_debit'
         | 'bancontact'
         | 'billie'
+        | 'bizum'
         | 'blik'
         | 'boleto'
         | 'cashapp'
@@ -678,6 +702,7 @@ export namespace TestHelpers {
         | 'revolut_pay'
         | 'samsung_pay'
         | 'satispay'
+        | 'scalapay'
         | 'sepa_debit'
         | 'sofort'
         | 'sunbit'
@@ -686,7 +711,8 @@ export namespace TestHelpers {
         | 'upi'
         | 'us_bank_account'
         | 'wechat_pay'
-        | 'zip';
+        | 'zip'
+        | OtherString;
 
       export interface Upi {
         /**
@@ -770,14 +796,17 @@ export namespace TestHelpers {
           | 'bank_muamalat'
           | 'bank_of_china'
           | 'bank_rakyat'
+          | 'bnp_paribas'
           | 'bsn'
           | 'cimb'
+          | 'citibank'
           | 'deutsche_bank'
           | 'hong_leong_bank'
           | 'hsbc'
           | 'kfh'
           | 'maybank2e'
           | 'maybank2u'
+          | 'mbsb_bank'
           | 'ocbc'
           | 'pb_enterprise'
           | 'public_bank'
@@ -830,7 +859,7 @@ export namespace TestHelpers {
       }
 
       export namespace NaverPay {
-        export type Funding = 'card' | 'points';
+        export type Funding = 'card' | 'points' | OtherString;
       }
 
       export namespace P24 {
@@ -860,11 +889,19 @@ export namespace TestHelpers {
           | 'tmobile_usbugi_bankowe'
           | 'toyota_bank'
           | 'velobank'
-          | 'volkswagen_bank';
+          | 'volkswagen_bank'
+          | OtherString;
       }
 
       export namespace Sofort {
-        export type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+        export type Country =
+          | 'AT'
+          | 'BE'
+          | 'DE'
+          | 'ES'
+          | 'IT'
+          | 'NL'
+          | OtherString;
       }
 
       export namespace Upi {
@@ -891,14 +928,14 @@ export namespace TestHelpers {
         }
 
         export namespace MandateOptions {
-          export type AmountType = 'fixed' | 'maximum';
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
         }
       }
 
       export namespace UsBankAccount {
-        export type AccountHolderType = 'company' | 'individual';
+        export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-        export type AccountType = 'checking' | 'savings';
+        export type AccountType = 'checking' | 'savings' | OtherString;
       }
     }
 
@@ -939,7 +976,11 @@ export namespace TestHelpers {
           }
 
           export namespace Plan {
-            export type Type = 'bonus' | 'fixed_count' | 'revolving';
+            export type Type =
+              | 'bonus'
+              | 'fixed_count'
+              | 'revolving'
+              | OtherString;
           }
         }
       }

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams} from '../../shared.js';
+import {PaginationParams, OtherString} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 
 export class TestClockResource extends StripeResource {
@@ -12,10 +12,10 @@ export class TestClockResource extends StripeResource {
     id: string,
     params?: TestHelpers.TestClockDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<TestHelpers.DeletedTestClock>> {
+  ): Promise<Response<DeletedTestClock>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/test_helpers/test_clocks/${id}`,
+      `/v1/test_helpers/test_clocks/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -30,7 +30,7 @@ export class TestClockResource extends StripeResource {
   ): Promise<Response<TestClock>> {
     return this._makeRequest(
       'GET',
-      `/v1/test_helpers/test_clocks/${id}`,
+      `/v1/test_helpers/test_clocks/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -76,7 +76,7 @@ export class TestClockResource extends StripeResource {
   ): Promise<Response<TestClock>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/test_clocks/${id}/advance`,
+      `/v1/test_helpers/test_clocks/${encodeURIComponent(id)}/advance`,
       params,
       options
     ) as any;
@@ -126,42 +126,39 @@ export interface TestClock {
   /**
    * The status of the Test Clock.
    */
-  status: TestHelpers.TestClock.Status;
+  status: TestClock.Status;
 
-  status_details: TestHelpers.TestClock.StatusDetails;
+  status_details: TestClock.StatusDetails;
 }
-export namespace TestHelpers {
-  export interface DeletedTestClock {
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
+export interface DeletedTestClock {
+  /**
+   * Unique identifier for the object.
+   */
+  id: string;
 
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'test_helpers.test_clock';
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'test_helpers.test_clock';
 
-    /**
-     * Always true for a deleted object
-     */
-    deleted: true;
+  /**
+   * Always true for a deleted object
+   */
+  deleted: true;
+}
+export namespace TestClock {
+  export type Status = 'advancing' | 'internal_failure' | 'ready' | OtherString;
+
+  export interface StatusDetails {
+    advancing?: StatusDetails.Advancing;
   }
 
-  export namespace TestClock {
-    export type Status = 'advancing' | 'internal_failure' | 'ready';
-
-    export interface StatusDetails {
-      advancing?: StatusDetails.Advancing;
-    }
-
-    export namespace StatusDetails {
-      export interface Advancing {
-        /**
-         * The `frozen_time` that the Test Clock is advancing towards.
-         */
-        target_frozen_time: number;
-      }
+  export namespace StatusDetails {
+    export interface Advancing {
+      /**
+       * The `frozen_time` that the Test Clock is advancing towards.
+       */
+      target_frozen_time: number;
     }
   }
 }
@@ -171,6 +168,11 @@ export namespace TestHelpers {
      * The initial frozen time for this test clock.
      */
     frozen_time: number;
+
+    /**
+     * Existing customer this test clock will be attached to. Once attached, customers can't be removed from a test clock.
+     */
+    customer?: string;
 
     /**
      * Specifies which fields in the response should be expanded.

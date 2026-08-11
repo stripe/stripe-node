@@ -90,6 +90,14 @@ describe('Error', () => {
       expect(e).not.to.have.property('decline_code', 'xyzzy');
     });
 
+    it('exposes network_advice_code from raw error', () => {
+      const e = new Error.StripeError({
+        type: 'card_error',
+        network_advice_code: '02',
+      } as any);
+      expect(e).to.have.property('network_advice_code', '02');
+    });
+
     it('Pulls in headers', () => {
       const headers = {'Request-Id': '123'};
       const e = Error.StripeError.generate({

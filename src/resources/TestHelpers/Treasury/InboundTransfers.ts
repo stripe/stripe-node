@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {InboundTransfer} from './../../Treasury/InboundTransfers.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class InboundTransferResource extends StripeResource {
@@ -15,7 +16,9 @@ export class InboundTransferResource extends StripeResource {
   ): Promise<Response<InboundTransfer>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/inbound_transfers/${id}/fail`,
+      `/v1/test_helpers/treasury/inbound_transfers/${encodeURIComponent(
+        id
+      )}/fail`,
       params,
       options
     ) as any;
@@ -30,7 +33,9 @@ export class InboundTransferResource extends StripeResource {
   ): Promise<Response<InboundTransfer>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/inbound_transfers/${id}/return`,
+      `/v1/test_helpers/treasury/inbound_transfers/${encodeURIComponent(
+        id
+      )}/return`,
       params,
       options
     ) as any;
@@ -45,7 +50,9 @@ export class InboundTransferResource extends StripeResource {
   ): Promise<Response<InboundTransfer>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/inbound_transfers/${id}/succeed`,
+      `/v1/test_helpers/treasury/inbound_transfers/${encodeURIComponent(
+        id
+      )}/succeed`,
       params,
       options
     ) as any;
@@ -87,7 +94,8 @@ export namespace TestHelpers {
           | 'invalid_account_number'
           | 'invalid_currency'
           | 'no_account'
-          | 'other';
+          | 'other'
+          | OtherString;
       }
     }
   }

@@ -1,0 +1,13 @@
+{
+  "name": "typescriptTestCjsNode16",
+  "version": "1.0.0",
+  "description": "Regression test for CJS types with moduleResolution: node16",
+  "main": "index.js",
+  "dependencies": {
+    "stripe": "file:../../"
+  },
+  "devDependencies": {
+    "@types/node": "~22.19",
+    "typescript": "^5.9.3"
+  }
+}

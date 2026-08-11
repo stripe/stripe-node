@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams, Emptyable} from '../shared.js';
+import {OtherString, PaginationParams, Emptyable} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class PaymentMethodConfigurationResource extends StripeResource {
@@ -46,7 +46,7 @@ export class PaymentMethodConfigurationResource extends StripeResource {
   ): Promise<Response<PaymentMethodConfiguration>> {
     return this._makeRequest(
       'GET',
-      `/v1/payment_method_configurations/${id}`,
+      `/v1/payment_method_configurations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -61,7 +61,7 @@ export class PaymentMethodConfigurationResource extends StripeResource {
   ): Promise<Response<PaymentMethodConfiguration>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_method_configurations/${id}`,
+      `/v1/payment_method_configurations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -109,6 +109,8 @@ export interface PaymentMethodConfiguration {
   bancontact?: PaymentMethodConfiguration.Bancontact;
 
   billie?: PaymentMethodConfiguration.Billie;
+
+  bizum?: PaymentMethodConfiguration.Bizum;
 
   blik?: PaymentMethodConfiguration.Blik;
 
@@ -201,6 +203,8 @@ export interface PaymentMethodConfiguration {
   samsung_pay?: PaymentMethodConfiguration.SamsungPay;
 
   satispay?: PaymentMethodConfiguration.Satispay;
+
+  scalapay?: PaymentMethodConfiguration.Scalapay;
 
   sepa_debit?: PaymentMethodConfiguration.SepaDebit;
 
@@ -318,6 +322,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: Billie.DisplayPreference;
+  }
+
+  export interface Bizum {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Bizum.DisplayPreference;
   }
 
   export interface Blik {
@@ -644,6 +657,15 @@ export namespace PaymentMethodConfiguration {
     display_preference: Satispay.DisplayPreference;
   }
 
+  export interface Scalapay {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Scalapay.DisplayPreference;
+  }
+
   export interface SepaDebit {
     /**
      * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
@@ -744,9 +766,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -769,9 +791,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -794,9 +816,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -819,9 +841,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -844,9 +866,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -869,9 +891,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -894,9 +916,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -919,9 +941,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -944,9 +966,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -969,9 +991,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -994,9 +1016,34 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Bizum {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1019,9 +1066,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1044,9 +1091,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1069,9 +1116,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1094,9 +1141,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1119,9 +1166,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1144,9 +1191,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1169,9 +1216,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1194,9 +1241,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1219,9 +1266,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1244,9 +1291,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1269,9 +1316,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1294,9 +1341,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1319,9 +1366,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1344,9 +1391,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1369,9 +1416,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1394,9 +1441,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1419,9 +1466,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1444,9 +1491,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1469,9 +1516,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1494,9 +1541,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1519,9 +1566,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1544,9 +1591,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1569,9 +1616,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1594,9 +1641,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1619,9 +1666,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1644,9 +1691,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1669,9 +1716,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1694,9 +1741,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1719,9 +1766,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1744,9 +1791,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1769,9 +1816,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1794,9 +1841,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1819,9 +1866,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1844,9 +1891,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1869,9 +1916,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1894,9 +1941,34 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Scalapay {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1919,9 +1991,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1944,9 +2016,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1969,9 +2041,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -1994,9 +2066,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -2019,9 +2091,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -2044,9 +2116,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -2069,9 +2141,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -2094,9 +2166,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 
@@ -2119,9 +2191,9 @@ export namespace PaymentMethodConfiguration {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
 
-      export type Value = 'off' | 'on';
+      export type Value = 'off' | 'on' | OtherString;
     }
   }
 }
@@ -2185,6 +2257,11 @@ export interface PaymentMethodConfigurationCreateParams {
    * Billie is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that offers businesses Pay by Invoice where they offer payment terms ranging from 7-120 days. Customers are redirected from your website or app, authorize the payment with Billie, then return to your website or app. You get [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
    */
   billie?: PaymentMethodConfigurationCreateParams.Billie;
+
+  /**
+   * To enable Bizum, buyers need a Spanish IBAN from a bank connected to Bizum. Within their banking app, they can enable Bizum and link their mobile number to their IBAN.
+   */
+  bizum?: PaymentMethodConfigurationCreateParams.Bizum;
 
   /**
    * BLIK is a [single use](https://docs.stripe.com/payments/payment-methods#usage) payment method that requires customers to authenticate their payments. When customers want to pay online using BLIK, they request a six-digit code from their banking application and enter it into the payment collection form. Check this [page](https://docs.stripe.com/payments/blik) for more details.
@@ -2387,6 +2464,11 @@ export interface PaymentMethodConfigurationCreateParams {
   satispay?: PaymentMethodConfigurationCreateParams.Satispay;
 
   /**
+   * Scalapay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that lets customers pay in 3 or 4 installments. Customers are redirected from your website or app, authorize the payment with Scalapay, then return to your website or app. You get [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+   */
+  scalapay?: PaymentMethodConfigurationCreateParams.Scalapay;
+
+  /**
    * The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is an initiative of the European Union to simplify payments within and across member countries. SEPA established and enforced banking standards to allow for the direct debiting of every EUR-denominated bank account within the SEPA region, check this [page](https://docs.stripe.com/payments/sepa-debit) for more details.
    */
   sepa_debit?: PaymentMethodConfigurationCreateParams.SepaDebit;
@@ -2514,6 +2596,13 @@ export namespace PaymentMethodConfigurationCreateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: Billie.DisplayPreference;
+  }
+
+  export interface Bizum {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Bizum.DisplayPreference;
   }
 
   export interface Blik {
@@ -2775,6 +2864,13 @@ export namespace PaymentMethodConfigurationCreateParams {
     display_preference?: Satispay.DisplayPreference;
   }
 
+  export interface Scalapay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Scalapay.DisplayPreference;
+  }
+
   export interface SepaDebit {
     /**
      * Whether or not the payment method should be displayed.
@@ -2847,7 +2943,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -2860,7 +2956,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -2873,7 +2969,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -2886,7 +2982,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -2899,7 +2995,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -2912,7 +3008,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -2925,7 +3021,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -2938,7 +3034,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -2951,7 +3047,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -2964,7 +3060,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -2977,7 +3073,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -2990,7 +3086,20 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Bizum {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3003,7 +3112,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3016,7 +3125,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3029,7 +3138,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3042,7 +3151,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3055,7 +3164,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3068,7 +3177,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3081,7 +3190,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3094,7 +3203,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3107,7 +3216,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3120,7 +3229,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3133,7 +3242,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3146,7 +3255,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3159,7 +3268,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3172,7 +3281,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3185,7 +3294,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3198,7 +3307,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3211,7 +3320,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3224,7 +3333,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3237,7 +3346,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3250,7 +3359,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3263,7 +3372,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3276,7 +3385,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3289,7 +3398,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3302,7 +3411,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3315,7 +3424,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3328,7 +3437,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3341,7 +3450,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3354,7 +3463,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3367,7 +3476,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3380,7 +3489,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3393,7 +3502,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3406,7 +3515,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3419,7 +3528,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3432,7 +3541,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3445,7 +3554,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3458,7 +3567,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3471,7 +3580,20 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Scalapay {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3484,7 +3606,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3497,7 +3619,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3510,7 +3632,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3523,7 +3645,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3536,7 +3658,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3549,7 +3671,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3562,7 +3684,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3575,7 +3697,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -3588,7 +3710,7 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 }
@@ -3663,6 +3785,11 @@ export interface PaymentMethodConfigurationUpdateParams {
    * Billie is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that offers businesses Pay by Invoice where they offer payment terms ranging from 7-120 days. Customers are redirected from your website or app, authorize the payment with Billie, then return to your website or app. You get [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
    */
   billie?: PaymentMethodConfigurationUpdateParams.Billie;
+
+  /**
+   * To enable Bizum, buyers need a Spanish IBAN from a bank connected to Bizum. Within their banking app, they can enable Bizum and link their mobile number to their IBAN.
+   */
+  bizum?: PaymentMethodConfigurationUpdateParams.Bizum;
 
   /**
    * BLIK is a [single use](https://docs.stripe.com/payments/payment-methods#usage) payment method that requires customers to authenticate their payments. When customers want to pay online using BLIK, they request a six-digit code from their banking application and enter it into the payment collection form. Check this [page](https://docs.stripe.com/payments/blik) for more details.
@@ -3860,6 +3987,11 @@ export interface PaymentMethodConfigurationUpdateParams {
   satispay?: PaymentMethodConfigurationUpdateParams.Satispay;
 
   /**
+   * Scalapay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that lets customers pay in 3 or 4 installments. Customers are redirected from your website or app, authorize the payment with Scalapay, then return to your website or app. You get [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+   */
+  scalapay?: PaymentMethodConfigurationUpdateParams.Scalapay;
+
+  /**
    * The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is an initiative of the European Union to simplify payments within and across member countries. SEPA established and enforced banking standards to allow for the direct debiting of every EUR-denominated bank account within the SEPA region, check this [page](https://docs.stripe.com/payments/sepa-debit) for more details.
    */
   sepa_debit?: PaymentMethodConfigurationUpdateParams.SepaDebit;
@@ -3987,6 +4119,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: Billie.DisplayPreference;
+  }
+
+  export interface Bizum {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Bizum.DisplayPreference;
   }
 
   export interface Blik {
@@ -4248,6 +4387,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
     display_preference?: Satispay.DisplayPreference;
   }
 
+  export interface Scalapay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Scalapay.DisplayPreference;
+  }
+
   export interface SepaDebit {
     /**
      * Whether or not the payment method should be displayed.
@@ -4320,7 +4466,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4333,7 +4479,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4346,7 +4492,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4359,7 +4505,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4372,7 +4518,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4385,7 +4531,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4398,7 +4544,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4411,7 +4557,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4424,7 +4570,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4437,7 +4583,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4450,7 +4596,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4463,7 +4609,20 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Bizum {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4476,7 +4635,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4489,7 +4648,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4502,7 +4661,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4515,7 +4674,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4528,7 +4687,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4541,7 +4700,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4554,7 +4713,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4567,7 +4726,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4580,7 +4739,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4593,7 +4752,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4606,7 +4765,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4619,7 +4778,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4632,7 +4791,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4645,7 +4804,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4658,7 +4817,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4671,7 +4830,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4684,7 +4843,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4697,7 +4856,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4710,7 +4869,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4723,7 +4882,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4736,7 +4895,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4749,7 +4908,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4762,7 +4921,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4775,7 +4934,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4788,7 +4947,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4801,7 +4960,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4814,7 +4973,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4827,7 +4986,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4840,7 +4999,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4853,7 +5012,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4866,7 +5025,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4879,7 +5038,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4892,7 +5051,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4905,7 +5064,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4918,7 +5077,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4931,7 +5090,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4944,7 +5103,20 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Scalapay {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4957,7 +5129,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4970,7 +5142,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4983,7 +5155,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -4996,7 +5168,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -5009,7 +5181,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -5022,7 +5194,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -5035,7 +5207,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -5048,7 +5220,7 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 
@@ -5061,11 +5233,16 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
 
     export namespace DisplayPreference {
-      export type Preference = 'none' | 'off' | 'on';
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
     }
   }
 }
 export interface PaymentMethodConfigurationListParams extends PaginationParams {
+  /**
+   * Whether the configuration is active.
+   */
+  active?: boolean;
+
   /**
    * The Connect application to filter by.
    */

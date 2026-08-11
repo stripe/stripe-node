@@ -2,8 +2,8 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {Event} from './Events.js';
-import {MetadataParam, Metadata} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {DeletedObject} from './../../V2/DeletedObject.js';
 
 export class EventDestinationResource extends StripeResource {
@@ -13,7 +13,7 @@ export class EventDestinationResource extends StripeResource {
   list(
     params?: V2.Core.EventDestinationListParams,
     options?: RequestOptions
-  ): ApiListPromise<EventDestination> {
+  ): V2ListPromise<EventDestination> {
     return this._makeRequest(
       'GET',
       '/v2/core/event_destinations',
@@ -48,7 +48,7 @@ export class EventDestinationResource extends StripeResource {
   ): Promise<Response<DeletedObject>> {
     return this._makeRequest(
       'DELETE',
-      `/v2/core/event_destinations/${id}`,
+      `/v2/core/event_destinations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -63,7 +63,7 @@ export class EventDestinationResource extends StripeResource {
   ): Promise<Response<EventDestination>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/event_destinations/${id}`,
+      `/v2/core/event_destinations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -78,7 +78,7 @@ export class EventDestinationResource extends StripeResource {
   ): Promise<Response<EventDestination>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/event_destinations/${id}`,
+      `/v2/core/event_destinations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -93,7 +93,7 @@ export class EventDestinationResource extends StripeResource {
   ): Promise<Response<EventDestination>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/event_destinations/${id}/disable`,
+      `/v2/core/event_destinations/${encodeURIComponent(id)}/disable`,
       params,
       options
     ) as any;
@@ -108,7 +108,7 @@ export class EventDestinationResource extends StripeResource {
   ): Promise<Response<EventDestination>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/event_destinations/${id}/enable`,
+      `/v2/core/event_destinations/${encodeURIComponent(id)}/enable`,
       params,
       options
     ) as any;
@@ -123,7 +123,7 @@ export class EventDestinationResource extends StripeResource {
   ): Promise<Response<Event>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/event_destinations/${id}/ping`,
+      `/v2/core/event_destinations/${encodeURIComponent(id)}/ping`,
       params,
       options
     ) as any;
@@ -143,7 +143,12 @@ export interface EventDestination {
   /**
    * Amazon EventBridge configuration.
    */
-  amazon_eventbridge?: V2.Core.EventDestination.AmazonEventbridge;
+  amazon_eventbridge?: EventDestination.AmazonEventbridge;
+
+  /**
+   * Azure Event Grid configuration.
+   */
+  azure_event_grid?: EventDestination.AzureEventGrid;
 
   /**
    * Time at which the object was created.
@@ -163,7 +168,7 @@ export interface EventDestination {
   /**
    * Payload type of events being subscribed to.
    */
-  event_payload: V2.Core.EventDestination.EventPayload;
+  event_payload: EventDestination.EventPayload;
 
   /**
    * Specifies which accounts' events route to this destination.
@@ -197,17 +202,17 @@ export interface EventDestination {
   /**
    * Status. It can be set to either enabled or disabled.
    */
-  status: V2.Core.EventDestination.Status;
+  status: EventDestination.Status;
 
   /**
    * Additional information about event destination status.
    */
-  status_details?: V2.Core.EventDestination.StatusDetails;
+  status_details?: EventDestination.StatusDetails;
 
   /**
    * Event destination type.
    */
-  type: V2.Core.EventDestination.Type;
+  type: EventDestination.Type;
 
   /**
    * Time at which the object was last updated.
@@ -217,73 +222,113 @@ export interface EventDestination {
   /**
    * Webhook endpoint configuration.
    */
-  webhook_endpoint?: V2.Core.EventDestination.WebhookEndpoint;
+  webhook_endpoint?: EventDestination.WebhookEndpoint;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace EventDestination {
-      export interface AmazonEventbridge {
-        /**
-         * The AWS account ID.
-         */
-        aws_account_id: string;
+export namespace EventDestination {
+  export interface AmazonEventbridge {
+    /**
+     * The AWS account ID.
+     */
+    aws_account_id: string;
 
-        /**
-         * The ARN of the AWS event source.
-         */
-        aws_event_source_arn: string;
+    /**
+     * The ARN of the AWS event source.
+     */
+    aws_event_source_arn: string;
 
-        /**
-         * The state of the AWS event source.
-         */
-        aws_event_source_status: AmazonEventbridge.AwsEventSourceStatus;
-      }
+    /**
+     * The state of the AWS event source.
+     */
+    aws_event_source_status: AmazonEventbridge.AwsEventSourceStatus;
+  }
 
-      export type EventPayload = 'snapshot' | 'thin';
+  export interface AzureEventGrid {
+    /**
+     * The name of the Azure partner topic.
+     */
+    azure_partner_topic_name: string;
 
-      export type Status = 'disabled' | 'enabled';
+    /**
+     * The status of the Azure partner topic.
+     */
+    azure_partner_topic_status: AzureEventGrid.AzurePartnerTopicStatus;
 
-      export interface StatusDetails {
-        /**
-         * Details about why the event destination has been disabled.
-         */
-        disabled?: StatusDetails.Disabled;
-      }
+    /**
+     * The Azure region.
+     */
+    azure_region: string;
 
-      export type Type = 'amazon_eventbridge' | 'webhook_endpoint';
+    /**
+     * The name of the Azure resource group.
+     */
+    azure_resource_group_name: string;
 
-      export interface WebhookEndpoint {
-        /**
-         * The signing secret of the webhook endpoint, only includable on creation.
-         */
-        signing_secret?: string;
+    /**
+     * The Azure subscription ID.
+     */
+    azure_subscription_id: string;
+  }
 
-        /**
-         * The URL of the webhook endpoint, includable.
-         */
-        url?: string;
-      }
+  export type EventPayload = 'snapshot' | 'thin';
 
-      export namespace AmazonEventbridge {
-        export type AwsEventSourceStatus =
-          | 'active'
-          | 'deleted'
-          | 'pending'
-          | 'unknown';
-      }
+  export type Status = 'disabled' | 'enabled';
 
-      export namespace StatusDetails {
-        export interface Disabled {
-          /**
-           * Reason event destination has been disabled.
-           */
-          reason: Disabled.Reason;
-        }
+  export interface StatusDetails {
+    /**
+     * Details about why the event destination has been disabled.
+     */
+    disabled?: StatusDetails.Disabled;
+  }
 
-        export namespace Disabled {
-          export type Reason = 'no_aws_event_source_exists' | 'user';
-        }
-      }
+  export type Type =
+    | 'amazon_eventbridge'
+    | 'azure_event_grid'
+    | 'webhook_endpoint'
+    | OtherString;
+
+  export interface WebhookEndpoint {
+    /**
+     * The signing secret of the webhook endpoint, only includable on creation.
+     */
+    signing_secret?: string;
+
+    /**
+     * The URL of the webhook endpoint, includable.
+     */
+    url?: string;
+  }
+
+  export namespace AmazonEventbridge {
+    export type AwsEventSourceStatus =
+      | 'active'
+      | 'deleted'
+      | 'pending'
+      | 'unknown';
+  }
+
+  export namespace AzureEventGrid {
+    export type AzurePartnerTopicStatus =
+      | 'activated'
+      | 'deleted'
+      | 'never_activated'
+      | 'unknown'
+      | OtherString;
+  }
+
+  export namespace StatusDetails {
+    export interface Disabled {
+      /**
+       * Reason event destination has been disabled.
+       */
+      reason: Disabled.Reason;
+    }
+
+    export namespace Disabled {
+      export type Reason =
+        | 'no_aws_event_source_exists'
+        | 'no_azure_partner_topic_exists'
+        | 'user'
+        | OtherString;
     }
   }
 }
@@ -314,6 +359,11 @@ export namespace V2 {
        * Amazon EventBridge configuration.
        */
       amazon_eventbridge?: EventDestinationCreateParams.AmazonEventbridge;
+
+      /**
+       * Azure Event Grid configuration.
+       */
+      azure_event_grid?: EventDestinationCreateParams.AzureEventGrid;
 
       /**
        * An optional description of what the event destination is used for.
@@ -353,7 +403,11 @@ export namespace V2 {
     export namespace EventDestinationCreateParams {
       export type EventPayload = 'snapshot' | 'thin';
 
-      export type Type = 'amazon_eventbridge' | 'webhook_endpoint';
+      export type Type =
+        | 'amazon_eventbridge'
+        | 'azure_event_grid'
+        | 'webhook_endpoint'
+        | OtherString;
 
       export interface AmazonEventbridge {
         /**
@@ -367,9 +421,27 @@ export namespace V2 {
         aws_region: string;
       }
 
+      export interface AzureEventGrid {
+        /**
+         * The Azure region.
+         */
+        azure_region: string;
+
+        /**
+         * The name of the Azure resource group.
+         */
+        azure_resource_group_name: string;
+
+        /**
+         * The Azure subscription ID.
+         */
+        azure_subscription_id: string;
+      }
+
       export type Include =
         | 'webhook_endpoint.signing_secret'
-        | 'webhook_endpoint.url';
+        | 'webhook_endpoint.url'
+        | OtherString;
 
       export interface WebhookEndpoint {
         /**

@@ -42,6 +42,8 @@ export interface NodeHttpClientInterface extends HttpClientInterface {
 
 export interface NodeHttpClientResponseInterface
   extends HttpClientResponseInterface {
+  // TODO(DEVSDK-3112): Replace with WHATWG ReadableStream in next major version.
+  // eslint-disable-next-line wintertc-compat
   toStream: (streamCompleteCallback: () => void) => NodeJS.ReadableStream;
 }
 
@@ -141,4 +143,17 @@ export class HttpClientResponse implements HttpClientResponseInterface {
   toJSON(): any {
     throw new Error('toJSON not implemented.');
   }
+
+  protected _parseResponseBody(body: string): any {
+    try {
+      return JSON.parse(body);
+    } catch (e) {
+      if (e instanceof Error) {
+        (e as any).rawBody = body;
+      }
+      throw e;
+    }
+  }
 }
+
+export class HttpClientRuntimeError extends Error {}

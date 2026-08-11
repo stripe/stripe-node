@@ -42,7 +42,7 @@ export class FileLinkResource extends StripeResource {
   ): Promise<Response<FileLink>> {
     return this._makeRequest(
       'GET',
-      `/v1/file_links/${id}`,
+      `/v1/file_links/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -57,7 +57,7 @@ export class FileLinkResource extends StripeResource {
   ): Promise<Response<FileLink>> {
     return this._makeRequest(
       'POST',
-      `/v1/file_links/${id}`,
+      `/v1/file_links/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

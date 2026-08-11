@@ -1834,19 +1834,75 @@ describe('RequestSender', () => {
           expect(sleepSeconds).to.be.at.least(min);
         }
       });
+    });
+  });
 
-      it('should allow a maximum override', () => {
-        const maxSec = stripe.getMaxNetworkRetryDelay();
-        const minMS = stripe.getInitialNetworkRetryDelay() * 1000;
+  describe('Stripe-Notice header', () => {
+    it('emits a warning when stripe-notice header is present', (done) => {
+      const warnings: Array<string> = [];
 
-        expect(sender._getSleepTimeInMS(3, 0)).to.be.gt(minMS);
-        expect(sender._getSleepTimeInMS(2, 3)).to.equal(3000);
-        expect(sender._getSleepTimeInMS(0, 3)).to.equal(3000);
-        expect(sender._getSleepTimeInMS(0, 0)).to.equal(minMS);
-        expect(sender._getSleepTimeInMS(0, maxSec * 2)).to.equal(
-          maxSec * 2 * 1000
-        );
-      });
+      return getTestServerStripe(
+        {},
+        (req, res) => {
+          res.setHeader('Stripe-Notice', 'test notice');
+          res.writeHead(200, {'Content-Type': 'application/json'});
+          res.write('{}');
+          res.end();
+        },
+        (err, stripe, closeServer) => {
+          if (err) {
+            return done(err);
+          }
+
+          const originalEmitWarning = stripe._platformFunctions.emitWarning.bind(
+            stripe._platformFunctions
+          );
+          stripe._platformFunctions.emitWarning = (warning: string): void => {
+            warnings.push(warning);
+            originalEmitWarning(warning);
+          };
+
+          stripe.balance
+            .retrieve()
+            .then(() => {
+              expect(warnings).to.include('test notice');
+              closeServer();
+              done();
+            })
+            .catch(done);
+        }
+      );
+    });
+
+    it('does not emit a warning when stripe-notice header is absent', (done) => {
+      const warnings: Array<string> = [];
+
+      return getTestServerStripe(
+        {},
+        (req, res) => {
+          res.writeHead(200, {'Content-Type': 'application/json'});
+          res.write('{}');
+          res.end();
+        },
+        (err, stripe, closeServer) => {
+          if (err) {
+            return done(err);
+          }
+
+          stripe._platformFunctions.emitWarning = (warning: string): void => {
+            warnings.push(warning);
+          };
+
+          stripe.balance
+            .retrieve()
+            .then(() => {
+              expect(warnings).to.be.empty;
+              closeServer();
+              done();
+            })
+            .catch(done);
+        }
+      );
     });
   });
 

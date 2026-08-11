@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {CreditNoteLineItem} from './CreditNoteLineItems.js';
-import {Refund} from './Refunds.js';
+import {Refund as _Refund} from './Refunds.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {CustomerBalanceTransaction} from './CustomerBalanceTransactions.js';
 import {Invoice} from './Invoices.js';
@@ -12,6 +12,7 @@ import {TaxRate} from './TaxRates.js';
 import * as Billing from './Billing/index.js';
 import {
   MetadataParam,
+  OtherString,
   Emptyable,
   Decimal,
   PaginationParams,
@@ -76,6 +77,8 @@ export class CreditNoteResource extends StripeResource {
    *
    * You may issue multiple credit notes for an invoice. Each credit note may increment the invoice's pre_payment_credit_notes_amount,
    * post_payment_credit_notes_amount, or both, depending on the invoice's amount_remaining at the time of credit note creation.
+   *
+   * For invoices that also have refunds created through the [Refund API](https://docs.stripe.com/docs/api/refunds), the credit note API subtracts those refund amounts from the maximum creditable amount. This prevents the combined credit notes and refunds from exceeding the invoice amount. If you use both, ensure the combined total does not exceed the invoice's paid amount.
    */
   create(
     params: CreditNoteCreateParams,
@@ -126,21 +129,27 @@ export class CreditNoteResource extends StripeResource {
     params?: CreditNoteRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<CreditNote>> {
-    return this._makeRequest('GET', `/v1/credit_notes/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    unit_amount_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'GET',
+      `/v1/credit_notes/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      unit_amount_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -148,8 +157,8 @@ export class CreditNoteResource extends StripeResource {
             },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Updates an existing credit note.
@@ -161,7 +170,7 @@ export class CreditNoteResource extends StripeResource {
   ): Promise<Response<CreditNote>> {
     return this._makeRequest(
       'POST',
-      `/v1/credit_notes/${id}`,
+      `/v1/credit_notes/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -250,7 +259,7 @@ export class CreditNoteResource extends StripeResource {
   ): Promise<Response<CreditNote>> {
     return this._makeRequest(
       'POST',
-      `/v1/credit_notes/${id}/void`,
+      `/v1/credit_notes/${encodeURIComponent(id)}/void`,
       params,
       options,
       {
@@ -335,7 +344,7 @@ export class CreditNoteResource extends StripeResource {
   ): ApiListPromise<CreditNoteLineItem> {
     return this._makeRequest(
       'GET',
-      `/v1/credit_notes/${id}/lines`,
+      `/v1/credit_notes/${encodeURIComponent(id)}/lines`,
       params,
       options,
       {
@@ -571,7 +580,8 @@ export namespace CreditNote {
     | 'duplicate'
     | 'fraudulent'
     | 'order_change'
-    | 'product_unsatisfactory';
+    | 'product_unsatisfactory'
+    | OtherString;
 
   export interface Refund {
     /**
@@ -587,7 +597,7 @@ export namespace CreditNote {
     /**
      * ID of the refund.
      */
-    refund: string | Refund;
+    refund: string | _Refund;
 
     /**
      * Type of the refund, one of `refund` or `payment_record_refund`.
@@ -622,7 +632,7 @@ export namespace CreditNote {
     taxes?: Array<ShippingCost.Tax>;
   }
 
-  export type Status = 'issued' | 'void';
+  export type Status = 'issued' | 'void' | OtherString;
 
   export interface TotalTax {
     /**
@@ -659,7 +669,7 @@ export namespace CreditNote {
   export type Type = 'mixed' | 'post_payment' | 'pre_payment';
 
   export namespace PretaxCreditAmount {
-    export type Type = 'credit_balance_transaction' | 'discount';
+    export type Type = 'credit_balance_transaction' | 'discount' | OtherString;
   }
 
   export namespace Refund {
@@ -675,7 +685,7 @@ export namespace CreditNote {
       refund_group: string;
     }
 
-    export type Type = 'payment_record_refund' | 'refund';
+    export type Type = 'payment_record_refund' | 'refund' | OtherString;
   }
 
   export namespace ShippingCost {
@@ -719,7 +729,8 @@ export namespace CreditNote {
         | 'reverse_charge'
         | 'standard_rated'
         | 'taxable_basis_reduced'
-        | 'zero_rated';
+        | 'zero_rated'
+        | OtherString;
     }
   }
 
@@ -749,7 +760,8 @@ export namespace CreditNote {
       | 'reverse_charge'
       | 'standard_rated'
       | 'taxable_basis_reduced'
-      | 'zero_rated';
+      | 'zero_rated'
+      | OtherString;
   }
 }
 export interface CreditNoteCreateParams {
@@ -824,7 +836,7 @@ export interface CreditNoteCreateParams {
   shipping_cost?: CreditNoteCreateParams.ShippingCost;
 }
 export namespace CreditNoteCreateParams {
-  export type EmailType = 'credit_note' | 'none';
+  export type EmailType = 'credit_note' | 'none' | OtherString;
 
   export interface Line {
     /**
@@ -853,7 +865,7 @@ export namespace CreditNoteCreateParams {
     quantity?: number;
 
     /**
-     * A list of up to 10 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
+     * A list of up to 20 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
      */
     tax_amounts?: Emptyable<Array<Line.TaxAmount>>;
 
@@ -882,7 +894,8 @@ export namespace CreditNoteCreateParams {
     | 'duplicate'
     | 'fraudulent'
     | 'order_change'
-    | 'product_unsatisfactory';
+    | 'product_unsatisfactory'
+    | OtherString;
 
   export interface Refund {
     /**
@@ -947,7 +960,7 @@ export namespace CreditNoteCreateParams {
       refund_group: string;
     }
 
-    export type Type = 'payment_record_refund' | 'refund';
+    export type Type = 'payment_record_refund' | 'refund' | OtherString;
   }
 }
 export interface CreditNoteRetrieveParams {
@@ -1076,7 +1089,7 @@ export interface CreditNoteListPreviewLineItemsParams extends PaginationParams {
   shipping_cost?: CreditNoteListPreviewLineItemsParams.ShippingCost;
 }
 export namespace CreditNoteListPreviewLineItemsParams {
-  export type EmailType = 'credit_note' | 'none';
+  export type EmailType = 'credit_note' | 'none' | OtherString;
 
   export interface Line {
     /**
@@ -1105,7 +1118,7 @@ export namespace CreditNoteListPreviewLineItemsParams {
     quantity?: number;
 
     /**
-     * A list of up to 10 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
+     * A list of up to 20 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
      */
     tax_amounts?: Emptyable<Array<Line.TaxAmount>>;
 
@@ -1134,7 +1147,8 @@ export namespace CreditNoteListPreviewLineItemsParams {
     | 'duplicate'
     | 'fraudulent'
     | 'order_change'
-    | 'product_unsatisfactory';
+    | 'product_unsatisfactory'
+    | OtherString;
 
   export interface Refund {
     /**
@@ -1199,7 +1213,7 @@ export namespace CreditNoteListPreviewLineItemsParams {
       refund_group: string;
     }
 
-    export type Type = 'payment_record_refund' | 'refund';
+    export type Type = 'payment_record_refund' | 'refund' | OtherString;
   }
 }
 export interface CreditNotePreviewParams {
@@ -1274,7 +1288,7 @@ export interface CreditNotePreviewParams {
   shipping_cost?: CreditNotePreviewParams.ShippingCost;
 }
 export namespace CreditNotePreviewParams {
-  export type EmailType = 'credit_note' | 'none';
+  export type EmailType = 'credit_note' | 'none' | OtherString;
 
   export interface Line {
     /**
@@ -1303,7 +1317,7 @@ export namespace CreditNotePreviewParams {
     quantity?: number;
 
     /**
-     * A list of up to 10 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
+     * A list of up to 20 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
      */
     tax_amounts?: Emptyable<Array<Line.TaxAmount>>;
 
@@ -1332,7 +1346,8 @@ export namespace CreditNotePreviewParams {
     | 'duplicate'
     | 'fraudulent'
     | 'order_change'
-    | 'product_unsatisfactory';
+    | 'product_unsatisfactory'
+    | OtherString;
 
   export interface Refund {
     /**
@@ -1397,7 +1412,7 @@ export namespace CreditNotePreviewParams {
       refund_group: string;
     }
 
-    export type Type = 'payment_record_refund' | 'refund';
+    export type Type = 'payment_record_refund' | 'refund' | OtherString;
   }
 }
 export interface CreditNoteVoidCreditNoteParams {

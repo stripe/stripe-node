@@ -1,5 +1,8 @@
 import * as crypto from 'crypto';
+import * as fs from 'fs';
 import * as http from 'http';
+import * as os from 'os';
+import * as path from 'path';
 import {CryptoProvider} from '../crypto/CryptoProvider.js';
 import {EventEmitter} from 'events';
 import {HttpClient, NodeHttpClientInterface} from '../net/HttpClient.js';
@@ -8,7 +11,6 @@ import {NodeHttpClient} from '../net/NodeHttpClient.js';
 import {PlatformFunctions} from './PlatformFunctions.js';
 import {StripeError} from '../Error.js';
 import {concat} from '../utils.js';
-import {arch, release} from 'os';
 import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
 
 class StreamProcessingError extends StripeError {}
@@ -28,7 +30,86 @@ export class NodePlatformFunctions extends PlatformFunctions {
 
   /** @override */
   getPlatformInfo(): string {
-    return `${process.platform} ${release()} ${arch()}`;
+    return `${process.platform} ${os.release()} ${os.arch()}`;
+  }
+
+  /** @override */
+  writeStderr(msg: string): void {
+    process.stderr.write(msg);
+  }
+
+  /** @override */
+  emitWarning(warning: string): void {
+    if (typeof process.emitWarning === 'function') {
+      process.emitWarning(warning, 'Stripe');
+    } else {
+      super.emitWarning(warning);
+    }
+  }
+
+  /** @override */
+  getEnv(): Record<string, string | undefined> {
+    return process.env;
+  }
+
+  /** @override */
+  getRuntimeVersion(): string {
+    return process.version;
+  }
+
+  private _telemetryId: string | null | undefined = undefined;
+
+  /** @override */
+  getTelemetryId(): string | null {
+    if (this._telemetryId !== undefined) {
+      return this._telemetryId;
+    }
+
+    const filePath = this._getTelemetryIdPath();
+    if (!filePath) {
+      this._telemetryId = null;
+      return null;
+    }
+
+    try {
+      // eslint-disable-next-line no-sync
+      const content = fs.readFileSync(filePath, 'utf8').trim();
+      if (content) {
+        this._telemetryId = content;
+        return content;
+      }
+      // eslint-disable-next-line no-empty
+    } catch {}
+
+    const newId = crypto.randomBytes(16).toString('hex');
+
+    try {
+      // eslint-disable-next-line no-sync
+      fs.mkdirSync(path.dirname(filePath), {recursive: true});
+      // eslint-disable-next-line no-sync
+      fs.writeFileSync(filePath, newId, 'utf8');
+    } catch {
+      this._telemetryId = null;
+      return null;
+    }
+
+    this._telemetryId = newId;
+    return newId;
+  }
+
+  private _getTelemetryIdPath(): string | null {
+    if (process.platform === 'win32') {
+      const appData = process.env.APPDATA;
+      if (!appData) return null;
+      return path.join(appData, 'Stripe', 'telemetry_id');
+    }
+    const xdg = process.env.XDG_CONFIG_HOME;
+    if (xdg) {
+      return path.join(xdg, 'stripe', 'telemetry_id');
+    }
+    const home = os.homedir();
+    if (!home) return null;
+    return path.join(home, '.config', 'stripe', 'telemetry_id');
   }
 
   /**

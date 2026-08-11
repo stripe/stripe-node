@@ -33,7 +33,7 @@ export class ActiveEntitlementResource extends StripeResource {
   ): Promise<Response<ActiveEntitlement>> {
     return this._makeRequest(
       'GET',
-      `/v1/entitlements/active_entitlements/${id}`,
+      `/v1/entitlements/active_entitlements/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

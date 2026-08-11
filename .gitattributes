@@ -1,0 +1,2 @@
+# Prevent CRLF conversion for binary test fixtures
+*.pdf binary

@@ -2,22 +2,28 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {AccountPersonToken} from './../../../V2/Core/AccountPersonTokens.js';
-import {JapanAddressParam, MetadataParam, Decimal} from '../../../../shared.js';
+import {
+  JapanAddressParam,
+  MetadataParam,
+  OtherString,
+  Decimal,
+} from '../../../../shared.js';
 import {RequestOptions, Response} from '../../../../lib.js';
 
 export class PersonTokenResource extends StripeResource {
   /**
-   * Creates a Person Token associated with an Account.
+   * Creates a single-use token that represents the details for a person. Use this when you create or update persons associated with an Account v2. Learn more about [account tokens](https://docs.stripe.com/connect/account-tokens).
+   * You can only create person tokens with your application's publishable key and in live mode. You can use your application's secret key to create person tokens only in test mode.
    * @throws Stripe.RateLimitError
    */
   create(
-    id: string,
+    accountId: string,
     params?: V2.Core.Accounts.PersonTokenCreateParams,
     options?: RequestOptions
   ): Promise<Response<AccountPersonToken>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/accounts/${id}/person_tokens`,
+      `/v2/core/accounts/${encodeURIComponent(accountId)}/person_tokens`,
       params,
       options,
       {
@@ -45,7 +51,9 @@ export class PersonTokenResource extends StripeResource {
   ): Promise<Response<AccountPersonToken>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/accounts/${accountId}/person_tokens/${id}`,
+      `/v2/core/accounts/${encodeURIComponent(
+        accountId
+      )}/person_tokens/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -274,9 +282,9 @@ export namespace V2 {
           value: string;
         }
 
-        export type LegalGender = 'female' | 'male';
+        export type LegalGender = 'female' | 'male' | OtherString;
 
-        export type PoliticalExposure = 'existing' | 'none';
+        export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
         export interface Relationship {
           /**
@@ -525,7 +533,8 @@ export namespace V2 {
             | 'us_ssn'
             | 'us_ssn_last_4'
             | 'uy_dni'
-            | 'za_id';
+            | 'za_id'
+            | OtherString;
         }
 
         export namespace ScriptNames {

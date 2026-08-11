@@ -5,10 +5,11 @@ import {AccountPerson} from './../../../V2/Core/AccountPersons.js';
 import {
   Address,
   MetadataParam,
+  OtherString,
   Decimal,
   JapanAddressParam,
 } from '../../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
 
 export class PersonResource extends StripeResource {
@@ -17,13 +18,13 @@ export class PersonResource extends StripeResource {
    * @throws Stripe.RateLimitError
    */
   list(
-    id: string,
+    accountId: string,
     params?: V2.Core.Accounts.PersonListParams,
     options?: RequestOptions
-  ): ApiListPromise<AccountPerson> {
+  ): V2ListPromise<AccountPerson> {
     return this._makeRequest(
       'GET',
-      `/v2/core/accounts/${id}/persons`,
+      `/v2/core/accounts/${encodeURIComponent(accountId)}/persons`,
       params,
       options,
       {
@@ -53,13 +54,13 @@ export class PersonResource extends StripeResource {
    * @throws Stripe.RateLimitError
    */
   create(
-    id: string,
+    accountId: string,
     params?: V2.Core.Accounts.PersonCreateParams,
     options?: RequestOptions
   ): Promise<Response<AccountPerson>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/accounts/${id}/persons`,
+      `/v2/core/accounts/${encodeURIComponent(accountId)}/persons`,
       params,
       options,
       {
@@ -96,7 +97,9 @@ export class PersonResource extends StripeResource {
   ): Promise<Response<DeletedObject>> {
     return this._makeRequest(
       'DELETE',
-      `/v2/core/accounts/${accountId}/persons/${id}`,
+      `/v2/core/accounts/${encodeURIComponent(
+        accountId
+      )}/persons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -113,7 +116,9 @@ export class PersonResource extends StripeResource {
   ): Promise<Response<AccountPerson>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/accounts/${accountId}/persons/${id}`,
+      `/v2/core/accounts/${encodeURIComponent(
+        accountId
+      )}/persons/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -141,7 +146,9 @@ export class PersonResource extends StripeResource {
   ): Promise<Response<AccountPerson>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/accounts/${accountId}/persons/${id}`,
+      `/v2/core/accounts/${encodeURIComponent(
+        accountId
+      )}/persons/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -432,9 +439,9 @@ export namespace V2 {
           value: string;
         }
 
-        export type LegalGender = 'female' | 'male';
+        export type LegalGender = 'female' | 'male' | OtherString;
 
-        export type PoliticalExposure = 'existing' | 'none';
+        export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
         export interface Relationship {
           /**
@@ -693,7 +700,8 @@ export namespace V2 {
             | 'us_ssn'
             | 'us_ssn_last_4'
             | 'uy_dni'
-            | 'za_id';
+            | 'za_id'
+            | OtherString;
         }
 
         export namespace ScriptAddresses {
@@ -1036,9 +1044,9 @@ export namespace V2 {
           value: string;
         }
 
-        export type LegalGender = 'female' | 'male';
+        export type LegalGender = 'female' | 'male' | OtherString;
 
-        export type PoliticalExposure = 'existing' | 'none';
+        export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
         export interface Relationship {
           /**
@@ -1297,7 +1305,8 @@ export namespace V2 {
             | 'us_ssn'
             | 'us_ssn_last_4'
             | 'uy_dni'
-            | 'za_id';
+            | 'za_id'
+            | OtherString;
         }
 
         export namespace ScriptNames {

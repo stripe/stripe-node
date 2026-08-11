@@ -15,7 +15,7 @@ export class RefundResource extends StripeResource {
   ): Promise<Response<Refund>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/refunds/${id}/expire`,
+      `/v1/test_helpers/refunds/${encodeURIComponent(id)}/expire`,
       params,
       options
     ) as any;

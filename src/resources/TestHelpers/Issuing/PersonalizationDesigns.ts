@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {PersonalizationDesign} from './../../Issuing/PersonalizationDesigns.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class PersonalizationDesignResource extends StripeResource {
@@ -15,7 +16,9 @@ export class PersonalizationDesignResource extends StripeResource {
   ): Promise<Response<PersonalizationDesign>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/personalization_designs/${id}/activate`,
+      `/v1/test_helpers/issuing/personalization_designs/${encodeURIComponent(
+        id
+      )}/activate`,
       params,
       options
     ) as any;
@@ -30,7 +33,9 @@ export class PersonalizationDesignResource extends StripeResource {
   ): Promise<Response<PersonalizationDesign>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/personalization_designs/${id}/deactivate`,
+      `/v1/test_helpers/issuing/personalization_designs/${encodeURIComponent(
+        id
+      )}/deactivate`,
       params,
       options
     ) as any;
@@ -45,7 +50,9 @@ export class PersonalizationDesignResource extends StripeResource {
   ): Promise<Response<PersonalizationDesign>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/personalization_designs/${id}/reject`,
+      `/v1/test_helpers/issuing/personalization_designs/${encodeURIComponent(
+        id
+      )}/reject`,
       params,
       options
     ) as any;
@@ -107,7 +114,8 @@ export namespace TestHelpers {
           | 'non_fiat_currency'
           | 'other'
           | 'other_entity'
-          | 'promotional_material';
+          | 'promotional_material'
+          | OtherString;
 
         export type CarrierText =
           | 'geographic_location'
@@ -116,7 +124,8 @@ export namespace TestHelpers {
           | 'non_fiat_currency'
           | 'other'
           | 'other_entity'
-          | 'promotional_material';
+          | 'promotional_material'
+          | OtherString;
       }
     }
   }

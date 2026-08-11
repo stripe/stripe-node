@@ -50,25 +50,25 @@ export class Tax {
 }
 
 export declare namespace Tax {
-  export type AssociationFindParams = TaxNamespace0.AssociationFindParams;
-  export {Association};
-  export type CalculationRetrieveParams = TaxNamespace1.CalculationRetrieveParams;
-  export type CalculationCreateParams = TaxNamespace1.CalculationCreateParams;
-  export type CalculationListLineItemsParams = TaxNamespace1.CalculationListLineItemsParams;
-  export {Calculation};
-  export type RegistrationListParams = TaxNamespace2.RegistrationListParams;
-  export type RegistrationCreateParams = TaxNamespace2.RegistrationCreateParams;
-  export type RegistrationRetrieveParams = TaxNamespace2.RegistrationRetrieveParams;
-  export type RegistrationUpdateParams = TaxNamespace2.RegistrationUpdateParams;
-  export {Registration};
-  export type SettingsRetrieveParams = TaxNamespace3.SettingsRetrieveParams;
-  export type SettingsUpdateParams = TaxNamespace3.SettingsUpdateParams;
-  export {Settings};
-  export type TransactionRetrieveParams = TaxNamespace4.TransactionRetrieveParams;
-  export type TransactionCreateFromCalculationParams = TaxNamespace4.TransactionCreateFromCalculationParams;
-  export type TransactionCreateReversalParams = TaxNamespace4.TransactionCreateReversalParams;
-  export type TransactionListLineItemsParams = TaxNamespace4.TransactionListLineItemsParams;
-  export {Transaction};
+  export import AssociationFindParams = TaxNamespace0.AssociationFindParams;
+  export {Association, AssociationResource};
+  export import CalculationRetrieveParams = TaxNamespace1.CalculationRetrieveParams;
+  export import CalculationCreateParams = TaxNamespace1.CalculationCreateParams;
+  export import CalculationListLineItemsParams = TaxNamespace1.CalculationListLineItemsParams;
+  export {Calculation, CalculationResource};
+  export import RegistrationListParams = TaxNamespace2.RegistrationListParams;
+  export import RegistrationCreateParams = TaxNamespace2.RegistrationCreateParams;
+  export import RegistrationRetrieveParams = TaxNamespace2.RegistrationRetrieveParams;
+  export import RegistrationUpdateParams = TaxNamespace2.RegistrationUpdateParams;
+  export {Registration, RegistrationResource};
+  export import SettingsRetrieveParams = TaxNamespace3.SettingsRetrieveParams;
+  export import SettingsUpdateParams = TaxNamespace3.SettingsUpdateParams;
+  export {Settings, SettingResource};
+  export import TransactionRetrieveParams = TaxNamespace4.TransactionRetrieveParams;
+  export import TransactionCreateFromCalculationParams = TaxNamespace4.TransactionCreateFromCalculationParams;
+  export import TransactionCreateReversalParams = TaxNamespace4.TransactionCreateReversalParams;
+  export import TransactionListLineItemsParams = TaxNamespace4.TransactionListLineItemsParams;
+  export {Transaction, TransactionResource};
   export {CalculationLineItem};
   export {TransactionLineItem};
 }

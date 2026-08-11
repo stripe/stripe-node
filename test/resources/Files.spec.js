@@ -47,6 +47,29 @@ describe('Files Resource', () => {
   });
 
   describe('create', () => {
+    it('Encodes file upload as multipart/form-data', () => {
+      const testFilename = path.join(__dirname, 'data/minimal.pdf');
+      const f = fs.readFileSync(testFilename);
+
+      return stripe.files
+        .create({
+          purpose: 'dispute_evidence',
+          file: {
+            data: f,
+            name: 'minimal.pdf',
+            type: 'application/octet-stream',
+          },
+        })
+        .then(() => {
+          const lastData = stripe.REQUESTS[stripe.REQUESTS.length - 1];
+          expect(lastData).to.be.an.instanceOf(Uint8Array);
+          const asString = new TextDecoder('utf8').decode(lastData);
+          expect(asString).to.contain('Content-Disposition: form-data');
+          expect(asString).to.contain('name="file"');
+          expect(asString).to.contain('name="purpose"');
+        });
+    });
+
     it('Sends the correct file upload request', () => {
       const testFilename = path.join(__dirname, 'data/minimal.pdf');
       const f = fs.readFileSync(testFilename);

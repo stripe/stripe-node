@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {OutboundTransfer} from './../../Treasury/OutboundTransfers.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class OutboundTransferResource extends StripeResource {
@@ -15,7 +16,7 @@ export class OutboundTransferResource extends StripeResource {
   ): Promise<Response<OutboundTransfer>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/outbound_transfers/${id}`,
+      `/v1/test_helpers/treasury/outbound_transfers/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -30,7 +31,9 @@ export class OutboundTransferResource extends StripeResource {
   ): Promise<Response<OutboundTransfer>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/outbound_transfers/${id}/fail`,
+      `/v1/test_helpers/treasury/outbound_transfers/${encodeURIComponent(
+        id
+      )}/fail`,
       params,
       options
     ) as any;
@@ -45,7 +48,9 @@ export class OutboundTransferResource extends StripeResource {
   ): Promise<Response<OutboundTransfer>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/outbound_transfers/${id}/post`,
+      `/v1/test_helpers/treasury/outbound_transfers/${encodeURIComponent(
+        id
+      )}/post`,
       params,
       options
     ) as any;
@@ -60,7 +65,9 @@ export class OutboundTransferResource extends StripeResource {
   ): Promise<Response<OutboundTransfer>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/outbound_transfers/${id}/return`,
+      `/v1/test_helpers/treasury/outbound_transfers/${encodeURIComponent(
+        id
+      )}/return`,
       params,
       options
     ) as any;
@@ -106,7 +113,7 @@ export namespace TestHelpers {
           trace_id: string;
         }
 
-        export type Type = 'ach' | 'us_domestic_wire';
+        export type Type = 'ach' | 'us_domestic_wire' | OtherString;
 
         export interface UsDomesticWire {
           /**
@@ -181,7 +188,8 @@ export namespace TestHelpers {
           | 'invalid_account_number'
           | 'invalid_currency'
           | 'no_account'
-          | 'other';
+          | 'other'
+          | OtherString;
       }
     }
   }

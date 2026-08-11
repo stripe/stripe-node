@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -21,7 +22,7 @@ export class CouponResource extends StripeResource {
   ): Promise<Response<DeletedCoupon>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/coupons/${id}`,
+      `/v1/coupons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -36,7 +37,7 @@ export class CouponResource extends StripeResource {
   ): Promise<Response<Coupon>> {
     return this._makeRequest(
       'GET',
-      `/v1/coupons/${id}`,
+      `/v1/coupons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -51,7 +52,7 @@ export class CouponResource extends StripeResource {
   ): Promise<Response<Coupon>> {
     return this._makeRequest(
       'POST',
-      `/v1/coupons/${id}`,
+      `/v1/coupons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -200,7 +201,7 @@ export namespace Coupon {
     amount_off: number;
   }
 
-  export type Duration = 'forever' | 'once' | 'repeating';
+  export type Duration = 'forever' | 'once' | 'repeating' | OtherString;
 }
 export interface CouponCreateParams {
   /**
@@ -285,7 +286,7 @@ export namespace CouponCreateParams {
     amount_off: number;
   }
 
-  export type Duration = 'forever' | 'once' | 'repeating';
+  export type Duration = 'forever' | 'once' | 'repeating' | OtherString;
 }
 export interface CouponRetrieveParams {
   /**

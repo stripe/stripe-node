@@ -14,7 +14,7 @@ export class EphemeralKeyResource extends StripeResource {
   ): Promise<Response<EphemeralKey>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/ephemeral_keys/${id}`,
+      `/v1/ephemeral_keys/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

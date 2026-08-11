@@ -45,7 +45,7 @@ export class TransferResource extends StripeResource {
   ): Promise<Response<Transfer>> {
     return this._makeRequest(
       'GET',
-      `/v1/transfers/${id}`,
+      `/v1/transfers/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -62,7 +62,7 @@ export class TransferResource extends StripeResource {
   ): Promise<Response<Transfer>> {
     return this._makeRequest(
       'POST',
-      `/v1/transfers/${id}`,
+      `/v1/transfers/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -77,7 +77,7 @@ export class TransferResource extends StripeResource {
   ): ApiListPromise<TransferReversal> {
     return this._makeRequest(
       'GET',
-      `/v1/transfers/${id}/reversals`,
+      `/v1/transfers/${encodeURIComponent(id)}/reversals`,
       params,
       options,
       {
@@ -99,7 +99,7 @@ export class TransferResource extends StripeResource {
   ): Promise<Response<TransferReversal>> {
     return this._makeRequest(
       'POST',
-      `/v1/transfers/${id}/reversals`,
+      `/v1/transfers/${encodeURIComponent(id)}/reversals`,
       params,
       options
     ) as any;
@@ -115,7 +115,9 @@ export class TransferResource extends StripeResource {
   ): Promise<Response<TransferReversal>> {
     return this._makeRequest(
       'GET',
-      `/v1/transfers/${transferId}/reversals/${id}`,
+      `/v1/transfers/${encodeURIComponent(
+        transferId
+      )}/reversals/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -133,7 +135,9 @@ export class TransferResource extends StripeResource {
   ): Promise<Response<TransferReversal>> {
     return this._makeRequest(
       'POST',
-      `/v1/transfers/${transferId}/reversals/${id}`,
+      `/v1/transfers/${encodeURIComponent(
+        transferId
+      )}/reversals/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

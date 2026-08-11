@@ -11,6 +11,7 @@ import {
   RangeQueryParam,
   MetadataParam,
   Emptyable,
+  OtherString,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
 
@@ -36,7 +37,7 @@ export class ApplicationFeeResource extends StripeResource {
   ): Promise<Response<ApplicationFee>> {
     return this._makeRequest(
       'GET',
-      `/v1/application_fees/${id}`,
+      `/v1/application_fees/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -52,7 +53,9 @@ export class ApplicationFeeResource extends StripeResource {
   ): Promise<Response<FeeRefund>> {
     return this._makeRequest(
       'GET',
-      `/v1/application_fees/${feeId}/refunds/${id}`,
+      `/v1/application_fees/${encodeURIComponent(
+        feeId
+      )}/refunds/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -70,7 +73,9 @@ export class ApplicationFeeResource extends StripeResource {
   ): Promise<Response<FeeRefund>> {
     return this._makeRequest(
       'POST',
-      `/v1/application_fees/${feeId}/refunds/${id}`,
+      `/v1/application_fees/${encodeURIComponent(
+        feeId
+      )}/refunds/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -85,7 +90,7 @@ export class ApplicationFeeResource extends StripeResource {
   ): ApiListPromise<FeeRefund> {
     return this._makeRequest(
       'GET',
-      `/v1/application_fees/${id}/refunds`,
+      `/v1/application_fees/${encodeURIComponent(id)}/refunds`,
       params,
       options,
       {
@@ -111,7 +116,7 @@ export class ApplicationFeeResource extends StripeResource {
   ): Promise<Response<FeeRefund>> {
     return this._makeRequest(
       'POST',
-      `/v1/application_fees/${id}/refunds`,
+      `/v1/application_fees/${encodeURIComponent(id)}/refunds`,
       params,
       options
     ) as any;
@@ -212,7 +217,7 @@ export namespace ApplicationFee {
   }
 
   export namespace FeeSource {
-    export type Type = 'charge' | 'payout';
+    export type Type = 'charge' | 'payout' | OtherString;
   }
 }
 export interface ApplicationFeeRetrieveParams {

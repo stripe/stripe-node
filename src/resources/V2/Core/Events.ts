@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RangeQueryParam, Decimal} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RangeQueryParam, Decimal, OtherString} from '../../../shared.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class EventResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class EventResource extends StripeResource {
   list(
     params?: V2.Core.EventListParams,
     options?: RequestOptions
-  ): ApiListPromise<Event> {
+  ): V2ListPromise<Event> {
     const transformResponseData = (response: any): any => {
       return {
         ...response,
@@ -24,7 +24,8 @@ export class EventResource extends StripeResource {
     }) as any;
   }
   /**
-   * Retrieves the details of an event.
+   * Retrieves the details of an event if it was created in the last 30 days. Supply the unique
+   * identifier of the event, which might have been delivered to your event destination.
    */
   retrieve(
     id: string,
@@ -34,9 +35,15 @@ export class EventResource extends StripeResource {
     const transformResponseData = (response: any): any => {
       return this.addFetchRelatedObjectIfNeeded(response);
     };
-    return this._makeRequest('GET', `/v2/core/events/${id}`, params, options, {
-      transformResponseData: transformResponseData,
-    }) as any;
+    return this._makeRequest(
+      'GET',
+      `/v2/core/events/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        transformResponseData: transformResponseData,
+      }
+    ) as any;
   }
   /**
    * @private
@@ -77,7 +84,7 @@ export interface EventBase {
   /**
    * Before and after changes for the primary related object.
    */
-  changes?: V2.Core.Event.Changes;
+  changes?: Event.Changes;
 
   /**
    * Authentication context needed to fetch the event or related object.
@@ -97,45 +104,41 @@ export interface EventBase {
   /**
    * Reason for the event.
    */
-  reason?: V2.Core.Event.Reason;
+  reason?: Event.Reason;
 
   /**
    * The type of the event.
    */
   type: string;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace Event {
-      export type Changes = {
-        [key: string]: unknown;
-      };
+export namespace Event {
+  export type Changes = {
+    [key: string]: unknown;
+  };
 
-      export interface Reason {
-        /**
-         * Information on the API request that instigated the event.
-         */
-        request?: Reason.Request;
+  export interface Reason {
+    /**
+     * Information on the API request that instigated the event.
+     */
+    request?: Reason.Request;
 
-        /**
-         * Event reason type.
-         */
-        type: 'request';
-      }
+    /**
+     * Event reason type.
+     */
+    type: 'request';
+  }
 
-      export namespace Reason {
-        export interface Request {
-          /**
-           * ID of the API request that caused the event.
-           */
-          id: string;
+  export namespace Reason {
+    export interface Request {
+      /**
+       * ID of the API request that caused the event.
+       */
+      id: string;
 
-          /**
-           * The idempotency key transmitted during the request.
-           */
-          idempotency_key: string;
-        }
-      }
+      /**
+       * The idempotency key transmitted during the request.
+       */
+      idempotency_key: string;
     }
   }
 }
@@ -171,9 +174,14 @@ export namespace V2 {
 }
 import {Core} from './index.js';
 import {Billing as V1Billing} from './../../Billing/index.js';
+import {Commerce} from './../Commerce/index.js';
 export type Event =
   | V1BillingMeterErrorReportTriggeredEvent
   | V1BillingMeterNoMeterFoundEvent
+  | V2CommerceProductCatalogImportsFailedEvent
+  | V2CommerceProductCatalogImportsProcessingEvent
+  | V2CommerceProductCatalogImportsSucceededEvent
+  | V2CommerceProductCatalogImportsSucceededWithErrorsEvent
   | V2CoreAccountClosedEvent
   | V2CoreAccountCreatedEvent
   | V2CoreAccountUpdatedEvent
@@ -196,6 +204,10 @@ export type Event =
 export type EventNotification =
   | V1BillingMeterErrorReportTriggeredEventNotification
   | V1BillingMeterNoMeterFoundEventNotification
+  | V2CommerceProductCatalogImportsFailedEventNotification
+  | V2CommerceProductCatalogImportsProcessingEventNotification
+  | V2CommerceProductCatalogImportsSucceededEventNotification
+  | V2CommerceProductCatalogImportsSucceededWithErrorsEventNotification
   | V2CoreAccountClosedEventNotification
   | V2CoreAccountCreatedEventNotification
   | V2CoreAccountUpdatedEventNotification
@@ -338,10 +350,12 @@ export namespace V1BillingMeterErrorReportTriggeredEvent {
           | 'meter_event_dimension_count_too_high'
           | 'meter_event_invalid_value'
           | 'meter_event_no_customer_defined'
+          | 'meter_event_value_too_many_digits'
           | 'missing_dimension_payload_keys'
           | 'no_meter'
           | 'timestamp_in_future'
-          | 'timestamp_too_far_in_past';
+          | 'timestamp_too_far_in_past'
+          | OtherString;
 
         export interface SampleError {
           /**
@@ -443,10 +457,12 @@ export namespace V1BillingMeterNoMeterFoundEvent {
           | 'meter_event_dimension_count_too_high'
           | 'meter_event_invalid_value'
           | 'meter_event_no_customer_defined'
+          | 'meter_event_value_too_many_digits'
           | 'missing_dimension_payload_keys'
           | 'no_meter'
           | 'timestamp_in_future'
-          | 'timestamp_too_far_in_past';
+          | 'timestamp_too_far_in_past'
+          | OtherString;
 
         export interface SampleError {
           /**
@@ -471,6 +487,91 @@ export namespace V1BillingMeterNoMeterFoundEvent {
       }
     }
   }
+}
+
+/**
+ * Occurs when a product catalog import cannot be processed or if processing fails unexpectedly.
+ */
+export interface V2CommerceProductCatalogImportsFailedEvent extends EventBase {
+  type: 'v2.commerce.product_catalog.imports.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+}
+export interface V2CommerceProductCatalogImportsFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.commerce.product_catalog.imports.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+  fetchEvent(): Promise<V2CommerceProductCatalogImportsFailedEvent>;
+}
+
+/**
+ * Occurs when a product catalog import file has been uploaded and has started processing.
+ */
+export interface V2CommerceProductCatalogImportsProcessingEvent
+  extends EventBase {
+  type: 'v2.commerce.product_catalog.imports.processing';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+}
+export interface V2CommerceProductCatalogImportsProcessingEventNotification
+  extends EventNotificationBase {
+  type: 'v2.commerce.product_catalog.imports.processing';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+  fetchEvent(): Promise<V2CommerceProductCatalogImportsProcessingEvent>;
+}
+
+/**
+ * Occurs when a product catalog file has been uploaded successfully and passed validation.
+ */
+export interface V2CommerceProductCatalogImportsSucceededEvent
+  extends EventBase {
+  type: 'v2.commerce.product_catalog.imports.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+}
+export interface V2CommerceProductCatalogImportsSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v2.commerce.product_catalog.imports.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+  fetchEvent(): Promise<V2CommerceProductCatalogImportsSucceededEvent>;
+}
+
+/**
+ * Occurs when a product catalog file has been successfully processed but some rows failed validation.
+ */
+export interface V2CommerceProductCatalogImportsSucceededWithErrorsEvent
+  extends EventBase {
+  type: 'v2.commerce.product_catalog.imports.succeeded_with_errors';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+}
+export interface V2CommerceProductCatalogImportsSucceededWithErrorsEventNotification
+  extends EventNotificationBase {
+  type: 'v2.commerce.product_catalog.imports.succeeded_with_errors';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+  fetchEvent(): Promise<
+    V2CommerceProductCatalogImportsSucceededWithErrorsEvent
+  >;
 }
 
 /**
@@ -666,10 +767,12 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'samsung_pay_payments'
       | 'sepa_bank_transfer_payments'
       | 'sepa_debit_payments'
+      | 'sunbit_payments'
       | 'swish_payments'
       | 'twint_payments'
       | 'us_bank_transfer_payments'
-      | 'zip_payments';
+      | 'zip_payments'
+      | OtherString;
   }
 }
 
@@ -736,7 +839,8 @@ export namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpd
       | 'cards'
       | 'stripe_balance.payouts'
       | 'stripe_balance.stripe_transfers'
-      | 'stripe.transfers';
+      | 'stripe.transfers'
+      | OtherString;
   }
 }
 
@@ -878,9 +982,13 @@ export namespace V2CoreAccountLinkReturnedEvent {
   }
 
   export namespace Data {
-    export type Configuration = 'customer' | 'merchant' | 'recipient';
+    export type Configuration =
+      | 'customer'
+      | 'merchant'
+      | 'recipient'
+      | OtherString;
 
-    export type UseCase = 'account_onboarding' | 'account_update';
+    export type UseCase = 'account_onboarding' | 'account_update' | OtherString;
   }
 }
 
@@ -1002,6 +1110,10 @@ export declare namespace Events {
     UnknownEventNotification,
     V1BillingMeterErrorReportTriggeredEvent,
     V1BillingMeterNoMeterFoundEvent,
+    V2CommerceProductCatalogImportsFailedEvent,
+    V2CommerceProductCatalogImportsProcessingEvent,
+    V2CommerceProductCatalogImportsSucceededEvent,
+    V2CommerceProductCatalogImportsSucceededWithErrorsEvent,
     V2CoreAccountClosedEvent,
     V2CoreAccountCreatedEvent,
     V2CoreAccountUpdatedEvent,
@@ -1022,6 +1134,10 @@ export declare namespace Events {
     V2CoreEventDestinationPingEvent,
     V1BillingMeterErrorReportTriggeredEventNotification,
     V1BillingMeterNoMeterFoundEventNotification,
+    V2CommerceProductCatalogImportsFailedEventNotification,
+    V2CommerceProductCatalogImportsProcessingEventNotification,
+    V2CommerceProductCatalogImportsSucceededEventNotification,
+    V2CommerceProductCatalogImportsSucceededWithErrorsEventNotification,
     V2CoreAccountClosedEventNotification,
     V2CoreAccountCreatedEventNotification,
     V2CoreAccountUpdatedEventNotification,

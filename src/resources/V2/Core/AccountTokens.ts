@@ -2,12 +2,21 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {JapanAddressParam, MetadataParam, Decimal} from '../../../shared.js';
+import {
+  JapanAddressParam,
+  OtherString,
+  MetadataParam,
+  Decimal,
+} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class AccountTokenResource extends StripeResource {
   /**
-   * Creates an Account Token.
+   * Create an account token with a publishable key and pass it to the Accounts v2 API to
+   * create or update an account without its data touching your server.
+   * Learn more about [account tokens](https://docs.stripe.com/connect/account-tokens).
+   * In live mode, you can only create account tokens with your application's publishable key.
+   * In test mode, you can create account tokens with your secret key or publishable key.
    * @throws Stripe.RateLimitError
    */
   create(
@@ -53,7 +62,7 @@ export class AccountTokenResource extends StripeResource {
   ): Promise<Response<AccountToken>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/account_tokens/${id}`,
+      `/v2/core/account_tokens/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -94,7 +103,7 @@ export namespace V2 {
   export namespace Core {
     export interface AccountTokenCreateParams {
       /**
-       * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
+       * The primary contact email address for the Account.
        */
       contact_email?: string;
 
@@ -167,6 +176,11 @@ export namespace V2 {
 
         export interface BusinessDetails {
           /**
+           * Additional addresses associated with the business.
+           */
+          additional_addresses?: Array<BusinessDetails.AdditionalAddress>;
+
+          /**
            * The business registration address of the business entity.
            */
           address?: JapanAddressParam;
@@ -231,7 +245,8 @@ export namespace V2 {
           | 'company'
           | 'government_entity'
           | 'individual'
-          | 'non_profit';
+          | 'non_profit'
+          | OtherString;
 
         export interface Individual {
           /**
@@ -260,7 +275,7 @@ export namespace V2 {
           documents?: Individual.Documents;
 
           /**
-           * The individual's email address.
+           * The individual's email address. You can only set this field when the Account is configured as a `merchant` or `recipient`. Use `contact_email` as the primary contact email for this Account.
            */
           email?: string;
 
@@ -388,6 +403,48 @@ export namespace V2 {
         }
 
         export namespace BusinessDetails {
+          export interface AdditionalAddress {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * Purpose of additional address.
+             */
+            purpose: AdditionalAddress.Purpose;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
+
           export interface AnnualRevenue {
             /**
              * A non-negative integer representing the amount in the smallest currency unit.
@@ -442,7 +499,7 @@ export namespace V2 {
             proof_of_address?: Documents.ProofOfAddress;
 
             /**
-             * One or more documents showing the company's proof of registration with the national business registry.
+             * One or more documents that demonstrate proof of ultimate beneficial ownership.
              */
             proof_of_registration?: Documents.ProofOfRegistration;
 
@@ -544,7 +601,14 @@ export namespace V2 {
             | 'trust'
             | 'unincorporated_association'
             | 'unincorporated_non_profit'
-            | 'unincorporated_partnership';
+            | 'unincorporated_partnership'
+            | OtherString;
+
+          export namespace AdditionalAddress {
+            export type Purpose =
+              | 'administrative'
+              | 'principal_place_of_business';
+          }
 
           export namespace Documents {
             export interface BankAccountOwnershipVerification {
@@ -650,6 +714,11 @@ export namespace V2 {
               files: Array<string>;
 
               /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfRegistration.Signer;
+
+              /**
                * The format of the document. Currently supports `files` only.
                */
               type: 'files';
@@ -660,6 +729,11 @@ export namespace V2 {
                * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
+
+              /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfUltimateBeneficialOwnership.Signer;
 
               /**
                * The format of the document. Currently supports `files` only.
@@ -678,6 +752,24 @@ export namespace V2 {
                  * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front?: string;
+              }
+            }
+
+            export namespace ProofOfRegistration {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
+              }
+            }
+
+            export namespace ProofOfUltimateBeneficialOwnership {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
               }
             }
           }
@@ -798,7 +890,8 @@ export namespace V2 {
               | 'th_crn'
               | 'th_prn'
               | 'th_tin'
-              | 'us_ein';
+              | 'us_ein'
+              | OtherString;
           }
 
           export namespace ScriptNames {
@@ -939,9 +1032,9 @@ export namespace V2 {
             value: string;
           }
 
-          export type LegalGender = 'female' | 'male';
+          export type LegalGender = 'female' | 'male' | OtherString;
 
-          export type PoliticalExposure = 'existing' | 'none';
+          export type PoliticalExposure = 'existing' | 'none' | OtherString;
 
           export interface Relationship {
             /**
@@ -1166,7 +1259,8 @@ export namespace V2 {
               | 'us_ssn'
               | 'us_ssn_last_4'
               | 'uy_dni'
-              | 'za_id';
+              | 'za_id'
+              | OtherString;
           }
 
           export namespace ScriptNames {

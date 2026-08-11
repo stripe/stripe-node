@@ -123,6 +123,49 @@ describe('V2 Core Events Resource', () => {
       });
     });
 
+    it('Returns v2 list response shape with next_page_url and previous_page_url', async () => {
+      const mockStripe = testUtils.createMockClient([
+        {
+          method: 'GET',
+          path: '/v2/core/events?object_id=foo',
+          response: `{
+            "data": [${v2EventPayloadWithoutRelatedObject}],
+            "next_page_url": "/v2/core/events?object_id=foo&page=next",
+            "previous_page_url": "/v2/core/events?object_id=foo&page=prev"
+          }`,
+        },
+      ]);
+      const resp = await mockStripe.v2.core.events.list({object_id: 'foo'});
+      expect(resp.data.length).is.equal(1);
+      expect(resp.next_page_url).is.equal(
+        '/v2/core/events?object_id=foo&page=next'
+      );
+      expect(resp.previous_page_url).is.equal(
+        '/v2/core/events?object_id=foo&page=prev'
+      );
+      expect(resp).not.to.have.property('has_more');
+      expect(resp).not.to.have.property('url');
+      expect(resp).not.to.have.property('object');
+    });
+
+    it('Returns null pagination URLs when there are no more pages', async () => {
+      const mockStripe = testUtils.createMockClient([
+        {
+          method: 'GET',
+          path: '/v2/core/events?object_id=foo',
+          response: `{
+            "data": [${v2EventPayloadWithoutRelatedObject}],
+            "next_page_url": null,
+            "previous_page_url": null
+          }`,
+        },
+      ]);
+      const resp = await mockStripe.v2.core.events.list({object_id: 'foo'});
+      expect(resp.data.length).is.equal(1);
+      expect(resp.next_page_url).is.null;
+      expect(resp.previous_page_url).is.null;
+    });
+
     it('Does not have fetchRelatedObject if not needed', async () => {
       const mockStripe = testUtils.createMockClient([
         {

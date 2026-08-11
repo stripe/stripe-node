@@ -10,6 +10,7 @@ import {
   PaginationParams,
   RangeQueryParam,
   Metadata,
+  OtherString,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
@@ -48,7 +49,7 @@ export class PayoutResource extends StripeResource {
   ): Promise<Response<Payout>> {
     return this._makeRequest(
       'GET',
-      `/v1/payouts/${id}`,
+      `/v1/payouts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -63,7 +64,7 @@ export class PayoutResource extends StripeResource {
   ): Promise<Response<Payout>> {
     return this._makeRequest(
       'POST',
-      `/v1/payouts/${id}`,
+      `/v1/payouts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -78,7 +79,7 @@ export class PayoutResource extends StripeResource {
   ): Promise<Response<Payout>> {
     return this._makeRequest(
       'POST',
-      `/v1/payouts/${id}/cancel`,
+      `/v1/payouts/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -95,7 +96,7 @@ export class PayoutResource extends StripeResource {
   ): Promise<Response<Payout>> {
     return this._makeRequest(
       'POST',
-      `/v1/payouts/${id}/reverse`,
+      `/v1/payouts/${encodeURIComponent(id)}/reverse`,
       params,
       options
     ) as any;
@@ -241,7 +242,8 @@ export namespace Payout {
   export type ReconciliationStatus =
     | 'completed'
     | 'in_progress'
-    | 'not_applicable';
+    | 'not_applicable'
+    | OtherString;
 
   export interface TraceId {
     /**
@@ -255,7 +257,7 @@ export namespace Payout {
     value: string | null;
   }
 
-  export type Type = 'bank_account' | 'card';
+  export type Type = 'bank_account' | 'card' | OtherString;
 }
 export interface PayoutCreateParams {
   /**
@@ -304,7 +306,7 @@ export interface PayoutCreateParams {
   source_type?: PayoutCreateParams.SourceType;
 
   /**
-   * A string that displays on the recipient's bank or card statement (up to 22 characters). A `statement_descriptor` that's longer than 22 characters return an error. Most banks truncate this information and display it inconsistently. Some banks might not display it at all.
+   * A string that displays on the recipient's bank or card statement (up to 22 characters). A `statement_descriptor` that's longer than 22 characters return an error. Most banks truncate this information and display it inconsistently. Some banks might not display it at all. For US ACH payouts, this maps to the ACH Company Entry Description field, which the NACHA standard limits to 10 characters. Stripe truncates descriptors longer than 10 characters for US ACH payouts.
    */
   statement_descriptor?: string;
 }

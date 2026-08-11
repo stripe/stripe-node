@@ -12,10 +12,10 @@ export class ValueListItemResource extends StripeResource {
     id: string,
     params?: Radar.ValueListItemDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<Radar.DeletedValueListItem>> {
+  ): Promise<Response<DeletedValueListItem>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/radar/value_list_items/${id}`,
+      `/v1/radar/value_list_items/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -30,7 +30,7 @@ export class ValueListItemResource extends StripeResource {
   ): Promise<Response<ValueListItem>> {
     return this._makeRequest(
       'GET',
-      `/v1/radar/value_list_items/${id}`,
+      `/v1/radar/value_list_items/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -108,23 +108,21 @@ export interface ValueListItem {
    */
   value_list: string;
 }
-export namespace Radar {
-  export interface DeletedValueListItem {
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
+export interface DeletedValueListItem {
+  /**
+   * Unique identifier for the object.
+   */
+  id: string;
 
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'radar.value_list_item';
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'radar.value_list_item';
 
-    /**
-     * Always true for a deleted object
-     */
-    deleted: true;
-  }
+  /**
+   * Always true for a deleted object
+   */
+  deleted: true;
 }
 export namespace Radar {
   export interface ValueListItemCreateParams {

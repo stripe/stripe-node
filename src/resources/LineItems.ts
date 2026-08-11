@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec
 
-import {Discount} from './Discounts.js';
+import {Discount as _Discount} from './Discounts.js';
 import {Price} from './Prices.js';
 import {TaxRate} from './TaxRates.js';
-import {Metadata} from '../shared.js';
+import {Metadata, OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface LineItem {
   /**
@@ -94,7 +94,7 @@ export namespace LineItem {
      *
      * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
      */
-    discount: Discount;
+    discount: _Discount;
   }
 
   export interface Tax {
@@ -137,6 +137,7 @@ export namespace LineItem {
       | 'reverse_charge'
       | 'standard_rated'
       | 'taxable_basis_reduced'
-      | 'zero_rated';
+      | 'zero_rated'
+      | OtherString;
   }
 }

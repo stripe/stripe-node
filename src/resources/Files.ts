@@ -4,6 +4,7 @@ import {multipartRequestDataProcessor} from '../multipart.js';
 import {StripeResource} from '../StripeResource.js';
 import {FileLink} from './FileLinks.js';
 import {
+  OtherString,
   Emptyable,
   MetadataParam,
   PaginationParams,
@@ -18,6 +19,7 @@ import {
 } from '../lib.js';
 
 export class FileResource extends StripeResource {
+  requestDataProcessor = multipartRequestDataProcessor;
   /**
    * Returns a list of the files that your account has access to. Stripe sorts and returns the files by their creation dates, placing the most recently created files at the top.
    */
@@ -53,7 +55,12 @@ export class FileResource extends StripeResource {
     params?: FileRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<File>> {
-    return this._makeRequest('GET', `/v1/files/${id}`, params, options) as any;
+    return this._makeRequest(
+      'GET',
+      `/v1/files/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface File {
@@ -134,7 +141,8 @@ export namespace File {
     | 'terminal_android_apk'
     | 'terminal_reader_splashscreen'
     | 'terminal_wifi_certificate'
-    | 'terminal_wifi_private_key';
+    | 'terminal_wifi_private_key'
+    | OtherString;
 }
 export interface FileCreateParams {
   /**
@@ -173,7 +181,8 @@ export namespace FileCreateParams {
     | 'terminal_android_apk'
     | 'terminal_reader_splashscreen'
     | 'terminal_wifi_certificate'
-    | 'terminal_wifi_private_key';
+    | 'terminal_wifi_private_key'
+    | OtherString;
 
   export interface FileLinkData {
     /**

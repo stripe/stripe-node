@@ -311,16 +311,6 @@ export function pascalToCamelCase(name: string): string {
   }
 }
 
-export function emitWarning(warning: string): void {
-  if (typeof process.emitWarning !== 'function') {
-    return console.warn(
-      `Stripe: ${warning}`
-    ); /* eslint-disable-line no-console */
-  }
-
-  return process.emitWarning(warning, 'Stripe');
-}
-
 export function isObject(obj: unknown): boolean {
   const type = typeof obj;
   return (type === 'function' || type === 'object') && !!obj;
@@ -373,14 +363,6 @@ export function validateInteger(
   }
 
   return n as number;
-}
-
-export function determineProcessUserAgentProperties(): Record<string, string> {
-  return typeof process === 'undefined'
-    ? {}
-    : {
-        lang_version: process.version,
-      };
 }
 
 export const AI_AGENTS: [string, string][] = [
@@ -475,19 +457,50 @@ export function parseHttpHeaderAsString<K extends keyof RequestHeaders>(
   return String(header);
 }
 
-export function parseHttpHeaderAsNumber<K extends keyof RequestHeaders>(
-  header: RequestHeaders[K]
-): number {
-  const number = Array.isArray(header) ? header[0] : header;
-  return Number(number);
-}
-
 export function parseHeadersForFetch(
   headers: RequestHeaders
 ): [string, string][] {
   return Object.entries(headers).map(([key, value]) => {
     return [key, parseHttpHeaderAsString(value)];
   });
+}
+
+/**
+ * Parses a webhook payload (string or Uint8Array) into a plain object.
+ */
+export function parsePayload(
+  payload: string | Uint8Array
+): Record<string, unknown> {
+  const raw =
+    payload instanceof Uint8Array
+      ? new TextDecoder('utf8').decode(payload)
+      : payload;
+  return JSON.parse(raw) as Record<string, unknown>;
+}
+
+export function maybeExtractFromCloudProviderEnvelope(
+  payload: string
+): Record<string, unknown> {
+  const parsed = parsePayload(payload);
+
+  // Could add as many checks as we want here, but we'll start simple
+  if ('detail' in parsed) {
+    // AWS
+    // https://docs.stripe.com/event-destinations/eventbridge#event-structure
+    return parsed.detail as Record<string, unknown>;
+  }
+  if ('specversion' in parsed && 'data' in parsed) {
+    // Azure
+    // https://docs.stripe.com/event-destinations/eventgrid#event-structure
+    return parsed.data as Record<string, unknown>;
+  }
+  if (parsed.object === 'event' || parsed.object === 'v2.core.event') {
+    // Raw Stripe event passed directly: return it as-is (pass-through)
+    return parsed;
+  }
+  throw new Error(
+    'Unrecognized event format. The payload must be an AWS EventBridge/Azure Event Grid event envelope or a Stripe webhook (thin event notification or snapshot).'
+  );
 }
 
 const CALL_SITE_MARKER = '\nOriginating from:';

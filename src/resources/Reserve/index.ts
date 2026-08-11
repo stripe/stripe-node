@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-warning-comments
-// TODO(prathmesh): https://go/j/DEVSDK-3050 Generate this class with codegen
+// File generated from our OpenAPI spec
 
 import {Hold} from './Holds.js';
 import {Plan} from './Plans.js';

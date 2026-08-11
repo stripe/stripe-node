@@ -4,7 +4,7 @@ import {CreditNote} from './CreditNotes.js';
 import {Customer} from './Customers.js';
 import {Invoice} from './Invoices.js';
 import * as Checkout from './Checkout/index.js';
-import {Metadata} from '../shared.js';
+import {Metadata, OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface CustomerBalanceTransaction {
   /**
@@ -95,5 +95,6 @@ export namespace CustomerBalanceTransaction {
     | 'invoice_too_small'
     | 'migration'
     | 'unapplied_from_invoice'
-    | 'unspent_receiver_credit';
+    | 'unspent_receiver_credit'
+    | OtherString;
 }

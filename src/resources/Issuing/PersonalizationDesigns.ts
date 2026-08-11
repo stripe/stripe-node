@@ -7,6 +7,7 @@ import {
   MetadataParam,
   Emptyable,
   PaginationParams,
+  OtherString,
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
@@ -53,7 +54,7 @@ export class PersonalizationDesignResource extends StripeResource {
   ): Promise<Response<PersonalizationDesign>> {
     return this._makeRequest(
       'GET',
-      `/v1/issuing/personalization_designs/${id}`,
+      `/v1/issuing/personalization_designs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -68,7 +69,7 @@ export class PersonalizationDesignResource extends StripeResource {
   ): Promise<Response<PersonalizationDesign>> {
     return this._makeRequest(
       'POST',
-      `/v1/issuing/personalization_designs/${id}`,
+      `/v1/issuing/personalization_designs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -86,14 +87,14 @@ export interface PersonalizationDesign {
   object: 'issuing.personalization_design';
 
   /**
-   * The file for the card logo to use with physical bundles that support card logos. Must have a `purpose` value of `issuing_logo`.
+   * The file for the card logo to use with physical bundles that support card logos. Must have a `purpose` value of `issuing_logo`. Image must be in PNG format with dimensions of 1000px by 200px. It must be a binary (black and white) image containing a black logo on a white background. We don't accept grayscale.
    */
   card_logo: string | File | null;
 
   /**
    * Hash containing carrier text, for use with physical bundles that support carrier text.
    */
-  carrier_text: Issuing.PersonalizationDesign.CarrierText | null;
+  carrier_text: PersonalizationDesign.CarrierText | null;
 
   /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -125,85 +126,90 @@ export interface PersonalizationDesign {
    */
   physical_bundle: string | PhysicalBundle;
 
-  preferences: Issuing.PersonalizationDesign.Preferences;
+  preferences: PersonalizationDesign.Preferences;
 
-  rejection_reasons: Issuing.PersonalizationDesign.RejectionReasons;
+  rejection_reasons: PersonalizationDesign.RejectionReasons;
 
   /**
    * Whether this personalization design can be used to create cards.
    */
-  status: Issuing.PersonalizationDesign.Status;
+  status: PersonalizationDesign.Status;
 }
-export namespace Issuing {
-  export namespace PersonalizationDesign {
-    export interface CarrierText {
-      /**
-       * The footer body text of the carrier letter.
-       */
-      footer_body: string | null;
+export namespace PersonalizationDesign {
+  export interface CarrierText {
+    /**
+     * The footer body text of the carrier letter.
+     */
+    footer_body: string | null;
 
-      /**
-       * The footer title text of the carrier letter.
-       */
-      footer_title: string | null;
+    /**
+     * The footer title text of the carrier letter.
+     */
+    footer_title: string | null;
 
-      /**
-       * The header body text of the carrier letter.
-       */
-      header_body: string | null;
+    /**
+     * The header body text of the carrier letter.
+     */
+    header_body: string | null;
 
-      /**
-       * The header title text of the carrier letter.
-       */
-      header_title: string | null;
-    }
+    /**
+     * The header title text of the carrier letter.
+     */
+    header_title: string | null;
+  }
 
-    export interface Preferences {
-      /**
-       * Whether we use this personalization design to create cards when one isn't specified. A connected account uses the Connect platform's default design if no personalization design is set as the default design.
-       */
-      is_default: boolean;
+  export interface Preferences {
+    /**
+     * Whether we use this personalization design to create cards when one isn't specified. A connected account uses the Connect platform's default design if no personalization design is set as the default design.
+     */
+    is_default: boolean;
 
-      /**
-       * Whether this personalization design is used to create cards when one is not specified and a default for this connected account does not exist.
-       */
-      is_platform_default: boolean | null;
-    }
+    /**
+     * Whether this personalization design is used to create cards when one is not specified and a default for this connected account does not exist.
+     */
+    is_platform_default: boolean | null;
+  }
 
-    export interface RejectionReasons {
-      /**
-       * The reason(s) the card logo was rejected.
-       */
-      card_logo: Array<RejectionReasons.CardLogo> | null;
+  export interface RejectionReasons {
+    /**
+     * The reason(s) the card logo was rejected.
+     */
+    card_logo: Array<RejectionReasons.CardLogo> | null;
 
-      /**
-       * The reason(s) the carrier text was rejected.
-       */
-      carrier_text: Array<RejectionReasons.CarrierText> | null;
-    }
+    /**
+     * The reason(s) the carrier text was rejected.
+     */
+    carrier_text: Array<RejectionReasons.CarrierText> | null;
+  }
 
-    export type Status = 'active' | 'inactive' | 'rejected' | 'review';
+  export type Status =
+    | 'active'
+    | 'inactive'
+    | 'rejected'
+    | 'review'
+    | OtherString;
 
-    export namespace RejectionReasons {
-      export type CardLogo =
-        | 'geographic_location'
-        | 'inappropriate'
-        | 'network_name'
-        | 'non_binary_image'
-        | 'non_fiat_currency'
-        | 'other'
-        | 'other_entity'
-        | 'promotional_material';
+  export namespace RejectionReasons {
+    export type CardLogo =
+      | 'geographic_location'
+      | 'inappropriate'
+      | 'network_name'
+      | 'non_binary_image'
+      | 'non_fiat_currency'
+      | 'other'
+      | 'other_entity'
+      | 'promotional_material'
+      | OtherString;
 
-      export type CarrierText =
-        | 'geographic_location'
-        | 'inappropriate'
-        | 'network_name'
-        | 'non_fiat_currency'
-        | 'other'
-        | 'other_entity'
-        | 'promotional_material';
-    }
+    export type CarrierText =
+      | 'geographic_location'
+      | 'inappropriate'
+      | 'network_name'
+      | 'non_fiat_currency'
+      | 'other'
+      | 'other_entity'
+      | 'promotional_material'
+      | OtherString;
   }
 }
 export namespace Issuing {
@@ -408,6 +414,11 @@ export namespace Issuing {
       is_platform_default?: boolean;
     }
 
-    export type Status = 'active' | 'inactive' | 'rejected' | 'review';
+    export type Status =
+      | 'active'
+      | 'inactive'
+      | 'rejected'
+      | 'review'
+      | OtherString;
   }
 }

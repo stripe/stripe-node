@@ -12,6 +12,7 @@ import {CustomerSource} from './CustomerSources.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   AddressParam,
   PaginationParams,
   RangeQueryParam,
@@ -62,7 +63,7 @@ export class SetupIntentResource extends StripeResource {
   ): Promise<Response<SetupIntent>> {
     return this._makeRequest(
       'GET',
-      `/v1/setup_intents/${id}`,
+      `/v1/setup_intents/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -77,7 +78,7 @@ export class SetupIntentResource extends StripeResource {
   ): Promise<Response<SetupIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/setup_intents/${id}`,
+      `/v1/setup_intents/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -94,7 +95,7 @@ export class SetupIntentResource extends StripeResource {
   ): Promise<Response<SetupIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/setup_intents/${id}/cancel`,
+      `/v1/setup_intents/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -122,7 +123,7 @@ export class SetupIntentResource extends StripeResource {
   ): Promise<Response<SetupIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/setup_intents/${id}/confirm`,
+      `/v1/setup_intents/${encodeURIComponent(id)}/confirm`,
       params,
       options
     ) as any;
@@ -137,7 +138,7 @@ export class SetupIntentResource extends StripeResource {
   ): Promise<Response<SetupIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/setup_intents/${id}/verify_microdeposits`,
+      `/v1/setup_intents/${encodeURIComponent(id)}/verify_microdeposits`,
       params,
       options
     ) as any;
@@ -153,6 +154,13 @@ export interface SetupIntent {
    * String representing the object's type. Objects of the same type share the same value.
    */
   object: 'setup_intent';
+
+  /**
+   * The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this list when determining the payment methods to offer.
+   */
+  allowed_payment_method_types?: Array<
+    SetupIntent.AllowedPaymentMethodType
+  > | null;
 
   /**
    * ID of the Connect application that created the SetupIntent.
@@ -296,6 +304,105 @@ export interface SetupIntent {
   usage: string;
 }
 export namespace SetupIntent {
+  export type AllowedPaymentMethodType =
+    | 'acss_debit'
+    | 'affirm'
+    | 'afterpay_clearpay'
+    | 'alipay'
+    | 'alma'
+    | 'amazon_pay'
+    | 'au_becs_debit'
+    | 'bacs_debit'
+    | 'bancontact'
+    | 'billie'
+    | 'bizum'
+    | 'blik'
+    | 'boku_promptpay'
+    | 'boleto'
+    | 'capchase_pay'
+    | 'card'
+    | 'cashapp'
+    | 'check_scan'
+    | 'click_to_pay'
+    | 'crypto'
+    | 'customer_balance'
+    | 'demo_pay'
+    | 'duitnow'
+    | 'dummy_auth_push'
+    | 'dummy_passthrough_card'
+    | 'edenred'
+    | 'eps'
+    | 'fpx'
+    | 'gcash'
+    | 'getbalance'
+    | 'gift_card'
+    | 'giropay'
+    | 'gopay'
+    | 'grabpay'
+    | 'id_bank_transfer'
+    | 'ideal'
+    | 'kakao_pay'
+    | 'klarna'
+    | 'knet'
+    | 'konbini'
+    | 'kr_card'
+    | 'kr_market'
+    | 'kriya'
+    | 'link'
+    | 'mb_way'
+    | 'mobilepay'
+    | 'momo'
+    | 'mondu'
+    | 'multibanco'
+    | 'naver_pay'
+    | 'netbanking'
+    | 'ng_bank'
+    | 'ng_bank_transfer'
+    | 'ng_card'
+    | 'ng_market'
+    | 'ng_ussd'
+    | 'ng_wallet'
+    | 'nz_bank_account'
+    | 'octopus'
+    | 'oxxo'
+    | 'p24'
+    | 'paper_check'
+    | 'pay_by_bank'
+    | 'payco'
+    | 'paynow'
+    | 'paypal'
+    | 'paypay'
+    | 'payto'
+    | 'pix'
+    | 'promptpay'
+    | 'qris'
+    | 'rechnung'
+    | 'revolut_pay'
+    | 'samsung_pay'
+    | 'satispay'
+    | 'scalapay'
+    | 'sepa_debit'
+    | 'sequra'
+    | 'shop_pay'
+    | 'shopeepay'
+    | 'sofort'
+    | 'south_korea_market'
+    | 'stripe_balance'
+    | 'sunbit'
+    | 'swish'
+    | 'tamara'
+    | 'test_pay'
+    | 'truemoney'
+    | 'twint'
+    | 'upi'
+    | 'us_bank_account'
+    | 'us_cash_voucher'
+    | 'vipps'
+    | 'wechat_pay'
+    | 'wero'
+    | 'zip'
+    | OtherString;
+
   export interface AutomaticPaymentMethods {
     /**
      * Controls whether this SetupIntent will accept redirect-based payment methods.
@@ -326,6 +433,7 @@ export namespace SetupIntent {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -358,6 +466,7 @@ export namespace SetupIntent {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'sofort'
     | 'sunbit'
@@ -366,7 +475,8 @@ export namespace SetupIntent {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
   export type FlowDirection = 'inbound' | 'outbound';
 
@@ -491,6 +601,8 @@ export namespace SetupIntent {
   }
 
   export interface NextAction {
+    blik_authorize?: NextAction.BlikAuthorize;
+
     cashapp_handle_redirect_or_display_qr_code?: NextAction.CashappHandleRedirectOrDisplayQrCode;
 
     pix_display_qr_code?: NextAction.PixDisplayQrCode;
@@ -531,6 +643,8 @@ export namespace SetupIntent {
 
     bacs_debit?: PaymentMethodOptions.BacsDebit;
 
+    bizum?: PaymentMethodOptions.Bizum;
+
     card?: PaymentMethodOptions.Card;
 
     card_present?: PaymentMethodOptions.CardPresent;
@@ -561,7 +675,7 @@ export namespace SetupIntent {
     | 'succeeded';
 
   export namespace AutomaticPaymentMethods {
-    export type AllowRedirects = 'always' | 'never';
+    export type AllowRedirects = 'always' | 'never' | OtherString;
   }
 
   export namespace LastSetupError {
@@ -578,6 +692,7 @@ export namespace SetupIntent {
       | 'alipay_upgrade_required'
       | 'amount_too_large'
       | 'amount_too_small'
+      | 'anomalous_money_movement_request'
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
@@ -617,6 +732,10 @@ export namespace SetupIntent {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'failed_tax_calculation'
+      | 'financial_account_balance_does_not_support_currency'
+      | 'financial_account_capability_not_enabled'
+      | 'financial_account_capability_restricted'
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
@@ -690,6 +809,7 @@ export namespace SetupIntent {
       | 'payment_method_invalid_parameter'
       | 'payment_method_invalid_parameter_testmode'
       | 'payment_method_microdeposit_failed'
+      | 'payment_method_microdeposit_processing_error'
       | 'payment_method_microdeposit_verification_amounts_invalid'
       | 'payment_method_microdeposit_verification_amounts_mismatch'
       | 'payment_method_microdeposit_verification_attempts_exceeded'
@@ -730,6 +850,7 @@ export namespace SetupIntent {
       | 'setup_intent_unexpected_state'
       | 'shipping_address_invalid'
       | 'shipping_calculation_failed'
+      | 'siret_invalid'
       | 'sku_inactive'
       | 'state_unsupported'
       | 'status_transition_invalid'
@@ -763,6 +884,8 @@ export namespace SetupIntent {
   }
 
   export namespace NextAction {
+    export interface BlikAuthorize {}
+
     export interface CashappHandleRedirectOrDisplayQrCode {
       /**
        * The URL to the hosted Cash App Pay instructions page, which allows customers to view the QR code, and supports QR code refreshing on expiration.
@@ -885,7 +1008,10 @@ export namespace SetupIntent {
     }
 
     export namespace VerifyWithMicrodeposits {
-      export type MicrodepositType = 'amounts' | 'descriptor_code';
+      export type MicrodepositType =
+        | 'amounts'
+        | 'descriptor_code'
+        | OtherString;
     }
   }
 
@@ -909,6 +1035,8 @@ export namespace SetupIntent {
     export interface BacsDebit {
       mandate_options?: BacsDebit.MandateOptions;
     }
+
+    export interface Bizum {}
 
     export interface Card {
       /**
@@ -984,7 +1112,7 @@ export namespace SetupIntent {
     }
 
     export namespace AcssDebit {
-      export type Currency = 'cad' | 'usd';
+      export type Currency = 'cad' | 'usd' | OtherString;
 
       export interface MandateOptions {
         /**
@@ -1016,14 +1144,19 @@ export namespace SetupIntent {
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type DefaultFor = 'invoice' | 'subscription';
+        export type DefaultFor = 'invoice' | 'subscription' | OtherString;
 
-        export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+        export type PaymentSchedule =
+          | 'combined'
+          | 'interval'
+          | 'sporadic'
+          | OtherString;
 
-        export type TransactionType = 'business' | 'personal';
+        export type TransactionType = 'business' | 'personal' | OtherString;
       }
     }
 
@@ -1104,7 +1237,11 @@ export namespace SetupIntent {
         | 'unknown'
         | 'visa';
 
-      export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+      export type RequestThreeDSecure =
+        | 'any'
+        | 'automatic'
+        | 'challenge'
+        | OtherString;
 
       export namespace MandateOptions {
         export type AmountType = 'fixed' | 'maximum';
@@ -1152,7 +1289,7 @@ export namespace SetupIntent {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'adhoc'
@@ -1162,7 +1299,8 @@ export namespace SetupIntent {
           | 'monthly'
           | 'quarterly'
           | 'semi_annual'
-          | 'weekly';
+          | 'weekly'
+          | OtherString;
 
         export type Purpose =
           | 'dependant_support'
@@ -1175,7 +1313,8 @@ export namespace SetupIntent {
           | 'retail'
           | 'salary'
           | 'tax'
-          | 'utility';
+          | 'utility'
+          | OtherString;
       }
     }
 
@@ -1223,16 +1362,17 @@ export namespace SetupIntent {
       }
 
       export namespace MandateOptions {
-        export type AmountIncludesIof = 'always' | 'never';
+        export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'halfyearly'
           | 'monthly'
           | 'quarterly'
           | 'weekly'
-          | 'yearly';
+          | 'yearly'
+          | OtherString;
       }
     }
 
@@ -1269,7 +1409,7 @@ export namespace SetupIntent {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
@@ -1303,7 +1443,8 @@ export namespace SetupIntent {
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace FinancialConnections {
         export interface Filters {
@@ -1317,18 +1458,30 @@ export namespace SetupIntent {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
-        export type Prefetch = 'balances' | 'ownership' | 'transactions';
+        export type Prefetch =
+          | 'balances'
+          | 'ownership'
+          | 'transactions'
+          | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
       }
     }
   }
 }
 export interface SetupIntentCreateParams {
+  /**
+   * The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this list when determining the payment methods to offer. A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
+   */
+  allowed_payment_method_types?: Array<
+    SetupIntentCreateParams.AllowedPaymentMethodType
+  >;
+
   /**
    * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
    *
@@ -1455,6 +1608,105 @@ export interface SetupIntentCreateParams {
   use_stripe_sdk?: boolean;
 }
 export namespace SetupIntentCreateParams {
+  export type AllowedPaymentMethodType =
+    | 'acss_debit'
+    | 'affirm'
+    | 'afterpay_clearpay'
+    | 'alipay'
+    | 'alma'
+    | 'amazon_pay'
+    | 'au_becs_debit'
+    | 'bacs_debit'
+    | 'bancontact'
+    | 'billie'
+    | 'bizum'
+    | 'blik'
+    | 'boku_promptpay'
+    | 'boleto'
+    | 'capchase_pay'
+    | 'card'
+    | 'cashapp'
+    | 'check_scan'
+    | 'click_to_pay'
+    | 'crypto'
+    | 'customer_balance'
+    | 'demo_pay'
+    | 'duitnow'
+    | 'dummy_auth_push'
+    | 'dummy_passthrough_card'
+    | 'edenred'
+    | 'eps'
+    | 'fpx'
+    | 'gcash'
+    | 'getbalance'
+    | 'gift_card'
+    | 'giropay'
+    | 'gopay'
+    | 'grabpay'
+    | 'id_bank_transfer'
+    | 'ideal'
+    | 'kakao_pay'
+    | 'klarna'
+    | 'knet'
+    | 'konbini'
+    | 'kr_card'
+    | 'kr_market'
+    | 'kriya'
+    | 'link'
+    | 'mb_way'
+    | 'mobilepay'
+    | 'momo'
+    | 'mondu'
+    | 'multibanco'
+    | 'naver_pay'
+    | 'netbanking'
+    | 'ng_bank'
+    | 'ng_bank_transfer'
+    | 'ng_card'
+    | 'ng_market'
+    | 'ng_ussd'
+    | 'ng_wallet'
+    | 'nz_bank_account'
+    | 'octopus'
+    | 'oxxo'
+    | 'p24'
+    | 'paper_check'
+    | 'pay_by_bank'
+    | 'payco'
+    | 'paynow'
+    | 'paypal'
+    | 'paypay'
+    | 'payto'
+    | 'pix'
+    | 'promptpay'
+    | 'qris'
+    | 'rechnung'
+    | 'revolut_pay'
+    | 'samsung_pay'
+    | 'satispay'
+    | 'scalapay'
+    | 'sepa_debit'
+    | 'sequra'
+    | 'shop_pay'
+    | 'shopeepay'
+    | 'sofort'
+    | 'south_korea_market'
+    | 'stripe_balance'
+    | 'sunbit'
+    | 'swish'
+    | 'tamara'
+    | 'test_pay'
+    | 'truemoney'
+    | 'twint'
+    | 'upi'
+    | 'us_bank_account'
+    | 'us_cash_voucher'
+    | 'vipps'
+    | 'wechat_pay'
+    | 'wero'
+    | 'zip'
+    | OtherString;
+
   export interface AutomaticPaymentMethods {
     /**
      * Controls whether this SetupIntent will accept redirect-based payment methods.
@@ -1480,6 +1732,7 @@ export namespace SetupIntentCreateParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -1512,6 +1765,7 @@ export namespace SetupIntentCreateParams {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'sofort'
     | 'sunbit'
@@ -1520,9 +1774,10 @@ export namespace SetupIntentCreateParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
-  export type FlowDirection = 'inbound' | 'outbound';
+  export type FlowDirection = 'inbound' | 'outbound' | OtherString;
 
   export interface MandateData {
     /**
@@ -1591,6 +1846,11 @@ export namespace SetupIntentCreateParams {
      * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
      */
     billing_details?: PaymentMethodData.BillingDetails;
+
+    /**
+     * If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
+     */
+    bizum?: PaymentMethodData.Bizum;
 
     /**
      * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
@@ -1668,7 +1928,7 @@ export namespace SetupIntentCreateParams {
     kr_card?: PaymentMethodData.KrCard;
 
     /**
-     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodData.Link;
 
@@ -1768,6 +2028,11 @@ export namespace SetupIntentCreateParams {
     satispay?: PaymentMethodData.Satispay;
 
     /**
+     * If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
+     */
+    scalapay?: PaymentMethodData.Scalapay;
+
+    /**
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
      */
     sepa_debit?: PaymentMethodData.SepaDebit;
@@ -1778,7 +2043,7 @@ export namespace SetupIntentCreateParams {
     sofort?: PaymentMethodData.Sofort;
 
     /**
-     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
      */
     sunbit?: PaymentMethodData.Sunbit;
 
@@ -1835,6 +2100,11 @@ export namespace SetupIntentCreateParams {
     bacs_debit?: PaymentMethodOptions.BacsDebit;
 
     /**
+     * If this is a `bizum` SetupIntent, this sub-hash contains details about the Bizum payment method options.
+     */
+    bizum?: PaymentMethodOptions.Bizum;
+
+    /**
      * Configuration for any card setup attempted on this SetupIntent.
      */
     card?: PaymentMethodOptions.Card;
@@ -1850,7 +2120,7 @@ export namespace SetupIntentCreateParams {
     klarna?: PaymentMethodOptions.Klarna;
 
     /**
-     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodOptions.Link;
 
@@ -1897,10 +2167,10 @@ export namespace SetupIntentCreateParams {
     currency: string;
   }
 
-  export type Usage = 'off_session' | 'on_session';
+  export type Usage = 'off_session' | 'on_session' | OtherString;
 
   export namespace AutomaticPaymentMethods {
-    export type AllowRedirects = 'always' | 'never';
+    export type AllowRedirects = 'always' | 'never' | OtherString;
   }
 
   export namespace MandateData {
@@ -1969,7 +2239,11 @@ export namespace SetupIntentCreateParams {
 
     export interface Alipay {}
 
-    export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+    export type AllowRedisplay =
+      | 'always'
+      | 'limited'
+      | 'unspecified'
+      | OtherString;
 
     export interface Alma {}
 
@@ -2029,6 +2303,8 @@ export namespace SetupIntentCreateParams {
        */
       tax_id?: string;
     }
+
+    export interface Bizum {}
 
     export interface Blik {}
 
@@ -2185,6 +2461,8 @@ export namespace SetupIntentCreateParams {
 
     export interface Satispay {}
 
+    export interface Scalapay {}
+
     export interface SepaDebit {
       /**
        * IBAN of the bank account.
@@ -2216,6 +2494,7 @@ export namespace SetupIntentCreateParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'bizum'
       | 'blik'
       | 'boleto'
       | 'cashapp'
@@ -2248,6 +2527,7 @@ export namespace SetupIntentCreateParams {
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
+      | 'scalapay'
       | 'sepa_debit'
       | 'sofort'
       | 'sunbit'
@@ -2256,7 +2536,8 @@ export namespace SetupIntentCreateParams {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
-      | 'zip';
+      | 'zip'
+      | OtherString;
 
     export interface Upi {
       /**
@@ -2340,14 +2621,17 @@ export namespace SetupIntentCreateParams {
         | 'bank_muamalat'
         | 'bank_of_china'
         | 'bank_rakyat'
+        | 'bnp_paribas'
         | 'bsn'
         | 'cimb'
+        | 'citibank'
         | 'deutsche_bank'
         | 'hong_leong_bank'
         | 'hsbc'
         | 'kfh'
         | 'maybank2e'
         | 'maybank2u'
+        | 'mbsb_bank'
         | 'ocbc'
         | 'pb_enterprise'
         | 'public_bank'
@@ -2400,7 +2684,7 @@ export namespace SetupIntentCreateParams {
     }
 
     export namespace NaverPay {
-      export type Funding = 'card' | 'points';
+      export type Funding = 'card' | 'points' | OtherString;
     }
 
     export namespace P24 {
@@ -2430,11 +2714,19 @@ export namespace SetupIntentCreateParams {
         | 'tmobile_usbugi_bankowe'
         | 'toyota_bank'
         | 'velobank'
-        | 'volkswagen_bank';
+        | 'volkswagen_bank'
+        | OtherString;
     }
 
     export namespace Sofort {
-      export type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+      export type Country =
+        | 'AT'
+        | 'BE'
+        | 'DE'
+        | 'ES'
+        | 'IT'
+        | 'NL'
+        | OtherString;
     }
 
     export namespace Upi {
@@ -2461,14 +2753,14 @@ export namespace SetupIntentCreateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
     }
   }
 
@@ -2498,6 +2790,8 @@ export namespace SetupIntentCreateParams {
        */
       mandate_options?: BacsDebit.MandateOptions;
     }
+
+    export interface Bizum {}
 
     export interface Card {
       /**
@@ -2621,7 +2915,7 @@ export namespace SetupIntentCreateParams {
     }
 
     export namespace AcssDebit {
-      export type Currency = 'cad' | 'usd';
+      export type Currency = 'cad' | 'usd' | OtherString;
 
       export interface MandateOptions {
         /**
@@ -2655,14 +2949,19 @@ export namespace SetupIntentCreateParams {
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type DefaultFor = 'invoice' | 'subscription';
+        export type DefaultFor = 'invoice' | 'subscription' | OtherString;
 
-        export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+        export type PaymentSchedule =
+          | 'combined'
+          | 'interval'
+          | 'sporadic'
+          | OtherString;
 
-        export type TransactionType = 'business' | 'personal';
+        export type TransactionType = 'business' | 'personal' | OtherString;
       }
     }
 
@@ -2743,7 +3042,11 @@ export namespace SetupIntentCreateParams {
         | 'unknown'
         | 'visa';
 
-      export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+      export type RequestThreeDSecure =
+        | 'any'
+        | 'automatic'
+        | 'challenge'
+        | OtherString;
 
       export interface ThreeDSecure {
         /**
@@ -2797,14 +3100,23 @@ export namespace SetupIntentCreateParams {
       }
 
       export namespace ThreeDSecure {
-        export type AresTransStatus = 'A' | 'C' | 'I' | 'N' | 'R' | 'U' | 'Y';
+        export type AresTransStatus =
+          | 'A'
+          | 'C'
+          | 'I'
+          | 'N'
+          | 'R'
+          | 'U'
+          | 'Y'
+          | OtherString;
 
         export type ElectronicCommerceIndicator =
           | '01'
           | '02'
           | '05'
           | '06'
-          | '07';
+          | '07'
+          | OtherString;
 
         export interface NetworkOptions {
           /**
@@ -2813,7 +3125,13 @@ export namespace SetupIntentCreateParams {
           cartes_bancaires?: NetworkOptions.CartesBancaires;
         }
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
 
         export namespace NetworkOptions {
           export interface CartesBancaires {
@@ -2840,7 +3158,14 @@ export namespace SetupIntentCreateParams {
           }
 
           export namespace CartesBancaires {
-            export type CbAvalgo = '0' | '1' | '2' | '3' | '4' | 'A';
+            export type CbAvalgo =
+              | '0'
+              | '1'
+              | '2'
+              | '3'
+              | '4'
+              | 'A'
+              | OtherString;
           }
         }
       }
@@ -2920,7 +3245,8 @@ export namespace SetupIntentCreateParams {
         | 'pt-PT'
         | 'ro-RO'
         | 'sv-FI'
-        | 'sv-SE';
+        | 'sv-SE'
+        | OtherString;
 
       export interface Subscription {
         /**
@@ -2950,11 +3276,16 @@ export namespace SetupIntentCreateParams {
       }
 
       export namespace OnDemand {
-        export type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+        export type PurchaseInterval =
+          | 'day'
+          | 'month'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace Subscription {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
         export interface NextBilling {
           /**
@@ -3009,7 +3340,7 @@ export namespace SetupIntentCreateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'adhoc'
@@ -3019,7 +3350,8 @@ export namespace SetupIntentCreateParams {
           | 'monthly'
           | 'quarterly'
           | 'semi_annual'
-          | 'weekly';
+          | 'weekly'
+          | OtherString;
 
         export type Purpose =
           | 'dependant_support'
@@ -3032,7 +3364,8 @@ export namespace SetupIntentCreateParams {
           | 'retail'
           | 'salary'
           | 'tax'
-          | 'utility';
+          | 'utility'
+          | OtherString;
       }
     }
 
@@ -3080,16 +3413,17 @@ export namespace SetupIntentCreateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountIncludesIof = 'always' | 'never';
+        export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'halfyearly'
           | 'monthly'
           | 'quarterly'
           | 'weekly'
-          | 'yearly';
+          | 'yearly'
+          | OtherString;
       }
     }
 
@@ -3125,10 +3459,14 @@ export namespace SetupIntentCreateParams {
         end_date?: number;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
@@ -3172,7 +3510,8 @@ export namespace SetupIntentCreateParams {
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace FinancialConnections {
         export interface Filters {
@@ -3188,7 +3527,11 @@ export namespace SetupIntentCreateParams {
           | 'payment_method'
           | 'transactions';
 
-        export type Prefetch = 'balances' | 'ownership' | 'transactions';
+        export type Prefetch =
+          | 'balances'
+          | 'ownership'
+          | 'transactions'
+          | OtherString;
 
         export namespace Filters {
           export type AccountSubcategory = 'checking' | 'savings';
@@ -3213,6 +3556,13 @@ export interface SetupIntentRetrieveParams {
   expand?: Array<string>;
 }
 export interface SetupIntentUpdateParams {
+  /**
+   * The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this list when determining the payment methods to offer. A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
+   */
+  allowed_payment_method_types?: Emptyable<
+    Array<SetupIntentUpdateParams.AllowedPaymentMethodType>
+  >;
+
   /**
    * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
    *
@@ -3290,6 +3640,105 @@ export interface SetupIntentUpdateParams {
   payment_method_types?: Array<string>;
 }
 export namespace SetupIntentUpdateParams {
+  export type AllowedPaymentMethodType =
+    | 'acss_debit'
+    | 'affirm'
+    | 'afterpay_clearpay'
+    | 'alipay'
+    | 'alma'
+    | 'amazon_pay'
+    | 'au_becs_debit'
+    | 'bacs_debit'
+    | 'bancontact'
+    | 'billie'
+    | 'bizum'
+    | 'blik'
+    | 'boku_promptpay'
+    | 'boleto'
+    | 'capchase_pay'
+    | 'card'
+    | 'cashapp'
+    | 'check_scan'
+    | 'click_to_pay'
+    | 'crypto'
+    | 'customer_balance'
+    | 'demo_pay'
+    | 'duitnow'
+    | 'dummy_auth_push'
+    | 'dummy_passthrough_card'
+    | 'edenred'
+    | 'eps'
+    | 'fpx'
+    | 'gcash'
+    | 'getbalance'
+    | 'gift_card'
+    | 'giropay'
+    | 'gopay'
+    | 'grabpay'
+    | 'id_bank_transfer'
+    | 'ideal'
+    | 'kakao_pay'
+    | 'klarna'
+    | 'knet'
+    | 'konbini'
+    | 'kr_card'
+    | 'kr_market'
+    | 'kriya'
+    | 'link'
+    | 'mb_way'
+    | 'mobilepay'
+    | 'momo'
+    | 'mondu'
+    | 'multibanco'
+    | 'naver_pay'
+    | 'netbanking'
+    | 'ng_bank'
+    | 'ng_bank_transfer'
+    | 'ng_card'
+    | 'ng_market'
+    | 'ng_ussd'
+    | 'ng_wallet'
+    | 'nz_bank_account'
+    | 'octopus'
+    | 'oxxo'
+    | 'p24'
+    | 'paper_check'
+    | 'pay_by_bank'
+    | 'payco'
+    | 'paynow'
+    | 'paypal'
+    | 'paypay'
+    | 'payto'
+    | 'pix'
+    | 'promptpay'
+    | 'qris'
+    | 'rechnung'
+    | 'revolut_pay'
+    | 'samsung_pay'
+    | 'satispay'
+    | 'scalapay'
+    | 'sepa_debit'
+    | 'sequra'
+    | 'shop_pay'
+    | 'shopeepay'
+    | 'sofort'
+    | 'south_korea_market'
+    | 'stripe_balance'
+    | 'sunbit'
+    | 'swish'
+    | 'tamara'
+    | 'test_pay'
+    | 'truemoney'
+    | 'twint'
+    | 'upi'
+    | 'us_bank_account'
+    | 'us_cash_voucher'
+    | 'vipps'
+    | 'wechat_pay'
+    | 'wero'
+    | 'zip'
+    | OtherString;
+
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
     | 'affirm'
@@ -3301,6 +3750,7 @@ export namespace SetupIntentUpdateParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -3333,6 +3783,7 @@ export namespace SetupIntentUpdateParams {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'sofort'
     | 'sunbit'
@@ -3341,9 +3792,10 @@ export namespace SetupIntentUpdateParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
-    | 'zip';
+    | 'zip'
+    | OtherString;
 
-  export type FlowDirection = 'inbound' | 'outbound';
+  export type FlowDirection = 'inbound' | 'outbound' | OtherString;
 
   export interface PaymentMethodData {
     /**
@@ -3405,6 +3857,11 @@ export namespace SetupIntentUpdateParams {
      * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
      */
     billing_details?: PaymentMethodData.BillingDetails;
+
+    /**
+     * If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
+     */
+    bizum?: PaymentMethodData.Bizum;
 
     /**
      * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
@@ -3482,7 +3939,7 @@ export namespace SetupIntentUpdateParams {
     kr_card?: PaymentMethodData.KrCard;
 
     /**
-     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodData.Link;
 
@@ -3582,6 +4039,11 @@ export namespace SetupIntentUpdateParams {
     satispay?: PaymentMethodData.Satispay;
 
     /**
+     * If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
+     */
+    scalapay?: PaymentMethodData.Scalapay;
+
+    /**
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
      */
     sepa_debit?: PaymentMethodData.SepaDebit;
@@ -3592,7 +4054,7 @@ export namespace SetupIntentUpdateParams {
     sofort?: PaymentMethodData.Sofort;
 
     /**
-     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
      */
     sunbit?: PaymentMethodData.Sunbit;
 
@@ -3649,6 +4111,11 @@ export namespace SetupIntentUpdateParams {
     bacs_debit?: PaymentMethodOptions.BacsDebit;
 
     /**
+     * If this is a `bizum` SetupIntent, this sub-hash contains details about the Bizum payment method options.
+     */
+    bizum?: PaymentMethodOptions.Bizum;
+
+    /**
      * Configuration for any card setup attempted on this SetupIntent.
      */
     card?: PaymentMethodOptions.Card;
@@ -3664,7 +4131,7 @@ export namespace SetupIntentUpdateParams {
     klarna?: PaymentMethodOptions.Klarna;
 
     /**
-     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodOptions.Link;
 
@@ -3723,7 +4190,11 @@ export namespace SetupIntentUpdateParams {
 
     export interface Alipay {}
 
-    export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+    export type AllowRedisplay =
+      | 'always'
+      | 'limited'
+      | 'unspecified'
+      | OtherString;
 
     export interface Alma {}
 
@@ -3783,6 +4254,8 @@ export namespace SetupIntentUpdateParams {
        */
       tax_id?: string;
     }
+
+    export interface Bizum {}
 
     export interface Blik {}
 
@@ -3939,6 +4412,8 @@ export namespace SetupIntentUpdateParams {
 
     export interface Satispay {}
 
+    export interface Scalapay {}
+
     export interface SepaDebit {
       /**
        * IBAN of the bank account.
@@ -3970,6 +4445,7 @@ export namespace SetupIntentUpdateParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'bizum'
       | 'blik'
       | 'boleto'
       | 'cashapp'
@@ -4002,6 +4478,7 @@ export namespace SetupIntentUpdateParams {
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
+      | 'scalapay'
       | 'sepa_debit'
       | 'sofort'
       | 'sunbit'
@@ -4010,7 +4487,8 @@ export namespace SetupIntentUpdateParams {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
-      | 'zip';
+      | 'zip'
+      | OtherString;
 
     export interface Upi {
       /**
@@ -4094,14 +4572,17 @@ export namespace SetupIntentUpdateParams {
         | 'bank_muamalat'
         | 'bank_of_china'
         | 'bank_rakyat'
+        | 'bnp_paribas'
         | 'bsn'
         | 'cimb'
+        | 'citibank'
         | 'deutsche_bank'
         | 'hong_leong_bank'
         | 'hsbc'
         | 'kfh'
         | 'maybank2e'
         | 'maybank2u'
+        | 'mbsb_bank'
         | 'ocbc'
         | 'pb_enterprise'
         | 'public_bank'
@@ -4154,7 +4635,7 @@ export namespace SetupIntentUpdateParams {
     }
 
     export namespace NaverPay {
-      export type Funding = 'card' | 'points';
+      export type Funding = 'card' | 'points' | OtherString;
     }
 
     export namespace P24 {
@@ -4184,11 +4665,19 @@ export namespace SetupIntentUpdateParams {
         | 'tmobile_usbugi_bankowe'
         | 'toyota_bank'
         | 'velobank'
-        | 'volkswagen_bank';
+        | 'volkswagen_bank'
+        | OtherString;
     }
 
     export namespace Sofort {
-      export type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+      export type Country =
+        | 'AT'
+        | 'BE'
+        | 'DE'
+        | 'ES'
+        | 'IT'
+        | 'NL'
+        | OtherString;
     }
 
     export namespace Upi {
@@ -4215,14 +4704,14 @@ export namespace SetupIntentUpdateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
     }
   }
 
@@ -4252,6 +4741,8 @@ export namespace SetupIntentUpdateParams {
        */
       mandate_options?: BacsDebit.MandateOptions;
     }
+
+    export interface Bizum {}
 
     export interface Card {
       /**
@@ -4375,7 +4866,7 @@ export namespace SetupIntentUpdateParams {
     }
 
     export namespace AcssDebit {
-      export type Currency = 'cad' | 'usd';
+      export type Currency = 'cad' | 'usd' | OtherString;
 
       export interface MandateOptions {
         /**
@@ -4409,14 +4900,19 @@ export namespace SetupIntentUpdateParams {
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type DefaultFor = 'invoice' | 'subscription';
+        export type DefaultFor = 'invoice' | 'subscription' | OtherString;
 
-        export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+        export type PaymentSchedule =
+          | 'combined'
+          | 'interval'
+          | 'sporadic'
+          | OtherString;
 
-        export type TransactionType = 'business' | 'personal';
+        export type TransactionType = 'business' | 'personal' | OtherString;
       }
     }
 
@@ -4497,7 +4993,11 @@ export namespace SetupIntentUpdateParams {
         | 'unknown'
         | 'visa';
 
-      export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+      export type RequestThreeDSecure =
+        | 'any'
+        | 'automatic'
+        | 'challenge'
+        | OtherString;
 
       export interface ThreeDSecure {
         /**
@@ -4551,14 +5051,23 @@ export namespace SetupIntentUpdateParams {
       }
 
       export namespace ThreeDSecure {
-        export type AresTransStatus = 'A' | 'C' | 'I' | 'N' | 'R' | 'U' | 'Y';
+        export type AresTransStatus =
+          | 'A'
+          | 'C'
+          | 'I'
+          | 'N'
+          | 'R'
+          | 'U'
+          | 'Y'
+          | OtherString;
 
         export type ElectronicCommerceIndicator =
           | '01'
           | '02'
           | '05'
           | '06'
-          | '07';
+          | '07'
+          | OtherString;
 
         export interface NetworkOptions {
           /**
@@ -4567,7 +5076,13 @@ export namespace SetupIntentUpdateParams {
           cartes_bancaires?: NetworkOptions.CartesBancaires;
         }
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
 
         export namespace NetworkOptions {
           export interface CartesBancaires {
@@ -4594,7 +5109,14 @@ export namespace SetupIntentUpdateParams {
           }
 
           export namespace CartesBancaires {
-            export type CbAvalgo = '0' | '1' | '2' | '3' | '4' | 'A';
+            export type CbAvalgo =
+              | '0'
+              | '1'
+              | '2'
+              | '3'
+              | '4'
+              | 'A'
+              | OtherString;
           }
         }
       }
@@ -4674,7 +5196,8 @@ export namespace SetupIntentUpdateParams {
         | 'pt-PT'
         | 'ro-RO'
         | 'sv-FI'
-        | 'sv-SE';
+        | 'sv-SE'
+        | OtherString;
 
       export interface Subscription {
         /**
@@ -4704,11 +5227,16 @@ export namespace SetupIntentUpdateParams {
       }
 
       export namespace OnDemand {
-        export type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+        export type PurchaseInterval =
+          | 'day'
+          | 'month'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace Subscription {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
         export interface NextBilling {
           /**
@@ -4763,7 +5291,7 @@ export namespace SetupIntentUpdateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'adhoc'
@@ -4773,7 +5301,8 @@ export namespace SetupIntentUpdateParams {
           | 'monthly'
           | 'quarterly'
           | 'semi_annual'
-          | 'weekly';
+          | 'weekly'
+          | OtherString;
 
         export type Purpose =
           | 'dependant_support'
@@ -4786,7 +5315,8 @@ export namespace SetupIntentUpdateParams {
           | 'retail'
           | 'salary'
           | 'tax'
-          | 'utility';
+          | 'utility'
+          | OtherString;
       }
     }
 
@@ -4834,16 +5364,17 @@ export namespace SetupIntentUpdateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountIncludesIof = 'always' | 'never';
+        export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'halfyearly'
           | 'monthly'
           | 'quarterly'
           | 'weekly'
-          | 'yearly';
+          | 'yearly'
+          | OtherString;
       }
     }
 
@@ -4879,10 +5410,14 @@ export namespace SetupIntentUpdateParams {
         end_date?: number;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
@@ -4926,7 +5461,8 @@ export namespace SetupIntentUpdateParams {
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace FinancialConnections {
         export interface Filters {
@@ -4942,7 +5478,11 @@ export namespace SetupIntentUpdateParams {
           | 'payment_method'
           | 'transactions';
 
-        export type Prefetch = 'balances' | 'ownership' | 'transactions';
+        export type Prefetch =
+          | 'balances'
+          | 'ownership'
+          | 'transactions'
+          | OtherString;
 
         export namespace Filters {
           export type AccountSubcategory = 'checking' | 'savings';
@@ -5007,6 +5547,13 @@ export namespace SetupIntentCancelParams {
 }
 export interface SetupIntentConfirmParams {
   /**
+   * The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this list when determining the payment methods to offer. A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
+   */
+  allowed_payment_method_types?: Array<
+    SetupIntentConfirmParams.AllowedPaymentMethodType
+  >;
+
+  /**
    * ID of the ConfirmationToken used to confirm this SetupIntent.
    *
    * If the provided ConfirmationToken contains properties that are also being provided in this request, such as `payment_method`, then the values in this request will take precedence.
@@ -5049,6 +5596,105 @@ export interface SetupIntentConfirmParams {
   use_stripe_sdk?: boolean;
 }
 export namespace SetupIntentConfirmParams {
+  export type AllowedPaymentMethodType =
+    | 'acss_debit'
+    | 'affirm'
+    | 'afterpay_clearpay'
+    | 'alipay'
+    | 'alma'
+    | 'amazon_pay'
+    | 'au_becs_debit'
+    | 'bacs_debit'
+    | 'bancontact'
+    | 'billie'
+    | 'bizum'
+    | 'blik'
+    | 'boku_promptpay'
+    | 'boleto'
+    | 'capchase_pay'
+    | 'card'
+    | 'cashapp'
+    | 'check_scan'
+    | 'click_to_pay'
+    | 'crypto'
+    | 'customer_balance'
+    | 'demo_pay'
+    | 'duitnow'
+    | 'dummy_auth_push'
+    | 'dummy_passthrough_card'
+    | 'edenred'
+    | 'eps'
+    | 'fpx'
+    | 'gcash'
+    | 'getbalance'
+    | 'gift_card'
+    | 'giropay'
+    | 'gopay'
+    | 'grabpay'
+    | 'id_bank_transfer'
+    | 'ideal'
+    | 'kakao_pay'
+    | 'klarna'
+    | 'knet'
+    | 'konbini'
+    | 'kr_card'
+    | 'kr_market'
+    | 'kriya'
+    | 'link'
+    | 'mb_way'
+    | 'mobilepay'
+    | 'momo'
+    | 'mondu'
+    | 'multibanco'
+    | 'naver_pay'
+    | 'netbanking'
+    | 'ng_bank'
+    | 'ng_bank_transfer'
+    | 'ng_card'
+    | 'ng_market'
+    | 'ng_ussd'
+    | 'ng_wallet'
+    | 'nz_bank_account'
+    | 'octopus'
+    | 'oxxo'
+    | 'p24'
+    | 'paper_check'
+    | 'pay_by_bank'
+    | 'payco'
+    | 'paynow'
+    | 'paypal'
+    | 'paypay'
+    | 'payto'
+    | 'pix'
+    | 'promptpay'
+    | 'qris'
+    | 'rechnung'
+    | 'revolut_pay'
+    | 'samsung_pay'
+    | 'satispay'
+    | 'scalapay'
+    | 'sepa_debit'
+    | 'sequra'
+    | 'shop_pay'
+    | 'shopeepay'
+    | 'sofort'
+    | 'south_korea_market'
+    | 'stripe_balance'
+    | 'sunbit'
+    | 'swish'
+    | 'tamara'
+    | 'test_pay'
+    | 'truemoney'
+    | 'twint'
+    | 'upi'
+    | 'us_bank_account'
+    | 'us_cash_voucher'
+    | 'vipps'
+    | 'wechat_pay'
+    | 'wero'
+    | 'zip'
+    | OtherString;
+
   export interface MandateData {
     /**
      * This hash contains details about the customer acceptance of the Mandate.
@@ -5116,6 +5762,11 @@ export namespace SetupIntentConfirmParams {
      * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
      */
     billing_details?: PaymentMethodData.BillingDetails;
+
+    /**
+     * If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
+     */
+    bizum?: PaymentMethodData.Bizum;
 
     /**
      * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
@@ -5193,7 +5844,7 @@ export namespace SetupIntentConfirmParams {
     kr_card?: PaymentMethodData.KrCard;
 
     /**
-     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodData.Link;
 
@@ -5293,6 +5944,11 @@ export namespace SetupIntentConfirmParams {
     satispay?: PaymentMethodData.Satispay;
 
     /**
+     * If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
+     */
+    scalapay?: PaymentMethodData.Scalapay;
+
+    /**
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
      */
     sepa_debit?: PaymentMethodData.SepaDebit;
@@ -5303,7 +5959,7 @@ export namespace SetupIntentConfirmParams {
     sofort?: PaymentMethodData.Sofort;
 
     /**
-     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
      */
     sunbit?: PaymentMethodData.Sunbit;
 
@@ -5360,6 +6016,11 @@ export namespace SetupIntentConfirmParams {
     bacs_debit?: PaymentMethodOptions.BacsDebit;
 
     /**
+     * If this is a `bizum` SetupIntent, this sub-hash contains details about the Bizum payment method options.
+     */
+    bizum?: PaymentMethodOptions.Bizum;
+
+    /**
      * Configuration for any card setup attempted on this SetupIntent.
      */
     card?: PaymentMethodOptions.Card;
@@ -5375,7 +6036,7 @@ export namespace SetupIntentConfirmParams {
     klarna?: PaymentMethodOptions.Klarna;
 
     /**
-     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodOptions.Link;
 
@@ -5476,7 +6137,11 @@ export namespace SetupIntentConfirmParams {
 
     export interface Alipay {}
 
-    export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+    export type AllowRedisplay =
+      | 'always'
+      | 'limited'
+      | 'unspecified'
+      | OtherString;
 
     export interface Alma {}
 
@@ -5536,6 +6201,8 @@ export namespace SetupIntentConfirmParams {
        */
       tax_id?: string;
     }
+
+    export interface Bizum {}
 
     export interface Blik {}
 
@@ -5692,6 +6359,8 @@ export namespace SetupIntentConfirmParams {
 
     export interface Satispay {}
 
+    export interface Scalapay {}
+
     export interface SepaDebit {
       /**
        * IBAN of the bank account.
@@ -5723,6 +6392,7 @@ export namespace SetupIntentConfirmParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'bizum'
       | 'blik'
       | 'boleto'
       | 'cashapp'
@@ -5755,6 +6425,7 @@ export namespace SetupIntentConfirmParams {
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
+      | 'scalapay'
       | 'sepa_debit'
       | 'sofort'
       | 'sunbit'
@@ -5763,7 +6434,8 @@ export namespace SetupIntentConfirmParams {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
-      | 'zip';
+      | 'zip'
+      | OtherString;
 
     export interface Upi {
       /**
@@ -5847,14 +6519,17 @@ export namespace SetupIntentConfirmParams {
         | 'bank_muamalat'
         | 'bank_of_china'
         | 'bank_rakyat'
+        | 'bnp_paribas'
         | 'bsn'
         | 'cimb'
+        | 'citibank'
         | 'deutsche_bank'
         | 'hong_leong_bank'
         | 'hsbc'
         | 'kfh'
         | 'maybank2e'
         | 'maybank2u'
+        | 'mbsb_bank'
         | 'ocbc'
         | 'pb_enterprise'
         | 'public_bank'
@@ -5907,7 +6582,7 @@ export namespace SetupIntentConfirmParams {
     }
 
     export namespace NaverPay {
-      export type Funding = 'card' | 'points';
+      export type Funding = 'card' | 'points' | OtherString;
     }
 
     export namespace P24 {
@@ -5937,11 +6612,19 @@ export namespace SetupIntentConfirmParams {
         | 'tmobile_usbugi_bankowe'
         | 'toyota_bank'
         | 'velobank'
-        | 'volkswagen_bank';
+        | 'volkswagen_bank'
+        | OtherString;
     }
 
     export namespace Sofort {
-      export type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+      export type Country =
+        | 'AT'
+        | 'BE'
+        | 'DE'
+        | 'ES'
+        | 'IT'
+        | 'NL'
+        | OtherString;
     }
 
     export namespace Upi {
@@ -5968,14 +6651,14 @@ export namespace SetupIntentConfirmParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
     export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-      export type AccountType = 'checking' | 'savings';
+      export type AccountType = 'checking' | 'savings' | OtherString;
     }
   }
 
@@ -6005,6 +6688,8 @@ export namespace SetupIntentConfirmParams {
        */
       mandate_options?: BacsDebit.MandateOptions;
     }
+
+    export interface Bizum {}
 
     export interface Card {
       /**
@@ -6128,7 +6813,7 @@ export namespace SetupIntentConfirmParams {
     }
 
     export namespace AcssDebit {
-      export type Currency = 'cad' | 'usd';
+      export type Currency = 'cad' | 'usd' | OtherString;
 
       export interface MandateOptions {
         /**
@@ -6162,14 +6847,19 @@ export namespace SetupIntentConfirmParams {
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type DefaultFor = 'invoice' | 'subscription';
+        export type DefaultFor = 'invoice' | 'subscription' | OtherString;
 
-        export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+        export type PaymentSchedule =
+          | 'combined'
+          | 'interval'
+          | 'sporadic'
+          | OtherString;
 
-        export type TransactionType = 'business' | 'personal';
+        export type TransactionType = 'business' | 'personal' | OtherString;
       }
     }
 
@@ -6250,7 +6940,11 @@ export namespace SetupIntentConfirmParams {
         | 'unknown'
         | 'visa';
 
-      export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+      export type RequestThreeDSecure =
+        | 'any'
+        | 'automatic'
+        | 'challenge'
+        | OtherString;
 
       export interface ThreeDSecure {
         /**
@@ -6304,14 +6998,23 @@ export namespace SetupIntentConfirmParams {
       }
 
       export namespace ThreeDSecure {
-        export type AresTransStatus = 'A' | 'C' | 'I' | 'N' | 'R' | 'U' | 'Y';
+        export type AresTransStatus =
+          | 'A'
+          | 'C'
+          | 'I'
+          | 'N'
+          | 'R'
+          | 'U'
+          | 'Y'
+          | OtherString;
 
         export type ElectronicCommerceIndicator =
           | '01'
           | '02'
           | '05'
           | '06'
-          | '07';
+          | '07'
+          | OtherString;
 
         export interface NetworkOptions {
           /**
@@ -6320,7 +7023,13 @@ export namespace SetupIntentConfirmParams {
           cartes_bancaires?: NetworkOptions.CartesBancaires;
         }
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
 
         export namespace NetworkOptions {
           export interface CartesBancaires {
@@ -6347,7 +7056,14 @@ export namespace SetupIntentConfirmParams {
           }
 
           export namespace CartesBancaires {
-            export type CbAvalgo = '0' | '1' | '2' | '3' | '4' | 'A';
+            export type CbAvalgo =
+              | '0'
+              | '1'
+              | '2'
+              | '3'
+              | '4'
+              | 'A'
+              | OtherString;
           }
         }
       }
@@ -6427,7 +7143,8 @@ export namespace SetupIntentConfirmParams {
         | 'pt-PT'
         | 'ro-RO'
         | 'sv-FI'
-        | 'sv-SE';
+        | 'sv-SE'
+        | OtherString;
 
       export interface Subscription {
         /**
@@ -6457,11 +7174,16 @@ export namespace SetupIntentConfirmParams {
       }
 
       export namespace OnDemand {
-        export type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+        export type PurchaseInterval =
+          | 'day'
+          | 'month'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace Subscription {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
         export interface NextBilling {
           /**
@@ -6516,7 +7238,7 @@ export namespace SetupIntentConfirmParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'adhoc'
@@ -6526,7 +7248,8 @@ export namespace SetupIntentConfirmParams {
           | 'monthly'
           | 'quarterly'
           | 'semi_annual'
-          | 'weekly';
+          | 'weekly'
+          | OtherString;
 
         export type Purpose =
           | 'dependant_support'
@@ -6539,7 +7262,8 @@ export namespace SetupIntentConfirmParams {
           | 'retail'
           | 'salary'
           | 'tax'
-          | 'utility';
+          | 'utility'
+          | OtherString;
       }
     }
 
@@ -6587,16 +7311,17 @@ export namespace SetupIntentConfirmParams {
       }
 
       export namespace MandateOptions {
-        export type AmountIncludesIof = 'always' | 'never';
+        export type AmountIncludesIof = 'always' | 'never' | OtherString;
 
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
         export type PaymentSchedule =
           | 'halfyearly'
           | 'monthly'
           | 'quarterly'
           | 'weekly'
-          | 'yearly';
+          | 'yearly'
+          | OtherString;
       }
     }
 
@@ -6632,10 +7357,14 @@ export namespace SetupIntentConfirmParams {
         end_date?: number;
       }
 
-      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      export type SetupFutureUsage =
+        | 'none'
+        | 'off_session'
+        | 'on_session'
+        | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
       }
     }
 
@@ -6679,7 +7408,8 @@ export namespace SetupIntentConfirmParams {
       export type VerificationMethod =
         | 'automatic'
         | 'instant'
-        | 'microdeposits';
+        | 'microdeposits'
+        | OtherString;
 
       export namespace FinancialConnections {
         export interface Filters {
@@ -6695,7 +7425,11 @@ export namespace SetupIntentConfirmParams {
           | 'payment_method'
           | 'transactions';
 
-        export type Prefetch = 'balances' | 'ownership' | 'transactions';
+        export type Prefetch =
+          | 'balances'
+          | 'ownership'
+          | 'transactions'
+          | OtherString;
 
         export namespace Filters {
           export type AccountSubcategory = 'checking' | 'savings';

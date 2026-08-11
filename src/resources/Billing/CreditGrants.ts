@@ -5,6 +5,7 @@ import {Customer, DeletedCustomer} from './../Customers.js';
 import * as TestHelpers from './../TestHelpers/index.js';
 import {
   MetadataParam,
+  OtherString,
   Emptyable,
   PaginationParams,
   Metadata,
@@ -53,7 +54,7 @@ export class CreditGrantResource extends StripeResource {
   ): Promise<Response<CreditGrant>> {
     return this._makeRequest(
       'GET',
-      `/v1/billing/credit_grants/${id}`,
+      `/v1/billing/credit_grants/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -68,7 +69,7 @@ export class CreditGrantResource extends StripeResource {
   ): Promise<Response<CreditGrant>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/credit_grants/${id}`,
+      `/v1/billing/credit_grants/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -83,7 +84,7 @@ export class CreditGrantResource extends StripeResource {
   ): Promise<Response<CreditGrant>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/credit_grants/${id}/expire`,
+      `/v1/billing/credit_grants/${encodeURIComponent(id)}/expire`,
       params,
       options
     ) as any;
@@ -98,7 +99,7 @@ export class CreditGrantResource extends StripeResource {
   ): Promise<Response<CreditGrant>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/credit_grants/${id}/void`,
+      `/v1/billing/credit_grants/${encodeURIComponent(id)}/void`,
       params,
       options
     ) as any;
@@ -115,14 +116,14 @@ export interface CreditGrant {
    */
   object: 'billing.credit_grant';
 
-  amount: Billing.CreditGrant.Amount;
+  amount: CreditGrant.Amount;
 
-  applicability_config: Billing.CreditGrant.ApplicabilityConfig;
+  applicability_config: CreditGrant.ApplicabilityConfig;
 
   /**
    * The category of this credit grant. This is for tracking purposes and isn't displayed to the customer.
    */
-  category: Billing.CreditGrant.Category;
+  category: CreditGrant.Category;
 
   /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -167,7 +168,7 @@ export interface CreditGrant {
   /**
    * The priority for applying this credit grant. The highest priority is 0 and the lowest is 100.
    */
-  priority?: number | null;
+  priority: number | null;
 
   /**
    * ID of the test clock this credit grant belongs to.
@@ -184,60 +185,58 @@ export interface CreditGrant {
    */
   voided_at: number | null;
 }
-export namespace Billing {
-  export namespace CreditGrant {
-    export interface Amount {
+export namespace CreditGrant {
+  export interface Amount {
+    /**
+     * The monetary amount.
+     */
+    monetary: Amount.Monetary | null;
+
+    /**
+     * The type of this amount. We currently only support `monetary` billing credits.
+     */
+    type: 'monetary';
+  }
+
+  export interface ApplicabilityConfig {
+    scope: ApplicabilityConfig.Scope;
+  }
+
+  export type Category = 'paid' | 'promotional' | OtherString;
+
+  export namespace Amount {
+    export interface Monetary {
       /**
-       * The monetary amount.
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
-      monetary: Amount.Monetary | null;
+      currency: string;
 
       /**
-       * The type of this amount. We currently only support `monetary` billing credits.
+       * A positive integer representing the amount.
        */
-      type: 'monetary';
+      value: number;
+    }
+  }
+
+  export namespace ApplicabilityConfig {
+    export interface Scope {
+      /**
+       * The price type that credit grants can apply to. We currently only support the `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `prices`.
+       */
+      price_type?: 'metered';
+
+      /**
+       * The prices that credit grants can apply to. We currently only support `metered` prices. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `price_type`.
+       */
+      prices?: Array<Scope.Price>;
     }
 
-    export interface ApplicabilityConfig {
-      scope: ApplicabilityConfig.Scope;
-    }
-
-    export type Category = 'paid' | 'promotional';
-
-    export namespace Amount {
-      export interface Monetary {
+    export namespace Scope {
+      export interface Price {
         /**
-         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         * Unique identifier for the object.
          */
-        currency: string;
-
-        /**
-         * A positive integer representing the amount.
-         */
-        value: number;
-      }
-    }
-
-    export namespace ApplicabilityConfig {
-      export interface Scope {
-        /**
-         * The price type that credit grants can apply to. We currently only support the `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `prices`.
-         */
-        price_type?: 'metered';
-
-        /**
-         * The prices that credit grants can apply to. We currently only support `metered` prices. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `price_type`.
-         */
-        prices?: Array<Scope.Price>;
-      }
-
-      export namespace Scope {
-        export interface Price {
-          /**
-           * Unique identifier for the object.
-           */
-          id: string | null;
-        }
+        id: string | null;
       }
     }
   }
@@ -320,7 +319,7 @@ export namespace Billing {
       scope: ApplicabilityConfig.Scope;
     }
 
-    export type Category = 'paid' | 'promotional';
+    export type Category = 'paid' | 'promotional' | OtherString;
 
     export namespace Amount {
       export interface Monetary {
@@ -344,7 +343,7 @@ export namespace Billing {
         price_type?: 'metered';
 
         /**
-         * A list of prices that the credit grant can apply to. We currently only support the `metered` prices. Cannot be used in combination with `price_type`.
+         * A list of prices that the credit grant can apply to. We currently only support the `metered` prices. Cannot be used in combination with `price_type`. Limit 20 prices.
          */
         prices?: Array<Scope.Price>;
       }

@@ -36,7 +36,7 @@ export class EarlyFraudWarningResource extends StripeResource {
   ): Promise<Response<EarlyFraudWarning>> {
     return this._makeRequest(
       'GET',
-      `/v1/radar/early_fraud_warnings/${id}`,
+      `/v1/radar/early_fraud_warnings/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

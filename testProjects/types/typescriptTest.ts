@@ -7,6 +7,8 @@
 
 import Stripe from 'stripe';
 
+const majorApiVersion: string = Stripe.MAJOR_API_VERSION;
+
 let stripe = new Stripe('sk_test_123', {
   apiVersion: Stripe.API_VERSION,
 });
@@ -105,6 +107,13 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
   }
 
   const cusList: Stripe.ApiList<Stripe.Customer> = await stripe.customers.list();
+
+  /**
+   * TODO(DEVSDK-2534): remove this test when we fix V2List at next major.
+   */
+  const v2EventsListBC: Stripe.ApiList<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
+
+  const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
 
   const aThousandCustomers: Array<Stripe.Customer> = await stripe.customers
     .list()
@@ -264,6 +273,36 @@ const instanceofCheck2 = {} instanceof Stripe.errors.StripeAPIError;
 const instanceofCheck5 = {} instanceof stripe.errors.StripeError;
 const instanceofCheck6 = {} instanceof stripe.errors.StripeAPIError;
 
+// ErrorType namespace provides type-level access (DEVSDK-3141)
+let errorTypeCheck1: Stripe.ErrorType.StripeError;
+let errorTypeCheck2: Stripe.ErrorType.StripeCardError;
+let errorTypeCheck3: Stripe.ErrorType.StripeInvalidRequestError;
+
+// Stripe.errors and Stripe.ErrorType are interchangeable as types
+const errorTypeInterchangeable = (
+  e: Stripe.errors.StripeError
+): Stripe.ErrorType.StripeError => e;
+
+// instanceof narrows to the correct type
+const instanceofNarrowing = (
+  e: unknown
+): Stripe.ErrorType.StripeError | null => {
+  if (e instanceof Stripe.errors.StripeError) {
+    return e;
+  }
+  return null;
+};
+
+// Error objects expose generated fields with proper types
+const errorFieldAccess = (e: Stripe.ErrorType.StripeError): void => {
+  const networkAdviceCode: string | undefined = e.network_advice_code;
+  const networkDeclineCode: string | undefined = e.network_decline_code;
+  const adviceCode: string | undefined = e.advice_code;
+  const paymentIntent: Stripe.PaymentIntent | undefined = e.payment_intent;
+  const paymentMethod: Stripe.PaymentMethod | undefined = e.payment_method;
+  const setupIntent: Stripe.SetupIntent | undefined = e.setup_intent;
+};
+
 stripe.files.create({
   purpose: 'dispute_evidence',
   file: {
@@ -320,6 +359,8 @@ const v2ContextObj: Stripe.StripeContextType | undefined = v2EventNotif.context;
 async (): Promise<void> => {
   // parsing event notifications
   const eventNotification = stripe.parseEventNotification('', '', '');
+  // literal type, so this is really checking the (purported) value
+  eventNotification.object === 'v2.core.event';
 
   if (eventNotification.type === 'v1.billing.meter.error_report_triggered') {
     eventNotification.related_object;
@@ -354,7 +395,15 @@ async (): Promise<void> => {
   let g: Stripe.V2.Core.Event;
 }
 
-Stripe.Decimal.from('1.0');
+// Test that the Decimal type is exported
+{
+  function takesDecimal(decimal: Stripe.Decimal) {
+    return decimal;
+  }
+
+  const testDecimal = Stripe.Decimal.from('1.0');
+  takesDecimal(testDecimal);
+}
 
 let event: Stripe.Event = stripe.webhooks.constructEvent(
   'payload',
@@ -374,5 +423,101 @@ event = stripe.webhooks.constructEvent(
   'secret'
 );
 
+// constructEventWithoutVerification on webhooks object and client
+event = stripe.webhooks.constructEventWithoutVerification('payload');
+event = stripe.constructEventWithoutVerification('payload');
+
+// parseEventNotificationWithoutVerification on client
+const _notificationWV: Stripe.V2.Core.EventNotification = stripe.parseEventNotificationWithoutVerification(
+  'payload'
+);
+
+// Verify that nested types with names matching imported types resolve correctly.
+// e.g. Checkout.Session.TotalDetails.Breakdown.Discount.discount should be
+// Stripe.Discount, not a self-referential Breakdown.Discount. (DEVSDK-3139)
+{
+  const session = {} as Stripe.Checkout.Session;
+  for (const item of session.total_details?.breakdown?.discounts ?? []) {
+    const discount: Stripe.Discount = item.discount as Stripe.Discount;
+    const promoCode: string | Stripe.PromotionCode | null =
+      discount.promotion_code;
+    const customer: string | Stripe.Customer | Stripe.DeletedCustomer | null =
+      discount.customer;
+    const start: number = discount.start;
+  }
+
+  const schedule = {} as Stripe.SubscriptionSchedule;
+  for (const phase of schedule.phases) {
+    for (const d of phase.discounts) {
+      if (typeof d.discount !== 'string' && d.discount) {
+        const promoCode: string | Stripe.PromotionCode | null =
+          d.discount.promotion_code;
+        const start: number = d.discount.start;
+      }
+    }
+  }
+}
+
+const v2AccountCreateParamConfiguration: Stripe.V2.Core.AccountCreateParams.Configuration = {};
 const checkoutSessionParam: Stripe.Checkout.SessionCreateParams = {};
+const checkoutSessionParamLineItem: Stripe.Checkout.SessionCreateParams.LineItem = {};
 const v2EventListParams: Stripe.V2.Core.EventListParams = {};
+const v2AccountCreateParams: Stripe.V2.Core.AccountCreateParams = {};
+const oAuthToken: Stripe.OAuthToken = {};
+const oAuthResource: Stripe.OAuthResource = stripe.oauth;
+
+const oAuthTokenParams: Stripe.OAuthTokenParams = {
+  grant_type: 'authorization_code',
+};
+const oAuthAuthorizeUrlOptions: Stripe.OAuthAuthorizeUrlOptions = {};
+const oAuthAuthorizeUrlParams: Stripe.OAuthAuthorizeUrlParams = {};
+const oAuthDeauthorization: Stripe.OAuthDeauthorization = {stripe_user_id: ''};
+const oAuthDeauthorizeParams: Stripe.OAuthDeauthorizeParams = {};
+
+// Resource sub-types (companion namespace access)
+let priceRecurring: Stripe.Price.Recurring;
+let customerInvoiceSettings: Stripe.Customer.InvoiceSettings;
+let subscriptionBillingMode: Stripe.Subscription.BillingMode;
+
+// Deep resource sub-types (2+ levels)
+const billingModeType: Stripe.Subscription.BillingMode.Type = 'classic';
+
+// Nested resource sub-types (product namespace → resource → sub-type)
+let alertStatus: Stripe.Billing.Alert.Status;
+let terminalTipping: Stripe.Terminal.Configuration.Tipping;
+let appsSecretScope: Stripe.Apps.Secret.Scope;
+
+// Deep params sub-namespaces (2+ levels)
+let accountBizProfile: Stripe.AccountCreateParams.BusinessProfile;
+let accountBizRevenue: Stripe.AccountCreateParams.BusinessProfile.AnnualRevenue;
+
+// Access and type top level resources and nested resources
+const customerResource: Stripe.CustomerResource = new Stripe.CustomerResource(
+  stripe
+);
+
+// Access nested resource
+const v2AccountResource: Stripe.V2.Billing.MeterEventResource = new Stripe.V2.Billing.MeterEventResource(
+  stripe
+);
+
+// Namespace type exports that must remain accessible (v21 parity).
+const _stripeConfig: Stripe.StripeConfig = {maxNetworkRetries: 3};
+const _latestApiVersion: Stripe.LatestApiVersion = '' as any;
+const _httpAgent: Stripe.HttpAgent = null as any;
+const _httpProtocol: Stripe.HttpProtocol = 'https';
+const _stripeResource: Stripe.StripeResource = null as any;
+const _cryptoProvider: Stripe.CryptoProvider = null as any;
+const _httpClient: Stripe.HttpClient = null as any;
+const _httpClientResponse: Stripe.HttpClientResponse = null as any;
+const _rawErrorType: Stripe.RawErrorType = 'card_error';
+const _webhooksType: Stripe.Webhooks = null as any;
+const _webhookTestHeaderOptions: Stripe.WebhookTestHeaderOptions = {
+  payload: '{}',
+  secret: 'whsec_test',
+};
+const _signatureType: Stripe.Signature = null as any;
+
+// Factory function return types must be assignable to their interface types.
+const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
+const _nodeCryptoProvider: Stripe.CryptoProvider = Stripe.createNodeCryptoProvider();
