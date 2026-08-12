@@ -4,8 +4,10 @@
 
 - Run all tests: `just test` (builds first)
 - Run a specific test: `just test --grep "test name pattern"`
+- Run type tests: `just types-test` (builds first, then type-checks `testProjects/types/typescriptTest.ts`)
 - Tests use mocha
 - Must build TypeScript before testing (handled automatically by `just` commands)
+- Most changes that add or modify public API surface should include a corresponding type test in `testProjects/types/typescriptTest.ts`
 
 ## Formatting & Linting
 
@@ -19,7 +21,7 @@
 - Node.js HTTP implementation: `src/net/NodeHttpClient.ts`
 - Fetch-based HTTP implementation: `src/net/FetchHttpClient.ts`
 - Request orchestration (headers, auth, retries): `src/RequestSender.ts`
-- Core client setup: `src/stripe.core.ts`
+- Core client setup: `src/stripe.core.ts` (CJS) and `src/stripe.esm.node.ts` (ESM) — changes to one usually need mirroring in the other
 - API version: `src/apiVersion.ts`
 
 ## Generated Code

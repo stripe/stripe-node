@@ -942,6 +942,8 @@ export namespace SubscriptionSchedule {
        * Settings controlling billing behavior during the pause.
        */
       settings: Pause.Settings | null;
+
+      status: Pause.Status;
     }
 
     export interface Resume {
@@ -951,6 +953,8 @@ export namespace SubscriptionSchedule {
       resume_at: number;
 
       settings: Resume.Settings;
+
+      status: Resume.Status;
     }
 
     export namespace Pause {
@@ -966,6 +970,15 @@ export namespace SubscriptionSchedule {
          * The type of pause settings.
          */
         type: 'subscription';
+      }
+
+      export interface Status {
+        error?: Status.Error;
+
+        /**
+         * The lifecycle state of the pause operation.
+         */
+        type: Status.Type;
       }
 
       export namespace Settings {
@@ -1007,6 +1020,22 @@ export namespace SubscriptionSchedule {
           }
         }
       }
+
+      export namespace Status {
+        export interface Error {
+          /**
+           * A machine-readable error code.
+           */
+          code?: string;
+
+          /**
+           * A description of the error.
+           */
+          message: string;
+        }
+
+        export type Type = 'error' | 'scheduled' | 'succeeded' | OtherString;
+      }
     }
 
     export namespace Resume {
@@ -1027,6 +1056,15 @@ export namespace SubscriptionSchedule {
         proration_behavior: Settings.ProrationBehavior;
       }
 
+      export interface Status {
+        error?: Status.Error;
+
+        /**
+         * The lifecycle state of the resume operation.
+         */
+        type: Status.Type;
+      }
+
       export namespace Settings {
         export type BillingCycleAnchor = 'resume_at' | 'unchanged';
 
@@ -1038,6 +1076,28 @@ export namespace SubscriptionSchedule {
           | 'always_invoice'
           | 'create_prorations'
           | 'none'
+          | OtherString;
+      }
+
+      export namespace Status {
+        export interface Error {
+          /**
+           * A machine-readable error code.
+           */
+          code?: string;
+
+          /**
+           * A description of the error.
+           */
+          message: string;
+        }
+
+        export type Type =
+          | 'error'
+          | 'pending'
+          | 'requires_action'
+          | 'scheduled'
+          | 'succeeded'
           | OtherString;
       }
     }
@@ -1652,7 +1712,7 @@ export interface SubscriptionScheduleCreateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
-   * Sets the pause schedules for the subscription schedule. Each entry configures when and how the subscription pauses and optionally when and how it resumes.
+   * Configures the subscription's pause behavior and, optionally, its resume behavior. Only one entry is supported.
    */
   pause_schedules?: Array<SubscriptionScheduleCreateParams.PauseSchedule>;
 
@@ -1776,7 +1836,7 @@ export namespace SubscriptionScheduleCreateParams {
     /**
      * Configuration for when and how the subscription pauses.
      */
-    pause: PauseSchedule.Pause;
+    pause?: PauseSchedule.Pause;
 
     /**
      * Configuration for when and how the subscription resumes.
@@ -2235,7 +2295,7 @@ export namespace SubscriptionScheduleCreateParams {
         billing_cycle_anchor?: Settings.BillingCycleAnchor;
 
         /**
-         * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. The default is `resume_on_payment_attempt`.
+         * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. The default is `resume_on_payment_success`.
          */
         payment_behavior?: Settings.PaymentBehavior;
 
@@ -3100,7 +3160,7 @@ export interface SubscriptionScheduleUpdateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
-   * Sets the pause schedules for the subscription schedule. Include a `key` to update an existing entry or omit it to add a new one. Pass `""` to clear all entries or `[]` to leave them unchanged.
+   * Configures the subscription's pause behavior and, optionally, its resume behavior. Only one entry is supported. Include a key to update an existing entry. Omit to leave an existing pause schedule unchanged, or pass "" to clear it.
    */
   pause_schedules?: Emptyable<
     Array<SubscriptionScheduleUpdateParams.PauseSchedule>
@@ -3219,7 +3279,7 @@ export namespace SubscriptionScheduleUpdateParams {
     /**
      * Configuration for when and how the subscription resumes.
      */
-    resume?: PauseSchedule.Resume;
+    resume?: Emptyable<PauseSchedule.Resume>;
   }
 
   export interface Phase {
@@ -3669,7 +3729,7 @@ export namespace SubscriptionScheduleUpdateParams {
         billing_cycle_anchor?: Settings.BillingCycleAnchor;
 
         /**
-         * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. The default is `resume_on_payment_attempt`.
+         * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. The default is `resume_on_payment_success`.
          */
         payment_behavior?: Settings.PaymentBehavior;
 

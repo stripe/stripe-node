@@ -2141,6 +2141,11 @@ export namespace Subscription {
       bancontact: PaymentMethodOptions.Bancontact | null;
 
       /**
+       * This sub-hash contains details about the Billie payment method options to pass to invoices created by the subscription.
+       */
+      billie?: PaymentMethodOptions.Billie | null;
+
+      /**
        * This sub-hash contains details about the Bizum payment method options to pass to invoices created by the subscription.
        */
       bizum?: PaymentMethodOptions.Bizum | null;
@@ -2216,6 +2221,7 @@ export namespace Subscription {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'billie'
       | 'bizum'
       | 'blik'
       | 'boleto'
@@ -2247,6 +2253,7 @@ export namespace Subscription {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'paypay'
       | 'payto'
       | 'pix'
       | 'promptpay'
@@ -2261,6 +2268,7 @@ export namespace Subscription {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
+      | 'vipps'
       | 'wechat_pay'
       | OtherString;
 
@@ -2285,6 +2293,8 @@ export namespace Subscription {
          */
         preferred_language: Bancontact.PreferredLanguage;
       }
+
+      export interface Billie {}
 
       export interface Bizum {
         mandate_options?: Bizum.MandateOptions;
@@ -3893,6 +3903,7 @@ export namespace SubscriptionCreateParams {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'billie'
       | 'bizum'
       | 'blik'
       | 'boleto'
@@ -3924,6 +3935,7 @@ export namespace SubscriptionCreateParams {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'paypay'
       | 'payto'
       | 'pix'
       | 'promptpay'
@@ -3938,6 +3950,7 @@ export namespace SubscriptionCreateParams {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
+      | 'vipps'
       | 'wechat_pay'
       | OtherString;
 
@@ -5526,6 +5539,7 @@ export namespace SubscriptionUpdateParams {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'billie'
       | 'bizum'
       | 'blik'
       | 'boleto'
@@ -5557,6 +5571,7 @@ export namespace SubscriptionUpdateParams {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'paypay'
       | 'payto'
       | 'pix'
       | 'promptpay'
@@ -5571,6 +5586,7 @@ export namespace SubscriptionUpdateParams {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
+      | 'vipps'
       | 'wechat_pay'
       | OtherString;
 

@@ -2190,6 +2190,11 @@ export interface CustomerCreateBalanceTransactionParams {
   currency: string;
 
   /**
+   * Required when `type` is `applied_to_invoice`. Identifies the open invoice to apply the customer's balance credit to.
+   */
+  applied_to_invoice?: CustomerCreateBalanceTransactionParams.AppliedToInvoice;
+
+  /**
    * An arbitrary string attached to the object. Often useful for displaying to users.
    */
   description?: string;
@@ -2203,6 +2208,21 @@ export interface CustomerCreateBalanceTransactionParams {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * The type of customer balance transaction. Defaults to `adjustment`, which updates the customer's credit balance directly. Set to `applied_to_invoice` to apply the customer's existing credit balance to a specific open invoice.
+   */
+  type?: CustomerCreateBalanceTransactionParams.Type;
+}
+export namespace CustomerCreateBalanceTransactionParams {
+  export interface AppliedToInvoice {
+    /**
+     * The ID of the open invoice to apply the customer's balance credit to.
+     */
+    invoice: string;
+  }
+
+  export type Type = 'adjustment' | 'applied_to_invoice' | OtherString;
 }
 export interface CustomerCreateFundingInstructionsParams {
   /**

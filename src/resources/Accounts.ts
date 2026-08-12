@@ -1002,7 +1002,7 @@ export namespace Account {
     sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
     /**
-     * The status of the Sequra capability of the account, or whether the account can directly process Sequra payments.
+     * The status of the SeQura capability of the account, or whether the account can directly process SeQura payments.
      */
     sequra_payments?: Capabilities.SequraPayments;
 
@@ -1957,10 +1957,7 @@ export namespace Account {
         | 'invalid_url_website_incomplete_under_construction'
         | 'invalid_url_website_other'
         | 'invalid_value_other'
-        | 'partner_disabled_dispute_rate'
-        | 'partner_disabled_responsibilities'
-        | 'partner_disabled_restricted_business'
-        | 'partner_disabled_suspected_fraud'
+        | 'partner_disabled'
         | 'unsupported_business_type'
         | 'verification_data_not_found'
         | 'verification_directors_mismatch'
@@ -2111,10 +2108,7 @@ export namespace Account {
         | 'invalid_url_website_incomplete_under_construction'
         | 'invalid_url_website_other'
         | 'invalid_value_other'
-        | 'partner_disabled_dispute_rate'
-        | 'partner_disabled_responsibilities'
-        | 'partner_disabled_restricted_business'
-        | 'partner_disabled_suspected_fraud'
+        | 'partner_disabled'
         | 'unsupported_business_type'
         | 'verification_data_not_found'
         | 'verification_directors_mismatch'

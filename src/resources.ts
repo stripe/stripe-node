@@ -106,6 +106,7 @@ import {OnboardingLinkResource as TerminalOnboardingLinks} from './resources/Ter
 import {OneTimeItemResource as V2BillingOneTimeItems} from './resources/V2/Billing/OneTimeItems.js';
 import {OnrampSessionResource as CryptoOnrampSessions} from './resources/Crypto/OnrampSessions.js';
 import {OnrampTransactionLimitResource as CryptoOnrampTransactionLimits} from './resources/Crypto/OnrampTransactionLimits.js';
+import {OperationResource as V2TaxOperations} from './resources/V2/Tax/Operations.js';
 import {OrderResource as ClimateOrders} from './resources/Climate/Orders.js';
 import {OrderResource as DelegatedCheckoutOrders} from './resources/DelegatedCheckout/Orders.js';
 import {OutboundPaymentQuoteResource as V2MoneyManagementOutboundPaymentQuotes} from './resources/V2/MoneyManagement/OutboundPaymentQuotes.js';
@@ -524,7 +525,10 @@ export const V2 = resourceNamespace('v2', {
     AccountEvaluations: V2SignalsAccountEvaluations,
     AccountSignals: V2SignalsAccountSignals,
   }),
-  Tax: resourceNamespace('tax', {ManualRules: V2TaxManualRules}),
+  Tax: resourceNamespace('tax', {
+    ManualRules: V2TaxManualRules,
+    Operations: V2TaxOperations,
+  }),
   TestHelpers: resourceNamespace('testHelpers', {
     FinancialAddresses: V2TestHelpersFinancialAddresses,
     MoneyManagement: V2TestHelpersMoneyManagement,

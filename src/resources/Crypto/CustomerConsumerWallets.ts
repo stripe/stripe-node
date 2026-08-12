@@ -39,6 +39,7 @@ export namespace CustomerConsumerWallet {
     | 'avalanche'
     | 'base'
     | 'bitcoin'
+    | 'celo'
     | 'ethereum'
     | 'optimism'
     | 'polygon'

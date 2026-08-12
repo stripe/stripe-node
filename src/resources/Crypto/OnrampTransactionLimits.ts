@@ -81,6 +81,7 @@ export namespace Crypto {
       | 'avalanche'
       | 'base'
       | 'bitcoin'
+      | 'celo'
       | 'ethereum'
       | 'optimism'
       | 'polygon'

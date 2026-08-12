@@ -267,6 +267,7 @@ import {Account as V1Account} from './../../Accounts.js';
 import {ApplicationFee as V1ApplicationFee} from './../../ApplicationFees.js';
 import {FeeRefund as V1FeeRefund} from './../../FeeRefunds.js';
 import {Balance as V1Balance} from './../../Balance.js';
+import {BalanceSettings as V1BalanceSettings} from './../../BalanceSettings.js';
 import {Capability as V1Capability} from './../../Capabilities.js';
 import {CashBalance as V1CashBalance} from './../../CashBalances.js';
 import {Charge as V1Charge} from './../../Charges.js';
@@ -321,9 +322,17 @@ export type Event =
   | V1ApplicationFeeRefundUpdatedEvent
   | V1ApplicationFeeRefundedEvent
   | V1BalanceAvailableEvent
+  | V1BalanceSettingsUpdatedEvent
   | V1BillingAlertTriggeredEvent
+  | V1BillingCreditBalanceTransactionCreatedEvent
+  | V1BillingCreditGrantCreatedEvent
+  | V1BillingCreditGrantUpdatedEvent
+  | V1BillingMeterCreatedEvent
+  | V1BillingMeterDeactivatedEvent
   | V1BillingMeterErrorReportTriggeredEvent
   | V1BillingMeterNoMeterFoundEvent
+  | V1BillingMeterReactivatedEvent
+  | V1BillingMeterUpdatedEvent
   | V1BillingPortalConfigurationCreatedEvent
   | V1BillingPortalConfigurationUpdatedEvent
   | V1BillingPortalSessionCreatedEvent
@@ -376,13 +385,18 @@ export type Event =
   | V1CustomerCashBalanceTransactionCreatedEvent
   | V1EntitlementsActiveEntitlementSummaryUpdatedEvent
   | V1FileCreatedEvent
+  | V1FinancialConnectionsAccountAccountNumbersUpdatedEvent
   | V1FinancialConnectionsAccountCreatedEvent
   | V1FinancialConnectionsAccountDeactivatedEvent
   | V1FinancialConnectionsAccountDisconnectedEvent
+  | V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent
   | V1FinancialConnectionsAccountReactivatedEvent
   | V1FinancialConnectionsAccountRefreshedBalanceEvent
   | V1FinancialConnectionsAccountRefreshedOwnershipEvent
   | V1FinancialConnectionsAccountRefreshedTransactionsEvent
+  | V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent
+  | V1FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent
+  | V1FinancialConnectionsAccountUpcomingDeactivationEvent
   | V1IdentityVerificationSessionCanceledEvent
   | V1IdentityVerificationSessionCreatedEvent
   | V1IdentityVerificationSessionProcessingEvent
@@ -398,6 +412,7 @@ export type Event =
   | V1InvoiceOverpaidEvent
   | V1InvoicePaidEvent
   | V1InvoicePaymentActionRequiredEvent
+  | V1InvoicePaymentAttemptRequiredEvent
   | V1InvoicePaymentFailedEvent
   | V1InvoicePaymentSucceededEvent
   | V1InvoiceSentEvent
@@ -750,9 +765,17 @@ export type EventNotification =
   | V1ApplicationFeeRefundUpdatedEventNotification
   | V1ApplicationFeeRefundedEventNotification
   | V1BalanceAvailableEventNotification
+  | V1BalanceSettingsUpdatedEventNotification
   | V1BillingAlertTriggeredEventNotification
+  | V1BillingCreditBalanceTransactionCreatedEventNotification
+  | V1BillingCreditGrantCreatedEventNotification
+  | V1BillingCreditGrantUpdatedEventNotification
+  | V1BillingMeterCreatedEventNotification
+  | V1BillingMeterDeactivatedEventNotification
   | V1BillingMeterErrorReportTriggeredEventNotification
   | V1BillingMeterNoMeterFoundEventNotification
+  | V1BillingMeterReactivatedEventNotification
+  | V1BillingMeterUpdatedEventNotification
   | V1BillingPortalConfigurationCreatedEventNotification
   | V1BillingPortalConfigurationUpdatedEventNotification
   | V1BillingPortalSessionCreatedEventNotification
@@ -805,13 +828,18 @@ export type EventNotification =
   | V1CustomerCashBalanceTransactionCreatedEventNotification
   | V1EntitlementsActiveEntitlementSummaryUpdatedEventNotification
   | V1FileCreatedEventNotification
+  | V1FinancialConnectionsAccountAccountNumbersUpdatedEventNotification
   | V1FinancialConnectionsAccountCreatedEventNotification
   | V1FinancialConnectionsAccountDeactivatedEventNotification
   | V1FinancialConnectionsAccountDisconnectedEventNotification
+  | V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEventNotification
   | V1FinancialConnectionsAccountReactivatedEventNotification
   | V1FinancialConnectionsAccountRefreshedBalanceEventNotification
   | V1FinancialConnectionsAccountRefreshedOwnershipEventNotification
   | V1FinancialConnectionsAccountRefreshedTransactionsEventNotification
+  | V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEventNotification
+  | V1FinancialConnectionsAccountUpcomingAccountNumberExpiryEventNotification
+  | V1FinancialConnectionsAccountUpcomingDeactivationEventNotification
   | V1IdentityVerificationSessionCanceledEventNotification
   | V1IdentityVerificationSessionCreatedEventNotification
   | V1IdentityVerificationSessionProcessingEventNotification
@@ -827,6 +855,7 @@ export type EventNotification =
   | V1InvoiceOverpaidEventNotification
   | V1InvoicePaidEventNotification
   | V1InvoicePaymentActionRequiredEventNotification
+  | V1InvoicePaymentAttemptRequiredEventNotification
   | V1InvoicePaymentFailedEventNotification
   | V1InvoicePaymentSucceededEventNotification
   | V1InvoiceSentEventNotification
@@ -1472,6 +1501,26 @@ export interface V1BalanceAvailableEventNotification
 }
 
 /**
+ * Occurs whenever a balance settings status or property has changed.
+ */
+export interface V1BalanceSettingsUpdatedEvent extends EventBase {
+  type: 'v1.balance_settings.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1BalanceSettings>;
+}
+export interface V1BalanceSettingsUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.balance_settings.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1BalanceSettings>;
+  fetchEvent(): Promise<V1BalanceSettingsUpdatedEvent>;
+}
+
+/**
  * Occurs whenever your custom alert threshold is met.
  */
 export interface V1BillingAlertTriggeredEvent extends EventBase {
@@ -1489,6 +1538,107 @@ export interface V1BillingAlertTriggeredEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1Billing.Alert>;
   fetchEvent(): Promise<V1BillingAlertTriggeredEvent>;
+}
+
+/**
+ * Occurs when a credit balance transaction is created.
+ */
+export interface V1BillingCreditBalanceTransactionCreatedEvent
+  extends EventBase {
+  type: 'v1.billing.credit_balance_transaction.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.CreditBalanceTransaction>;
+}
+export interface V1BillingCreditBalanceTransactionCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.billing.credit_balance_transaction.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.CreditBalanceTransaction>;
+  fetchEvent(): Promise<V1BillingCreditBalanceTransactionCreatedEvent>;
+}
+
+/**
+ * Occurs when a credit grant is created.
+ */
+export interface V1BillingCreditGrantCreatedEvent extends EventBase {
+  type: 'v1.billing.credit_grant.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.CreditGrant>;
+}
+export interface V1BillingCreditGrantCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.billing.credit_grant.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.CreditGrant>;
+  fetchEvent(): Promise<V1BillingCreditGrantCreatedEvent>;
+}
+
+/**
+ * Occurs when a credit grant is updated.
+ */
+export interface V1BillingCreditGrantUpdatedEvent extends EventBase {
+  type: 'v1.billing.credit_grant.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.CreditGrant>;
+}
+export interface V1BillingCreditGrantUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.billing.credit_grant.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.CreditGrant>;
+  fetchEvent(): Promise<V1BillingCreditGrantUpdatedEvent>;
+}
+
+/**
+ * Occurs when a meter is created.
+ */
+export interface V1BillingMeterCreatedEvent extends EventBase {
+  type: 'v1.billing.meter.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.Meter>;
+}
+export interface V1BillingMeterCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.billing.meter.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.Meter>;
+  fetchEvent(): Promise<V1BillingMeterCreatedEvent>;
+}
+
+/**
+ * Occurs when a meter is deactivated.
+ */
+export interface V1BillingMeterDeactivatedEvent extends EventBase {
+  type: 'v1.billing.meter.deactivated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.Meter>;
+}
+export interface V1BillingMeterDeactivatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.billing.meter.deactivated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.Meter>;
+  fetchEvent(): Promise<V1BillingMeterDeactivatedEvent>;
 }
 
 /**
@@ -1711,6 +1861,46 @@ export namespace V1BillingMeterNoMeterFoundEvent {
       }
     }
   }
+}
+
+/**
+ * Occurs when a meter is reactivated.
+ */
+export interface V1BillingMeterReactivatedEvent extends EventBase {
+  type: 'v1.billing.meter.reactivated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.Meter>;
+}
+export interface V1BillingMeterReactivatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.billing.meter.reactivated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.Meter>;
+  fetchEvent(): Promise<V1BillingMeterReactivatedEvent>;
+}
+
+/**
+ * Occurs when a meter is updated.
+ */
+export interface V1BillingMeterUpdatedEvent extends EventBase {
+  type: 'v1.billing.meter.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.Meter>;
+}
+export interface V1BillingMeterUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.billing.meter.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Billing.Meter>;
+  fetchEvent(): Promise<V1BillingMeterUpdatedEvent>;
 }
 
 /**
@@ -2567,7 +2757,7 @@ export interface V1CustomerSubscriptionResumedEventNotification
 }
 
 /**
- * Occurs three days before a subscription's trial period is scheduled to end, or when a trial is ended immediately (using `trial_end=now`).
+ * Occurs three days before a subscription's trial period is scheduled to end, or immediately when a trial is ended early (for example, with `trial_end=now` or when a Customer Portal plan change ends a trial). If a trial is shortened so that fewer than three days remain, this event can fire immediately, including during the same transaction that collects payment. Before sending payment-reminder communications from this webhook, check the subscription status and latest invoice to determine whether payment has already been collected.
  */
 export interface V1CustomerSubscriptionTrialWillEndEvent extends EventBase {
   type: 'v1.customer.subscription.trial_will_end';
@@ -2740,6 +2930,29 @@ export interface V1FileCreatedEventNotification extends EventNotificationBase {
 }
 
 /**
+ * Occurs when a Financial Connections account's account numbers are updated.
+ */
+export interface V1FinancialConnectionsAccountAccountNumbersUpdatedEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.account_numbers_updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountAccountNumbersUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.account_numbers_updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountAccountNumbersUpdatedEvent
+  >;
+}
+
+/**
  * Occurs when a new Financial Connections account is created.
  */
 export interface V1FinancialConnectionsAccountCreatedEvent extends EventBase {
@@ -2799,6 +3012,29 @@ export interface V1FinancialConnectionsAccountDisconnectedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
   fetchEvent(): Promise<V1FinancialConnectionsAccountDisconnectedEvent>;
+}
+
+/**
+ * Occurs when a Financial Connections account’s `expected_deactivation_date` changes.
+ */
+export interface V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.expected_deactivation_date_updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.expected_deactivation_date_updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent
+  >;
 }
 
 /**
@@ -2885,6 +3121,73 @@ export interface V1FinancialConnectionsAccountRefreshedTransactionsEventNotifica
   fetchEvent(): Promise<
     V1FinancialConnectionsAccountRefreshedTransactionsEvent
   >;
+}
+
+/**
+ * Occurs when the supported_payment_method_types array on a Financial Connections account changes.
+ */
+export interface V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.supported_payment_method_types_updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.supported_payment_method_types_updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent
+  >;
+}
+
+/**
+ * Occurs when an Account’s tokenized account number is about to expire.
+ */
+export interface V1FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.upcoming_account_number_expiry';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountUpcomingAccountNumberExpiryEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.upcoming_account_number_expiry';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent
+  >;
+}
+
+/**
+ * Occurs when a Financial Connections account is about to become `inactive`.
+ */
+export interface V1FinancialConnectionsAccountUpcomingDeactivationEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.upcoming_deactivation';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountUpcomingDeactivationEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.upcoming_deactivation';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<V1FinancialConnectionsAccountUpcomingDeactivationEvent>;
 }
 
 /**
@@ -3186,6 +3489,26 @@ export interface V1InvoicePaymentActionRequiredEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1Invoice>;
   fetchEvent(): Promise<V1InvoicePaymentActionRequiredEvent>;
+}
+
+/**
+ * Occurs when an invoice requires a payment using a payment method that cannot be processed by Stripe.
+ */
+export interface V1InvoicePaymentAttemptRequiredEvent extends EventBase {
+  type: 'v1.invoice.payment_attempt_required';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+}
+export interface V1InvoicePaymentAttemptRequiredEventNotification
+  extends EventNotificationBase {
+  type: 'v1.invoice.payment_attempt_required';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+  fetchEvent(): Promise<V1InvoicePaymentAttemptRequiredEvent>;
 }
 
 /**
@@ -8263,6 +8586,11 @@ export namespace V2CoreHealthAuthorizationRateDropFiringEvent {
 
       export interface Dimension {
         /**
+         * The acquirer dimension.
+         */
+        acquirer?: string;
+
+        /**
          * The issuer dimension.
          */
         issuer?: string;
@@ -8270,7 +8598,7 @@ export namespace V2CoreHealthAuthorizationRateDropFiringEvent {
         /**
          * The type of the dimension.
          */
-        type: 'issuer';
+        type: Dimension.Type;
       }
 
       export type PaymentMethodType =
@@ -8344,6 +8672,10 @@ export namespace V2CoreHealthAuthorizationRateDropFiringEvent {
         | 'wechat_pay'
         | 'zip'
         | OtherString;
+
+      export namespace Dimension {
+        export type Type = 'acquirer' | 'issuer' | OtherString;
+      }
     }
   }
 }
@@ -8429,6 +8761,11 @@ export namespace V2CoreHealthAuthorizationRateDropResolvedEvent {
 
       export interface Dimension {
         /**
+         * The acquirer dimension.
+         */
+        acquirer?: string;
+
+        /**
          * The issuer dimension.
          */
         issuer?: string;
@@ -8436,7 +8773,7 @@ export namespace V2CoreHealthAuthorizationRateDropResolvedEvent {
         /**
          * The type of the dimension.
          */
-        type: 'issuer';
+        type: Dimension.Type;
       }
 
       export type PaymentMethodType =
@@ -8510,6 +8847,10 @@ export namespace V2CoreHealthAuthorizationRateDropResolvedEvent {
         | 'wechat_pay'
         | 'zip'
         | OtherString;
+
+      export namespace Dimension {
+        export type Type = 'acquirer' | 'issuer' | OtherString;
+      }
     }
   }
 }
@@ -12806,9 +13147,17 @@ export declare namespace Events {
     V1ApplicationFeeRefundUpdatedEvent,
     V1ApplicationFeeRefundedEvent,
     V1BalanceAvailableEvent,
+    V1BalanceSettingsUpdatedEvent,
     V1BillingAlertTriggeredEvent,
+    V1BillingCreditBalanceTransactionCreatedEvent,
+    V1BillingCreditGrantCreatedEvent,
+    V1BillingCreditGrantUpdatedEvent,
+    V1BillingMeterCreatedEvent,
+    V1BillingMeterDeactivatedEvent,
     V1BillingMeterErrorReportTriggeredEvent,
     V1BillingMeterNoMeterFoundEvent,
+    V1BillingMeterReactivatedEvent,
+    V1BillingMeterUpdatedEvent,
     V1BillingPortalConfigurationCreatedEvent,
     V1BillingPortalConfigurationUpdatedEvent,
     V1BillingPortalSessionCreatedEvent,
@@ -12861,13 +13210,18 @@ export declare namespace Events {
     V1CustomerCashBalanceTransactionCreatedEvent,
     V1EntitlementsActiveEntitlementSummaryUpdatedEvent,
     V1FileCreatedEvent,
+    V1FinancialConnectionsAccountAccountNumbersUpdatedEvent,
     V1FinancialConnectionsAccountCreatedEvent,
     V1FinancialConnectionsAccountDeactivatedEvent,
     V1FinancialConnectionsAccountDisconnectedEvent,
+    V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent,
     V1FinancialConnectionsAccountReactivatedEvent,
     V1FinancialConnectionsAccountRefreshedBalanceEvent,
     V1FinancialConnectionsAccountRefreshedOwnershipEvent,
     V1FinancialConnectionsAccountRefreshedTransactionsEvent,
+    V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent,
+    V1FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent,
+    V1FinancialConnectionsAccountUpcomingDeactivationEvent,
     V1IdentityVerificationSessionCanceledEvent,
     V1IdentityVerificationSessionCreatedEvent,
     V1IdentityVerificationSessionProcessingEvent,
@@ -12883,6 +13237,7 @@ export declare namespace Events {
     V1InvoiceOverpaidEvent,
     V1InvoicePaidEvent,
     V1InvoicePaymentActionRequiredEvent,
+    V1InvoicePaymentAttemptRequiredEvent,
     V1InvoicePaymentFailedEvent,
     V1InvoicePaymentSucceededEvent,
     V1InvoiceSentEvent,
@@ -13233,9 +13588,17 @@ export declare namespace Events {
     V1ApplicationFeeRefundUpdatedEventNotification,
     V1ApplicationFeeRefundedEventNotification,
     V1BalanceAvailableEventNotification,
+    V1BalanceSettingsUpdatedEventNotification,
     V1BillingAlertTriggeredEventNotification,
+    V1BillingCreditBalanceTransactionCreatedEventNotification,
+    V1BillingCreditGrantCreatedEventNotification,
+    V1BillingCreditGrantUpdatedEventNotification,
+    V1BillingMeterCreatedEventNotification,
+    V1BillingMeterDeactivatedEventNotification,
     V1BillingMeterErrorReportTriggeredEventNotification,
     V1BillingMeterNoMeterFoundEventNotification,
+    V1BillingMeterReactivatedEventNotification,
+    V1BillingMeterUpdatedEventNotification,
     V1BillingPortalConfigurationCreatedEventNotification,
     V1BillingPortalConfigurationUpdatedEventNotification,
     V1BillingPortalSessionCreatedEventNotification,
@@ -13288,13 +13651,18 @@ export declare namespace Events {
     V1CustomerCashBalanceTransactionCreatedEventNotification,
     V1EntitlementsActiveEntitlementSummaryUpdatedEventNotification,
     V1FileCreatedEventNotification,
+    V1FinancialConnectionsAccountAccountNumbersUpdatedEventNotification,
     V1FinancialConnectionsAccountCreatedEventNotification,
     V1FinancialConnectionsAccountDeactivatedEventNotification,
     V1FinancialConnectionsAccountDisconnectedEventNotification,
+    V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEventNotification,
     V1FinancialConnectionsAccountReactivatedEventNotification,
     V1FinancialConnectionsAccountRefreshedBalanceEventNotification,
     V1FinancialConnectionsAccountRefreshedOwnershipEventNotification,
     V1FinancialConnectionsAccountRefreshedTransactionsEventNotification,
+    V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEventNotification,
+    V1FinancialConnectionsAccountUpcomingAccountNumberExpiryEventNotification,
+    V1FinancialConnectionsAccountUpcomingDeactivationEventNotification,
     V1IdentityVerificationSessionCanceledEventNotification,
     V1IdentityVerificationSessionCreatedEventNotification,
     V1IdentityVerificationSessionProcessingEventNotification,
@@ -13310,6 +13678,7 @@ export declare namespace Events {
     V1InvoiceOverpaidEventNotification,
     V1InvoicePaidEventNotification,
     V1InvoicePaymentActionRequiredEventNotification,
+    V1InvoicePaymentAttemptRequiredEventNotification,
     V1InvoicePaymentFailedEventNotification,
     V1InvoicePaymentSucceededEventNotification,
     V1InvoiceSentEventNotification,

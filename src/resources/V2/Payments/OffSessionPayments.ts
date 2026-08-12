@@ -140,7 +140,7 @@ export interface OffSessionPayment {
   amount_details?: OffSessionPayment.AmountDetails;
 
   /**
-   * The “presentment amount” to be collected from the customer.
+   * The "presentment amount" to be collected from the customer.
    */
   amount_requested: V2Amount;
 
@@ -505,7 +505,7 @@ export namespace V2 {
   export namespace Payments {
     export interface OffSessionPaymentCreateParams {
       /**
-       * The “presentment amount” to be collected from the customer.
+       * The "presentment amount" to be collected from the customer.
        */
       amount: V2Amount;
 
