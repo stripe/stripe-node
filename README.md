@@ -168,7 +168,7 @@ Please feel welcome to share your thoughts about the versioning policy in a Gith
 ### Open and Closed Enum
 
 Many of Stripe API enums are open, meaning Stripe may add new values even on older API versions.
-To reflect this, open enum fields in TypeScript include a string type (via OtherString) in addition to the known literal values.
+To reflect this, open enum fields in TypeScript include a string type (via `OtherString`) in addition to the known literal values.
 This ensures the field has the correct type for both values known at SDK release time and other values that may be added later.
 
 A small number of enums are closed, meaning Stripe guarantees no new values will be added without an API version change.
