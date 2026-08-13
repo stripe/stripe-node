@@ -90,6 +90,11 @@ export namespace CustomerSession {
     buy_button: Components.BuyButton;
 
     /**
+     * This hash contains whether the customer portal is enabled.
+     */
+    customer_portal: Components.CustomerPortal;
+
+    /**
      * This hash contains whether the customer sheet is enabled and the features it supports.
      */
     customer_sheet: Components.CustomerSheet;
@@ -119,6 +124,13 @@ export namespace CustomerSession {
     export interface BuyButton {
       /**
        * Whether the buy button is enabled.
+       */
+      enabled: boolean;
+    }
+
+    export interface CustomerPortal {
+      /**
+       * Whether the customer portal is enabled.
        */
       enabled: boolean;
     }

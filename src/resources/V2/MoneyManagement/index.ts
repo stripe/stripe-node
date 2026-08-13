@@ -220,6 +220,8 @@ export declare namespace MoneyManagement {
   export import PayoutIntentRetrieveParams = V2Namespace10.MoneyManagement.PayoutIntentRetrieveParams;
   export import PayoutIntentUpdateParams = V2Namespace10.MoneyManagement.PayoutIntentUpdateParams;
   export import PayoutIntentCancelParams = V2Namespace10.MoneyManagement.PayoutIntentCancelParams;
+  export import PayoutIntentConfirmParams = V2Namespace10.MoneyManagement.PayoutIntentConfirmParams;
+  export import PayoutIntentFxQuoteParams = V2Namespace10.MoneyManagement.PayoutIntentFxQuoteParams;
   export {PayoutIntent, PayoutIntentResource};
   export import PayoutMethodListParams = V2Namespace11.MoneyManagement.PayoutMethodListParams;
   export import PayoutMethodRetrieveParams = V2Namespace11.MoneyManagement.PayoutMethodRetrieveParams;

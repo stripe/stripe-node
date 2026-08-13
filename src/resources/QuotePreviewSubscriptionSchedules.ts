@@ -683,6 +683,8 @@ export namespace QuotePreviewSubscriptionSchedule {
        * Settings controlling billing behavior during the pause.
        */
       settings: Pause.Settings | null;
+
+      status: Pause.Status;
     }
 
     export interface Resume {
@@ -692,6 +694,8 @@ export namespace QuotePreviewSubscriptionSchedule {
       resume_at: number;
 
       settings: Resume.Settings;
+
+      status: Resume.Status;
     }
 
     export namespace Pause {
@@ -707,6 +711,15 @@ export namespace QuotePreviewSubscriptionSchedule {
          * The type of pause settings.
          */
         type: 'subscription';
+      }
+
+      export interface Status {
+        error?: Status.Error;
+
+        /**
+         * The lifecycle state of the pause operation.
+         */
+        type: Status.Type;
       }
 
       export namespace Settings {
@@ -748,6 +761,22 @@ export namespace QuotePreviewSubscriptionSchedule {
           }
         }
       }
+
+      export namespace Status {
+        export interface Error {
+          /**
+           * A machine-readable error code.
+           */
+          code?: string;
+
+          /**
+           * A description of the error.
+           */
+          message: string;
+        }
+
+        export type Type = 'error' | 'scheduled' | 'succeeded' | OtherString;
+      }
     }
 
     export namespace Resume {
@@ -768,6 +797,15 @@ export namespace QuotePreviewSubscriptionSchedule {
         proration_behavior: Settings.ProrationBehavior;
       }
 
+      export interface Status {
+        error?: Status.Error;
+
+        /**
+         * The lifecycle state of the resume operation.
+         */
+        type: Status.Type;
+      }
+
       export namespace Settings {
         export type BillingCycleAnchor = 'resume_at' | 'unchanged';
 
@@ -779,6 +817,28 @@ export namespace QuotePreviewSubscriptionSchedule {
           | 'always_invoice'
           | 'create_prorations'
           | 'none'
+          | OtherString;
+      }
+
+      export namespace Status {
+        export interface Error {
+          /**
+           * A machine-readable error code.
+           */
+          code?: string;
+
+          /**
+           * A description of the error.
+           */
+          message: string;
+        }
+
+        export type Type =
+          | 'error'
+          | 'pending'
+          | 'requires_action'
+          | 'scheduled'
+          | 'succeeded'
           | OtherString;
       }
     }

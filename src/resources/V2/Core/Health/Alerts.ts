@@ -704,14 +704,19 @@ export namespace Alert {
 
     export interface Dimension {
       /**
+       * Populated when type is acquirer.
+       */
+      acquirer?: string;
+
+      /**
        * Populated when type is issuer.
        */
       issuer?: string;
 
       /**
-       * The type of the dimension. Determines which field in dimension_details is populated.
+       * The type of the dimension. Determines which field is populated.
        */
-      type: 'issuer';
+      type: Dimension.Type;
     }
 
     export type PaymentMethodType =
@@ -785,6 +790,10 @@ export namespace Alert {
       | 'wechat_pay'
       | 'zip'
       | OtherString;
+
+    export namespace Dimension {
+      export type Type = 'acquirer' | 'issuer' | OtherString;
+    }
   }
 
   export namespace ElementsError {

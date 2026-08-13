@@ -172,6 +172,11 @@ export namespace Session {
     countries: Array<string> | null;
 
     /**
+     * Country from which to filter accounts.
+     */
+    country: string | null;
+
+    /**
      * Stripe ID of the institution with which the customer should be directed to log in.
      */
     institution?: string;

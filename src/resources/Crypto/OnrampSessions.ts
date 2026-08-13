@@ -235,6 +235,7 @@ export namespace OnrampSession {
       | 'avalanche'
       | 'base'
       | 'bitcoin'
+      | 'celo'
       | 'ethereum'
       | 'optimism'
       | 'polygon'
@@ -276,6 +277,11 @@ export namespace OnrampSession {
        * A bitcoin address
        */
       bitcoin: string | null;
+
+      /**
+       * A Celo address
+       */
+      celo: string | null;
 
       /**
        * The end customer's crypto wallet destination tag (for each network) to use for this transaction.
@@ -457,6 +463,7 @@ export namespace Crypto {
       | 'avalanche'
       | 'base'
       | 'bitcoin'
+      | 'celo'
       | 'ethereum'
       | 'optimism'
       | 'polygon'
@@ -541,6 +548,7 @@ export namespace Crypto {
       | 'avalanche'
       | 'base'
       | 'bitcoin'
+      | 'celo'
       | 'ethereum'
       | 'optimism'
       | 'polygon'

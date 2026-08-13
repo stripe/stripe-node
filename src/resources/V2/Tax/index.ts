@@ -6,14 +6,19 @@ import {
   ManualRule,
   ManualRuleResource,
 } from './ManualRules.js';
+import {V2 as V2Namespace1, OperationResource} from './Operations.js';
+import {OperationsResolveAddressResult} from './OperationsResolveAddressResults.js';
 
 export {ManualRule} from './ManualRules.js';
+export {OperationsResolveAddressResult} from './OperationsResolveAddressResults.js';
 
 export class Tax {
   manualRules: ManualRuleResource;
+  operations: OperationResource;
 
   constructor(private readonly stripe: Stripe) {
     this.manualRules = new ManualRuleResource(stripe);
+    this.operations = new OperationResource(stripe);
   }
 }
 
@@ -24,4 +29,5 @@ export declare namespace Tax {
   export import ManualRuleUpdateParams = V2Namespace0.Tax.ManualRuleUpdateParams;
   export import ManualRuleDeactivateParams = V2Namespace0.Tax.ManualRuleDeactivateParams;
   export {ManualRule, ManualRuleResource};
+  export {OperationsResolveAddressResult};
 }

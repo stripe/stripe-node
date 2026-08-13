@@ -1407,6 +1407,16 @@ export namespace Authorization {
     currency: string;
 
     /**
+     * The total amount to be held for this authorization request.
+     */
+    hold_amount?: PendingRequest.HoldAmount | null;
+
+    /**
+     * Breakdown of the amounts contributing to hold_amount.
+     */
+    hold_amount_details?: PendingRequest.HoldAmountDetails | null;
+
+    /**
      * If set `true`, you may provide [amount](https://docs.stripe.com/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
      */
     is_amount_controllable: boolean;
@@ -1464,6 +1474,16 @@ export namespace Authorization {
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
     currency: string;
+
+    /**
+     * The total amount that was held for this authorization request.
+     */
+    hold_amount?: RequestHistory.HoldAmount | null;
+
+    /**
+     * Breakdown of the amounts contributing to hold_amount.
+     */
+    hold_amount_details?: RequestHistory.HoldAmountDetails | null;
 
     /**
      * The `pending_request.merchant_amount` at the time of the request, presented in the `merchant_currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
@@ -2319,6 +2339,53 @@ export namespace Authorization {
        */
       cashback_amount: number | null;
     }
+
+    export interface HoldAmount {
+      /**
+       * Three-letter ISO currency code.
+       */
+      currency: string;
+
+      /**
+       * The amount in the smallest currency unit.
+       */
+      value: number;
+    }
+
+    export interface HoldAmountDetails {
+      network: HoldAmountDetails.Network;
+
+      /**
+       * The reserve amount held for this authorization. Present for certain MCCs that may have overcaptures.
+       */
+      reserve: HoldAmountDetails.Reserve | null;
+    }
+
+    export namespace HoldAmountDetails {
+      export interface Network {
+        /**
+         * Three-letter ISO currency code.
+         */
+        currency: string;
+
+        /**
+         * The amount in the smallest currency unit.
+         */
+        value: number;
+      }
+
+      export interface Reserve {
+        /**
+         * Three-letter ISO currency code.
+         */
+        currency: string;
+
+        /**
+         * The amount in the smallest currency unit.
+         */
+        value: number;
+      }
+    }
   }
 
   export namespace Redaction {
@@ -2336,6 +2403,27 @@ export namespace Authorization {
        * The amount of cash requested by the cardholder.
        */
       cashback_amount: number | null;
+    }
+
+    export interface HoldAmount {
+      /**
+       * Three-letter ISO currency code.
+       */
+      currency: string;
+
+      /**
+       * The amount in the smallest currency unit.
+       */
+      value: number;
+    }
+
+    export interface HoldAmountDetails {
+      network: HoldAmountDetails.Network;
+
+      /**
+       * The reserve amount held for this authorization. Present for certain MCCs that may have overcaptures.
+       */
+      reserve: HoldAmountDetails.Reserve | null;
     }
 
     export interface NetworkData {
@@ -2368,6 +2456,32 @@ export namespace Authorization {
       | 'webhook_error'
       | 'webhook_timeout'
       | OtherString;
+
+    export namespace HoldAmountDetails {
+      export interface Network {
+        /**
+         * Three-letter ISO currency code.
+         */
+        currency: string;
+
+        /**
+         * The amount in the smallest currency unit.
+         */
+        value: number;
+      }
+
+      export interface Reserve {
+        /**
+         * Three-letter ISO currency code.
+         */
+        currency: string;
+
+        /**
+         * The amount in the smallest currency unit.
+         */
+        value: number;
+      }
+    }
 
     export namespace NetworkData {
       export interface TraceId {

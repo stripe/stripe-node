@@ -130,7 +130,7 @@ export interface Cardholder {
   phone_number: string | null;
 
   /**
-   * The cardholder's preferred locales (languages), ordered by preference. Locales can be `da`, `de`, `en`, `es`, `fr`, `it`, `pl`, or `sv`.
+   * The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
    *  This changes the language of the [3D Secure flow](https://docs.stripe.com/issuing/3d-secure) and one-time password messages sent to the cardholder.
    */
   preferred_locales: Array<Cardholder.PreferredLocale> | null;
@@ -202,8 +202,10 @@ export namespace Cardholder {
     | 'en'
     | 'es'
     | 'fr'
+    | 'hu'
     | 'it'
     | 'pl'
+    | 'ro'
     | 'sv'
     | OtherString;
 
@@ -1332,7 +1334,7 @@ export namespace Issuing {
     phone_number?: string;
 
     /**
-     * The cardholder's preferred locales (languages), ordered by preference. Locales can be `da`, `de`, `en`, `es`, `fr`, `it`, `pl`, or `sv`.
+     * The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
      *  This changes the language of the [3D Secure flow](https://docs.stripe.com/issuing/3d-secure) and one-time password messages sent to the cardholder.
      */
     preferred_locales?: Array<CardholderCreateParams.PreferredLocale>;
@@ -1401,8 +1403,10 @@ export namespace Issuing {
       | 'en'
       | 'es'
       | 'fr'
+      | 'hu'
       | 'it'
       | 'pl'
+      | 'ro'
       | 'sv'
       | OtherString;
 
@@ -2529,7 +2533,7 @@ export namespace Issuing {
     phone_number?: string;
 
     /**
-     * The cardholder's preferred locales (languages), ordered by preference. Locales can be `da`, `de`, `en`, `es`, `fr`, `it`, `pl`, or `sv`.
+     * The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
      *  This changes the language of the [3D Secure flow](https://docs.stripe.com/issuing/3d-secure) and one-time password messages sent to the cardholder.
      */
     preferred_locales?: Array<CardholderUpdateParams.PreferredLocale>;
@@ -2593,8 +2597,10 @@ export namespace Issuing {
       | 'en'
       | 'es'
       | 'fr'
+      | 'hu'
       | 'it'
       | 'pl'
+      | 'ro'
       | 'sv'
       | OtherString;
 

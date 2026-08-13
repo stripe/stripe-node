@@ -77,6 +77,7 @@ export type RawErrorType =
   | 'feature_not_enabled'
   | 'financial_account_not_open'
   | 'fx_quote_expired'
+  | 'fx_quote_needs_refresh'
   | 'insufficient_funds'
   | 'invalid_payment_method'
   | 'invalid_payout_method'

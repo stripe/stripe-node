@@ -154,6 +154,11 @@ export interface QuotePreviewInvoice {
   customer_address: Address | null;
 
   /**
+   * The customer balance amounts applied to this invoice.
+   */
+  customer_balance?: QuotePreviewInvoice.CustomerBalance | null;
+
+  /**
    * The customer's email. Until the invoice is finalized, this field will equal `customer.email`. Once the invoice is finalized, this field will no longer be updated.
    */
   customer_email: string | null;
@@ -530,6 +535,23 @@ export namespace QuotePreviewInvoice {
      * The value of the custom field.
      */
     value: string;
+  }
+
+  export interface CustomerBalance {
+    /**
+     * The total amount of customer balance applied to this invoice (automatically + manually).
+     */
+    applied_balance: number;
+
+    /**
+     * The amount of customer balance automatically applied during invoice finalization.
+     */
+    automatically_applied_balance: number;
+
+    /**
+     * The total amount of customer balance manually applied after finalization.
+     */
+    manually_applied_balance: number;
   }
 
   export interface CustomerShipping {
@@ -1420,6 +1442,11 @@ export namespace QuotePreviewInvoice {
       bancontact: PaymentMethodOptions.Bancontact | null;
 
       /**
+       * If paying by `billie`, this sub-hash contains details about the Billie payment method options to pass to the invoice's PaymentIntent.
+       */
+      billie?: PaymentMethodOptions.Billie | null;
+
+      /**
        * If paying by `bizum`, this sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
        */
       bizum?: PaymentMethodOptions.Bizum | null;
@@ -1495,6 +1522,7 @@ export namespace QuotePreviewInvoice {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'billie'
       | 'bizum'
       | 'blik'
       | 'boleto'
@@ -1526,6 +1554,7 @@ export namespace QuotePreviewInvoice {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'paypay'
       | 'payto'
       | 'pix'
       | 'promptpay'
@@ -1540,6 +1569,7 @@ export namespace QuotePreviewInvoice {
       | 'twint'
       | 'upi'
       | 'us_bank_account'
+      | 'vipps'
       | 'wechat_pay'
       | OtherString;
 
@@ -1559,6 +1589,8 @@ export namespace QuotePreviewInvoice {
          */
         preferred_language: Bancontact.PreferredLanguage;
       }
+
+      export interface Billie {}
 
       export interface Bizum {}
 

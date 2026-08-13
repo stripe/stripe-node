@@ -185,6 +185,13 @@ export interface Account {
   category: Account.Category;
 
   /**
+   * Per-taxonomy processing state for this account. One entry per subscribed taxonomy.
+   */
+  classification_state?: {
+    [key: string]: Account.ClassificationState;
+  } | null;
+
+  /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
    */
   created: number;
@@ -193,6 +200,11 @@ export interface Account {
    * A human-readable name that has been assigned to this account, either by the account holder or by the institution.
    */
   display_name: string | null;
+
+  /**
+   * The state of merchant name enrichment for this account.
+   */
+  enrichment_state?: Account.EnrichmentState | null;
 
   /**
    * The state of the most recent attempt to refresh the account's inferred balance history.
@@ -367,6 +379,20 @@ export namespace Account {
     | 'other'
     | OtherString;
 
+  export interface ClassificationState {
+    /**
+     * The taxonomy classification status for this account. One of 'pending' or 'completed'.
+     */
+    status: ClassificationState.Status | null;
+  }
+
+  export interface EnrichmentState {
+    /**
+     * The enrichment status for merchant name normalization.
+     */
+    merchant: EnrichmentState.Merchant | null;
+  }
+
   export interface InferredBalancesRefresh {
     /**
      * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
@@ -503,6 +529,23 @@ export namespace Account {
 
   export namespace BalanceRefresh {
     export type Status = 'failed' | 'pending' | 'succeeded' | OtherString;
+  }
+
+  export namespace ClassificationState {
+    export type Status = 'completed' | 'pending' | OtherString;
+  }
+
+  export namespace EnrichmentState {
+    export interface Merchant {
+      /**
+       * The merchant enrichment status for this account. One of 'pending' or 'completed'.
+       */
+      status: Merchant.Status | null;
+    }
+
+    export namespace Merchant {
+      export type Status = 'completed' | 'pending' | OtherString;
+    }
   }
 
   export namespace InferredBalancesRefresh {

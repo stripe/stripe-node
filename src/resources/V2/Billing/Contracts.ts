@@ -932,6 +932,7 @@ export namespace V2 {
 
       export type Include =
         | 'billing_settings'
+        | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides'
         | OtherString;
@@ -1348,6 +1349,7 @@ export namespace V2 {
     export namespace ContractRetrieveParams {
       export type Include =
         | 'billing_settings'
+        | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides'
         | OtherString;
@@ -1378,6 +1380,7 @@ export namespace V2 {
     export namespace ContractUpdateParams {
       export type Include =
         | 'billing_settings'
+        | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides'
         | OtherString;
@@ -2063,6 +2066,7 @@ export namespace V2 {
     export namespace ContractListParams {
       export type Include =
         | 'billing_settings'
+        | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides'
         | OtherString;
@@ -2086,6 +2090,7 @@ export namespace V2 {
     export namespace ContractActivateParams {
       export type Include =
         | 'billing_settings'
+        | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides'
         | OtherString;
@@ -2133,6 +2138,7 @@ export namespace V2 {
 
       export type Include =
         | 'billing_settings'
+        | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides'
         | OtherString;

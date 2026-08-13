@@ -60,6 +60,11 @@ export interface Transaction {
   amount: number;
 
   /**
+   * Classification labels for this transaction, one entry per subscribed use case.
+   */
+  classifications?: Array<Transaction.Classification> | null;
+
+  /**
    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
    */
   currency: string;
@@ -68,6 +73,11 @@ export interface Transaction {
    * The description of this transaction.
    */
   description: string;
+
+  /**
+   * Enriched merchant information for this transaction.
+   */
+  enrichments?: Transaction.Enrichments | null;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -97,6 +107,27 @@ export interface Transaction {
   updated: number;
 }
 export namespace Transaction {
+  export interface Classification {
+    /**
+     * Money movement classification labels for this transaction.
+     */
+    money_movement: Classification.MoneyMovement | null;
+
+    /**
+     * Personal finance classification labels for this transaction.
+     */
+    personal_finance: Classification.PersonalFinance | null;
+
+    /**
+     * The taxonomy type for this classification entry.
+     */
+    type: string;
+  }
+
+  export interface Enrichments {
+    merchant: Enrichments.Merchant;
+  }
+
   export type Status = 'pending' | 'posted' | 'void' | OtherString;
 
   export interface StatusTransitions {
@@ -109,6 +140,68 @@ export namespace Transaction {
      * Time at which this transaction was voided. Measured in seconds since the Unix epoch.
      */
     void_at: number | null;
+  }
+
+  export namespace Classification {
+    export interface MoneyMovement {
+      /**
+       * Stripe's confidence in this classification.
+       */
+      confidence_level: MoneyMovement.ConfidenceLevel | null;
+
+      /**
+       * The detailed category label for this transaction.
+       */
+      detailed_label: string | null;
+
+      /**
+       * The primary category label for this transaction.
+       */
+      primary_label: string | null;
+    }
+
+    export interface PersonalFinance {
+      /**
+       * Stripe's confidence in this classification.
+       */
+      confidence_level: PersonalFinance.ConfidenceLevel | null;
+
+      /**
+       * The detailed category label for this transaction.
+       */
+      detailed_label: string | null;
+
+      /**
+       * The primary category label for this transaction.
+       */
+      primary_label: string | null;
+    }
+
+    export namespace MoneyMovement {
+      export type ConfidenceLevel = 'high' | 'low' | 'medium' | 'very_high';
+    }
+
+    export namespace PersonalFinance {
+      export type ConfidenceLevel = 'high' | 'low' | 'medium' | 'very_high';
+    }
+  }
+
+  export namespace Enrichments {
+    export interface Merchant {
+      /**
+       * Stripe's confidence in the enriched merchant name.
+       */
+      confidence_level: Merchant.ConfidenceLevel | null;
+
+      /**
+       * The normalized merchant name for this transaction.
+       */
+      name: string | null;
+    }
+
+    export namespace Merchant {
+      export type ConfidenceLevel = 'high' | 'low' | 'medium' | 'very_high';
+    }
   }
 }
 export namespace FinancialConnections {
