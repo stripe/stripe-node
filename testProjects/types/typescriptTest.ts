@@ -422,6 +422,41 @@ async (): Promise<void> => {
   const res: void = await handler.handle('', '');
 };
 
+// event handler that skips signature verification
+async (): Promise<void> => {
+  const unverifiedHandler = stripe.notificationHandlerWithoutVerification(
+    async (unhandledEvent, client, details) => {
+      const e: Stripe.Events.UnknownEventNotification = unhandledEvent;
+      const s: Stripe = client;
+      const d: Stripe.UnhandledNotificationDetails = details;
+    }
+  );
+
+  unverifiedHandler.on(
+    'v1.billing.meter.error_report_triggered',
+    async (event) => {
+      const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
+      const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification = event;
+    }
+  );
+
+  // handle() takes only the body; there is no signature to pass
+  const res: void = await unverifiedHandler.handle('');
+
+  // @ts-expect-error - the verifying two-argument handle is not available here
+  await unverifiedHandler.handle('', 'sig_header');
+
+  // Node exposes only the client factory. The handler classes are type-only (they are
+  // not attached as statics on the constructor), so the static factory that the other
+  // SDKs offer is intentionally unreachable here.
+  // @ts-expect-error - StripeEventNotificationHandler is not a runtime value
+  Stripe.StripeEventNotificationHandler.withoutVerification(stripe, async () => {});
+};
+
+// both handler types must be nameable off the namespace
+let _verifyingHandler: Stripe.StripeEventNotificationHandler;
+let _unverifiedHandler: Stripe.StripeEventNotificationHandlerWithoutVerification;
+
 // Test that the Decimal type is exported
 {
   function takesDecimal(decimal: Stripe.Decimal) {

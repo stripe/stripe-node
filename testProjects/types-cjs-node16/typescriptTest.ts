@@ -90,3 +90,35 @@ const _signatureType: Stripe.Signature = null as any;
 const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
 const _nodeCryptoProvider: Stripe.CryptoProvider =
   Stripe.createNodeCryptoProvider();
+
+// notificationHandlerWithoutVerification must be reachable under moduleResolution node16
+async (): Promise<void> => {
+  const unverifiedHandler = stripe.notificationHandlerWithoutVerification(
+    async (unhandledEvent, client, details) => {
+      const e: Stripe.Events.UnknownEventNotification = unhandledEvent;
+      const s: Stripe = client;
+      const d: Stripe.UnhandledNotificationDetails = details;
+    }
+  );
+
+  unverifiedHandler.on(
+    'v1.billing.meter.error_report_triggered',
+    async (event) => {
+      const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
+    }
+  );
+
+  // handle() takes only the body; there is no signature to pass
+  const res: void = await unverifiedHandler.handle('');
+
+  // @ts-expect-error - the verifying two-argument handle is not available here
+  await unverifiedHandler.handle('', 'sig_header');
+
+  // Node exposes only the client factory; the handler classes are type-only.
+  // @ts-expect-error - StripeEventNotificationHandler is not a runtime value
+  Stripe.StripeEventNotificationHandler.withoutVerification(stripe, async () => {});
+};
+
+// both handler types must be nameable off the namespace
+let _verifyingHandler: Stripe.StripeEventNotificationHandler;
+let _unverifiedHandler: Stripe.StripeEventNotificationHandlerWithoutVerification;

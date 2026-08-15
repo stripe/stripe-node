@@ -26,6 +26,7 @@ import {
 } from './utils.js';
 import {
   StripeEventNotificationHandler,
+  StripeEventNotificationHandlerWithoutVerification,
   UnhandledNotificationDetails,
 } from './StripeEventNotificationHandler.js';
 import {
@@ -1862,7 +1863,7 @@ export class Stripe {
    * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) envelope.
    */
   parseEventNotificationWithoutVerification(
-    payload: string
+    payload: string | Uint8Array
   ): V2.Core.EventNotification {
     const inner = maybeExtractFromCloudProviderEnvelope(payload);
     if (inner.object === 'event') {
@@ -1889,6 +1890,19 @@ export class Stripe {
     return new StripeEventNotificationHandler(
       this,
       webhookSecret,
+      fallbackCallback
+    );
+  }
+
+  notificationHandlerWithoutVerification(
+    fallbackCallback: (
+      event: UnknownEventNotification,
+      client: Stripe,
+      details: UnhandledNotificationDetails
+    ) => Promise<void>
+  ): StripeEventNotificationHandlerWithoutVerification {
+    return StripeEventNotificationHandler.withoutVerification(
+      this,
       fallbackCallback
     );
   }
@@ -2885,6 +2899,11 @@ export declare namespace Stripe {
   export {StripeContext as StripeContextType};
   export {StripeRawError};
   export {UnhandledNotificationDetails};
+  // Type-only: these classes are not attached as statics on the Stripe constructor,
+  // so they can be named in annotations but not used as values. Construct handlers
+  // through stripe.notificationHandler() / stripe.notificationHandlerWithoutVerification().
+  export type StripeEventNotificationHandler = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandler;
+  export type StripeEventNotificationHandlerWithoutVerification = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandlerWithoutVerification;
   export import Events = V2.Core.Events;
 
   // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
