@@ -76,6 +76,19 @@ export class NodeHttpClient extends HttpClient
           // tearing down the request alone surfaces on the response as a
           // generic ECONNRESET. Destroying the response with the timeout error
           // first lets a stalled body be reported as the timeout it is.
+          //
+          // The cost is that this is the same error a toStream() caller sees, so
+          // a stalled download now emits an ETIMEDOUT TypeError where it used to
+          // emit an ECONNRESET Error with the message "aborted". The timing is
+          // unchanged and 'aborted' still fires either way.
+          // TODO(DEVSDK-3247): decouple the two by dropping this destroy() and
+          // instead recording that the timeout fired (e.g. a getter handed to
+          // NodeHttpClientResponse), so only toJSON() translates the teardown
+          // into a timeout and the stream keeps its original error. Dropping
+          // this destroy() on its own is not enough: the request teardown does
+          // still reach toJSON's listeners at the same time, but as a generic
+          // failure, which the response body error then reports as a
+          // StripeAPIError instead of a timeout.
           if (res && !res.complete) {
             res.destroy(timeoutError);
           }

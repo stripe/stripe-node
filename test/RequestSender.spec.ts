@@ -3,6 +3,7 @@ import {expect} from 'chai';
 import nock = require('nock');
 
 import {
+  StripeAPIError,
   StripeAuthenticationError,
   StripeConnectionError,
   StripeError,
@@ -967,6 +968,29 @@ describe('RequestSender', () => {
         },
       ].forEach(({name, httpClient}) => {
         describe(`response body failures with ${name}`, () => {
+          // Routes a failed assertion to `done` rather than letting it reject an
+          // orphaned promise, where it would surface as a mocha timeout and be
+          // indistinguishable from the hang these tests guard against.
+          const expectRejection = (promise, closeServer, done, assertions) => {
+            promise
+              .then(
+                () => {
+                  throw new Error('Expected an error');
+                },
+                (err) => assertions(err)
+              )
+              .then(
+                () => {
+                  closeServer();
+                  done();
+                },
+                (err) => {
+                  closeServer();
+                  done(err);
+                }
+              );
+          };
+
           it('throws a timeout error when the body stalls after the headers arrive', (done) => {
             return getTestServerStripe(
               {timeout: 50, maxNetworkRetries: 0, httpClient},
@@ -980,25 +1004,57 @@ describe('RequestSender', () => {
                 if (err) {
                   return done(err);
                 }
-                stripe.charges
-                  .create(options.data)
-                  .then(() => {
-                    closeServer();
-                    done(new Error('Expected an error'));
-                  })
-                  .catch((err) => {
+                expectRejection(
+                  stripe.charges.create(options.data),
+                  closeServer,
+                  done,
+                  (err) => {
                     expect(err).to.be.an.instanceOf(StripeConnectionError);
                     expect(err.message).to.deep.equal(
                       'Request aborted due to timeout being reached (50ms)'
                     );
-                    closeServer();
-                    done();
-                  });
+                  }
+                );
               }
             );
           });
 
-          it('throws a connection error when the connection drops after the headers arrive', (done) => {
+          // The reported reproduction, which stalls a GET rather than a POST.
+          it('throws a timeout error on a GET whose body stalls', (done) => {
+            return getTestServerStripe(
+              {timeout: 50, maxNetworkRetries: 0, httpClient},
+              (req, res) => {
+                res.writeHead(200, {
+                  'Content-Type': 'application/json',
+                  'Content-Length': '100',
+                });
+                res.write('{"id": "cus_123", "objec');
+                return {shouldStayOpen: true};
+              },
+              (err, stripe, closeServer) => {
+                if (err) {
+                  return done(err);
+                }
+                expectRejection(
+                  stripe.customers.retrieve('cus_123'),
+                  closeServer,
+                  done,
+                  (err) => {
+                    expect(err).to.be.an.instanceOf(StripeConnectionError);
+                    expect(err.message).to.deep.equal(
+                      'Request aborted due to timeout being reached (50ms)'
+                    );
+                  }
+                );
+              }
+            );
+          });
+
+          // A StripeAPIError is not really the right shape for a severed
+          // connection, but it is what the fetch client already threw here, so
+          // it is preserved until the next major.
+          // TODO(DEVSDK-3247): report every HttpClientResponseBodyError as a
+          it('throws an API error when the connection drops after the headers arrive', (done) => {
             return getTestServerStripe(
               {timeout: 5000, maxNetworkRetries: 0, httpClient},
               (req, res) => {
@@ -1013,24 +1069,65 @@ describe('RequestSender', () => {
                 if (err) {
                   return done(err);
                 }
-                stripe.charges
-                  .create(options.data)
-                  .then(() => {
-                    closeServer();
-                    done(new Error('Expected an error'));
-                  })
-                  .catch((err) => {
-                    expect(err).to.be.an.instanceOf(StripeConnectionError);
+                expectRejection(
+                  stripe.charges.create(options.data),
+                  closeServer,
+                  done,
+                  (err) => {
+                    expect(err).to.be.an.instanceOf(StripeAPIError);
                     expect(err.message).to.deep.equal(
-                      'An error occurred with our connection to Stripe.'
+                      'Invalid JSON received from the Stripe API'
                     );
-                    closeServer();
-                    done();
-                  });
+                  }
+                );
               }
             );
           });
         });
+      });
+
+      // Pins the error identity a stalled download surfaces, which is the
+      // coupled cost of reporting a stalled toJSON() body as a timeout. The
+      // TODO(DEVSDK-3247) in NodeHttpClient will deliberately change this back
+      // to an ECONNRESET Error with the message 'aborted'.
+      it('surfaces a stalled streaming response as an ETIMEDOUT error', (done) => {
+        return getTestServerStripe(
+          {timeout: 50, maxNetworkRetries: 0},
+          (req, res) => {
+            res.writeHead(200, {'Content-Type': 'application/pdf'});
+            res.write('%PDF-1.4 partial');
+            return {shouldStayOpen: true};
+          },
+          (err, stripe, closeServer) => {
+            if (err) {
+              return done(err);
+            }
+            stripe
+              .rawRequest('GET', '/v1/quotes/qt_123/pdf', {}, {streaming: true})
+              .then((stream) => {
+                // Flowing mode, so the stall is in the body rather than in our
+                // own backpressure.
+                stream.on('data', () => {});
+                stream.on('error', (streamErr) => {
+                  closeServer();
+                  try {
+                    expect(streamErr.code).to.equal('ETIMEDOUT');
+                    done();
+                  } catch (e) {
+                    done(e);
+                  }
+                });
+                stream.on('end', () => {
+                  closeServer();
+                  done(new Error('Expected the stream to error'));
+                });
+              })
+              .catch((e) => {
+                closeServer();
+                done(e);
+              });
+          }
+        );
       });
 
       it('throws a StripeAuthenticationError on 401', (done) => {

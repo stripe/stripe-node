@@ -223,8 +223,17 @@ export class RequestSender {
             }
 
             // A body we could not read to completion is a transport failure,
-            // not a malformed payload, so report it as such.
-            if (e instanceof HttpClientResponseBodyError) {
+            // not a malformed payload. Only a timeout is reported as such for
+            // now: a connection severed mid-body already surfaced here as a
+            // StripeAPIError on the fetch client, so reclassifying it would
+            // break anyone catching it. A timeout, by contrast, never got this
+            // far -- it hung -- so there is no behavior to preserve.
+            // TODO(DEVSDK-3247): report every HttpClientResponseBodyError as a
+            // StripeConnectionError, since none of them are parse failures.
+            if (
+              e instanceof HttpClientResponseBodyError &&
+              e.code === HttpClient.TIMEOUT_ERROR_CODE
+            ) {
               throw RequestSender._generateConnectionError(
                 e,
                 timeout,
