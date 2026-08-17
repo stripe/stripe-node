@@ -263,9 +263,13 @@ export class RequestSender {
     maxRetries: number,
     error?: HttpClientResponseError
   ): boolean {
-    // A connection closed before we got a response is always retried once,
-    // even when retries are disabled: the request was very likely never
-    // processed (e.g. a stale keep-alive socket), so re-sending it is safe.
+    // A closed connection is retried once even when retries are disabled,
+    // since it usually means the request never reached the API (e.g. a stale
+    // keep-alive socket held across a frozen Lambda context). See https://github.com/stripe/stripe-node/issues/1040.
+    //
+    // This intentionally precedes the maxRetries check. Note that these codes
+    // can also surface after the API processed the request, so this retry is
+    // not guaranteed to be a no-op.
     if (
       error &&
       numRetries === 0 &&
@@ -340,14 +344,7 @@ export class RequestSender {
       : this._stripe.getMaxNetworkRetries();
   }
 
-  _defaultIdempotencyKey(
-    method: string,
-    settings: RequestSettings,
-    apiMode: ApiMode
-  ): string | null {
-    // If this is a POST and we allow multiple retries, ensure an idempotency key.
-    const maxRetries = this._getMaxNetworkRetries(settings);
-
+  _defaultIdempotencyKey(method: string, apiMode: ApiMode): string | null {
     const genKey = (): string =>
       `stripe-node-retry-${this._stripe._platformFunctions.uuid4()}`;
 
@@ -357,7 +354,11 @@ export class RequestSender {
         return genKey();
       }
     } else if (apiMode === 'v1') {
-      if (method === 'POST' && maxRetries > 0) {
+      // Key every POST, including when maxNetworkRetries is 0. Closed-connection
+      // errors are retried regardless of that setting (see _shouldRetry), and
+      // those codes can surface after the API processed the request, so the
+      // retry needs a key to dedupe against.
+      if (method === 'POST') {
         return genKey();
       }
     }
@@ -397,11 +398,7 @@ export class RequestSender {
       'Stripe-Version': apiVersion,
       'Stripe-Account': stripeAccount,
       'Stripe-Context': stripeContext,
-      'Idempotency-Key': this._defaultIdempotencyKey(
-        method,
-        userSuppliedSettings,
-        apiMode
-      ),
+      'Idempotency-Key': this._defaultIdempotencyKey(method, apiMode),
     } as RequestHeaders;
 
     // As per https://datatracker.ietf.org/doc/html/rfc7230#section-3.3.2:
