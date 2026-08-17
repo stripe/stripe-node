@@ -263,6 +263,9 @@ export class RequestSender {
     maxRetries: number,
     error?: HttpClientResponseError
   ): boolean {
+    // A connection closed before we got a response is always retried once,
+    // even when retries are disabled: the request was very likely never
+    // processed (e.g. a stale keep-alive socket), so re-sending it is safe.
     if (
       error &&
       numRetries === 0 &&

@@ -309,6 +309,13 @@ const stripeClient = Stripe('sk_test_...', {
 });
 ```
 
+> [!NOTE]
+> Even with `maxNetworkRetries: 0`, a request whose connection is closed before a
+> response arrives (`ECONNRESET` or `EPIPE`) is still reattempted once. Such a
+> request almost certainly never reached the API — commonly a stale keep-alive
+> socket — so re-sending it is safe. Subsequent connection-closed errors are not
+> retried.
+
 ```js
 const stripeClient = Stripe('sk_test_...', {
   maxNetworkRetries: 2, // Retry a request twice before giving up

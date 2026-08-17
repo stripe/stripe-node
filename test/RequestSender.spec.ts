@@ -167,6 +167,30 @@ describe('RequestSender', () => {
 
       expect(res).to.equal(false);
     });
+
+    // a closed connection is retried once regardless of maxNetworkRetries,
+    // since the request almost certainly never reached the API
+    it('should return true on a connection-closed error even if retries are disabled', () => {
+      const econnreset = RequestSender._shouldRetry(null, 0, 0, {
+        code: 'ECONNRESET',
+      });
+      const epipe = RequestSender._shouldRetry(null, 0, 0, {code: 'EPIPE'});
+
+      expect(econnreset).to.equal(true);
+      expect(epipe).to.equal(true);
+    });
+
+    it('should only bypass maxNetworkRetries for the first connection-closed error', () => {
+      const res = RequestSender._shouldRetry(null, 1, 0, {code: 'ECONNRESET'});
+
+      expect(res).to.equal(false);
+    });
+
+    it('should not bypass maxNetworkRetries for other error codes', () => {
+      const res = RequestSender._shouldRetry(null, 0, 0, {code: 'ETIMEDOUT'});
+
+      expect(res).to.equal(false);
+    });
   });
 
   describe('_getContentLength', () => {
