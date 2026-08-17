@@ -957,6 +957,82 @@ describe('RequestSender', () => {
         );
       });
 
+      // The `timeout` option has to cover reading the response body, not just
+      // the time to headers. See https://github.com/stripe/stripe-node/issues/2814
+      [
+        {name: 'the Node client', httpClient: undefined},
+        {
+          name: 'the fetch client',
+          httpClient: require('../src/stripe.cjs.node.js').createFetchHttpClient(),
+        },
+      ].forEach(({name, httpClient}) => {
+        describe(`response body failures with ${name}`, () => {
+          it('throws a timeout error when the body stalls after the headers arrive', (done) => {
+            return getTestServerStripe(
+              {timeout: 50, maxNetworkRetries: 0, httpClient},
+              (req, res) => {
+                // Promise more body than we send, then never finish it.
+                res.writeHead(200, {'Content-Length': '100'});
+                res.write('{"ab');
+                return {shouldStayOpen: true};
+              },
+              (err, stripe, closeServer) => {
+                if (err) {
+                  return done(err);
+                }
+                stripe.charges
+                  .create(options.data)
+                  .then(() => {
+                    closeServer();
+                    done(new Error('Expected an error'));
+                  })
+                  .catch((err) => {
+                    expect(err).to.be.an.instanceOf(StripeConnectionError);
+                    expect(err.message).to.deep.equal(
+                      'Request aborted due to timeout being reached (50ms)'
+                    );
+                    closeServer();
+                    done();
+                  });
+              }
+            );
+          });
+
+          it('throws a connection error when the connection drops after the headers arrive', (done) => {
+            return getTestServerStripe(
+              {timeout: 5000, maxNetworkRetries: 0, httpClient},
+              (req, res) => {
+                res.writeHead(200, {'Content-Length': '100'});
+                res.write('{"ab');
+                // Flush the headers and partial body before severing, so this
+                // fails while reading the body rather than before it.
+                setTimeout(() => res.socket.destroy(), 20);
+                return {shouldStayOpen: true};
+              },
+              (err, stripe, closeServer) => {
+                if (err) {
+                  return done(err);
+                }
+                stripe.charges
+                  .create(options.data)
+                  .then(() => {
+                    closeServer();
+                    done(new Error('Expected an error'));
+                  })
+                  .catch((err) => {
+                    expect(err).to.be.an.instanceOf(StripeConnectionError);
+                    expect(err.message).to.deep.equal(
+                      'An error occurred with our connection to Stripe.'
+                    );
+                    closeServer();
+                    done();
+                  });
+              }
+            );
+          });
+        });
+      });
+
       it('throws a StripeAuthenticationError on 401', (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)
