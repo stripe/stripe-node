@@ -3,7 +3,12 @@
 import {StripeResource} from '../StripeResource.js';
 import {Card, DeletedCard} from './Cards.js';
 import {BankAccount, DeletedBankAccount} from './BankAccounts.js';
-import {MetadataParam, Emptyable, PaginationParams} from '../shared.js';
+import {
+  MetadataParam,
+  OtherString,
+  Emptyable,
+  PaginationParams,
+} from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 
 export class ExternalAccountResource extends StripeResource {
@@ -189,7 +194,7 @@ export namespace ExternalAccountCreateParams {
   }
 
   export namespace BankAccount {
-    export type AccountHolderType = 'company' | 'individual';
+    export type AccountHolderType = 'company' | 'individual' | OtherString;
   }
 }
 export interface ExternalAccountRetrieveParams {
@@ -282,9 +287,14 @@ export interface ExternalAccountUpdateParams {
   name?: string;
 }
 export namespace ExternalAccountUpdateParams {
-  export type AccountHolderType = 'company' | 'individual';
+  export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-  export type AccountType = 'checking' | 'futsu' | 'savings' | 'toza';
+  export type AccountType =
+    | 'checking'
+    | 'futsu'
+    | 'savings'
+    | 'toza'
+    | OtherString;
 
   export interface Documents {
     /**
@@ -314,6 +324,6 @@ export interface ExternalAccountListParams extends PaginationParams {
   object?: ExternalAccountListParams.Object;
 }
 export namespace ExternalAccountListParams {
-  export type Object = 'bank_account' | 'card';
+  export type Object = 'bank_account' | 'card' | OtherString;
 }
 export interface ExternalAccountDeleteParams {}

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {RequestOptions} from '../../lib.js';
-export interface FeedbackOptions {
+export interface FeedbackOption {
   /**
    * Unique identifier for the object.
    */
@@ -10,7 +10,7 @@ export interface FeedbackOptions {
   /**
    * String representing the object's type. Objects of the same type share the same value.
    */
-  object: 'billing.feedback_options';
+  object: 'billing.feedback_option';
 
   /**
    * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -25,11 +25,11 @@ export interface FeedbackOptions {
   /**
    * The feedback option's status.
    */
-  status: FeedbackOptions.Status;
+  status: FeedbackOption.Status;
 
-  status_transitions: FeedbackOptions.StatusTransitions;
+  status_transitions: FeedbackOption.StatusTransitions;
 }
-export namespace FeedbackOptions {
+export namespace FeedbackOption {
   export type Status = 'active' | 'inactive';
 
   export interface StatusTransitions {

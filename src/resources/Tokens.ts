@@ -962,9 +962,14 @@ export namespace TokenCreateParams {
   }
 
   export namespace BankAccount {
-    export type AccountHolderType = 'company' | 'individual';
+    export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-    export type AccountType = 'checking' | 'futsu' | 'savings' | 'toza';
+    export type AccountType =
+      | 'checking'
+      | 'futsu'
+      | 'savings'
+      | 'toza'
+      | OtherString;
   }
 
   export namespace Card {

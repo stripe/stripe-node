@@ -248,7 +248,7 @@ export namespace ApplicationFee {
     type: string;
   }
 
-  export type SettlementType = 'gross_settled' | 'net_settled';
+  export type SettlementType = 'gross_settled' | 'net_settled' | OtherString;
 
   export namespace FeeSource {
     export type Type = 'charge' | 'payout' | 'transfer' | OtherString;

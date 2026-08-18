@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {MetadataParam, Metadata} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class BatchJobResource extends StripeResource {
@@ -727,7 +727,8 @@ export namespace V2 {
           | '/v1/customers/:customer/tax_ids'
           | '/v1/customers/:customer/tax_ids/:id'
           | '/v1/tax_rates'
-          | '/v1/tax_rates/:tax_rate';
+          | '/v1/tax_rates/:tax_rate'
+          | OtherString;
       }
 
       export namespace NotificationSuppression {

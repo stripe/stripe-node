@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {FinancingOffer} from './../../Capital/FinancingOffers.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class FinancingOfferResource extends StripeResource {
@@ -75,7 +76,8 @@ export namespace TestHelpers {
       export type FinancingType =
         | 'cash_advance'
         | 'fixed_term_loan'
-        | 'flex_loan';
+        | 'flex_loan'
+        | OtherString;
 
       export type Status =
         | 'accepted'
@@ -88,7 +90,8 @@ export namespace TestHelpers {
         | 'paid_out'
         | 'rejected'
         | 'replaced'
-        | 'undelivered';
+        | 'undelivered'
+        | OtherString;
     }
   }
 }
@@ -130,7 +133,8 @@ export namespace TestHelpers {
       export type FinancingType =
         | 'cash_advance'
         | 'fixed_term_loan'
-        | 'flex_loan';
+        | 'flex_loan'
+        | OtherString;
 
       export type Status =
         | 'accepted'
@@ -143,7 +147,8 @@ export namespace TestHelpers {
         | 'paid_out'
         | 'rejected'
         | 'replaced'
-        | 'undelivered';
+        | 'undelivered'
+        | OtherString;
     }
   }
 }

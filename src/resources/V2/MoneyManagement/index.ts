@@ -246,6 +246,7 @@ export declare namespace MoneyManagement {
   export {RecipientVerification, RecipientVerificationResource};
   export import TransactionListParams = V2Namespace17.MoneyManagement.TransactionListParams;
   export import TransactionRetrieveParams = V2Namespace17.MoneyManagement.TransactionRetrieveParams;
+  export import TransactionUpdateParams = V2Namespace17.MoneyManagement.TransactionUpdateParams;
   export {Transaction, TransactionResource};
   export import TransactionEntryListParams = V2Namespace18.MoneyManagement.TransactionEntryListParams;
   export import TransactionEntryRetrieveParams = V2Namespace18.MoneyManagement.TransactionEntryRetrieveParams;

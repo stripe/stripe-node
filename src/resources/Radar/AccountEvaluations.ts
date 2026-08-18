@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class AccountEvaluationResource extends StripeResource {
@@ -199,7 +200,10 @@ export namespace Radar {
   }
 
   export namespace AccountEvaluationCreateParams {
-    export type Type = 'login_initiated' | 'registration_initiated';
+    export type Type =
+      | 'login_initiated'
+      | 'registration_initiated'
+      | OtherString;
 
     export interface LoginInitiated {
       /**
@@ -360,7 +364,8 @@ export namespace Radar {
       | 'login_failed'
       | 'login_succeeded'
       | 'registration_failed'
-      | 'registration_succeeded';
+      | 'registration_succeeded'
+      | OtherString;
 
     export interface LoginFailed {
       /**
@@ -391,11 +396,11 @@ export namespace Radar {
     }
 
     export namespace LoginFailed {
-      export type Reason = 'other' | 'suspected_account_sharing';
+      export type Reason = 'other' | 'suspected_account_sharing' | OtherString;
     }
 
     export namespace RegistrationFailed {
-      export type Reason = 'other' | 'suspected_multi_accounting';
+      export type Reason = 'other' | 'suspected_multi_accounting' | OtherString;
     }
   }
 }

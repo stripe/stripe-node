@@ -213,7 +213,7 @@ export namespace GiftCardOperation {
     voided_operation: string;
   }
 
-  export type Status = 'failed' | 'succeeded';
+  export type Status = 'failed' | 'succeeded' | OtherString;
 
   export type Type =
     | 'activation'
@@ -222,7 +222,8 @@ export namespace GiftCardOperation {
     | 'cashout'
     | 'cashout_void'
     | 'reload'
-    | 'reload_void';
+    | 'reload_void'
+    | OtherString;
 
   export namespace Activation {
     export interface Balance {

@@ -471,7 +471,7 @@ export namespace CouponCreateParams {
   }
 
   export namespace ServicePeriod {
-    export type Interval = 'day' | 'month' | 'week' | 'year';
+    export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
     export interface Iterations {
       /**

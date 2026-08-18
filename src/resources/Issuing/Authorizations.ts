@@ -2353,6 +2353,16 @@ export namespace Authorization {
     }
 
     export interface HoldAmountDetails {
+      /**
+       * Advisory estimate of total fees for this authorization request.
+       */
+      estimated_fee: HoldAmountDetails.EstimatedFee | null;
+
+      /**
+       * Per-fee-type breakdown of the estimated fees for this authorization request.
+       */
+      estimated_fee_details: Array<HoldAmountDetails.EstimatedFeeDetail> | null;
+
       network: HoldAmountDetails.Network;
 
       /**
@@ -2362,6 +2372,29 @@ export namespace Authorization {
     }
 
     export namespace HoldAmountDetails {
+      export interface EstimatedFee {
+        /**
+         * Three-letter ISO currency code.
+         */
+        currency: string;
+
+        /**
+         * The amount in the smallest currency unit.
+         */
+        value: number;
+      }
+
+      export interface EstimatedFeeDetail {
+        amount: EstimatedFeeDetail.Amount;
+
+        charged_by: EstimatedFeeDetail.ChargedBy;
+
+        /**
+         * The category of this fee.
+         */
+        type: string;
+      }
+
       export interface Network {
         /**
          * Three-letter ISO currency code.
@@ -2384,6 +2417,41 @@ export namespace Authorization {
          * The amount in the smallest currency unit.
          */
         value: number;
+      }
+
+      export namespace EstimatedFeeDetail {
+        export interface Amount {
+          /**
+           * Three-letter ISO currency code.
+           */
+          currency: string;
+
+          /**
+           * The amount in the smallest currency unit.
+           */
+          value: number;
+        }
+
+        export interface ChargedBy {
+          /**
+           * Details for a fee charged by a Connect application.
+           */
+          application: ChargedBy.Application | null;
+
+          /**
+           * The type of entity that charged this fee.
+           */
+          type: string;
+        }
+
+        export namespace ChargedBy {
+          export interface Application {
+            /**
+             * Human-readable product name.
+             */
+            feature_name: string;
+          }
+        }
       }
     }
   }
@@ -2418,6 +2486,16 @@ export namespace Authorization {
     }
 
     export interface HoldAmountDetails {
+      /**
+       * Advisory estimate of total fees for this authorization request.
+       */
+      estimated_fee: HoldAmountDetails.EstimatedFee | null;
+
+      /**
+       * Per-fee-type breakdown of the estimated fees for this authorization request.
+       */
+      estimated_fee_details: Array<HoldAmountDetails.EstimatedFeeDetail> | null;
+
       network: HoldAmountDetails.Network;
 
       /**
@@ -2458,6 +2536,29 @@ export namespace Authorization {
       | OtherString;
 
     export namespace HoldAmountDetails {
+      export interface EstimatedFee {
+        /**
+         * Three-letter ISO currency code.
+         */
+        currency: string;
+
+        /**
+         * The amount in the smallest currency unit.
+         */
+        value: number;
+      }
+
+      export interface EstimatedFeeDetail {
+        amount: EstimatedFeeDetail.Amount;
+
+        charged_by: EstimatedFeeDetail.ChargedBy;
+
+        /**
+         * The category of this fee.
+         */
+        type: string;
+      }
+
       export interface Network {
         /**
          * Three-letter ISO currency code.
@@ -2480,6 +2581,41 @@ export namespace Authorization {
          * The amount in the smallest currency unit.
          */
         value: number;
+      }
+
+      export namespace EstimatedFeeDetail {
+        export interface Amount {
+          /**
+           * Three-letter ISO currency code.
+           */
+          currency: string;
+
+          /**
+           * The amount in the smallest currency unit.
+           */
+          value: number;
+        }
+
+        export interface ChargedBy {
+          /**
+           * Details for a fee charged by a Connect application.
+           */
+          application: ChargedBy.Application | null;
+
+          /**
+           * The type of entity that charged this fee.
+           */
+          type: string;
+        }
+
+        export namespace ChargedBy {
+          export interface Application {
+            /**
+             * Human-readable product name.
+             */
+            feature_name: string;
+          }
+        }
       }
     }
 

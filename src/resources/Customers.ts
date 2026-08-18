@@ -1504,7 +1504,7 @@ export namespace Customer {
     provider: Tax.Provider;
   }
 
-  export type TaxExempt = 'exempt' | 'none' | 'reverse';
+  export type TaxExempt = 'exempt' | 'none' | 'reverse' | OtherString;
 
   export namespace InvoiceSettings {
     export interface CustomField {
@@ -1745,7 +1745,7 @@ export namespace CustomerCreateParams {
     validate_location?: Tax.ValidateLocation;
   }
 
-  export type TaxExempt = 'exempt' | 'none' | 'reverse';
+  export type TaxExempt = 'exempt' | 'none' | 'reverse' | OtherString;
 
   export interface TaxIdDatum {
     /**
@@ -1771,7 +1771,8 @@ export namespace CustomerCreateParams {
       export type ReconciliationMode =
         | 'automatic'
         | 'manual'
-        | 'merchant_default';
+        | 'merchant_default'
+        | OtherString;
     }
   }
 
@@ -1801,7 +1802,10 @@ export namespace CustomerCreateParams {
     }
 
     export namespace RenderingOptions {
-      export type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+      export type AmountTaxDisplay =
+        | 'exclude_tax'
+        | 'include_inclusive_tax'
+        | OtherString;
     }
   }
 
@@ -1927,7 +1931,8 @@ export namespace CustomerCreateParams {
       | 'vn_tin'
       | 'za_vat'
       | 'zm_tin'
-      | 'zw_tin';
+      | 'zw_tin'
+      | OtherString;
   }
 }
 export interface CustomerRetrieveParams {
@@ -2100,7 +2105,7 @@ export namespace CustomerUpdateParams {
     validate_location?: Tax.ValidateLocation;
   }
 
-  export type TaxExempt = 'exempt' | 'none' | 'reverse';
+  export type TaxExempt = 'exempt' | 'none' | 'reverse' | OtherString;
 
   export namespace CashBalance {
     export interface Settings {
@@ -2114,7 +2119,8 @@ export namespace CustomerUpdateParams {
       export type ReconciliationMode =
         | 'automatic'
         | 'manual'
-        | 'merchant_default';
+        | 'merchant_default'
+        | OtherString;
     }
   }
 
@@ -2144,7 +2150,10 @@ export namespace CustomerUpdateParams {
     }
 
     export namespace RenderingOptions {
-      export type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+      export type AmountTaxDisplay =
+        | 'exclude_tax'
+        | 'include_inclusive_tax'
+        | OtherString;
     }
   }
 
@@ -2441,7 +2450,8 @@ export namespace CustomerCreateTaxIdParams {
     | 'vn_tin'
     | 'za_vat'
     | 'zm_tin'
-    | 'zw_tin';
+    | 'zw_tin'
+    | OtherString;
 }
 export interface CustomerDeleteDiscountParams {}
 export interface CustomerDeleteSourceParams {
@@ -2694,7 +2704,8 @@ export namespace CustomerUpdateCashBalanceParams {
     export type ReconciliationMode =
       | 'automatic'
       | 'manual'
-      | 'merchant_default';
+      | 'merchant_default'
+      | OtherString;
   }
 }
 export interface CustomerUpdateSourceParams {
@@ -2766,7 +2777,7 @@ export interface CustomerUpdateSourceParams {
   owner?: CustomerUpdateSourceParams.Owner;
 }
 export namespace CustomerUpdateSourceParams {
-  export type AccountHolderType = 'company' | 'individual';
+  export type AccountHolderType = 'company' | 'individual' | OtherString;
 
   export interface Owner {
     /**

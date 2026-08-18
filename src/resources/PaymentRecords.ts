@@ -2138,7 +2138,7 @@ export namespace PaymentRecord {
     export interface Zip {}
 
     export namespace AchDebit {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
     }
 
     export namespace Alma {
@@ -2201,7 +2201,7 @@ export namespace PaymentRecord {
     }
 
     export namespace Bancontact {
-      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
     }
 
     export namespace Card {
@@ -2278,11 +2278,6 @@ export namespace PaymentRecord {
          * For authenticated transactions: Indicates how the issuing bank authenticated the customer.
          */
         authentication_flow: ThreeDSecure.AuthenticationFlow | null;
-
-        /**
-         * The 3D Secure cryptogram, also known as the "authentication value" (AAV, CAVV or AEVV).
-         */
-        cryptogram: string | null;
 
         /**
          * The Electronic Commerce Indicator (ECI). A protocol-level field indicating what degree of authentication was performed.
@@ -2394,9 +2389,10 @@ export namespace PaymentRecord {
           | '04'
           | '05'
           | '06'
-          | '07';
+          | '07'
+          | OtherString;
 
-        export type ExemptionIndicator = 'low_risk' | 'none';
+        export type ExemptionIndicator = 'low_risk' | 'none' | OtherString;
 
         export type Result =
           | 'attempt_acknowledged'
@@ -2598,11 +2594,12 @@ export namespace PaymentRecord {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -2629,7 +2626,8 @@ export namespace PaymentRecord {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace GiftCard {
@@ -2679,7 +2677,8 @@ export namespace PaymentRecord {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
 
       export type Bic =
         | 'ABNANL2A'
@@ -2702,7 +2701,8 @@ export namespace PaymentRecord {
         | 'REVOIE23'
         | 'REVOLT21'
         | 'SNSBNL2A'
-        | 'TRIONL2U';
+        | 'TRIONL2U'
+        | OtherString;
     }
 
     export namespace InteracPresent {
@@ -2889,7 +2889,8 @@ export namespace PaymentRecord {
         | 'tmobile_usbugi_bankowe'
         | 'toyota_bank'
         | 'velobank'
-        | 'volkswagen_bank';
+        | 'volkswagen_bank'
+        | OtherString;
     }
 
     export namespace Paypal {
@@ -2977,7 +2978,8 @@ export namespace PaymentRecord {
         | 'fr'
         | 'it'
         | 'nl'
-        | 'pl';
+        | 'pl'
+        | OtherString;
     }
 
     export namespace UsBankAccount {

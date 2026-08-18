@@ -409,6 +409,12 @@ declare namespace StripeConstructor {
   export type PaymentMethodDomainListParams = Stripe_.PaymentMethodDomainListParams;
   export type PaymentMethodDomainValidateParams = Stripe_.PaymentMethodDomainValidateParams;
   export type PaymentMethodDomainResource = Stripe_.PaymentMethodDomainResource;
+  export type PaymentPlan = Stripe_.PaymentPlan;
+  export type PaymentPlanCreateParams = Stripe_.PaymentPlanCreateParams;
+  export type PaymentPlanRetrieveParams = Stripe_.PaymentPlanRetrieveParams;
+  export type PaymentPlanUpdateParams = Stripe_.PaymentPlanUpdateParams;
+  export type PaymentPlanListParams = Stripe_.PaymentPlanListParams;
+  export type PaymentPlanResource = Stripe_.PaymentPlanResource;
   export type PaymentRecord = Stripe_.PaymentRecord;
   export type PaymentRecordCreateParams = Stripe_.PaymentRecordCreateParams;
   export type PaymentRecordRetrieveParams = Stripe_.PaymentRecordRetrieveParams;
@@ -849,6 +855,7 @@ declare namespace StripeConstructor {
       export type SmartDisputes = Stripe_.AccountCreateParams.Settings.SmartDisputes;
       export type TaxForms = Stripe_.AccountCreateParams.Settings.TaxForms;
       export type Treasury = Stripe_.AccountCreateParams.Settings.Treasury;
+      export type WechatPayPayments = Stripe_.AccountCreateParams.Settings.WechatPayPayments;
       export namespace CardIssuing {
         export type TosAcceptance = Stripe_.AccountCreateParams.Settings.CardIssuing.TosAcceptance;
       }
@@ -1056,6 +1063,7 @@ declare namespace StripeConstructor {
       export type SmartDisputes = Stripe_.AccountUpdateParams.Settings.SmartDisputes;
       export type TaxForms = Stripe_.AccountUpdateParams.Settings.TaxForms;
       export type Treasury = Stripe_.AccountUpdateParams.Settings.Treasury;
+      export type WechatPayPayments = Stripe_.AccountUpdateParams.Settings.WechatPayPayments;
       export namespace CardIssuing {
         export type TosAcceptance = Stripe_.AccountUpdateParams.Settings.CardIssuing.TosAcceptance;
       }
@@ -1356,6 +1364,7 @@ declare namespace StripeConstructor {
       export type SmartDisputes = Stripe_.Account.Settings.SmartDisputes;
       export type TaxForms = Stripe_.Account.Settings.TaxForms;
       export type Treasury = Stripe_.Account.Settings.Treasury;
+      export type WechatPayPayments = Stripe_.Account.Settings.WechatPayPayments;
       export namespace CardIssuing {
         export type TosAcceptance = Stripe_.Account.Settings.CardIssuing.TosAcceptance;
       }
@@ -2956,6 +2965,7 @@ declare namespace StripeConstructor {
   export namespace CustomerSession {
     export type Components = Stripe_.CustomerSession.Components;
     export namespace Components {
+      export type ActiveEntitlements = Stripe_.CustomerSession.Components.ActiveEntitlements;
       export type BuyButton = Stripe_.CustomerSession.Components.BuyButton;
       export type CustomerPortal = Stripe_.CustomerSession.Components.CustomerPortal;
       export type CustomerSheet = Stripe_.CustomerSession.Components.CustomerSheet;
@@ -3190,6 +3200,7 @@ declare namespace StripeConstructor {
     export type Discount = Stripe_.InvoiceCreateParams.Discount;
     export type FromInvoice = Stripe_.InvoiceCreateParams.FromInvoice;
     export type Issuer = Stripe_.InvoiceCreateParams.Issuer;
+    export type ManagedPayments = Stripe_.InvoiceCreateParams.ManagedPayments;
     export type PaymentSettings = Stripe_.InvoiceCreateParams.PaymentSettings;
     export type PendingInvoiceItemsBehavior = Stripe_.InvoiceCreateParams.PendingInvoiceItemsBehavior;
     export type Rendering = Stripe_.InvoiceCreateParams.Rendering;
@@ -4033,6 +4044,7 @@ declare namespace StripeConstructor {
     export type FromInvoice = Stripe_.Invoice.FromInvoice;
     export type Issuer = Stripe_.Invoice.Issuer;
     export type LastFinalizationError = Stripe_.Invoice.LastFinalizationError;
+    export type ManagedPayments = Stripe_.Invoice.ManagedPayments;
     export type Parent = Stripe_.Invoice.Parent;
     export type PaymentSettings = Stripe_.Invoice.PaymentSettings;
     export type Rendering = Stripe_.Invoice.Rendering;
@@ -4181,6 +4193,7 @@ declare namespace StripeConstructor {
   }
   export namespace InvoiceItemCreateParams {
     export type Discount = Stripe_.InvoiceItemCreateParams.Discount;
+    export type ManagedPayments = Stripe_.InvoiceItemCreateParams.ManagedPayments;
     export type Period = Stripe_.InvoiceItemCreateParams.Period;
     export type PriceData = Stripe_.InvoiceItemCreateParams.PriceData;
     export type Pricing = Stripe_.InvoiceItemCreateParams.Pricing;
@@ -4221,6 +4234,7 @@ declare namespace StripeConstructor {
   }
   export namespace InvoiceItem {
     export type FrozenField = Stripe_.InvoiceItem.FrozenField;
+    export type ManagedPayments = Stripe_.InvoiceItem.ManagedPayments;
     export type Parent = Stripe_.InvoiceItem.Parent;
     export type Period = Stripe_.InvoiceItem.Period;
     export type Pricing = Stripe_.InvoiceItem.Pricing;
@@ -10831,6 +10845,73 @@ declare namespace StripeConstructor {
       export type StatusDetails = Stripe_.PaymentMethodDomain.Paypal.StatusDetails;
     }
   }
+  export namespace PaymentPlanCreateParams {
+    export type CollectsOn = Stripe_.PaymentPlanCreateParams.CollectsOn;
+    export type Schedule = Stripe_.PaymentPlanCreateParams.Schedule;
+    export namespace CollectsOn {
+      export type InvoiceDetails = Stripe_.PaymentPlanCreateParams.CollectsOn.InvoiceDetails;
+    }
+    export namespace Schedule {
+      export type AmountsDue = Stripe_.PaymentPlanCreateParams.Schedule.AmountsDue;
+      export namespace AmountsDue {
+        export type Amount = Stripe_.PaymentPlanCreateParams.Schedule.AmountsDue.Amount;
+        export namespace Amount {
+          export type DueDate = Stripe_.PaymentPlanCreateParams.Schedule.AmountsDue.Amount.DueDate;
+          export type FixedAmount = Stripe_.PaymentPlanCreateParams.Schedule.AmountsDue.Amount.FixedAmount;
+          export type Type = Stripe_.PaymentPlanCreateParams.Schedule.AmountsDue.Amount.Type;
+          export namespace DueDate {
+            export type Relative = Stripe_.PaymentPlanCreateParams.Schedule.AmountsDue.Amount.DueDate.Relative;
+            export type Type = Stripe_.PaymentPlanCreateParams.Schedule.AmountsDue.Amount.DueDate.Type;
+            export namespace Relative {
+              export type Interval = Stripe_.PaymentPlanCreateParams.Schedule.AmountsDue.Amount.DueDate.Relative.Interval;
+            }
+          }
+        }
+      }
+    }
+  }
+  export namespace PaymentPlanUpdateParams {
+    export type Schedule = Stripe_.PaymentPlanUpdateParams.Schedule;
+    export namespace Schedule {
+      export type AmountsDue = Stripe_.PaymentPlanUpdateParams.Schedule.AmountsDue;
+      export namespace AmountsDue {
+        export type Amount = Stripe_.PaymentPlanUpdateParams.Schedule.AmountsDue.Amount;
+        export namespace Amount {
+          export type DueDate = Stripe_.PaymentPlanUpdateParams.Schedule.AmountsDue.Amount.DueDate;
+          export type FixedAmount = Stripe_.PaymentPlanUpdateParams.Schedule.AmountsDue.Amount.FixedAmount;
+          export type Type = Stripe_.PaymentPlanUpdateParams.Schedule.AmountsDue.Amount.Type;
+          export namespace DueDate {
+            export type Relative = Stripe_.PaymentPlanUpdateParams.Schedule.AmountsDue.Amount.DueDate.Relative;
+            export type Type = Stripe_.PaymentPlanUpdateParams.Schedule.AmountsDue.Amount.DueDate.Type;
+            export namespace Relative {
+              export type Interval = Stripe_.PaymentPlanUpdateParams.Schedule.AmountsDue.Amount.DueDate.Relative.Interval;
+            }
+          }
+        }
+      }
+    }
+  }
+  export namespace PaymentPlan {
+    export type CollectsOn = Stripe_.PaymentPlan.CollectsOn;
+    export type Installment = Stripe_.PaymentPlan.Installment;
+    export type Schedule = Stripe_.PaymentPlan.Schedule;
+    export namespace CollectsOn {
+      export type InvoiceDetails = Stripe_.PaymentPlan.CollectsOn.InvoiceDetails;
+    }
+    export namespace Schedule {
+      export type AmountsDue = Stripe_.PaymentPlan.Schedule.AmountsDue;
+      export namespace AmountsDue {
+        export type Amount = Stripe_.PaymentPlan.Schedule.AmountsDue.Amount;
+        export namespace Amount {
+          export type DueDate = Stripe_.PaymentPlan.Schedule.AmountsDue.Amount.DueDate;
+          export type FixedAmount = Stripe_.PaymentPlan.Schedule.AmountsDue.Amount.FixedAmount;
+          export namespace DueDate {
+            export type Relative = Stripe_.PaymentPlan.Schedule.AmountsDue.Amount.DueDate.Relative;
+          }
+        }
+      }
+    }
+  }
   export namespace PaymentRecordCreateParams {
     export type Amount = Stripe_.PaymentRecordCreateParams.Amount;
     export type ProcessorDetails = Stripe_.PaymentRecordCreateParams.ProcessorDetails;
@@ -15415,6 +15496,7 @@ declare namespace StripeConstructor {
     export type FromInvoice = Stripe_.QuotePreviewInvoice.FromInvoice;
     export type Issuer = Stripe_.QuotePreviewInvoice.Issuer;
     export type LastFinalizationError = Stripe_.QuotePreviewInvoice.LastFinalizationError;
+    export type ManagedPayments = Stripe_.QuotePreviewInvoice.ManagedPayments;
     export type Parent = Stripe_.QuotePreviewInvoice.Parent;
     export type PaymentSettings = Stripe_.QuotePreviewInvoice.PaymentSettings;
     export type Rendering = Stripe_.QuotePreviewInvoice.Rendering;
@@ -15841,7 +15923,7 @@ declare namespace StripeConstructor {
     export type MeterEventAdjustmentResource = Stripe_.Billing.MeterEventAdjustmentResource;
     export type AlertRecovered = Stripe_.Billing.AlertRecovered;
     export type AlertTriggered = Stripe_.Billing.AlertTriggered;
-    export type FeedbackOptions = Stripe_.Billing.FeedbackOptions;
+    export type FeedbackOption = Stripe_.Billing.FeedbackOption;
     export type AlertNotification = Stripe_.Billing.AlertNotification;
     export type MeterEventSummary = Stripe_.Billing.MeterEventSummary;
     export namespace AlertCreateParams {
@@ -16070,9 +16152,9 @@ declare namespace StripeConstructor {
         export type Type = Stripe_.Billing.AlertTriggered.GroupBy.Type;
       }
     }
-    export namespace FeedbackOptions {
-      export type Status = Stripe_.Billing.FeedbackOptions.Status;
-      export type StatusTransitions = Stripe_.Billing.FeedbackOptions.StatusTransitions;
+    export namespace FeedbackOption {
+      export type Status = Stripe_.Billing.FeedbackOption.Status;
+      export type StatusTransitions = Stripe_.Billing.FeedbackOption.StatusTransitions;
     }
     export namespace AlertNotification {
       export type Action = Stripe_.Billing.AlertNotification.Action;
@@ -16213,6 +16295,7 @@ declare namespace StripeConstructor {
         export type AfterCompletion = Stripe_.BillingPortal.Session.Flow.AfterCompletion;
         export type CustomerUpdate = Stripe_.BillingPortal.Session.Flow.CustomerUpdate;
         export type SubscriptionCancel = Stripe_.BillingPortal.Session.Flow.SubscriptionCancel;
+        export type SubscriptionPause = Stripe_.BillingPortal.Session.Flow.SubscriptionPause;
         export type SubscriptionUpdate = Stripe_.BillingPortal.Session.Flow.SubscriptionUpdate;
         export type SubscriptionUpdateConfirm = Stripe_.BillingPortal.Session.Flow.SubscriptionUpdateConfirm;
         export type Type = Stripe_.BillingPortal.Session.Flow.Type;
@@ -17982,8 +18065,17 @@ declare namespace StripeConstructor {
         export type HoldAmount = Stripe_.Issuing.Authorization.PendingRequest.HoldAmount;
         export type HoldAmountDetails = Stripe_.Issuing.Authorization.PendingRequest.HoldAmountDetails;
         export namespace HoldAmountDetails {
+          export type EstimatedFee = Stripe_.Issuing.Authorization.PendingRequest.HoldAmountDetails.EstimatedFee;
+          export type EstimatedFeeDetail = Stripe_.Issuing.Authorization.PendingRequest.HoldAmountDetails.EstimatedFeeDetail;
           export type Network = Stripe_.Issuing.Authorization.PendingRequest.HoldAmountDetails.Network;
           export type Reserve = Stripe_.Issuing.Authorization.PendingRequest.HoldAmountDetails.Reserve;
+          export namespace EstimatedFeeDetail {
+            export type Amount = Stripe_.Issuing.Authorization.PendingRequest.HoldAmountDetails.EstimatedFeeDetail.Amount;
+            export type ChargedBy = Stripe_.Issuing.Authorization.PendingRequest.HoldAmountDetails.EstimatedFeeDetail.ChargedBy;
+            export namespace ChargedBy {
+              export type Application = Stripe_.Issuing.Authorization.PendingRequest.HoldAmountDetails.EstimatedFeeDetail.ChargedBy.Application;
+            }
+          }
         }
       }
       export namespace Redaction {
@@ -17996,8 +18088,17 @@ declare namespace StripeConstructor {
         export type NetworkData = Stripe_.Issuing.Authorization.RequestHistory.NetworkData;
         export type Reason = Stripe_.Issuing.Authorization.RequestHistory.Reason;
         export namespace HoldAmountDetails {
+          export type EstimatedFee = Stripe_.Issuing.Authorization.RequestHistory.HoldAmountDetails.EstimatedFee;
+          export type EstimatedFeeDetail = Stripe_.Issuing.Authorization.RequestHistory.HoldAmountDetails.EstimatedFeeDetail;
           export type Network = Stripe_.Issuing.Authorization.RequestHistory.HoldAmountDetails.Network;
           export type Reserve = Stripe_.Issuing.Authorization.RequestHistory.HoldAmountDetails.Reserve;
+          export namespace EstimatedFeeDetail {
+            export type Amount = Stripe_.Issuing.Authorization.RequestHistory.HoldAmountDetails.EstimatedFeeDetail.Amount;
+            export type ChargedBy = Stripe_.Issuing.Authorization.RequestHistory.HoldAmountDetails.EstimatedFeeDetail.ChargedBy;
+            export namespace ChargedBy {
+              export type Application = Stripe_.Issuing.Authorization.RequestHistory.HoldAmountDetails.EstimatedFeeDetail.ChargedBy.Application;
+            }
+          }
         }
         export namespace NetworkData {
           export type TraceId = Stripe_.Issuing.Authorization.RequestHistory.NetworkData.TraceId;
@@ -19712,8 +19813,12 @@ declare namespace StripeConstructor {
           }
         }
         export namespace At {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.At.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.At.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.At.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.At.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.At.Standard.PlaceOfSupplyScheme;
           }
@@ -19725,15 +19830,23 @@ declare namespace StripeConstructor {
           }
         }
         export namespace Be {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Be.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Be.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Be.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Be.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Be.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Bg {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Bg.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Bg.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Bg.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Bg.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Bg.Standard.PlaceOfSupplyScheme;
           }
@@ -19749,57 +19862,89 @@ declare namespace StripeConstructor {
           }
         }
         export namespace Cy {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Cy.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Cy.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Cy.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Cy.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Cy.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Cz {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Cz.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Cz.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Cz.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Cz.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Cz.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace De {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.De.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.De.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.De.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.De.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.De.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Dk {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Dk.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Dk.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Dk.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Dk.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Dk.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Ee {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Ee.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Ee.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Ee.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Ee.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Ee.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Es {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Es.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Es.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Es.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Es.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Es.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Fi {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Fi.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Fi.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Fi.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Fi.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Fi.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Fr {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Fr.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Fr.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Fr.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Fr.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Fr.Standard.PlaceOfSupplyScheme;
           }
@@ -19811,36 +19956,56 @@ declare namespace StripeConstructor {
           }
         }
         export namespace Gr {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Gr.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Gr.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Gr.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Gr.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Gr.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Hr {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Hr.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Hr.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Hr.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Hr.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Hr.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Hu {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Hu.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Hu.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Hu.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Hu.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Hu.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Ie {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Ie.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Ie.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Ie.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Ie.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Ie.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace It {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.It.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.It.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.It.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.It.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.It.Standard.PlaceOfSupplyScheme;
           }
@@ -19852,36 +20017,56 @@ declare namespace StripeConstructor {
           }
         }
         export namespace Lt {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Lt.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Lt.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Lt.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Lt.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Lt.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Lu {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Lu.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Lu.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Lu.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Lu.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Lu.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Lv {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Lv.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Lv.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Lv.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Lv.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Lv.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Mt {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Mt.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Mt.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Mt.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Mt.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Mt.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Nl {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Nl.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Nl.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Nl.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Nl.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Nl.Standard.PlaceOfSupplyScheme;
           }
@@ -19899,29 +20084,45 @@ declare namespace StripeConstructor {
           }
         }
         export namespace Pl {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Pl.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Pl.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Pl.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Pl.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Pl.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Pt {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Pt.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Pt.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Pt.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Pt.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Pt.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Ro {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Ro.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Ro.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Ro.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Ro.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Ro.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Se {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Se.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Se.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Se.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Se.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Se.Standard.PlaceOfSupplyScheme;
           }
@@ -19933,15 +20134,23 @@ declare namespace StripeConstructor {
           }
         }
         export namespace Si {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Si.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Si.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Si.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Si.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Si.Standard.PlaceOfSupplyScheme;
           }
         }
         export namespace Sk {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Sk.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Sk.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Sk.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Sk.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Sk.Standard.PlaceOfSupplyScheme;
           }
@@ -26198,6 +26407,7 @@ declare namespace StripeConstructor {
       export type RecipientVerificationResource = Stripe_.V2.MoneyManagement.RecipientVerificationResource;
       export type Transaction = Stripe_.V2.MoneyManagement.Transaction;
       export type TransactionRetrieveParams = Stripe_.V2.MoneyManagement.TransactionRetrieveParams;
+      export type TransactionUpdateParams = Stripe_.V2.MoneyManagement.TransactionUpdateParams;
       export type TransactionListParams = Stripe_.V2.MoneyManagement.TransactionListParams;
       export type TransactionResource = Stripe_.V2.MoneyManagement.TransactionResource;
       export type TransactionEntry = Stripe_.V2.MoneyManagement.TransactionEntry;
@@ -26438,6 +26648,22 @@ declare namespace StripeConstructor {
           export type BankAccount = Stripe_.V2.MoneyManagement.OutboundPaymentQuoteCreateParams.DeliveryOptions.BankAccount;
           export type Speed = Stripe_.V2.MoneyManagement.OutboundPaymentQuoteCreateParams.DeliveryOptions.Speed;
         }
+        export namespace To {
+          export type PayoutMethodOptions = Stripe_.V2.MoneyManagement.OutboundPaymentQuoteCreateParams.To.PayoutMethodOptions;
+          export namespace PayoutMethodOptions {
+            export type BankAccount = Stripe_.V2.MoneyManagement.OutboundPaymentQuoteCreateParams.To.PayoutMethodOptions.BankAccount;
+            export namespace BankAccount {
+              export type PreferredNetworkOptions = Stripe_.V2.MoneyManagement.OutboundPaymentQuoteCreateParams.To.PayoutMethodOptions.BankAccount.PreferredNetworkOptions;
+              export type PreferredNetwork = Stripe_.V2.MoneyManagement.OutboundPaymentQuoteCreateParams.To.PayoutMethodOptions.BankAccount.PreferredNetwork;
+              export namespace PreferredNetworkOptions {
+                export type Ach = Stripe_.V2.MoneyManagement.OutboundPaymentQuoteCreateParams.To.PayoutMethodOptions.BankAccount.PreferredNetworkOptions.Ach;
+                export namespace Ach {
+                  export type Submission = Stripe_.V2.MoneyManagement.OutboundPaymentQuoteCreateParams.To.PayoutMethodOptions.BankAccount.PreferredNetworkOptions.Ach.Submission;
+                }
+              }
+            }
+          }
+        }
       }
       export namespace OutboundPaymentQuote {
         export type DeliveryOptions = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.DeliveryOptions;
@@ -26450,12 +26676,29 @@ declare namespace StripeConstructor {
           export type Speed = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.DeliveryOptions.Speed;
         }
         export namespace EstimatedFee {
+          export type TaxAmount = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.EstimatedFee.TaxAmount;
           export type Type = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.EstimatedFee.Type;
         }
         export namespace FxQuote {
           export type LockDuration = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.FxQuote.LockDuration;
           export type LockStatus = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.FxQuote.LockStatus;
           export type Rates = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.FxQuote.Rates;
+        }
+        export namespace To {
+          export type PayoutMethodOptions = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.To.PayoutMethodOptions;
+          export namespace PayoutMethodOptions {
+            export type BankAccount = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.To.PayoutMethodOptions.BankAccount;
+            export namespace BankAccount {
+              export type PreferredNetworkOptions = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.To.PayoutMethodOptions.BankAccount.PreferredNetworkOptions;
+              export type PreferredNetwork = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.To.PayoutMethodOptions.BankAccount.PreferredNetwork;
+              export namespace PreferredNetworkOptions {
+                export type Ach = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.To.PayoutMethodOptions.BankAccount.PreferredNetworkOptions.Ach;
+                export namespace Ach {
+                  export type Submission = Stripe_.V2.MoneyManagement.OutboundPaymentQuote.To.PayoutMethodOptions.BankAccount.PreferredNetworkOptions.Ach.Submission;
+                }
+              }
+            }
+          }
         }
       }
       export namespace OutboundSetupIntentCreateParams {
@@ -28553,6 +28796,11 @@ declare namespace StripeConstructor {
   export type PaymentMethodAutomaticallyUpdatedEvent = Stripe_.PaymentMethodAutomaticallyUpdatedEvent;
   export type PaymentMethodDetachedEvent = Stripe_.PaymentMethodDetachedEvent;
   export type PaymentMethodUpdatedEvent = Stripe_.PaymentMethodUpdatedEvent;
+  export type PaymentPlanCreatedEvent = Stripe_.PaymentPlanCreatedEvent;
+  export type PaymentPlanInstallmentDueEvent = Stripe_.PaymentPlanInstallmentDueEvent;
+  export type PaymentPlanInstallmentPaidEvent = Stripe_.PaymentPlanInstallmentPaidEvent;
+  export type PaymentPlanInstallmentWillBeDueEvent = Stripe_.PaymentPlanInstallmentWillBeDueEvent;
+  export type PaymentPlanUpdatedEvent = Stripe_.PaymentPlanUpdatedEvent;
   export type PayoutCanceledEvent = Stripe_.PayoutCanceledEvent;
   export type PayoutCreatedEvent = Stripe_.PayoutCreatedEvent;
   export type PayoutFailedEvent = Stripe_.PayoutFailedEvent;

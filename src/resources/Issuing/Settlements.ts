@@ -99,7 +99,7 @@ export interface Settlement {
   transaction_count: number;
 }
 export namespace Settlement {
-  export type Network = 'maestro' | 'mastercard' | 'visa';
+  export type Network = 'maestro' | 'mastercard' | 'visa' | OtherString;
 
   export type Status = 'complete' | 'pending' | OtherString;
 }

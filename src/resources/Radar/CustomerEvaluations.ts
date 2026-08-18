@@ -237,7 +237,7 @@ export namespace Radar {
       type: EvaluationContext.Type;
     }
 
-    export type EventType = 'login' | 'registration';
+    export type EventType = 'login' | 'registration' | OtherString;
 
     export namespace EvaluationContext {
       export interface ClientDetails {
@@ -264,7 +264,7 @@ export namespace Radar {
         customer_data?: CustomerDetails.CustomerData;
       }
 
-      export type Type = 'client_details' | 'customer_details';
+      export type Type = 'client_details' | 'customer_details' | OtherString;
 
       export namespace ClientDetails {
         export interface Data {
@@ -333,6 +333,6 @@ export namespace Radar {
   }
 
   export namespace CustomerEvaluationUpdateParams {
-    export type Status = 'allowed' | 'blocked' | 'restricted';
+    export type Status = 'allowed' | 'blocked' | 'restricted' | OtherString;
   }
 }
