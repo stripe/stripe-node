@@ -132,6 +132,28 @@ describe('StripeEventNotificationHandler', () => {
       );
     });
 
+    it('should throw error when registering handler after a failed parse', async () => {
+      eventHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {}
+      );
+
+      // attempting to handle locks registration even though verification fails
+      let parseFailed = false;
+      try {
+        await eventHandler.handle(v1BillingMeterPayload, 't=1,v1=not-a-sig');
+      } catch (e) {
+        parseFailed = true;
+      }
+      expect(parseFailed).to.be.true;
+
+      expect(() => {
+        eventHandler.on('v1.billing.meter.no_meter_found', async () => {});
+      }).to.throw(
+        /Cannot register new handlers after an event has been handled/
+      );
+    });
+
     it('should throw error when registering duplicate handler', () => {
       eventHandler.on(
         'v1.billing.meter.error_report_triggered',
@@ -528,6 +550,26 @@ describe('StripeEventNotificationHandlerWithoutVerification', () => {
     );
     expect(receivedEvent.id).to.equal('evt_123');
     expect(receivedClient).to.exist;
+  });
+
+  it('should throw error when registering handler after a failed parse', async () => {
+    withoutVerifHandler.on(
+      'v1.billing.meter.error_report_triggered',
+      async () => {}
+    );
+
+    // attempting to handle locks registration even though the parse fails
+    let parseFailed = false;
+    try {
+      await withoutVerifHandler.handle('not json');
+    } catch (e) {
+      parseFailed = true;
+    }
+    expect(parseFailed).to.be.true;
+
+    expect(() => {
+      withoutVerifHandler.on('v1.billing.meter.no_meter_found', async () => {});
+    }).to.throw(/Cannot register new handlers after an event has been handled/);
   });
 
   it('should accept a Uint8Array body without a signature', async () => {

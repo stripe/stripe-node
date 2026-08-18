@@ -161,8 +161,6 @@ class BaseEventNotificationHandler {
   protected async dispatchEvent(
     event: Stripe.V2.Core.EventNotification
   ): Promise<void> {
-    // we're not worried about thread safety here because we expect callbacks will be registered synchronously on app startup
-    this.hasHandledEvent = true;
     // Create a new client with the event's context instead of modifying the shared client
     // This ensures thread-safety when processing webhooks in parallel
     // We create a shallow copy and override _api with a new object containing the event context
@@ -216,6 +214,10 @@ export class StripeEventNotificationHandler extends BaseEventNotificationHandler
     rawBody: string | Uint8Array,
     signature: string | Uint8Array
   ): Promise<void> {
+    // set before parsing, so that even a failed parse locks out registration.
+    // we're not worried about thread safety here because we expect callbacks will be registered synchronously on app startup
+    this.hasHandledEvent = true;
+
     return await this.dispatchEvent(
       this.client.parseEventNotification(rawBody, signature, this.webhookSecret)
     );
@@ -232,6 +234,8 @@ export class StripeEventNotificationHandler extends BaseEventNotificationHandler
  */
 export class StripeEventNotificationHandlerWithoutVerification extends BaseEventNotificationHandler {
   public async handle(rawBody: string | Uint8Array): Promise<void> {
+    this.hasHandledEvent = true;
+
     return await this.dispatchEvent(
       this.client.parseEventNotificationWithoutVerification(rawBody)
     );
