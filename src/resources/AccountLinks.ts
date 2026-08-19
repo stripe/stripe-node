@@ -87,7 +87,7 @@ export namespace AccountLinkCreateParams {
     | 'capital_financing_reporting'
     | OtherString;
 
-  export type Collect = 'currently_due' | 'eventually_due';
+  export type Collect = 'currently_due' | 'eventually_due' | OtherString;
 
   export interface CollectionOptions {
     /**
@@ -107,8 +107,8 @@ export namespace AccountLinkCreateParams {
   }
 
   export namespace CollectionOptions {
-    export type Fields = 'currently_due' | 'eventually_due';
+    export type Fields = 'currently_due' | 'eventually_due' | OtherString;
 
-    export type FutureRequirements = 'include' | 'omit';
+    export type FutureRequirements = 'include' | 'omit' | OtherString;
   }
 }

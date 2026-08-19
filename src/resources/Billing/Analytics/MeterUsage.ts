@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {MeterUsageRow} from './MeterUsageRows.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response, ApiList} from '../../../lib.js';
 
 export class MeterUsageResource extends StripeResource {
@@ -708,9 +709,15 @@ export namespace Billing {
         | 'Universal'
         | 'W-SU'
         | 'WET'
-        | 'Zulu';
+        | 'Zulu'
+        | OtherString;
 
-      export type ValueGroupingWindow = 'day' | 'hour' | 'month' | 'week';
+      export type ValueGroupingWindow =
+        | 'day'
+        | 'hour'
+        | 'month'
+        | 'week'
+        | OtherString;
     }
   }
 }

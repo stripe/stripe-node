@@ -4,10 +4,10 @@ import {StripeResource} from '../../StripeResource.js';
 import {ValueListItem} from './ValueListItems.js';
 import {
   MetadataParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
-  OtherString,
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise, ApiList} from '../../lib.js';
 
@@ -212,7 +212,8 @@ export namespace Radar {
       | 'ip_address'
       | 'sepa_debit_fingerprint'
       | 'string'
-      | 'us_bank_account_fingerprint';
+      | 'us_bank_account_fingerprint'
+      | OtherString;
   }
 }
 export namespace Radar {

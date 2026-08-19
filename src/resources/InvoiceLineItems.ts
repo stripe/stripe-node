@@ -556,7 +556,7 @@ export namespace InvoiceLineItem {
   }
 
   export namespace Tax {
-    export type TaxBehavior = 'exclusive' | 'inclusive';
+    export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
 
     export interface TaxRateDetails {
       /**

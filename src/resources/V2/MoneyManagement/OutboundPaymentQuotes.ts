@@ -109,6 +109,11 @@ export namespace OutboundPaymentQuote {
     amount: V2Amount;
 
     /**
+     * Tax charged for this fee, if applicable. Value expressed as a decimal string in major units.
+     */
+    tax_amount?: EstimatedFee.TaxAmount;
+
+    /**
      * The fee type.
      */
     type: EstimatedFee.Type;
@@ -167,6 +172,11 @@ export namespace OutboundPaymentQuote {
     payout_method: string;
 
     /**
+     * Payout method options for the OutboundPaymentQuote.
+     */
+    payout_method_options?: To.PayoutMethodOptions;
+
+    /**
      * To which account the OutboundPayment is sent.
      */
     recipient: string;
@@ -183,6 +193,18 @@ export namespace OutboundPaymentQuote {
   }
 
   export namespace EstimatedFee {
+    export interface TaxAmount {
+      /**
+       * Currency code.
+       */
+      currency: string;
+
+      /**
+       * Tax amount value represented as a decimal string in major units.
+       */
+      value_decimal: string;
+    }
+
     export type Type =
       | 'cross_border_payout_fee'
       | 'foreign_exchange_fee'
@@ -204,6 +226,69 @@ export namespace OutboundPaymentQuote {
        * The exchange rate going from_currency -> to_currency.
        */
       exchange_rate: string;
+    }
+  }
+
+  export namespace To {
+    export interface PayoutMethodOptions {
+      /**
+       * Options for bank account payout methods.
+       */
+      bank_account?: PayoutMethodOptions.BankAccount;
+    }
+
+    export namespace PayoutMethodOptions {
+      export interface BankAccount {
+        /**
+         * Per-network configuration options.
+         */
+        preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+        /**
+         * The preferred networks to use for this OutboundPayment.
+         */
+        preferred_networks: Array<BankAccount.PreferredNetwork>;
+      }
+
+      export namespace BankAccount {
+        export interface PreferredNetworkOptions {
+          /**
+           * ACH-specific network options.
+           */
+          ach?: PreferredNetworkOptions.Ach;
+        }
+
+        export type PreferredNetwork =
+          | 'ach'
+          | 'becs'
+          | 'eft'
+          | 'fedwire'
+          | 'fps'
+          | 'npp'
+          | 'rtp'
+          | 'sepa_credit'
+          | 'sepa_instant'
+          | 'swift'
+          | OtherString;
+
+        export namespace PreferredNetworkOptions {
+          export interface Ach {
+            /**
+             * Open Enum. ACH submission timing.
+             */
+            submission?: Ach.Submission;
+
+            /**
+             * The transaction purpose for this ACH payment.
+             */
+            transaction_purpose?: 'payroll';
+          }
+
+          export namespace Ach {
+            export type Submission = 'next_day' | 'same_day' | OtherString;
+          }
+        }
+      }
     }
   }
 }
@@ -262,6 +347,11 @@ export namespace V2 {
         payout_method?: string;
 
         /**
+         * Payout method options for the OutboundPaymentQuote.
+         */
+        payout_method_options?: To.PayoutMethodOptions;
+
+        /**
          * To which account the OutboundPayment is sent.
          */
         recipient: string;
@@ -287,6 +377,69 @@ export namespace V2 {
           | 'next_business_day'
           | 'standard'
           | OtherString;
+      }
+
+      export namespace To {
+        export interface PayoutMethodOptions {
+          /**
+           * Options for bank account payout methods.
+           */
+          bank_account?: PayoutMethodOptions.BankAccount;
+        }
+
+        export namespace PayoutMethodOptions {
+          export interface BankAccount {
+            /**
+             * Per-network configuration options.
+             */
+            preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+            /**
+             * The preferred networks to use for this OutboundPayment.
+             */
+            preferred_networks: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export namespace BankAccount {
+            export interface PreferredNetworkOptions {
+              /**
+               * ACH-specific network options.
+               */
+              ach?: PreferredNetworkOptions.Ach;
+            }
+
+            export type PreferredNetwork =
+              | 'ach'
+              | 'becs'
+              | 'eft'
+              | 'fedwire'
+              | 'fps'
+              | 'npp'
+              | 'rtp'
+              | 'sepa_credit'
+              | 'sepa_instant'
+              | 'swift'
+              | OtherString;
+
+            export namespace PreferredNetworkOptions {
+              export interface Ach {
+                /**
+                 * Open Enum. ACH submission timing.
+                 */
+                submission?: Ach.Submission;
+
+                /**
+                 * The transaction purpose for this ACH payment.
+                 */
+                transaction_purpose?: 'payroll';
+              }
+
+              export namespace Ach {
+                export type Submission = 'next_day' | 'same_day' | OtherString;
+              }
+            }
+          }
+        }
       }
     }
   }

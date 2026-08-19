@@ -320,7 +320,7 @@ export namespace Tax {
       | OtherString;
 
     export namespace Payee {
-      export type Type = 'account' | 'external_reference';
+      export type Type = 'account' | 'external_reference' | OtherString;
     }
   }
 }

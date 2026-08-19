@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {AddressParam, OtherString, Address} from '../../shared.js';
+import {OtherString, AddressParam, Address} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class SettingResource extends StripeResource {
@@ -178,7 +178,8 @@ export namespace Tax {
       export type TaxBehavior =
         | 'exclusive'
         | 'inclusive'
-        | 'inferred_by_currency';
+        | 'inferred_by_currency'
+        | OtherString;
     }
   }
 }

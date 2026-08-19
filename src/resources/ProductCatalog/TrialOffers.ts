@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {Price} from './../Prices.js';
+import {Price, DeletedPrice} from './../Prices.js';
 import {OtherString, PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
@@ -118,7 +118,7 @@ export namespace TrialOffer {
       /**
        * The new price to use at the end of the trial offer period.
        */
-      price: string | Price;
+      price: string | Price | DeletedPrice;
     }
   }
 }

@@ -132,7 +132,11 @@ export namespace CalculationLineItem {
       state: string | null;
     }
 
-    export type Sourcing = 'destination' | 'origin' | 'performance';
+    export type Sourcing =
+      | 'destination'
+      | 'origin'
+      | 'performance'
+      | OtherString;
 
     export interface TaxRateDetails {
       /**
@@ -204,7 +208,8 @@ export namespace CalculationLineItem {
         | 'sales_tax'
         | 'service_tax'
         | 'tourism_tax'
-        | 'vat';
+        | 'vat'
+        | OtherString;
     }
   }
 }

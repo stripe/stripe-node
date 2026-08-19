@@ -500,6 +500,14 @@ import {
   PaymentMethodDomainResource,
 } from './resources/PaymentMethodDomains.js';
 import {
+  PaymentPlan,
+  PaymentPlanCreateParams,
+  PaymentPlanRetrieveParams,
+  PaymentPlanUpdateParams,
+  PaymentPlanListParams,
+  PaymentPlanResource,
+} from './resources/PaymentPlans.js';
+import {
   PaymentRecord,
   PaymentRecordCreateParams,
   PaymentRecordRetrieveParams,
@@ -1017,6 +1025,11 @@ import {
   PaymentMethodAutomaticallyUpdatedEvent,
   PaymentMethodDetachedEvent,
   PaymentMethodUpdatedEvent,
+  PaymentPlanCreatedEvent,
+  PaymentPlanInstallmentDueEvent,
+  PaymentPlanInstallmentPaidEvent,
+  PaymentPlanInstallmentWillBeDueEvent,
+  PaymentPlanUpdatedEvent,
   PayoutCanceledEvent,
   PayoutCreatedEvent,
   PayoutFailedEvent,
@@ -1197,7 +1210,7 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 export class Stripe {
-  static PACKAGE_VERSION = '22.6.0-alpha.1';
+  static PACKAGE_VERSION = '22.6.0-alpha.2';
   static API_VERSION: typeof ApiVersion = ApiVersion;
   /**
    * The major API version that this SDK uses. Objects retrieved using the same
@@ -1291,6 +1304,7 @@ export class Stripe {
   paymentMethodConfigurations: PaymentMethodConfigurationResource;
   paymentMethodDomains: PaymentMethodDomainResource;
   paymentMethods: PaymentMethodResource;
+  paymentPlans: PaymentPlanResource;
   paymentRecords: PaymentRecordResource;
   payouts: PayoutResource;
   plans: PlanResource;
@@ -1500,6 +1514,7 @@ export class Stripe {
     );
     this.paymentMethodDomains = new PaymentMethodDomainResource(this);
     this.paymentMethods = new PaymentMethodResource(this);
+    this.paymentPlans = new PaymentPlanResource(this);
     this.paymentRecords = new PaymentRecordResource(this);
     this.payouts = new PayoutResource(this);
     this.plans = new PlanResource(this);
@@ -2491,6 +2506,14 @@ export declare namespace Stripe {
     PaymentMethodDomainResource,
   };
   export {
+    PaymentPlan,
+    PaymentPlanCreateParams,
+    PaymentPlanRetrieveParams,
+    PaymentPlanUpdateParams,
+    PaymentPlanListParams,
+    PaymentPlanResource,
+  };
+  export {
     PaymentRecord,
     PaymentRecordCreateParams,
     PaymentRecordRetrieveParams,
@@ -2982,6 +3005,11 @@ export declare namespace Stripe {
     PaymentMethodAutomaticallyUpdatedEvent,
     PaymentMethodDetachedEvent,
     PaymentMethodUpdatedEvent,
+    PaymentPlanCreatedEvent,
+    PaymentPlanInstallmentDueEvent,
+    PaymentPlanInstallmentPaidEvent,
+    PaymentPlanInstallmentWillBeDueEvent,
+    PaymentPlanUpdatedEvent,
     PayoutCanceledEvent,
     PayoutCreatedEvent,
     PayoutFailedEvent,

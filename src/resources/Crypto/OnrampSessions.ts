@@ -227,6 +227,7 @@ export namespace OnrampSession {
       | 'matic'
       | 'sol'
       | 'usdc'
+      | 'usdt'
       | 'wld'
       | 'xlm'
       | OtherString;
@@ -455,6 +456,7 @@ export namespace Crypto {
       | 'matic'
       | 'sol'
       | 'usdc'
+      | 'usdt'
       | 'wld'
       | 'xlm'
       | OtherString;
@@ -540,6 +542,7 @@ export namespace Crypto {
       | 'matic'
       | 'sol'
       | 'usdc'
+      | 'usdt'
       | 'wld'
       | 'xlm'
       | OtherString;
@@ -627,7 +630,7 @@ export namespace Crypto {
           user_agent: string;
         }
 
-        export type Type = 'offline' | 'online';
+        export type Type = 'offline' | 'online' | OtherString;
       }
     }
   }

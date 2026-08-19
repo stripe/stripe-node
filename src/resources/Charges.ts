@@ -705,7 +705,8 @@ export namespace Charge {
     export type AdviceCode =
       | 'confirm_card_data'
       | 'do_not_try_again'
-      | 'try_again_later';
+      | 'try_again_later'
+      | OtherString;
 
     export interface Rule {
       /**
@@ -2262,7 +2263,7 @@ export namespace Charge {
     export interface Zip {}
 
     export namespace AchDebit {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
     }
 
     export namespace Alma {
@@ -2325,7 +2326,7 @@ export namespace Charge {
     }
 
     export namespace Bancontact {
-      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
     }
 
     export namespace Card {
@@ -2506,7 +2507,7 @@ export namespace Charge {
       }
 
       export namespace AccountFunding {
-        export type Status = 'disabled' | 'enabled';
+        export type Status = 'disabled' | 'enabled' | OtherString;
       }
 
       export namespace Benefits {
@@ -2664,7 +2665,8 @@ export namespace Charge {
           | 'link'
           | 'masterpass'
           | 'samsung_pay'
-          | 'visa_checkout';
+          | 'visa_checkout'
+          | OtherString;
 
         export interface VisaCheckout {
           /**
@@ -2855,11 +2857,12 @@ export namespace Charge {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -2886,7 +2889,8 @@ export namespace Charge {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace GiftCard {
@@ -2936,7 +2940,8 @@ export namespace Charge {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
 
       export type Bic =
         | 'ABNANL2A'
@@ -2959,7 +2964,8 @@ export namespace Charge {
         | 'REVOIE23'
         | 'REVOLT21'
         | 'SNSBNL2A'
-        | 'TRIONL2U';
+        | 'TRIONL2U'
+        | OtherString;
     }
 
     export namespace InteracPresent {
@@ -3054,7 +3060,12 @@ export namespace Charge {
       }
 
       export namespace Store {
-        export type Chain = 'familymart' | 'lawson' | 'ministop' | 'seicomart';
+        export type Chain =
+          | 'familymart'
+          | 'lawson'
+          | 'ministop'
+          | 'seicomart'
+          | OtherString;
       }
     }
 
@@ -3141,7 +3152,8 @@ export namespace Charge {
         | 'tmobile_usbugi_bankowe'
         | 'toyota_bank'
         | 'velobank'
-        | 'volkswagen_bank';
+        | 'volkswagen_bank'
+        | OtherString;
     }
 
     export namespace Paypal {
@@ -3229,7 +3241,8 @@ export namespace Charge {
         | 'fr'
         | 'it'
         | 'nl'
-        | 'pl';
+        | 'pl'
+        | OtherString;
     }
 
     export namespace UsBankAccount {
@@ -3548,7 +3561,7 @@ export namespace ChargeUpdateParams {
   }
 
   export namespace FraudDetails {
-    export type UserReport = 'fraudulent' | 'safe';
+    export type UserReport = 'fraudulent' | 'safe' | OtherString;
   }
 
   export namespace PaymentDetails {

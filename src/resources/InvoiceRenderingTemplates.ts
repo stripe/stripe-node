@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams, Metadata} from '../shared.js';
+import {PaginationParams, OtherString, Metadata} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class InvoiceRenderingTemplateResource extends StripeResource {
@@ -150,7 +150,7 @@ export interface InvoiceRenderingTemplate {
   version: number;
 }
 export namespace InvoiceRenderingTemplate {
-  export type Status = 'active' | 'archived';
+  export type Status = 'active' | 'archived' | OtherString;
 }
 export interface InvoiceRenderingTemplateRetrieveParams {
   /**
@@ -169,7 +169,7 @@ export interface InvoiceRenderingTemplateListParams extends PaginationParams {
   status?: InvoiceRenderingTemplateListParams.Status;
 }
 export namespace InvoiceRenderingTemplateListParams {
-  export type Status = 'active' | 'archived';
+  export type Status = 'active' | 'archived' | OtherString;
 }
 export interface InvoiceRenderingTemplateArchiveParams {
   /**

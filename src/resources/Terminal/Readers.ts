@@ -506,7 +506,7 @@ export namespace Reader {
     | 'verifone_v660p'
     | OtherString;
 
-  export type Status = 'offline' | 'online';
+  export type Status = 'offline' | 'online' | OtherString;
 
   export namespace Action {
     export interface ActivateGiftCard {
@@ -1072,13 +1072,15 @@ export namespace Reader {
         | 'transfers_not_allowed'
         | 'url_invalid'
         | 'v2_account_disconnection_unsupported'
-        | 'v2_account_missing_configuration';
+        | 'v2_account_missing_configuration'
+        | OtherString;
 
       export type Type =
         | 'api_error'
         | 'card_error'
         | 'idempotency_error'
-        | 'invalid_request_error';
+        | 'invalid_request_error'
+        | OtherString;
     }
 
     export namespace CollectInputs {
@@ -1242,7 +1244,8 @@ export namespace Reader {
           | 'phone'
           | 'selection'
           | 'signature'
-          | 'text';
+          | 'text'
+          | OtherString;
 
         export namespace Selection {
           export interface Choice {
@@ -1379,7 +1382,11 @@ export namespace Reader {
     }
 
     export namespace RefundPayment {
-      export type Reason = 'duplicate' | 'fraudulent' | 'requested_by_customer';
+      export type Reason =
+        | 'duplicate'
+        | 'fraudulent'
+        | 'requested_by_customer'
+        | OtherString;
 
       export interface RefundPaymentConfig {
         /**

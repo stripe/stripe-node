@@ -213,7 +213,8 @@ export namespace TaxRate {
     | 'county'
     | 'district'
     | 'multiple'
-    | 'state';
+    | 'state'
+    | OtherString;
 
   export type RateType = 'flat_amount' | 'percentage' | OtherString;
 

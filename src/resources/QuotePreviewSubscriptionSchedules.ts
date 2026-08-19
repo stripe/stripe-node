@@ -164,7 +164,10 @@ export namespace QuotePreviewSubscriptionSchedule {
     type: AppliesTo.Type;
   }
 
-  export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+  export type BillingBehavior =
+    | 'prorate_on_next_phase'
+    | 'prorate_up_front'
+    | OtherString;
 
   export interface BillingMode {
     /**
@@ -452,7 +455,8 @@ export namespace QuotePreviewSubscriptionSchedule {
     | 'canceled'
     | 'completed'
     | 'not_started'
-    | 'released';
+    | 'released'
+    | OtherString;
 
   export namespace AppliesTo {
     export type Type = 'new_reference' | 'subscription_schedule' | OtherString;
@@ -469,7 +473,7 @@ export namespace QuotePreviewSubscriptionSchedule {
     export type Type = 'classic' | 'flexible' | OtherString;
 
     export namespace Flexible {
-      export type ProrationDiscounts = 'included' | 'itemized';
+      export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
     }
   }
 
@@ -524,7 +528,7 @@ export namespace QuotePreviewSubscriptionSchedule {
       export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -547,7 +551,7 @@ export namespace QuotePreviewSubscriptionSchedule {
       liability: AutomaticTax.Liability | null;
     }
 
-    export type BillingCycleAnchor = 'automatic' | 'phase_start';
+    export type BillingCycleAnchor = 'automatic' | 'phase_start' | OtherString;
 
     export interface BillingThresholds {
       /**
@@ -595,7 +599,10 @@ export namespace QuotePreviewSubscriptionSchedule {
       issuer: InvoiceSettings.Issuer;
     }
 
-    export type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
+    export type PhaseEffectiveAt =
+      | 'billing_period_start'
+      | 'phase_start'
+      | OtherString;
 
     export interface TransferData {
       /**
@@ -750,14 +757,15 @@ export namespace QuotePreviewSubscriptionSchedule {
           }
 
           export namespace OutstandingUsageThrough {
-            export type Type = 'none' | 'pause_at';
+            export type Type = 'none' | 'pause_at' | OtherString;
           }
 
           export namespace UnusedTimeFrom {
             export type Type =
               | 'item_current_period_start'
               | 'none'
-              | 'pause_at';
+              | 'pause_at'
+              | OtherString;
           }
         }
       }
@@ -807,11 +815,15 @@ export namespace QuotePreviewSubscriptionSchedule {
       }
 
       export namespace Settings {
-        export type BillingCycleAnchor = 'resume_at' | 'unchanged';
+        export type BillingCycleAnchor =
+          | 'resume_at'
+          | 'unchanged'
+          | OtherString;
 
         export type PaymentBehavior =
           | 'resume_on_payment_attempt'
-          | 'resume_on_payment_success';
+          | 'resume_on_payment_success'
+          | OtherString;
 
         export type ProrationBehavior =
           | 'always_invoice'
@@ -896,7 +908,7 @@ export namespace QuotePreviewSubscriptionSchedule {
       liability: AutomaticTax.Liability | null;
     }
 
-    export type BillingCycleAnchor = 'automatic' | 'phase_start';
+    export type BillingCycleAnchor = 'automatic' | 'phase_start' | OtherString;
 
     export interface BillingThresholds {
       /**
@@ -910,7 +922,10 @@ export namespace QuotePreviewSubscriptionSchedule {
       reset_billing_cycle_anchor: boolean | null;
     }
 
-    export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+    export type CollectionMethod =
+      | 'charge_automatically'
+      | 'send_invoice'
+      | OtherString;
 
     export interface Discount {
       /**
@@ -936,7 +951,10 @@ export namespace QuotePreviewSubscriptionSchedule {
       settings?: Discount.Settings;
     }
 
-    export type EffectiveAt = 'billing_period_start' | 'phase_start';
+    export type EffectiveAt =
+      | 'billing_period_start'
+      | 'phase_start'
+      | OtherString;
 
     export interface InvoiceSettings {
       /**
@@ -1027,7 +1045,8 @@ export namespace QuotePreviewSubscriptionSchedule {
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export interface TransferData {
       /**

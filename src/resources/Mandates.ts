@@ -186,7 +186,7 @@ export namespace Mandate {
       user_agent: string | null;
     }
 
-    export type Type = 'offline' | 'online';
+    export type Type = 'offline' | 'online' | OtherString;
   }
 
   export namespace PaymentMethodDetails {
@@ -435,7 +435,8 @@ export namespace Mandate {
         | 'accepted'
         | 'pending'
         | 'refused'
-        | 'revoked';
+        | 'revoked'
+        | OtherString;
 
       export type RevocationReason =
         | 'account_closed'

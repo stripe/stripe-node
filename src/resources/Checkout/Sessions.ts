@@ -1012,7 +1012,7 @@ export interface Session {
   payment_link: string | PaymentLink | null;
 
   /**
-   * Configure whether a Checkout Session should collect a payment method. Defaults to `always`.
+   * Configure whether a Checkout Session should collect a payment method for sessions with mode `payment`. Defaults to `always`.
    */
   payment_method_collection: Session.PaymentMethodCollection | null;
 
@@ -1828,7 +1828,7 @@ export namespace Session {
     tax_rates?: Array<string>;
   }
 
-  export type Status = 'complete' | 'expired' | 'open';
+  export type Status = 'complete' | 'expired' | 'open' | OtherString;
 
   export type SubmitType =
     | 'auto'
@@ -1929,13 +1929,25 @@ export namespace Session {
   }
 
   export namespace AutomaticSurcharge {
-    export type CalculationBasis = 'total_after_tax' | 'total_before_tax';
+    export type CalculationBasis =
+      | 'total_after_tax'
+      | 'total_before_tax'
+      | OtherString;
 
-    export type Provider = 'daikin' | 'interpayments' | 'proserv' | 'yeeld';
+    export type Provider =
+      | 'daikin'
+      | 'interpayments'
+      | 'proserv'
+      | 'yeeld'
+      | OtherString;
 
-    export type Status = 'complete' | 'failed' | 'requires_input';
+    export type Status = 'complete' | 'failed' | 'requires_input' | OtherString;
 
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
   }
 
   export namespace AutomaticTax {
@@ -1965,7 +1977,7 @@ export namespace Session {
   }
 
   export namespace BrandingSettings {
-    export type BorderStyle = 'pill' | 'rectangular' | 'rounded';
+    export type BorderStyle = 'pill' | 'rectangular' | 'rounded' | OtherString;
 
     export interface Icon {
       /**
@@ -2002,11 +2014,11 @@ export namespace Session {
     }
 
     export namespace Icon {
-      export type Type = 'file' | 'url';
+      export type Type = 'file' | 'url' | OtherString;
     }
 
     export namespace Logo {
-      export type Type = 'file' | 'url';
+      export type Type = 'file' | 'url' | OtherString;
     }
   }
 
@@ -2199,12 +2211,13 @@ export namespace Session {
         | 'vn_tin'
         | 'za_vat'
         | 'zm_tin'
-        | 'zw_tin';
+        | 'zw_tin'
+        | OtherString;
     }
   }
 
   export namespace Consent {
-    export type Promotions = 'opt_in' | 'opt_out';
+    export type Promotions = 'opt_in' | 'opt_out' | OtherString;
   }
 
   export namespace ConsentCollection {
@@ -2217,12 +2230,12 @@ export namespace Session {
       position: PaymentMethodReuseAgreement.Position;
     }
 
-    export type Promotions = 'auto' | 'none';
+    export type Promotions = 'auto' | 'none' | OtherString;
 
-    export type TermsOfService = 'none' | 'required';
+    export type TermsOfService = 'none' | 'required' | OtherString;
 
     export namespace PaymentMethodReuseAgreement {
-      export type Position = 'auto' | 'hidden';
+      export type Position = 'auto' | 'hidden' | OtherString;
     }
   }
 
@@ -2379,7 +2392,12 @@ export namespace Session {
       }
 
       export namespace Card {
-        export type Funding = 'credit' | 'debit' | 'prepaid' | 'unknown';
+        export type Funding =
+          | 'credit'
+          | 'debit'
+          | 'prepaid'
+          | 'unknown'
+          | OtherString;
 
         export interface Wallet {
           /**
@@ -2397,14 +2415,15 @@ export namespace Session {
             | 'masterpass'
             | 'meta_pay'
             | 'samsung_pay'
-            | 'visa_checkout';
+            | 'visa_checkout'
+            | OtherString;
         }
       }
     }
   }
 
   export namespace CustomerDetails {
-    export type TaxExempt = 'exempt' | 'none' | 'reverse';
+    export type TaxExempt = 'exempt' | 'none' | 'reverse' | OtherString;
 
     export interface TaxId {
       /**
@@ -2537,7 +2556,8 @@ export namespace Session {
         | 'vn_tin'
         | 'za_vat'
         | 'zm_tin'
-        | 'zw_tin';
+        | 'zw_tin'
+        | OtherString;
     }
   }
 
@@ -2829,7 +2849,7 @@ export namespace Session {
       }
 
       export namespace PendingInvoiceItemInterval {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
 
       export namespace TrialSettings {
@@ -3853,9 +3873,14 @@ export namespace Session {
           | 'american_express'
           | 'discover_global_network'
           | 'mastercard'
-          | 'visa';
+          | 'visa'
+          | OtherString;
 
-        export type FundingTypesBlocked = 'credit' | 'debit' | 'prepaid';
+        export type FundingTypesBlocked =
+          | 'credit'
+          | 'debit'
+          | 'prepaid'
+          | OtherString;
       }
     }
 
@@ -3903,7 +3928,14 @@ export namespace Session {
           | OtherString;
 
         export namespace EuBankTransfer {
-          export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+          export type Country =
+            | 'BE'
+            | 'DE'
+            | 'ES'
+            | 'FR'
+            | 'IE'
+            | 'NL'
+            | OtherString;
         }
       }
     }
@@ -4200,7 +4232,7 @@ export namespace Session {
     }
 
     export namespace WechatPay {
-      export type Client = 'android' | 'ios' | 'web';
+      export type Client = 'android' | 'ios' | 'web' | OtherString;
     }
   }
 
@@ -4225,14 +4257,17 @@ export namespace Session {
       shipping_details: Update.ShippingDetails | null;
     }
 
-    export type UpdateLineItems = 'client_only' | 'server_only';
+    export type UpdateLineItems = 'client_only' | 'server_only' | OtherString;
 
-    export type UpdateShippingDetails = 'client_only' | 'server_only';
+    export type UpdateShippingDetails =
+      | 'client_only'
+      | 'server_only'
+      | OtherString;
 
     export namespace Update {
-      export type LineItems = 'client_only' | 'server_only';
+      export type LineItems = 'client_only' | 'server_only' | OtherString;
 
-      export type ShippingDetails = 'client_only' | 'server_only';
+      export type ShippingDetails = 'client_only' | 'server_only' | OtherString;
     }
   }
 
@@ -6074,9 +6109,16 @@ export namespace Checkout {
     }
 
     export namespace AutomaticSurcharge {
-      export type CalculationBasis = 'total_after_tax' | 'total_before_tax';
+      export type CalculationBasis =
+        | 'total_after_tax'
+        | 'total_before_tax'
+        | OtherString;
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
     }
 
     export namespace AutomaticTax {
@@ -6475,7 +6517,8 @@ export namespace Checkout {
         export namespace RenderingOptions {
           export type AmountTaxDisplay =
             | 'exclude_tax'
-            | 'include_inclusive_tax';
+            | 'include_inclusive_tax'
+            | OtherString;
         }
       }
     }
@@ -6625,7 +6668,10 @@ export namespace Checkout {
           export type Type = 'classic' | 'flexible' | OtherString;
 
           export namespace Flexible {
-            export type ProrationDiscounts = 'included' | 'itemized';
+            export type ProrationDiscounts =
+              | 'included'
+              | 'itemized'
+              | OtherString;
           }
         }
 
@@ -6717,7 +6763,11 @@ export namespace Checkout {
               interval_count?: number;
             }
 
-            export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            export type TaxBehavior =
+              | 'exclusive'
+              | 'inclusive'
+              | 'unspecified'
+              | OtherString;
 
             export namespace ProductData {
               export interface TaxDetails {
@@ -6734,13 +6784,23 @@ export namespace Checkout {
             }
 
             export namespace Recurring {
-              export type Interval = 'day' | 'month' | 'week' | 'year';
+              export type Interval =
+                | 'day'
+                | 'month'
+                | 'week'
+                | 'year'
+                | OtherString;
             }
           }
         }
 
         export namespace PendingInvoiceItemInterval {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
 
         export namespace TrialSettings {
@@ -6867,7 +6927,11 @@ export namespace Checkout {
           interval_count?: number;
         }
 
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
 
         export namespace ProductData {
           export interface TaxDetails {
@@ -6884,7 +6948,12 @@ export namespace Checkout {
         }
 
         export namespace Recurring {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -8416,7 +8485,8 @@ export namespace Checkout {
             | 'balances'
             | 'ownership'
             | 'payment_method'
-            | 'transactions';
+            | 'transactions'
+            | OtherString;
 
           export type Prefetch =
             | 'balances'
@@ -8428,7 +8498,7 @@ export namespace Checkout {
       }
 
       export namespace WechatPay {
-        export type Client = 'android' | 'ios' | 'web';
+        export type Client = 'android' | 'ios' | 'web' | OtherString;
       }
     }
 
@@ -8797,7 +8867,11 @@ export namespace Checkout {
           };
         }
 
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
 
         export namespace DeliveryEstimate {
           export interface Maximum {
@@ -8859,7 +8933,11 @@ export namespace Checkout {
           }
 
           export namespace CurrencyOptions {
-            export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            export type TaxBehavior =
+              | 'exclusive'
+              | 'inclusive'
+              | 'unspecified'
+              | OtherString;
           }
         }
       }
@@ -8959,7 +9037,10 @@ export namespace Checkout {
         export type Type = 'classic' | 'flexible' | OtherString;
 
         export namespace Flexible {
-          export type ProrationDiscounts = 'included' | 'itemized';
+          export type ProrationDiscounts =
+            | 'included'
+            | 'itemized'
+            | OtherString;
         }
       }
 
@@ -8982,7 +9063,7 @@ export namespace Checkout {
       }
 
       export namespace PendingInvoiceItemInterval {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
 
       export namespace TrialSettings {
@@ -9442,7 +9523,11 @@ export namespace Checkout {
           interval_count?: number;
         }
 
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
 
         export namespace ProductData {
           export interface TaxDetails {
@@ -9459,7 +9544,12 @@ export namespace Checkout {
         }
 
         export namespace Recurring {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -9534,7 +9624,11 @@ export namespace Checkout {
           };
         }
 
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
 
         export namespace DeliveryEstimate {
           export interface Maximum {
@@ -9596,7 +9690,11 @@ export namespace Checkout {
           }
 
           export namespace CurrencyOptions {
-            export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            export type TaxBehavior =
+              | 'exclusive'
+              | 'inclusive'
+              | 'unspecified'
+              | OtherString;
           }
         }
       }
@@ -9641,7 +9739,7 @@ export namespace Checkout {
       }
 
       export namespace PendingInvoiceItemInterval {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -9702,7 +9800,7 @@ export namespace Checkout {
       email: string;
     }
 
-    export type Status = 'complete' | 'expired' | 'open';
+    export type Status = 'complete' | 'expired' | 'open' | OtherString;
   }
 }
 export namespace Checkout {
