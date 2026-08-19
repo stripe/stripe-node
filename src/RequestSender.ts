@@ -25,6 +25,7 @@ import {
 import {RawRequestOptions, RequestOptions} from './lib.js';
 import {
   HttpClient,
+  HttpClientResponseBodyError,
   HttpClientResponseInterface,
   HttpClientRuntimeError,
 } from './net/HttpClient.js';
@@ -160,6 +161,8 @@ export class RequestSender {
     requestEvent: RequestEvent,
     apiMode: 'v1' | 'v2',
     usage: Array<string>,
+    timeout: number,
+    requestRetries: number,
     callback: RequestCallback
   ) {
     return (res: HttpClientResponseInterface): void => {
@@ -218,6 +221,27 @@ export class RequestSender {
             ) {
               responseEvent.body = (e as any).rawBody;
             }
+
+            // A body we could not read to completion is a transport failure,
+            // not a malformed payload. Only a timeout is reported as such for
+            // now: a connection severed mid-body already surfaced here as a
+            // StripeAPIError on the fetch client, so reclassifying it would
+            // break anyone catching it. A timeout, by contrast, never got this
+            // far -- it hung -- so there is no behavior to preserve.
+            // TODO(DEVSDK-3247): report every HttpClientResponseBodyError as a
+            // StripeConnectionError, since none of them are parse failures.
+            if (
+              e instanceof HttpClientResponseBodyError &&
+              e.code === HttpClient.TIMEOUT_ERROR_CODE
+            ) {
+              throw RequestSender._generateConnectionError(
+                e,
+                timeout,
+                requestRetries,
+                requestId
+              );
+            }
+
             throw new StripeAPIError({
               message: 'Invalid JSON received from the Stripe API',
               exception: e,
@@ -254,6 +278,25 @@ export class RequestSender {
     return `An error occurred with our connection to Stripe.${
       requestRetries > 0 ? ` Request was retried ${requestRetries} times.` : ''
     }`;
+  }
+
+  static _generateConnectionError(
+    error: HttpClientResponseError | HttpClientResponseBodyError,
+    timeout: number,
+    requestRetries: number,
+    // Only available when the failure happened after the headers arrived.
+    requestId?: string
+  ): StripeConnectionError {
+    const isTimeoutError =
+      !!error.code && error.code === HttpClient.TIMEOUT_ERROR_CODE;
+
+    return new StripeConnectionError({
+      message: isTimeoutError
+        ? `Request aborted due to timeout being reached (${timeout}ms)`
+        : RequestSender._generateConnectionErrorMessage(requestRetries),
+      detail: error,
+      requestId,
+    });
   }
 
   // For more on when and how to retry API requests, see https://stripe.com/docs/error-handling#safely-retrying-requests-with-idempotency
@@ -679,6 +722,8 @@ export class RequestSender {
                   requestEvent,
                   apiMode,
                   usage,
+                  timeout,
+                  requestRetries,
                   callback
                 )(res);
               }
@@ -704,18 +749,12 @@ export class RequestSender {
                     requestRetries
                   );
                 } else {
-                  const isTimeoutError =
-                    error.code && error.code === HttpClient.TIMEOUT_ERROR_CODE;
-
                   return callback(
-                    new StripeConnectionError({
-                      message: isTimeoutError
-                        ? `Request aborted due to timeout being reached (${timeout}ms)`
-                        : RequestSender._generateConnectionErrorMessage(
-                            requestRetries
-                          ),
-                      detail: error,
-                    })
+                    RequestSender._generateConnectionError(
+                      error,
+                      timeout,
+                      requestRetries
+                    )
                   );
                 }
               }
