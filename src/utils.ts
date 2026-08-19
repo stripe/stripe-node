@@ -479,7 +479,7 @@ export function parsePayload(
 }
 
 export function maybeExtractFromCloudProviderEnvelope(
-  payload: string
+  payload: string | Uint8Array
 ): Record<string, unknown> {
   const parsed = parsePayload(payload);
 

@@ -31,12 +31,38 @@ handler.on('v1.billing.meter.error_report_triggered', async (event) => {
   console.log(`Billing Meter ${meter.display_name} had a problem`);
 });
 
+// Handles events delivered through a channel that has already authenticated them, such as
+// AWS EventBridge or Azure Event Grid. Those payloads carry no Stripe-Signature header, so
+// this handler skips verification. Callbacks are registered separately from the one above.
+const unverifiedHandler = client.notificationHandlerWithoutVerification(
+  async (unhandledEvent, client, details) => {
+    console.log(`Received unhandled event type: ${unhandledEvent.type}`);
+  }
+);
+
+unverifiedHandler.on(
+  'v1.billing.meter.error_report_triggered',
+  async (event) => {
+    const meter = await event.fetchRelatedObject();
+    console.log(`Billing Meter ${meter.display_name} had a problem`);
+  }
+);
+
 app.post(
   '/webhook',
   express.raw({type: 'application/json'}),
   async (req, res) => {
     const sig = req.headers['stripe-signature']?.[0] ?? '';
     handler.handle(req.body, sig);
+  }
+);
+
+app.post(
+  '/webhook-from-cloud-provider',
+  express.raw({type: 'application/json'}),
+  async (req, res) => {
+    // handle() takes only the body here; there's no signature to check
+    await unverifiedHandler.handle(req.body);
   }
 );
 

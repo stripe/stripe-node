@@ -132,6 +132,28 @@ describe('StripeEventNotificationHandler', () => {
       );
     });
 
+    it('should throw error when registering handler after a failed parse', async () => {
+      eventHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {}
+      );
+
+      // attempting to handle locks registration even though verification fails
+      let parseFailed = false;
+      try {
+        await eventHandler.handle(v1BillingMeterPayload, 't=1,v1=not-a-sig');
+      } catch (e) {
+        parseFailed = true;
+      }
+      expect(parseFailed).to.be.true;
+
+      expect(() => {
+        eventHandler.on('v1.billing.meter.no_meter_found', async () => {});
+      }).to.throw(
+        /Cannot register new handlers after an event has been handled/
+      );
+    });
+
     it('should throw error when registering duplicate handler', () => {
       eventHandler.on(
         'v1.billing.meter.error_report_triggered',
@@ -467,5 +489,217 @@ describe('StripeEventNotificationHandler', () => {
         'v1.billing.meter.no_meter_found',
       ]);
     });
+  });
+});
+
+describe('StripeEventNotificationHandlerWithoutVerification', () => {
+  let stripe: any;
+  let withoutVerifHandler: any;
+
+  // Event payloads (duplicated here since they are scoped to the sibling describe block)
+  const v1BillingMeterPayload = JSON.stringify({
+    id: 'evt_123',
+    object: 'v2.core.event',
+    type: 'v1.billing.meter.error_report_triggered',
+    livemode: false,
+    created: '2022-02-15T00:27:45.330Z',
+    context: 'event_context_456',
+    related_object: {
+      id: 'mtr_123',
+      type: 'billing.meter',
+      url: '/v1/billing/meters/mtr_123',
+    },
+  });
+
+  const unknownEventPayload = JSON.stringify({
+    id: 'evt_unknown',
+    object: 'v2.core.event',
+    type: 'llama.created',
+    livemode: false,
+    created: '2022-02-15T00:27:45.330Z',
+    context: 'event_context_unknown',
+  });
+
+  beforeEach(() => {
+    stripe = getSpyableStripe({});
+    withoutVerifHandler = stripe.notificationHandlerWithoutVerification(
+      async () => {}
+    );
+  });
+
+  it('should route event to registered handler without a signature', async () => {
+    let callbackCalled = false;
+    let receivedEvent: any = null;
+    let receivedClient: any = null;
+
+    withoutVerifHandler.on(
+      'v1.billing.meter.error_report_triggered',
+      async (event: any, client: any) => {
+        callbackCalled = true;
+        receivedEvent = event;
+        receivedClient = client;
+      }
+    );
+
+    // No signature argument — just the raw body
+    await withoutVerifHandler.handle(v1BillingMeterPayload);
+
+    expect(callbackCalled).to.be.true;
+    expect(receivedEvent.type).to.equal(
+      'v1.billing.meter.error_report_triggered'
+    );
+    expect(receivedEvent.id).to.equal('evt_123');
+    expect(receivedClient).to.exist;
+  });
+
+  it('should throw error when registering handler after a failed parse', async () => {
+    withoutVerifHandler.on(
+      'v1.billing.meter.error_report_triggered',
+      async () => {}
+    );
+
+    // attempting to handle locks registration even though the parse fails
+    let parseFailed = false;
+    try {
+      await withoutVerifHandler.handle('not json');
+    } catch (e) {
+      parseFailed = true;
+    }
+    expect(parseFailed).to.be.true;
+
+    expect(() => {
+      withoutVerifHandler.on('v1.billing.meter.no_meter_found', async () => {});
+    }).to.throw(/Cannot register new handlers after an event has been handled/);
+  });
+
+  it('should accept a Uint8Array body without a signature', async () => {
+    let callbackCalled = false;
+
+    withoutVerifHandler.on(
+      'v1.billing.meter.error_report_triggered',
+      async () => {
+        callbackCalled = true;
+      }
+    );
+
+    const bodyAsBytes = new TextEncoder().encode(v1BillingMeterPayload);
+    await withoutVerifHandler.handle(bodyAsBytes);
+
+    expect(callbackCalled).to.be.true;
+  });
+
+  it('should route known unregistered event to fallback with isKnownEventType: true', async () => {
+    let unhandledCalled = false;
+    let unhandledEvent: any = null;
+    let unhandledInfo: any = null;
+
+    const handler = stripe.notificationHandlerWithoutVerification(
+      async (event: any, _client: any, info: any) => {
+        unhandledCalled = true;
+        unhandledEvent = event;
+        unhandledInfo = info;
+      }
+    );
+
+    await handler.handle(v1BillingMeterPayload);
+
+    expect(unhandledCalled).to.be.true;
+    expect(unhandledEvent.type).to.equal(
+      'v1.billing.meter.error_report_triggered'
+    );
+    expect(unhandledInfo.isKnownEventType).to.be.true;
+  });
+
+  it('should route unknown event type to fallback with isKnownEventType: false', async () => {
+    let unhandledCalled = false;
+    let unhandledEvent: any = null;
+    let unhandledInfo: any = null;
+
+    const handler = stripe.notificationHandlerWithoutVerification(
+      async (event: any, _client: any, info: any) => {
+        unhandledCalled = true;
+        unhandledEvent = event;
+        unhandledInfo = info;
+      }
+    );
+
+    await handler.handle(unknownEventPayload);
+
+    expect(unhandledCalled).to.be.true;
+    expect(unhandledEvent.type).to.equal('llama.created');
+    expect(unhandledInfo.isKnownEventType).to.be.false;
+  });
+
+  it('should propagate event stripe context to the callback client', async () => {
+    let receivedContext: any = null;
+    let normalizedContext: any = null;
+
+    withoutVerifHandler.on(
+      'v1.billing.meter.error_report_triggered',
+      async (event: any, client: any) => {
+        receivedContext = client._api.stripeContext;
+        normalizedContext = client._requestSender._normalizeStripeContext(
+          undefined,
+          client.getApiField('stripeContext')
+        );
+      }
+    );
+
+    await withoutVerifHandler.handle(v1BillingMeterPayload);
+
+    // The event has context 'event_context_456'
+    expect(receivedContext?.toString()).to.equal('event_context_456');
+    expect(normalizedContext).to.equal('event_context_456');
+  });
+
+  it('should return StripeEventNotificationHandlerWithoutVerification from static factory', () => {
+    // Access the parent class via an existing handler instance to avoid a
+    // separate import that would break when this file is copied to stripe-node.
+    const tempHandler = stripe.notificationHandler(
+      'whsec_test_secret',
+      async () => {}
+    );
+    const StripeEventNotificationHandlerClass = tempHandler.constructor;
+
+    const handler = StripeEventNotificationHandlerClass.withoutVerification(
+      stripe,
+      async () => {}
+    );
+
+    expect(handler.constructor.name).to.equal(
+      'StripeEventNotificationHandlerWithoutVerification'
+    );
+    expect(typeof handler.on).to.equal('function');
+    expect(typeof handler.handle).to.equal('function');
+  });
+
+  it('should throw when constructing the original handler with an empty webhookSecret', () => {
+    expect(() => {
+      stripe.notificationHandler('', async () => {});
+    }).to.throw(/webhookSecret must be a non-empty string/);
+  });
+
+  it('should treat every webhookSecret as a real secret, with no magic bypass value', async () => {
+    // there is no sentinel to forge: the verifying and non-verifying handlers are
+    // separate classes, so any string passed here is just an ordinary (wrong) secret
+    const handler = stripe.notificationHandler(
+      '__without_verification__',
+      async () => {}
+    );
+
+    let errorThrown = false;
+
+    try {
+      await handler.handle(
+        v1BillingMeterPayload,
+        generateHeader(v1BillingMeterPayload)
+      );
+    } catch (err) {
+      errorThrown = true;
+      // @ts-expect-error
+      expect(err.type).to.include('StripeSignatureVerification');
+    }
+
+    expect(errorThrown).to.be.true;
   });
 });
