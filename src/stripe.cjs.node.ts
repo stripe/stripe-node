@@ -20810,6 +20810,9 @@ declare namespace StripeConstructor {
   export type Signature = Stripe_.Signature;
   export type StripeContextType = Stripe_.StripeContextType;
   export type StripeRawError = Stripe_.StripeRawError;
+  export type UnhandledNotificationDetails = Stripe_.UnhandledNotificationDetails;
+  export type StripeEventNotificationHandler = Stripe_.StripeEventNotificationHandler;
+  export type StripeEventNotificationHandlerWithoutVerification = Stripe_.StripeEventNotificationHandlerWithoutVerification;
   export type Decimal = Stripe_.Decimal;
   export namespace errors {
     export type StripeError = InstanceType<typeof Stripe_.errors.StripeError>;
