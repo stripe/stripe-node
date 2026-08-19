@@ -712,6 +712,11 @@ export namespace Contract {
               lookup_key?: string;
 
               /**
+               * Set of key-value pairs.
+               */
+              metadata?: Metadata;
+
+              /**
                * Details for an overwrite_price override.
                */
               overwrite_price?: Data.OverwritePrice;
@@ -776,6 +781,11 @@ export namespace Contract {
        * The user-provided lookup key for the pricing override.
        */
       lookup_key?: string;
+
+      /**
+       * Set of key-value pairs.
+       */
+      metadata?: Metadata;
 
       /**
        * Details for a multiply_pricing override.
@@ -974,6 +984,11 @@ export namespace V2 {
          * A user-provided lookup key to reference this pricing override.
          */
         lookup_key?: string;
+
+        /**
+         * Set of key-value pairs.
+         */
+        metadata?: MetadataParam;
 
         /**
          * Parameters for a multiply_pricing override. Required if `type` is `multiply_pricing`.
@@ -1365,6 +1380,11 @@ export namespace V2 {
       include?: Array<ContractUpdateParams.Include>;
 
       /**
+       * Set of key-value pairs.
+       */
+      metadata?: MetadataParam;
+
+      /**
        * Pricing line actions to apply.
        */
       pricing_line_actions?: Array<ContractUpdateParams.PricingLineAction>;
@@ -1476,6 +1496,11 @@ export namespace V2 {
            * The id of the pricing line.
            */
           id: string;
+
+          /**
+           * Metadata mutations to apply to the pricing line.
+           */
+          metadata?: MetadataParam;
 
           /**
            * Updated pricing configuration.
@@ -1795,7 +1820,7 @@ export namespace V2 {
                   lookup_key?: string;
 
                   /**
-                   * Metadata for the pricing override.
+                   * Metadata mutations to apply to the pricing override.
                    */
                   metadata?: MetadataParam;
 
@@ -1896,6 +1921,11 @@ export namespace V2 {
           lookup_key?: string;
 
           /**
+           * Metadata for the pricing override.
+           */
+          metadata?: MetadataParam;
+
+          /**
            * A multiply_pricing override to add.
            */
           multiply_pricing?: Add.MultiplyPricing;
@@ -1940,6 +1970,11 @@ export namespace V2 {
            * The ID of the pricing override.
            */
           id: string;
+
+          /**
+           * Metadata mutations to apply to the pricing override.
+           */
+          metadata?: MetadataParam;
 
           /**
            * The updated start time for the pricing override.

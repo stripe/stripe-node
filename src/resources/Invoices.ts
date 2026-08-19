@@ -11,6 +11,7 @@ import {PaymentMethod} from './PaymentMethods.js';
 import {CustomerSource} from './CustomerSources.js';
 import {TaxRate} from './TaxRates.js';
 import {Account} from './Accounts.js';
+import {PaymentPlan} from './PaymentPlans.js';
 import {InvoicePayment} from './InvoicePayments.js';
 import {GiftCardOperation} from './GiftCardOperations.js';
 import {PaymentIntent} from './PaymentIntents.js';
@@ -1635,6 +1636,8 @@ export interface Invoice {
    */
   livemode: boolean;
 
+  managed_payments?: Invoice.ManagedPayments | null;
+
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
@@ -1659,6 +1662,11 @@ export interface Invoice {
    * The parent that generated this invoice
    */
   parent: Invoice.Parent | null;
+
+  /**
+   * The ID of the payment plan associated with this invoice, if any. Use `expand[]=payment_plan` to include the full payment plan object.
+   */
+  payment_plan?: string | PaymentPlan;
 
   payment_settings: Invoice.PaymentSettings;
 
@@ -1871,7 +1879,8 @@ export namespace Invoice {
     | 'subscription_cycle'
     | 'subscription_threshold'
     | 'subscription_update'
-    | 'upcoming';
+    | 'upcoming'
+    | OtherString;
 
   export type CollectionMethod =
     | 'charge_automatically'
@@ -1943,7 +1952,7 @@ export namespace Invoice {
     tracking_number?: string | null;
   }
 
-  export type CustomerTaxExempt = 'exempt' | 'none' | 'reverse';
+  export type CustomerTaxExempt = 'exempt' | 'none' | 'reverse' | OtherString;
 
   export interface CustomerTaxId {
     /**
@@ -2098,6 +2107,13 @@ export namespace Invoice {
      * The type of error returned. One of `api_error`, `card_error`, `idempotency_error`, or `invalid_request_error`
      */
     type: LastFinalizationError.Type;
+  }
+
+  export interface ManagedPayments {
+    /**
+     * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+     */
+    enabled: boolean;
   }
 
   export interface Parent {
@@ -2346,7 +2362,7 @@ export namespace Invoice {
   }
 
   export namespace AmountsDue {
-    export type Status = 'open' | 'paid' | 'past_due';
+    export type Status = 'open' | 'paid' | 'past_due' | OtherString;
   }
 
   export namespace AutomaticTax {
@@ -2497,7 +2513,8 @@ export namespace Invoice {
       | 'vn_tin'
       | 'za_vat'
       | 'zm_tin'
-      | 'zw_tin';
+      | 'zw_tin'
+      | OtherString;
   }
 
   export namespace Issuer {
@@ -2705,13 +2722,15 @@ export namespace Invoice {
       | 'transfers_not_allowed'
       | 'url_invalid'
       | 'v2_account_disconnection_unsupported'
-      | 'v2_account_missing_configuration';
+      | 'v2_account_missing_configuration'
+      | OtherString;
 
     export type Type =
       | 'api_error'
       | 'card_error'
       | 'idempotency_error'
-      | 'invalid_request_error';
+      | 'invalid_request_error'
+      | OtherString;
   }
 
   export namespace Parent {
@@ -2785,7 +2804,11 @@ export namespace Invoice {
       }
 
       export namespace PauseCollection {
-        export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        export type Behavior =
+          | 'keep_as_draft'
+          | 'mark_uncollectible'
+          | 'void'
+          | OtherString;
       }
     }
   }
@@ -3081,7 +3104,14 @@ export namespace Invoice {
           }
 
           export namespace EuBankTransfer {
-            export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+            export type Country =
+              | 'BE'
+              | 'DE'
+              | 'ES'
+              | 'FR'
+              | 'IE'
+              | 'NL'
+              | OtherString;
           }
         }
       }
@@ -3213,7 +3243,12 @@ export namespace Invoice {
       }
 
       export namespace WechatPay {
-        export type Client = 'android' | 'ios' | 'mobile_web' | 'web';
+        export type Client =
+          | 'android'
+          | 'ios'
+          | 'mobile_web'
+          | 'web'
+          | OtherString;
       }
     }
   }
@@ -3227,7 +3262,7 @@ export namespace Invoice {
     }
 
     export namespace Pdf {
-      export type PageSize = 'a4' | 'auto' | 'letter';
+      export type PageSize = 'a4' | 'auto' | 'letter' | OtherString;
     }
   }
 
@@ -3300,7 +3335,7 @@ export namespace Invoice {
   }
 
   export namespace TotalTax {
-    export type TaxBehavior = 'exclusive' | 'inclusive';
+    export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
 
     export interface TaxRateDetails {
       /**
@@ -3451,6 +3486,11 @@ export interface InvoiceCreateParams {
   issuer?: InvoiceCreateParams.Issuer;
 
   /**
+   * Settings for Managed Payments for this invoice.
+   */
+  managed_payments?: InvoiceCreateParams.ManagedPayments;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
@@ -3540,7 +3580,10 @@ export namespace InvoiceCreateParams {
     liability?: AutomaticTax.Liability;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface CustomField {
     /**
@@ -3598,6 +3641,13 @@ export namespace InvoiceCreateParams {
      * Type of the account referenced in the request.
      */
     type: Issuer.Type;
+  }
+
+  export interface ManagedPayments {
+    /**
+     * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution.
+     */
+    enabled?: boolean;
   }
 
   export interface PaymentSettings {
@@ -4188,7 +4238,8 @@ export namespace InvoiceCreateParams {
             | 'balances'
             | 'ownership'
             | 'payment_method'
-            | 'transactions';
+            | 'transactions'
+            | OtherString;
 
           export type Prefetch =
             | 'balances'
@@ -4207,13 +4258,21 @@ export namespace InvoiceCreateParams {
       }
 
       export namespace WechatPay {
-        export type Client = 'android' | 'ios' | 'mobile_web' | 'web';
+        export type Client =
+          | 'android'
+          | 'ios'
+          | 'mobile_web'
+          | 'web'
+          | OtherString;
       }
     }
   }
 
   export namespace Rendering {
-    export type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+    export type AmountTaxDisplay =
+      | 'exclude_tax'
+      | 'include_inclusive_tax'
+      | OtherString;
 
     export interface Pdf {
       /**
@@ -4225,7 +4284,7 @@ export namespace InvoiceCreateParams {
     }
 
     export namespace Pdf {
-      export type PageSize = 'a4' | 'auto' | 'letter';
+      export type PageSize = 'a4' | 'auto' | 'letter' | OtherString;
     }
   }
 
@@ -4299,7 +4358,11 @@ export namespace InvoiceCreateParams {
         };
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace DeliveryEstimate {
         export interface Maximum {
@@ -4361,7 +4424,11 @@ export namespace InvoiceCreateParams {
         }
 
         export namespace CurrencyOptions {
-          export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          export type TaxBehavior =
+            | 'exclusive'
+            | 'inclusive'
+            | 'unspecified'
+            | OtherString;
         }
       }
     }
@@ -4554,7 +4621,10 @@ export namespace InvoiceUpdateParams {
     liability?: AutomaticTax.Liability;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface CustomField {
     /**
@@ -5188,7 +5258,8 @@ export namespace InvoiceUpdateParams {
             | 'balances'
             | 'ownership'
             | 'payment_method'
-            | 'transactions';
+            | 'transactions'
+            | OtherString;
 
           export type Prefetch =
             | 'balances'
@@ -5207,13 +5278,21 @@ export namespace InvoiceUpdateParams {
       }
 
       export namespace WechatPay {
-        export type Client = 'android' | 'ios' | 'mobile_web' | 'web';
+        export type Client =
+          | 'android'
+          | 'ios'
+          | 'mobile_web'
+          | 'web'
+          | OtherString;
       }
     }
   }
 
   export namespace Rendering {
-    export type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+    export type AmountTaxDisplay =
+      | 'exclude_tax'
+      | 'include_inclusive_tax'
+      | OtherString;
 
     export interface Pdf {
       /**
@@ -5225,7 +5304,7 @@ export namespace InvoiceUpdateParams {
     }
 
     export namespace Pdf {
-      export type PageSize = 'a4' | 'auto' | 'letter';
+      export type PageSize = 'a4' | 'auto' | 'letter' | OtherString;
     }
   }
 
@@ -5299,7 +5378,11 @@ export namespace InvoiceUpdateParams {
         };
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace DeliveryEstimate {
         export interface Maximum {
@@ -5361,7 +5444,11 @@ export namespace InvoiceUpdateParams {
         }
 
         export namespace CurrencyOptions {
-          export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          export type TaxBehavior =
+            | 'exclusive'
+            | 'inclusive'
+            | 'unspecified'
+            | OtherString;
         }
       }
     }
@@ -5411,7 +5498,10 @@ export interface InvoiceListParams extends PaginationParams {
   subscription?: string;
 }
 export namespace InvoiceListParams {
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export type Status =
     | 'draft'
@@ -5693,7 +5783,11 @@ export namespace InvoiceAddLinesParams {
         unit_label?: string;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace ProductData {
         export interface TaxDetails {
@@ -6292,7 +6386,7 @@ export namespace InvoiceCreatePreviewParams {
       ip_address?: Emptyable<string>;
     }
 
-    export type TaxExempt = 'exempt' | 'none' | 'reverse';
+    export type TaxExempt = 'exempt' | 'none' | 'reverse' | OtherString;
 
     export interface TaxId {
       /**
@@ -6424,7 +6518,8 @@ export namespace InvoiceCreatePreviewParams {
         | 'vn_tin'
         | 'za_vat'
         | 'zm_tin'
-        | 'zw_tin';
+        | 'zw_tin'
+        | OtherString;
     }
   }
 
@@ -6595,7 +6690,11 @@ export namespace InvoiceCreatePreviewParams {
       unit_amount_decimal?: Decimal;
     }
 
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
 
     export namespace Discount {
       export interface DiscountEnd {
@@ -6642,7 +6741,11 @@ export namespace InvoiceCreatePreviewParams {
     }
 
     export namespace PriceData {
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
     }
   }
 
@@ -6713,7 +6816,10 @@ export namespace InvoiceCreatePreviewParams {
       trial_settings?: Amendment.TrialSettings;
     }
 
-    export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+    export type BillingBehavior =
+      | 'prorate_on_next_phase'
+      | 'prorate_up_front'
+      | OtherString;
 
     export interface BillingMode {
       /**
@@ -6751,7 +6857,7 @@ export namespace InvoiceCreatePreviewParams {
       phase_effective_at?: DefaultSettings.PhaseEffectiveAt;
     }
 
-    export type EndBehavior = 'cancel' | 'release';
+    export type EndBehavior = 'cancel' | 'release' | OtherString;
 
     export interface Phase {
       /**
@@ -7802,7 +7908,7 @@ export namespace InvoiceCreatePreviewParams {
       export type Type = 'classic' | 'flexible' | OtherString;
 
       export namespace Flexible {
-        export type ProrationDiscounts = 'included' | 'itemized';
+        export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
       }
     }
 
@@ -7852,13 +7958,21 @@ export namespace InvoiceCreatePreviewParams {
         export type Type = 'duration' | 'timestamp' | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
 
     export namespace DefaultSettings {
-      export type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
+      export type PhaseEffectiveAt =
+        | 'billing_period_start'
+        | 'phase_start'
+        | OtherString;
     }
 
     export namespace Phase {
@@ -7916,7 +8030,10 @@ export namespace InvoiceCreatePreviewParams {
         liability?: AutomaticTax.Liability;
       }
 
-      export type BillingCycleAnchor = 'automatic' | 'phase_start';
+      export type BillingCycleAnchor =
+        | 'automatic'
+        | 'phase_start'
+        | OtherString;
 
       export interface BillingThresholds {
         /**
@@ -7930,7 +8047,10 @@ export namespace InvoiceCreatePreviewParams {
         reset_billing_cycle_anchor?: boolean;
       }
 
-      export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+      export type CollectionMethod =
+        | 'charge_automatically'
+        | 'send_invoice'
+        | OtherString;
 
       export interface Discount {
         /**
@@ -7971,7 +8091,10 @@ export namespace InvoiceCreatePreviewParams {
         interval_count?: number;
       }
 
-      export type EffectiveAt = 'billing_period_start' | 'phase_start';
+      export type EffectiveAt =
+        | 'billing_period_start'
+        | 'phase_start'
+        | OtherString;
 
       export interface InvoiceSettings {
         /**
@@ -8225,7 +8348,11 @@ export namespace InvoiceCreatePreviewParams {
         }
 
         export namespace PriceData {
-          export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          export type TaxBehavior =
+            | 'exclusive'
+            | 'inclusive'
+            | 'unspecified'
+            | OtherString;
         }
       }
 
@@ -8355,7 +8482,7 @@ export namespace InvoiceCreatePreviewParams {
       }
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
 
       export namespace InvoiceSettings {
@@ -8575,10 +8702,19 @@ export namespace InvoiceCreatePreviewParams {
             interval_count?: number;
           }
 
-          export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          export type TaxBehavior =
+            | 'exclusive'
+            | 'inclusive'
+            | 'unspecified'
+            | OtherString;
 
           export namespace Recurring {
-            export type Interval = 'day' | 'month' | 'week' | 'year';
+            export type Interval =
+              | 'day'
+              | 'month'
+              | 'week'
+              | 'year'
+              | OtherString;
           }
         }
 
@@ -8672,7 +8808,7 @@ export namespace InvoiceCreatePreviewParams {
   }
 
   export namespace SubscriptionDetails {
-    export type BillingCycleAnchor = 'now' | 'unchanged';
+    export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
     export interface BillingMode {
       /**
@@ -8812,7 +8948,7 @@ export namespace InvoiceCreatePreviewParams {
       export type Type = 'classic' | 'flexible' | OtherString;
 
       export namespace Flexible {
-        export type ProrationDiscounts = 'included' | 'itemized';
+        export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
       }
     }
 
@@ -8862,7 +8998,12 @@ export namespace InvoiceCreatePreviewParams {
         export type Type = 'duration' | 'timestamp' | OtherString;
 
         export namespace Duration {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -9069,10 +9210,19 @@ export namespace InvoiceCreatePreviewParams {
           interval_count?: number;
         }
 
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
 
         export namespace Recurring {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -9111,11 +9261,15 @@ export namespace InvoiceCreatePreviewParams {
         }
 
         export namespace OutstandingUsageThrough {
-          export type Type = 'none' | 'now';
+          export type Type = 'none' | 'now' | OtherString;
         }
 
         export namespace UnusedTimeFrom {
-          export type Type = 'item_current_period_start' | 'none' | 'now';
+          export type Type =
+            | 'item_current_period_start'
+            | 'none'
+            | 'now'
+            | OtherString;
         }
       }
     }
@@ -9539,7 +9693,11 @@ export namespace InvoiceUpdateLinesParams {
         unit_label?: string;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace ProductData {
         export interface TaxDetails {
@@ -9900,7 +10058,11 @@ export namespace InvoiceUpdateLineItemParams {
       unit_label?: string;
     }
 
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
 
     export namespace ProductData {
       export interface TaxDetails {

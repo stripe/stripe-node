@@ -3,7 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {VerificationReport} from './VerificationReports.js';
 import {VerificationSession} from './VerificationSessions.js';
-import {PaginationParams, RangeQueryParam} from '../../shared.js';
+import {OtherString, PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class BlocklistEntryResource extends StripeResource {
@@ -142,7 +142,7 @@ export interface BlocklistEntry {
 export namespace BlocklistEntry {
   export type Status = 'active' | 'disabled' | 'redacted';
 
-  export type Type = 'document' | 'selfie';
+  export type Type = 'document' | 'selfie' | OtherString;
 }
 export namespace Identity {
   export interface BlocklistEntryCreateParams {
@@ -168,7 +168,7 @@ export namespace Identity {
   }
 
   export namespace BlocklistEntryCreateParams {
-    export type EntryType = 'document' | 'selfie';
+    export type EntryType = 'document' | 'selfie' | OtherString;
   }
 }
 export namespace Identity {
@@ -210,7 +210,7 @@ export namespace Identity {
   export namespace BlocklistEntryListParams {
     export type Status = 'active' | 'disabled' | 'redacted';
 
-    export type Type = 'document' | 'selfie';
+    export type Type = 'document' | 'selfie' | OtherString;
   }
 }
 export namespace Identity {

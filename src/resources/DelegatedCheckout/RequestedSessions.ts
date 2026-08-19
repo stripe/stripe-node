@@ -1676,6 +1676,11 @@ export namespace DelegatedCheckout {
     risk_details?: RequestedSessionConfirmParams.RiskDetails;
 
     /**
+     * A SharedPaymentIssuedToken (`spt_...`) previously issued to this buyer. Mutually exclusive with `payment_method` and `payment_method_data`.
+     */
+    shared_payment_issued_token?: string;
+
+    /**
      * Set to true when using Stripe.js, iOS, or Android client-side SDKs to handle next actions.
      */
     use_stripe_sdk?: boolean;

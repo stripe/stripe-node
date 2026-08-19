@@ -5,8 +5,8 @@ import {Product, DeletedProduct} from './Products.js';
 import {
   MetadataParam,
   Decimal,
-  Emptyable,
   OtherString,
+  Emptyable,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -583,7 +583,7 @@ export interface DeletedPrice {
   deleted: true;
 }
 export namespace Price {
-  export type BillingScheme = 'per_unit' | 'tiered';
+  export type BillingScheme = 'per_unit' | 'tiered' | OtherString;
 
   export interface CurrencyOptions {
     /**
@@ -673,7 +673,11 @@ export namespace Price {
     usage_type: Recurring.UsageType;
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+  export type TaxBehavior =
+    | 'exclusive'
+    | 'inclusive'
+    | 'unspecified'
+    | OtherString;
 
   export interface Tier {
     /**
@@ -702,7 +706,7 @@ export namespace Price {
     up_to: number | null;
   }
 
-  export type TiersMode = 'graduated' | 'volume';
+  export type TiersMode = 'graduated' | 'volume' | OtherString;
 
   export interface TransformQuantity {
     /**
@@ -716,7 +720,7 @@ export namespace Price {
     round: TransformQuantity.Round;
   }
 
-  export type Type = 'one_time' | 'recurring';
+  export type Type = 'one_time' | 'recurring' | OtherString;
 
   export namespace CurrencyOptions {
     export interface CustomUnitAmount {
@@ -736,7 +740,11 @@ export namespace Price {
       preset: number | null;
     }
 
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
 
     export interface Tier {
       /**
@@ -880,7 +888,7 @@ export interface PriceCreateParams {
   unit_amount_decimal?: Decimal;
 }
 export namespace PriceCreateParams {
-  export type BillingScheme = 'per_unit' | 'tiered';
+  export type BillingScheme = 'per_unit' | 'tiered' | OtherString;
 
   export interface CurrencyOptions {
     /**
@@ -1002,7 +1010,11 @@ export namespace PriceCreateParams {
     usage_type?: Recurring.UsageType;
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+  export type TaxBehavior =
+    | 'exclusive'
+    | 'inclusive'
+    | 'unspecified'
+    | OtherString;
 
   export interface Tier {
     /**
@@ -1068,7 +1080,11 @@ export namespace PriceCreateParams {
       preset?: number;
     }
 
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
 
     export interface Tier {
       /**
@@ -1113,9 +1129,9 @@ export namespace PriceCreateParams {
   }
 
   export namespace Recurring {
-    export type Interval = 'day' | 'month' | 'week' | 'year';
+    export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
-    export type UsageType = 'licensed' | 'metered';
+    export type UsageType = 'licensed' | 'metered' | OtherString;
   }
 
   export namespace TransformQuantity {
@@ -1226,7 +1242,11 @@ export namespace PriceUpdateParams {
     price: string;
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+  export type TaxBehavior =
+    | 'exclusive'
+    | 'inclusive'
+    | 'unspecified'
+    | OtherString;
 
   export namespace CurrencyOptions {
     export interface CustomUnitAmount {
@@ -1251,7 +1271,11 @@ export namespace PriceUpdateParams {
       preset?: number;
     }
 
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
 
     export interface Tier {
       /**
@@ -1340,12 +1364,12 @@ export namespace PriceListParams {
     usage_type?: Recurring.UsageType;
   }
 
-  export type Type = 'one_time' | 'recurring';
+  export type Type = 'one_time' | 'recurring' | OtherString;
 
   export namespace Recurring {
-    export type Interval = 'day' | 'month' | 'week' | 'year';
+    export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
-    export type UsageType = 'licensed' | 'metered';
+    export type UsageType = 'licensed' | 'metered' | OtherString;
   }
 }
 export interface PriceSearchParams {

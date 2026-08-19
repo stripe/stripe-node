@@ -85,6 +85,11 @@ export interface CustomerSession {
 export namespace CustomerSession {
   export interface Components {
     /**
+     * This hash contains whether the active entitlements is enabled.
+     */
+    active_entitlements: Components.ActiveEntitlements;
+
+    /**
      * This hash contains whether the buy button is enabled.
      */
     buy_button: Components.BuyButton;
@@ -121,6 +126,13 @@ export namespace CustomerSession {
   }
 
   export namespace Components {
+    export interface ActiveEntitlements {
+      /**
+       * Whether the active entitlements is enabled.
+       */
+      enabled: boolean;
+    }
+
     export interface BuyButton {
       /**
        * Whether the buy button is enabled.

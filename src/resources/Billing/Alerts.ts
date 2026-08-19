@@ -1171,6 +1171,6 @@ export namespace Billing {
   }
 
   export namespace AlertListNotificationsParams {
-    export type Action = 'recovered' | 'triggered';
+    export type Action = 'recovered' | 'triggered' | OtherString;
   }
 }

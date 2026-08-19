@@ -228,6 +228,7 @@ export {PaymentLocationCapabilityResource as PaymentLocationCapabilities} from '
 export {PaymentMethodResource as PaymentMethods} from './resources/PaymentMethods.js';
 export {PaymentMethodConfigurationResource as PaymentMethodConfigurations} from './resources/PaymentMethodConfigurations.js';
 export {PaymentMethodDomainResource as PaymentMethodDomains} from './resources/PaymentMethodDomains.js';
+export {PaymentPlanResource as PaymentPlans} from './resources/PaymentPlans.js';
 export {PaymentRecordResource as PaymentRecords} from './resources/PaymentRecords.js';
 export {PayoutResource as Payouts} from './resources/Payouts.js';
 export {PlanResource as Plans} from './resources/Plans.js';

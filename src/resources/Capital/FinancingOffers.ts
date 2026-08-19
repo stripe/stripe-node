@@ -4,8 +4,8 @@ import {StripeResource} from '../../StripeResource.js';
 import {
   PaginationParams,
   RangeQueryParam,
-  Metadata,
   OtherString,
+  Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
@@ -185,7 +185,8 @@ export namespace FinancingOffer {
     | 'youlend_de_financing'
     | 'youlend_fr_financing'
     | 'youlend_uk_mca'
-    | 'youlend_us_mca';
+    | 'youlend_us_mca'
+    | OtherString;
 
   export type FinancingType = 'cash_advance' | 'flex_loan' | OtherString;
 
@@ -239,7 +240,11 @@ export namespace FinancingOffer {
     | 'undelivered'
     | OtherString;
 
-  export type Type = 'cash_advance' | 'fixed_term_loan' | 'flex_loan';
+  export type Type =
+    | 'cash_advance'
+    | 'fixed_term_loan'
+    | 'flex_loan'
+    | OtherString;
 
   export namespace OfferedTerms {
     export type CampaignType =
@@ -291,7 +296,8 @@ export namespace Capital {
       | 'paid_out'
       | 'rejected'
       | 'revoked'
-      | 'undelivered';
+      | 'undelivered'
+      | OtherString;
   }
 }
 export namespace Capital {

@@ -211,7 +211,8 @@ export namespace BalanceTransaction {
     | 'transfer'
     | 'transfer_cancel'
     | 'transfer_failure'
-    | 'transfer_refund';
+    | 'transfer_refund'
+    | OtherString;
 }
 export interface BalanceTransactionRetrieveParams {
   /**

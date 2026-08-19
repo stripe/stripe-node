@@ -784,7 +784,8 @@ export namespace SubscriptionItemCreateParams {
     | 'allow_incomplete'
     | 'default_incomplete'
     | 'error_if_incomplete'
-    | 'pending_if_incomplete';
+    | 'pending_if_incomplete'
+    | OtherString;
 
   export interface PriceData {
     /**
@@ -954,10 +955,14 @@ export namespace SubscriptionItemCreateParams {
       interval_count?: number;
     }
 
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
 
     export namespace Recurring {
-      export type Interval = 'day' | 'month' | 'week' | 'year';
+      export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
     }
   }
 
@@ -1095,7 +1100,8 @@ export namespace SubscriptionItemUpdateParams {
     | 'allow_incomplete'
     | 'default_incomplete'
     | 'error_if_incomplete'
-    | 'pending_if_incomplete';
+    | 'pending_if_incomplete'
+    | OtherString;
 
   export interface PriceData {
     /**
@@ -1253,10 +1259,14 @@ export namespace SubscriptionItemUpdateParams {
       interval_count?: number;
     }
 
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
 
     export namespace Recurring {
-      export type Interval = 'day' | 'month' | 'week' | 'year';
+      export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
     }
   }
 }
@@ -1297,7 +1307,8 @@ export namespace SubscriptionItemDeleteParams {
     | 'allow_incomplete'
     | 'default_incomplete'
     | 'error_if_incomplete'
-    | 'pending_if_incomplete';
+    | 'pending_if_incomplete'
+    | OtherString;
 
   export type ProrationBehavior =
     | 'always_invoice'

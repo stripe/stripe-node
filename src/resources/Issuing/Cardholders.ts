@@ -366,7 +366,7 @@ export namespace Cardholder {
   }
 
   export namespace SpendingControls {
-    export type AllowedCardPresence = 'not_present' | 'present';
+    export type AllowedCardPresence = 'not_present' | 'present' | OtherString;
 
     export type AllowedCategory =
       | 'ac_refrigeration_repair'
@@ -663,9 +663,10 @@ export namespace Cardholder {
       | 'wires_money_orders'
       | 'womens_accessory_and_specialty_shops'
       | 'womens_ready_to_wear_stores'
-      | 'wrecking_and_salvage_yards';
+      | 'wrecking_and_salvage_yards'
+      | OtherString;
 
-    export type BlockedCardPresence = 'not_present' | 'present';
+    export type BlockedCardPresence = 'not_present' | 'present' | OtherString;
 
     export type BlockedCategory =
       | 'ac_refrigeration_repair'
@@ -962,7 +963,8 @@ export namespace Cardholder {
       | 'wires_money_orders'
       | 'womens_accessory_and_specialty_shops'
       | 'womens_ready_to_wear_stores'
-      | 'wrecking_and_salvage_yards';
+      | 'wrecking_and_salvage_yards'
+      | OtherString;
 
     export interface SpendingLimit {
       /**
@@ -1277,7 +1279,8 @@ export namespace Cardholder {
         | 'wires_money_orders'
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
-        | 'wrecking_and_salvage_yards';
+        | 'wrecking_and_salvage_yards'
+        | OtherString;
 
       export type Interval =
         | 'all_time'
@@ -1557,7 +1560,7 @@ export namespace Issuing {
     }
 
     export namespace SpendingControls {
-      export type AllowedCardPresence = 'not_present' | 'present';
+      export type AllowedCardPresence = 'not_present' | 'present' | OtherString;
 
       export type AllowedCategory =
         | 'ac_refrigeration_repair'
@@ -1854,9 +1857,10 @@ export namespace Issuing {
         | 'wires_money_orders'
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
-        | 'wrecking_and_salvage_yards';
+        | 'wrecking_and_salvage_yards'
+        | OtherString;
 
-      export type BlockedCardPresence = 'not_present' | 'present';
+      export type BlockedCardPresence = 'not_present' | 'present' | OtherString;
 
       export type BlockedCategory =
         | 'ac_refrigeration_repair'
@@ -2153,7 +2157,8 @@ export namespace Issuing {
         | 'wires_money_orders'
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
-        | 'wrecking_and_salvage_yards';
+        | 'wrecking_and_salvage_yards'
+        | OtherString;
 
       export interface SpendingLimit {
         /**
@@ -2468,7 +2473,8 @@ export namespace Issuing {
           | 'wires_money_orders'
           | 'womens_accessory_and_specialty_shops'
           | 'womens_ready_to_wear_stores'
-          | 'wrecking_and_salvage_yards';
+          | 'wrecking_and_salvage_yards'
+          | OtherString;
 
         export type Interval =
           | 'all_time'
@@ -2749,7 +2755,7 @@ export namespace Issuing {
     }
 
     export namespace SpendingControls {
-      export type AllowedCardPresence = 'not_present' | 'present';
+      export type AllowedCardPresence = 'not_present' | 'present' | OtherString;
 
       export type AllowedCategory =
         | 'ac_refrigeration_repair'
@@ -3046,9 +3052,10 @@ export namespace Issuing {
         | 'wires_money_orders'
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
-        | 'wrecking_and_salvage_yards';
+        | 'wrecking_and_salvage_yards'
+        | OtherString;
 
-      export type BlockedCardPresence = 'not_present' | 'present';
+      export type BlockedCardPresence = 'not_present' | 'present' | OtherString;
 
       export type BlockedCategory =
         | 'ac_refrigeration_repair'
@@ -3345,7 +3352,8 @@ export namespace Issuing {
         | 'wires_money_orders'
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
-        | 'wrecking_and_salvage_yards';
+        | 'wrecking_and_salvage_yards'
+        | OtherString;
 
       export interface SpendingLimit {
         /**
@@ -3660,7 +3668,8 @@ export namespace Issuing {
           | 'wires_money_orders'
           | 'womens_accessory_and_specialty_shops'
           | 'womens_ready_to_wear_stores'
-          | 'wrecking_and_salvage_yards';
+          | 'wrecking_and_salvage_yards'
+          | OtherString;
 
         export type Interval =
           | 'all_time'

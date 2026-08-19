@@ -322,6 +322,8 @@ export interface InvoiceItem {
    */
   livemode: boolean;
 
+  managed_payments?: InvoiceItem.ManagedPayments | null;
+
   /**
    * The margins which apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.
    */
@@ -393,7 +395,14 @@ export interface DeletedInvoiceItem {
   deleted: true;
 }
 export namespace InvoiceItem {
-  export type FrozenField = 'discounts' | 'pricing' | 'quantity';
+  export type FrozenField = 'discounts' | 'pricing' | 'quantity' | OtherString;
+
+  export interface ManagedPayments {
+    /**
+     * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+     */
+    enabled: boolean;
+  }
 
   export interface Parent {
     /**
@@ -640,7 +649,7 @@ export namespace InvoiceItem {
         invoice_line_items: Array<string>;
       }
 
-      export type Type = 'invoice_item' | 'invoice_line_items';
+      export type Type = 'invoice_item' | 'invoice_line_items' | OtherString;
     }
   }
 }
@@ -689,6 +698,11 @@ export interface InvoiceItemCreateParams {
    * The ID of an existing invoice to add this invoice item to. For subscription invoices, when left blank, the invoice item will be added to the next upcoming scheduled invoice. For standalone invoices, the invoice item won't be automatically added unless you pass `pending_invoice_item_behavior: 'include'` when creating the invoice. This is useful when adding invoice items in response to an invoice.created webhook. You can only add invoice items to draft invoices and there is a maximum of 250 items per invoice.
    */
   invoice?: string;
+
+  /**
+   * Settings for Managed Payments for this invoice item.
+   */
+  managed_payments?: InvoiceItemCreateParams.ManagedPayments;
 
   /**
    * The ids of the margins to apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.
@@ -773,6 +787,13 @@ export namespace InvoiceItemCreateParams {
     promotion_code?: string;
   }
 
+  export interface ManagedPayments {
+    /**
+     * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution.
+     */
+    enabled?: boolean;
+  }
+
   export interface Period {
     /**
      * The end of the period, which must be greater than or equal to the start. This value is inclusive.
@@ -819,7 +840,11 @@ export namespace InvoiceItemCreateParams {
     price?: string;
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+  export type TaxBehavior =
+    | 'exclusive'
+    | 'inclusive'
+    | 'unspecified'
+    | OtherString;
 
   export namespace Discount {
     export interface DiscountEnd {
@@ -861,7 +886,11 @@ export namespace InvoiceItemCreateParams {
   }
 
   export namespace PriceData {
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
   }
 }
 export interface InvoiceItemRetrieveParams {
@@ -1020,7 +1049,11 @@ export namespace InvoiceItemUpdateParams {
     price?: string;
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+  export type TaxBehavior =
+    | 'exclusive'
+    | 'inclusive'
+    | 'unspecified'
+    | OtherString;
 
   export namespace Discount {
     export interface DiscountEnd {
@@ -1062,7 +1095,11 @@ export namespace InvoiceItemUpdateParams {
   }
 
   export namespace PriceData {
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
   }
 }
 export interface InvoiceItemListParams extends PaginationParams {

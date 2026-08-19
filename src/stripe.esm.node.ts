@@ -499,6 +499,14 @@ import {
   PaymentMethodDomainResource,
 } from './resources/PaymentMethodDomains.js';
 import {
+  PaymentPlan,
+  PaymentPlanCreateParams,
+  PaymentPlanRetrieveParams,
+  PaymentPlanUpdateParams,
+  PaymentPlanListParams,
+  PaymentPlanResource,
+} from './resources/PaymentPlans.js';
+import {
   PaymentRecord,
   PaymentRecordCreateParams,
   PaymentRecordRetrieveParams,
@@ -1016,6 +1024,11 @@ import {
   PaymentMethodAutomaticallyUpdatedEvent,
   PaymentMethodDetachedEvent,
   PaymentMethodUpdatedEvent,
+  PaymentPlanCreatedEvent,
+  PaymentPlanInstallmentDueEvent,
+  PaymentPlanInstallmentPaidEvent,
+  PaymentPlanInstallmentWillBeDueEvent,
+  PaymentPlanUpdatedEvent,
   PayoutCanceledEvent,
   PayoutCreatedEvent,
   PayoutFailedEvent,
@@ -1290,6 +1303,7 @@ export class Stripe {
   paymentMethodConfigurations: PaymentMethodConfigurationResource;
   paymentMethodDomains: PaymentMethodDomainResource;
   paymentMethods: PaymentMethodResource;
+  paymentPlans: PaymentPlanResource;
   paymentRecords: PaymentRecordResource;
   payouts: PayoutResource;
   plans: PlanResource;
@@ -1499,6 +1513,7 @@ export class Stripe {
     );
     this.paymentMethodDomains = new PaymentMethodDomainResource(this);
     this.paymentMethods = new PaymentMethodResource(this);
+    this.paymentPlans = new PaymentPlanResource(this);
     this.paymentRecords = new PaymentRecordResource(this);
     this.payouts = new PayoutResource(this);
     this.plans = new PlanResource(this);
@@ -2481,6 +2496,14 @@ export declare namespace Stripe {
     PaymentMethodDomainResource,
   };
   export {
+    PaymentPlan,
+    PaymentPlanCreateParams,
+    PaymentPlanRetrieveParams,
+    PaymentPlanUpdateParams,
+    PaymentPlanListParams,
+    PaymentPlanResource,
+  };
+  export {
     PaymentRecord,
     PaymentRecordCreateParams,
     PaymentRecordRetrieveParams,
@@ -2972,6 +2995,11 @@ export declare namespace Stripe {
     PaymentMethodAutomaticallyUpdatedEvent,
     PaymentMethodDetachedEvent,
     PaymentMethodUpdatedEvent,
+    PaymentPlanCreatedEvent,
+    PaymentPlanInstallmentDueEvent,
+    PaymentPlanInstallmentPaidEvent,
+    PaymentPlanInstallmentWillBeDueEvent,
+    PaymentPlanUpdatedEvent,
     PayoutCanceledEvent,
     PayoutCreatedEvent,
     PayoutFailedEvent,

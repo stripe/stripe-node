@@ -1618,7 +1618,8 @@ export namespace ConfirmationToken {
           | 'link'
           | 'masterpass'
           | 'samsung_pay'
-          | 'visa_checkout';
+          | 'visa_checkout'
+          | OtherString;
 
         export interface VisaCheckout {
           /**
@@ -1723,11 +1724,12 @@ export namespace ConfirmationToken {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -1754,7 +1756,8 @@ export namespace ConfirmationToken {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace IdBankTransfer {
@@ -1788,7 +1791,8 @@ export namespace ConfirmationToken {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
 
       export type Bic =
         | 'ABNANL2A'
@@ -1811,7 +1815,8 @@ export namespace ConfirmationToken {
         | 'REVOIE23'
         | 'REVOLT21'
         | 'SNSBNL2A'
-        | 'TRIONL2U';
+        | 'TRIONL2U'
+        | OtherString;
     }
 
     export namespace InteracPresent {
@@ -1977,7 +1982,7 @@ export namespace ConfirmationToken {
       }
 
       export namespace Networks {
-        export type Supported = 'ach' | 'us_domestic_wire';
+        export type Supported = 'ach' | 'us_domestic_wire' | OtherString;
       }
 
       export namespace StatusDetails {

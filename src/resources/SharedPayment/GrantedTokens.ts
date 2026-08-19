@@ -377,7 +377,8 @@ export namespace GrantedToken {
           | 'link'
           | 'masterpass'
           | 'samsung_pay'
-          | 'visa_checkout';
+          | 'visa_checkout'
+          | OtherString;
 
         export interface VisaCheckout {
           /**

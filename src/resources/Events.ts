@@ -311,6 +311,11 @@ export namespace Event {
     | 'payment_method.automatically_updated'
     | 'payment_method.detached'
     | 'payment_method.updated'
+    | 'payment_plan.created'
+    | 'payment_plan.installment_due'
+    | 'payment_plan.installment_paid'
+    | 'payment_plan.installment_will_be_due'
+    | 'payment_plan.updated'
     | 'payout.canceled'
     | 'payout.created'
     | 'payout.failed'
@@ -433,7 +438,8 @@ export namespace Event {
     | 'treasury.received_credit.created'
     | 'treasury.received_credit.failed'
     | 'treasury.received_credit.succeeded'
-    | 'treasury.received_debit.created';
+    | 'treasury.received_debit.created'
+    | OtherString;
 
   export namespace Data {
     export interface Object {}
@@ -563,6 +569,7 @@ import {Mandate} from './Mandates.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {PaymentLink} from './PaymentLinks.js';
 import {PaymentMethod} from './PaymentMethods.js';
+import {PaymentPlan} from './PaymentPlans.js';
 import {Payout} from './Payouts.js';
 import {Person} from './Persons.js';
 import {Plan} from './Plans.js';
@@ -762,6 +769,11 @@ export type Event =
   | PaymentMethodAutomaticallyUpdatedEvent
   | PaymentMethodDetachedEvent
   | PaymentMethodUpdatedEvent
+  | PaymentPlanCreatedEvent
+  | PaymentPlanInstallmentDueEvent
+  | PaymentPlanInstallmentPaidEvent
+  | PaymentPlanInstallmentWillBeDueEvent
+  | PaymentPlanUpdatedEvent
   | PayoutCanceledEvent
   | PayoutCreatedEvent
   | PayoutFailedEvent
@@ -3815,6 +3827,86 @@ export namespace PaymentMethodUpdatedEvent {
     object: PaymentMethod;
 
     previous_attributes?: Partial<PaymentMethod>;
+  }
+}
+
+/**
+ * Occurs whenever a new payment plan is created.
+ */
+export interface PaymentPlanCreatedEvent extends EventBase {
+  type: 'payment_plan.created';
+  data: PaymentPlanCreatedEvent.Data;
+}
+
+export namespace PaymentPlanCreatedEvent {
+  export interface Data extends Event.Data {
+    object: PaymentPlan;
+
+    previous_attributes?: Partial<PaymentPlan>;
+  }
+}
+
+/**
+ * Occurs whenever a payment plan installment becomes due.
+ */
+export interface PaymentPlanInstallmentDueEvent extends EventBase {
+  type: 'payment_plan.installment_due';
+  data: PaymentPlanInstallmentDueEvent.Data;
+}
+
+export namespace PaymentPlanInstallmentDueEvent {
+  export interface Data extends Event.Data {
+    object: PaymentPlan;
+
+    previous_attributes?: Partial<PaymentPlan>;
+  }
+}
+
+/**
+ * Occurs whenever a payment plan installment is paid.
+ */
+export interface PaymentPlanInstallmentPaidEvent extends EventBase {
+  type: 'payment_plan.installment_paid';
+  data: PaymentPlanInstallmentPaidEvent.Data;
+}
+
+export namespace PaymentPlanInstallmentPaidEvent {
+  export interface Data extends Event.Data {
+    object: PaymentPlan;
+
+    previous_attributes?: Partial<PaymentPlan>;
+  }
+}
+
+/**
+ * Occurs whenever a payment plan installment is about to become due.
+ */
+export interface PaymentPlanInstallmentWillBeDueEvent extends EventBase {
+  type: 'payment_plan.installment_will_be_due';
+  data: PaymentPlanInstallmentWillBeDueEvent.Data;
+}
+
+export namespace PaymentPlanInstallmentWillBeDueEvent {
+  export interface Data extends Event.Data {
+    object: PaymentPlan;
+
+    previous_attributes?: Partial<PaymentPlan>;
+  }
+}
+
+/**
+ * Occurs whenever a payment plan is updated.
+ */
+export interface PaymentPlanUpdatedEvent extends EventBase {
+  type: 'payment_plan.updated';
+  data: PaymentPlanUpdatedEvent.Data;
+}
+
+export namespace PaymentPlanUpdatedEvent {
+  export interface Data extends Event.Data {
+    object: PaymentPlan;
+
+    previous_attributes?: Partial<PaymentPlan>;
   }
 }
 

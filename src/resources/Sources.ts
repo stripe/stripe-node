@@ -4,12 +4,12 @@ import {StripeResource} from '../StripeResource.js';
 import {SourceTransaction} from './SourceTransactions.js';
 import {
   MetadataParam,
+  OtherString,
   Emptyable,
   AddressParam,
   ShippingAddressParam,
   PaginationParams,
   Metadata,
-  OtherString,
   Address,
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
@@ -794,7 +794,8 @@ export namespace Source {
     | 'sepa_debit'
     | 'sofort'
     | 'three_d_secure'
-    | 'wechat';
+    | 'wechat'
+    | OtherString;
 
   export interface Wechat {
     prepay_id?: string;
@@ -942,7 +943,12 @@ export interface SourceCreateParams {
   usage?: SourceCreateParams.Usage;
 }
 export namespace SourceCreateParams {
-  export type Flow = 'code_verification' | 'none' | 'receiver' | 'redirect';
+  export type Flow =
+    | 'code_verification'
+    | 'none'
+    | 'receiver'
+    | 'redirect'
+    | OtherString;
 
   export interface Mandate {
     /**
@@ -1019,7 +1025,7 @@ export namespace SourceCreateParams {
     shipping?: SourceOrder.Shipping;
   }
 
-  export type Usage = 'reusable' | 'single_use';
+  export type Usage = 'reusable' | 'single_use' | OtherString;
 
   export namespace Mandate {
     export interface Acceptance {
@@ -1059,14 +1065,15 @@ export namespace SourceCreateParams {
       user_agent?: string;
     }
 
-    export type Interval = 'one_time' | 'scheduled' | 'variable';
+    export type Interval = 'one_time' | 'scheduled' | 'variable' | OtherString;
 
     export type NotificationMethod =
       | 'deprecated_none'
       | 'email'
       | 'manual'
       | 'none'
-      | 'stripe_email';
+      | 'stripe_email'
+      | OtherString;
 
     export namespace Acceptance {
       export interface Offline {
@@ -1093,14 +1100,23 @@ export namespace SourceCreateParams {
         user_agent?: string;
       }
 
-      export type Status = 'accepted' | 'pending' | 'refused' | 'revoked';
+      export type Status =
+        | 'accepted'
+        | 'pending'
+        | 'refused'
+        | 'revoked'
+        | OtherString;
 
-      export type Type = 'offline' | 'online';
+      export type Type = 'offline' | 'online' | OtherString;
     }
   }
 
   export namespace Receiver {
-    export type RefundAttributesMethod = 'email' | 'manual' | 'none';
+    export type RefundAttributesMethod =
+      | 'email'
+      | 'manual'
+      | 'none'
+      | OtherString;
   }
 
   export namespace SourceOrder {
@@ -1152,7 +1168,7 @@ export namespace SourceCreateParams {
     }
 
     export namespace Item {
-      export type Type = 'discount' | 'shipping' | 'sku' | 'tax';
+      export type Type = 'discount' | 'shipping' | 'sku' | 'tax' | OtherString;
     }
   }
 }
@@ -1298,14 +1314,15 @@ export namespace SourceUpdateParams {
       user_agent?: string;
     }
 
-    export type Interval = 'one_time' | 'scheduled' | 'variable';
+    export type Interval = 'one_time' | 'scheduled' | 'variable' | OtherString;
 
     export type NotificationMethod =
       | 'deprecated_none'
       | 'email'
       | 'manual'
       | 'none'
-      | 'stripe_email';
+      | 'stripe_email'
+      | OtherString;
 
     export namespace Acceptance {
       export interface Offline {
@@ -1332,9 +1349,14 @@ export namespace SourceUpdateParams {
         user_agent?: string;
       }
 
-      export type Status = 'accepted' | 'pending' | 'refused' | 'revoked';
+      export type Status =
+        | 'accepted'
+        | 'pending'
+        | 'refused'
+        | 'revoked'
+        | OtherString;
 
-      export type Type = 'offline' | 'online';
+      export type Type = 'offline' | 'online' | OtherString;
     }
   }
 
@@ -1387,7 +1409,7 @@ export namespace SourceUpdateParams {
     }
 
     export namespace Item {
-      export type Type = 'discount' | 'shipping' | 'sku' | 'tax';
+      export type Type = 'discount' | 'shipping' | 'sku' | 'tax' | OtherString;
     }
   }
 }

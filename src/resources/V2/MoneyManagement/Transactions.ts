@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {OtherString} from '../../../shared.js';
+import {MetadataParam, Metadata, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class TransactionResource extends StripeResource {
@@ -33,6 +33,21 @@ export class TransactionResource extends StripeResource {
   ): Promise<Response<Transaction>> {
     return this._makeRequest(
       'GET',
+      `/v2/money_management/transactions/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Updates the description of an existing Transaction.
+   */
+  update(
+    id: string,
+    params?: V2.MoneyManagement.TransactionUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<Transaction>> {
+    return this._makeRequest(
+      'POST',
       `/v2/money_management/transactions/${encodeURIComponent(id)}`,
       params,
       options
@@ -96,6 +111,12 @@ export interface Transaction {
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
    */
   livemode: boolean;
+
+  /**
+   * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information
+   * about the object in a structured format.
+   */
+  metadata?: Metadata;
 
   /**
    * Closed Enum. Current status of the Transaction.
@@ -426,6 +447,22 @@ export namespace Transaction {
 export namespace V2 {
   export namespace MoneyManagement {
     export interface TransactionRetrieveParams {}
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface TransactionUpdateParams {
+      /**
+       * Description of this Transaction, up to 100 characters.
+       */
+      description?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to the Transaction. Individual keys can be unset by posting
+       * null to them.
+       */
+      metadata?: MetadataParam;
+    }
   }
 }
 export namespace V2 {

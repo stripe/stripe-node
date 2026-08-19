@@ -856,7 +856,8 @@ export namespace PaymentIntent {
     | 'failed_invoice'
     | 'fraudulent'
     | 'requested_by_customer'
-    | 'void_invoice';
+    | 'void_invoice'
+    | OtherString;
 
   export type CaptureMethod =
     | 'automatic'
@@ -1379,7 +1380,8 @@ export namespace PaymentIntent {
     | 'requires_confirmation'
     | 'requires_payment_method'
     | 'requires_reauthorization'
-    | 'succeeded';
+    | 'succeeded'
+    | OtherString;
 
   export interface TransferData {
     /**
@@ -1550,7 +1552,11 @@ export namespace PaymentIntent {
     }
 
     export namespace Surcharge {
-      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+      export type EnforceValidation =
+        | 'automatic'
+        | 'disabled'
+        | 'enabled'
+        | OtherString;
     }
   }
 
@@ -1789,13 +1795,15 @@ export namespace PaymentIntent {
       | 'transfers_not_allowed'
       | 'url_invalid'
       | 'v2_account_disconnection_unsupported'
-      | 'v2_account_missing_configuration';
+      | 'v2_account_missing_configuration'
+      | OtherString;
 
     export type Type =
       | 'api_error'
       | 'card_error'
       | 'idempotency_error'
-      | 'invalid_request_error';
+      | 'invalid_request_error'
+      | OtherString;
   }
 
   export namespace NextAction {
@@ -5646,7 +5654,7 @@ export namespace PaymentIntent {
     }
 
     export namespace Bancontact {
-      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
 
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -5660,7 +5668,11 @@ export namespace PaymentIntent {
     }
 
     export namespace Card {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+      export type CaptureBy =
+        | 'auth_expiry'
+        | 'end_of_day'
+        | 'target_delay'
+        | OtherString;
 
       export interface CaptureDelay {
         /**
@@ -5757,7 +5769,8 @@ export namespace PaymentIntent {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestDecrementalAuthorization =
         | 'if_available'
@@ -5864,9 +5877,15 @@ export namespace PaymentIntent {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace StatementDetails {
@@ -5932,7 +5951,11 @@ export namespace PaymentIntent {
         unbound_pos?: AadeData.UnboundPos;
       }
 
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+      export type CaptureBy =
+        | 'auth_expiry'
+        | 'end_of_day'
+        | 'target_delay'
+        | OtherString;
 
       export interface CaptureDelay {
         /**
@@ -6101,7 +6124,14 @@ export namespace PaymentIntent {
           | OtherString;
 
         export namespace EuBankTransfer {
-          export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+          export type Country =
+            | 'BE'
+            | 'DE'
+            | 'ES'
+            | 'FR'
+            | 'IE'
+            | 'NL'
+            | OtherString;
         }
       }
     }
@@ -6390,7 +6420,8 @@ export namespace PaymentIntent {
         | 'fr'
         | 'it'
         | 'nl'
-        | 'pl';
+        | 'pl'
+        | OtherString;
 
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -7077,7 +7108,7 @@ export namespace PaymentIntentCreateParams {
     customer_acceptance: MandateData.CustomerAcceptance;
   }
 
-  export type OffSession = 'one_off' | 'recurring';
+  export type OffSession = 'one_off' | 'recurring' | OtherString;
 
   export interface PaymentDetails {
     /**
@@ -8327,7 +8358,7 @@ export namespace PaymentIntentCreateParams {
         user_agent: string;
       }
 
-      export type Type = 'offline' | 'online';
+      export type Type = 'offline' | 'online' | OtherString;
     }
   }
 
@@ -10997,11 +11028,12 @@ export namespace PaymentIntentCreateParams {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -11028,7 +11060,8 @@ export namespace PaymentIntentCreateParams {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace IdBankTransfer {
@@ -11062,7 +11095,8 @@ export namespace PaymentIntentCreateParams {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -12772,7 +12806,11 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace Card {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+      export type CaptureBy =
+        | 'auth_expiry'
+        | 'end_of_day'
+        | 'target_delay'
+        | OtherString;
 
       export interface CaptureDelay {
         days?: number;
@@ -12857,7 +12895,8 @@ export namespace PaymentIntentCreateParams {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export interface PaymentDetails {
         /**
@@ -12998,9 +13037,15 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace PaymentDetails {
@@ -13105,7 +13150,11 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace CardPresent {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+      export type CaptureBy =
+        | 'auth_expiry'
+        | 'end_of_day'
+        | 'target_delay'
+        | OtherString;
 
       export interface CaptureDelay {
         days?: number;
@@ -15058,7 +15107,8 @@ export namespace PaymentIntentCreateParams {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
@@ -15068,7 +15118,7 @@ export namespace PaymentIntentCreateParams {
           | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
 
         export namespace ManualEntry {
@@ -15077,7 +15127,7 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace Networks {
-        export type Requested = 'ach' | 'us_domestic_wire';
+        export type Requested = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
 
@@ -19416,11 +19466,12 @@ export namespace PaymentIntentUpdateParams {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -19447,7 +19498,8 @@ export namespace PaymentIntentUpdateParams {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace IdBankTransfer {
@@ -19481,7 +19533,8 @@ export namespace PaymentIntentUpdateParams {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -21191,7 +21244,11 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace Card {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+      export type CaptureBy =
+        | 'auth_expiry'
+        | 'end_of_day'
+        | 'target_delay'
+        | OtherString;
 
       export interface CaptureDelay {
         days?: number;
@@ -21276,7 +21333,8 @@ export namespace PaymentIntentUpdateParams {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export interface PaymentDetails {
         /**
@@ -21417,9 +21475,15 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace PaymentDetails {
@@ -21524,7 +21588,11 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace CardPresent {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+      export type CaptureBy =
+        | 'auth_expiry'
+        | 'end_of_day'
+        | 'target_delay'
+        | OtherString;
 
       export interface CaptureDelay {
         days?: number;
@@ -23477,7 +23545,8 @@ export namespace PaymentIntentUpdateParams {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
@@ -23487,7 +23556,7 @@ export namespace PaymentIntentUpdateParams {
           | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
 
         export namespace ManualEntry {
@@ -23496,7 +23565,7 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace Networks {
-        export type Requested = 'ach' | 'us_domestic_wire';
+        export type Requested = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
 
@@ -23617,7 +23686,8 @@ export namespace PaymentIntentCancelParams {
     | 'abandoned'
     | 'duplicate'
     | 'fraudulent'
-    | 'requested_by_customer';
+    | 'requested_by_customer'
+    | OtherString;
 }
 export interface PaymentIntentCaptureParams {
   /**
@@ -26597,7 +26667,7 @@ export namespace PaymentIntentConfirmParams {
     customer_acceptance?: MandateData.CustomerAcceptance;
   }
 
-  export type OffSession = 'one_off' | 'recurring';
+  export type OffSession = 'one_off' | 'recurring' | OtherString;
 
   export interface PaymentDetails {
     /**
@@ -27793,7 +27863,7 @@ export namespace PaymentIntentConfirmParams {
         user_agent?: string;
       }
 
-      export type Type = 'offline' | 'online';
+      export type Type = 'offline' | 'online' | OtherString;
     }
   }
 
@@ -30463,11 +30533,12 @@ export namespace PaymentIntentConfirmParams {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -30494,7 +30565,8 @@ export namespace PaymentIntentConfirmParams {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace IdBankTransfer {
@@ -30528,7 +30600,8 @@ export namespace PaymentIntentConfirmParams {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -32238,7 +32311,11 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace Card {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+      export type CaptureBy =
+        | 'auth_expiry'
+        | 'end_of_day'
+        | 'target_delay'
+        | OtherString;
 
       export interface CaptureDelay {
         days?: number;
@@ -32323,7 +32400,8 @@ export namespace PaymentIntentConfirmParams {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export interface PaymentDetails {
         /**
@@ -32464,9 +32542,15 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace PaymentDetails {
@@ -32571,7 +32655,11 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace CardPresent {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+      export type CaptureBy =
+        | 'auth_expiry'
+        | 'end_of_day'
+        | 'target_delay'
+        | OtherString;
 
       export interface CaptureDelay {
         days?: number;
@@ -34524,7 +34612,8 @@ export namespace PaymentIntentConfirmParams {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
@@ -34534,7 +34623,7 @@ export namespace PaymentIntentConfirmParams {
           | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
 
         export namespace ManualEntry {
@@ -34543,7 +34632,7 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace Networks {
-        export type Requested = 'ach' | 'us_domestic_wire';
+        export type Requested = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
 

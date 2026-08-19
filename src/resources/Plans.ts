@@ -323,7 +323,7 @@ export interface DeletedPlan {
   deleted: true;
 }
 export namespace Plan {
-  export type BillingScheme = 'per_unit' | 'tiered';
+  export type BillingScheme = 'per_unit' | 'tiered' | OtherString;
 
   export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
@@ -354,7 +354,7 @@ export namespace Plan {
     up_to: number | null;
   }
 
-  export type TiersMode = 'graduated' | 'volume';
+  export type TiersMode = 'graduated' | 'volume' | OtherString;
 
   export interface TransformUsage {
     /**
@@ -463,9 +463,9 @@ export interface PlanCreateParams {
   usage_type?: PlanCreateParams.UsageType;
 }
 export namespace PlanCreateParams {
-  export type Interval = 'day' | 'month' | 'week' | 'year';
+  export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
-  export type BillingScheme = 'per_unit' | 'tiered';
+  export type BillingScheme = 'per_unit' | 'tiered' | OtherString;
 
   export interface Product {
     /**
@@ -552,7 +552,7 @@ export namespace PlanCreateParams {
     round: TransformUsage.Round;
   }
 
-  export type UsageType = 'licensed' | 'metered';
+  export type UsageType = 'licensed' | 'metered' | OtherString;
 
   export namespace Product {
     export interface TaxDetails {
