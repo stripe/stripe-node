@@ -20,7 +20,10 @@ let subscription: Stripe.Subscription;
 let invoice: Stripe.Invoice;
 let refund: Stripe.Refund;
 let paymentIntent: Stripe.PaymentIntent;
-let event: Stripe.Event;
+let event: Stripe.Event; // union of types
+let et: Stripe.EventBase; // actual base interface
+let et2: Stripe.V2.Core.EventBase; // actual v2 base interface
+let notif: Stripe.V2.Core.EventNotification; // union of thin event types
 
 // Param types
 let params: Stripe.CustomerCreateParams;
@@ -66,8 +69,9 @@ const bad = new Stripe('sk_test_123', {unknownProperty: true});
 // Webhook methods: constructEventWithoutVerification and parseEventNotificationWithoutVerification
 event = stripe.webhooks.constructEventWithoutVerification('payload');
 event = stripe.constructEventWithoutVerification('payload');
-const _notificationWV: Stripe.V2.Core.EventNotification =
-  stripe.parseEventNotificationWithoutVerification('payload');
+const _notificationWV: Stripe.V2.Core.EventNotification = stripe.parseEventNotificationWithoutVerification(
+  'payload'
+);
 
 // Namespace type exports that must remain accessible (v21 parity).
 const _stripeConfig: Stripe.StripeConfig = {maxNetworkRetries: 3};
@@ -88,5 +92,39 @@ const _signatureType: Stripe.Signature = null as any;
 
 // Factory function return types must be assignable to their interface types.
 const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
-const _nodeCryptoProvider: Stripe.CryptoProvider =
-  Stripe.createNodeCryptoProvider();
+const _nodeCryptoProvider: Stripe.CryptoProvider = Stripe.createNodeCryptoProvider();
+
+// notificationHandlerWithoutVerification must be reachable under moduleResolution node16
+async (): Promise<void> => {
+  const unverifiedHandler = stripe.notificationHandlerWithoutVerification(
+    async (unhandledEvent, client, details) => {
+      const e: Stripe.Events.UnknownEventNotification = unhandledEvent;
+      const s: Stripe = client;
+      const d: Stripe.UnhandledNotificationDetails = details;
+    }
+  );
+
+  unverifiedHandler.on(
+    'v1.billing.meter.error_report_triggered',
+    async (event) => {
+      const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
+    }
+  );
+
+  // handle() takes only the body; there is no signature to pass
+  const res: void = await unverifiedHandler.handle('');
+
+  // @ts-expect-error - the verifying two-argument handle is not available here
+  await unverifiedHandler.handle('', 'sig_header');
+
+  // Node exposes only the client factory; the handler classes are type-only.
+  // @ts-expect-error - StripeEventNotificationHandler is not a runtime value
+  Stripe.StripeEventNotificationHandler.withoutVerification(
+    stripe,
+    async () => {}
+  );
+};
+
+// both handler types must be nameable off the namespace
+let _verifyingHandler: Stripe.StripeEventNotificationHandler;
+let _unverifiedHandler: Stripe.StripeEventNotificationHandlerWithoutVerification;
