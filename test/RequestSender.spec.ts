@@ -90,7 +90,7 @@ describe('RequestSender', () => {
       expect(headers).to.not.include.keys('Stripe-Context');
     });
     describe('idempotency keys', () => {
-      it('only creates creates an idempotency key if a v1 request will retry', () => {
+      it('creates an idempotency key for v1 POST requests', () => {
         const headers = sender._makeHeaders({
           method: 'POST',
           userSuppliedSettings: {maxNetworkRetries: 3},
@@ -98,10 +98,19 @@ describe('RequestSender', () => {
         });
         expect(headers['Idempotency-Key']).matches(/^stripe-node-retry/);
       });
-      // should probably always create an IK; until then, codify the behavior
-      it("skips idempotency generation for v1 request if we're not retrying the request", () => {
+      // closed-connection errors are retried even with retries disabled, so
+      // these requests still need a key to dedupe against
+      it('creates an idempotency key for v1 POST requests when retries are disabled', () => {
         const headers = sender._makeHeaders({
           method: 'POST',
+          userSuppliedSettings: {maxNetworkRetries: 0},
+          apiMode: 'v1',
+        });
+        expect(headers['Idempotency-Key']).matches(/^stripe-node-retry/);
+      });
+      it('does not create an idempotency key for v1 GET requests', () => {
+        const headers = sender._makeHeaders({
+          method: 'GET',
           userSuppliedSettings: {maxNetworkRetries: 0},
           apiMode: 'v1',
         });
@@ -116,8 +125,8 @@ describe('RequestSender', () => {
         expect(headers['Idempotency-Key']).matches(/^stripe-node-retry/);
       });
       it('generates a new key every time', () => {
-        expect(sender._defaultIdempotencyKey('POST', {}, 'v2')).not.to.equal(
-          sender._defaultIdempotencyKey('POST', {}, 'v2')
+        expect(sender._defaultIdempotencyKey('POST', 'v2')).not.to.equal(
+          sender._defaultIdempotencyKey('POST', 'v2')
         );
       });
     });
@@ -165,6 +174,30 @@ describe('RequestSender', () => {
         1,
         2
       );
+
+      expect(res).to.equal(false);
+    });
+
+    // a closed connection is retried once regardless of maxNetworkRetries,
+    // since the request almost certainly never reached the API
+    it('should return true on a connection-closed error even if retries are disabled', () => {
+      const econnreset = RequestSender._shouldRetry(null, 0, 0, {
+        code: 'ECONNRESET',
+      });
+      const epipe = RequestSender._shouldRetry(null, 0, 0, {code: 'EPIPE'});
+
+      expect(econnreset).to.equal(true);
+      expect(epipe).to.equal(true);
+    });
+
+    it('should only bypass maxNetworkRetries for the first connection-closed error', () => {
+      const res = RequestSender._shouldRetry(null, 1, 0, {code: 'ECONNRESET'});
+
+      expect(res).to.equal(false);
+    });
+
+    it('should not bypass maxNetworkRetries for other error codes', () => {
+      const res = RequestSender._shouldRetry(null, 0, 0, {code: 'ETIMEDOUT'});
 
       expect(res).to.equal(false);
     });
@@ -1337,6 +1370,32 @@ describe('RequestSender', () => {
             expect(err.detail.code).to.deep.equal('ECONNRESET');
             done();
           });
+      });
+
+      // this retry bypasses maxNetworkRetries, so it must still carry a key to
+      // dedupe against the original in case the API did process it
+      it('reuses an idempotency key on the closed-connection retry', (done) => {
+        const keys = [];
+
+        const scope = nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .replyWithError({code: 'ECONNRESET', errno: 'ECONNRESET'})
+          .post(options.path, options.params)
+          .reply(200, {id: 'ch_123', object: 'charge', amount: 1000});
+
+        scope.on('request', (req) => {
+          keys.push(req.headers['idempotency-key']);
+        });
+
+        realStripe.charges
+          .create(options.data)
+          .then(() => {
+            expect(keys).to.have.lengthOf(2);
+            expect(keys[0]).to.match(/^stripe-node-retry/);
+            expect(keys[1]).to.equal(keys[0]);
+            done();
+          })
+          .catch(done);
       });
 
       it('should retry the request if max retries are set', (done) => {
