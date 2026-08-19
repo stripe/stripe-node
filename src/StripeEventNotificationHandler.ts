@@ -1,0 +1,179 @@
+import {Stripe} from './stripe.core.js';
+import * as Events from './resources/V2/Core/Events.js';
+import {WebhookHeader, WebhookPayload} from './Webhooks.js';
+
+export interface UnhandledNotificationDetails {
+  isKnownEventType: boolean;
+}
+
+export type FallbackCallback = (
+  event: Events.UnknownEventNotification,
+  client: Stripe,
+  details: UnhandledNotificationDetails
+) => Promise<void>;
+
+// this is an internal-only type; we write a user-facing one separately
+type HandlerCallback = (event: any, client: any) => Promise<void>;
+
+// most languages can check if we have an UnknownEventNotification at runtime
+// but JS only has interfaces so we fall back to a string match to determine known events
+const KNOWN_EVENT_TYPES = new Set([
+  // event-types: The beginning of the section generated from our OpenAPI spec
+  'v1.billing.meter.error_report_triggered',
+  'v1.billing.meter.no_meter_found',
+  'v2.commerce.product_catalog.imports.failed',
+  'v2.commerce.product_catalog.imports.processing',
+  'v2.commerce.product_catalog.imports.succeeded',
+  'v2.commerce.product_catalog.imports.succeeded_with_errors',
+  'v2.core.account.closed',
+  'v2.core.account.created',
+  'v2.core.account.updated',
+  'v2.core.account[configuration.customer].capability_status_updated',
+  'v2.core.account[configuration.customer].updated',
+  'v2.core.account[configuration.merchant].capability_status_updated',
+  'v2.core.account[configuration.merchant].updated',
+  'v2.core.account[configuration.recipient].capability_status_updated',
+  'v2.core.account[configuration.recipient].updated',
+  'v2.core.account[defaults].updated',
+  'v2.core.account[future_requirements].updated',
+  'v2.core.account[identity].updated',
+  'v2.core.account[requirements].updated',
+  'v2.core.account_link.returned',
+  'v2.core.account_person.created',
+  'v2.core.account_person.deleted',
+  'v2.core.account_person.updated',
+  'v2.core.event_destination.ping',
+  // event-types: The end of the section generated from our OpenAPI spec
+]);
+
+/**
+ * Shared registration and dispatch machinery for the two handlers below.
+ *
+ * Deliberately does not declare `handle`, and is not exported. TypeScript won't
+ * let a subclass add a required parameter to an inherited method, so a verifying
+ * handler cannot extend a non-verifying one (or vice versa) without either
+ * loosening a signature or suppressing the error. Making them siblings lets each
+ * declare its own exact `handle` while sharing everything else.
+ */
+class BaseEventNotificationHandler {
+  private registeredHandlers: Record<string, HandlerCallback> = {};
+  protected hasHandledEvent = false;
+
+  // the body is empty but the parameter properties are not, so the lint is ignorable
+  // eslint-disable-next-line no-useless-constructor
+  constructor(
+    protected client: Stripe,
+    private fallbackCallback: FallbackCallback
+  ) {}
+
+  // these types are duplicated in the manual types
+  public on<T extends Stripe.V2.Core.EventNotification['type']>(
+    type: T,
+    callback: (
+      event: Extract<Stripe.V2.Core.EventNotification, {type: T}>,
+      client: Stripe
+    ) => Promise<void>
+  ): this;
+  public on(type: string, callback: HandlerCallback): this {
+    if (this.hasHandledEvent) {
+      throw new Error(
+        'Cannot register new handlers after an event has been handled. This is indicative of a bug.'
+      );
+    }
+    // the matched types are validated by the type system
+    if (this.registeredHandlers[type]) {
+      throw new Error(`Handler already registered for event type: ${type}`);
+    }
+
+    this.registeredHandlers[type] = callback;
+    return this;
+  }
+
+  public registeredEventTypes(): string[] {
+    const keys = Object.keys(this.registeredHandlers);
+    keys.sort();
+    return keys;
+  }
+
+  protected async dispatchEvent(
+    event: Stripe.V2.Core.EventNotification
+  ): Promise<void> {
+    // Create a new client with the event's context instead of modifying the shared client
+    // This ensures thread-safety when processing webhooks in parallel
+    // We create a shallow copy and override _api with a new object containing the event context
+    // This reuses expensive resources like httpClient (Flyweight pattern)
+    const eventClient = Object.create(Object.getPrototypeOf(this.client));
+    Object.assign(eventClient, this.client);
+    eventClient._api = {
+      ...this.client._api,
+      stripeContext: event.context,
+    };
+
+    const handler = this.registeredHandlers[event.type];
+    if (handler) {
+      return await handler(event, eventClient);
+    } else {
+      return await this.fallbackCallback(
+        event as Events.UnknownEventNotification,
+        eventClient,
+        {
+          isKnownEventType: KNOWN_EVENT_TYPES.has(event.type),
+        }
+      );
+    }
+  }
+}
+
+export class StripeEventNotificationHandler extends BaseEventNotificationHandler {
+  constructor(
+    client: Stripe,
+    private webhookSecret: string,
+    fallbackCallback: FallbackCallback
+  ) {
+    super(client, fallbackCallback);
+    if (!webhookSecret) {
+      throw new Error('webhookSecret must be a non-empty string');
+    }
+  }
+
+  static withoutVerification(
+    client: Stripe,
+    fallbackCallback: FallbackCallback
+  ): StripeEventNotificationHandlerWithoutVerification {
+    return new StripeEventNotificationHandlerWithoutVerification(
+      client,
+      fallbackCallback
+    );
+  }
+
+  public async handle(
+    rawBody: WebhookPayload,
+    signature: WebhookHeader
+  ): Promise<void> {
+    // set before parsing, so that even a failed parse locks out registration.
+    // we're not worried about thread safety here because we expect callbacks will be registered synchronously on app startup
+    this.hasHandledEvent = true;
+
+    return await this.dispatchEvent(
+      this.client.parseEventNotification(rawBody, signature, this.webhookSecret)
+    );
+  }
+}
+
+/**
+ * A variant of StripeEventNotificationHandler that parses events without
+ * verifying webhook signatures. Intended for pre-authenticated channels
+ * like AWS EventBridge or Azure Event Grid.
+ *
+ * Prefer StripeEventNotificationHandler.withoutVerification() or
+ * client.notificationHandlerWithoutVerification() to construct one.
+ */
+export class StripeEventNotificationHandlerWithoutVerification extends BaseEventNotificationHandler {
+  public async handle(rawBody: WebhookPayload): Promise<void> {
+    this.hasHandledEvent = true;
+
+    return await this.dispatchEvent(
+      this.client.parseEventNotificationWithoutVerification(rawBody)
+    );
+  }
+}

@@ -17,7 +17,7 @@ import {maybeExtractFromCloudProviderEnvelope, parsePayload} from './utils.js';
  * since express should never return this header as an array,
  * only a string.
  */
-type WebhookHeader = string | string[] | Uint8Array;
+export type WebhookHeader = string | string[] | Uint8Array;
 type WebhookParsedHeader = {
   signatures: Array<string>;
   timestamp: number;
@@ -37,7 +37,7 @@ export type WebhookTestHeaderOptions = {
   cryptoProvider?: CryptoProvider;
 };
 
-type WebhookPayload = string | Uint8Array;
+export type WebhookPayload = string | Uint8Array;
 export type WebhookSignatureObject = {
   /**
    * Verifies the authenticity (and recency) of a webhook, throwing a `SignatureVerificationError`
