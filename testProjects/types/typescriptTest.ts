@@ -115,6 +115,17 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
 
   const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
 
+  // TODO: replace with a real v2 search method once one is generated
+  const v2SearchResultPromise =
+    {} as Stripe.V2SearchResultPromise<Stripe.V2.Core.Event>;
+  const v2SearchResult: Stripe.V2SearchResult<Stripe.V2.Core.Event> =
+    await v2SearchResultPromise;
+  const v2SearchData: Array<Stripe.V2.Core.Event> = v2SearchResult.data;
+  const v2SearchNextPageUrl: string | null = v2SearchResult.next_page_url;
+  const v2SearchPreviousPageUrl: string | null =
+    v2SearchResult.previous_page_url;
+  const v2SearchTotalCount: number = v2SearchResult.total_count;
+
   const aThousandCustomers: Array<Stripe.Customer> = await stripe.customers
     .list()
     .autoPagingToArray({limit: 1000});
