@@ -11,7 +11,7 @@ import {
   StripeRawError,
   DEFAULT_BASE_ADDRESSES,
 } from './Types.js';
-import {createWebhooks} from './Webhooks.js';
+import {createWebhooks, WebhookHeader, WebhookPayload} from './Webhooks.js';
 import {ApiVersion, ApiMajorVersion} from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
@@ -1761,8 +1761,8 @@ export class Stripe {
   }
 
   parseEventNotification(
-    payload: string | Uint8Array,
-    header: string | Uint8Array,
+    payload: WebhookPayload,
+    header: WebhookHeader,
     secret: string,
     tolerance?: number,
     cryptoProvider?: CryptoProvider,
@@ -1804,8 +1804,8 @@ export class Stripe {
   }
 
   async parseEventNotificationAsync(
-    payload: string | Uint8Array,
-    header: string | Uint8Array,
+    payload: WebhookPayload,
+    header: WebhookHeader,
     secret: string,
     tolerance?: number,
     cryptoProvider?: CryptoProvider,
@@ -1851,8 +1851,12 @@ export class Stripe {
    * Accepts raw Stripe Event JSON as well as payloads wrapped in an
    * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
    * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) envelope.
+   *
+   * @deprecated Use `stripe.webhooks.constructEventWithoutVerification(...)` instead.
+   * This will be removed in the next major version.
    */
   constructEventWithoutVerification(payload: string): Event {
+    // TODO(DEVSDK-3248) remove this
     return this.webhooks.constructEventWithoutVerification(payload);
   }
 
@@ -1863,7 +1867,7 @@ export class Stripe {
    * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) envelope.
    */
   parseEventNotificationWithoutVerification(
-    payload: string | Uint8Array
+    payload: WebhookPayload
   ): V2.Core.EventNotification {
     const inner = maybeExtractFromCloudProviderEnvelope(payload);
     if (inner.object === 'event') {
@@ -2904,8 +2908,6 @@ export declare namespace Stripe {
   // through stripe.notificationHandler() / stripe.notificationHandlerWithoutVerification().
   export type StripeEventNotificationHandler = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandler;
   export type StripeEventNotificationHandlerWithoutVerification = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandlerWithoutVerification;
-  export import Events = V2.Core.Events;
-
   // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
   export namespace ErrorType {
     export type StripeError = InstanceType<typeof _Error.StripeError>;
@@ -3096,6 +3098,7 @@ export declare namespace Stripe {
     >;
   }
   // ErrorTypeNamespaces: The end of the section generated from our OpenAPI spec
+  export import Events = V2.Core.Events;
 }
 
 Stripe.initialize(new NodePlatformFunctions());

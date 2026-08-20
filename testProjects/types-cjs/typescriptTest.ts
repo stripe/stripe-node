@@ -390,6 +390,9 @@ async (): Promise<void> => {
   let f: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification;
   // union of all V2 Events
   let g: Stripe.V2.Core.Event;
+  // let h: Stripe.V2.Core.EventNotificationBase; // doesn't work, can export later
+  // union of all v1 events
+  let i: Stripe.Event;
 }
 
 // Test that the Decimal type is exported
