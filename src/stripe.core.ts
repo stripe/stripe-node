@@ -10,7 +10,7 @@ import {
   StripeRawError,
   DEFAULT_BASE_ADDRESSES,
 } from './Types.js';
-import {createWebhooks} from './Webhooks.js';
+import {createWebhooks, WebhookHeader, WebhookPayload} from './Webhooks.js';
 import {ApiVersion, ApiMajorVersion} from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
@@ -1789,8 +1789,8 @@ export class Stripe {
    * `parseEventNotificationWithoutVerification`.
    */
   parseEventNotification(
-    payload: string | Uint8Array,
-    header: string | Uint8Array,
+    payload: WebhookPayload,
+    header: WebhookHeader,
     secret: string,
     tolerance?: number,
     cryptoProvider?: CryptoProvider,
@@ -1816,8 +1816,8 @@ export class Stripe {
   }
 
   async parseEventNotificationAsync(
-    payload: string | Uint8Array,
-    header: string | Uint8Array,
+    payload: WebhookPayload,
+    header: WebhookHeader,
     secret: string,
     tolerance?: number,
     cryptoProvider?: CryptoProvider,
@@ -1849,8 +1849,12 @@ export class Stripe {
    * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge), or
    * [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload). Or, to verify &
    * construct in a single call, use `webhooks.constructEvent(...)` instead.
+   *
+   * @deprecated Use `stripe.webhooks.constructEventWithoutVerification(...)` instead.
+   * This will be removed in the next major version.
    */
   constructEventWithoutVerification(payload: string): Event {
+    // TODO(DEVSDK-3248) remove this
     return this.webhooks.constructEventWithoutVerification(payload);
   }
 
@@ -1863,7 +1867,7 @@ export class Stripe {
    * parse in a single call, use `parseEventNotification(...)` instead.
    */
   parseEventNotificationWithoutVerification(
-    payload: string | Uint8Array
+    payload: WebhookPayload
   ): V2.Core.EventNotification {
     return this._buildEventNotification(
       maybeExtractFromCloudProviderEnvelope(payload)

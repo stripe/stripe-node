@@ -68,12 +68,36 @@ export class NodeHttpClient extends HttpClient
           ciphers: 'DEFAULT:!aNULL:!eNULL:!LOW:!EXPORT:!SSLv2:!MD5',
         });
 
+        let res: http_.IncomingMessage | null = null;
+
         req.setTimeout(timeout, () => {
-          req.destroy(HttpClient.makeTimeoutError());
+          const timeoutError = HttpClient.makeTimeoutError();
+          // The socket timeout stays armed while the body is being read, but
+          // tearing down the request alone surfaces on the response as a
+          // generic ECONNRESET. Destroying the response with the timeout error
+          // first lets a stalled body be reported as the timeout it is.
+          //
+          // The cost is that this is the same error a toStream() caller sees, so
+          // a stalled download now emits an ETIMEDOUT TypeError where it used to
+          // emit an ECONNRESET Error with the message "aborted". The timing is
+          // unchanged and 'aborted' still fires either way.
+          // TODO(DEVSDK-3247): decouple the two by dropping this destroy() and
+          // instead recording that the timeout fired (e.g. a getter handed to
+          // NodeHttpClientResponse), so only toJSON() translates the teardown
+          // into a timeout and the stream keeps its original error. Dropping
+          // this destroy() on its own is not enough: the request teardown does
+          // still reach toJSON's listeners at the same time, but as a generic
+          // failure, which the response body error then reports as a
+          // StripeAPIError instead of a timeout.
+          if (res && !res.complete) {
+            res.destroy(timeoutError);
+          }
+          req.destroy(timeoutError);
         });
 
-        req.on('response', (res) => {
-          resolve(new NodeHttpClientResponse(res));
+        req.on('response', (response) => {
+          res = response;
+          resolve(new NodeHttpClientResponse(response));
         });
 
         req.on('error', (error) => {
@@ -132,6 +156,20 @@ export class NodeHttpClientResponse extends HttpClientResponse
       this._res.setEncoding('utf8');
       this._res.on('data', (chunk) => {
         response += chunk;
+      });
+      // Node only emits 'error' on an IncomingMessage when a listener is
+      // attached; without one, a connection that stalls or drops after the
+      // headers arrive never emits 'end' either, and this promise would hang
+      // forever. See https://github.com/stripe/stripe-node/issues/2814.
+      this._res.once('error', (error) => {
+        reject(HttpClient.makeResponseBodyError(error));
+      });
+      // Not every truncated response emits an 'error', so treat closing before
+      // the body is complete as a failure too.
+      this._res.once('close', () => {
+        if (!this._res.complete) {
+          reject(HttpClient.makeResponseBodyError(null));
+        }
       });
       this._res.once('end', () => {
         try {

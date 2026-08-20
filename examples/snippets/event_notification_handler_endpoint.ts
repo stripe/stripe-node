@@ -1,5 +1,3 @@
-// File copied from our code generator; changes here will be overwritten.
-
 /**
  * event_notification_handler_endpoint.ts - receive and process event notifications like the
  * v1.billing.meter.error_report_triggered event.
@@ -52,8 +50,7 @@ app.post(
   '/webhook',
   express.raw({type: 'application/json'}),
   async (req, res) => {
-    const sig = req.headers['stripe-signature']?.[0] ?? '';
-    handler.handle(req.body, sig);
+    handler.handle(req.body, req.headers['stripe-signature']!);
   }
 );
 
