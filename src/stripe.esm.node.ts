@@ -3098,6 +3098,7 @@ export declare namespace Stripe {
     >;
   }
   // ErrorTypeNamespaces: The end of the section generated from our OpenAPI spec
+  export import Events = V2.Core.Events;
 }
 
 Stripe.initialize(new NodePlatformFunctions());
