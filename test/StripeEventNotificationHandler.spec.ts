@@ -1,5 +1,3 @@
-// File copied from our code generator; changes here will be overwritten.
-
 /* eslint-disable require-await */
 
 import {expect} from 'chai';

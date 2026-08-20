@@ -1,7 +1,6 @@
-// File copied from our code generator; changes here will be overwritten.
-
 import {Stripe} from './stripe.core.js';
 import * as Events from './resources/V2/Core/Events.js';
+import {WebhookHeader, WebhookPayload} from './Webhooks.js';
 
 export interface UnhandledNotificationDetails {
   isKnownEventType: boolean;
@@ -565,9 +564,8 @@ export class StripeEventNotificationHandler extends BaseEventNotificationHandler
   }
 
   public async handle(
-    // these types are duplicated in the manual types, so they're just here for internal use
-    rawBody: string | Uint8Array,
-    signature: string | Uint8Array
+    rawBody: WebhookPayload,
+    signature: WebhookHeader
   ): Promise<void> {
     // set before parsing, so that even a failed parse locks out registration.
     // we're not worried about thread safety here because we expect callbacks will be registered synchronously on app startup
@@ -588,7 +586,7 @@ export class StripeEventNotificationHandler extends BaseEventNotificationHandler
  * client.notificationHandlerWithoutVerification() to construct one.
  */
 export class StripeEventNotificationHandlerWithoutVerification extends BaseEventNotificationHandler {
-  public async handle(rawBody: string | Uint8Array): Promise<void> {
+  public async handle(rawBody: WebhookPayload): Promise<void> {
     this.hasHandledEvent = true;
 
     return await this.dispatchEvent(
