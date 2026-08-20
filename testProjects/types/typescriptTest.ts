@@ -393,7 +393,36 @@ async (): Promise<void> => {
   let f: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification;
   // union of all V2 Events
   let g: Stripe.V2.Core.Event;
+  // union of all v1 events
+  let h: Stripe.Event;
 }
+
+async (): Promise<void> => {
+  // event handler
+  const handler = stripe.notificationHandler(
+    'whsec_123',
+    async (unhandledEvent, client, details) => {
+      const e: Stripe.Events.UnknownEventNotification = unhandledEvent;
+      const s: Stripe = client;
+      const d: Stripe.UnhandledNotificationDetails = details;
+    }
+  );
+
+  handler
+    .on('v1.billing.meter.error_report_triggered', async (event) => {
+      const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
+      const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification = event;
+      const evt: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent = await event.fetchEvent();
+    })
+    .on('v1.billing.meter.no_meter_found', async (event) => {
+      const e: Stripe.Events.V1BillingMeterNoMeterFoundEventNotification = event;
+      // @ts-expect-error - shouldn't be available
+      const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
+      const evt: Stripe.Events.V1BillingMeterNoMeterFoundEvent = await event.fetchEvent();
+    });
+
+  const res: void = await handler.handle('', '');
+};
 
 // event handler that skips signature verification
 async (): Promise<void> => {
@@ -423,12 +452,34 @@ async (): Promise<void> => {
   // not attached as statics on the constructor), so the static factory that the other
   // SDKs offer is intentionally unreachable here.
   // @ts-expect-error - StripeEventNotificationHandler is not a runtime value
-  Stripe.StripeEventNotificationHandler.withoutVerification(stripe, async () => {});
+  Stripe.StripeEventNotificationHandler.withoutVerification(
+    stripe,
+    async () => {}
+  );
 };
 
 // both handler types must be nameable off the namespace
 let _verifyingHandler: Stripe.StripeEventNotificationHandler;
 let _unverifiedHandler: Stripe.StripeEventNotificationHandlerWithoutVerification;
+
+// event-notification methods take the same payload/header types as the v1 webhook
+// methods: WebhookPayload (string | Uint8Array) and WebhookHeader, which includes
+// string[] so it composes with express's `Request#headers` type.
+async (): Promise<void> => {
+  const arrayHeader: string[] = ['sig'];
+  const bytesBody: Uint8Array = new TextEncoder().encode('{}');
+
+  stripe.parseEventNotification(bytesBody, arrayHeader, 'whsec_123');
+  await stripe.parseEventNotificationAsync(bytesBody, arrayHeader, 'whsec_123');
+  stripe.parseEventNotificationWithoutVerification(bytesBody);
+
+  await stripe
+    .notificationHandler('whsec_123', async () => {})
+    .handle(bytesBody, arrayHeader);
+  await stripe
+    .notificationHandlerWithoutVerification(async () => {})
+    .handle(bytesBody);
+};
 
 // Test that the Decimal type is exported
 {
