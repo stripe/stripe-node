@@ -361,7 +361,8 @@ export namespace Calculation {
         | 'vn_tin'
         | 'za_vat'
         | 'zm_tin'
-        | 'zw_tin';
+        | 'zw_tin'
+        | OtherString;
     }
   }
 
@@ -420,7 +421,7 @@ export namespace Calculation {
         state: string | null;
       }
 
-      export type Sourcing = 'destination' | 'origin';
+      export type Sourcing = 'destination' | 'origin' | OtherString;
 
       export interface TaxRateDetails {
         /**
@@ -484,7 +485,8 @@ export namespace Calculation {
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
-          | 'vat';
+          | 'vat'
+          | OtherString;
       }
     }
   }
@@ -571,7 +573,8 @@ export namespace Calculation {
         | 'rst'
         | 'sales_tax'
         | 'service_tax'
-        | 'vat';
+        | 'vat'
+        | OtherString;
     }
   }
 }
@@ -884,7 +887,8 @@ export namespace Tax {
           | 'vn_tin'
           | 'za_vat'
           | 'zm_tin'
-          | 'zw_tin';
+          | 'zw_tin'
+          | OtherString;
       }
     }
 

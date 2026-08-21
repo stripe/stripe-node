@@ -294,7 +294,8 @@ export namespace Configuration {
       export type ProrationBehavior =
         | 'always_invoice'
         | 'create_prorations'
-        | 'none';
+        | 'none'
+        | OtherString;
 
       export namespace CancellationReason {
         export type Option =
@@ -311,7 +312,7 @@ export namespace Configuration {
     }
 
     export namespace SubscriptionUpdate {
-      export type BillingCycleAnchor = 'now' | 'unchanged';
+      export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
       export type DefaultAllowedUpdate =
         | 'price'
@@ -336,7 +337,8 @@ export namespace Configuration {
       export type ProrationBehavior =
         | 'always_invoice'
         | 'create_prorations'
-        | 'none';
+        | 'none'
+        | OtherString;
 
       export interface ScheduleAtPeriodEnd {
         /**
@@ -599,7 +601,8 @@ export namespace BillingPortal {
         export type ProrationBehavior =
           | 'always_invoice'
           | 'create_prorations'
-          | 'none';
+          | 'none'
+          | OtherString;
 
         export namespace CancellationReason {
           export type Option =
@@ -616,7 +619,7 @@ export namespace BillingPortal {
       }
 
       export namespace SubscriptionUpdate {
-        export type BillingCycleAnchor = 'now' | 'unchanged';
+        export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
         export type DefaultAllowedUpdate =
           | 'price'
@@ -644,7 +647,8 @@ export namespace BillingPortal {
         export type ProrationBehavior =
           | 'always_invoice'
           | 'create_prorations'
-          | 'none';
+          | 'none'
+          | OtherString;
 
         export interface ScheduleAtPeriodEnd {
           /**
@@ -923,7 +927,8 @@ export namespace BillingPortal {
         export type ProrationBehavior =
           | 'always_invoice'
           | 'create_prorations'
-          | 'none';
+          | 'none'
+          | OtherString;
 
         export namespace CancellationReason {
           export type Option =
@@ -940,7 +945,7 @@ export namespace BillingPortal {
       }
 
       export namespace SubscriptionUpdate {
-        export type BillingCycleAnchor = 'now' | 'unchanged';
+        export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
         export type DefaultAllowedUpdate =
           | 'price'
@@ -968,7 +973,8 @@ export namespace BillingPortal {
         export type ProrationBehavior =
           | 'always_invoice'
           | 'create_prorations'
-          | 'none';
+          | 'none'
+          | OtherString;
 
         export interface ScheduleAtPeriodEnd {
           /**

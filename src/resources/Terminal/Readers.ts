@@ -419,7 +419,7 @@ export namespace Reader {
     | 'verifone_v660p'
     | OtherString;
 
-  export type Status = 'offline' | 'online';
+  export type Status = 'offline' | 'online' | OtherString;
 
   export namespace Action {
     export interface ApiError {
@@ -889,13 +889,15 @@ export namespace Reader {
         | 'token_in_use'
         | 'transfer_source_balance_parameters_mismatch'
         | 'transfers_not_allowed'
-        | 'url_invalid';
+        | 'url_invalid'
+        | OtherString;
 
       export type Type =
         | 'api_error'
         | 'card_error'
         | 'idempotency_error'
-        | 'invalid_request_error';
+        | 'invalid_request_error'
+        | OtherString;
     }
 
     export namespace CollectInputs {
@@ -1059,7 +1061,8 @@ export namespace Reader {
           | 'phone'
           | 'selection'
           | 'signature'
-          | 'text';
+          | 'text'
+          | OtherString;
 
         export namespace Selection {
           export interface Choice {
@@ -1196,7 +1199,11 @@ export namespace Reader {
     }
 
     export namespace RefundPayment {
-      export type Reason = 'duplicate' | 'fraudulent' | 'requested_by_customer';
+      export type Reason =
+        | 'duplicate'
+        | 'fraudulent'
+        | 'requested_by_customer'
+        | OtherString;
 
       export interface RefundPaymentConfig {
         /**

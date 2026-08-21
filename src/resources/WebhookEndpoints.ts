@@ -596,7 +596,8 @@ export namespace WebhookEndpointCreateParams {
     | '2026-04-22.dahlia'
     | '2026-05-27.dahlia'
     | '2026-06-24.dahlia'
-    | '2026-07-29.dahlia';
+    | '2026-07-29.dahlia'
+    | OtherString;
 }
 export interface WebhookEndpointRetrieveParams {
   /**
