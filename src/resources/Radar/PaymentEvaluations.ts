@@ -626,7 +626,8 @@ export namespace PaymentEvaluation {
         | 'low'
         | 'normal'
         | 'not_assessed'
-        | 'unknown';
+        | 'unknown'
+        | OtherString;
     }
   }
 }

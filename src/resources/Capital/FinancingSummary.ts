@@ -125,7 +125,8 @@ export namespace FinancingSummary {
       | 'youlend_de_financing'
       | 'youlend_fr_financing'
       | 'youlend_uk_mca'
-      | 'youlend_us_mca';
+      | 'youlend_us_mca'
+      | OtherString;
   }
 }
 export namespace Capital {

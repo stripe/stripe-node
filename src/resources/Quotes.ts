@@ -2461,7 +2461,10 @@ export namespace Quote {
     status: AutomaticTax.Status | null;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface Computed {
     /**
@@ -2800,7 +2803,7 @@ export namespace Quote {
     }
 
     export namespace Recurring {
-      export type Interval = 'day' | 'month' | 'week' | 'year';
+      export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
       export interface TotalDetails {
         /**
@@ -3154,7 +3157,8 @@ export namespace Quote {
           | 'subscription_expired'
           | 'subscription_schedule_canceled'
           | 'subscription_schedule_changed'
-          | 'subscription_schedule_released';
+          | 'subscription_schedule_released'
+          | OtherString;
       }
     }
   }
@@ -3172,7 +3176,10 @@ export namespace Quote {
       bill_until: BillOnAcceptance.BillUntil | null;
     }
 
-    export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+    export type BillingBehavior =
+      | 'prorate_on_next_phase'
+      | 'prorate_up_front'
+      | OtherString;
 
     export interface BillingMode {
       flexible?: BillingMode.Flexible;
@@ -3192,7 +3199,8 @@ export namespace Quote {
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export namespace BillingMode {
       export interface Flexible {
@@ -3205,7 +3213,7 @@ export namespace Quote {
       export type Type = 'classic' | 'flexible' | OtherString;
 
       export namespace Flexible {
-        export type ProrationDiscounts = 'included' | 'itemized';
+        export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
       }
     }
 
@@ -3346,14 +3354,18 @@ export namespace Quote {
       bill_until: BillOnAcceptance.BillUntil | null;
     }
 
-    export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+    export type BillingBehavior =
+      | 'prorate_on_next_phase'
+      | 'prorate_up_front'
+      | OtherString;
 
     export type EndBehavior = 'cancel' | 'release' | OtherString;
 
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export namespace AppliesTo {
       export type Type =
@@ -3706,7 +3718,10 @@ export namespace QuoteCreateParams {
     liability?: AutomaticTax.Liability;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface Discount {
     /**
@@ -4781,10 +4796,14 @@ export namespace QuoteCreateParams {
         interval_count?: number;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace Recurring {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -4802,7 +4821,10 @@ export namespace QuoteCreateParams {
       bill_until?: BillOnAcceptance.BillUntil;
     }
 
-    export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+    export type BillingBehavior =
+      | 'prorate_on_next_phase'
+      | 'prorate_up_front'
+      | OtherString;
 
     export interface BillingMode {
       /**
@@ -4828,7 +4850,8 @@ export namespace QuoteCreateParams {
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export namespace BillingMode {
       export interface Flexible {
@@ -4841,7 +4864,7 @@ export namespace QuoteCreateParams {
       export type Type = 'classic' | 'flexible' | OtherString;
 
       export namespace Flexible {
-        export type ProrationDiscounts = 'included' | 'itemized';
+        export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
       }
     }
 
@@ -4982,14 +5005,18 @@ export namespace QuoteCreateParams {
       bill_until?: BillOnAcceptance.BillUntil;
     }
 
-    export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+    export type BillingBehavior =
+      | 'prorate_on_next_phase'
+      | 'prorate_up_front'
+      | OtherString;
 
     export type EndBehavior = 'cancel' | 'release' | OtherString;
 
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export namespace AppliesTo {
       export type Type =
@@ -5237,7 +5264,10 @@ export namespace QuoteUpdateParams {
     liability?: AutomaticTax.Liability;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface Discount {
     /**
@@ -6305,10 +6335,14 @@ export namespace QuoteUpdateParams {
         interval_count?: number;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace Recurring {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -6326,7 +6360,10 @@ export namespace QuoteUpdateParams {
       bill_until?: BillOnAcceptance.BillUntil;
     }
 
-    export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+    export type BillingBehavior =
+      | 'prorate_on_next_phase'
+      | 'prorate_up_front'
+      | OtherString;
 
     export type EndBehavior = 'cancel' | 'release' | OtherString;
 
@@ -6340,7 +6377,8 @@ export namespace QuoteUpdateParams {
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export namespace BillOnAcceptance {
       export interface BillFrom {
@@ -6479,14 +6517,18 @@ export namespace QuoteUpdateParams {
       bill_until?: BillOnAcceptance.BillUntil;
     }
 
-    export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+    export type BillingBehavior =
+      | 'prorate_on_next_phase'
+      | 'prorate_up_front'
+      | OtherString;
 
     export type EndBehavior = 'cancel' | 'release' | OtherString;
 
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export namespace AppliesTo {
       export type Type =

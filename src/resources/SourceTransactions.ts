@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface SourceTransaction {
   /**
@@ -189,5 +190,6 @@ export namespace SourceTransaction {
     | 'sepa_debit'
     | 'sofort'
     | 'three_d_secure'
-    | 'wechat';
+    | 'wechat'
+    | OtherString;
 }

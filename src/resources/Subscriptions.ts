@@ -1585,7 +1585,10 @@ export namespace Subscription {
     reason: CancellationDetails.Reason | null;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface InvoiceSettings {
     /**
@@ -1818,7 +1821,7 @@ export namespace Subscription {
     export type Type = 'classic' | 'flexible' | OtherString;
 
     export namespace Flexible {
-      export type ProrationDiscounts = 'included' | 'itemized';
+      export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
     }
   }
 
@@ -1873,7 +1876,7 @@ export namespace Subscription {
       export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -1943,7 +1946,11 @@ export namespace Subscription {
   }
 
   export namespace PauseCollection {
-    export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+    export type Behavior =
+      | 'keep_as_draft'
+      | 'mark_uncollectible'
+      | 'void'
+      | OtherString;
   }
 
   export namespace PaymentSettings {
@@ -2207,7 +2214,8 @@ export namespace Subscription {
           | 'mastercard'
           | 'unionpay'
           | 'unknown'
-          | 'visa';
+          | 'visa'
+          | OtherString;
 
         export type RequestThreeDSecure =
           | 'any'
@@ -2239,7 +2247,14 @@ export namespace Subscription {
           }
 
           export namespace EuBankTransfer {
-            export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+            export type Country =
+              | 'BE'
+              | 'DE'
+              | 'ES'
+              | 'FR'
+              | 'IE'
+              | 'NL'
+              | OtherString;
           }
         }
       }
@@ -2405,7 +2420,7 @@ export namespace Subscription {
   }
 
   export namespace PendingInvoiceItemInterval {
-    export type Interval = 'day' | 'month' | 'week' | 'year';
+    export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
   }
 
   export namespace Prebilling {
@@ -2462,7 +2477,7 @@ export namespace Subscription {
     }
 
     export namespace EndBehavior {
-      export type BillingCycleAnchor = 'now' | 'unchanged';
+      export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
       export type MissingPaymentMethod =
         | 'cancel'
@@ -2789,7 +2804,10 @@ export namespace SubscriptionCreateParams {
     | 'min_period_end'
     | OtherString;
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface Discount {
     /**
@@ -2896,7 +2914,8 @@ export namespace SubscriptionCreateParams {
     | 'allow_incomplete'
     | 'default_incomplete'
     | 'error_if_incomplete'
-    | 'pending_if_incomplete';
+    | 'pending_if_incomplete'
+    | OtherString;
 
   export interface PaymentSettings {
     /**
@@ -3109,7 +3128,11 @@ export namespace SubscriptionCreateParams {
     }
 
     export namespace PriceData {
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
     }
   }
 
@@ -3142,7 +3165,7 @@ export namespace SubscriptionCreateParams {
     export type Type = 'classic' | 'flexible' | OtherString;
 
     export namespace Flexible {
-      export type ProrationDiscounts = 'included' | 'itemized';
+      export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
     }
   }
 
@@ -3192,7 +3215,7 @@ export namespace SubscriptionCreateParams {
       export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -3409,10 +3432,14 @@ export namespace SubscriptionCreateParams {
         interval_count?: number;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace Recurring {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
 
@@ -3706,7 +3733,8 @@ export namespace SubscriptionCreateParams {
           | 'mastercard'
           | 'unionpay'
           | 'unknown'
-          | 'visa';
+          | 'visa'
+          | OtherString;
 
         export type RequestThreeDSecure =
           | 'any'
@@ -3877,7 +3905,8 @@ export namespace SubscriptionCreateParams {
             | 'balances'
             | 'ownership'
             | 'payment_method'
-            | 'transactions';
+            | 'transactions'
+            | OtherString;
 
           export type Prefetch =
             | 'balances'
@@ -3898,7 +3927,7 @@ export namespace SubscriptionCreateParams {
   }
 
   export namespace PendingInvoiceItemInterval {
-    export type Interval = 'day' | 'month' | 'week' | 'year';
+    export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
   }
 
   export namespace Prebilling {
@@ -3919,7 +3948,7 @@ export namespace SubscriptionCreateParams {
     }
 
     export namespace EndBehavior {
-      export type BillingCycleAnchor = 'now' | 'unchanged';
+      export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
       export type MissingPaymentMethod =
         | 'cancel'
@@ -4160,7 +4189,7 @@ export namespace SubscriptionUpdateParams {
     liability?: AutomaticTax.Liability;
   }
 
-  export type BillingCycleAnchor = 'now' | 'unchanged';
+  export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
   export interface BillingSchedule {
     /**
@@ -4209,7 +4238,10 @@ export namespace SubscriptionUpdateParams {
     feedback?: Emptyable<CancellationDetails.Feedback>;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface Discount {
     /**
@@ -4338,7 +4370,8 @@ export namespace SubscriptionUpdateParams {
     | 'allow_incomplete'
     | 'default_incomplete'
     | 'error_if_incomplete'
-    | 'pending_if_incomplete';
+    | 'pending_if_incomplete'
+    | OtherString;
 
   export interface PaymentSettings {
     /**
@@ -4551,7 +4584,11 @@ export namespace SubscriptionUpdateParams {
     }
 
     export namespace PriceData {
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
     }
   }
 
@@ -4619,7 +4656,7 @@ export namespace SubscriptionUpdateParams {
       export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -4837,16 +4874,24 @@ export namespace SubscriptionUpdateParams {
         interval_count?: number;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace Recurring {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
 
   export namespace PauseCollection {
-    export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+    export type Behavior =
+      | 'keep_as_draft'
+      | 'mark_uncollectible'
+      | 'void'
+      | OtherString;
   }
 
   export namespace PaymentSettings {
@@ -5134,7 +5179,8 @@ export namespace SubscriptionUpdateParams {
           | 'mastercard'
           | 'unionpay'
           | 'unknown'
-          | 'visa';
+          | 'visa'
+          | OtherString;
 
         export type RequestThreeDSecure =
           | 'any'
@@ -5305,7 +5351,8 @@ export namespace SubscriptionUpdateParams {
             | 'balances'
             | 'ownership'
             | 'payment_method'
-            | 'transactions';
+            | 'transactions'
+            | OtherString;
 
           export type Prefetch =
             | 'balances'
@@ -5326,7 +5373,7 @@ export namespace SubscriptionUpdateParams {
   }
 
   export namespace PendingInvoiceItemInterval {
-    export type Interval = 'day' | 'month' | 'week' | 'year';
+    export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
   }
 
   export namespace Prebilling {
@@ -5347,7 +5394,7 @@ export namespace SubscriptionUpdateParams {
     }
 
     export namespace EndBehavior {
-      export type BillingCycleAnchor = 'now' | 'unchanged';
+      export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
       export type MissingPaymentMethod =
         | 'cancel'
@@ -5426,7 +5473,10 @@ export namespace SubscriptionListParams {
     enabled: boolean;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export type Status =
     | 'active'
@@ -5522,7 +5572,7 @@ export namespace SubscriptionMigrateParams {
     }
 
     export namespace Flexible {
-      export type ProrationDiscounts = 'included' | 'itemized';
+      export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
     }
   }
 }
@@ -5581,11 +5631,15 @@ export namespace SubscriptionPauseParams {
     }
 
     export namespace OutstandingUsageThrough {
-      export type Type = 'none' | 'now';
+      export type Type = 'none' | 'now' | OtherString;
     }
 
     export namespace UnusedTimeFrom {
-      export type Type = 'item_current_period_start' | 'none' | 'now';
+      export type Type =
+        | 'item_current_period_start'
+        | 'none'
+        | 'now'
+        | OtherString;
     }
   }
 }
@@ -5620,7 +5674,8 @@ export namespace SubscriptionResumeParams {
 
   export type PaymentBehavior =
     | 'resume_on_payment_attempt'
-    | 'resume_on_payment_success';
+    | 'resume_on_payment_success'
+    | OtherString;
 
   export type ProrationBehavior =
     | 'always_invoice'

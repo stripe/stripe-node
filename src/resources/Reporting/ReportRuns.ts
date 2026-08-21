@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {File} from './../Files.js';
-import {PaginationParams, RangeQueryParam} from '../../shared.js';
+import {OtherString, PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class ReportRunResource extends StripeResource {
@@ -248,7 +248,8 @@ export namespace Reporting {
         | 'topup_reversal'
         | 'transfer'
         | 'transfer_reversal'
-        | 'unreconciled_customer_funds';
+        | 'unreconciled_customer_funds'
+        | OtherString;
 
       export type Timezone =
         | 'Africa/Abidjan'
@@ -849,7 +850,8 @@ export namespace Reporting {
         | 'Universal'
         | 'W-SU'
         | 'WET'
-        | 'Zulu';
+        | 'Zulu'
+        | OtherString;
     }
   }
 }

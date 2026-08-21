@@ -857,11 +857,12 @@ export namespace TestHelpers {
           | 'sparda_bank_wien'
           | 'volksbank_gruppe'
           | 'volkskreditbank_ag'
-          | 'vr_bank_braunau';
+          | 'vr_bank_braunau'
+          | OtherString;
       }
 
       export namespace Fpx {
-        export type AccountHolderType = 'company' | 'individual';
+        export type AccountHolderType = 'company' | 'individual' | OtherString;
 
         export type Bank =
           | 'affin_bank'
@@ -888,7 +889,8 @@ export namespace TestHelpers {
           | 'public_bank'
           | 'rhb'
           | 'standard_chartered'
-          | 'uob';
+          | 'uob'
+          | OtherString;
       }
 
       export namespace IdBankTransfer {
@@ -922,7 +924,8 @@ export namespace TestHelpers {
           | 'sns_bank'
           | 'triodos_bank'
           | 'van_lanschot'
-          | 'yoursafe';
+          | 'yoursafe'
+          | OtherString;
       }
 
       export namespace Klarna {

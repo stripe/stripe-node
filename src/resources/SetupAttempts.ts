@@ -108,7 +108,7 @@ export interface SetupAttempt {
   usage: string;
 }
 export namespace SetupAttempt {
-  export type FlowDirection = 'inbound' | 'outbound';
+  export type FlowDirection = 'inbound' | 'outbound' | OtherString;
 
   export interface PaymentMethodDetails {
     acss_debit?: PaymentMethodDetails.AcssDebit;
@@ -576,7 +576,7 @@ export namespace SetupAttempt {
     export interface UsBankAccount {}
 
     export namespace Bancontact {
-      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
     }
 
     export namespace Card {
@@ -692,7 +692,7 @@ export namespace SetupAttempt {
 
         export interface GooglePay {}
 
-        export type Type = 'apple_pay' | 'google_pay' | 'link';
+        export type Type = 'apple_pay' | 'google_pay' | 'link' | OtherString;
       }
     }
 
@@ -741,7 +741,8 @@ export namespace SetupAttempt {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
 
       export type Bic =
         | 'ABNANL2A'
@@ -764,11 +765,12 @@ export namespace SetupAttempt {
         | 'REVOIE23'
         | 'REVOLT21'
         | 'SNSBNL2A'
-        | 'TRIONL2U';
+        | 'TRIONL2U'
+        | OtherString;
     }
 
     export namespace Sofort {
-      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
     }
   }
 
@@ -973,13 +975,15 @@ export namespace SetupAttempt {
       | 'transfers_not_allowed'
       | 'url_invalid'
       | 'v2_account_disconnection_unsupported'
-      | 'v2_account_missing_configuration';
+      | 'v2_account_missing_configuration'
+      | OtherString;
 
     export type Type =
       | 'api_error'
       | 'card_error'
       | 'idempotency_error'
-      | 'invalid_request_error';
+      | 'invalid_request_error'
+      | OtherString;
   }
 }
 export interface SetupAttemptListParams extends PaginationParams {

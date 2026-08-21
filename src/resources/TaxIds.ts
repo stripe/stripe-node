@@ -282,7 +282,8 @@ export namespace TaxId {
     | 'vn_tin'
     | 'za_vat'
     | 'zm_tin'
-    | 'zw_tin';
+    | 'zw_tin'
+    | OtherString;
 
   export interface Verification {
     /**
@@ -311,7 +312,12 @@ export namespace TaxId {
   }
 
   export namespace Verification {
-    export type Status = 'pending' | 'unavailable' | 'unverified' | 'verified';
+    export type Status =
+      | 'pending'
+      | 'unavailable'
+      | 'unverified'
+      | 'verified'
+      | OtherString;
   }
 }
 export interface TaxIdCreateParams {
@@ -453,7 +459,8 @@ export namespace TaxIdCreateParams {
     | 'vn_tin'
     | 'za_vat'
     | 'zm_tin'
-    | 'zw_tin';
+    | 'zw_tin'
+    | OtherString;
 
   export interface Owner {
     /**
