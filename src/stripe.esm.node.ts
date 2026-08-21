@@ -210,20 +210,24 @@ import {
   CustomerCreateBalanceTransactionParams,
   CustomerCreateFundingInstructionsParams,
   CustomerCreateSourceParams,
+  CustomerCreateTaxExemptionParams,
   CustomerCreateTaxIdParams,
   CustomerDeleteDiscountParams,
   CustomerDeleteSourceParams,
+  CustomerDeleteTaxExemptionParams,
   CustomerDeleteTaxIdParams,
   CustomerListBalanceTransactionsParams,
   CustomerListCashBalanceTransactionsParams,
   CustomerListPaymentMethodsParams,
   CustomerListSourcesParams,
+  CustomerListTaxExemptionsParams,
   CustomerListTaxIdsParams,
   CustomerRetrieveBalanceTransactionParams,
   CustomerRetrieveCashBalanceParams,
   CustomerRetrieveCashBalanceTransactionParams,
   CustomerRetrievePaymentMethodParams,
   CustomerRetrieveSourceParams,
+  CustomerRetrieveTaxExemptionParams,
   CustomerRetrieveTaxIdParams,
   CustomerSearchParams,
   CustomerSerializeBatchCreateParams,
@@ -509,9 +513,9 @@ import {
 } from './resources/PaymentPlans.js';
 import {
   PaymentRecord,
-  PaymentRecordCreateParams,
   PaymentRecordRetrieveParams,
   PaymentRecordListParams,
+  PaymentRecordReportDisputeParams,
   PaymentRecordReportPaymentParams,
   PaymentRecordReportPaymentAttemptParams,
   PaymentRecordReportPaymentAttemptCanceledParams,
@@ -804,6 +808,10 @@ import {
   CustomerSource,
   DeletedCustomerSource,
 } from './resources/CustomerSources.js';
+import {
+  CustomerTaxExemption,
+  DeletedCustomerTaxExemption,
+} from './resources/CustomerTaxExemptions.js';
 import {InvoiceLineItem} from './resources/InvoiceLineItems.js';
 import {PaymentIntentAmountDetailsLineItem} from './resources/PaymentIntentAmountDetailsLineItems.js';
 import {
@@ -2218,20 +2226,24 @@ export declare namespace Stripe {
     CustomerCreateBalanceTransactionParams,
     CustomerCreateFundingInstructionsParams,
     CustomerCreateSourceParams,
+    CustomerCreateTaxExemptionParams,
     CustomerCreateTaxIdParams,
     CustomerDeleteDiscountParams,
     CustomerDeleteSourceParams,
+    CustomerDeleteTaxExemptionParams,
     CustomerDeleteTaxIdParams,
     CustomerListBalanceTransactionsParams,
     CustomerListCashBalanceTransactionsParams,
     CustomerListPaymentMethodsParams,
     CustomerListSourcesParams,
+    CustomerListTaxExemptionsParams,
     CustomerListTaxIdsParams,
     CustomerRetrieveBalanceTransactionParams,
     CustomerRetrieveCashBalanceParams,
     CustomerRetrieveCashBalanceTransactionParams,
     CustomerRetrievePaymentMethodParams,
     CustomerRetrieveSourceParams,
+    CustomerRetrieveTaxExemptionParams,
     CustomerRetrieveTaxIdParams,
     CustomerSearchParams,
     CustomerSerializeBatchCreateParams,
@@ -2519,9 +2531,9 @@ export declare namespace Stripe {
   };
   export {
     PaymentRecord,
-    PaymentRecordCreateParams,
     PaymentRecordRetrieveParams,
     PaymentRecordListParams,
+    PaymentRecordReportDisputeParams,
     PaymentRecordReportPaymentParams,
     PaymentRecordReportPaymentAttemptParams,
     PaymentRecordReportPaymentAttemptCanceledParams,
@@ -2792,6 +2804,7 @@ export declare namespace Stripe {
   export {CashBalance};
   export {CustomerCashBalanceTransaction};
   export {CustomerSource, DeletedCustomerSource};
+  export {CustomerTaxExemption, DeletedCustomerTaxExemption};
   export {InvoiceLineItem};
   export {PaymentIntentAmountDetailsLineItem};
   export {ProductFeature, DeletedProductFeature};

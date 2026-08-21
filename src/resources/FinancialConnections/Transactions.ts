@@ -108,15 +108,11 @@ export interface Transaction {
 }
 export namespace Transaction {
   export interface Classification {
-    /**
-     * Money movement classification labels for this transaction.
-     */
-    money_movement: Classification.MoneyMovement | null;
+    credit?: Classification.Credit;
 
-    /**
-     * Personal finance classification labels for this transaction.
-     */
-    personal_finance: Classification.PersonalFinance | null;
+    money_movement?: Classification.MoneyMovement;
+
+    personal_finance?: Classification.PersonalFinance;
 
     /**
      * The taxonomy type for this classification entry.
@@ -143,6 +139,23 @@ export namespace Transaction {
   }
 
   export namespace Classification {
+    export interface Credit {
+      /**
+       * Stripe's confidence in this classification.
+       */
+      confidence_level: Credit.ConfidenceLevel | null;
+
+      /**
+       * The detailed category label for this transaction.
+       */
+      detailed_label: string | null;
+
+      /**
+       * The primary category label for this transaction.
+       */
+      primary_label: string | null;
+    }
+
     export interface MoneyMovement {
       /**
        * Stripe's confidence in this classification.
@@ -175,6 +188,10 @@ export namespace Transaction {
        * The primary category label for this transaction.
        */
       primary_label: string | null;
+    }
+
+    export namespace Credit {
+      export type ConfidenceLevel = 'high' | 'low' | 'medium' | 'very_high';
     }
 
     export namespace MoneyMovement {

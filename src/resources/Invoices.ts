@@ -6840,7 +6840,7 @@ export namespace InvoiceCreatePreviewParams {
       applies_to?: Array<BillingSchedule.AppliesTo>;
 
       /**
-       * The end date for the billing schedule.
+       * The end date for the billing schedule. You must not set this earlier than current period end for every applicable subscription item.
        */
       bill_until?: BillingSchedule.BillUntil;
 
@@ -8829,7 +8829,7 @@ export namespace InvoiceCreatePreviewParams {
       applies_to?: Array<BillingSchedule.AppliesTo>;
 
       /**
-       * The end date for the billing schedule.
+       * The end date for the billing schedule. You must not set this earlier than current period end for every applicable subscription item.
        */
       bill_until?: BillingSchedule.BillUntil;
 

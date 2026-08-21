@@ -277,7 +277,7 @@ export namespace Cardholder {
   export namespace Individual {
     export interface CardIssuing {
       /**
-       * Information about cardholder acceptance of Celtic [Authorized User Terms](https://stripe.com/docs/issuing/cards#accept-authorized-user-terms). Required for cards backed by a Celtic program.
+       * Information about cardholder acceptance of Celtic [Authorized User Terms](https://docs.stripe.com/issuing/compliance-us#issuing-terms). Required for cards backed by a Celtic program.
        */
       user_terms_acceptance: CardIssuing.UserTermsAcceptance | null;
     }
@@ -1496,7 +1496,7 @@ export namespace Issuing {
     export namespace Individual {
       export interface CardIssuing {
         /**
-         * Information about cardholder acceptance of Celtic [Authorized User Terms](https://stripe.com/docs/issuing/cards#accept-authorized-user-terms). Required for cards backed by a Celtic program.
+         * Information about cardholder acceptance of Celtic [Authorized User Terms](https://docs.stripe.com/issuing/compliance-us#issuing-terms). Required for cards backed by a Celtic program.
          */
         user_terms_acceptance?: CardIssuing.UserTermsAcceptance;
       }
@@ -2691,7 +2691,7 @@ export namespace Issuing {
     export namespace Individual {
       export interface CardIssuing {
         /**
-         * Information about cardholder acceptance of Celtic [Authorized User Terms](https://stripe.com/docs/issuing/cards#accept-authorized-user-terms). Required for cards backed by a Celtic program.
+         * Information about cardholder acceptance of Celtic [Authorized User Terms](https://docs.stripe.com/issuing/compliance-us#issuing-terms). Required for cards backed by a Celtic program.
          */
         user_terms_acceptance?: CardIssuing.UserTermsAcceptance;
       }

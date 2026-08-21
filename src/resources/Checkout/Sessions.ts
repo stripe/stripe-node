@@ -1203,6 +1203,11 @@ export namespace Session {
     enabled: boolean;
 
     /**
+     * How `automatic_tax` was set (`explicit`, `managed_payments`, or `tax_integration_configuration`) and why it may have been disabled.
+     */
+    enablement_details?: AutomaticTax.EnablementDetails | null;
+
+    /**
      * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
      */
     liability: AutomaticTax.Liability | null;
@@ -1677,8 +1682,6 @@ export namespace Session {
 
     sepa_debit?: PaymentMethodOptions.SepaDebit;
 
-    sequra?: PaymentMethodOptions.Sequra;
-
     sofort?: PaymentMethodOptions.Sofort;
 
     sunbit?: PaymentMethodOptions.Sunbit;
@@ -1953,6 +1956,18 @@ export namespace Session {
   export namespace AutomaticTax {
     export type AddressCollectionPrecision = 'full' | 'minimal';
 
+    export interface EnablementDetails {
+      /**
+       * Present when `source=tax_integration_configuration` and `automatic_tax[enabled]=false`.
+       */
+      integration_configuration_disabled_reason: EnablementDetails.IntegrationConfigurationDisabledReason | null;
+
+      /**
+       * How `automatic_tax` was set: `explicit`, `managed_payments`, or `tax_integration_configuration`.
+       */
+      source: EnablementDetails.Source;
+    }
+
     export interface Liability {
       /**
        * The connected account being referenced when `type` is `account`.
@@ -1970,6 +1985,20 @@ export namespace Session {
       | 'failed'
       | 'requires_location_inputs'
       | OtherString;
+
+    export namespace EnablementDetails {
+      export interface IntegrationConfigurationDisabledReason {
+        /**
+         * The parameter that prevented `automatic_tax` from being enabled (e.g. `line_items[][tax_rates]`).
+         */
+        conflicting_field: string;
+      }
+
+      export type Source =
+        | 'explicit'
+        | 'managed_payments'
+        | 'tax_integration_configuration';
+    }
 
     export namespace Liability {
       export type Type = 'account' | 'application' | 'self' | OtherString;
@@ -3608,13 +3637,6 @@ export namespace Session {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
-    }
-
-    export interface Sequra {
-      /**
-       * Controls when the funds will be captured from the customer's account.
-       */
-      capture_method?: 'manual';
     }
 
     export interface Sofort {
@@ -5486,26 +5508,17 @@ export namespace Checkout {
       receipt_email?: string;
 
       /**
-       * Indicates that you intend to [make future payments](https://docs.stripe.com/payments/payment-intents#future-usage) with the payment
-       * method collected by this Checkout Session.
+       * Indicates that you intend to [make future payments](https://docs.stripe.com/payments/payment-intents#future-usage) with the payment method collected by this Checkout Session.
        *
-       * When setting this to `on_session`, Checkout will show a notice to the
-       * customer that their payment details will be saved.
+       * When setting this to `on_session`, Checkout will show a notice to the customer that their payment details will be saved.
        *
-       * When setting this to `off_session`, Checkout will show a notice to the
-       * customer that their payment details will be saved and used for future
-       * payments.
+       * When setting this to `off_session`, Checkout will show a notice to the customer that their payment details will be saved and used for future payments.
        *
-       * If a Customer has been provided or Checkout creates a new Customer,
-       * Checkout will attach the payment method to the Customer.
+       * If a Customer has been provided or Checkout creates a new Customer, Checkout will attach the payment method to the Customer.
        *
-       * If Checkout does not create a Customer, the payment method is not attached
-       * to a Customer. To reuse the payment method, you can retrieve it from the
-       * Checkout Session's PaymentIntent.
+       * If Checkout does not create a Customer, the payment method is not attached to a Customer. To reuse the payment method, you can retrieve it from the Checkout Session's PaymentIntent.
        *
-       * When processing card payments, Checkout also uses `setup_future_usage`
-       * to dynamically optimize your payment flow and comply with regional
-       * legislation and network rules, such as SCA.
+       * When processing card payments, Checkout also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as SCA.
        */
       setup_future_usage?: PaymentIntentData.SetupFutureUsage;
 
