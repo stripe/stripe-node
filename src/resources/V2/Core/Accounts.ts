@@ -602,6 +602,23 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            blik_recurring_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                             boleto_payments: {
                               kind: 'object',
                               fields: {
@@ -2768,6 +2785,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                       },
+                      blik_recurring_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
                       boleto_payments: {
                         kind: 'object',
                         fields: {
@@ -4810,6 +4844,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         blik_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        blik_recurring_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -6936,6 +6987,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        blik_recurring_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         boleto_payments: {
                           kind: 'object',
                           fields: {
@@ -9011,6 +9079,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         blik_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        blik_recurring_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -12715,6 +12800,11 @@ export namespace Account {
         blik_payments?: Capabilities.BlikPayments;
 
         /**
+         * Allow the merchant to process recurring BLIK payments.
+         */
+        blik_recurring_payments?: Capabilities.BlikRecurringPayments;
+
+        /**
          * Allow the merchant to process Boleto payments.
          */
         boleto_payments?: Capabilities.BoletoPayments;
@@ -13150,6 +13240,23 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<BlikPayments.StatusDetail>;
+        }
+
+        export interface BlikRecurringPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: BlikRecurringPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: BlikRecurringPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<BlikRecurringPayments.StatusDetail>;
         }
 
         export interface BoletoPayments {
@@ -14385,6 +14492,76 @@ export namespace Account {
         }
 
         export namespace BlikPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace BlikRecurringPayments {
           export interface Protections {
             /**
              * Protection details for PSP migration.
@@ -26523,6 +26700,11 @@ export namespace V2 {
             blik_payments?: Capabilities.BlikPayments;
 
             /**
+             * Allow the merchant to process recurring BLIK payments.
+             */
+            blik_recurring_payments?: Capabilities.BlikRecurringPayments;
+
+            /**
              * Allow the merchant to process Boleto payments.
              */
             boleto_payments?: Capabilities.BoletoPayments;
@@ -26891,6 +27073,18 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: BlikPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface BlikRecurringPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: BlikRecurringPayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -27481,6 +27675,24 @@ export namespace V2 {
             }
 
             export namespace BlikPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace BlikRecurringPayments {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -33937,6 +34149,11 @@ export namespace V2 {
             blik_payments?: Capabilities.BlikPayments;
 
             /**
+             * Allow the merchant to process recurring BLIK payments.
+             */
+            blik_recurring_payments?: Capabilities.BlikRecurringPayments;
+
+            /**
              * Allow the merchant to process Boleto payments.
              */
             boleto_payments?: Capabilities.BoletoPayments;
@@ -34305,6 +34522,18 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: BlikPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface BlikRecurringPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: BlikRecurringPayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -34895,6 +35124,24 @@ export namespace V2 {
             }
 
             export namespace BlikPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace BlikRecurringPayments {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.

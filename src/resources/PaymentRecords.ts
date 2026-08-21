@@ -4,10 +4,10 @@ import {StripeResource} from '../StripeResource.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {Mandate} from './Mandates.js';
 import {
+  PaginationParams,
   Emptyable,
   MetadataParam,
   OtherString,
-  PaginationParams,
   AddressParam,
   Metadata,
   Address,
@@ -70,9 +70,9 @@ export class PaymentRecordResource extends StripeResource {
    * Report that the most recent payment attempt on the specified Payment Record
    *  was disputed.
    */
-  create(
+  reportDispute(
     id: string,
-    params: PaymentRecordCreateParams,
+    params: PaymentRecordReportDisputeParams,
     options?: RequestOptions
   ): Promise<Response<PaymentRecord>> {
     return this._makeRequest(
@@ -551,8 +551,6 @@ export namespace PaymentRecord {
     sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
-
-    sequra?: PaymentMethodDetails.Sequra;
 
     shopeepay?: PaymentMethodDetails.Shopeepay;
 
@@ -1954,13 +1952,6 @@ export namespace PaymentRecord {
       mandate: string | null;
     }
 
-    export interface Sequra {
-      /**
-       * The SeQura transaction ID associated with this payment.
-       */
-      transaction_id: string | null;
-    }
-
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -3026,21 +3017,43 @@ export namespace PaymentRecord {
       | OtherString;
   }
 }
-export interface PaymentRecordCreateParams {
+export interface PaymentRecordRetrieveParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export interface PaymentRecordListParams extends PaginationParams {
+  /**
+   * Only return Payment Records that were created after this unix timestamp.
+   */
+  created_after?: number;
+
+  /**
+   * Only return Payment Records that were created before this unix timestamp.
+   */
+  created_before?: number;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export interface PaymentRecordReportDisputeParams {
   /**
    * The amount that has been lost to the customer due to disputes on this payment.
    */
-  amount: PaymentRecordCreateParams.Amount;
+  amount: PaymentRecordReportDisputeParams.Amount;
 
   /**
    * Processor information for this payment.
    */
-  processor_details: PaymentRecordCreateParams.ProcessorDetails;
+  processor_details: PaymentRecordReportDisputeParams.ProcessorDetails;
 
   /**
    * Information about the dispute closing.
    */
-  closed?: PaymentRecordCreateParams.Closed;
+  closed?: PaymentRecordReportDisputeParams.Closed;
 
   /**
    * Specifies which fields in the response should be expanded.
@@ -3050,7 +3063,7 @@ export interface PaymentRecordCreateParams {
   /**
    * Information about the dispute funding event.
    */
-  funded?: PaymentRecordCreateParams.Funded;
+  funded?: PaymentRecordReportDisputeParams.Funded;
 
   /**
    * When the reported payment was initiated. Measured in seconds since the Unix epoch.
@@ -3065,9 +3078,9 @@ export interface PaymentRecordCreateParams {
   /**
    * The reason the payment was disputed.
    */
-  reason?: PaymentRecordCreateParams.Reason;
+  reason?: PaymentRecordReportDisputeParams.Reason;
 }
-export namespace PaymentRecordCreateParams {
+export namespace PaymentRecordReportDisputeParams {
   export interface Amount {
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -3156,28 +3169,6 @@ export namespace PaymentRecordCreateParams {
       dispute_reference: string;
     }
   }
-}
-export interface PaymentRecordRetrieveParams {
-  /**
-   * Specifies which fields in the response should be expanded.
-   */
-  expand?: Array<string>;
-}
-export interface PaymentRecordListParams extends PaginationParams {
-  /**
-   * Only return Payment Records that were created after this unix timestamp.
-   */
-  created_after?: number;
-
-  /**
-   * Only return Payment Records that were created before this unix timestamp.
-   */
-  created_before?: number;
-
-  /**
-   * Specifies which fields in the response should be expanded.
-   */
-  expand?: Array<string>;
 }
 export interface PaymentRecordReportPaymentParams {
   /**

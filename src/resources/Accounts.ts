@@ -1002,11 +1002,6 @@ export namespace Account {
     sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
     /**
-     * The status of the SeQura capability of the account, or whether the account can directly process SeQura payments.
-     */
-    sequra_payments?: Capabilities.SequraPayments;
-
-    /**
      * The status of the ShopeePay capability of the account, or whether the account can directly process ShopeePay payments.
      */
     shopeepay_payments?: Capabilities.ShopeepayPayments;
@@ -1727,12 +1722,6 @@ export namespace Account {
       | 'pending'
       | OtherString;
 
-    export type SequraPayments =
-      | 'active'
-      | 'inactive'
-      | 'pending'
-      | OtherString;
-
     export type ShopeepayPayments =
       | 'active'
       | 'inactive'
@@ -2124,6 +2113,8 @@ export namespace Account {
        */
       code: Error.Code;
 
+      details?: Error.Details;
+
       /**
        * An informative message that indicates the error type and provides additional details about the error.
        */
@@ -2236,6 +2227,13 @@ export namespace Account {
         | 'verification_requires_additional_memorandum_of_associations'
         | 'verification_requires_additional_proof_of_registration'
         | 'verification_supportability';
+
+      export interface Details {
+        /**
+         * The rejection code as received from our payment method partner.
+         */
+        partner_rejection_code?: string;
+      }
     }
   }
 
@@ -2275,6 +2273,8 @@ export namespace Account {
        */
       code: Error.Code;
 
+      details?: Error.Details;
+
       /**
        * An informative message that indicates the error type and provides additional details about the error.
        */
@@ -2387,6 +2387,13 @@ export namespace Account {
         | 'verification_requires_additional_memorandum_of_associations'
         | 'verification_requires_additional_proof_of_registration'
         | 'verification_supportability';
+
+      export interface Details {
+        /**
+         * The rejection code as received from our payment method partner.
+         */
+        partner_rejection_code?: string;
+      }
     }
   }
 

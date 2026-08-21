@@ -523,8 +523,6 @@ export namespace PaymentAttemptRecord {
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
-    sequra?: PaymentMethodDetails.Sequra;
-
     shopeepay?: PaymentMethodDetails.Shopeepay;
 
     sofort?: PaymentMethodDetails.Sofort;
@@ -1925,13 +1923,6 @@ export namespace PaymentAttemptRecord {
       mandate: string | null;
     }
 
-    export interface Sequra {
-      /**
-       * The SeQura transaction ID associated with this payment.
-       */
-      transaction_id: string | null;
-    }
-
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -3057,11 +3048,33 @@ export interface PaymentAttemptRecordReportAuthorizedParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
+   * Payment evaluations associated with this reported payment.
+   */
+  payment_evaluations?: Array<string>;
+
+  /**
+   * Information about the Payment Method debited for this payment.
+   */
+  payment_method_details?: PaymentAttemptRecordReportAuthorizedParams.PaymentMethodDetails;
+
+  /**
    * Processor information for this payment.
    */
   processor_details?: PaymentAttemptRecordReportAuthorizedParams.ProcessorDetails;
 }
 export namespace PaymentAttemptRecordReportAuthorizedParams {
+  export interface PaymentMethodDetails {
+    /**
+     * Information about the card payment method used to make this payment.
+     */
+    card?: PaymentMethodDetails.Card;
+
+    /**
+     * The type of the payment method details. An additional hash is included on the payment_method_details with a name matching this value. It contains additional information specific to the type.
+     */
+    type: 'card';
+  }
+
   export interface ProcessorDetails {
     /**
      * Information about the custom processor used to make this payment.
@@ -3072,6 +3085,57 @@ export namespace PaymentAttemptRecordReportAuthorizedParams {
      * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
      */
     type: 'custom';
+  }
+
+  export namespace PaymentMethodDetails {
+    export interface Card {
+      /**
+       * Verification checks performed on the card.
+       */
+      checks?: Card.Checks;
+    }
+
+    export namespace Card {
+      export interface Checks {
+        /**
+         * The result of the check on the cardholder's address line 1.
+         */
+        address_line1_check?: Checks.AddressLine1Check;
+
+        /**
+         * The result of the check on the cardholder's postal code.
+         */
+        address_postal_code_check?: Checks.AddressPostalCodeCheck;
+
+        /**
+         * The result of the check on the card's CVC.
+         */
+        cvc_check?: Checks.CvcCheck;
+      }
+
+      export namespace Checks {
+        export type AddressLine1Check =
+          | 'fail'
+          | 'pass'
+          | 'unavailable'
+          | 'unchecked'
+          | OtherString;
+
+        export type AddressPostalCodeCheck =
+          | 'fail'
+          | 'pass'
+          | 'unavailable'
+          | 'unchecked'
+          | OtherString;
+
+        export type CvcCheck =
+          | 'fail'
+          | 'pass'
+          | 'unavailable'
+          | 'unchecked'
+          | OtherString;
+      }
+    }
   }
 
   export namespace ProcessorDetails {

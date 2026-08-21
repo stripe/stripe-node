@@ -2786,7 +2786,7 @@ export interface SubscriptionCreateParams {
   billing_mode?: SubscriptionCreateParams.BillingMode;
 
   /**
-   * Sets the billing schedules for the subscription.
+   * An array of billing schedules, which allow you to bill customers in advance for multiple service periods. Requires flexible billing mode and API version 2026-05-27.dahlia or later. Learn more about [prebilling](https://docs.stripe.com/billing/subscriptions/prebilling).
    */
   billing_schedules?: Array<SubscriptionCreateParams.BillingSchedule>;
 
@@ -3038,7 +3038,7 @@ export namespace SubscriptionCreateParams {
     applies_to?: Array<BillingSchedule.AppliesTo>;
 
     /**
-     * The end date for the billing schedule.
+     * The end date for the billing schedule. You must not set this earlier than current period end for every applicable subscription item.
      */
     bill_until: BillingSchedule.BillUntil;
 
@@ -4461,7 +4461,7 @@ export interface SubscriptionUpdateParams {
   billing_cycle_anchor?: SubscriptionUpdateParams.BillingCycleAnchor;
 
   /**
-   * Sets the billing schedules for the subscription.
+   * An array of billing schedules, which allow you to bill customers in advance for multiple service periods. Requires flexible billing mode and API version 2026-05-27.dahlia or later. Learn more about [prebilling](https://docs.stripe.com/billing/subscriptions/prebilling).
    */
   billing_schedules?: Emptyable<
     Array<SubscriptionUpdateParams.BillingSchedule>
@@ -4673,7 +4673,7 @@ export namespace SubscriptionUpdateParams {
     applies_to?: Array<BillingSchedule.AppliesTo>;
 
     /**
-     * The end date for the billing schedule.
+     * The end date for the billing schedule. You must not set this earlier than current period end for every applicable subscription item.
      */
     bill_until?: BillingSchedule.BillUntil;
 

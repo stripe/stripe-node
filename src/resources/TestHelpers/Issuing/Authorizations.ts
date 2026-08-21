@@ -1477,6 +1477,11 @@ export namespace TestHelpers {
       network_data?: AuthorizationCreateParams.NetworkData;
 
       /**
+       * The point-of-sale initiation condition for this test authorization.
+       */
+      pos_condition?: AuthorizationCreateParams.PosCondition;
+
+      /**
        * Stripe's assessment of the fraud risk for this authorization.
        */
       risk_assessment?: AuthorizationCreateParams.RiskAssessment;
@@ -1674,6 +1679,16 @@ export namespace TestHelpers {
          */
         acquiring_institution_id?: string;
       }
+
+      export type PosCondition =
+        | 'account_verification'
+        | 'card_not_present'
+        | 'card_present'
+        | 'e_commerce'
+        | 'key_entered_pos'
+        | 'other'
+        | 'pin_entered'
+        | 'recurring_or_moto';
 
       export interface RiskAssessment {
         /**
