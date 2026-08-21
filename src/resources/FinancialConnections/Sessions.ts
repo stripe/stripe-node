@@ -270,7 +270,8 @@ export namespace FinancialConnections {
       | 'balances'
       | 'ownership'
       | 'payment_method'
-      | 'transactions';
+      | 'transactions'
+      | OtherString;
 
     export interface Filters {
       /**

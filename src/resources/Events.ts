@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams, RangeQueryParam} from '../shared.js';
+import {PaginationParams, RangeQueryParam, OtherString} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class EventResource extends StripeResource {
@@ -375,7 +375,8 @@ export namespace Event {
     | 'treasury.received_credit.created'
     | 'treasury.received_credit.failed'
     | 'treasury.received_credit.succeeded'
-    | 'treasury.received_debit.created';
+    | 'treasury.received_debit.created'
+    | OtherString;
 
   export namespace Data {
     export interface Object {}

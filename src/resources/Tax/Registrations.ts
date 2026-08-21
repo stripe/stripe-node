@@ -1942,7 +1942,8 @@ export namespace Registration {
         | 'parking_tax'
         | 'state_communications_tax'
         | 'state_retail_delivery_fee'
-        | 'state_sales_tax';
+        | 'state_sales_tax'
+        | OtherString;
 
       export namespace StateSalesTax {
         export interface Election {
@@ -4670,7 +4671,8 @@ export namespace Tax {
           | 'parking_tax'
           | 'state_communications_tax'
           | 'state_retail_delivery_fee'
-          | 'state_sales_tax';
+          | 'state_sales_tax'
+          | OtherString;
 
         export namespace StateSalesTax {
           export interface Election {

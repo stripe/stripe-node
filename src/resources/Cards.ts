@@ -204,7 +204,7 @@ export namespace Card {
     | 'unspecified'
     | OtherString;
 
-  export type AvailablePayoutMethod = 'instant' | 'standard';
+  export type AvailablePayoutMethod = 'instant' | 'standard' | OtherString;
 
   export interface Networks {
     /**

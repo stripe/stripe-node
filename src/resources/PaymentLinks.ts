@@ -994,12 +994,12 @@ export namespace PaymentLink {
       position: PaymentMethodReuseAgreement.Position;
     }
 
-    export type Promotions = 'auto' | 'none';
+    export type Promotions = 'auto' | 'none' | OtherString;
 
-    export type TermsOfService = 'none' | 'required';
+    export type TermsOfService = 'none' | 'required' | OtherString;
 
     export namespace PaymentMethodReuseAgreement {
-      export type Position = 'auto' | 'hidden';
+      export type Position = 'auto' | 'hidden' | OtherString;
     }
   }
 
@@ -2371,7 +2371,10 @@ export namespace PaymentLinkCreateParams {
       }
 
       export namespace RenderingOptions {
-        export type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+        export type AmountTaxDisplay =
+          | 'exclude_tax'
+          | 'include_inclusive_tax'
+          | OtherString;
       }
     }
   }
@@ -2476,10 +2479,14 @@ export namespace PaymentLinkCreateParams {
         interval_count?: number;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace Recurring {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -3613,7 +3620,10 @@ export namespace PaymentLinkUpdateParams {
       }
 
       export namespace RenderingOptions {
-        export type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+        export type AmountTaxDisplay =
+          | 'exclude_tax'
+          | 'include_inclusive_tax'
+          | OtherString;
       }
     }
   }
