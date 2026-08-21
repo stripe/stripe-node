@@ -500,7 +500,8 @@ export namespace QuotePreviewInvoice {
     | 'subscription_cycle'
     | 'subscription_threshold'
     | 'subscription_update'
-    | 'upcoming';
+    | 'upcoming'
+    | OtherString;
 
   export type CollectionMethod =
     | 'charge_automatically'
@@ -555,7 +556,7 @@ export namespace QuotePreviewInvoice {
     tracking_number?: string | null;
   }
 
-  export type CustomerTaxExempt = 'exempt' | 'none' | 'reverse';
+  export type CustomerTaxExempt = 'exempt' | 'none' | 'reverse' | OtherString;
 
   export interface CustomerTaxId {
     /**
@@ -942,7 +943,7 @@ export namespace QuotePreviewInvoice {
   }
 
   export namespace AmountsDue {
-    export type Status = 'open' | 'paid' | 'past_due';
+    export type Status = 'open' | 'paid' | 'past_due' | OtherString;
   }
 
   export namespace AppliesTo {
@@ -1097,7 +1098,8 @@ export namespace QuotePreviewInvoice {
       | 'vn_tin'
       | 'za_vat'
       | 'zm_tin'
-      | 'zw_tin';
+      | 'zw_tin'
+      | OtherString;
   }
 
   export namespace Issuer {
@@ -1305,13 +1307,15 @@ export namespace QuotePreviewInvoice {
       | 'transfers_not_allowed'
       | 'url_invalid'
       | 'v2_account_disconnection_unsupported'
-      | 'v2_account_missing_configuration';
+      | 'v2_account_missing_configuration'
+      | OtherString;
 
     export type Type =
       | 'api_error'
       | 'card_error'
       | 'idempotency_error'
-      | 'invalid_request_error';
+      | 'invalid_request_error'
+      | OtherString;
   }
 
   export namespace Parent {
@@ -1361,7 +1365,11 @@ export namespace QuotePreviewInvoice {
       }
 
       export namespace PauseCollection {
-        export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        export type Behavior =
+          | 'keep_as_draft'
+          | 'mark_uncollectible'
+          | 'void'
+          | OtherString;
       }
     }
   }
@@ -1612,7 +1620,14 @@ export namespace QuotePreviewInvoice {
           }
 
           export namespace EuBankTransfer {
-            export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+            export type Country =
+              | 'BE'
+              | 'DE'
+              | 'ES'
+              | 'FR'
+              | 'IE'
+              | 'NL'
+              | OtherString;
           }
         }
       }
@@ -1754,7 +1769,7 @@ export namespace QuotePreviewInvoice {
     }
 
     export namespace Pdf {
-      export type PageSize = 'a4' | 'auto' | 'letter';
+      export type PageSize = 'a4' | 'auto' | 'letter' | OtherString;
     }
   }
 
@@ -1827,7 +1842,7 @@ export namespace QuotePreviewInvoice {
   }
 
   export namespace TotalTax {
-    export type TaxBehavior = 'exclusive' | 'inclusive';
+    export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
 
     export interface TaxRateDetails {
       /**

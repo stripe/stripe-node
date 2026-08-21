@@ -448,7 +448,7 @@ export namespace InvoiceItem {
         invoice_line_items: Array<string>;
       }
 
-      export type Type = 'invoice_item' | 'invoice_line_items';
+      export type Type = 'invoice_item' | 'invoice_line_items' | OtherString;
     }
   }
 }
@@ -627,7 +627,11 @@ export namespace InvoiceItemCreateParams {
     price?: string;
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+  export type TaxBehavior =
+    | 'exclusive'
+    | 'inclusive'
+    | 'unspecified'
+    | OtherString;
 
   export namespace Discount {
     export interface DiscountEnd {
@@ -669,7 +673,11 @@ export namespace InvoiceItemCreateParams {
   }
 
   export namespace PriceData {
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
   }
 }
 export interface InvoiceItemRetrieveParams {
@@ -828,7 +836,11 @@ export namespace InvoiceItemUpdateParams {
     price?: string;
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+  export type TaxBehavior =
+    | 'exclusive'
+    | 'inclusive'
+    | 'unspecified'
+    | OtherString;
 
   export namespace Discount {
     export interface DiscountEnd {
@@ -870,7 +882,11 @@ export namespace InvoiceItemUpdateParams {
   }
 
   export namespace PriceData {
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
   }
 }
 export interface InvoiceItemListParams extends PaginationParams {

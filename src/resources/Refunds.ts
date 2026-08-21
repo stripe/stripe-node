@@ -10,10 +10,10 @@ import {TransferReversal} from './TransferReversals.js';
 import {
   Emptyable,
   MetadataParam,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
-  OtherString,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
@@ -667,7 +667,11 @@ export interface RefundCreateParams {
   reverse_transfer?: boolean;
 }
 export namespace RefundCreateParams {
-  export type Reason = 'duplicate' | 'fraudulent' | 'requested_by_customer';
+  export type Reason =
+    | 'duplicate'
+    | 'fraudulent'
+    | 'requested_by_customer'
+    | OtherString;
 }
 export interface RefundRetrieveParams {
   /**

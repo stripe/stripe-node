@@ -281,7 +281,7 @@ export namespace Session {
   }
 
   export namespace Hosted {
-    export type DeliveryMethod = 'email' | 'url';
+    export type DeliveryMethod = 'email' | 'url' | OtherString;
   }
 
   export namespace ManualEntry {
@@ -374,7 +374,8 @@ export namespace FinancialConnections {
       | 'balances'
       | 'ownership'
       | 'payment_method'
-      | 'transactions';
+      | 'transactions'
+      | OtherString;
 
     export interface AccountHolder {
       /**
@@ -479,7 +480,7 @@ export namespace FinancialConnections {
     }
 
     export namespace Hosted {
-      export type DeliveryMethod = 'email' | 'url';
+      export type DeliveryMethod = 'email' | 'url' | OtherString;
     }
 
     export namespace ManualEntry {

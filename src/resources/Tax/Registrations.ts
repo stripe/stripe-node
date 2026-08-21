@@ -2022,7 +2022,8 @@ export namespace Registration {
         | 'state_communications_tax'
         | 'state_retail_delivery_fee'
         | 'state_sales_tax'
-        | 'tourism_tax';
+        | 'tourism_tax'
+        | OtherString;
 
       export namespace StateSalesTax {
         export interface Election {
@@ -4854,7 +4855,8 @@ export namespace Tax {
           | 'state_communications_tax'
           | 'state_retail_delivery_fee'
           | 'state_sales_tax'
-          | 'tourism_tax';
+          | 'tourism_tax'
+          | OtherString;
 
         export namespace StateSalesTax {
           export interface Election {

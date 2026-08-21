@@ -1862,7 +1862,7 @@ export namespace PaymentAttemptRecord {
     export interface Zip {}
 
     export namespace AchDebit {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
     }
 
     export namespace Alma {
@@ -1925,7 +1925,7 @@ export namespace PaymentAttemptRecord {
     }
 
     export namespace Bancontact {
-      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
     }
 
     export namespace Card {
@@ -2118,9 +2118,10 @@ export namespace PaymentAttemptRecord {
           | '04'
           | '05'
           | '06'
-          | '07';
+          | '07'
+          | OtherString;
 
-        export type ExemptionIndicator = 'low_risk' | 'none';
+        export type ExemptionIndicator = 'low_risk' | 'none' | OtherString;
 
         export type Result =
           | 'attempt_acknowledged'
@@ -2300,11 +2301,12 @@ export namespace PaymentAttemptRecord {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -2331,7 +2333,8 @@ export namespace PaymentAttemptRecord {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace IdBankTransfer {
@@ -2365,7 +2368,8 @@ export namespace PaymentAttemptRecord {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
 
       export type Bic =
         | 'ABNANL2A'
@@ -2388,7 +2392,8 @@ export namespace PaymentAttemptRecord {
         | 'REVOIE23'
         | 'REVOLT21'
         | 'SNSBNL2A'
-        | 'TRIONL2U';
+        | 'TRIONL2U'
+        | OtherString;
     }
 
     export namespace InteracPresent {
@@ -2575,7 +2580,8 @@ export namespace PaymentAttemptRecord {
         | 'tmobile_usbugi_bankowe'
         | 'toyota_bank'
         | 'velobank'
-        | 'volkswagen_bank';
+        | 'volkswagen_bank'
+        | OtherString;
     }
 
     export namespace Paypal {
@@ -2663,7 +2669,8 @@ export namespace PaymentAttemptRecord {
         | 'fr'
         | 'it'
         | 'nl'
-        | 'pl';
+        | 'pl'
+        | OtherString;
     }
 
     export namespace UsBankAccount {

@@ -425,7 +425,8 @@ export namespace SetupIntent {
   export type CancellationReason =
     | 'abandoned'
     | 'duplicate'
-    | 'requested_by_customer';
+    | 'requested_by_customer'
+    | OtherString;
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
@@ -490,7 +491,7 @@ export namespace SetupIntent {
     | 'zip'
     | OtherString;
 
-  export type FlowDirection = 'inbound' | 'outbound';
+  export type FlowDirection = 'inbound' | 'outbound' | OtherString;
 
   export interface LastSetupError {
     /**
@@ -691,7 +692,8 @@ export namespace SetupIntent {
     | 'requires_action'
     | 'requires_confirmation'
     | 'requires_payment_method'
-    | 'succeeded';
+    | 'succeeded'
+    | OtherString;
 
   export namespace AutomaticPaymentMethods {
     export type AllowRedirects = 'always' | 'never' | OtherString;
@@ -898,13 +900,15 @@ export namespace SetupIntent {
       | 'transfers_not_allowed'
       | 'url_invalid'
       | 'v2_account_disconnection_unsupported'
-      | 'v2_account_missing_configuration';
+      | 'v2_account_missing_configuration'
+      | OtherString;
 
     export type Type =
       | 'api_error'
       | 'card_error'
       | 'idempotency_error'
-      | 'invalid_request_error';
+      | 'invalid_request_error'
+      | OtherString;
   }
 
   export namespace NextAction {
@@ -1269,7 +1273,8 @@ export namespace SetupIntent {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestThreeDSecure =
         | 'any'
@@ -1278,9 +1283,15 @@ export namespace SetupIntent {
         | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
     }
 
@@ -2315,7 +2326,7 @@ export namespace SetupIntentCreateParams {
         user_agent: string;
       }
 
-      export type Type = 'offline' | 'online';
+      export type Type = 'offline' | 'online' | OtherString;
     }
   }
 
@@ -2746,11 +2757,12 @@ export namespace SetupIntentCreateParams {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -2777,7 +2789,8 @@ export namespace SetupIntentCreateParams {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace IdBankTransfer {
@@ -2811,7 +2824,8 @@ export namespace SetupIntentCreateParams {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -3216,7 +3230,8 @@ export namespace SetupIntentCreateParams {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestThreeDSecure =
         | 'any'
@@ -3270,9 +3285,15 @@ export namespace SetupIntentCreateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace ThreeDSecure {
@@ -3718,7 +3739,8 @@ export namespace SetupIntentCreateParams {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
@@ -3728,7 +3750,7 @@ export namespace SetupIntentCreateParams {
           | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
 
         export namespace ManualEntry {
@@ -3737,7 +3759,7 @@ export namespace SetupIntentCreateParams {
       }
 
       export namespace Networks {
-        export type Requested = 'ach' | 'us_domestic_wire';
+        export type Requested = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
   }
@@ -4838,11 +4860,12 @@ export namespace SetupIntentUpdateParams {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -4869,7 +4892,8 @@ export namespace SetupIntentUpdateParams {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace IdBankTransfer {
@@ -4903,7 +4927,8 @@ export namespace SetupIntentUpdateParams {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -5308,7 +5333,8 @@ export namespace SetupIntentUpdateParams {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestThreeDSecure =
         | 'any'
@@ -5362,9 +5388,15 @@ export namespace SetupIntentUpdateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace ThreeDSecure {
@@ -5810,7 +5842,8 @@ export namespace SetupIntentUpdateParams {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
@@ -5820,7 +5853,7 @@ export namespace SetupIntentUpdateParams {
           | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
 
         export namespace ManualEntry {
@@ -5829,7 +5862,7 @@ export namespace SetupIntentUpdateParams {
       }
 
       export namespace Networks {
-        export type Requested = 'ach' | 'us_domestic_wire';
+        export type Requested = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
   }
@@ -5882,7 +5915,8 @@ export namespace SetupIntentCancelParams {
   export type CancellationReason =
     | 'abandoned'
     | 'duplicate'
-    | 'requested_by_customer';
+    | 'requested_by_customer'
+    | OtherString;
 }
 export interface SetupIntentConfirmParams {
   /**
@@ -6488,7 +6522,7 @@ export namespace SetupIntentConfirmParams {
         user_agent?: string;
       }
 
-      export type Type = 'offline' | 'online';
+      export type Type = 'offline' | 'online' | OtherString;
     }
   }
 
@@ -6919,11 +6953,12 @@ export namespace SetupIntentConfirmParams {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -6950,7 +6985,8 @@ export namespace SetupIntentConfirmParams {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace IdBankTransfer {
@@ -6984,7 +7020,8 @@ export namespace SetupIntentConfirmParams {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -7389,7 +7426,8 @@ export namespace SetupIntentConfirmParams {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestThreeDSecure =
         | 'any'
@@ -7443,9 +7481,15 @@ export namespace SetupIntentConfirmParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace ThreeDSecure {
@@ -7891,7 +7935,8 @@ export namespace SetupIntentConfirmParams {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
@@ -7901,7 +7946,7 @@ export namespace SetupIntentConfirmParams {
           | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
 
         export namespace ManualEntry {
@@ -7910,7 +7955,7 @@ export namespace SetupIntentConfirmParams {
       }
 
       export namespace Networks {
-        export type Requested = 'ach' | 'us_domestic_wire';
+        export type Requested = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
   }

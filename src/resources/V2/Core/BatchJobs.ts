@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {MetadataParam, Metadata} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class BatchJobResource extends StripeResource {
@@ -648,7 +648,8 @@ export namespace V2 {
           | '/v1/promotion_codes/:promotion_code'
           | '/v1/subscriptions/:subscription_exposed_id'
           | '/v1/subscriptions/:subscription_exposed_id'
-          | '/v1/subscriptions/:subscription/migrate';
+          | '/v1/subscriptions/:subscription/migrate'
+          | OtherString;
       }
 
       export namespace NotificationSuppression {
