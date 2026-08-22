@@ -5,6 +5,8 @@
  *   - write a fallback callback to handle unrecognized event notifications
  *   - create a StripeClient called client
  *   - Initialize an EventNotificationHandler with the client, webhook secret, and fallback callback
+ *   - register a preHandle hook that deduplicates events we've already processed, stopping
+ *     handling entirely (no registered handler, no fallback) for events we've seen before
  *   - register a specific handler for the "v1.billing.meter.no_meter_found" event notification type
  *   - use handler.handle() to process the received notification webhook body
  */
@@ -23,6 +25,19 @@ const handler = client.notificationHandler(
     console.log(`Received unhandled event type: ${unhandledEvent.type}`);
   }
 );
+
+// Track ids we've already processed so retried deliveries are skipped entirely.
+// preHandle runs before any callback: resolving false here means neither the
+// registered handler below nor the fallback above will run for this event.
+const processedEventIds = new Set<string>();
+handler.preHandle(async (event) => {
+  if (processedEventIds.has(event.id)) {
+    console.log(`Skipping already-processed event: ${event.id}`);
+    return false;
+  }
+  processedEventIds.add(event.id);
+  return true;
+});
 
 handler.on('v1.billing.meter.error_report_triggered', async (event) => {
   const meter = await event.fetchRelatedObject();
@@ -50,7 +65,7 @@ app.post(
   '/webhook',
   express.raw({type: 'application/json'}),
   async (req, res) => {
-    handler.handle(req.body, req.headers['stripe-signature']!);
+    await handler.handle(req.body, req.headers['stripe-signature']!);
   }
 );
 
