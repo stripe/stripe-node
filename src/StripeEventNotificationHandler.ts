@@ -89,7 +89,9 @@ class BaseEventNotificationHandler {
     this.assertCanRegister();
     // the matched types are validated by the type system
     if (this.registeredHandlers[type]) {
-      throw new Error(`Handler already registered for event type: ${type}`);
+      throw new Error(
+        `Callback for event type "${type}" is already registered.`
+      );
     }
 
     this.registeredHandlers[type] = callback;
@@ -103,7 +105,7 @@ class BaseEventNotificationHandler {
   private assertCanRegister(): void {
     if (this.hasHandledEvent) {
       throw new Error(
-        'Cannot register new handlers after an event has been handled. This is indicative of a bug.'
+        'Cannot register new callbacks after an event has been handled. This is indicative of a bug.'
       );
     }
   }

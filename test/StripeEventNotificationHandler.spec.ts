@@ -126,7 +126,7 @@ describe('StripeEventNotificationHandler', () => {
       expect(() => {
         eventHandler.on('v1.billing.meter.no_meter_found', async () => {});
       }).to.throw(
-        /Cannot register new handlers after an event has been handled/
+        /Cannot register new callbacks after an event has been handled/
       );
     });
 
@@ -148,7 +148,7 @@ describe('StripeEventNotificationHandler', () => {
       expect(() => {
         eventHandler.on('v1.billing.meter.no_meter_found', async () => {});
       }).to.throw(
-        /Cannot register new handlers after an event has been handled/
+        /Cannot register new callbacks after an event has been handled/
       );
     });
 
@@ -163,7 +163,7 @@ describe('StripeEventNotificationHandler', () => {
           'v1.billing.meter.error_report_triggered',
           async () => {}
         );
-      }).to.throw(/Handler already registered for event type/);
+      }).to.throw(/Callback for event type ".*" is already registered/);
     });
   });
 
@@ -310,7 +310,7 @@ describe('StripeEventNotificationHandler', () => {
       expect(() => {
         eventHandler.preHandle(async () => true);
       }).to.throw(
-        /Cannot register new handlers after an event has been handled/
+        /Cannot register new callbacks after an event has been handled/
       );
     });
 
@@ -746,7 +746,9 @@ describe('StripeEventNotificationHandlerWithoutVerification', () => {
 
     expect(() => {
       withoutVerifHandler.on('v1.billing.meter.no_meter_found', async () => {});
-    }).to.throw(/Cannot register new handlers after an event has been handled/);
+    }).to.throw(
+      /Cannot register new callbacks after an event has been handled/
+    );
   });
 
   it('should accept a Uint8Array body without a signature', async () => {
@@ -984,7 +986,7 @@ describe('StripeEventNotificationHandlerWithoutVerification', () => {
       expect(() => {
         withoutVerifHandler.preHandle(async () => true);
       }).to.throw(
-        /Cannot register new handlers after an event has been handled/
+        /Cannot register new callbacks after an event has been handled/
       );
     });
 
