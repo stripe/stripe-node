@@ -12,11 +12,6 @@ export type FallbackCallback = (
   details: UnhandledNotificationDetails
 ) => Promise<void>;
 
-/**
- * Runs after `handle()` parses the payload but before any registered
- * handler or fallback callback fires. Resolving `false` stops handling
- * entirely: neither the registered handler nor the fallback will run.
- */
 export type PreHandleCallback = (
   event: Stripe.V2.Core.EventNotification,
   client: Stripe
@@ -110,6 +105,11 @@ class BaseEventNotificationHandler {
     }
   }
 
+  /**
+   * Registers a function that will be run before any event-specific callbacks. A useful place to store event-agnostic logic, such as logging or checking for [duplicate event deliveries](https://docs.stripe.com/webhooks#handle-duplicate-events).
+   *
+   * Returning `true` causes handling to continue as normal; returning `false` returns from `.handle()` immediately, so neither the registered callback nor the fallback callback are called.
+   */
   public preHandle(callback: PreHandleCallback): this {
     this.assertCanRegister();
     if (this.preHandleCallback) {
