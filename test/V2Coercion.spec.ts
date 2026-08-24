@@ -221,19 +221,31 @@ describe('V2Int64', () => {
         expect(result).to.deep.equal({type: 'unknown_type', amount: 100n});
       });
 
-      it('returns data unchanged when discriminator field is missing', () => {
-        const input = {amount: 100n};
-        const result = coerceV2RequestData(input, schema);
-        expect(result).to.deep.equal({amount: 100n});
+      it('throws when discriminator field is missing', () => {
+        // Skipping coercion here would send `amount` as a raw JSON number and
+        // lose precision above Number.MAX_SAFE_INTEGER, with no error.
+        expect(() => coerceV2RequestData({amount: 100n}, schema)).to.throw(
+          /discriminator `type`/
+        );
       });
 
-      it('returns data unchanged when discriminator value is not a string', () => {
-        const input = {type: 123, amount: 100n};
-        const result = coerceV2RequestData(input, schema);
-        expect(result).to.deep.equal({type: 123, amount: 100n});
+      it('lists the valid variants when it throws', () => {
+        expect(() => coerceV2RequestData({amount: 100n}, schema)).to.throw(
+          /bank_transfer, card/
+        );
+      });
+
+      it('throws when discriminator value is not a string', () => {
+        for (const bad of [123, true, {}, [], 1.5, null]) {
+          expect(
+            () => coerceV2RequestData({type: bad, amount: 100n}, schema),
+            `expected ${JSON.stringify(bad)} to be rejected`
+          ).to.throw(/discriminator `type`/);
+        }
       });
 
       it('passes null through', () => {
+        // An omitted optional union is not a missing discriminator.
         expect(coerceV2RequestData(null, schema)).to.equal(null);
       });
 

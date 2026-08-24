@@ -10,13 +10,24 @@ const coerceV2RequestDiscriminatedUnion = (
   }
   const obj = data as Record<string, unknown>;
   const discriminatorValue = obj[schema.discriminator];
-  if (
-    typeof discriminatorValue === 'string' &&
-    discriminatorValue in schema.variants
-  ) {
-    return coerceV2RequestData(data, schema.variants[discriminatorValue]);
+
+  // A discriminator that is absent, or present but not a string, is equally
+  // unusable: either way there is no way to pick a variant schema. Skipping
+  // coercion silently sends int64_string fields as raw JSON numbers and loses
+  // precision above Number.MAX_SAFE_INTEGER, so fail instead.
+  if (typeof discriminatorValue !== 'string') {
+    throw new Error(
+      `Missing or invalid discriminator \`${schema.discriminator}\` for a polymorphic ` +
+        `parameter. Stripe uses this field to determine the shape of the value, so we ` +
+        `cannot encode the request without it. Provide \`${schema.discriminator}\` with ` +
+        `one of: ${Object.keys(schema.variants).join(', ')}.`
+    );
   }
-  return data;
+
+  // An unrecognized discriminator passes through untouched: we support sending
+  // undocumented params when the caller uses the right shape.
+  const variant = schema.variants[discriminatorValue];
+  return variant ? coerceV2RequestData(data, variant) : data;
 };
 
 const coerceV2RequestObject = (
