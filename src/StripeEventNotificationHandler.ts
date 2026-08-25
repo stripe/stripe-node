@@ -12,6 +12,11 @@ export type FallbackCallback = (
   details: UnhandledNotificationDetails
 ) => Promise<void>;
 
+export type PreHandleCallback = (
+  event: Stripe.V2.Core.EventNotification,
+  client: Stripe
+) => Promise<boolean>;
+
 // this is an internal-only type; we write a user-facing one separately
 type HandlerCallback = (event: any, client: any) => Promise<void>;
 
@@ -57,6 +62,7 @@ const KNOWN_EVENT_TYPES = new Set([
  */
 class BaseEventNotificationHandler {
   private registeredHandlers: Record<string, HandlerCallback> = {};
+  private preHandleCallback: PreHandleCallback | null = null;
   protected hasHandledEvent = false;
 
   // the body is empty but the parameter properties are not, so the lint is ignorable
@@ -75,17 +81,42 @@ class BaseEventNotificationHandler {
     ) => Promise<void>
   ): this;
   public on(type: string, callback: HandlerCallback): this {
-    if (this.hasHandledEvent) {
-      throw new Error(
-        'Cannot register new handlers after an event has been handled. This is indicative of a bug.'
-      );
-    }
+    this.assertCanRegister();
     // the matched types are validated by the type system
     if (this.registeredHandlers[type]) {
-      throw new Error(`Handler already registered for event type: ${type}`);
+      throw new Error(
+        `Callback for event type "${type}" is already registered.`
+      );
     }
 
     this.registeredHandlers[type] = callback;
+    return this;
+  }
+
+  /**
+   * Callbacks are expected to be registered once on startup, so registering
+   * anything after handling has begun indicates a bug.
+   */
+  private assertCanRegister(): void {
+    if (this.hasHandledEvent) {
+      throw new Error(
+        'Cannot register new callbacks after an event has been handled. This is indicative of a bug.'
+      );
+    }
+  }
+
+  /**
+   * Registers a function that will be run before any event-specific callbacks. A useful place to store event-agnostic logic, such as logging or checking for [duplicate event deliveries](https://docs.stripe.com/webhooks#handle-duplicate-events).
+   *
+   * Returning `true` causes handling to continue as normal; returning `false` returns from `.handle()` immediately, so neither the registered callback nor the fallback callback are called.
+   */
+  public preHandle(callback: PreHandleCallback): this {
+    this.assertCanRegister();
+    if (this.preHandleCallback) {
+      throw new Error('A preHandle callback is already registered');
+    }
+
+    this.preHandleCallback = callback;
     return this;
   }
 
@@ -108,6 +139,13 @@ class BaseEventNotificationHandler {
       ...this.client._api,
       stripeContext: event.context,
     };
+
+    if (
+      this.preHandleCallback &&
+      !(await this.preHandleCallback(event, eventClient))
+    ) {
+      return;
+    }
 
     const handler = this.registeredHandlers[event.type];
     if (handler) {
