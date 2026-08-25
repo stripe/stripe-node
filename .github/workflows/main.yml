@@ -125,7 +125,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           # Disable automatic dependency caching to reduce cache poisoning risk
           package-manager-cache: false
-      - run: npm install -g npm@11
       - name: Publish to NPM
         run: |
           set -euxo pipefail
