@@ -10,8 +10,8 @@ import {
   StripeRawError,
   DEFAULT_BASE_ADDRESSES,
 } from './Types.js';
-import {createWebhooks} from './Webhooks.js';
-import {ApiVersion} from './apiVersion.js';
+import {createWebhooks, WebhookHeader, WebhookPayload} from './Webhooks.js';
+import {ApiVersion, ApiMajorVersion} from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
@@ -19,9 +19,17 @@ import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
   detectAIAgent,
+  maybeExtractFromCloudProviderEnvelope,
+  parsePayload,
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
+import {
+  FallbackCallback,
+  StripeEventNotificationHandler,
+  StripeEventNotificationHandlerWithoutVerification,
+  UnhandledNotificationDetails,
+} from './StripeEventNotificationHandler.js';
 import {
   Response,
   RequestOptions,
@@ -52,7 +60,7 @@ import {
   Emptyable,
   Decimal,
 } from './shared.js';
-import {EventNotification as V2EventNotification} from './resources/V2/Core/Events.js';
+import {UnknownEventNotification} from './resources/V2/Core/Events.js';
 
 // StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
 import {
@@ -955,8 +963,13 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 export class Stripe {
-  static PACKAGE_VERSION = '22.4.0';
+  static PACKAGE_VERSION = '22.5.0';
   static API_VERSION: typeof ApiVersion = ApiVersion;
+  /**
+   * The major API version that this SDK uses. Objects retrieved using the same
+   * major version are compatible. Is an empty string in preview versions of the SDK.
+   */
+  static MAJOR_API_VERSION = ApiMajorVersion;
   static aiAgent = '';
   static AI_AGENT = '';
   static USER_AGENT: Record<string, string | boolean | null> = {
@@ -1098,6 +1111,16 @@ export class Stripe {
     const env = platformFunctions.getEnv();
     const runtimeVersion = platformFunctions.getRuntimeVersion();
 
+    if (env?.CLAUDECODE || env?.CLAUDE_CODE_CHILD_SESSION) {
+      try {
+        platformFunctions.writeStderr(
+          '<claude-code-hint v="1" type="plugin" value="stripe@claude-plugins-official" />\n'
+        );
+      } catch {
+        // never let hint emission crash the SDK
+      }
+    }
+
     Stripe.aiAgent = env ? detectAIAgent(env) : '';
     Stripe.AI_AGENT = Stripe.aiAgent;
     Stripe.USER_AGENT = {
@@ -1139,7 +1162,7 @@ export class Stripe {
       maxNetworkRetries: validateInteger(
         'maxNetworkRetries',
         props.maxNetworkRetries,
-        2
+        this._platformFunctions.getDefaultMaxNetworkRetries()
       ),
       agent: agent,
       httpClient:
@@ -1290,6 +1313,10 @@ export class Stripe {
     key: string,
     authenticator: RequestAuthenticator | null
   ): void {
+    if (!key && !authenticator) {
+      authenticator = this._platformFunctions.createDefaultAuthenticator();
+    }
+
     if (key && authenticator) {
       throw new Error("Can't specify both apiKey and authenticator");
     }
@@ -1578,9 +1605,70 @@ export class Stripe {
     return this._api[key];
   }
 
+  _buildEventNotification(
+    parsed: Record<string, unknown>
+  ): V2.Core.EventNotification {
+    if (parsed.object === 'event') {
+      throw new Error(
+        'You passed a v1 Event to a method that expects a thin event notification. Use the corresponding constructEvent method instead.'
+      );
+    }
+    if (parsed.object != null && parsed.object !== 'v2.core.event') {
+      throw new Error(
+        `Unexpected object type '${parsed.object}'. Expected 'v2.core.event' for an event notification.`
+      );
+    }
+
+    if (parsed.context) {
+      parsed.context = StripeContext.parse(parsed.context as string);
+    }
+
+    parsed.fetchEvent = (): Promise<unknown> => {
+      return this._requestSender._rawRequest(
+        'GET',
+        `/v2/core/events/${parsed.id}`,
+        undefined,
+        {
+          stripeContext: parsed.context as any,
+          headers: {
+            'Stripe-Request-Trigger': `event=${parsed.id}`,
+          },
+        },
+        ['fetch_event']
+      );
+    };
+
+    parsed.fetchRelatedObject = (): Promise<unknown> => {
+      if (!parsed.related_object) {
+        return Promise.resolve(null);
+      }
+
+      return this._requestSender._rawRequest(
+        'GET',
+        (parsed.related_object as any).url,
+        undefined,
+        {
+          stripeContext: parsed.context as any,
+          headers: {
+            'Stripe-Request-Trigger': `event=${parsed.id}`,
+          },
+        },
+        ['fetch_related_object']
+      );
+    };
+
+    return (parsed as unknown) as V2.Core.EventNotification;
+  }
+
+  /**
+   * Constructs a [thin event notification](https://docs.stripe.com/event-destinations#thin-payload) from an
+   * incoming webhook after verifying its authenticity. To work with a webhook that has already been
+   * verified (i.e. one from a cloud provider, an asynchronous queue, or during testing), see
+   * `parseEventNotificationWithoutVerification`.
+   */
   parseEventNotification(
-    payload: string | Uint8Array,
-    header: string | Uint8Array,
+    payload: WebhookPayload,
+    header: WebhookHeader,
     secret: string,
     tolerance?: number,
     cryptoProvider?: CryptoProvider,
@@ -1602,64 +1690,12 @@ export class Stripe {
       receivedAt
     );
 
-    const eventNotification =
-      payload instanceof Uint8Array
-        ? JSON.parse(new TextDecoder('utf8').decode(payload))
-        : JSON.parse(payload as string);
-
-    if (eventNotification && eventNotification.object === 'event') {
-      throw new Error(
-        'You passed a webhook payload to stripe.parseEventNotification, which expects an event notification. Use stripe.webhooks.constructEvent instead.'
-      );
-    }
-
-    // Parse string context into StripeContext object if present
-    if (eventNotification.context) {
-      eventNotification.context = StripeContext.parse(
-        eventNotification.context
-      );
-    }
-
-    eventNotification.fetchEvent = (): Promise<unknown> => {
-      return this._requestSender._rawRequest(
-        'GET',
-        `/v2/core/events/${eventNotification.id}`,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_event']
-      );
-    };
-
-    eventNotification.fetchRelatedObject = (): Promise<unknown> => {
-      if (!eventNotification.related_object) {
-        return Promise.resolve(null);
-      }
-
-      return this._requestSender._rawRequest(
-        'GET',
-        eventNotification.related_object.url,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_related_object']
-      );
-    };
-
-    return eventNotification;
+    return this._buildEventNotification(parsePayload(payload));
   }
 
   async parseEventNotificationAsync(
-    payload: string | Uint8Array,
-    header: string | Uint8Array,
+    payload: WebhookPayload,
+    header: WebhookHeader,
     secret: string,
     tolerance?: number,
     cryptoProvider?: CryptoProvider,
@@ -1681,59 +1717,59 @@ export class Stripe {
       receivedAt
     );
 
-    const eventNotification =
-      payload instanceof Uint8Array
-        ? JSON.parse(new TextDecoder('utf8').decode(payload))
-        : JSON.parse(payload as string);
+    return this._buildEventNotification(parsePayload(payload));
+  }
 
-    if (eventNotification && eventNotification.object === 'event') {
-      throw new Error(
-        'You passed a webhook payload to stripe.parseEventNotificationAsync, which expects an event notification. Use stripe.webhooks.constructEventAsync instead.'
-      );
-    }
+  /**
+   * Constructs a [snapshot event](https://docs.stripe.com/event-destinations#snapshot-payload) from an
+   * incoming webhook without first verifying its authenticity. Should be used after calling
+   * `webhooks.verifySignatureHeader(...)` or with input from a trusted source (such as
+   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge), or
+   * [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload). Or, to verify &
+   * construct in a single call, use `webhooks.constructEvent(...)` instead.
+   *
+   * @deprecated Use `stripe.webhooks.constructEventWithoutVerification(...)` instead.
+   * This will be removed in the next major version.
+   */
+  constructEventWithoutVerification(payload: string): Event {
+    // TODO(DEVSDK-3248) remove this
+    return this.webhooks.constructEventWithoutVerification(payload);
+  }
 
-    // Parse string context into StripeContext object if present
-    if (eventNotification.context) {
-      eventNotification.context = StripeContext.parse(
-        eventNotification.context
-      );
-    }
+  /**
+   * Constructs a [thin event notification](https://docs.stripe.com/event-destinations#thin-payload) from an
+   * incoming webhook without first verifying its authenticity. Should be used after calling
+   * `webhooks.verifySignatureHeader(...)` or with input from a trusted source (such as
+   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge), or
+   * [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload). Or, to verify &
+   * parse in a single call, use `parseEventNotification(...)` instead.
+   */
+  parseEventNotificationWithoutVerification(
+    payload: WebhookPayload
+  ): V2.Core.EventNotification {
+    return this._buildEventNotification(
+      maybeExtractFromCloudProviderEnvelope(payload)
+    );
+  }
 
-    eventNotification.fetchEvent = (): Promise<unknown> => {
-      return this._requestSender._rawRequest(
-        'GET',
-        `/v2/core/events/${eventNotification.id}`,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_event']
-      );
-    };
+  notificationHandler(
+    webhookSecret: string,
+    fallbackCallback: FallbackCallback
+  ): StripeEventNotificationHandler {
+    return new StripeEventNotificationHandler(
+      this,
+      webhookSecret,
+      fallbackCallback
+    );
+  }
 
-    eventNotification.fetchRelatedObject = (): Promise<unknown> => {
-      if (!eventNotification.related_object) {
-        return Promise.resolve(null);
-      }
-
-      return this._requestSender._rawRequest(
-        'GET',
-        eventNotification.related_object.url,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_related_object']
-      );
-    };
-
-    return eventNotification;
+  notificationHandlerWithoutVerification(
+    fallbackCallback: FallbackCallback
+  ): StripeEventNotificationHandlerWithoutVerification {
+    return StripeEventNotificationHandler.withoutVerification(
+      this,
+      fallbackCallback
+    );
   }
 }
 
@@ -2622,6 +2658,12 @@ export declare namespace Stripe {
 
   export {StripeContext as StripeContextType};
   export {StripeRawError};
+  // Type-only: these classes are not attached as statics on the Stripe constructor,
+  // so they can be named in annotations but not used as values. Construct handlers
+  // through stripe.notificationHandler() / stripe.notificationHandlerWithoutVerification().
+  export type UnhandledNotificationDetails = import('./StripeEventNotificationHandler.js').UnhandledNotificationDetails;
+  export type StripeEventNotificationHandler = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandler;
+  export type StripeEventNotificationHandlerWithoutVerification = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandlerWithoutVerification;
   // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
   export namespace ErrorType {
     export type StripeError = InstanceType<typeof _Error.StripeError>;

@@ -109,6 +109,23 @@ export class HttpClient implements HttpClientInterface {
     timeoutErr.code = HttpClient.TIMEOUT_ERROR_CODE;
     return timeoutErr;
   }
+
+  /**
+   * Helper to wrap a failure that occurred while reading a response body, so
+   * that implementations can report one consistently.
+   */
+  static makeResponseBodyError(
+    exception: unknown
+  ): HttpClientResponseBodyError {
+    const error = new HttpClientResponseBodyError(
+      'Failed to read the response body'
+    );
+    error.exception = exception;
+    if (exception && typeof (exception as {code?: unknown}).code === 'string') {
+      error.code = (exception as {code: string}).code;
+    }
+    return error;
+  }
 }
 
 // Public API accessible via Stripe.HttpClient
@@ -143,4 +160,31 @@ export class HttpClientResponse implements HttpClientResponseInterface {
   toJSON(): any {
     throw new Error('toJSON not implemented.');
   }
+
+  protected _parseResponseBody(body: string): any {
+    try {
+      return JSON.parse(body);
+    } catch (e) {
+      if (e instanceof Error) {
+        (e as any).rawBody = body;
+      }
+      throw e;
+    }
+  }
+}
+
+export class HttpClientRuntimeError extends Error {}
+
+/**
+ * Raised when the response body could not be read to completion, e.g. because
+ * the connection stalled or was severed after the headers arrived. This is
+ * distinct from a body that was received in full but is not valid JSON, so that
+ * a transport failure can be surfaced as a connection error rather than as a
+ * parsing error.
+ */
+export class HttpClientResponseBodyError extends Error {
+  /** The error code of the underlying failure, when the runtime supplies one. */
+  code?: string;
+  /** The underlying failure, when the runtime supplies one. */
+  exception?: unknown;
 }

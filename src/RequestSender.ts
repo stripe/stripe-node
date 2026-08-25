@@ -23,7 +23,12 @@ import {
   ApiMode,
 } from './Types.js';
 import {RawRequestOptions, RequestOptions} from './lib.js';
-import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
+import {
+  HttpClient,
+  HttpClientResponseBodyError,
+  HttpClientResponseInterface,
+  HttpClientRuntimeError,
+} from './net/HttpClient.js';
 import {Stripe} from './stripe.core.js';
 import {
   jsonStringifyRequestData,
@@ -156,6 +161,8 @@ export class RequestSender {
     requestEvent: RequestEvent,
     apiMode: 'v1' | 'v2',
     usage: Array<string>,
+    timeout: number,
+    requestRetries: number,
     callback: RequestCallback
   ) {
     return (res: HttpClientResponseInterface): void => {
@@ -214,6 +221,27 @@ export class RequestSender {
             ) {
               responseEvent.body = (e as any).rawBody;
             }
+
+            // A body we could not read to completion is a transport failure,
+            // not a malformed payload. Only a timeout is reported as such for
+            // now: a connection severed mid-body already surfaced here as a
+            // StripeAPIError on the fetch client, so reclassifying it would
+            // break anyone catching it. A timeout, by contrast, never got this
+            // far -- it hung -- so there is no behavior to preserve.
+            // TODO(DEVSDK-3247): report every HttpClientResponseBodyError as a
+            // StripeConnectionError, since none of them are parse failures.
+            if (
+              e instanceof HttpClientResponseBodyError &&
+              e.code === HttpClient.TIMEOUT_ERROR_CODE
+            ) {
+              throw RequestSender._generateConnectionError(
+                e,
+                timeout,
+                requestRetries,
+                requestId
+              );
+            }
+
             throw new StripeAPIError({
               message: 'Invalid JSON received from the Stripe API',
               exception: e,
@@ -252,6 +280,25 @@ export class RequestSender {
     }`;
   }
 
+  static _generateConnectionError(
+    error: HttpClientResponseError | HttpClientResponseBodyError,
+    timeout: number,
+    requestRetries: number,
+    // Only available when the failure happened after the headers arrived.
+    requestId?: string
+  ): StripeConnectionError {
+    const isTimeoutError =
+      !!error.code && error.code === HttpClient.TIMEOUT_ERROR_CODE;
+
+    return new StripeConnectionError({
+      message: isTimeoutError
+        ? `Request aborted due to timeout being reached (${timeout}ms)`
+        : RequestSender._generateConnectionErrorMessage(requestRetries),
+      detail: error,
+      requestId,
+    });
+  }
+
   // For more on when and how to retry API requests, see https://stripe.com/docs/error-handling#safely-retrying-requests-with-idempotency
   static _shouldRetry(
     res: null | HttpClientResponseInterface,
@@ -259,6 +306,13 @@ export class RequestSender {
     maxRetries: number,
     error?: HttpClientResponseError
   ): boolean {
+    // A closed connection is retried once even when retries are disabled,
+    // since it usually means the request never reached the API (e.g. a stale
+    // keep-alive socket held across a frozen Lambda context). See https://github.com/stripe/stripe-node/issues/1040.
+    //
+    // This intentionally precedes the maxRetries check. Note that these codes
+    // can also surface after the API processed the request, so this retry is
+    // not guaranteed to be a no-op.
     if (
       error &&
       numRetries === 0 &&
@@ -333,14 +387,7 @@ export class RequestSender {
       : this._stripe.getMaxNetworkRetries();
   }
 
-  _defaultIdempotencyKey(
-    method: string,
-    settings: RequestSettings,
-    apiMode: ApiMode
-  ): string | null {
-    // If this is a POST and we allow multiple retries, ensure an idempotency key.
-    const maxRetries = this._getMaxNetworkRetries(settings);
-
+  _defaultIdempotencyKey(method: string, apiMode: ApiMode): string | null {
     const genKey = (): string =>
       `stripe-node-retry-${this._stripe._platformFunctions.uuid4()}`;
 
@@ -350,7 +397,11 @@ export class RequestSender {
         return genKey();
       }
     } else if (apiMode === 'v1') {
-      if (method === 'POST' && maxRetries > 0) {
+      // Key every POST, including when maxNetworkRetries is 0. Closed-connection
+      // errors are retried regardless of that setting (see _shouldRetry), and
+      // those codes can surface after the API processed the request, so the
+      // retry needs a key to dedupe against.
+      if (method === 'POST') {
         return genKey();
       }
     }
@@ -390,11 +441,7 @@ export class RequestSender {
       'Stripe-Version': apiVersion,
       'Stripe-Account': stripeAccount,
       'Stripe-Context': stripeContext,
-      'Idempotency-Key': this._defaultIdempotencyKey(
-        method,
-        userSuppliedSettings,
-        apiMode
-      ),
+      'Idempotency-Key': this._defaultIdempotencyKey(method, apiMode),
     } as RequestHeaders;
 
     // As per https://datatracker.ietf.org/doc/html/rfc7230#section-3.3.2:
@@ -675,41 +722,43 @@ export class RequestSender {
                   requestEvent,
                   apiMode,
                   usage,
+                  timeout,
+                  requestRetries,
                   callback
                 )(res);
               }
             })
-            .catch((error: HttpClientResponseError) => {
-              if (
-                RequestSender._shouldRetry(
-                  null,
-                  requestRetries,
-                  maxRetries,
-                  error
-                )
-              ) {
-                return retryRequest(
-                  makeRequest,
-                  apiVersion,
-                  headers,
-                  requestRetries
-                );
-              } else {
-                const isTimeoutError =
-                  error.code && error.code === HttpClient.TIMEOUT_ERROR_CODE;
+            .catch(
+              (error: HttpClientResponseError | HttpClientRuntimeError) => {
+                if (error instanceof HttpClientRuntimeError) {
+                  return callback(error);
+                }
 
-                return callback(
-                  new StripeConnectionError({
-                    message: isTimeoutError
-                      ? `Request aborted due to timeout being reached (${timeout}ms)`
-                      : RequestSender._generateConnectionErrorMessage(
-                          requestRetries
-                        ),
-                    detail: error,
-                  })
-                );
+                if (
+                  RequestSender._shouldRetry(
+                    null,
+                    requestRetries,
+                    maxRetries,
+                    error
+                  )
+                ) {
+                  return retryRequest(
+                    makeRequest,
+                    apiVersion,
+                    headers,
+                    requestRetries
+                  );
+                } else {
+                  return callback(
+                    RequestSender._generateConnectionError(
+                      error,
+                      timeout,
+                      requestRetries
+                    )
+                  );
+                }
               }
-            });
+            );
         })
         .catch((e: any) => {
           throw new StripeError({
