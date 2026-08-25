@@ -182,6 +182,85 @@ describe('V2Int64', () => {
       });
     });
 
+    describe('discriminatedUnion kind', () => {
+      const schema: V2RuntimeSchema = {
+        kind: 'discriminatedUnion',
+        discriminator: 'type',
+        variants: {
+          bank_transfer: {
+            kind: 'object',
+            fields: {
+              amount: {kind: 'int64_string'},
+            },
+          },
+          card: {
+            kind: 'object',
+            fields: {
+              fee: {kind: 'int64_string'},
+            },
+          },
+        },
+      };
+
+      it('coerces fields in the matched variant', () => {
+        const result = coerceV2RequestData(
+          {type: 'bank_transfer', amount: 100n},
+          schema
+        );
+        expect(result).to.deep.equal({type: 'bank_transfer', amount: '100'});
+      });
+
+      it('coerces a different variant', () => {
+        const result = coerceV2RequestData({type: 'card', fee: 250n}, schema);
+        expect(result).to.deep.equal({type: 'card', fee: '250'});
+      });
+
+      it('returns data unchanged when discriminator value is not in variants', () => {
+        const input = {type: 'unknown_type', amount: 100n};
+        const result = coerceV2RequestData(input, schema);
+        expect(result).to.deep.equal({type: 'unknown_type', amount: 100n});
+      });
+
+      it('throws when discriminator field is missing', () => {
+        // Skipping coercion here would send `amount` as a raw JSON number and
+        // lose precision above Number.MAX_SAFE_INTEGER, with no error.
+        expect(() => coerceV2RequestData({amount: 100n}, schema)).to.throw(
+          /discriminator `type`/
+        );
+      });
+
+      it('lists the valid variants when it throws', () => {
+        expect(() => coerceV2RequestData({amount: 100n}, schema)).to.throw(
+          /bank_transfer, card/
+        );
+      });
+
+      it('throws when discriminator value is not a string', () => {
+        for (const bad of [123, true, {}, [], 1.5, null]) {
+          expect(
+            () => coerceV2RequestData({type: bad, amount: 100n}, schema),
+            `expected ${JSON.stringify(bad)} to be rejected`
+          ).to.throw(/discriminator `type`/);
+        }
+      });
+
+      it('passes null through', () => {
+        // An omitted optional union is not a missing discriminator.
+        expect(coerceV2RequestData(null, schema)).to.equal(null);
+      });
+
+      it('handles non-object gracefully', () => {
+        expect(coerceV2RequestData('not an object', schema)).to.equal(
+          'not an object'
+        );
+      });
+
+      it('handles array gracefully', () => {
+        const input = [1, 2, 3];
+        expect(coerceV2RequestData(input, schema)).to.deep.equal([1, 2, 3]);
+      });
+    });
+
     describe('complex schema', () => {
       const schema: V2RuntimeSchema = {
         kind: 'object',
@@ -351,6 +430,74 @@ describe('V2Int64', () => {
 
       it('passes null through', () => {
         expect(coerceV2ResponseData(null, schema)).to.equal(null);
+      });
+    });
+
+    describe('discriminatedUnion kind', () => {
+      const schema: V2RuntimeSchema = {
+        kind: 'discriminatedUnion',
+        discriminator: 'type',
+        variants: {
+          bank_transfer: {
+            kind: 'object',
+            fields: {
+              amount: {kind: 'int64_string'},
+            },
+          },
+          card: {
+            kind: 'object',
+            fields: {
+              fee: {kind: 'int64_string'},
+            },
+          },
+        },
+      };
+
+      it('coerces fields in the matched variant', () => {
+        const data = {type: 'bank_transfer', amount: '100'};
+        coerceV2ResponseData(data, schema);
+        expect(data).to.deep.equal({type: 'bank_transfer', amount: 100n});
+      });
+
+      it('coerces a different variant', () => {
+        const data = {type: 'card', fee: '250'};
+        coerceV2ResponseData(data, schema);
+        expect(data).to.deep.equal({type: 'card', fee: 250n});
+      });
+
+      it('returns data unchanged when discriminator value is not in variants', () => {
+        const data = {type: 'unknown_type', amount: '100'};
+        const result = coerceV2ResponseData(data, schema);
+        expect(result).to.deep.equal({type: 'unknown_type', amount: '100'});
+      });
+
+      it('returns data unchanged when discriminator field is missing', () => {
+        const data = {amount: '100'};
+        const result = coerceV2ResponseData(data, schema);
+        expect(result).to.deep.equal({amount: '100'});
+      });
+
+      it('returns data unchanged when discriminator value is not a string', () => {
+        const data = {type: 123, amount: '100'};
+        const result = coerceV2ResponseData(data, schema);
+        expect(result).to.deep.equal({type: 123, amount: '100'});
+      });
+
+      it('passes null through', () => {
+        expect(coerceV2ResponseData(null, schema)).to.equal(null);
+      });
+
+      it('handles non-object gracefully', () => {
+        expect(coerceV2ResponseData('not an object', schema)).to.equal(
+          'not an object'
+        );
+      });
+
+      it('mutates in-place like other response coercion', () => {
+        const data = {type: 'bank_transfer', amount: '100'};
+        const result = coerceV2ResponseData(data, schema);
+        expect(result).to.equal(data);
+        expect(data.amount).to.equal(100n);
       });
     });
 
