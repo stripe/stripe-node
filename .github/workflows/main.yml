@@ -36,18 +36,6 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> "$GITHUB_OUTPUT"
-
-      - uses: actions/cache@v4
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
       - name: Verify Linting
         run: just lint-check
 
@@ -101,23 +89,6 @@ jobs:
 
       - name: Print Deno version
         run: deno -V
-
-      - name: Get yarn cache directory path
-        # caches are platform-specific and there's only one windows job, so don't bother caching
-        if: runner.os != 'Windows'
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> "$GITHUB_OUTPUT"
-
-      - uses: actions/cache@v4
-        # caches are platform-specific and there's only one windows job, so don't bother caching
-        if: runner.os != 'Windows'
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          # searching very deep deps can time out, so only cache on the root yarn.lock
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
 
       - uses: stripe/openapi/actions/stripe-mock@master
 
