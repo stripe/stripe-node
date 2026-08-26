@@ -245,5 +245,6 @@ export namespace FileListParams {
     | 'terminal_android_apk'
     | 'terminal_reader_splashscreen'
     | 'terminal_wifi_certificate'
-    | 'terminal_wifi_private_key';
+    | 'terminal_wifi_private_key'
+    | OtherString;
 }

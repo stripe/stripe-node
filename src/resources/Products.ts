@@ -7,6 +7,7 @@ import {TaxCode} from './TaxCodes.js';
 import {
   MetadataParam,
   Decimal,
+  OtherString,
   Emptyable,
   PaginationParams,
   RangeQueryParam,
@@ -347,7 +348,7 @@ export namespace Product {
     width: number;
   }
 
-  export type Type = 'good' | 'service';
+  export type Type = 'good' | 'service' | OtherString;
 }
 export interface ProductCreateParams {
   /**
@@ -507,7 +508,7 @@ export namespace ProductCreateParams {
     width: number;
   }
 
-  export type Type = 'good' | 'service';
+  export type Type = 'good' | 'service' | OtherString;
 
   export namespace DefaultPriceData {
     export interface CurrencyOptions {
@@ -571,7 +572,11 @@ export namespace ProductCreateParams {
       interval_count?: number;
     }
 
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
 
     export namespace CurrencyOptions {
       export interface CustomUnitAmount {
@@ -596,7 +601,11 @@ export namespace ProductCreateParams {
         preset?: number;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export interface Tier {
         /**
@@ -627,7 +636,7 @@ export namespace ProductCreateParams {
     }
 
     export namespace Recurring {
-      export type Interval = 'day' | 'month' | 'week' | 'year';
+      export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
     }
   }
 }
@@ -778,7 +787,7 @@ export interface ProductListParams extends PaginationParams {
   url?: string;
 }
 export namespace ProductListParams {
-  export type Type = 'good' | 'service';
+  export type Type = 'good' | 'service' | OtherString;
 }
 export interface ProductDeleteParams {}
 export interface ProductCreateFeatureParams {

@@ -146,6 +146,11 @@ export namespace Session {
     countries: Array<string> | null;
 
     /**
+     * Country from which to filter accounts.
+     */
+    country: string | null;
+
+    /**
      * Whether the Session should require that linked accounts support payments and retrieve account numbers before completion.
      */
     require_payment_method_support?: Filters.RequirePaymentMethodSupport;
@@ -270,7 +275,8 @@ export namespace FinancialConnections {
       | 'balances'
       | 'ownership'
       | 'payment_method'
-      | 'transactions';
+      | 'transactions'
+      | OtherString;
 
     export interface Filters {
       /**
