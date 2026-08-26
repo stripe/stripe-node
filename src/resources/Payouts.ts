@@ -6,11 +6,11 @@ import {BalanceTransaction} from './BalanceTransactions.js';
 import {ExternalAccount, DeletedExternalAccount} from './ExternalAccounts.js';
 import {
   MetadataParam,
+  OtherString,
   Emptyable,
   PaginationParams,
   RangeQueryParam,
   Metadata,
-  OtherString,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
@@ -311,9 +311,9 @@ export interface PayoutCreateParams {
   statement_descriptor?: string;
 }
 export namespace PayoutCreateParams {
-  export type Method = 'instant' | 'standard';
+  export type Method = 'instant' | 'standard' | OtherString;
 
-  export type SourceType = 'bank_account' | 'card' | 'fpx';
+  export type SourceType = 'bank_account' | 'card' | 'fpx' | OtherString;
 }
 export interface PayoutRetrieveParams {
   /**

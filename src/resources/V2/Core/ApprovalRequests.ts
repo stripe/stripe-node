@@ -1,0 +1,522 @@
+// File generated from our OpenAPI spec
+
+import {StripeResource} from '../../../StripeResource.js';
+import {RangeQueryParam, OtherString} from '../../../shared.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
+
+export class ApprovalRequestResource extends StripeResource {
+  /**
+   * GET /v2/core/approval_requests
+   * Lists approval requests with optional filtering.
+   */
+  list(
+    params?: V2.Core.ApprovalRequestListParams,
+    options?: RequestOptions
+  ): V2ListPromise<ApprovalRequest> {
+    return this._makeRequest(
+      'GET',
+      '/v2/core/approval_requests',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
+  }
+  /**
+   * GET /v2/core/approval_requests/:id
+   * Retrieves an approval request by ID.
+   */
+  retrieve(
+    id: string,
+    params?: V2.Core.ApprovalRequestRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<ApprovalRequest>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/approval_requests/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * POST /v2/core/approval_requests/:id
+   * Updates a pending approval request's mutable fields.
+   */
+  update(
+    id: string,
+    params?: V2.Core.ApprovalRequestUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<ApprovalRequest>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/approval_requests/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * POST /v2/core/approval_requests/:id/cancel
+   * Cancels a pending approval request.
+   */
+  cancel(
+    id: string,
+    params?: V2.Core.ApprovalRequestCancelParams,
+    options?: RequestOptions
+  ): Promise<Response<ApprovalRequest>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/approval_requests/${encodeURIComponent(id)}/cancel`,
+      params,
+      options
+    ) as any;
+  }
+}
+export interface ApprovalRequest {
+  /**
+   * The unique identifier for this ApprovalRequest.
+   */
+  id: string;
+
+  /**
+   * String representing the object's type. Objects of the same type share the same value of the object field.
+   */
+  object: 'v2.core.approval_request';
+
+  /**
+   * The action that was requested.
+   */
+  action: ApprovalRequest.Action;
+
+  /**
+   * Time this ApprovalRequest was created.
+   */
+  created: string;
+
+  /**
+   * The URL to the dashboard for this ApprovalRequest.
+   */
+  dashboard_url?: string;
+
+  /**
+   * The timestamp at which this ApprovalRequest will expire.
+   */
+  expires_at: string;
+
+  /**
+   * Whether this ApprovalRequest is livemode.
+   */
+  livemode: boolean;
+
+  /**
+   * Context provided by the requester (e.g. an agent) to help reviewers evaluate the request.
+   */
+  reason?: string;
+
+  /**
+   * The requester of this ApprovalRequest.
+   */
+  requested_by: ApprovalRequest.RequestedBy;
+
+  /**
+   * The review of this ApprovalRequest if it has been reviewed.
+   */
+  review?: ApprovalRequest.Review;
+
+  /**
+   * The rule associated with this ApprovalRequest.
+   */
+  rule?: ApprovalRequest.Rule;
+
+  /**
+   * The status of this ApprovalRequest.
+   */
+  status: ApprovalRequest.Status;
+
+  /**
+   * The details of the status of this ApprovalRequest.
+   */
+  status_details?: ApprovalRequest.StatusDetails;
+
+  /**
+   * The transitions of the status of this ApprovalRequest.
+   */
+  status_transitions?: ApprovalRequest.StatusTransitions;
+}
+export namespace ApprovalRequest {
+  export type Action =
+    | 'charge.create'
+    | 'dispute.close'
+    | 'inbound_transfers.money_management.create'
+    | 'invoice.create'
+    | 'outbound_payments.money_management.create'
+    | 'outbound_transfers.money_management.create'
+    | 'payment_intent.create'
+    | 'payment_intent.update'
+    | 'payout.create'
+    | 'price.update'
+    | 'refund.create'
+    | 'setup_intent.create'
+    | 'subscription.create'
+    | 'subscription.update'
+    | 'topup.create'
+    | 'transfer.create'
+    | OtherString;
+
+  export interface RequestedBy {
+    /**
+     * Present when `type` is `api_key`.
+     */
+    api_key?: RequestedBy.ApiKey;
+
+    /**
+     * The type of actor that made the request.
+     */
+    type: RequestedBy.Type;
+
+    /**
+     * Present when `type` is `user`.
+     */
+    user?: RequestedBy.User;
+  }
+
+  export interface Review {
+    /**
+     * The reason provided by the reviewer.
+     */
+    reason?: string;
+
+    /**
+     * The result of the review.
+     */
+    result: Review.Result;
+
+    /**
+     * Timestamp when the review was performed.
+     */
+    reviewed_at: string;
+
+    /**
+     * The reviewer who performed the review.
+     */
+    reviewed_by: Review.ReviewedBy;
+  }
+
+  export interface Rule {
+    /**
+     * The name of the rule.
+     */
+    name: string;
+  }
+
+  export type Status =
+    | 'approved'
+    | 'canceled'
+    | 'execution_failed'
+    | 'execution_started'
+    | 'execution_succeeded'
+    | 'expired'
+    | 'failed'
+    | 'pending'
+    | 'rejected'
+    | 'requires_execution'
+    | 'requires_review'
+    | 'succeeded'
+    | OtherString;
+
+  export interface StatusDetails {
+    /**
+     * Deprecated: use requires_execution status instead.
+     */
+    approved?: StatusDetails.Approved;
+
+    /**
+     * Deprecated: use canceled status instead.
+     */
+    canceled?: StatusDetails.Canceled;
+
+    /**
+     * Deprecated: use failed status instead.
+     */
+    execution_failed?: StatusDetails.ExecutionFailed;
+
+    /**
+     * Deprecated: use requires_execution status instead.
+     */
+    execution_started?: StatusDetails.ExecutionStarted;
+
+    /**
+     * Deprecated: use succeeded status instead.
+     */
+    execution_succeeded?: StatusDetails.ExecutionSucceeded;
+
+    /**
+     * Deprecated: use expired status instead.
+     */
+    expired?: StatusDetails.Expired;
+
+    /**
+     * Details when the approval request failed.
+     */
+    failed?: StatusDetails.Failed;
+
+    /**
+     * Deprecated: use requires_review status instead.
+     */
+    pending?: StatusDetails.Pending;
+
+    /**
+     * Deprecated: use rejected status instead.
+     */
+    rejected?: StatusDetails.Rejected;
+
+    /**
+     * Details when the approval request succeeded.
+     */
+    succeeded?: StatusDetails.Succeeded;
+  }
+
+  export interface StatusTransitions {
+    /**
+     * Timestamp when the approval request was approved.
+     */
+    approved_at?: string;
+
+    /**
+     * Timestamp when the approval request was canceled.
+     */
+    canceled_at?: string;
+
+    /**
+     * Timestamp when the approval request expired.
+     */
+    expired_at?: string;
+
+    /**
+     * Timestamp when the approval request failed.
+     */
+    failed_at?: string;
+
+    /**
+     * Timestamp when the approval request was rejected.
+     */
+    rejected_at?: string;
+
+    /**
+     * Timestamp when the approval request succeeded.
+     */
+    succeeded_at?: string;
+  }
+
+  export namespace RequestedBy {
+    export interface ApiKey {
+      /**
+       * Stripe-defined identifier for the API key (e.g. a restricted API key token).
+       */
+      id: string;
+
+      /**
+       * Merchant-defined name for the API key.
+       */
+      name?: string;
+    }
+
+    export type Type = 'api_key' | 'user' | OtherString;
+
+    export interface User {
+      /**
+       * Email address of the dashboard user.
+       */
+      email: string;
+    }
+  }
+
+  export namespace Review {
+    export type Result = 'approved' | 'rejected';
+
+    export interface ReviewedBy {
+      /**
+       * Present when `type` is `api_key`.
+       */
+      api_key?: ReviewedBy.ApiKey;
+
+      /**
+       * The type of actor that reviewed the request.
+       */
+      type: ReviewedBy.Type;
+
+      /**
+       * Present when `type` is `user`.
+       */
+      user?: ReviewedBy.User;
+    }
+
+    export namespace ReviewedBy {
+      export interface ApiKey {
+        /**
+         * Stripe-defined identifier for the API key (e.g. a restricted API key token).
+         */
+        id: string;
+
+        /**
+         * Merchant-defined name for the API key.
+         */
+        name?: string;
+      }
+
+      export type Type = 'api_key' | 'user' | OtherString;
+
+      export interface User {
+        /**
+         * Email address of the dashboard user.
+         */
+        email: string;
+      }
+    }
+  }
+
+  export namespace StatusDetails {
+    export interface Approved {
+      /**
+       * The reason provided when approving the request.
+       */
+      reason?: string;
+    }
+
+    export interface Canceled {}
+
+    export interface ExecutionFailed {
+      /**
+       * The error code for the failed execution.
+       */
+      code: string;
+
+      /**
+       * The error message for the failed execution.
+       */
+      message: string;
+
+      /**
+       * The error type for the failed execution.
+       */
+      type: string;
+    }
+
+    export interface ExecutionStarted {}
+
+    export interface ExecutionSucceeded {
+      /**
+       * The result of the successful execution.
+       */
+      result: ExecutionSucceeded.Result;
+    }
+
+    export interface Expired {}
+
+    export interface Failed {
+      /**
+       * The error code for the failed execution.
+       */
+      error_code: string;
+
+      /**
+       * The error message for the failed execution.
+       */
+      error_message: string;
+
+      /**
+       * The error type for the failed execution.
+       */
+      error_type: string;
+    }
+
+    export interface Pending {}
+
+    export interface Rejected {
+      /**
+       * The reason provided when rejecting the request.
+       */
+      reason?: string;
+    }
+
+    export interface Succeeded {
+      /**
+       * The result of the successful execution.
+       */
+      result: Succeeded.Result;
+    }
+
+    export namespace ExecutionSucceeded {
+      export interface Result {
+        /**
+         * The unique identifier of the executed object.
+         */
+        id: string;
+
+        /**
+         * The object type of the executed resource.
+         */
+        object: string;
+      }
+    }
+
+    export namespace Succeeded {
+      export interface Result {
+        /**
+         * The unique identifier of the executed object.
+         */
+        id: string;
+
+        /**
+         * The object type of the executed resource.
+         */
+        object: string;
+      }
+    }
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export interface ApprovalRequestRetrieveParams {}
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export interface ApprovalRequestUpdateParams {
+      /**
+       * The updated reason for the approval request.
+       */
+      reason?: string;
+    }
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export interface ApprovalRequestListParams {
+      /**
+       * Filter by action type (e.g. "refund.create", "payment_intent.create", "payout.create").
+       */
+      action?: string;
+
+      /**
+       * Filter by creation time.
+       */
+      created?: RangeQueryParam;
+
+      /**
+       * Maximum number of results to return.
+       */
+      limit?: number;
+
+      /**
+       * Filter by approval request status (e.g. "requires_review", "approved", "succeeded", "failed", "rejected", "canceled", "expired").
+       */
+      status?: string;
+    }
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export interface ApprovalRequestCancelParams {}
+  }
+}

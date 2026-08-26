@@ -999,12 +999,12 @@ export namespace PaymentLink {
       position: PaymentMethodReuseAgreement.Position;
     }
 
-    export type Promotions = 'auto' | 'none';
+    export type Promotions = 'auto' | 'none' | OtherString;
 
-    export type TermsOfService = 'none' | 'required';
+    export type TermsOfService = 'none' | 'required' | OtherString;
 
     export namespace PaymentMethodReuseAgreement {
-      export type Position = 'auto' | 'hidden';
+      export type Position = 'auto' | 'hidden' | OtherString;
     }
   }
 
@@ -2198,7 +2198,7 @@ export namespace PaymentLinkCreateParams {
   export namespace CustomField {
     export interface Dropdown {
       /**
-       * The value that pre-fills the field on the payment page.Must match a `value` in the `options` array.
+       * The value that pre-fills the field on the payment page. Must match a `value` in the `options` array.
        */
       default_value?: string;
 
@@ -2381,7 +2381,10 @@ export namespace PaymentLinkCreateParams {
       }
 
       export namespace RenderingOptions {
-        export type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+        export type AmountTaxDisplay =
+          | 'exclude_tax'
+          | 'include_inclusive_tax'
+          | OtherString;
       }
     }
   }
@@ -2491,7 +2494,11 @@ export namespace PaymentLinkCreateParams {
         interval_count?: number;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace ProductData {
         export interface TaxDetails {
@@ -2508,7 +2515,7 @@ export namespace PaymentLinkCreateParams {
       }
 
       export namespace Recurring {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -2925,6 +2932,16 @@ export interface PaymentLinkUpdateParams {
   allow_promotion_codes?: boolean;
 
   /**
+   * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. Can only be applied when there are no line items with recurring prices.
+   */
+  application_fee_amount?: Emptyable<number>;
+
+  /**
+   * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. There must be at least 1 line item with a recurring price to use this field.
+   */
+  application_fee_percent?: Emptyable<number>;
+
+  /**
    * Configuration for automatic tax collection.
    */
   automatic_tax?: PaymentLinkUpdateParams.AutomaticTax;
@@ -2983,6 +3000,11 @@ export interface PaymentLinkUpdateParams {
    * Controls settings applied for collecting the customer's name.
    */
   name_collection?: Emptyable<PaymentLinkUpdateParams.NameCollection>;
+
+  /**
+   * The account on behalf of which to charge.
+   */
+  on_behalf_of?: Emptyable<string>;
 
   /**
    * A list of optional items the customer can add to their order at checkout. Use this parameter to pass one-time or recurring [Prices](https://docs.stripe.com/api/prices).
@@ -3057,6 +3079,11 @@ export interface PaymentLinkUpdateParams {
    * Controls tax ID collection during checkout.
    */
   tax_id_collection?: PaymentLinkUpdateParams.TaxIdCollection;
+
+  /**
+   * The account (if any) the payments will be attributed to for tax reporting, and where funds from each payment will be transferred to.
+   */
+  transfer_data?: Emptyable<PaymentLinkUpdateParams.TransferData>;
 }
 export namespace PaymentLinkUpdateParams {
   export interface AfterCompletion {
@@ -3407,6 +3434,21 @@ export namespace PaymentLinkUpdateParams {
     required?: TaxIdCollection.Required;
   }
 
+  export interface TransferData {
+    /**
+     * The amount that will be transferred automatically when a charge succeeds.
+     */
+    amount?: Emptyable<number>;
+
+    /**
+     * If specified, successful charges will be attributed to the destination
+     *  account for tax reporting, and the funds from charges will be transferred
+     *  to the destination account. The ID of the resulting transfer will be
+     *  returned on the successful charge's `transfer` field.
+     */
+    destination: string;
+  }
+
   export namespace AfterCompletion {
     export interface HostedConfirmation {
       /**
@@ -3464,7 +3506,7 @@ export namespace PaymentLinkUpdateParams {
   export namespace CustomField {
     export interface Dropdown {
       /**
-       * The value that pre-fills the field on the payment page.Must match a `value` in the `options` array.
+       * The value that pre-fills the field on the payment page. Must match a `value` in the `options` array.
        */
       default_value?: string;
 
@@ -3647,7 +3689,10 @@ export namespace PaymentLinkUpdateParams {
       }
 
       export namespace RenderingOptions {
-        export type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+        export type AmountTaxDisplay =
+          | 'exclude_tax'
+          | 'include_inclusive_tax'
+          | OtherString;
       }
     }
   }

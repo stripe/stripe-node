@@ -2,7 +2,7 @@
 
 import {Account} from './Accounts.js';
 import {Customer, DeletedCustomer} from './Customers.js';
-import {Metadata} from '../shared.js';
+import {Metadata, OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface BankAccount {
   /**
@@ -129,7 +129,7 @@ export interface DeletedBankAccount {
   deleted: true;
 }
 export namespace BankAccount {
-  export type AvailablePayoutMethod = 'instant' | 'standard';
+  export type AvailablePayoutMethod = 'instant' | 'standard' | OtherString;
 
   export interface FutureRequirements {
     /**

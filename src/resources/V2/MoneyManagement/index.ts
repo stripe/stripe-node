@@ -163,6 +163,7 @@ export declare namespace MoneyManagement {
   export import PayoutMethodListParams = V2Namespace8.MoneyManagement.PayoutMethodListParams;
   export import PayoutMethodRetrieveParams = V2Namespace8.MoneyManagement.PayoutMethodRetrieveParams;
   export import PayoutMethodArchiveParams = V2Namespace8.MoneyManagement.PayoutMethodArchiveParams;
+  export import PayoutMethodDisableParams = V2Namespace8.MoneyManagement.PayoutMethodDisableParams;
   export import PayoutMethodUnarchiveParams = V2Namespace8.MoneyManagement.PayoutMethodUnarchiveParams;
   export {PayoutMethod, PayoutMethodResource};
   export import PayoutMethodsBankAccountSpecRetrieveParams = V2Namespace9.MoneyManagement.PayoutMethodsBankAccountSpecRetrieveParams;

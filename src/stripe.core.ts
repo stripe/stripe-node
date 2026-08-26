@@ -25,6 +25,7 @@ import {
   validateInteger,
 } from './utils.js';
 import {
+  FallbackCallback,
   StripeEventNotificationHandler,
   StripeEventNotificationHandlerWithoutVerification,
   UnhandledNotificationDetails,
@@ -1876,11 +1877,7 @@ export class Stripe {
 
   notificationHandler(
     webhookSecret: string,
-    fallbackCallback: (
-      event: UnknownEventNotification,
-      client: Stripe,
-      details: UnhandledNotificationDetails
-    ) => Promise<void>
+    fallbackCallback: FallbackCallback
   ): StripeEventNotificationHandler {
     return new StripeEventNotificationHandler(
       this,
@@ -1890,11 +1887,7 @@ export class Stripe {
   }
 
   notificationHandlerWithoutVerification(
-    fallbackCallback: (
-      event: UnknownEventNotification,
-      client: Stripe,
-      details: UnhandledNotificationDetails
-    ) => Promise<void>
+    fallbackCallback: FallbackCallback
   ): StripeEventNotificationHandlerWithoutVerification {
     return StripeEventNotificationHandler.withoutVerification(
       this,

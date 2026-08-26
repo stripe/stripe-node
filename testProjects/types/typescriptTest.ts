@@ -409,6 +409,11 @@ async (): Promise<void> => {
   );
 
   handler
+    .preHandle(async (event, client) => {
+      const e: Stripe.V2.Core.EventNotification = event;
+      const s: Stripe = client;
+      return true;
+    })
     .on('v1.billing.meter.error_report_triggered', async (event) => {
       const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
       const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification = event;
@@ -422,6 +427,12 @@ async (): Promise<void> => {
     });
 
   const res: void = await handler.handle('', '');
+
+  // @ts-expect-error - preHandle callback must resolve boolean, not void
+  handler.preHandle(async () => {});
+  // @ts-expect-error - preHandle callback must resolve boolean, not int
+  handler.preHandle(async () => 3);
+  handler.preHandle(async () => false);
 };
 
 // event handler that skips signature verification

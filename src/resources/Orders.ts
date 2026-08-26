@@ -13,8 +13,8 @@ import {
   Emptyable,
   MetadataParam,
   Decimal,
-  AddressParam,
   OtherString,
+  AddressParam,
   Address,
   PaginationParams,
   Metadata,
@@ -1260,7 +1260,12 @@ export namespace Order {
         }
 
         export namespace Bancontact {
-          export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+          export type PreferredLanguage =
+            | 'de'
+            | 'en'
+            | 'fr'
+            | 'nl'
+            | OtherString;
 
           export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
@@ -1323,7 +1328,14 @@ export namespace Order {
               | OtherString;
 
             export namespace EuBankTransfer {
-              export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+              export type Country =
+                | 'BE'
+                | 'DE'
+                | 'ES'
+                | 'FR'
+                | 'IE'
+                | 'NL'
+                | OtherString;
             }
           }
         }
@@ -1434,7 +1446,8 @@ export namespace Order {
             | 'fr'
             | 'it'
             | 'nl'
-            | 'pl';
+            | 'pl'
+            | OtherString;
 
           export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
         }
@@ -1493,7 +1506,7 @@ export namespace Order {
   }
 
   export namespace TaxDetails {
-    export type TaxExempt = 'exempt' | 'none' | 'reverse';
+    export type TaxExempt = 'exempt' | 'none' | 'reverse' | OtherString;
 
     export interface TaxId {
       /**
@@ -1626,7 +1639,8 @@ export namespace Order {
         | 'vn_tin'
         | 'za_vat'
         | 'zm_tin'
-        | 'zw_tin';
+        | 'zw_tin'
+        | OtherString;
     }
   }
 
@@ -2017,7 +2031,11 @@ export namespace OrderCreateParams {
     }
 
     export namespace PriceData {
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
     }
 
     export namespace ProductData {
@@ -4252,7 +4270,11 @@ export namespace OrderCreateParams {
         };
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace DeliveryEstimate {
         export interface Maximum {
@@ -4314,14 +4336,18 @@ export namespace OrderCreateParams {
         }
 
         export namespace CurrencyOptions {
-          export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          export type TaxBehavior =
+            | 'exclusive'
+            | 'inclusive'
+            | 'unspecified'
+            | OtherString;
         }
       }
     }
   }
 
   export namespace TaxDetails {
-    export type TaxExempt = 'exempt' | 'none' | 'reverse';
+    export type TaxExempt = 'exempt' | 'none' | 'reverse' | OtherString;
 
     export interface TaxId {
       /**
@@ -4453,7 +4479,8 @@ export namespace OrderCreateParams {
         | 'vn_tin'
         | 'za_vat'
         | 'zm_tin'
-        | 'zw_tin';
+        | 'zw_tin'
+        | OtherString;
     }
   }
 }
@@ -4780,7 +4807,11 @@ export namespace OrderUpdateParams {
     }
 
     export namespace PriceData {
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
     }
 
     export namespace ProductData {
@@ -7015,7 +7046,11 @@ export namespace OrderUpdateParams {
         };
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace DeliveryEstimate {
         export interface Maximum {
@@ -7077,14 +7112,18 @@ export namespace OrderUpdateParams {
         }
 
         export namespace CurrencyOptions {
-          export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          export type TaxBehavior =
+            | 'exclusive'
+            | 'inclusive'
+            | 'unspecified'
+            | OtherString;
         }
       }
     }
   }
 
   export namespace TaxDetails {
-    export type TaxExempt = 'exempt' | 'none' | 'reverse';
+    export type TaxExempt = 'exempt' | 'none' | 'reverse' | OtherString;
 
     export interface TaxId {
       /**
@@ -7216,7 +7255,8 @@ export namespace OrderUpdateParams {
         | 'vn_tin'
         | 'za_vat'
         | 'zm_tin'
-        | 'zw_tin';
+        | 'zw_tin'
+        | OtherString;
     }
   }
 }

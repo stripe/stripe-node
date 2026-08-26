@@ -67,9 +67,19 @@ export interface CustomerSession {
 export namespace CustomerSession {
   export interface Components {
     /**
+     * This hash contains whether the active entitlements is enabled.
+     */
+    active_entitlements: Components.ActiveEntitlements;
+
+    /**
      * This hash contains whether the buy button is enabled.
      */
     buy_button: Components.BuyButton;
+
+    /**
+     * This hash contains whether the customer portal is enabled.
+     */
+    customer_portal: Components.CustomerPortal;
 
     /**
      * This hash contains whether the customer sheet is enabled and the features it supports.
@@ -98,9 +108,23 @@ export namespace CustomerSession {
   }
 
   export namespace Components {
+    export interface ActiveEntitlements {
+      /**
+       * Whether the active entitlements is enabled.
+       */
+      enabled: boolean;
+    }
+
     export interface BuyButton {
       /**
        * Whether the buy button is enabled.
+       */
+      enabled: boolean;
+    }
+
+    export interface CustomerPortal {
+      /**
+       * Whether the customer portal is enabled.
        */
       enabled: boolean;
     }
@@ -367,9 +391,19 @@ export interface CustomerSessionCreateParams {
 export namespace CustomerSessionCreateParams {
   export interface Components {
     /**
+     * Configuration for active entitlements.
+     */
+    active_entitlements?: Components.ActiveEntitlements;
+
+    /**
      * Configuration for buy button.
      */
     buy_button?: Components.BuyButton;
+
+    /**
+     * Configuration for customer portal.
+     */
+    customer_portal?: Components.CustomerPortal;
 
     /**
      * Configuration for the customer sheet.
@@ -398,9 +432,23 @@ export namespace CustomerSessionCreateParams {
   }
 
   export namespace Components {
+    export interface ActiveEntitlements {
+      /**
+       * Whether the active entitlements is enabled.
+       */
+      enabled: boolean;
+    }
+
     export interface BuyButton {
       /**
        * Whether the buy button is enabled.
+       */
+      enabled: boolean;
+    }
+
+    export interface CustomerPortal {
+      /**
+       * Whether the customer portal is enabled.
        */
       enabled: boolean;
     }

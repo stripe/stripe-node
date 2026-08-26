@@ -13,6 +13,7 @@ import {Iam} from './Iam/index.js';
 import {MoneyManagement} from './MoneyManagement/index.js';
 import {Network} from './Network/index.js';
 import {OrchestratedCommerce} from './OrchestratedCommerce/index.js';
+import {Signals} from './Signals/index.js';
 import {TestHelpers} from './TestHelpers/index.js';
 
 export {DeletedObject} from './DeletedObject.js';
@@ -29,6 +30,7 @@ export class V2 {
   moneyManagement: MoneyManagement;
   network: Network;
   orchestratedCommerce: OrchestratedCommerce;
+  signals: Signals;
   testHelpers: TestHelpers;
 
   constructor(private readonly stripe: Stripe) {
@@ -41,6 +43,7 @@ export class V2 {
     this.moneyManagement = new MoneyManagement(stripe);
     this.network = new Network(stripe);
     this.orchestratedCommerce = new OrchestratedCommerce(stripe);
+    this.signals = new Signals(stripe);
     this.testHelpers = new TestHelpers(stripe);
   }
 }
@@ -58,5 +61,6 @@ export declare namespace V2 {
   export {MoneyManagement};
   export {Network};
   export {OrchestratedCommerce};
+  export {Signals};
   export {TestHelpers};
 }

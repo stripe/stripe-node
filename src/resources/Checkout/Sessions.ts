@@ -856,7 +856,7 @@ export interface Session {
   payment_link: string | PaymentLink | null;
 
   /**
-   * Configure whether a Checkout Session should collect a payment method. Defaults to `always`.
+   * Configure whether a Checkout Session should collect a payment method for sessions with mode `payment`. Defaults to `always`.
    */
   payment_method_collection: Session.PaymentMethodCollection | null;
 
@@ -1462,7 +1462,7 @@ export namespace Session {
      *
      * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
      *
-     * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+     * This parameter is only supported when `ui_mode=elements`.
      */
     update_shipping_details: Permissions.UpdateShippingDetails | null;
   }
@@ -1565,7 +1565,7 @@ export namespace Session {
     shipping_rate: string | ShippingRate;
   }
 
-  export type Status = 'complete' | 'expired' | 'open';
+  export type Status = 'complete' | 'expired' | 'open' | OtherString;
 
   export type SubmitType =
     | 'auto'
@@ -1668,7 +1668,7 @@ export namespace Session {
   }
 
   export namespace BrandingSettings {
-    export type BorderStyle = 'pill' | 'rectangular' | 'rounded';
+    export type BorderStyle = 'pill' | 'rectangular' | 'rounded' | OtherString;
 
     export interface Icon {
       /**
@@ -1705,11 +1705,11 @@ export namespace Session {
     }
 
     export namespace Icon {
-      export type Type = 'file' | 'url';
+      export type Type = 'file' | 'url' | OtherString;
     }
 
     export namespace Logo {
-      export type Type = 'file' | 'url';
+      export type Type = 'file' | 'url' | OtherString;
     }
   }
 
@@ -1854,12 +1854,13 @@ export namespace Session {
         | 'vn_tin'
         | 'za_vat'
         | 'zm_tin'
-        | 'zw_tin';
+        | 'zw_tin'
+        | OtherString;
     }
   }
 
   export namespace Consent {
-    export type Promotions = 'opt_in' | 'opt_out';
+    export type Promotions = 'opt_in' | 'opt_out' | OtherString;
   }
 
   export namespace ConsentCollection {
@@ -1872,17 +1873,17 @@ export namespace Session {
       position: PaymentMethodReuseAgreement.Position;
     }
 
-    export type Promotions = 'auto' | 'none';
+    export type Promotions = 'auto' | 'none' | OtherString;
 
-    export type TermsOfService = 'none' | 'required';
+    export type TermsOfService = 'none' | 'required' | OtherString;
 
     export namespace PaymentMethodReuseAgreement {
-      export type Position = 'auto' | 'hidden';
+      export type Position = 'auto' | 'hidden' | OtherString;
     }
   }
 
   export namespace CustomerDetails {
-    export type TaxExempt = 'exempt' | 'none' | 'reverse';
+    export type TaxExempt = 'exempt' | 'none' | 'reverse' | OtherString;
 
     export interface TaxId {
       /**
@@ -2015,7 +2016,8 @@ export namespace Session {
         | 'vn_tin'
         | 'za_vat'
         | 'zm_tin'
-        | 'zw_tin';
+        | 'zw_tin'
+        | OtherString;
     }
   }
 
@@ -3190,6 +3192,11 @@ export namespace Session {
          * The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they can't complete the payment.
          */
         brands_blocked?: Array<Restrictions.BrandsBlocked>;
+
+        /**
+         * Card funding types to block for this Checkout Session. Supported values are `credit`, `debit`, and `prepaid`.
+         */
+        funding_types_blocked?: Array<Restrictions.FundingTypesBlocked>;
       }
 
       export type SetupFutureUsage =
@@ -3203,7 +3210,14 @@ export namespace Session {
           | 'american_express'
           | 'discover_global_network'
           | 'mastercard'
-          | 'visa';
+          | 'visa'
+          | OtherString;
+
+        export type FundingTypesBlocked =
+          | 'credit'
+          | 'debit'
+          | 'prepaid'
+          | OtherString;
       }
     }
 
@@ -3251,7 +3265,14 @@ export namespace Session {
           | OtherString;
 
         export namespace EuBankTransfer {
-          export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+          export type Country =
+            | 'BE'
+            | 'DE'
+            | 'ES'
+            | 'FR'
+            | 'IE'
+            | 'NL'
+            | OtherString;
         }
       }
     }
@@ -3548,7 +3569,7 @@ export namespace Session {
     }
 
     export namespace WechatPay {
-      export type Client = 'android' | 'ios' | 'web';
+      export type Client = 'android' | 'ios' | 'web' | OtherString;
     }
   }
 
@@ -3568,19 +3589,22 @@ export namespace Session {
        *
        * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
        *
-       * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+       * This parameter is only supported when `ui_mode=elements`.
        */
       shipping_details: Update.ShippingDetails | null;
     }
 
-    export type UpdateLineItems = 'client_only' | 'server_only';
+    export type UpdateLineItems = 'client_only' | 'server_only' | OtherString;
 
-    export type UpdateShippingDetails = 'client_only' | 'server_only';
+    export type UpdateShippingDetails =
+      | 'client_only'
+      | 'server_only'
+      | OtherString;
 
     export namespace Update {
-      export type LineItems = 'client_only' | 'server_only';
+      export type LineItems = 'client_only' | 'server_only' | OtherString;
 
-      export type ShippingDetails = 'client_only' | 'server_only';
+      export type ShippingDetails = 'client_only' | 'server_only' | OtherString;
     }
   }
 
@@ -4721,26 +4745,17 @@ export namespace Checkout {
       receipt_email?: string;
 
       /**
-       * Indicates that you intend to [make future payments](https://docs.stripe.com/payments/payment-intents#future-usage) with the payment
-       * method collected by this Checkout Session.
+       * Indicates that you intend to [make future payments](https://docs.stripe.com/payments/payment-intents#future-usage) with the payment method collected by this Checkout Session.
        *
-       * When setting this to `on_session`, Checkout will show a notice to the
-       * customer that their payment details will be saved.
+       * When setting this to `on_session`, Checkout will show a notice to the customer that their payment details will be saved.
        *
-       * When setting this to `off_session`, Checkout will show a notice to the
-       * customer that their payment details will be saved and used for future
-       * payments.
+       * When setting this to `off_session`, Checkout will show a notice to the customer that their payment details will be saved and used for future payments.
        *
-       * If a Customer has been provided or Checkout creates a new Customer,
-       * Checkout will attach the payment method to the Customer.
+       * If a Customer has been provided or Checkout creates a new Customer, Checkout will attach the payment method to the Customer.
        *
-       * If Checkout does not create a Customer, the payment method is not attached
-       * to a Customer. To reuse the payment method, you can retrieve it from the
-       * Checkout Session's PaymentIntent.
+       * If Checkout does not create a Customer, the payment method is not attached to a Customer. To reuse the payment method, you can retrieve it from the Checkout Session's PaymentIntent.
        *
-       * When processing card payments, Checkout also uses `setup_future_usage`
-       * to dynamically optimize your payment flow and comply with regional
-       * legislation and network rules, such as SCA.
+       * When processing card payments, Checkout also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as SCA.
        */
       setup_future_usage?: PaymentIntentData.SetupFutureUsage;
 
@@ -5126,7 +5141,7 @@ export namespace Checkout {
        *
        * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
        *
-       * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+       * This parameter is only supported when `ui_mode=elements`.
        */
       update_shipping_details?: Permissions.UpdateShippingDetails;
     }
@@ -5459,7 +5474,7 @@ export namespace Checkout {
     export namespace CustomField {
       export interface Dropdown {
         /**
-         * The value that pre-fills the field on the payment page.Must match a `value` in the `options` array.
+         * The value that pre-fills the field on the payment page. Must match a `value` in the `options` array.
          */
         default_value?: string;
 
@@ -5682,7 +5697,8 @@ export namespace Checkout {
         export namespace RenderingOptions {
           export type AmountTaxDisplay =
             | 'exclude_tax'
-            | 'include_inclusive_tax';
+            | 'include_inclusive_tax'
+            | OtherString;
         }
       }
     }
@@ -5792,7 +5808,11 @@ export namespace Checkout {
           interval_count?: number;
         }
 
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
 
         export namespace ProductData {
           export interface TaxDetails {
@@ -5809,7 +5829,12 @@ export namespace Checkout {
         }
 
         export namespace Recurring {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -6944,6 +6969,11 @@ export namespace Checkout {
            * The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they can't complete the payment.
            */
           brands_blocked?: Array<Restrictions.BrandsBlocked>;
+
+          /**
+           * Card funding types to block for this Checkout Session. Supported values are `credit`, `debit`, and `prepaid`.
+           */
+          funding_types_blocked?: Array<Restrictions.FundingTypesBlocked>;
         }
 
         export type SetupFutureUsage =
@@ -6957,6 +6987,12 @@ export namespace Checkout {
             | 'discover_global_network'
             | 'mastercard'
             | 'visa'
+            | OtherString;
+
+          export type FundingTypesBlocked =
+            | 'credit'
+            | 'debit'
+            | 'prepaid'
             | OtherString;
         }
       }
@@ -7330,7 +7366,8 @@ export namespace Checkout {
             | 'balances'
             | 'ownership'
             | 'payment_method'
-            | 'transactions';
+            | 'transactions'
+            | OtherString;
 
           export type Prefetch =
             | 'balances'
@@ -7342,7 +7379,7 @@ export namespace Checkout {
       }
 
       export namespace WechatPay {
-        export type Client = 'android' | 'ios' | 'web';
+        export type Client = 'android' | 'ios' | 'web' | OtherString;
       }
     }
 
@@ -7362,7 +7399,7 @@ export namespace Checkout {
          *
          * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
          *
-         * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+         * This parameter is only supported when `ui_mode=elements`.
          */
         shipping_details?: Update.ShippingDetails;
       }
@@ -7711,7 +7748,11 @@ export namespace Checkout {
           };
         }
 
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
 
         export namespace DeliveryEstimate {
           export interface Maximum {
@@ -7773,7 +7814,11 @@ export namespace Checkout {
           }
 
           export namespace CurrencyOptions {
-            export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            export type TaxBehavior =
+              | 'exclusive'
+              | 'inclusive'
+              | 'unspecified'
+              | OtherString;
           }
         }
       }
@@ -7873,7 +7918,10 @@ export namespace Checkout {
         export type Type = 'classic' | 'flexible' | OtherString;
 
         export namespace Flexible {
-          export type ProrationDiscounts = 'included' | 'itemized';
+          export type ProrationDiscounts =
+            | 'included'
+            | 'itemized'
+            | OtherString;
         }
       }
 
@@ -7896,7 +7944,7 @@ export namespace Checkout {
       }
 
       export namespace PendingInvoiceItemInterval {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
 
       export namespace TrialSettings {
@@ -8346,7 +8394,11 @@ export namespace Checkout {
           interval_count?: number;
         }
 
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
 
         export namespace ProductData {
           export interface TaxDetails {
@@ -8363,7 +8415,12 @@ export namespace Checkout {
         }
 
         export namespace Recurring {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
     }
@@ -8438,7 +8495,11 @@ export namespace Checkout {
           };
         }
 
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
 
         export namespace DeliveryEstimate {
           export interface Maximum {
@@ -8500,7 +8561,11 @@ export namespace Checkout {
           }
 
           export namespace CurrencyOptions {
-            export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            export type TaxBehavior =
+              | 'exclusive'
+              | 'inclusive'
+              | 'unspecified'
+              | OtherString;
           }
         }
       }
@@ -8545,7 +8610,7 @@ export namespace Checkout {
       }
 
       export namespace PendingInvoiceItemInterval {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -8606,7 +8671,7 @@ export namespace Checkout {
       email: string;
     }
 
-    export type Status = 'complete' | 'expired' | 'open';
+    export type Status = 'complete' | 'expired' | 'open' | OtherString;
   }
 }
 export namespace Checkout {

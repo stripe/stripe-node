@@ -1360,166 +1360,383 @@ export namespace Account {
   }
 
   export namespace Capabilities {
-    export type AcssDebitPayments = 'active' | 'inactive' | 'pending';
+    export type AcssDebitPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type AffirmPayments = 'active' | 'inactive' | 'pending';
+    export type AffirmPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type AfterpayClearpayPayments = 'active' | 'inactive' | 'pending';
+    export type AfterpayClearpayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type AlmaPayments = 'active' | 'inactive' | 'pending';
+    export type AlmaPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type AmazonPayPayments = 'active' | 'inactive' | 'pending';
+    export type AmazonPayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type AppDistribution = 'active' | 'inactive' | 'pending';
+    export type AppDistribution =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
+    export type AuBecsDebitPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type AutomaticIndirectTax = 'active' | 'inactive' | 'pending';
+    export type AutomaticIndirectTax =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type BacsDebitPayments = 'active' | 'inactive' | 'pending';
+    export type BacsDebitPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type BancontactPayments = 'active' | 'inactive' | 'pending';
+    export type BancontactPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type BankTransferPayments = 'active' | 'inactive' | 'pending';
+    export type BankTransferPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type BilliePayments = 'active' | 'inactive' | 'pending';
+    export type BilliePayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type BizumPayments = 'active' | 'inactive' | 'pending';
+    export type BizumPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type BlikPayments = 'active' | 'inactive' | 'pending';
+    export type BlikPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type BoletoPayments = 'active' | 'inactive' | 'pending';
+    export type BoletoPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type CardIssuing = 'active' | 'inactive' | 'pending';
+    export type CardIssuing = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type CardPayments = 'active' | 'inactive' | 'pending';
+    export type CardPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type CartesBancairesPayments = 'active' | 'inactive' | 'pending';
+    export type CartesBancairesPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type CashappPayments = 'active' | 'inactive' | 'pending';
+    export type CashappPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type CryptoPayments = 'active' | 'inactive' | 'pending';
+    export type CryptoPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type EpsPayments = 'active' | 'inactive' | 'pending';
+    export type EpsPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type FpxPayments = 'active' | 'inactive' | 'pending';
+    export type FpxPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type GbBankTransferPayments = 'active' | 'inactive' | 'pending';
+    export type GbBankTransferPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type GiropayPayments = 'active' | 'inactive' | 'pending';
+    export type GiropayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type GopayPayments = 'active' | 'inactive' | 'pending';
+    export type GopayPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type GrabpayPayments = 'active' | 'inactive' | 'pending';
+    export type GrabpayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type IdBankTransferPayments = 'active' | 'inactive' | 'pending';
+    export type IdBankTransferPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type IdBankTransferPaymentsBca = 'active' | 'inactive' | 'pending';
+    export type IdBankTransferPaymentsBca =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type IdealPayments = 'active' | 'inactive' | 'pending';
+    export type IdealPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type IndiaInternationalPayments = 'active' | 'inactive' | 'pending';
+    export type IndiaInternationalPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type JcbPayments = 'active' | 'inactive' | 'pending';
+    export type JcbPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type JpBankTransferPayments = 'active' | 'inactive' | 'pending';
+    export type JpBankTransferPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type KakaoPayPayments = 'active' | 'inactive' | 'pending';
+    export type KakaoPayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type KlarnaPayments = 'active' | 'inactive' | 'pending';
+    export type KlarnaPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type KonbiniPayments = 'active' | 'inactive' | 'pending';
+    export type KonbiniPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type KrCardPayments = 'active' | 'inactive' | 'pending';
+    export type KrCardPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type LegacyPayments = 'active' | 'inactive' | 'pending';
+    export type LegacyPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type LinkPayments = 'active' | 'inactive' | 'pending';
+    export type LinkPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type MbWayPayments = 'active' | 'inactive' | 'pending';
+    export type MbWayPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type MobilepayPayments = 'active' | 'inactive' | 'pending';
+    export type MobilepayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type MultibancoPayments = 'active' | 'inactive' | 'pending';
+    export type MultibancoPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type MxBankTransferPayments = 'active' | 'inactive' | 'pending';
+    export type MxBankTransferPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type NaverPayPayments = 'active' | 'inactive' | 'pending';
+    export type NaverPayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
     export type NzBankAccountBecsDebitPayments =
       | 'active'
       | 'inactive'
-      | 'pending';
+      | 'pending'
+      | OtherString;
 
-    export type OxxoPayments = 'active' | 'inactive' | 'pending';
+    export type OxxoPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type P24Payments = 'active' | 'inactive' | 'pending';
+    export type P24Payments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type PayByBankPayments = 'active' | 'inactive' | 'pending';
+    export type PayByBankPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type PaycoPayments = 'active' | 'inactive' | 'pending';
+    export type PaycoPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type PaynowPayments = 'active' | 'inactive' | 'pending';
+    export type PaynowPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type PaypalPayments = 'active' | 'inactive' | 'pending';
+    export type PaypalPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type PaypayPayments = 'active' | 'inactive' | 'pending';
+    export type PaypayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type PaytoPayments = 'active' | 'inactive' | 'pending';
+    export type PaytoPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type PixPayments = 'active' | 'inactive' | 'pending';
+    export type PixPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type PromptpayPayments = 'active' | 'inactive' | 'pending';
+    export type PromptpayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type QrisPayments = 'active' | 'inactive' | 'pending';
+    export type QrisPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type RechnungPayments = 'active' | 'inactive' | 'pending';
+    export type RechnungPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type RevolutPayPayments = 'active' | 'inactive' | 'pending';
+    export type RevolutPayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type SamsungPayPayments = 'active' | 'inactive' | 'pending';
+    export type SamsungPayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type SatispayPayments = 'active' | 'inactive' | 'pending';
+    export type SatispayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type ScalapayPayments = 'active' | 'inactive' | 'pending';
+    export type ScalapayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type SepaBankTransferPayments = 'active' | 'inactive' | 'pending';
+    export type SepaBankTransferPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type SepaDebitPayments = 'active' | 'inactive' | 'pending';
+    export type SepaDebitPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type ShopeepayPayments = 'active' | 'inactive' | 'pending';
+    export type ShopeepayPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type SofortPayments = 'active' | 'inactive' | 'pending';
+    export type SofortPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type StripeBalancePayments = 'active' | 'inactive' | 'pending';
+    export type StripeBalancePayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type SunbitPayments = 'active' | 'inactive' | 'pending';
+    export type SunbitPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type SwishPayments = 'active' | 'inactive' | 'pending';
+    export type SwishPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type TaxReportingUs1099K = 'active' | 'inactive' | 'pending';
+    export type TaxReportingUs1099K =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type TaxReportingUs1099Misc = 'active' | 'inactive' | 'pending';
+    export type TaxReportingUs1099Misc =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type Transfers = 'active' | 'inactive' | 'pending';
+    export type Transfers = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type Treasury = 'active' | 'inactive' | 'pending';
+    export type Treasury = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type TreasuryEvolve = 'active' | 'inactive' | 'pending';
+    export type TreasuryEvolve =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type TreasuryFifthThird = 'active' | 'inactive' | 'pending';
+    export type TreasuryFifthThird =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type TreasuryGoldmanSachs = 'active' | 'inactive' | 'pending';
+    export type TreasuryGoldmanSachs =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type TwintPayments = 'active' | 'inactive' | 'pending';
+    export type TwintPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type UpiPayments = 'active' | 'inactive' | 'pending';
+    export type UpiPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
-    export type UsBankAccountAchPayments = 'active' | 'inactive' | 'pending';
+    export type UsBankAccountAchPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type UsBankTransferPayments = 'active' | 'inactive' | 'pending';
+    export type UsBankTransferPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
 
-    export type ZipPayments = 'active' | 'inactive' | 'pending';
+    export type ZipPayments = 'active' | 'inactive' | 'pending' | OtherString;
   }
 
   export namespace Company {
@@ -1773,10 +1990,10 @@ export namespace Account {
       type: StripeDashboard.Type;
     }
 
-    export type Type = 'account' | 'application';
+    export type Type = 'account' | 'application' | OtherString;
 
     export namespace Dashboard {
-      export type Type = 'express' | 'full' | 'none';
+      export type Type = 'express' | 'full' | 'none' | OtherString;
     }
 
     export namespace Fees {
@@ -2335,7 +2552,11 @@ export namespace Account {
     }
 
     export namespace Invoices {
-      export type HostedPaymentMethodSave = 'always' | 'never' | 'offer';
+      export type HostedPaymentMethodSave =
+        | 'always'
+        | 'never'
+        | 'offer'
+        | OtherString;
     }
 
     export namespace Payouts {
@@ -3059,6 +3280,9 @@ export namespace AccountCreateParams {
      */
     address_kanji?: JapanAddressParam;
 
+    /**
+     * The location where the business is administered.
+     */
     administrative_address?: AddressParam;
 
     /**
@@ -3121,6 +3345,9 @@ export namespace AccountCreateParams {
      */
     phone?: string;
 
+    /**
+     * The primary location where the business conducts operations.
+     */
     principal_place_of_business?: AddressParam;
 
     /**
@@ -3502,7 +3729,7 @@ export namespace AccountCreateParams {
     user_agent?: string;
   }
 
-  export type Type = 'custom' | 'express' | 'standard';
+  export type Type = 'custom' | 'express' | 'standard' | OtherString;
 
   export namespace BusinessProfile {
     export interface AnnualRevenue {
@@ -4707,7 +4934,12 @@ export namespace AccountCreateParams {
       }
 
       export namespace Schedule {
-        export type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
+        export type Interval =
+          | 'daily'
+          | 'manual'
+          | 'monthly'
+          | 'weekly'
+          | OtherString;
 
         export type WeeklyAnchor =
           | 'friday'
@@ -4716,7 +4948,8 @@ export namespace AccountCreateParams {
           | 'sunday'
           | 'thursday'
           | 'tuesday'
-          | 'wednesday';
+          | 'wednesday'
+          | OtherString;
 
         export type WeeklyPayoutDay =
           | 'friday'
@@ -5403,6 +5636,9 @@ export namespace AccountUpdateParams {
      */
     address_kanji?: JapanAddressParam;
 
+    /**
+     * The location where the business is administered.
+     */
     administrative_address?: AddressParam;
 
     /**
@@ -5465,6 +5701,9 @@ export namespace AccountUpdateParams {
      */
     phone?: string;
 
+    /**
+     * The primary location where the business conducts operations.
+     */
     principal_place_of_business?: AddressParam;
 
     registration_date?: Emptyable<Company.RegistrationDate>;
@@ -5862,7 +6101,7 @@ export namespace AccountUpdateParams {
   }
 
   export namespace BankAccount {
-    export type AccountHolderType = 'company' | 'individual';
+    export type AccountHolderType = 'company' | 'individual' | OtherString;
   }
 
   export namespace BusinessProfile {
@@ -7036,7 +7275,12 @@ export namespace AccountUpdateParams {
       }
 
       export namespace Schedule {
-        export type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
+        export type Interval =
+          | 'daily'
+          | 'manual'
+          | 'monthly'
+          | 'weekly'
+          | OtherString;
 
         export type WeeklyAnchor =
           | 'friday'
@@ -7045,7 +7289,8 @@ export namespace AccountUpdateParams {
           | 'sunday'
           | 'thursday'
           | 'tuesday'
-          | 'wednesday';
+          | 'wednesday'
+          | OtherString;
 
         export type WeeklyPayoutDay =
           | 'friday'
@@ -7255,7 +7500,7 @@ export namespace AccountCreateExternalAccountParams {
   }
 
   export namespace BankAccount {
-    export type AccountHolderType = 'company' | 'individual';
+    export type AccountHolderType = 'company' | 'individual' | OtherString;
   }
 }
 export interface AccountCreateLoginLinkParams {
@@ -7686,7 +7931,7 @@ export interface AccountListExternalAccountsParams extends PaginationParams {
   object?: AccountListExternalAccountsParams.Object;
 }
 export namespace AccountListExternalAccountsParams {
-  export type Object = 'bank_account' | 'card';
+  export type Object = 'bank_account' | 'card' | OtherString;
 }
 export interface AccountListPersonsParams extends PaginationParams {
   /**
@@ -7879,9 +8124,14 @@ export interface AccountUpdateExternalAccountParams {
   name?: string;
 }
 export namespace AccountUpdateExternalAccountParams {
-  export type AccountHolderType = 'company' | 'individual';
+  export type AccountHolderType = 'company' | 'individual' | OtherString;
 
-  export type AccountType = 'checking' | 'futsu' | 'savings' | 'toza';
+  export type AccountType =
+    | 'checking'
+    | 'futsu'
+    | 'savings'
+    | 'toza'
+    | OtherString;
 
   export interface Documents {
     /**

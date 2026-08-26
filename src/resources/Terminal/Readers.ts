@@ -419,7 +419,7 @@ export namespace Reader {
     | 'verifone_v660p'
     | OtherString;
 
-  export type Status = 'offline' | 'online';
+  export type Status = 'offline' | 'online' | OtherString;
 
   export namespace Action {
     export interface ApiError {
@@ -731,6 +731,7 @@ export namespace Reader {
         | 'api_key_expired'
         | 'application_fees_not_allowed'
         | 'approval_required'
+        | 'authentication_failure'
         | 'authentication_required'
         | 'balance_insufficient'
         | 'balance_invalid_parameter'
@@ -743,6 +744,7 @@ export namespace Reader {
         | 'bank_account_verification_failed'
         | 'billing_invalid_mandate'
         | 'bitcoin_upgrade_required'
+        | 'capability_not_active'
         | 'capture_charge_authorization_expired'
         | 'capture_unauthorized_payment'
         | 'card_decline_rate_limit_exceeded'
@@ -767,6 +769,7 @@ export namespace Reader {
         | 'debit_not_authorized'
         | 'email_invalid'
         | 'expired_card'
+        | 'expired_payment_method'
         | 'failed_tax_calculation'
         | 'financial_account_balance_does_not_support_currency'
         | 'financial_account_capability_not_enabled'
@@ -786,6 +789,7 @@ export namespace Reader {
         | 'incorrect_address'
         | 'incorrect_cvc'
         | 'incorrect_number'
+        | 'incorrect_postal_code'
         | 'incorrect_zip'
         | 'india_recurring_payment_mandate_canceled'
         | 'instant_payouts_config_disabled'
@@ -795,6 +799,7 @@ export namespace Reader {
         | 'insufficient_funds'
         | 'intent_invalid_state'
         | 'intent_verification_method_missing'
+        | 'invalid_canceled_subscription_fields'
         | 'invalid_card_type'
         | 'invalid_characters'
         | 'invalid_charge_amount'
@@ -854,6 +859,7 @@ export namespace Reader {
         | 'payment_method_not_available'
         | 'payment_method_provider_decline'
         | 'payment_method_provider_timeout'
+        | 'payment_method_restricted'
         | 'payment_method_unactivated'
         | 'payment_method_unexpected_state'
         | 'payment_method_unsupported_type'
@@ -914,13 +920,15 @@ export namespace Reader {
         | 'transfers_not_allowed'
         | 'url_invalid'
         | 'v2_account_disconnection_unsupported'
-        | 'v2_account_missing_configuration';
+        | 'v2_account_missing_configuration'
+        | OtherString;
 
       export type Type =
         | 'api_error'
         | 'card_error'
         | 'idempotency_error'
-        | 'invalid_request_error';
+        | 'invalid_request_error'
+        | OtherString;
     }
 
     export namespace CollectInputs {
@@ -1084,7 +1092,8 @@ export namespace Reader {
           | 'phone'
           | 'selection'
           | 'signature'
-          | 'text';
+          | 'text'
+          | OtherString;
 
         export namespace Selection {
           export interface Choice {
@@ -1221,7 +1230,11 @@ export namespace Reader {
     }
 
     export namespace RefundPayment {
-      export type Reason = 'duplicate' | 'fraudulent' | 'requested_by_customer';
+      export type Reason =
+        | 'duplicate'
+        | 'fraudulent'
+        | 'requested_by_customer'
+        | OtherString;
 
       export interface RefundPaymentConfig {
         /**

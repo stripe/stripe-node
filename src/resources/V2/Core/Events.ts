@@ -179,6 +179,7 @@ import {Data} from './../Data/index.js';
 import {Extend} from './../Extend/index.js';
 import {MoneyManagement} from './../MoneyManagement/index.js';
 import {OrchestratedCommerce} from './../OrchestratedCommerce/index.js';
+import {Signals} from './../Signals/index.js';
 export type Event =
   | V1BillingMeterErrorReportTriggeredEvent
   | V1BillingMeterNoMeterFoundEvent
@@ -205,6 +206,13 @@ export type Event =
   | V2CoreAccountPersonCreatedEvent
   | V2CoreAccountPersonDeletedEvent
   | V2CoreAccountPersonUpdatedEvent
+  | V2CoreApprovalRequestApprovedEvent
+  | V2CoreApprovalRequestCanceledEvent
+  | V2CoreApprovalRequestCreatedEvent
+  | V2CoreApprovalRequestExpiredEvent
+  | V2CoreApprovalRequestFailedEvent
+  | V2CoreApprovalRequestRejectedEvent
+  | V2CoreApprovalRequestSucceededEvent
   | V2CoreBatchJobBatchFailedEvent
   | V2CoreBatchJobCanceledEvent
   | V2CoreBatchJobCompletedEvent
@@ -265,7 +273,8 @@ export type Event =
   | V2OrchestratedCommerceAgreementConfirmedEvent
   | V2OrchestratedCommerceAgreementCreatedEvent
   | V2OrchestratedCommerceAgreementPartiallyConfirmedEvent
-  | V2OrchestratedCommerceAgreementTerminatedEvent;
+  | V2OrchestratedCommerceAgreementTerminatedEvent
+  | V2SignalsAccountEvaluationCompleteEvent;
 
 export type EventNotification =
   | V1BillingMeterErrorReportTriggeredEventNotification
@@ -293,6 +302,13 @@ export type EventNotification =
   | V2CoreAccountPersonCreatedEventNotification
   | V2CoreAccountPersonDeletedEventNotification
   | V2CoreAccountPersonUpdatedEventNotification
+  | V2CoreApprovalRequestApprovedEventNotification
+  | V2CoreApprovalRequestCanceledEventNotification
+  | V2CoreApprovalRequestCreatedEventNotification
+  | V2CoreApprovalRequestExpiredEventNotification
+  | V2CoreApprovalRequestFailedEventNotification
+  | V2CoreApprovalRequestRejectedEventNotification
+  | V2CoreApprovalRequestSucceededEventNotification
   | V2CoreBatchJobBatchFailedEventNotification
   | V2CoreBatchJobCanceledEventNotification
   | V2CoreBatchJobCompletedEventNotification
@@ -353,7 +369,8 @@ export type EventNotification =
   | V2OrchestratedCommerceAgreementConfirmedEventNotification
   | V2OrchestratedCommerceAgreementCreatedEventNotification
   | V2OrchestratedCommerceAgreementPartiallyConfirmedEventNotification
-  | V2OrchestratedCommerceAgreementTerminatedEventNotification;
+  | V2OrchestratedCommerceAgreementTerminatedEventNotification
+  | V2SignalsAccountEvaluationCompleteEventNotification;
 
 import {StripeContext} from '../../../StripeContext.js';
 
@@ -1294,6 +1311,146 @@ export namespace V2CoreAccountPersonUpdatedEvent {
      */
     account_id: string;
   }
+}
+
+/**
+ * Occurs when an approval request is approved by a reviewer.
+ */
+export interface V2CoreApprovalRequestApprovedEvent extends EventBase {
+  type: 'v2.core.approval_request.approved';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+}
+export interface V2CoreApprovalRequestApprovedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.approval_request.approved';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+  fetchEvent(): Promise<V2CoreApprovalRequestApprovedEvent>;
+}
+
+/**
+ * Occurs when an approval request is canceled by the requester.
+ */
+export interface V2CoreApprovalRequestCanceledEvent extends EventBase {
+  type: 'v2.core.approval_request.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+}
+export interface V2CoreApprovalRequestCanceledEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.approval_request.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+  fetchEvent(): Promise<V2CoreApprovalRequestCanceledEvent>;
+}
+
+/**
+ * Occurs when an approval request is created.
+ */
+export interface V2CoreApprovalRequestCreatedEvent extends EventBase {
+  type: 'v2.core.approval_request.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+}
+export interface V2CoreApprovalRequestCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.approval_request.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+  fetchEvent(): Promise<V2CoreApprovalRequestCreatedEvent>;
+}
+
+/**
+ * Occurs when an approval request expires without being acted upon.
+ */
+export interface V2CoreApprovalRequestExpiredEvent extends EventBase {
+  type: 'v2.core.approval_request.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+}
+export interface V2CoreApprovalRequestExpiredEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.approval_request.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+  fetchEvent(): Promise<V2CoreApprovalRequestExpiredEvent>;
+}
+
+/**
+ * Occurs when the action associated with an approval request fails during execution.
+ */
+export interface V2CoreApprovalRequestFailedEvent extends EventBase {
+  type: 'v2.core.approval_request.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+}
+export interface V2CoreApprovalRequestFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.approval_request.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+  fetchEvent(): Promise<V2CoreApprovalRequestFailedEvent>;
+}
+
+/**
+ * Occurs when an approval request is rejected by a reviewer.
+ */
+export interface V2CoreApprovalRequestRejectedEvent extends EventBase {
+  type: 'v2.core.approval_request.rejected';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+}
+export interface V2CoreApprovalRequestRejectedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.approval_request.rejected';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+  fetchEvent(): Promise<V2CoreApprovalRequestRejectedEvent>;
+}
+
+/**
+ * Occurs when an approval request is successfully executed.
+ */
+export interface V2CoreApprovalRequestSucceededEvent extends EventBase {
+  type: 'v2.core.approval_request.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+}
+export interface V2CoreApprovalRequestSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.approval_request.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+  fetchEvent(): Promise<V2CoreApprovalRequestSucceededEvent>;
 }
 
 /**
@@ -2866,6 +3023,26 @@ export namespace V2OrchestratedCommerceAgreementTerminatedEvent {
   }
 }
 
+/**
+ * Occurs when all requested signals for an account evaluation are complete.
+ */
+export interface V2SignalsAccountEvaluationCompleteEvent extends EventBase {
+  type: 'v2.signals.account_evaluation.complete';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.AccountEvaluation>;
+}
+export interface V2SignalsAccountEvaluationCompleteEventNotification
+  extends EventNotificationBase {
+  type: 'v2.signals.account_evaluation.complete';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.AccountEvaluation>;
+  fetchEvent(): Promise<V2SignalsAccountEvaluationCompleteEvent>;
+}
+
 export declare namespace Events {
   export {
     UnknownEventNotification,
@@ -2894,6 +3071,13 @@ export declare namespace Events {
     V2CoreAccountPersonCreatedEvent,
     V2CoreAccountPersonDeletedEvent,
     V2CoreAccountPersonUpdatedEvent,
+    V2CoreApprovalRequestApprovedEvent,
+    V2CoreApprovalRequestCanceledEvent,
+    V2CoreApprovalRequestCreatedEvent,
+    V2CoreApprovalRequestExpiredEvent,
+    V2CoreApprovalRequestFailedEvent,
+    V2CoreApprovalRequestRejectedEvent,
+    V2CoreApprovalRequestSucceededEvent,
     V2CoreBatchJobBatchFailedEvent,
     V2CoreBatchJobCanceledEvent,
     V2CoreBatchJobCompletedEvent,
@@ -2955,6 +3139,7 @@ export declare namespace Events {
     V2OrchestratedCommerceAgreementCreatedEvent,
     V2OrchestratedCommerceAgreementPartiallyConfirmedEvent,
     V2OrchestratedCommerceAgreementTerminatedEvent,
+    V2SignalsAccountEvaluationCompleteEvent,
     V1BillingMeterErrorReportTriggeredEventNotification,
     V1BillingMeterNoMeterFoundEventNotification,
     V2CommerceProductCatalogImportsFailedEventNotification,
@@ -2980,6 +3165,13 @@ export declare namespace Events {
     V2CoreAccountPersonCreatedEventNotification,
     V2CoreAccountPersonDeletedEventNotification,
     V2CoreAccountPersonUpdatedEventNotification,
+    V2CoreApprovalRequestApprovedEventNotification,
+    V2CoreApprovalRequestCanceledEventNotification,
+    V2CoreApprovalRequestCreatedEventNotification,
+    V2CoreApprovalRequestExpiredEventNotification,
+    V2CoreApprovalRequestFailedEventNotification,
+    V2CoreApprovalRequestRejectedEventNotification,
+    V2CoreApprovalRequestSucceededEventNotification,
     V2CoreBatchJobBatchFailedEventNotification,
     V2CoreBatchJobCanceledEventNotification,
     V2CoreBatchJobCompletedEventNotification,
@@ -3041,5 +3233,6 @@ export declare namespace Events {
     V2OrchestratedCommerceAgreementCreatedEventNotification,
     V2OrchestratedCommerceAgreementPartiallyConfirmedEventNotification,
     V2OrchestratedCommerceAgreementTerminatedEventNotification,
+    V2SignalsAccountEvaluationCompleteEventNotification,
   };
 }

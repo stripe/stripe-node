@@ -334,7 +334,10 @@ export interface SubscriptionSchedule {
   test_clock: string | TestHelpers.TestClock | null;
 }
 export namespace SubscriptionSchedule {
-  export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+  export type BillingBehavior =
+    | 'prorate_on_next_phase'
+    | 'prorate_up_front'
+    | OtherString;
 
   export interface BillingMode {
     /**
@@ -581,7 +584,8 @@ export namespace SubscriptionSchedule {
     | 'canceled'
     | 'completed'
     | 'not_started'
-    | 'released';
+    | 'released'
+    | OtherString;
 
   export namespace BillingMode {
     export interface Flexible {
@@ -594,7 +598,7 @@ export namespace SubscriptionSchedule {
     export type Type = 'classic' | 'flexible' | OtherString;
 
     export namespace Flexible {
-      export type ProrationDiscounts = 'included' | 'itemized';
+      export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
     }
   }
 
@@ -616,7 +620,7 @@ export namespace SubscriptionSchedule {
       liability: AutomaticTax.Liability | null;
     }
 
-    export type BillingCycleAnchor = 'automatic' | 'phase_start';
+    export type BillingCycleAnchor = 'automatic' | 'phase_start' | OtherString;
 
     export interface BillingThresholds {
       /**
@@ -791,7 +795,7 @@ export namespace SubscriptionSchedule {
       liability: AutomaticTax.Liability | null;
     }
 
-    export type BillingCycleAnchor = 'automatic' | 'phase_start';
+    export type BillingCycleAnchor = 'automatic' | 'phase_start' | OtherString;
 
     export interface BillingThresholds {
       /**
@@ -805,7 +809,10 @@ export namespace SubscriptionSchedule {
       reset_billing_cycle_anchor: boolean | null;
     }
 
-    export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+    export type CollectionMethod =
+      | 'charge_automatically'
+      | 'send_invoice'
+      | OtherString;
 
     export interface Discount {
       /**
@@ -918,7 +925,8 @@ export namespace SubscriptionSchedule {
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
-      | 'none';
+      | 'none'
+      | OtherString;
 
     export interface TransferData {
       /**
@@ -1238,7 +1246,10 @@ export interface SubscriptionScheduleCreateParams {
   start_date?: number | 'now';
 }
 export namespace SubscriptionScheduleCreateParams {
-  export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+  export type BillingBehavior =
+    | 'prorate_on_next_phase'
+    | 'prorate_up_front'
+    | OtherString;
 
   export interface BillingMode {
     /**
@@ -1456,7 +1467,7 @@ export namespace SubscriptionScheduleCreateParams {
     export type Type = 'classic' | 'flexible' | OtherString;
 
     export namespace Flexible {
-      export type ProrationDiscounts = 'included' | 'itemized';
+      export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
     }
   }
 
@@ -1473,7 +1484,7 @@ export namespace SubscriptionScheduleCreateParams {
       liability?: AutomaticTax.Liability;
     }
 
-    export type BillingCycleAnchor = 'automatic' | 'phase_start';
+    export type BillingCycleAnchor = 'automatic' | 'phase_start' | OtherString;
 
     export interface BillingThresholds {
       /**
@@ -1487,7 +1498,10 @@ export namespace SubscriptionScheduleCreateParams {
       reset_billing_cycle_anchor?: boolean;
     }
 
-    export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+    export type CollectionMethod =
+      | 'charge_automatically'
+      | 'send_invoice'
+      | OtherString;
 
     export interface InvoiceSettings {
       /**
@@ -1628,7 +1642,7 @@ export namespace SubscriptionScheduleCreateParams {
       liability?: AutomaticTax.Liability;
     }
 
-    export type BillingCycleAnchor = 'automatic' | 'phase_start';
+    export type BillingCycleAnchor = 'automatic' | 'phase_start' | OtherString;
 
     export interface BillingThresholds {
       /**
@@ -1642,7 +1656,10 @@ export namespace SubscriptionScheduleCreateParams {
       reset_billing_cycle_anchor?: boolean;
     }
 
-    export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+    export type CollectionMethod =
+      | 'charge_automatically'
+      | 'send_invoice'
+      | OtherString;
 
     export interface Discount {
       /**
@@ -1945,7 +1962,11 @@ export namespace SubscriptionScheduleCreateParams {
       }
 
       export namespace PriceData {
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
       }
     }
 
@@ -2012,7 +2033,7 @@ export namespace SubscriptionScheduleCreateParams {
     }
 
     export namespace Duration {
-      export type Interval = 'day' | 'month' | 'week' | 'year';
+      export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
     }
 
     export namespace InvoiceSettings {
@@ -2176,10 +2197,19 @@ export namespace SubscriptionScheduleCreateParams {
           interval_count?: number;
         }
 
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
 
         export namespace Recurring {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
 
@@ -2262,7 +2292,10 @@ export interface SubscriptionScheduleUpdateParams {
   proration_behavior?: SubscriptionScheduleUpdateParams.ProrationBehavior;
 }
 export namespace SubscriptionScheduleUpdateParams {
-  export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+  export type BillingBehavior =
+    | 'prorate_on_next_phase'
+    | 'prorate_up_front'
+    | OtherString;
 
   export interface DefaultSettings {
     /**
@@ -2481,7 +2514,7 @@ export namespace SubscriptionScheduleUpdateParams {
       liability?: AutomaticTax.Liability;
     }
 
-    export type BillingCycleAnchor = 'automatic' | 'phase_start';
+    export type BillingCycleAnchor = 'automatic' | 'phase_start' | OtherString;
 
     export interface BillingThresholds {
       /**
@@ -2495,7 +2528,10 @@ export namespace SubscriptionScheduleUpdateParams {
       reset_billing_cycle_anchor?: boolean;
     }
 
-    export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+    export type CollectionMethod =
+      | 'charge_automatically'
+      | 'send_invoice'
+      | OtherString;
 
     export interface InvoiceSettings {
       /**
@@ -2636,7 +2672,7 @@ export namespace SubscriptionScheduleUpdateParams {
       liability?: AutomaticTax.Liability;
     }
 
-    export type BillingCycleAnchor = 'automatic' | 'phase_start';
+    export type BillingCycleAnchor = 'automatic' | 'phase_start' | OtherString;
 
     export interface BillingThresholds {
       /**
@@ -2650,7 +2686,10 @@ export namespace SubscriptionScheduleUpdateParams {
       reset_billing_cycle_anchor?: boolean;
     }
 
-    export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+    export type CollectionMethod =
+      | 'charge_automatically'
+      | 'send_invoice'
+      | OtherString;
 
     export interface Discount {
       /**
@@ -2953,7 +2992,11 @@ export namespace SubscriptionScheduleUpdateParams {
       }
 
       export namespace PriceData {
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
       }
     }
 
@@ -3020,7 +3063,7 @@ export namespace SubscriptionScheduleUpdateParams {
     }
 
     export namespace Duration {
-      export type Interval = 'day' | 'month' | 'week' | 'year';
+      export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
     }
 
     export namespace InvoiceSettings {
@@ -3184,10 +3227,19 @@ export namespace SubscriptionScheduleUpdateParams {
           interval_count?: number;
         }
 
-        export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        export type TaxBehavior =
+          | 'exclusive'
+          | 'inclusive'
+          | 'unspecified'
+          | OtherString;
 
         export namespace Recurring {
-          export type Interval = 'day' | 'month' | 'week' | 'year';
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
         }
       }
 
@@ -3303,7 +3355,7 @@ export namespace SubscriptionScheduleAmendParams {
     amendment_start: Amendment.AmendmentStart;
 
     /**
-     * For point-in-time amendments (having no `amendment_end`), this attribute lets you set or remove whether the subscription's billing cycle anchor is reset at the `amendment_start` timestamp.For time-span based amendments (having both `amendment_start` and `amendment_end`), the only value valid is `automatic`, which removes any previously configured billing cycle anchor resets scheduled to occur during the window of time spanned by the amendment.
+     * For point-in-time amendments (having no `amendment_end`), this attribute lets you set or remove whether the subscription's billing cycle anchor is reset at the `amendment_start` timestamp. For time-span based amendments (having both `amendment_start` and `amendment_end`), the only value valid is `automatic`, which removes any previously configured billing cycle anchor resets scheduled to occur during the window of time spanned by the amendment.
      */
     billing_cycle_anchor?: Amendment.BillingCycleAnchor;
 

@@ -500,7 +500,8 @@ export namespace QuotePreviewInvoice {
     | 'subscription_cycle'
     | 'subscription_threshold'
     | 'subscription_update'
-    | 'upcoming';
+    | 'upcoming'
+    | OtherString;
 
   export type CollectionMethod =
     | 'charge_automatically'
@@ -555,7 +556,7 @@ export namespace QuotePreviewInvoice {
     tracking_number?: string | null;
   }
 
-  export type CustomerTaxExempt = 'exempt' | 'none' | 'reverse';
+  export type CustomerTaxExempt = 'exempt' | 'none' | 'reverse' | OtherString;
 
   export interface CustomerTaxId {
     /**
@@ -942,7 +943,7 @@ export namespace QuotePreviewInvoice {
   }
 
   export namespace AmountsDue {
-    export type Status = 'open' | 'paid' | 'past_due';
+    export type Status = 'open' | 'paid' | 'past_due' | OtherString;
   }
 
   export namespace AppliesTo {
@@ -1097,7 +1098,8 @@ export namespace QuotePreviewInvoice {
       | 'vn_tin'
       | 'za_vat'
       | 'zm_tin'
-      | 'zw_tin';
+      | 'zw_tin'
+      | OtherString;
   }
 
   export namespace Issuer {
@@ -1122,6 +1124,7 @@ export namespace QuotePreviewInvoice {
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
+      | 'authentication_failure'
       | 'authentication_required'
       | 'balance_insufficient'
       | 'balance_invalid_parameter'
@@ -1134,6 +1137,7 @@ export namespace QuotePreviewInvoice {
       | 'bank_account_verification_failed'
       | 'billing_invalid_mandate'
       | 'bitcoin_upgrade_required'
+      | 'capability_not_active'
       | 'capture_charge_authorization_expired'
       | 'capture_unauthorized_payment'
       | 'card_decline_rate_limit_exceeded'
@@ -1158,6 +1162,7 @@ export namespace QuotePreviewInvoice {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'expired_payment_method'
       | 'failed_tax_calculation'
       | 'financial_account_balance_does_not_support_currency'
       | 'financial_account_capability_not_enabled'
@@ -1177,6 +1182,7 @@ export namespace QuotePreviewInvoice {
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'
+      | 'incorrect_postal_code'
       | 'incorrect_zip'
       | 'india_recurring_payment_mandate_canceled'
       | 'instant_payouts_config_disabled'
@@ -1186,6 +1192,7 @@ export namespace QuotePreviewInvoice {
       | 'insufficient_funds'
       | 'intent_invalid_state'
       | 'intent_verification_method_missing'
+      | 'invalid_canceled_subscription_fields'
       | 'invalid_card_type'
       | 'invalid_characters'
       | 'invalid_charge_amount'
@@ -1245,6 +1252,7 @@ export namespace QuotePreviewInvoice {
       | 'payment_method_not_available'
       | 'payment_method_provider_decline'
       | 'payment_method_provider_timeout'
+      | 'payment_method_restricted'
       | 'payment_method_unactivated'
       | 'payment_method_unexpected_state'
       | 'payment_method_unsupported_type'
@@ -1305,13 +1313,15 @@ export namespace QuotePreviewInvoice {
       | 'transfers_not_allowed'
       | 'url_invalid'
       | 'v2_account_disconnection_unsupported'
-      | 'v2_account_missing_configuration';
+      | 'v2_account_missing_configuration'
+      | OtherString;
 
     export type Type =
       | 'api_error'
       | 'card_error'
       | 'idempotency_error'
-      | 'invalid_request_error';
+      | 'invalid_request_error'
+      | OtherString;
   }
 
   export namespace Parent {
@@ -1361,7 +1371,11 @@ export namespace QuotePreviewInvoice {
       }
 
       export namespace PauseCollection {
-        export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        export type Behavior =
+          | 'keep_as_draft'
+          | 'mark_uncollectible'
+          | 'void'
+          | OtherString;
       }
     }
   }
@@ -1377,6 +1391,11 @@ export namespace QuotePreviewInvoice {
        * If paying by `bancontact`, this sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
        */
       bancontact: PaymentMethodOptions.Bancontact | null;
+
+      /**
+       * If paying by `billie`, this sub-hash contains details about the Billie payment method options to pass to the invoice's PaymentIntent.
+       */
+      billie?: PaymentMethodOptions.Billie | null;
 
       /**
        * If paying by `blik`, this sub-hash contains details about the Blik payment method options to pass to the invoice's PaymentIntent.
@@ -1439,6 +1458,7 @@ export namespace QuotePreviewInvoice {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'billie'
       | 'blik'
       | 'boleto'
       | 'card'
@@ -1499,6 +1519,8 @@ export namespace QuotePreviewInvoice {
          */
         preferred_language: Bancontact.PreferredLanguage;
       }
+
+      export interface Billie {}
 
       export interface Blik {}
 
@@ -1612,7 +1634,14 @@ export namespace QuotePreviewInvoice {
           }
 
           export namespace EuBankTransfer {
-            export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+            export type Country =
+              | 'BE'
+              | 'DE'
+              | 'ES'
+              | 'FR'
+              | 'IE'
+              | 'NL'
+              | OtherString;
           }
         }
       }
@@ -1754,7 +1783,7 @@ export namespace QuotePreviewInvoice {
     }
 
     export namespace Pdf {
-      export type PageSize = 'a4' | 'auto' | 'letter';
+      export type PageSize = 'a4' | 'auto' | 'letter' | OtherString;
     }
   }
 
@@ -1827,7 +1856,7 @@ export namespace QuotePreviewInvoice {
   }
 
   export namespace TotalTax {
-    export type TaxBehavior = 'exclusive' | 'inclusive';
+    export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
 
     export interface TaxRateDetails {
       /**
