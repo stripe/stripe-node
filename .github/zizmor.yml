@@ -5,4 +5,4 @@ rules:
   unpinned-uses:
     config:
       policies:
-        "stripe/*": ref-pin
+        "stripe/openapi/*": ref-pin
