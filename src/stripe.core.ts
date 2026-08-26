@@ -28,7 +28,6 @@ import {
   FallbackCallback,
   StripeEventNotificationHandler,
   StripeEventNotificationHandlerWithoutVerification,
-  FallbackCallback,
 } from './StripeEventNotificationHandler.js';
 import {
   Response,

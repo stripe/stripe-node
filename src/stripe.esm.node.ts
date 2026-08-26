@@ -29,7 +29,6 @@ import {
   StripeEventNotificationHandler,
   StripeEventNotificationHandlerWithoutVerification,
   UnhandledNotificationDetails,
-  FallbackCallback,
 } from './StripeEventNotificationHandler.js';
 import {
   Response,
