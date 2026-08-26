@@ -182,6 +182,8 @@ export namespace BankAccount {
        */
       code: Error.Code;
 
+      details?: Error.Details;
+
       /**
        * An informative message that indicates the error type and provides additional details about the error.
        */
@@ -294,6 +296,13 @@ export namespace BankAccount {
         | 'verification_requires_additional_memorandum_of_associations'
         | 'verification_requires_additional_proof_of_registration'
         | 'verification_supportability';
+
+      export interface Details {
+        /**
+         * The rejection code as received from our payment method partner.
+         */
+        partner_rejection_code?: string;
+      }
     }
   }
 
@@ -304,6 +313,8 @@ export namespace BankAccount {
        */
       code: Error.Code;
 
+      details?: Error.Details;
+
       /**
        * An informative message that indicates the error type and provides additional details about the error.
        */
@@ -416,6 +427,13 @@ export namespace BankAccount {
         | 'verification_requires_additional_memorandum_of_associations'
         | 'verification_requires_additional_proof_of_registration'
         | 'verification_supportability';
+
+      export interface Details {
+        /**
+         * The rejection code as received from our payment method partner.
+         */
+        partner_rejection_code?: string;
+      }
     }
   }
 }

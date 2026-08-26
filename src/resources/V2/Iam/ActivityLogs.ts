@@ -103,6 +103,11 @@ export namespace ActivityLog {
     type: Details.Type;
 
     /**
+     * Details of a user access action.
+     */
+    user_access?: Details.UserAccess;
+
+    /**
      * Details of a user invite action.
      */
     user_invite?: Details.UserInvite;
@@ -118,6 +123,7 @@ export namespace ActivityLog {
     | 'api_key_deleted'
     | 'api_key_updated'
     | 'api_key_viewed'
+    | 'user_access_started'
     | 'user_invite_accepted'
     | 'user_invite_created'
     | 'user_invite_deleted'
@@ -191,7 +197,54 @@ export namespace ActivityLog {
       type: ApiKey.Type;
     }
 
-    export type Type = 'api_key' | 'user_invite' | 'user_roles' | OtherString;
+    export type Type =
+      | 'api_key'
+      | 'user_access'
+      | 'user_invite'
+      | 'user_roles'
+      | OtherString;
+
+    export interface UserAccess {
+      /**
+       * Authentication details for the user access action.
+       */
+      authentication: UserAccess.Authentication;
+
+      /**
+       * Dashboard client details for the user access action.
+       */
+      dashboard_client?: UserAccess.DashboardClient;
+
+      /**
+       * Timestamp when the user access expires.
+       */
+      expires_at: string;
+
+      /**
+       * Network details for the user access action.
+       */
+      network: UserAccess.Network;
+
+      /**
+       * Risk details for the user access action.
+       */
+      risk: UserAccess.Risk;
+
+      /**
+       * Roles associated with the user access action.
+       */
+      roles: Array<string>;
+
+      /**
+       * Session fingerprint for the user access action.
+       */
+      session_fingerprint: string;
+
+      /**
+       * Surface where the user access action started.
+       */
+      surface: UserAccess.Surface;
+    }
 
     export interface UserInvite {
       /**
@@ -252,6 +305,154 @@ export namespace ActivityLog {
       }
     }
 
+    export namespace UserAccess {
+      export interface Authentication {
+        /**
+         * Primary authentication factor.
+         */
+        primary_factor: Authentication.PrimaryFactor;
+
+        /**
+         * Secondary authentication factors.
+         */
+        secondary_factors: Array<Authentication.SecondaryFactor>;
+      }
+
+      export interface DashboardClient {
+        /**
+         * Browser used for the user access action.
+         */
+        browser: string;
+
+        /**
+         * Browser version used for the user access action.
+         */
+        browser_version: string;
+
+        /**
+         * Device type used for the user access action.
+         */
+        device_type: string;
+
+        /**
+         * Operating system used for the user access action.
+         */
+        os: string;
+      }
+
+      export interface Network {
+        /**
+         * City for the user access action.
+         */
+        city: string;
+
+        /**
+         * Country for the user access action.
+         */
+        country: string;
+
+        /**
+         * IP address for the user access action.
+         */
+        ip_address: string;
+
+        /**
+         * Region for the user access action.
+         */
+        region: string;
+      }
+
+      export interface Risk {
+        /**
+         * Risk level for the user access action.
+         */
+        level: Risk.Level;
+
+        /**
+         * Risk signals for the user access action.
+         */
+        signals: Array<Risk.Signal>;
+      }
+
+      export type Surface = 'dashboard' | 'express' | OtherString;
+
+      export namespace Authentication {
+        export interface PrimaryFactor {
+          /**
+           * SSO provider for the authentication factor.
+           */
+          sso_provider?: string;
+
+          /**
+           * Type of authentication factor.
+           */
+          type: PrimaryFactor.Type;
+        }
+
+        export interface SecondaryFactor {
+          /**
+           * SSO provider for the authentication factor.
+           */
+          sso_provider?: string;
+
+          /**
+           * Type of authentication factor.
+           */
+          type: SecondaryFactor.Type;
+        }
+
+        export namespace PrimaryFactor {
+          export type Type =
+            | 'backup_code'
+            | 'email_code'
+            | 'oauth'
+            | 'passkey'
+            | 'password'
+            | 'phone_code'
+            | 'saml'
+            | 'sms'
+            | 'totp'
+            | 'web_authn'
+            | OtherString;
+        }
+
+        export namespace SecondaryFactor {
+          export type Type =
+            | 'backup_code'
+            | 'email_code'
+            | 'oauth'
+            | 'passkey'
+            | 'password'
+            | 'phone_code'
+            | 'saml'
+            | 'sms'
+            | 'totp'
+            | 'web_authn'
+            | OtherString;
+        }
+      }
+
+      export namespace Risk {
+        export type Level = 'high' | 'low' | 'medium' | OtherString;
+
+        export interface Signal {
+          /**
+           * The user access action used a novel device.
+           */
+          novel_device?: Signal.NovelDevice;
+
+          /**
+           * Type of risk signal.
+           */
+          type: 'novel_device';
+        }
+
+        export namespace Signal {
+          export interface NovelDevice {}
+        }
+      }
+    }
+
     export namespace UserRoles {
       export type Source = 'dashboard' | 'scim' | 'sso' | OtherString;
     }
@@ -284,6 +485,7 @@ export namespace V2 {
     export namespace ActivityLogListParams {
       export type ActionGroup =
         | 'api_key'
+        | 'user_access'
         | 'user_invite'
         | 'user_roles'
         | OtherString;
@@ -293,6 +495,7 @@ export namespace V2 {
         | 'api_key_deleted'
         | 'api_key_updated'
         | 'api_key_viewed'
+        | 'user_access_started'
         | 'user_invite_accepted'
         | 'user_invite_created'
         | 'user_invite_deleted'

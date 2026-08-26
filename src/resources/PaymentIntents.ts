@@ -919,7 +919,6 @@ export namespace PaymentIntent {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
-    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -1282,8 +1281,6 @@ export namespace PaymentIntent {
     scalapay?: PaymentMethodOptions.Scalapay;
 
     sepa_debit?: PaymentMethodOptions.SepaDebit;
-
-    sequra?: PaymentMethodOptions.Sequra;
 
     shopeepay?: PaymentMethodOptions.Shopeepay;
 
@@ -4529,6 +4526,13 @@ export namespace PaymentIntent {
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: 'manual';
+
+      company_details?: Billie.CompanyDetails;
+
+      /**
+       * An identifier or reference that this payment corresponds to.
+       */
+      reference?: string | null;
     }
 
     export interface Bizum {}
@@ -5357,24 +5361,6 @@ export namespace PaymentIntent {
       target_date?: string;
     }
 
-    export interface Sequra {
-      /**
-       * Controls when the funds will be captured from the customer's account.
-       */
-      capture_method?: 'manual';
-
-      /**
-       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
-       *
-       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
-       *
-       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
-       *
-       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
-       */
-      setup_future_usage?: 'none';
-    }
-
     export interface Shopeepay {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -5657,6 +5643,51 @@ export namespace PaymentIntent {
       export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
 
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
+    export namespace Billie {
+      export interface CompanyDetails {
+        registered_address?: Address;
+
+        /**
+         * Company or entity name.
+         */
+        registered_name: string | null;
+
+        /**
+         * The official registration number for the given registration type.
+         */
+        registration_number: string | null;
+
+        /**
+         * Type of registration the company or entity holds in their registered country.
+         */
+        registration_type?: CompanyDetails.RegistrationType;
+
+        /**
+         * VAT id number
+         */
+        vat: string | null;
+      }
+
+      export namespace CompanyDetails {
+        export type RegistrationType =
+          | 'ch_ein'
+          | 'de_hrb'
+          | 'dk_cvr'
+          | 'es_cif'
+          | 'fi_tunnus'
+          | 'fr_siren'
+          | 'fr_siret'
+          | 'it_rea'
+          | 'nl_kvk'
+          | 'no_org_number'
+          | 'no_pno'
+          | 'se_org_number'
+          | 'se_pno'
+          | 'uk_crn'
+          | OtherString;
+      }
     }
 
     export namespace Boleto {
@@ -7079,7 +7110,6 @@ export namespace PaymentIntentCreateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
-    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -10944,7 +10974,6 @@ export namespace PaymentIntentCreateParams {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
-      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -11430,6 +11459,16 @@ export namespace PaymentIntentCreateParams {
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
       capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Registration details about the buyer's organization.
+       */
+      company_details?: Emptyable<Billie.CompanyDetails>;
+
+      /**
+       * An identifier or reference that this payment corresponds to.
+       */
+      reference?: string;
     }
 
     export interface Bizum {}
@@ -11613,6 +11652,11 @@ export namespace PaymentIntentCreateParams {
     }
 
     export interface CardPresent {
+      /**
+       * Greek e-invoicing data required for card-present transactions processed by merchants subject to AADE's myDATA POS compliance mandate (Governor's Decision A.1155/2023).
+       */
+      aade_data?: CardPresent.AadeData;
+
       /**
        * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
        *
@@ -12797,6 +12841,54 @@ export namespace PaymentIntentCreateParams {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
+    export namespace Billie {
+      export interface CompanyDetails {
+        /**
+         * The address the company or entity is registered with.
+         */
+        registered_address?: Emptyable<AddressParam>;
+
+        /**
+         * Company or entity name.
+         */
+        registered_name?: string;
+
+        /**
+         * The official registration number for the given registration type.
+         */
+        registration_number?: string;
+
+        /**
+         * Type of registration the company or entity holds in their registered country.
+         */
+        registration_type?: Emptyable<CompanyDetails.RegistrationType>;
+
+        /**
+         * VAT id number
+         */
+        vat?: string;
+      }
+
+      export namespace CompanyDetails {
+        export type RegistrationType =
+          | 'ch_ein'
+          | 'de_hrb'
+          | 'dk_cvr'
+          | 'es_cif'
+          | 'fi_tunnus'
+          | 'fr_siren'
+          | 'fr_siret'
+          | 'it_rea'
+          | 'nl_kvk'
+          | 'no_org_number'
+          | 'no_pno'
+          | 'se_org_number'
+          | 'se_pno'
+          | 'uk_crn'
+          | OtherString;
+      }
+    }
+
     export namespace Boleto {
       export type SetupFutureUsage =
         | 'none'
@@ -13150,6 +13242,33 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace CardPresent {
+      export interface AadeData {
+        /**
+         * The canonical string that was signed by the e-invoicing provider to produce `signed_mark`, formatted per Appendix A of A.1155/2023. Required when `mode` is `standard`.
+         */
+        mark_data?: string;
+
+        /**
+         * The e-invoicing mode under which the mark was generated.
+         */
+        mode: AadeData.Mode;
+
+        /**
+         * The AADE-assigned approval number of the e-invoicing provider that generated the mark. Required when `mode` is `standard`.
+         */
+        provider_id?: number;
+
+        /**
+         * The cryptographic signature returned by the e-invoicing provider for this transaction, hex-encoded. Required when `mode` is `standard`.
+         */
+        signed_mark?: string;
+
+        /**
+         * The reason for entering autonomous mode. Required when `mode` is `autonomous`.
+         */
+        unbound_pos?: AadeData.UnboundPos;
+      }
+
       export type CaptureBy =
         | 'auth_expiry'
         | 'end_of_day'
@@ -13186,6 +13305,15 @@ export namespace PaymentIntentCreateParams {
          * Routing requested priority
          */
         requested_priority?: Routing.RequestedPriority;
+      }
+
+      export namespace AadeData {
+        export type Mode = 'autonomous' | 'standard';
+
+        export type UnboundPos =
+          | 'interconnection_loss'
+          | 'lock'
+          | 'replacement_cash_system';
       }
 
       export namespace PaymentDetails {
@@ -15577,7 +15705,6 @@ export namespace PaymentIntentUpdateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
-    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -19382,7 +19509,6 @@ export namespace PaymentIntentUpdateParams {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
-      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -19868,6 +19994,16 @@ export namespace PaymentIntentUpdateParams {
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
       capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Registration details about the buyer's organization.
+       */
+      company_details?: Emptyable<Billie.CompanyDetails>;
+
+      /**
+       * An identifier or reference that this payment corresponds to.
+       */
+      reference?: string;
     }
 
     export interface Bizum {}
@@ -20051,6 +20187,11 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export interface CardPresent {
+      /**
+       * Greek e-invoicing data required for card-present transactions processed by merchants subject to AADE's myDATA POS compliance mandate (Governor's Decision A.1155/2023).
+       */
+      aade_data?: CardPresent.AadeData;
+
       /**
        * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
        *
@@ -21235,6 +21376,54 @@ export namespace PaymentIntentUpdateParams {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
+    export namespace Billie {
+      export interface CompanyDetails {
+        /**
+         * The address the company or entity is registered with.
+         */
+        registered_address?: Emptyable<AddressParam>;
+
+        /**
+         * Company or entity name.
+         */
+        registered_name?: string;
+
+        /**
+         * The official registration number for the given registration type.
+         */
+        registration_number?: string;
+
+        /**
+         * Type of registration the company or entity holds in their registered country.
+         */
+        registration_type?: Emptyable<CompanyDetails.RegistrationType>;
+
+        /**
+         * VAT id number
+         */
+        vat?: string;
+      }
+
+      export namespace CompanyDetails {
+        export type RegistrationType =
+          | 'ch_ein'
+          | 'de_hrb'
+          | 'dk_cvr'
+          | 'es_cif'
+          | 'fi_tunnus'
+          | 'fr_siren'
+          | 'fr_siret'
+          | 'it_rea'
+          | 'nl_kvk'
+          | 'no_org_number'
+          | 'no_pno'
+          | 'se_org_number'
+          | 'se_pno'
+          | 'uk_crn'
+          | OtherString;
+      }
+    }
+
     export namespace Boleto {
       export type SetupFutureUsage =
         | 'none'
@@ -21588,6 +21777,33 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace CardPresent {
+      export interface AadeData {
+        /**
+         * The canonical string that was signed by the e-invoicing provider to produce `signed_mark`, formatted per Appendix A of A.1155/2023. Required when `mode` is `standard`.
+         */
+        mark_data?: string;
+
+        /**
+         * The e-invoicing mode under which the mark was generated.
+         */
+        mode: AadeData.Mode;
+
+        /**
+         * The AADE-assigned approval number of the e-invoicing provider that generated the mark. Required when `mode` is `standard`.
+         */
+        provider_id?: number;
+
+        /**
+         * The cryptographic signature returned by the e-invoicing provider for this transaction, hex-encoded. Required when `mode` is `standard`.
+         */
+        signed_mark?: string;
+
+        /**
+         * The reason for entering autonomous mode. Required when `mode` is `autonomous`.
+         */
+        unbound_pos?: AadeData.UnboundPos;
+      }
+
       export type CaptureBy =
         | 'auth_expiry'
         | 'end_of_day'
@@ -21624,6 +21840,15 @@ export namespace PaymentIntentUpdateParams {
          * Routing requested priority
          */
         requested_priority?: Routing.RequestedPriority;
+      }
+
+      export namespace AadeData {
+        export type Mode = 'autonomous' | 'standard';
+
+        export type UnboundPos =
+          | 'interconnection_loss'
+          | 'lock'
+          | 'replacement_cash_system';
       }
 
       export namespace PaymentDetails {
@@ -26638,7 +26863,6 @@ export namespace PaymentIntentConfirmParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
-    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -30449,7 +30673,6 @@ export namespace PaymentIntentConfirmParams {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
-      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -30935,6 +31158,16 @@ export namespace PaymentIntentConfirmParams {
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
       capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Registration details about the buyer's organization.
+       */
+      company_details?: Emptyable<Billie.CompanyDetails>;
+
+      /**
+       * An identifier or reference that this payment corresponds to.
+       */
+      reference?: string;
     }
 
     export interface Bizum {}
@@ -31118,6 +31351,11 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export interface CardPresent {
+      /**
+       * Greek e-invoicing data required for card-present transactions processed by merchants subject to AADE's myDATA POS compliance mandate (Governor's Decision A.1155/2023).
+       */
+      aade_data?: CardPresent.AadeData;
+
       /**
        * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
        *
@@ -32302,6 +32540,54 @@ export namespace PaymentIntentConfirmParams {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
+    export namespace Billie {
+      export interface CompanyDetails {
+        /**
+         * The address the company or entity is registered with.
+         */
+        registered_address?: Emptyable<AddressParam>;
+
+        /**
+         * Company or entity name.
+         */
+        registered_name?: string;
+
+        /**
+         * The official registration number for the given registration type.
+         */
+        registration_number?: string;
+
+        /**
+         * Type of registration the company or entity holds in their registered country.
+         */
+        registration_type?: Emptyable<CompanyDetails.RegistrationType>;
+
+        /**
+         * VAT id number
+         */
+        vat?: string;
+      }
+
+      export namespace CompanyDetails {
+        export type RegistrationType =
+          | 'ch_ein'
+          | 'de_hrb'
+          | 'dk_cvr'
+          | 'es_cif'
+          | 'fi_tunnus'
+          | 'fr_siren'
+          | 'fr_siret'
+          | 'it_rea'
+          | 'nl_kvk'
+          | 'no_org_number'
+          | 'no_pno'
+          | 'se_org_number'
+          | 'se_pno'
+          | 'uk_crn'
+          | OtherString;
+      }
+    }
+
     export namespace Boleto {
       export type SetupFutureUsage =
         | 'none'
@@ -32655,6 +32941,33 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace CardPresent {
+      export interface AadeData {
+        /**
+         * The canonical string that was signed by the e-invoicing provider to produce `signed_mark`, formatted per Appendix A of A.1155/2023. Required when `mode` is `standard`.
+         */
+        mark_data?: string;
+
+        /**
+         * The e-invoicing mode under which the mark was generated.
+         */
+        mode: AadeData.Mode;
+
+        /**
+         * The AADE-assigned approval number of the e-invoicing provider that generated the mark. Required when `mode` is `standard`.
+         */
+        provider_id?: number;
+
+        /**
+         * The cryptographic signature returned by the e-invoicing provider for this transaction, hex-encoded. Required when `mode` is `standard`.
+         */
+        signed_mark?: string;
+
+        /**
+         * The reason for entering autonomous mode. Required when `mode` is `autonomous`.
+         */
+        unbound_pos?: AadeData.UnboundPos;
+      }
+
       export type CaptureBy =
         | 'auth_expiry'
         | 'end_of_day'
@@ -32691,6 +33004,15 @@ export namespace PaymentIntentConfirmParams {
          * Routing requested priority
          */
         requested_priority?: Routing.RequestedPriority;
+      }
+
+      export namespace AadeData {
+        export type Mode = 'autonomous' | 'standard';
+
+        export type UnboundPos =
+          | 'interconnection_loss'
+          | 'lock'
+          | 'replacement_cash_system';
       }
 
       export namespace PaymentDetails {

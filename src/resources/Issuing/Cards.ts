@@ -104,6 +104,8 @@ export interface Card {
    */
   created: number;
 
+  crypto_wallet?: Card.CryptoWallet;
+
   /**
    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Supported currencies are `usd` in the US, `eur` in the EU, and `gbp` in the UK.
    */
@@ -232,6 +234,28 @@ export namespace Card {
     | 'fulfillment_error'
     | 'lost'
     | 'stolen';
+
+  export interface CryptoWallet {
+    /**
+     * The public address of the wallet.
+     */
+    address: string | null;
+
+    /**
+     * The blockchain network the wallet is on.
+     */
+    chain: string;
+
+    /**
+     * The cryptocurrency held in the wallet.
+     */
+    currency: string;
+
+    /**
+     * The type of wallet (standard or bridge_wallet).
+     */
+    type: CryptoWallet.Type | null;
+  }
 
   export interface LatestFraudWarning {
     /**
@@ -399,6 +423,10 @@ export namespace Card {
      * Unique identifier for a card used with digital wallets
      */
     primary_account_identifier: string | null;
+  }
+
+  export namespace CryptoWallet {
+    export type Type = 'bridge_wallet' | 'standard' | OtherString;
   }
 
   export namespace LatestFraudWarning {
@@ -1487,6 +1515,11 @@ export namespace Issuing {
     cardholder?: string;
 
     /**
+     * The crypto wallet to attach this card to for Bridge integration.
+     */
+    crypto_wallet?: CardCreateParams.CryptoWallet;
+
+    /**
      * The desired expiration month (1-12) for this card if [specifying a custom expiration date](https://docs.stripe.com/issuing/cards/virtual/issue-cards?testing-method=with-code#exp-dates).
      */
     exp_month?: number;
@@ -1564,6 +1597,28 @@ export namespace Issuing {
 
   export namespace CardCreateParams {
     export type Type = 'physical' | 'virtual' | OtherString;
+
+    export interface CryptoWallet {
+      /**
+       * The public address of the crypto wallet.
+       */
+      address?: string;
+
+      /**
+       * The blockchain network the wallet is on.
+       */
+      chain: string;
+
+      /**
+       * The cryptocurrency held in the wallet.
+       */
+      currency: string;
+
+      /**
+       * The type of wallet (standard or bridge_wallet).
+       */
+      type?: CryptoWallet.Type;
+    }
 
     export interface LifecycleControls {
       /**
@@ -1666,6 +1721,10 @@ export namespace Issuing {
     }
 
     export type Status = 'active' | 'inactive' | OtherString;
+
+    export namespace CryptoWallet {
+      export type Type = 'bridge_wallet' | 'standard' | OtherString;
+    }
 
     export namespace LifecycleControls {
       export interface CancelAfter {
@@ -2681,6 +2740,11 @@ export namespace Issuing {
     cancellation_reason?: CardUpdateParams.CancellationReason;
 
     /**
+     * Updates the cryptocurrency used to fund this card's existing crypto wallet.
+     */
+    crypto_wallet?: CardUpdateParams.CryptoWallet;
+
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
@@ -2720,6 +2784,13 @@ export namespace Issuing {
 
   export namespace CardUpdateParams {
     export type CancellationReason = 'lost' | 'stolen';
+
+    export interface CryptoWallet {
+      /**
+       * Updates the crypto wallet's funding currency for subsequent card movements. This doesn't convert existing balances or change the wallet's address, chain, or type.
+       */
+      currency: string;
+    }
 
     export interface Pin {
       /**

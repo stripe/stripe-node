@@ -543,6 +543,11 @@ export namespace Identity {
     type?: VerificationSessionCreateParams.Type;
 
     /**
+     * Details on the user's consent to Stripe Terms of Service and Privacy Policy.
+     */
+    user_consent?: VerificationSessionCreateParams.UserConsent;
+
+    /**
      * The ID of a verification flow from the Dashboard. See https://docs.stripe.com/identity/verification-flows.
      */
     verification_flow?: string;
@@ -581,6 +586,23 @@ export namespace Identity {
     }
 
     export type Type = 'document' | 'email' | 'id_number' | OtherString;
+
+    export interface UserConsent {
+      /**
+       * The time at which the user gave consent, as a Unix timestamp.
+       */
+      date: number;
+
+      /**
+       * The IP address of the user when they gave consent.
+       */
+      ip: string;
+
+      /**
+       * The user agent of the browser or device the user used to give consent.
+       */
+      user_agent?: string;
+    }
 
     export namespace Options {
       export interface Document {
@@ -654,6 +676,11 @@ export namespace Identity {
      * The type of [verification check](https://docs.stripe.com/identity/verification-checks) to be performed.
      */
     type?: VerificationSessionUpdateParams.Type;
+
+    /**
+     * Details on the user's consent to Stripe Terms of Service and Privacy Policy.
+     */
+    user_consent?: VerificationSessionUpdateParams.UserConsent;
   }
 
   export namespace VerificationSessionUpdateParams {
@@ -677,6 +704,23 @@ export namespace Identity {
     }
 
     export type Type = 'document' | 'email' | 'id_number' | OtherString;
+
+    export interface UserConsent {
+      /**
+       * The time at which the user gave consent, as a Unix timestamp.
+       */
+      date: number;
+
+      /**
+       * The IP address of the user when they gave consent.
+       */
+      ip: string;
+
+      /**
+       * The user agent of the browser or device the user used to give consent.
+       */
+      user_agent?: string;
+    }
 
     export namespace Options {
       export interface Document {
