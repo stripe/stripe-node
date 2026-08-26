@@ -29,6 +29,7 @@ import {EarlyFraudWarningResource as RadarEarlyFraudWarnings} from './resources/
 import {EventDestinationResource as V2CoreEventDestinations} from './resources/V2/Core/EventDestinations.js';
 import {EventResource as V2CoreEvents} from './resources/V2/Core/Events.js';
 import {FeatureResource as EntitlementsFeatures} from './resources/Entitlements/Features.js';
+import {FeedbackOptionResource as BillingFeedbackOptions} from './resources/Billing/FeedbackOptions.js';
 import {FinancialAccountResource as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
 import {ImportResource as V2CommerceProductCatalogImports} from './resources/V2/Commerce/ProductCatalog/Imports.js';
 import {InboundTransferResource as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
@@ -146,6 +147,7 @@ export const Billing = resourceNamespace('billing', {
   CreditBalanceSummary: BillingCreditBalanceSummary,
   CreditBalanceTransactions: BillingCreditBalanceTransactions,
   CreditGrants: BillingCreditGrants,
+  FeedbackOptions: BillingFeedbackOptions,
   MeterEventAdjustments: BillingMeterEventAdjustments,
   MeterEvents: BillingMeterEvents,
   Meters: BillingMeters,

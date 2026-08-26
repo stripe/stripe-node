@@ -1168,7 +1168,10 @@ export namespace Quote {
     status: AutomaticTax.Status | null;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface Computed {
     /**
@@ -1366,7 +1369,7 @@ export namespace Quote {
     }
 
     export namespace Recurring {
-      export type Interval = 'day' | 'month' | 'week' | 'year';
+      export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
 
       export interface TotalDetails {
         /**
@@ -1611,7 +1614,7 @@ export namespace Quote {
       export type Type = 'classic' | 'flexible' | OtherString;
 
       export namespace Flexible {
-        export type ProrationDiscounts = 'included' | 'itemized';
+        export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
       }
     }
   }
@@ -1810,7 +1813,10 @@ export namespace QuoteCreateParams {
     liability?: AutomaticTax.Liability;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface Discount {
     /**
@@ -2050,10 +2056,14 @@ export namespace QuoteCreateParams {
         interval_count?: number;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace Recurring {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -2082,7 +2092,7 @@ export namespace QuoteCreateParams {
       export type Type = 'classic' | 'flexible' | OtherString;
 
       export namespace Flexible {
-        export type ProrationDiscounts = 'included' | 'itemized';
+        export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
       }
     }
   }
@@ -2202,7 +2212,10 @@ export namespace QuoteUpdateParams {
     liability?: AutomaticTax.Liability;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface Discount {
     /**
@@ -2430,10 +2443,14 @@ export namespace QuoteUpdateParams {
         interval_count?: number;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace Recurring {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }

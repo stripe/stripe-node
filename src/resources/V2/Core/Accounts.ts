@@ -4170,7 +4170,7 @@ export namespace Account {
       id_numbers?: Array<Individual.IdNumber>;
 
       /**
-       * The individual's gender (International regulations require either "male” or "female").
+       * The individual's gender (International regulations require either "male" or "female").
        */
       legal_gender?: Individual.LegalGender;
 
@@ -6023,7 +6023,7 @@ export namespace V2 {
         export namespace Customer {
           export interface AutomaticIndirectTax {
             /**
-             * Describes the customer's tax exemption status, which is `none`, `exempt`, or `reverse`. When set to reverse, invoice and receipt PDFs include the following text: “Reverse charge”.
+             * Describes the customer's tax exemption status, which is `none`, `exempt`, or `reverse`. When set to reverse, invoice and receipt PDFs include the following text: "Reverse charge".
              */
             exempt?: AutomaticIndirectTax.Exempt;
 
