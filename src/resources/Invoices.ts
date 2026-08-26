@@ -2974,7 +2974,14 @@ export namespace Invoice {
         preferred_language: Bancontact.PreferredLanguage;
       }
 
-      export interface Billie {}
+      export interface Billie {
+        company_details?: Billie.CompanyDetails;
+
+        /**
+         * An identifier or reference that this payment corresponds to.
+         */
+        reference?: string | null;
+      }
 
       export interface Bizum {}
 
@@ -3068,6 +3075,50 @@ export namespace Invoice {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
+      }
+
+      export namespace Billie {
+        export interface CompanyDetails {
+          registered_address?: Address;
+
+          /**
+           * Company or entity name.
+           */
+          registered_name: string | null;
+
+          /**
+           * The official registration number for the given registration type.
+           */
+          registration_number: string | null;
+
+          /**
+           * Type of registration the company or entity holds in their registered country.
+           */
+          registration_type?: CompanyDetails.RegistrationType;
+
+          /**
+           * VAT ID number.
+           */
+          vat: string | null;
+        }
+
+        export namespace CompanyDetails {
+          export type RegistrationType =
+            | 'ch_ein'
+            | 'de_hrb'
+            | 'dk_cvr'
+            | 'es_cif'
+            | 'fi_tunnus'
+            | 'fr_siren'
+            | 'fr_siret'
+            | 'it_rea'
+            | 'nl_kvk'
+            | 'no_org_number'
+            | 'no_pno'
+            | 'se_org_number'
+            | 'se_pno'
+            | 'uk_crn';
+        }
       }
 
       export namespace Card {
@@ -3806,6 +3857,11 @@ export namespace InvoiceCreateParams {
       bancontact?: Emptyable<PaymentMethodOptions.Bancontact>;
 
       /**
+       * If paying by `billie`, this sub-hash contains details about the Billie payment method options to pass to the invoice's PaymentIntent.
+       */
+      billie?: Emptyable<PaymentMethodOptions.Billie>;
+
+      /**
        * If paying by `bizum`, this sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
        */
       bizum?: Emptyable<PaymentMethodOptions.Bizum>;
@@ -3952,6 +4008,18 @@ export namespace InvoiceCreateParams {
         preferred_language?: Bancontact.PreferredLanguage;
       }
 
+      export interface Billie {
+        /**
+         * Registration details about the buyer's organization.
+         */
+        company_details?: Emptyable<Billie.CompanyDetails>;
+
+        /**
+         * An identifier or reference that this payment corresponds to.
+         */
+        reference?: string;
+      }
+
       export interface Bizum {}
 
       export interface Blik {}
@@ -4061,6 +4129,54 @@ export namespace InvoiceCreateParams {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
+      }
+
+      export namespace Billie {
+        export interface CompanyDetails {
+          /**
+           * The address the company or entity is registered with.
+           */
+          registered_address?: Emptyable<AddressParam>;
+
+          /**
+           * Company or entity name.
+           */
+          registered_name?: string;
+
+          /**
+           * The official registration number for the given registration type.
+           */
+          registration_number?: string;
+
+          /**
+           * Type of registration the company or entity holds in their registered country.
+           */
+          registration_type?: Emptyable<CompanyDetails.RegistrationType>;
+
+          /**
+           * VAT ID number.
+           */
+          vat?: string;
+        }
+
+        export namespace CompanyDetails {
+          export type RegistrationType =
+            | 'ch_ein'
+            | 'de_hrb'
+            | 'dk_cvr'
+            | 'es_cif'
+            | 'fi_tunnus'
+            | 'fr_siren'
+            | 'fr_siret'
+            | 'it_rea'
+            | 'nl_kvk'
+            | 'no_org_number'
+            | 'no_pno'
+            | 'se_org_number'
+            | 'se_pno'
+            | 'uk_crn'
+            | OtherString;
+        }
       }
 
       export namespace Card {
@@ -4826,6 +4942,11 @@ export namespace InvoiceUpdateParams {
       bancontact?: Emptyable<PaymentMethodOptions.Bancontact>;
 
       /**
+       * If paying by `billie`, this sub-hash contains details about the Billie payment method options to pass to the invoice's PaymentIntent.
+       */
+      billie?: Emptyable<PaymentMethodOptions.Billie>;
+
+      /**
        * If paying by `bizum`, this sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
        */
       bizum?: Emptyable<PaymentMethodOptions.Bizum>;
@@ -4972,6 +5093,18 @@ export namespace InvoiceUpdateParams {
         preferred_language?: Bancontact.PreferredLanguage;
       }
 
+      export interface Billie {
+        /**
+         * Registration details about the buyer's organization.
+         */
+        company_details?: Emptyable<Billie.CompanyDetails>;
+
+        /**
+         * An identifier or reference that this payment corresponds to.
+         */
+        reference?: string;
+      }
+
       export interface Bizum {}
 
       export interface Blik {}
@@ -5081,6 +5214,54 @@ export namespace InvoiceUpdateParams {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
+      }
+
+      export namespace Billie {
+        export interface CompanyDetails {
+          /**
+           * The address the company or entity is registered with.
+           */
+          registered_address?: Emptyable<AddressParam>;
+
+          /**
+           * Company or entity name.
+           */
+          registered_name?: string;
+
+          /**
+           * The official registration number for the given registration type.
+           */
+          registration_number?: string;
+
+          /**
+           * Type of registration the company or entity holds in their registered country.
+           */
+          registration_type?: Emptyable<CompanyDetails.RegistrationType>;
+
+          /**
+           * VAT ID number.
+           */
+          vat?: string;
+        }
+
+        export namespace CompanyDetails {
+          export type RegistrationType =
+            | 'ch_ein'
+            | 'de_hrb'
+            | 'dk_cvr'
+            | 'es_cif'
+            | 'fi_tunnus'
+            | 'fr_siren'
+            | 'fr_siret'
+            | 'it_rea'
+            | 'nl_kvk'
+            | 'no_org_number'
+            | 'no_pno'
+            | 'se_org_number'
+            | 'se_pno'
+            | 'uk_crn'
+            | OtherString;
+        }
       }
 
       export namespace Card {
@@ -6840,7 +7021,7 @@ export namespace InvoiceCreatePreviewParams {
       applies_to?: Array<BillingSchedule.AppliesTo>;
 
       /**
-       * The end date for the billing schedule.
+       * The end date for the billing schedule. You must not set this earlier than current period end for every applicable subscription item.
        */
       bill_until?: BillingSchedule.BillUntil;
 
@@ -8829,7 +9010,7 @@ export namespace InvoiceCreatePreviewParams {
       applies_to?: Array<BillingSchedule.AppliesTo>;
 
       /**
-       * The end date for the billing schedule.
+       * The end date for the billing schedule. You must not set this earlier than current period end for every applicable subscription item.
        */
       bill_until?: BillingSchedule.BillUntil;
 

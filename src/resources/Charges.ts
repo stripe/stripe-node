@@ -585,8 +585,6 @@ export namespace Charge {
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
-    sequra?: PaymentMethodDetails.Sequra;
-
     shopeepay?: PaymentMethodDetails.Shopeepay;
 
     sofort?: PaymentMethodDetails.Sofort;
@@ -1739,7 +1737,7 @@ export namespace Charge {
       country: string | null;
 
       /**
-       * The funding source group applied to this Link payment at confirmation time. Maps to a bundle in your Stripe pricing contract and on Stripe's published pricing page. Omitted if group lookup failed at confirmation time.
+       * The [funding source group code](https://docs.stripe.com/payments/link/link-payment-methods) applied to this Link payment at confirmation time.
        */
       funding_source_group?: string;
     }
@@ -2075,13 +2073,6 @@ export namespace Charge {
        * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://docs.stripe.com/api/mandates/retrieve).
        */
       mandate: string | null;
-    }
-
-    export interface Sequra {
-      /**
-       * The SeQura transaction ID associated with this payment.
-       */
-      transaction_id: string | null;
     }
 
     export interface Shopeepay {}
@@ -2632,7 +2623,12 @@ export namespace Charge {
 
         export interface GooglePay {}
 
-        export interface Link {}
+        export interface Link {
+          /**
+           * The [funding source group code](https://docs.stripe.com/payments/link/link-payment-methods) applied to this Link payment at confirmation time.
+           */
+          funding_source_group: string | null;
+        }
 
         export interface Masterpass {
           /**

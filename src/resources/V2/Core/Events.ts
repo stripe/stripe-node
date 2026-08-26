@@ -7126,6 +7126,7 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'bacs_debit_payments'
       | 'bancontact_payments'
       | 'blik_payments'
+      | 'blik_recurring_payments'
       | 'boleto_payments'
       | 'card_payments'
       | 'cartes_bancaires_payments'

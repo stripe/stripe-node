@@ -391,7 +391,7 @@ export namespace Dispute {
 
   export interface SmartDisputes {
     /**
-     * Evidence that could be provided to improve the SmartDisputes packet
+     * Evidence that could be provided to improve the Smart Disputes packet
      */
     recommended_evidence: Array<Array<string>> | null;
 

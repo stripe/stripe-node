@@ -4,7 +4,6 @@ import {StripeResource} from '../StripeResource.js';
 import {
   Emptyable,
   MetadataParam,
-  OtherString,
   PaginationParams,
   Metadata,
 } from '../shared.js';
@@ -506,8 +505,7 @@ export namespace WebhookEndpointCreateParams {
     | 'treasury.received_credit.created'
     | 'treasury.received_credit.failed'
     | 'treasury.received_credit.succeeded'
-    | 'treasury.received_debit.created'
-    | OtherString;
+    | 'treasury.received_debit.created';
 
   export type ApiVersion =
     | '2011-01-01'
@@ -635,8 +633,7 @@ export namespace WebhookEndpointCreateParams {
     | '2026-04-22.dahlia'
     | '2026-05-27.dahlia'
     | '2026-06-24.dahlia'
-    | '2026-07-29.dahlia'
-    | OtherString;
+    | '2026-07-29.dahlia';
 }
 export interface WebhookEndpointRetrieveParams {
   /**
@@ -981,8 +978,7 @@ export namespace WebhookEndpointUpdateParams {
     | 'treasury.received_credit.created'
     | 'treasury.received_credit.failed'
     | 'treasury.received_credit.succeeded'
-    | 'treasury.received_debit.created'
-    | OtherString;
+    | 'treasury.received_debit.created';
 }
 export interface WebhookEndpointListParams extends PaginationParams {
   /**

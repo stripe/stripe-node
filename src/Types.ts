@@ -36,7 +36,12 @@ export type V2RuntimeSchema =
   | {kind: 'decimal_string'}
   | {kind: 'object'; fields: Record<string, V2RuntimeSchema>}
   | {kind: 'array'; element: V2RuntimeSchema}
-  | {kind: 'nullable'; inner: V2RuntimeSchema};
+  | {kind: 'nullable'; inner: V2RuntimeSchema}
+  | {
+      kind: 'discriminatedUnion';
+      discriminator: string;
+      variants: Record<string, V2RuntimeSchema>;
+    };
 export type MethodSpec = {
   method: string;
   methodType?: string;

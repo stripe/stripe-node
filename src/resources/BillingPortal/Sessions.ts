@@ -372,6 +372,11 @@ export namespace BillingPortal {
       subscription_cancel?: FlowData.SubscriptionCancel;
 
       /**
+       * Configuration when `flow_data.type=subscription_pause`.
+       */
+      subscription_pause?: FlowData.SubscriptionPause;
+
+      /**
        * Configuration when `flow_data.type=subscription_update`.
        */
       subscription_update?: FlowData.SubscriptionUpdate;
@@ -467,6 +472,13 @@ export namespace BillingPortal {
         subscription: string;
       }
 
+      export interface SubscriptionPause {
+        /**
+         * The ID of the subscription to be paused.
+         */
+        subscription: string;
+      }
+
       export interface SubscriptionUpdate {
         /**
          * The ID of the subscription to be updated.
@@ -492,8 +504,10 @@ export namespace BillingPortal {
       }
 
       export type Type =
+        | 'customer_update'
         | 'payment_method_update'
         | 'subscription_cancel'
+        | 'subscription_pause'
         | 'subscription_update'
         | 'subscription_update_confirm'
         | OtherString;

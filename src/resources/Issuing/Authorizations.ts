@@ -1066,6 +1066,11 @@ export interface Authorization {
   pending_request: Authorization.PendingRequest | null;
 
   /**
+   * The point-of-sale initiation condition. This is null when the card network did not provide one.
+   */
+  pos_condition?: Authorization.PosCondition | null;
+
+  /**
    * Redaction status of this authorization. If the authorization is not redacted, this field will be null.
    */
   redaction?: Authorization.Redaction | null;
@@ -1436,6 +1441,16 @@ export namespace Authorization {
      */
     network_risk_score: number | null;
   }
+
+  export type PosCondition =
+    | 'account_verification'
+    | 'card_not_present'
+    | 'card_present'
+    | 'e_commerce'
+    | 'key_entered_pos'
+    | 'other'
+    | 'pin_entered'
+    | 'recurring_or_moto';
 
   export interface Redaction {
     /**

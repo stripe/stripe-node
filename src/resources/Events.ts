@@ -438,8 +438,7 @@ export namespace Event {
     | 'treasury.received_credit.created'
     | 'treasury.received_credit.failed'
     | 'treasury.received_credit.succeeded'
-    | 'treasury.received_debit.created'
-    | OtherString;
+    | 'treasury.received_debit.created';
 
   export namespace Data {
     export interface Object {}

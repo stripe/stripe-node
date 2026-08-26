@@ -1607,7 +1607,14 @@ export namespace QuotePreviewInvoice {
         preferred_language: Bancontact.PreferredLanguage;
       }
 
-      export interface Billie {}
+      export interface Billie {
+        company_details?: Billie.CompanyDetails;
+
+        /**
+         * An identifier or reference that this payment corresponds to.
+         */
+        reference?: string | null;
+      }
 
       export interface Bizum {}
 
@@ -1701,6 +1708,50 @@ export namespace QuotePreviewInvoice {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
+      }
+
+      export namespace Billie {
+        export interface CompanyDetails {
+          registered_address?: Address;
+
+          /**
+           * Company or entity name.
+           */
+          registered_name: string | null;
+
+          /**
+           * The official registration number for the given registration type.
+           */
+          registration_number: string | null;
+
+          /**
+           * Type of registration the company or entity holds in their registered country.
+           */
+          registration_type?: CompanyDetails.RegistrationType;
+
+          /**
+           * VAT ID number.
+           */
+          vat: string | null;
+        }
+
+        export namespace CompanyDetails {
+          export type RegistrationType =
+            | 'ch_ein'
+            | 'de_hrb'
+            | 'dk_cvr'
+            | 'es_cif'
+            | 'fi_tunnus'
+            | 'fr_siren'
+            | 'fr_siret'
+            | 'it_rea'
+            | 'nl_kvk'
+            | 'no_org_number'
+            | 'no_pno'
+            | 'se_org_number'
+            | 'se_pno'
+            | 'uk_crn';
+        }
       }
 
       export namespace Card {
