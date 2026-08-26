@@ -126,7 +126,7 @@ describe('StripeEventNotificationHandler', () => {
       expect(() => {
         eventHandler.on('v1.billing.meter.no_meter_found', async () => {});
       }).to.throw(
-        /Cannot register new handlers after an event has been handled/
+        /Cannot register new callbacks after an event has been handled/
       );
     });
 
@@ -148,7 +148,7 @@ describe('StripeEventNotificationHandler', () => {
       expect(() => {
         eventHandler.on('v1.billing.meter.no_meter_found', async () => {});
       }).to.throw(
-        /Cannot register new handlers after an event has been handled/
+        /Cannot register new callbacks after an event has been handled/
       );
     });
 
@@ -163,7 +163,186 @@ describe('StripeEventNotificationHandler', () => {
           'v1.billing.meter.error_report_triggered',
           async () => {}
         );
-      }).to.throw(/Handler already registered for event type/);
+      }).to.throw(/Callback for event type ".*" is already registered/);
+    });
+  });
+
+  describe('preHandle', () => {
+    it('should run the registered handler when no preHandle hook is registered', async () => {
+      let callbackCalled = false;
+
+      eventHandler.on('v1.billing.meter.error_report_triggered', async () => {
+        callbackCalled = true;
+      });
+
+      const sigHeader = generateHeader(v1BillingMeterPayload);
+      await eventHandler.handle(v1BillingMeterPayload, sigHeader);
+
+      expect(callbackCalled).to.be.true;
+    });
+
+    it('should run the handler after the hook when the hook resolves true', async () => {
+      const order: string[] = [];
+
+      eventHandler.preHandle(async () => {
+        order.push('preHandle');
+        return true;
+      });
+
+      eventHandler.on('v1.billing.meter.error_report_triggered', async () => {
+        order.push('handler');
+      });
+
+      const sigHeader = generateHeader(v1BillingMeterPayload);
+      await eventHandler.handle(v1BillingMeterPayload, sigHeader);
+
+      expect(order).to.deep.equal(['preHandle', 'handler']);
+    });
+
+    it('should not run the registered handler when the hook resolves false', async () => {
+      let callbackCalled = false;
+
+      eventHandler.preHandle(async () => false);
+
+      eventHandler.on('v1.billing.meter.error_report_triggered', async () => {
+        callbackCalled = true;
+      });
+
+      const sigHeader = generateHeader(v1BillingMeterPayload);
+      await eventHandler.handle(v1BillingMeterPayload, sigHeader);
+
+      expect(callbackCalled).to.be.false;
+    });
+
+    it('should not run the fallback callback for an unknown event type when the hook resolves false', async () => {
+      let fallbackCalled = false;
+
+      const handler = stripe.notificationHandler(
+        DUMMY_WEBHOOK_SECRET,
+        async () => {
+          fallbackCalled = true;
+        }
+      );
+
+      handler.preHandle(async () => false);
+
+      const sigHeader = generateHeader(unknownEventPayload);
+      await handler.handle(unknownEventPayload, sigHeader);
+
+      expect(fallbackCalled).to.be.false;
+    });
+
+    it('should receive the context-scoped client, leaving the shared client unmutated', async () => {
+      const stripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
+        stripeContext: 'original_context_123',
+      });
+
+      const handler = stripe.notificationHandler(
+        DUMMY_WEBHOOK_SECRET,
+        async () => {}
+      );
+
+      let receivedContext: any = null;
+      let receivedClient: any = null;
+
+      handler.preHandle(async (_event: any, client: any) => {
+        receivedClient = client;
+        receivedContext = client._api.stripeContext;
+        return true;
+      });
+
+      handler.on('v1.billing.meter.error_report_triggered', async () => {});
+
+      const originalContext = stripe._api.stripeContext;
+
+      const sigHeader = generateHeader(v1BillingMeterPayload);
+      await handler.handle(v1BillingMeterPayload, sigHeader);
+
+      expect(receivedClient).to.not.equal(stripe);
+      expect(receivedContext?.toString()).to.equal('event_context_456');
+      expect(stripe._api.stripeContext).to.equal(originalContext);
+    });
+
+    it('should propagate a rejection from the hook and not run any callback', async () => {
+      let handlerCalled = false;
+      let fallbackCalled = false;
+
+      const handler = stripe.notificationHandler(
+        DUMMY_WEBHOOK_SECRET,
+        async () => {
+          fallbackCalled = true;
+        }
+      );
+
+      handler.preHandle(async () => {
+        throw new Error('preHandle blew up!');
+      });
+
+      handler.on('v1.billing.meter.error_report_triggered', async () => {
+        handlerCalled = true;
+      });
+
+      const sigHeader = generateHeader(v1BillingMeterPayload);
+
+      let errorThrown = false;
+      try {
+        await handler.handle(v1BillingMeterPayload, sigHeader);
+      } catch (err) {
+        errorThrown = true;
+        // @ts-expect-error
+        expect(err.message).to.equal('preHandle blew up!');
+      }
+
+      expect(errorThrown).to.be.true;
+      expect(handlerCalled).to.be.false;
+      expect(fallbackCalled).to.be.false;
+    });
+
+    it('should throw when registering a hook after an event has been handled', async () => {
+      eventHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {}
+      );
+
+      const sigHeader = generateHeader(v1BillingMeterPayload);
+      await eventHandler.handle(v1BillingMeterPayload, sigHeader);
+
+      expect(() => {
+        eventHandler.preHandle(async () => true);
+      }).to.throw(
+        /Cannot register new callbacks after an event has been handled/
+      );
+    });
+
+    it('should throw when registering a preHandle hook twice', () => {
+      eventHandler.preHandle(async () => true);
+
+      expect(() => {
+        eventHandler.preHandle(async () => true);
+      }).to.throw(/A preHandle callback is already registered/);
+    });
+
+    it('should genuinely await the hook before dispatching', async () => {
+      let handlerCalled = false;
+
+      eventHandler.preHandle(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 0));
+        return false;
+      });
+
+      eventHandler.on('v1.billing.meter.error_report_triggered', async () => {
+        handlerCalled = true;
+      });
+
+      const sigHeader = generateHeader(v1BillingMeterPayload);
+      await eventHandler.handle(v1BillingMeterPayload, sigHeader);
+
+      expect(handlerCalled).to.be.false;
+    });
+
+    it('should return the handler instance for chaining', () => {
+      const result = eventHandler.preHandle(async () => true);
+      expect(result).to.equal(eventHandler);
     });
   });
 
@@ -567,7 +746,9 @@ describe('StripeEventNotificationHandlerWithoutVerification', () => {
 
     expect(() => {
       withoutVerifHandler.on('v1.billing.meter.no_meter_found', async () => {});
-    }).to.throw(/Cannot register new handlers after an event has been handled/);
+    }).to.throw(
+      /Cannot register new callbacks after an event has been handled/
+    );
   });
 
   it('should accept a Uint8Array body without a signature', async () => {
@@ -675,6 +856,172 @@ describe('StripeEventNotificationHandlerWithoutVerification', () => {
     expect(() => {
       stripe.notificationHandler('', async () => {});
     }).to.throw(/webhookSecret must be a non-empty string/);
+  });
+
+  describe('preHandle', () => {
+    it('should run the registered handler when no preHandle hook is registered', async () => {
+      let callbackCalled = false;
+
+      withoutVerifHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {
+          callbackCalled = true;
+        }
+      );
+
+      await withoutVerifHandler.handle(v1BillingMeterPayload);
+
+      expect(callbackCalled).to.be.true;
+    });
+
+    it('should run the handler after the hook when the hook resolves true', async () => {
+      const order: string[] = [];
+
+      withoutVerifHandler.preHandle(async () => {
+        order.push('preHandle');
+        return true;
+      });
+
+      withoutVerifHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {
+          order.push('handler');
+        }
+      );
+
+      await withoutVerifHandler.handle(v1BillingMeterPayload);
+
+      expect(order).to.deep.equal(['preHandle', 'handler']);
+    });
+
+    it('should not run the registered handler when the hook resolves false', async () => {
+      let callbackCalled = false;
+
+      withoutVerifHandler.preHandle(async () => false);
+
+      withoutVerifHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {
+          callbackCalled = true;
+        }
+      );
+
+      await withoutVerifHandler.handle(v1BillingMeterPayload);
+
+      expect(callbackCalled).to.be.false;
+    });
+
+    it('should not run the fallback callback for an unknown event type when the hook resolves false', async () => {
+      let fallbackCalled = false;
+
+      const handler = stripe.notificationHandlerWithoutVerification(
+        async () => {
+          fallbackCalled = true;
+        }
+      );
+
+      handler.preHandle(async () => false);
+
+      await handler.handle(unknownEventPayload);
+
+      expect(fallbackCalled).to.be.false;
+    });
+
+    it('should receive the context-scoped client', async () => {
+      let receivedContext: any = null;
+      let receivedClient: any = null;
+
+      withoutVerifHandler.preHandle(async (_event: any, client: any) => {
+        receivedClient = client;
+        receivedContext = client._api.stripeContext;
+        return true;
+      });
+
+      withoutVerifHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {}
+      );
+
+      await withoutVerifHandler.handle(v1BillingMeterPayload);
+
+      expect(receivedClient).to.not.equal(stripe);
+      expect(receivedContext?.toString()).to.equal('event_context_456');
+    });
+
+    it('should propagate a rejection from the hook and not run any callback', async () => {
+      let handlerCalled = false;
+
+      withoutVerifHandler.preHandle(async () => {
+        throw new Error('preHandle blew up!');
+      });
+
+      withoutVerifHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {
+          handlerCalled = true;
+        }
+      );
+
+      let errorThrown = false;
+      try {
+        await withoutVerifHandler.handle(v1BillingMeterPayload);
+      } catch (err) {
+        errorThrown = true;
+        // @ts-expect-error
+        expect(err.message).to.equal('preHandle blew up!');
+      }
+
+      expect(errorThrown).to.be.true;
+      expect(handlerCalled).to.be.false;
+    });
+
+    it('should throw when registering a hook after an event has been handled', async () => {
+      withoutVerifHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {}
+      );
+
+      await withoutVerifHandler.handle(v1BillingMeterPayload);
+
+      expect(() => {
+        withoutVerifHandler.preHandle(async () => true);
+      }).to.throw(
+        /Cannot register new callbacks after an event has been handled/
+      );
+    });
+
+    it('should throw when registering a preHandle hook twice', () => {
+      withoutVerifHandler.preHandle(async () => true);
+
+      expect(() => {
+        withoutVerifHandler.preHandle(async () => true);
+      }).to.throw(/A preHandle callback is already registered/);
+    });
+
+    it('should genuinely await the hook before dispatching', async () => {
+      let handlerCalled = false;
+
+      withoutVerifHandler.preHandle(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 0));
+        return false;
+      });
+
+      withoutVerifHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {
+          handlerCalled = true;
+        }
+      );
+
+      await withoutVerifHandler.handle(v1BillingMeterPayload);
+
+      expect(handlerCalled).to.be.false;
+    });
+
+    it('should return the handler instance for chaining', () => {
+      const result = withoutVerifHandler.preHandle(async () => true);
+      expect(result).to.equal(withoutVerifHandler);
+    });
   });
 
   it('should treat every webhookSecret as a real secret, with no magic bypass value', async () => {

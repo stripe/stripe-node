@@ -211,7 +211,7 @@ export namespace V2 {
         card?: PayoutMethodData.Card;
 
         /**
-         * Closed Enum. The type of payout method to be created.
+         * Open Enum. The type of payout method to be created.
          */
         type: PayoutMethodData.Type;
       }
@@ -329,7 +329,7 @@ export namespace V2 {
         card?: PayoutMethodData.Card;
 
         /**
-         * Closed Enum. The type of payout method to be created/updated.
+         * Open Enum. The type of payout method to be created/updated.
          */
         type: PayoutMethodData.Type;
       }

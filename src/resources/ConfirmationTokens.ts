@@ -4,7 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {Customer} from './Customers.js';
 import {SetupAttempt} from './SetupAttempts.js';
 import {Charge} from './Charges.js';
-import {OtherString, Address} from '../shared.js';
+import {Metadata, OtherString, Address} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class ConfirmationTokenResource extends StripeResource {
@@ -54,6 +54,11 @@ export interface ConfirmationToken {
    * Data used for generating a Mandate.
    */
   mandate_data?: ConfirmationToken.MandateData | null;
+
+  /**
+   * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   */
+  metadata: Metadata | null;
 
   /**
    * ID of the PaymentIntent that this ConfirmationToken was used to confirm, or null if this ConfirmationToken has not yet been used.
@@ -1519,7 +1524,8 @@ export namespace ConfirmationToken {
           | 'link'
           | 'masterpass'
           | 'samsung_pay'
-          | 'visa_checkout';
+          | 'visa_checkout'
+          | OtherString;
 
         export interface VisaCheckout {
           /**
@@ -1624,11 +1630,12 @@ export namespace ConfirmationToken {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -1655,7 +1662,8 @@ export namespace ConfirmationToken {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace IdBankTransfer {
@@ -1689,7 +1697,8 @@ export namespace ConfirmationToken {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
 
       export type Bic =
         | 'ABNANL2A'
@@ -1712,7 +1721,8 @@ export namespace ConfirmationToken {
         | 'REVOIE23'
         | 'REVOLT21'
         | 'SNSBNL2A'
-        | 'TRIONL2U';
+        | 'TRIONL2U'
+        | OtherString;
     }
 
     export namespace InteracPresent {
@@ -1873,7 +1883,7 @@ export namespace ConfirmationToken {
       }
 
       export namespace Networks {
-        export type Supported = 'ach' | 'us_domestic_wire';
+        export type Supported = 'ach' | 'us_domestic_wire' | OtherString;
       }
 
       export namespace StatusDetails {

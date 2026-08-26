@@ -77,7 +77,7 @@ export interface Product {
   };
 
   /**
-   * The year in which the carbon removal is expected to be delivered.
+   * The year in which the carbon removal is expected to be delivered. If the year is in the past, this represents spot inventory with guaranteed delivery.
    */
   delivery_year: number | null;
 

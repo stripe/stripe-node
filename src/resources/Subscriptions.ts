@@ -15,6 +15,7 @@ import {SubscriptionSchedule} from './SubscriptionSchedules.js';
 import {Price} from './Prices.js';
 import {TaxId, DeletedTaxId} from './TaxIds.js';
 import * as TestHelpers from './TestHelpers/index.js';
+import * as Billing from './Billing/index.js';
 import {
   Emptyable,
   MetadataParam,
@@ -268,7 +269,7 @@ export class SubscriptionResource extends StripeResource {
    * When changing prices or quantities, we optionally prorate the price we charge next month to make up for any price changes.
    * To preview how the proration is calculated, use the [create preview](https://docs.stripe.com/docs/api/invoices/create_preview) endpoint.
    *
-   * By default, we prorate subscription changes. For example, if a customer signs up on May 1 for a 100 price, they'll be billed 100 immediately. If on May 15 they switch to a 200 price, then on June 1 they'll be billed 250 (200 for a renewal of her subscription, plus a 50 prorating adjustment for half of the previous month's 100 difference). Similarly, a downgrade generates a credit that is applied to the next invoice. We also prorate when you make quantity changes.
+   * By default, we prorate subscription changes. For example, if a customer signs up on May 1 for a 100 price, they'll be billed 100 immediately. If on May 15 they switch to a 200 price, then on June 1 they'll be billed 250 (200 for a renewal of her subscription, plus a 50 prorating adjustment for half of the previous month's 100 difference). Similarly, a downgrade generates a credit that is applied to the next invoice. We also prorate when you make quantity changes. You can also [use scripts to prorate your billing. To learn more, see <a href="/billing/subscriptions/prorations">Prorations](https://docs.stripe.com/billing/scripts/stripe-authored/proration).
    *
    * Switching prices does not normally change the billing date or generate an immediate charge unless:
    *
@@ -1580,12 +1581,20 @@ export namespace Subscription {
     feedback: CancellationDetails.Feedback | null;
 
     /**
+     * Customized feedback options that provide deeper insight into why the subscription was canceled, if the subscription was canceled explicitly by the user.
+     */
+    feedback_option: string | Billing.FeedbackOption | null;
+
+    /**
      * Why this subscription was canceled.
      */
     reason: CancellationDetails.Reason | null;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface InvoiceSettings {
     /**
@@ -1818,7 +1827,7 @@ export namespace Subscription {
     export type Type = 'classic' | 'flexible' | OtherString;
 
     export namespace Flexible {
-      export type ProrationDiscounts = 'included' | 'itemized';
+      export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
     }
   }
 
@@ -1873,7 +1882,7 @@ export namespace Subscription {
       export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -1943,7 +1952,11 @@ export namespace Subscription {
   }
 
   export namespace PauseCollection {
-    export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+    export type Behavior =
+      | 'keep_as_draft'
+      | 'mark_uncollectible'
+      | 'void'
+      | OtherString;
   }
 
   export namespace PaymentSettings {
@@ -1957,6 +1970,11 @@ export namespace Subscription {
        * This sub-hash contains details about the Bancontact payment method options to pass to invoices created by the subscription.
        */
       bancontact: PaymentMethodOptions.Bancontact | null;
+
+      /**
+       * This sub-hash contains details about the Billie payment method options to pass to invoices created by the subscription.
+       */
+      billie?: PaymentMethodOptions.Billie | null;
 
       /**
        * This sub-hash contains details about the Blik payment method options to pass to invoices created by the subscription.
@@ -2019,6 +2037,7 @@ export namespace Subscription {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'billie'
       | 'blik'
       | 'boleto'
       | 'card'
@@ -2084,6 +2103,8 @@ export namespace Subscription {
          */
         preferred_language: Bancontact.PreferredLanguage;
       }
+
+      export interface Billie {}
 
       export interface Blik {
         mandate_options?: Blik.MandateOptions;
@@ -2207,7 +2228,8 @@ export namespace Subscription {
           | 'mastercard'
           | 'unionpay'
           | 'unknown'
-          | 'visa';
+          | 'visa'
+          | OtherString;
 
         export type RequestThreeDSecure =
           | 'any'
@@ -2239,7 +2261,14 @@ export namespace Subscription {
           }
 
           export namespace EuBankTransfer {
-            export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+            export type Country =
+              | 'BE'
+              | 'DE'
+              | 'ES'
+              | 'FR'
+              | 'IE'
+              | 'NL'
+              | OtherString;
           }
         }
       }
@@ -2405,7 +2434,7 @@ export namespace Subscription {
   }
 
   export namespace PendingInvoiceItemInterval {
-    export type Interval = 'day' | 'month' | 'week' | 'year';
+    export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
   }
 
   export namespace Prebilling {
@@ -2462,7 +2491,7 @@ export namespace Subscription {
     }
 
     export namespace EndBehavior {
-      export type BillingCycleAnchor = 'now' | 'unchanged';
+      export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
       export type MissingPaymentMethod =
         | 'cancel'
@@ -2509,7 +2538,7 @@ export interface SubscriptionCreateParams {
   billing_mode?: SubscriptionCreateParams.BillingMode;
 
   /**
-   * Sets the billing schedules for the subscription.
+   * An array of billing schedules, which allow you to bill customers in advance for multiple service periods. Requires flexible billing mode and API version 2026-05-27.dahlia or later. Learn more about [prebilling](https://docs.stripe.com/billing/subscriptions/prebilling).
    */
   billing_schedules?: Array<SubscriptionCreateParams.BillingSchedule>;
 
@@ -2761,7 +2790,7 @@ export namespace SubscriptionCreateParams {
     applies_to?: Array<BillingSchedule.AppliesTo>;
 
     /**
-     * The end date for the billing schedule.
+     * The end date for the billing schedule. You must not set this earlier than current period end for every applicable subscription item.
      */
     bill_until: BillingSchedule.BillUntil;
 
@@ -2789,7 +2818,10 @@ export namespace SubscriptionCreateParams {
     | 'min_period_end'
     | OtherString;
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface Discount {
     /**
@@ -2896,7 +2928,8 @@ export namespace SubscriptionCreateParams {
     | 'allow_incomplete'
     | 'default_incomplete'
     | 'error_if_incomplete'
-    | 'pending_if_incomplete';
+    | 'pending_if_incomplete'
+    | OtherString;
 
   export interface PaymentSettings {
     /**
@@ -3109,7 +3142,11 @@ export namespace SubscriptionCreateParams {
     }
 
     export namespace PriceData {
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
     }
   }
 
@@ -3142,7 +3179,7 @@ export namespace SubscriptionCreateParams {
     export type Type = 'classic' | 'flexible' | OtherString;
 
     export namespace Flexible {
-      export type ProrationDiscounts = 'included' | 'itemized';
+      export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
     }
   }
 
@@ -3192,7 +3229,7 @@ export namespace SubscriptionCreateParams {
       export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -3409,10 +3446,14 @@ export namespace SubscriptionCreateParams {
         interval_count?: number;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace Recurring {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
 
@@ -3432,6 +3473,11 @@ export namespace SubscriptionCreateParams {
        * This sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
        */
       bancontact?: Emptyable<PaymentMethodOptions.Bancontact>;
+
+      /**
+       * This sub-hash contains details about the Billie payment method options to pass to the invoice's PaymentIntent.
+       */
+      billie?: Emptyable<PaymentMethodOptions.Billie>;
 
       /**
        * This sub-hash contains details about the Blik payment method options to pass to the invoice's PaymentIntent.
@@ -3494,6 +3540,7 @@ export namespace SubscriptionCreateParams {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'billie'
       | 'blik'
       | 'boleto'
       | 'card'
@@ -3562,6 +3609,8 @@ export namespace SubscriptionCreateParams {
          */
         preferred_language?: Bancontact.PreferredLanguage;
       }
+
+      export interface Billie {}
 
       export interface Blik {
         /**
@@ -3706,7 +3755,8 @@ export namespace SubscriptionCreateParams {
           | 'mastercard'
           | 'unionpay'
           | 'unknown'
-          | 'visa';
+          | 'visa'
+          | OtherString;
 
         export type RequestThreeDSecure =
           | 'any'
@@ -3877,7 +3927,8 @@ export namespace SubscriptionCreateParams {
             | 'balances'
             | 'ownership'
             | 'payment_method'
-            | 'transactions';
+            | 'transactions'
+            | OtherString;
 
           export type Prefetch =
             | 'balances'
@@ -3898,7 +3949,7 @@ export namespace SubscriptionCreateParams {
   }
 
   export namespace PendingInvoiceItemInterval {
-    export type Interval = 'day' | 'month' | 'week' | 'year';
+    export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
   }
 
   export namespace Prebilling {
@@ -3919,7 +3970,7 @@ export namespace SubscriptionCreateParams {
     }
 
     export namespace EndBehavior {
-      export type BillingCycleAnchor = 'now' | 'unchanged';
+      export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
       export type MissingPaymentMethod =
         | 'cancel'
@@ -3957,7 +4008,7 @@ export interface SubscriptionUpdateParams {
   billing_cycle_anchor?: SubscriptionUpdateParams.BillingCycleAnchor;
 
   /**
-   * Sets the billing schedules for the subscription.
+   * An array of billing schedules, which allow you to bill customers in advance for multiple service periods. Requires flexible billing mode and API version 2026-05-27.dahlia or later. Learn more about [prebilling](https://docs.stripe.com/billing/subscriptions/prebilling).
    */
   billing_schedules?: Emptyable<
     Array<SubscriptionUpdateParams.BillingSchedule>
@@ -4160,7 +4211,7 @@ export namespace SubscriptionUpdateParams {
     liability?: AutomaticTax.Liability;
   }
 
-  export type BillingCycleAnchor = 'now' | 'unchanged';
+  export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
   export interface BillingSchedule {
     /**
@@ -4169,7 +4220,7 @@ export namespace SubscriptionUpdateParams {
     applies_to?: Array<BillingSchedule.AppliesTo>;
 
     /**
-     * The end date for the billing schedule.
+     * The end date for the billing schedule. You must not set this earlier than current period end for every applicable subscription item.
      */
     bill_until?: BillingSchedule.BillUntil;
 
@@ -4207,9 +4258,17 @@ export namespace SubscriptionUpdateParams {
      * The customer submitted reason for why they canceled, if the subscription was canceled explicitly by the user.
      */
     feedback?: Emptyable<CancellationDetails.Feedback>;
+
+    /**
+     * Customized feedback options that provide deeper insight into why the subscription was canceled, if the subscription was canceled explicitly by the user.
+     */
+    feedback_option?: string;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export interface Discount {
     /**
@@ -4338,7 +4397,8 @@ export namespace SubscriptionUpdateParams {
     | 'allow_incomplete'
     | 'default_incomplete'
     | 'error_if_incomplete'
-    | 'pending_if_incomplete';
+    | 'pending_if_incomplete'
+    | OtherString;
 
   export interface PaymentSettings {
     /**
@@ -4551,7 +4611,11 @@ export namespace SubscriptionUpdateParams {
     }
 
     export namespace PriceData {
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
     }
   }
 
@@ -4619,7 +4683,7 @@ export namespace SubscriptionUpdateParams {
       export type Type = 'duration' | 'timestamp' | OtherString;
 
       export namespace Duration {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
@@ -4837,16 +4901,24 @@ export namespace SubscriptionUpdateParams {
         interval_count?: number;
       }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
 
       export namespace Recurring {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
       }
     }
   }
 
   export namespace PauseCollection {
-    export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+    export type Behavior =
+      | 'keep_as_draft'
+      | 'mark_uncollectible'
+      | 'void'
+      | OtherString;
   }
 
   export namespace PaymentSettings {
@@ -4860,6 +4932,11 @@ export namespace SubscriptionUpdateParams {
        * This sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
        */
       bancontact?: Emptyable<PaymentMethodOptions.Bancontact>;
+
+      /**
+       * This sub-hash contains details about the Billie payment method options to pass to the invoice's PaymentIntent.
+       */
+      billie?: Emptyable<PaymentMethodOptions.Billie>;
 
       /**
        * This sub-hash contains details about the Blik payment method options to pass to the invoice's PaymentIntent.
@@ -4922,6 +4999,7 @@ export namespace SubscriptionUpdateParams {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'billie'
       | 'blik'
       | 'boleto'
       | 'card'
@@ -4990,6 +5068,8 @@ export namespace SubscriptionUpdateParams {
          */
         preferred_language?: Bancontact.PreferredLanguage;
       }
+
+      export interface Billie {}
 
       export interface Blik {
         /**
@@ -5134,7 +5214,8 @@ export namespace SubscriptionUpdateParams {
           | 'mastercard'
           | 'unionpay'
           | 'unknown'
-          | 'visa';
+          | 'visa'
+          | OtherString;
 
         export type RequestThreeDSecure =
           | 'any'
@@ -5305,7 +5386,8 @@ export namespace SubscriptionUpdateParams {
             | 'balances'
             | 'ownership'
             | 'payment_method'
-            | 'transactions';
+            | 'transactions'
+            | OtherString;
 
           export type Prefetch =
             | 'balances'
@@ -5326,7 +5408,7 @@ export namespace SubscriptionUpdateParams {
   }
 
   export namespace PendingInvoiceItemInterval {
-    export type Interval = 'day' | 'month' | 'week' | 'year';
+    export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
   }
 
   export namespace Prebilling {
@@ -5347,7 +5429,7 @@ export namespace SubscriptionUpdateParams {
     }
 
     export namespace EndBehavior {
-      export type BillingCycleAnchor = 'now' | 'unchanged';
+      export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
       export type MissingPaymentMethod =
         | 'cancel'
@@ -5426,7 +5508,10 @@ export namespace SubscriptionListParams {
     enabled: boolean;
   }
 
-  export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+  export type CollectionMethod =
+    | 'charge_automatically'
+    | 'send_invoice'
+    | OtherString;
 
   export type Status =
     | 'active'
@@ -5473,6 +5558,11 @@ export namespace SubscriptionCancelParams {
      * The customer submitted reason for why they canceled, if the subscription was canceled explicitly by the user.
      */
     feedback?: Emptyable<CancellationDetails.Feedback>;
+
+    /**
+     * Customized feedback options that provide deeper insight into why the subscription was canceled, if the subscription was canceled explicitly by the user.
+     */
+    feedback_option?: string;
   }
 
   export namespace CancellationDetails {
@@ -5522,7 +5612,7 @@ export namespace SubscriptionMigrateParams {
     }
 
     export namespace Flexible {
-      export type ProrationDiscounts = 'included' | 'itemized';
+      export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
     }
   }
 }
@@ -5581,11 +5671,15 @@ export namespace SubscriptionPauseParams {
     }
 
     export namespace OutstandingUsageThrough {
-      export type Type = 'none' | 'now';
+      export type Type = 'none' | 'now' | OtherString;
     }
 
     export namespace UnusedTimeFrom {
-      export type Type = 'item_current_period_start' | 'none' | 'now';
+      export type Type =
+        | 'item_current_period_start'
+        | 'none'
+        | 'now'
+        | OtherString;
     }
   }
 }
@@ -5620,7 +5714,8 @@ export namespace SubscriptionResumeParams {
 
   export type PaymentBehavior =
     | 'resume_on_payment_attempt'
-    | 'resume_on_payment_success';
+    | 'resume_on_payment_success'
+    | OtherString;
 
   export type ProrationBehavior =
     | 'always_invoice'

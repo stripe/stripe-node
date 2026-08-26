@@ -1,7 +1,10 @@
 // File generated from our OpenAPI spec
 
 import {resourceNamespace} from './ResourceNamespace.js';
+import {AccountActivityResource as V2SignalsAccountActivity} from './resources/V2/Signals/AccountActivity.js';
+import {AccountEvaluationResource as V2SignalsAccountEvaluations} from './resources/V2/Signals/AccountEvaluations.js';
 import {AccountLinkResource as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
+import {AccountSignalResource as V2SignalsAccountSignals} from './resources/V2/Signals/AccountSignals.js';
 import {AccountTokenResource as V2CoreAccountTokens} from './resources/V2/Core/AccountTokens.js';
 import {AccountResource as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
 import {AccountResource as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
@@ -10,6 +13,7 @@ import {ActivityLogResource as V2IamActivityLogs} from './resources/V2/Iam/Activ
 import {AdjustmentResource as V2MoneyManagementAdjustments} from './resources/V2/MoneyManagement/Adjustments.js';
 import {AgreementResource as V2OrchestratedCommerceAgreements} from './resources/V2/OrchestratedCommerce/Agreements.js';
 import {AlertResource as BillingAlerts} from './resources/Billing/Alerts.js';
+import {ApprovalRequestResource as V2CoreApprovalRequests} from './resources/V2/Core/ApprovalRequests.js';
 import {AssociationResource as TaxAssociations} from './resources/Tax/Associations.js';
 import {AuthorizationResource as FinancialConnectionsAuthorizations} from './resources/FinancialConnections/Authorizations.js';
 import {AuthorizationResource as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
@@ -40,6 +44,7 @@ import {EarlyFraudWarningResource as RadarEarlyFraudWarnings} from './resources/
 import {EventDestinationResource as V2CoreEventDestinations} from './resources/V2/Core/EventDestinations.js';
 import {EventResource as V2CoreEvents} from './resources/V2/Core/Events.js';
 import {FeatureResource as EntitlementsFeatures} from './resources/Entitlements/Features.js';
+import {FeedbackOptionResource as BillingFeedbackOptions} from './resources/Billing/FeedbackOptions.js';
 import {FinancialAccountResource as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
 import {FinancialAccountResource as V2MoneyManagementFinancialAccounts} from './resources/V2/MoneyManagement/FinancialAccounts.js';
 import {FinancialAddressResource as V2MoneyManagementFinancialAddresses} from './resources/V2/MoneyManagement/FinancialAddresses.js';
@@ -199,6 +204,7 @@ export const Billing = resourceNamespace('billing', {
   CreditBalanceSummary: BillingCreditBalanceSummary,
   CreditBalanceTransactions: BillingCreditBalanceTransactions,
   CreditGrants: BillingCreditGrants,
+  FeedbackOptions: BillingFeedbackOptions,
   MeterEventAdjustments: BillingMeterEventAdjustments,
   MeterEvents: BillingMeterEvents,
   Meters: BillingMeters,
@@ -356,6 +362,7 @@ export const V2 = resourceNamespace('v2', {
     AccountLinks: V2CoreAccountLinks,
     AccountTokens: V2CoreAccountTokens,
     Accounts: V2CoreAccounts,
+    ApprovalRequests: V2CoreApprovalRequests,
     BatchJobs: V2CoreBatchJobs,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
@@ -395,6 +402,11 @@ export const V2 = resourceNamespace('v2', {
   }),
   OrchestratedCommerce: resourceNamespace('orchestratedCommerce', {
     Agreements: V2OrchestratedCommerceAgreements,
+  }),
+  Signals: resourceNamespace('signals', {
+    AccountActivity: V2SignalsAccountActivity,
+    AccountEvaluations: V2SignalsAccountEvaluations,
+    AccountSignals: V2SignalsAccountSignals,
   }),
   TestHelpers: resourceNamespace('testHelpers', {
     FinancialAddresses: V2TestHelpersFinancialAddresses,

@@ -159,7 +159,11 @@ export namespace ShippingRate {
     };
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+  export type TaxBehavior =
+    | 'exclusive'
+    | 'inclusive'
+    | 'unspecified'
+    | OtherString;
 
   export namespace DeliveryEstimate {
     export interface Maximum {
@@ -221,7 +225,11 @@ export namespace ShippingRate {
     }
 
     export namespace CurrencyOptions {
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
     }
   }
 }
@@ -298,7 +306,11 @@ export namespace ShippingRateCreateParams {
     };
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+  export type TaxBehavior =
+    | 'exclusive'
+    | 'inclusive'
+    | 'unspecified'
+    | OtherString;
 
   export namespace DeliveryEstimate {
     export interface Maximum {
@@ -360,7 +372,11 @@ export namespace ShippingRateCreateParams {
     }
 
     export namespace CurrencyOptions {
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
     }
   }
 }
@@ -406,7 +422,11 @@ export namespace ShippingRateUpdateParams {
     };
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+  export type TaxBehavior =
+    | 'exclusive'
+    | 'inclusive'
+    | 'unspecified'
+    | OtherString;
 
   export namespace FixedAmount {
     export interface CurrencyOptions {
@@ -422,7 +442,11 @@ export namespace ShippingRateUpdateParams {
     }
 
     export namespace CurrencyOptions {
-      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'unspecified'
+        | OtherString;
     }
   }
 }

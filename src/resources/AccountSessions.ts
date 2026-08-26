@@ -88,6 +88,8 @@ export namespace AccountSession {
 
     payment_disputes: Components.PaymentDisputes;
 
+    payment_method_settings: Components.PaymentMethodSettings;
+
     payments: Components.Payments;
 
     payout_details: Components.PayoutDetails;
@@ -255,6 +257,15 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: PaymentDisputes.Features;
+    }
+
+    export interface PaymentMethodSettings {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: PaymentMethodSettings.Features;
     }
 
     export interface Payments {
@@ -595,6 +606,15 @@ export namespace AccountSession {
          * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
          */
         smart_disputes_management: boolean;
+      }
+    }
+
+    export namespace PaymentMethodSettings {
+      export interface Features {
+        /**
+         * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. This is `false` by default.
+         */
+        disable_stripe_user_authentication: boolean;
       }
     }
 
@@ -1121,7 +1141,7 @@ export namespace AccountSessionCreateParams {
       enabled: boolean;
 
       /**
-       * An empty list, because this embedded component has no features.
+       * The list of features enabled in the embedded component.
        */
       features?: PaymentMethodSettings.Features;
     }
@@ -1560,7 +1580,12 @@ export namespace AccountSessionCreateParams {
     }
 
     export namespace PaymentMethodSettings {
-      export interface Features {}
+      export interface Features {
+        /**
+         * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. This is `false` by default.
+         */
+        disable_stripe_user_authentication?: boolean;
+      }
     }
 
     export namespace Payments {

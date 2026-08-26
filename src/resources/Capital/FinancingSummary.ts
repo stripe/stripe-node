@@ -31,7 +31,7 @@ export interface FinancingSummary {
    * fee amount, withhold rate, remaining amount, paid amount, current repayment interval,
    * repayment start date, and advance payout date.
    *
-   * Only present for financing offers with the `paid_out` status.
+   * Only present for financing offers with a `status` other than `none`.
    */
   details: FinancingSummary.Details | null;
 
@@ -125,7 +125,8 @@ export namespace FinancingSummary {
       | 'youlend_de_financing'
       | 'youlend_fr_financing'
       | 'youlend_uk_mca'
-      | 'youlend_us_mca';
+      | 'youlend_us_mca'
+      | OtherString;
   }
 }
 export namespace Capital {

@@ -172,6 +172,11 @@ export namespace Session {
     countries: Array<string> | null;
 
     /**
+     * Country from which to filter accounts.
+     */
+    country: string | null;
+
+    /**
      * Stripe ID of the institution with which the customer should be directed to log in.
      */
     institution?: string;
@@ -281,7 +286,7 @@ export namespace Session {
   }
 
   export namespace Hosted {
-    export type DeliveryMethod = 'email' | 'url';
+    export type DeliveryMethod = 'email' | 'url' | OtherString;
   }
 
   export namespace ManualEntry {
@@ -374,7 +379,8 @@ export namespace FinancialConnections {
       | 'balances'
       | 'ownership'
       | 'payment_method'
-      | 'transactions';
+      | 'transactions'
+      | OtherString;
 
     export interface AccountHolder {
       /**
@@ -479,7 +485,7 @@ export namespace FinancialConnections {
     }
 
     export namespace Hosted {
-      export type DeliveryMethod = 'email' | 'url';
+      export type DeliveryMethod = 'email' | 'url' | OtherString;
     }
 
     export namespace ManualEntry {

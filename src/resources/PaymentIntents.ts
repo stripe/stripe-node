@@ -353,7 +353,7 @@ export interface PaymentIntent {
   /**
    * The list of payment method types allowed for use with this payment. Stripe automatically returns compatible payment methods from this list in the `payment_method_types` field of the response, based on the other PaymentIntent parameters, such as `currency`, `amount`, and `customer`.
    */
-  allowed_payment_method_types?: Array<
+  allowed_payment_method_types: Array<
     PaymentIntent.AllowedPaymentMethodType
   > | null;
 
@@ -689,6 +689,7 @@ export namespace PaymentIntent {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -750,7 +751,8 @@ export namespace PaymentIntent {
     | 'failed_invoice'
     | 'fraudulent'
     | 'requested_by_customer'
-    | 'void_invoice';
+    | 'void_invoice'
+    | OtherString;
 
   export type CaptureMethod =
     | 'automatic'
@@ -1230,7 +1232,8 @@ export namespace PaymentIntent {
     | 'requires_capture'
     | 'requires_confirmation'
     | 'requires_payment_method'
-    | 'succeeded';
+    | 'succeeded'
+    | OtherString;
 
   export interface TransferData {
     /**
@@ -1334,7 +1337,11 @@ export namespace PaymentIntent {
     }
 
     export namespace Surcharge {
-      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+      export type EnforceValidation =
+        | 'automatic'
+        | 'disabled'
+        | 'enabled'
+        | OtherString;
     }
   }
 
@@ -1390,6 +1397,7 @@ export namespace PaymentIntent {
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
+      | 'authentication_failure'
       | 'authentication_required'
       | 'balance_insufficient'
       | 'balance_invalid_parameter'
@@ -1402,6 +1410,7 @@ export namespace PaymentIntent {
       | 'bank_account_verification_failed'
       | 'billing_invalid_mandate'
       | 'bitcoin_upgrade_required'
+      | 'capability_not_active'
       | 'capture_charge_authorization_expired'
       | 'capture_unauthorized_payment'
       | 'card_decline_rate_limit_exceeded'
@@ -1426,6 +1435,7 @@ export namespace PaymentIntent {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'expired_payment_method'
       | 'failed_tax_calculation'
       | 'financial_account_balance_does_not_support_currency'
       | 'financial_account_capability_not_enabled'
@@ -1445,6 +1455,7 @@ export namespace PaymentIntent {
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'
+      | 'incorrect_postal_code'
       | 'incorrect_zip'
       | 'india_recurring_payment_mandate_canceled'
       | 'instant_payouts_config_disabled'
@@ -1454,6 +1465,7 @@ export namespace PaymentIntent {
       | 'insufficient_funds'
       | 'intent_invalid_state'
       | 'intent_verification_method_missing'
+      | 'invalid_canceled_subscription_fields'
       | 'invalid_card_type'
       | 'invalid_characters'
       | 'invalid_charge_amount'
@@ -1513,6 +1525,7 @@ export namespace PaymentIntent {
       | 'payment_method_not_available'
       | 'payment_method_provider_decline'
       | 'payment_method_provider_timeout'
+      | 'payment_method_restricted'
       | 'payment_method_unactivated'
       | 'payment_method_unexpected_state'
       | 'payment_method_unsupported_type'
@@ -1573,13 +1586,15 @@ export namespace PaymentIntent {
       | 'transfers_not_allowed'
       | 'url_invalid'
       | 'v2_account_disconnection_unsupported'
-      | 'v2_account_missing_configuration';
+      | 'v2_account_missing_configuration'
+      | OtherString;
 
     export type Type =
       | 'api_error'
       | 'card_error'
       | 'idempotency_error'
-      | 'invalid_request_error';
+      | 'invalid_request_error'
+      | OtherString;
   }
 
   export namespace NextAction {
@@ -4849,7 +4864,7 @@ export namespace PaymentIntent {
     }
 
     export namespace Bancontact {
-      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
 
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -4940,7 +4955,8 @@ export namespace PaymentIntent {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestDecrementalAuthorization =
         | 'if_available'
@@ -5042,9 +5058,15 @@ export namespace PaymentIntent {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace StatementDetails {
@@ -5152,7 +5174,14 @@ export namespace PaymentIntent {
           | OtherString;
 
         export namespace EuBankTransfer {
-          export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+          export type Country =
+            | 'BE'
+            | 'DE'
+            | 'ES'
+            | 'FR'
+            | 'IE'
+            | 'NL'
+            | OtherString;
         }
       }
     }
@@ -5426,7 +5455,8 @@ export namespace PaymentIntent {
         | 'fr'
         | 'it'
         | 'nl'
-        | 'pl';
+        | 'pl'
+        | OtherString;
 
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -5740,11 +5770,6 @@ export interface PaymentIntentCreateParams {
   payment_method_options?: PaymentIntentCreateParams.PaymentMethodOptions;
 
   /**
-   * The list of payment method types (for example, a card) that this PaymentIntent can use. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
-   */
-  payment_method_types?: Array<string>;
-
-  /**
    * Options to configure Radar. Learn more about [Radar Sessions](https://docs.stripe.com/radar/radar-session).
    */
   radar_options?: PaymentIntentCreateParams.RadarOptions;
@@ -5897,6 +5922,7 @@ export namespace PaymentIntentCreateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -6045,7 +6071,7 @@ export namespace PaymentIntentCreateParams {
     customer_acceptance: MandateData.CustomerAcceptance;
   }
 
-  export type OffSession = 'one_off' | 'recurring';
+  export type OffSession = 'one_off' | 'recurring' | OtherString;
 
   export interface PaymentDetails {
     /**
@@ -7086,7 +7112,7 @@ export namespace PaymentIntentCreateParams {
         user_agent: string;
       }
 
-      export type Type = 'offline' | 'online';
+      export type Type = 'offline' | 'online' | OtherString;
     }
   }
 
@@ -9363,11 +9389,12 @@ export namespace PaymentIntentCreateParams {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -9394,7 +9421,8 @@ export namespace PaymentIntentCreateParams {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace IdBankTransfer {
@@ -9428,7 +9456,8 @@ export namespace PaymentIntentCreateParams {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -11073,7 +11102,8 @@ export namespace PaymentIntentCreateParams {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestDecrementalAuthorization =
         | 'if_available'
@@ -11202,9 +11232,15 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace ThreeDSecure {
@@ -13098,7 +13134,8 @@ export namespace PaymentIntentCreateParams {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
@@ -13108,7 +13145,7 @@ export namespace PaymentIntentCreateParams {
           | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
 
         export namespace ManualEntry {
@@ -13117,7 +13154,7 @@ export namespace PaymentIntentCreateParams {
       }
 
       export namespace Networks {
-        export type Requested = 'ach' | 'us_domestic_wire';
+        export type Requested = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
 
@@ -13264,11 +13301,6 @@ export interface PaymentIntentUpdateParams {
   payment_method_options?: PaymentIntentUpdateParams.PaymentMethodOptions;
 
   /**
-   * The list of payment method types (for example, card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
-   */
-  payment_method_types?: Array<string>;
-
-  /**
    * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
    */
   receipt_email?: Emptyable<string>;
@@ -13402,6 +13434,7 @@ export namespace PaymentIntentUpdateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -16804,11 +16837,12 @@ export namespace PaymentIntentUpdateParams {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -16835,7 +16869,8 @@ export namespace PaymentIntentUpdateParams {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace IdBankTransfer {
@@ -16869,7 +16904,8 @@ export namespace PaymentIntentUpdateParams {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -18514,7 +18550,8 @@ export namespace PaymentIntentUpdateParams {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestDecrementalAuthorization =
         | 'if_available'
@@ -18643,9 +18680,15 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace ThreeDSecure {
@@ -20539,7 +20582,8 @@ export namespace PaymentIntentUpdateParams {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
@@ -20549,7 +20593,7 @@ export namespace PaymentIntentUpdateParams {
           | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
 
         export namespace ManualEntry {
@@ -20558,7 +20602,7 @@ export namespace PaymentIntentUpdateParams {
       }
 
       export namespace Networks {
-        export type Requested = 'ach' | 'us_domestic_wire';
+        export type Requested = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
 
@@ -20638,7 +20682,8 @@ export namespace PaymentIntentCancelParams {
     | 'abandoned'
     | 'duplicate'
     | 'fraudulent'
-    | 'requested_by_customer';
+    | 'requested_by_customer'
+    | OtherString;
 }
 export interface PaymentIntentCaptureParams {
   /**
@@ -22960,11 +23005,6 @@ export interface PaymentIntentConfirmParams {
   payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
 
   /**
-   * The list of payment method types (for example, a card) that this PaymentIntent can use. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
-   */
-  payment_method_types?: Array<string>;
-
-  /**
    * Options to configure Radar. Learn more about [Radar Sessions](https://docs.stripe.com/radar/radar-session).
    */
   radar_options?: PaymentIntentConfirmParams.RadarOptions;
@@ -23093,6 +23133,7 @@ export namespace PaymentIntentConfirmParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -23225,7 +23266,7 @@ export namespace PaymentIntentConfirmParams {
     customer_acceptance?: MandateData.CustomerAcceptance;
   }
 
-  export type OffSession = 'one_off' | 'recurring';
+  export type OffSession = 'one_off' | 'recurring' | OtherString;
 
   export interface PaymentDetails {
     /**
@@ -24224,7 +24265,7 @@ export namespace PaymentIntentConfirmParams {
         user_agent?: string;
       }
 
-      export type Type = 'offline' | 'online';
+      export type Type = 'offline' | 'online' | OtherString;
     }
   }
 
@@ -26501,11 +26542,12 @@ export namespace PaymentIntentConfirmParams {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -26532,7 +26574,8 @@ export namespace PaymentIntentConfirmParams {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace IdBankTransfer {
@@ -26566,7 +26609,8 @@ export namespace PaymentIntentConfirmParams {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -28211,7 +28255,8 @@ export namespace PaymentIntentConfirmParams {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestDecrementalAuthorization =
         | 'if_available'
@@ -28340,9 +28385,15 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace ThreeDSecure {
@@ -30236,7 +30287,8 @@ export namespace PaymentIntentConfirmParams {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
@@ -30246,7 +30298,7 @@ export namespace PaymentIntentConfirmParams {
           | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
 
         export namespace ManualEntry {
@@ -30255,7 +30307,7 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export namespace Networks {
-        export type Requested = 'ach' | 'us_domestic_wire';
+        export type Requested = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
 
