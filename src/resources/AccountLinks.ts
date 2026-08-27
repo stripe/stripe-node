@@ -82,7 +82,7 @@ export interface AccountLinkCreateParams {
 export namespace AccountLinkCreateParams {
   export type Type = 'account_onboarding' | 'account_update' | OtherString;
 
-  export type Collect = 'currently_due' | 'eventually_due';
+  export type Collect = 'currently_due' | 'eventually_due' | OtherString;
 
   export interface CollectionOptions {
     /**
@@ -97,8 +97,8 @@ export namespace AccountLinkCreateParams {
   }
 
   export namespace CollectionOptions {
-    export type Fields = 'currently_due' | 'eventually_due';
+    export type Fields = 'currently_due' | 'eventually_due' | OtherString;
 
-    export type FutureRequirements = 'include' | 'omit';
+    export type FutureRequirements = 'include' | 'omit' | OtherString;
   }
 }

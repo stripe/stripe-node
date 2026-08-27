@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface CashBalance {
   /**
@@ -45,6 +46,6 @@ export namespace CashBalance {
   }
 
   export namespace Settings {
-    export type ReconciliationMode = 'automatic' | 'manual';
+    export type ReconciliationMode = 'automatic' | 'manual' | OtherString;
   }
 }

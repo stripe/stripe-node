@@ -130,7 +130,7 @@ export interface Cardholder {
   phone_number: string | null;
 
   /**
-   * The cardholder's preferred locales (languages), ordered by preference. Locales can be `da`, `de`, `en`, `es`, `fr`, `it`, `pl`, or `sv`.
+   * The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
    *  This changes the language of the [3D Secure flow](https://docs.stripe.com/issuing/3d-secure) and one-time password messages sent to the cardholder.
    */
   preferred_locales: Array<Cardholder.PreferredLocale> | null;
@@ -254,7 +254,7 @@ export namespace Cardholder {
   export namespace Individual {
     export interface CardIssuing {
       /**
-       * Information about cardholder acceptance of Celtic [Authorized User Terms](https://stripe.com/docs/issuing/cards#accept-authorized-user-terms). Required for cards backed by a Celtic program.
+       * Information about cardholder acceptance of Celtic [Authorized User Terms](https://docs.stripe.com/issuing/compliance-us#issuing-terms). Required for cards backed by a Celtic program.
        */
       user_terms_acceptance: CardIssuing.UserTermsAcceptance | null;
     }
@@ -339,7 +339,7 @@ export namespace Cardholder {
   }
 
   export namespace SpendingControls {
-    export type AllowedCardPresence = 'not_present' | 'present';
+    export type AllowedCardPresence = 'not_present' | 'present' | OtherString;
 
     export type AllowedCategory =
       | 'ac_refrigeration_repair'
@@ -636,9 +636,10 @@ export namespace Cardholder {
       | 'wires_money_orders'
       | 'womens_accessory_and_specialty_shops'
       | 'womens_ready_to_wear_stores'
-      | 'wrecking_and_salvage_yards';
+      | 'wrecking_and_salvage_yards'
+      | OtherString;
 
-    export type BlockedCardPresence = 'not_present' | 'present';
+    export type BlockedCardPresence = 'not_present' | 'present' | OtherString;
 
     export type BlockedCategory =
       | 'ac_refrigeration_repair'
@@ -935,7 +936,8 @@ export namespace Cardholder {
       | 'wires_money_orders'
       | 'womens_accessory_and_specialty_shops'
       | 'womens_ready_to_wear_stores'
-      | 'wrecking_and_salvage_yards';
+      | 'wrecking_and_salvage_yards'
+      | OtherString;
 
     export interface SpendingLimit {
       /**
@@ -1250,7 +1252,8 @@ export namespace Cardholder {
         | 'wires_money_orders'
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
-        | 'wrecking_and_salvage_yards';
+        | 'wrecking_and_salvage_yards'
+        | OtherString;
 
       export type Interval =
         | 'all_time'
@@ -1306,7 +1309,7 @@ export namespace Issuing {
     phone_number?: string;
 
     /**
-     * The cardholder's preferred locales (languages), ordered by preference. Locales can be `da`, `de`, `en`, `es`, `fr`, `it`, `pl`, or `sv`.
+     * The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
      *  This changes the language of the [3D Secure flow](https://docs.stripe.com/issuing/3d-secure) and one-time password messages sent to the cardholder.
      */
     preferred_locales?: Array<CardholderCreateParams.PreferredLocale>;
@@ -1460,7 +1463,7 @@ export namespace Issuing {
     export namespace Individual {
       export interface CardIssuing {
         /**
-         * Information about cardholder acceptance of Celtic [Authorized User Terms](https://stripe.com/docs/issuing/cards#accept-authorized-user-terms). Required for cards backed by a Celtic program.
+         * Information about cardholder acceptance of Celtic [Authorized User Terms](https://docs.stripe.com/issuing/compliance-us#issuing-terms). Required for cards backed by a Celtic program.
          */
         user_terms_acceptance?: CardIssuing.UserTermsAcceptance;
       }
@@ -1524,7 +1527,7 @@ export namespace Issuing {
     }
 
     export namespace SpendingControls {
-      export type AllowedCardPresence = 'not_present' | 'present';
+      export type AllowedCardPresence = 'not_present' | 'present' | OtherString;
 
       export type AllowedCategory =
         | 'ac_refrigeration_repair'
@@ -1821,9 +1824,10 @@ export namespace Issuing {
         | 'wires_money_orders'
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
-        | 'wrecking_and_salvage_yards';
+        | 'wrecking_and_salvage_yards'
+        | OtherString;
 
-      export type BlockedCardPresence = 'not_present' | 'present';
+      export type BlockedCardPresence = 'not_present' | 'present' | OtherString;
 
       export type BlockedCategory =
         | 'ac_refrigeration_repair'
@@ -2120,7 +2124,8 @@ export namespace Issuing {
         | 'wires_money_orders'
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
-        | 'wrecking_and_salvage_yards';
+        | 'wrecking_and_salvage_yards'
+        | OtherString;
 
       export interface SpendingLimit {
         /**
@@ -2435,7 +2440,8 @@ export namespace Issuing {
           | 'wires_money_orders'
           | 'womens_accessory_and_specialty_shops'
           | 'womens_ready_to_wear_stores'
-          | 'wrecking_and_salvage_yards';
+          | 'wrecking_and_salvage_yards'
+          | OtherString;
 
         export type Interval =
           | 'all_time'
@@ -2495,7 +2501,7 @@ export namespace Issuing {
     phone_number?: string;
 
     /**
-     * The cardholder's preferred locales (languages), ordered by preference. Locales can be `da`, `de`, `en`, `es`, `fr`, `it`, `pl`, or `sv`.
+     * The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
      *  This changes the language of the [3D Secure flow](https://docs.stripe.com/issuing/3d-secure) and one-time password messages sent to the cardholder.
      */
     preferred_locales?: Array<CardholderUpdateParams.PreferredLocale>;
@@ -2642,7 +2648,7 @@ export namespace Issuing {
     export namespace Individual {
       export interface CardIssuing {
         /**
-         * Information about cardholder acceptance of Celtic [Authorized User Terms](https://stripe.com/docs/issuing/cards#accept-authorized-user-terms). Required for cards backed by a Celtic program.
+         * Information about cardholder acceptance of Celtic [Authorized User Terms](https://docs.stripe.com/issuing/compliance-us#issuing-terms). Required for cards backed by a Celtic program.
          */
         user_terms_acceptance?: CardIssuing.UserTermsAcceptance;
       }
@@ -2706,7 +2712,7 @@ export namespace Issuing {
     }
 
     export namespace SpendingControls {
-      export type AllowedCardPresence = 'not_present' | 'present';
+      export type AllowedCardPresence = 'not_present' | 'present' | OtherString;
 
       export type AllowedCategory =
         | 'ac_refrigeration_repair'
@@ -3003,9 +3009,10 @@ export namespace Issuing {
         | 'wires_money_orders'
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
-        | 'wrecking_and_salvage_yards';
+        | 'wrecking_and_salvage_yards'
+        | OtherString;
 
-      export type BlockedCardPresence = 'not_present' | 'present';
+      export type BlockedCardPresence = 'not_present' | 'present' | OtherString;
 
       export type BlockedCategory =
         | 'ac_refrigeration_repair'
@@ -3302,7 +3309,8 @@ export namespace Issuing {
         | 'wires_money_orders'
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
-        | 'wrecking_and_salvage_yards';
+        | 'wrecking_and_salvage_yards'
+        | OtherString;
 
       export interface SpendingLimit {
         /**
@@ -3617,7 +3625,8 @@ export namespace Issuing {
           | 'wires_money_orders'
           | 'womens_accessory_and_specialty_shops'
           | 'womens_ready_to_wear_stores'
-          | 'wrecking_and_salvage_yards';
+          | 'wrecking_and_salvage_yards'
+          | OtherString;
 
         export type Interval =
           | 'all_time'

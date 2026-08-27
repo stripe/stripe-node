@@ -3,7 +3,7 @@
 import {StripeResource} from '../StripeResource.js';
 import {Charge} from './Charges.js';
 import {PaymentIntent} from './PaymentIntents.js';
-import {PaginationParams, RangeQueryParam} from '../shared.js';
+import {PaginationParams, RangeQueryParam, OtherString} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class ReviewResource extends StripeResource {
@@ -158,7 +158,7 @@ export namespace Review {
     region: string | null;
   }
 
-  export type OpenedReason = 'manual' | 'rule';
+  export type OpenedReason = 'manual' | 'rule' | OtherString;
 
   export interface Session {
     /**

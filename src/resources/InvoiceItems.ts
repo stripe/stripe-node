@@ -11,6 +11,7 @@ import {
   Emptyable,
   MetadataParam,
   Decimal,
+  OtherString,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -248,6 +249,11 @@ export interface InvoiceItem {
   discounts: Array<string | Discount> | null;
 
   /**
+   * Array of field names that can't be modified. Attempting to update a frozen field returns an error.
+   */
+  frozen_fields?: Array<InvoiceItem.FrozenField>;
+
+  /**
    * The ID of the invoice this invoice item belongs to.
    */
   invoice: string | Invoice | null;
@@ -323,6 +329,8 @@ export interface DeletedInvoiceItem {
   deleted: true;
 }
 export namespace InvoiceItem {
+  export type FrozenField = 'discounts' | 'pricing' | 'quantity' | OtherString;
+
   export interface Parent {
     /**
      * Details about the subscription that generated this invoice item
@@ -441,7 +449,7 @@ export namespace InvoiceItem {
         invoice_line_items: Array<string>;
       }
 
-      export type Type = 'invoice_item' | 'invoice_line_items';
+      export type Type = 'invoice_item' | 'invoice_line_items' | OtherString;
     }
   }
 }
@@ -610,10 +618,18 @@ export namespace InvoiceItemCreateParams {
     price?: string;
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+  export type TaxBehavior =
+    | 'exclusive'
+    | 'inclusive'
+    | 'unspecified'
+    | OtherString;
 
   export namespace PriceData {
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
   }
 }
 export interface InvoiceItemRetrieveParams {
@@ -762,10 +778,18 @@ export namespace InvoiceItemUpdateParams {
     price?: string;
   }
 
-  export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+  export type TaxBehavior =
+    | 'exclusive'
+    | 'inclusive'
+    | 'unspecified'
+    | OtherString;
 
   export namespace PriceData {
-    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    export type TaxBehavior =
+      | 'exclusive'
+      | 'inclusive'
+      | 'unspecified'
+      | OtherString;
   }
 }
 export interface InvoiceItemListParams extends PaginationParams {

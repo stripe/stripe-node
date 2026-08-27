@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Application, DeletedApplication} from './../Applications.js';
+import * as Billing from './../Billing/index.js';
 import {
   Emptyable,
   MetadataParam,
@@ -284,6 +285,11 @@ export namespace Configuration {
         enabled: boolean;
 
         /**
+         * The IDs of custom feedback options configured for this cancellation reason.
+         */
+        feedback_options: Array<string | Billing.FeedbackOption> | null;
+
+        /**
          * Which cancellation reasons will be given as options to the customer.
          */
         options: Array<CancellationReason.Option>;
@@ -294,7 +300,8 @@ export namespace Configuration {
       export type ProrationBehavior =
         | 'always_invoice'
         | 'create_prorations'
-        | 'none';
+        | 'none'
+        | OtherString;
 
       export namespace CancellationReason {
         export type Option =
@@ -311,7 +318,7 @@ export namespace Configuration {
     }
 
     export namespace SubscriptionUpdate {
-      export type BillingCycleAnchor = 'now' | 'unchanged';
+      export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
       export type DefaultAllowedUpdate =
         | 'price'
@@ -336,7 +343,8 @@ export namespace Configuration {
       export type ProrationBehavior =
         | 'always_invoice'
         | 'create_prorations'
-        | 'none';
+        | 'none'
+        | OtherString;
 
       export interface ScheduleAtPeriodEnd {
         /**
@@ -589,6 +597,11 @@ export namespace BillingPortal {
           enabled: boolean;
 
           /**
+           * The IDs of custom feedback options to use for this cancellation reason.
+           */
+          feedback_options?: Emptyable<Array<string>>;
+
+          /**
            * Which cancellation reasons will be given as options to the customer.
            */
           options: Emptyable<Array<CancellationReason.Option>>;
@@ -599,7 +612,8 @@ export namespace BillingPortal {
         export type ProrationBehavior =
           | 'always_invoice'
           | 'create_prorations'
-          | 'none';
+          | 'none'
+          | OtherString;
 
         export namespace CancellationReason {
           export type Option =
@@ -616,7 +630,7 @@ export namespace BillingPortal {
       }
 
       export namespace SubscriptionUpdate {
-        export type BillingCycleAnchor = 'now' | 'unchanged';
+        export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
         export type DefaultAllowedUpdate =
           | 'price'
@@ -644,7 +658,8 @@ export namespace BillingPortal {
         export type ProrationBehavior =
           | 'always_invoice'
           | 'create_prorations'
-          | 'none';
+          | 'none'
+          | OtherString;
 
         export interface ScheduleAtPeriodEnd {
           /**
@@ -913,6 +928,11 @@ export namespace BillingPortal {
           enabled: boolean;
 
           /**
+           * The IDs of custom feedback options to use for this cancellation reason.
+           */
+          feedback_options?: Emptyable<Array<string>>;
+
+          /**
            * Which cancellation reasons will be given as options to the customer.
            */
           options?: Emptyable<Array<CancellationReason.Option>>;
@@ -923,7 +943,8 @@ export namespace BillingPortal {
         export type ProrationBehavior =
           | 'always_invoice'
           | 'create_prorations'
-          | 'none';
+          | 'none'
+          | OtherString;
 
         export namespace CancellationReason {
           export type Option =
@@ -940,7 +961,7 @@ export namespace BillingPortal {
       }
 
       export namespace SubscriptionUpdate {
-        export type BillingCycleAnchor = 'now' | 'unchanged';
+        export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
 
         export type DefaultAllowedUpdate =
           | 'price'
@@ -968,7 +989,8 @@ export namespace BillingPortal {
         export type ProrationBehavior =
           | 'always_invoice'
           | 'create_prorations'
-          | 'none';
+          | 'none'
+          | OtherString;
 
         export interface ScheduleAtPeriodEnd {
           /**

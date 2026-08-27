@@ -81,6 +81,8 @@ export namespace AccountSession {
 
     payment_disputes: Components.PaymentDisputes;
 
+    payment_method_settings: Components.PaymentMethodSettings;
+
     payments: Components.Payments;
 
     payout_details: Components.PayoutDetails;
@@ -221,6 +223,15 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: PaymentDisputes.Features;
+    }
+
+    export interface PaymentMethodSettings {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: PaymentMethodSettings.Features;
     }
 
     export interface Payments {
@@ -552,6 +563,15 @@ export namespace AccountSession {
       }
     }
 
+    export namespace PaymentMethodSettings {
+      export interface Features {
+        /**
+         * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. This is `false` by default.
+         */
+        disable_stripe_user_authentication: boolean;
+      }
+    }
+
     export namespace Payments {
       export interface Features {
         /**
@@ -718,6 +738,11 @@ export namespace AccountSessionCreateParams {
      * Configuration for the [payment disputes](https://docs.stripe.com/connect/supported-embedded-components/payment-disputes/) embedded component.
      */
     payment_disputes?: Components.PaymentDisputes;
+
+    /**
+     * Configuration for the [payment method settings](https://docs.stripe.com/connect/supported-embedded-components/payment-method-settings/) embedded component.
+     */
+    payment_method_settings?: Components.PaymentMethodSettings;
 
     /**
      * Configuration for the [payments](https://docs.stripe.com/connect/supported-embedded-components/payments/) embedded component.
@@ -922,6 +947,18 @@ export namespace AccountSessionCreateParams {
        * The list of features enabled in the embedded component.
        */
       features?: PaymentDisputes.Features;
+    }
+
+    export interface PaymentMethodSettings {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * The list of features enabled in the embedded component.
+       */
+      features?: PaymentMethodSettings.Features;
     }
 
     export interface Payments {
@@ -1271,6 +1308,15 @@ export namespace AccountSessionCreateParams {
          * Whether to allow connected accounts to submit disputes using Smart Disputes. Defaults to the value of `dispute_management`.
          */
         smart_disputes_management?: boolean;
+      }
+    }
+
+    export namespace PaymentMethodSettings {
+      export interface Features {
+        /**
+         * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. This is `false` by default.
+         */
+        disable_stripe_user_authentication?: boolean;
       }
     }
 

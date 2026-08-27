@@ -127,7 +127,11 @@ export namespace InvoicePayment {
   }
 
   export namespace Payment {
-    export type Type = 'charge' | 'payment_intent' | 'payment_record';
+    export type Type =
+      | 'charge'
+      | 'payment_intent'
+      | 'payment_record'
+      | OtherString;
   }
 }
 export interface InvoicePaymentRetrieveParams {

@@ -365,7 +365,8 @@ export namespace Transaction {
         | 'vn_tin'
         | 'za_vat'
         | 'zm_tin'
-        | 'zw_tin';
+        | 'zw_tin'
+        | OtherString;
     }
   }
 
@@ -424,7 +425,7 @@ export namespace Transaction {
         state: string | null;
       }
 
-      export type Sourcing = 'destination' | 'origin';
+      export type Sourcing = 'destination' | 'origin' | OtherString;
 
       export interface TaxRateDetails {
         /**
@@ -488,7 +489,8 @@ export namespace Transaction {
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
-          | 'vat';
+          | 'vat'
+          | OtherString;
       }
     }
   }
