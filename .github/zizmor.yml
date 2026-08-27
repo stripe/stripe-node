@@ -1,0 +1,8 @@
+# Actions under the stripe/openapi namespace are unpinned on purpose.
+# This is deliberately scoped to that namespace so that other actions
+# still require a full commit hash.
+rules:
+  unpinned-uses:
+    config:
+      policies:
+        "stripe/openapi/*": ref-pin
