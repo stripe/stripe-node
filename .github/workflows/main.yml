@@ -154,4 +154,6 @@ jobs:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
           package-manager-cache: false
+      - run: just install
+      - run: just build
       - run: npm pack --dry-run
