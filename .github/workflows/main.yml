@@ -159,8 +159,4 @@ jobs:
             rm -f "$NPM_CONFIG_USERCONFIG"
           fi
       - run: |
-          set -euxo pipefail
-          VERSION=$(jq -r '.version' package.json)
-          NPM_TAG=$(jq -r '.version | if contains("beta") then "public-preview" else if contains("alpha") then "private-preview" else "latest" end end' package.json)
-          echo "Publishing $VERSION with $NPM_TAG tag (dry run)."
-          npm publish --dry-run --tag "$NPM_TAG"
+          npm pack --dry-run
