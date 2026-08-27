@@ -155,6 +155,10 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           package-manager-cache: false
       - run: |
+          if [ -n "${NPM_CONFIG_USERCONFIG:-}" ]; then
+            rm -f "$NPM_CONFIG_USERCONFIG"
+          fi
+      - run: |
           set -euxo pipefail
           VERSION=$(jq -r '.version' package.json)
           NPM_TAG=$(jq -r '.version | if contains("beta") then "public-preview" else if contains("alpha") then "private-preview" else "latest" end end' package.json)
