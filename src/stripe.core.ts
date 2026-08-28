@@ -1626,7 +1626,9 @@ export class Stripe {
     parsed.fetchEvent = (): Promise<unknown> => {
       return this._requestSender._rawRequest(
         'GET',
-        `/v2/core/events/${parsed.id}`,
+        // `id` comes from the notification body, so encode it the way the
+        // generated resources do -- otherwise it can inject path or query segments.
+        `/v2/core/events/${encodeURIComponent(parsed.id as string)}`,
         undefined,
         {
           stripeContext: parsed.context as any,

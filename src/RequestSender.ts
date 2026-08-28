@@ -31,6 +31,7 @@ import {
 } from './net/HttpClient.js';
 import {Stripe} from './stripe.core.js';
 import {
+  validatePath,
   jsonStringifyRequestData,
   normalizeHeaders,
   queryStringifyRequestData,
@@ -620,6 +621,9 @@ export class RequestSender {
   ): void {
     let requestData: string | Uint8Array;
     authenticator = authenticator ?? this._stripe._authenticator;
+    // Validate before anything derives meaning from the path -- apiMode is
+    // sniffed from its prefix, and the path may have come from remote data.
+    validatePath(path);
     const apiMode: ApiMode = getAPIMode(path);
     const retryRequest = (
       requestFn: typeof makeRequest,

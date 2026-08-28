@@ -439,6 +439,40 @@ export function jsonStringifyRequestData(data: RequestData | string): string {
 }
 
 /**
+ * Asserts that a request path is origin-relative: that it begins with a single
+ * '/'.
+ *
+ * Some HTTP clients build the absolute URL by concatenating a host onto this
+ * path, and the configured hosts carry no trailing slash. A path like
+ * '@evil.example/v1/x' or '.evil.example/v1/x' would then land inside the
+ * authority component and send the request -- Authorization header included --
+ * to a host of the path's choosing. Some request paths originate in remote data
+ * (a webhook body's related_object.url, a response's next_page_url), so the path
+ * cannot be assumed to be well-formed.
+ *
+ * NodeHttpClient passes {host, path} to http.request separately and so is not
+ * itself vulnerable, but `httpClient` is a public option: a caller-supplied
+ * client that concatenates would be. Asserting centrally makes the guarantee
+ * hold for every client rather than only the ones that happen to check.
+ *
+ * A single leading slash is sufficient: it terminates the authority component,
+ * after which nothing in the path can extend it.
+ */
+export function validatePath(path: string): void {
+  if (
+    typeof path !== 'string' ||
+    !path.startsWith('/') ||
+    path.startsWith('//')
+  ) {
+    throw new Error(
+      `Request path must be a string beginning with a single "/", got: ${JSON.stringify(
+        path
+      )}`
+    );
+  }
+}
+
+/**
  * Inspects the given path to determine if the endpoint is for v1 or v2 API
  */
 export function getAPIMode(path?: string): ApiMode {
