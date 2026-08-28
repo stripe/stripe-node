@@ -6,6 +6,7 @@ on:
     branches:
       - master
       - beta
+      - private-preview
       - sdk-release/**
       - feature/**
     tags:
