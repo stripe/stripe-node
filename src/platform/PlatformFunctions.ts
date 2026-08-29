@@ -93,14 +93,21 @@ export class PlatformFunctions {
   }
 
   /**
-   * Generates a v4 UUID. See https://stackoverflow.com/a/2117523
+   * Generates a v4 UUID. Must be cryptographically secure: this seeds both
+   * `Idempotency-Key` values and the multipart/form-data boundary.
+   *
+   * `crypto.randomUUID` is part of the WinterTC Minimum Common API, so it is
+   * available in browsers, Deno, Bun and Cloudflare Workers.
+   *
+   * Deliberately throws rather than degrading to `Math.random()`.
    */
   uuid4(): string {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      const r = (Math.random() * 16) | 0;
-      const v = c === 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
+    if (typeof crypto === 'undefined' || !crypto.randomUUID) {
+      throw new Error(
+        'Stripe: no cryptographically secure random number generator is available in this runtime; `crypto.randomUUID` is required.'
+      );
+    }
+    return crypto.randomUUID();
   }
 
   /**

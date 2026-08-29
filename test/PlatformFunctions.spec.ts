@@ -58,14 +58,6 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
             expect(called).to.equal(isNodeEnvironment);
           }
         });
-
-        it('returns a valid v4 UUID without it', () => {
-          crypto.randomUUID = null;
-          expect(platformFunctions.uuid4()).to.match(
-            // regex from https://createuuid.com/validator/, specifically for v4
-            /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-          );
-        });
       });
 
       it('should return a well-formatted v4 UUID', () => {
@@ -75,6 +67,20 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
         );
         // further test: could spy on crypto.randomUUID to ensure it's being used, if available
         // whether that's useful is a race between using jest/sinon for these tests and dropping support for node < 14
+      });
+
+      it('is not derived from Math.random', () => {
+        // Idempotency-Key values come from uuid4, so pinning Math.random must
+        // not pin them.
+        const random$ = Math.random;
+        Math.random = (): number => 0.5;
+        try {
+          expect(platformFunctions.uuid4()).to.not.equal(
+            platformFunctions.uuid4()
+          );
+        } finally {
+          Math.random = random$;
+        }
       });
     });
 
@@ -438,3 +444,43 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
     });
   });
 }
+
+describe('PlatformFunctions.uuid4 without crypto.randomUUID', () => {
+  // `crypto.randomUUID` is secure-context-only, so it is absent on plain
+  // `http://` origins and on browsers predating ~2022, where
+  // `crypto.getRandomValues` would still work. Every v1 POST calls uuid4 for
+  // its Idempotency-Key, so this is the error those runtimes surface.
+  // Tracked by https://go/j/DEVSDK-3253.
+  beforeEach(() => {
+    Object.defineProperty(globalThis.crypto, 'randomUUID', {
+      value: undefined,
+      configurable: true,
+      writable: true,
+    });
+  });
+
+  afterEach(() => {
+    delete (globalThis.crypto as any).randomUUID;
+  });
+
+  it('throws instead of degrading to a weak RNG', () => {
+    expect(() => new PlatformFunctions().uuid4()).to.throw(
+      /no cryptographically secure random number generator is available/
+    );
+  });
+
+  it('does not fall back to Math.random', () => {
+    const random$ = Math.random;
+    let called = false;
+    Math.random = (): number => {
+      called = true;
+      return 0.5;
+    };
+    try {
+      expect(() => new PlatformFunctions().uuid4()).to.throw();
+      expect(called).to.equal(false);
+    } finally {
+      Math.random = random$;
+    }
+  });
+});
