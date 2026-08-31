@@ -444,19 +444,16 @@ export function jsonStringifyRequestData(data: RequestData | string): string {
  *
  * Some HTTP clients build the absolute URL by concatenating a host onto this
  * path, and the configured hosts carry no trailing slash. A path like
- * '@evil.example/v1/x' or '.evil.example/v1/x' would then land inside the
- * authority component and send the request -- Authorization header included --
- * to a host of the path's choosing. Some request paths originate in remote data
- * (a webhook body's related_object.url, a response's next_page_url), so the path
- * cannot be assumed to be well-formed.
+ * '@evil.example/v1/x' or '.evil.example/v1/x' would modify the resulting host
+ * and direct the request (including the API key) to a non-Stripe host.
  *
- * NodeHttpClient passes {host, path} to http.request separately and so is not
- * itself vulnerable, but `httpClient` is a public option: a caller-supplied
- * client that concatenates would be. Asserting centrally makes the guarantee
- * hold for every client rather than only the ones that happen to check.
+ * Because some relative urls arrive from potentially untrusted sources (like
+ * webhook bodies), we have to be a little defensive.
  *
- * A single leading slash is sufficient: it terminates the authority component,
- * after which nothing in the path can extend it.
+ * So, we require that a path starts with a leading slash.
+ *
+ * NodeHttpClient passes {host, path} to `http.request` individually, so it doesn't need the same checks
+ * but the public `httpClient` needs the same security guarantees.
  */
 export function validatePath(path: string): void {
   if (

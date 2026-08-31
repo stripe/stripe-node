@@ -839,11 +839,6 @@ describe('utils', () => {
   });
 
   describe('assertOriginRelativePath', () => {
-    // A path that does not begin with a single '/' can land inside the URL's
-    // authority component when a client concatenates host + path, redirecting
-    // the request -- Authorization header included -- to a host of the path's
-    // choosing. Some request paths come from remote data: a webhook body's
-    // related_object.url, a response's next_page_url.
     it('accepts origin-relative paths', () => {
       const valid = [
         '/v1/customers/cus_123',
