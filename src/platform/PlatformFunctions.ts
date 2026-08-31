@@ -93,11 +93,7 @@ export class PlatformFunctions {
   }
 
   /**
-   * Generates a v4 UUID. Must be cryptographically secure: this seeds both
-   * `Idempotency-Key` values and the multipart/form-data boundary.
-   *
-   * `crypto.randomUUID` is part of the WinterTC Minimum Common API, so it is
-   * available in browsers, Deno, Bun and Cloudflare Workers.
+   * Generates a v4 UUID. Must be cryptographically secure: this seeds both `Idempotency-Key` values and the multipart/form-data boundary.
    *
    * Deliberately throws rather than degrading to `Math.random()`.
    */

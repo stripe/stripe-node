@@ -493,3 +493,45 @@ describe('PlatformFunctions.uuid4 without crypto.randomUUID', () => {
     }
   });
 });
+
+// TODO(https://go/j/DEVSDK-3253) - can remove when we drop node 18
+describe('NodePlatformFunctions.uuid4 without globalThis.crypto', () => {
+  // This is the property that keeps Node 18 working: Node 18 exposes no
+  // `globalThis.crypto` in CommonJS module scope (it landed unflagged in Node
+  // 19), so NodePlatformFunctions must depend on the `crypto` *module* alone.
+  // Simulating the absence means the guarantee is checked on every Node
+  // version rather than only when CI happens to run 18. Every v1 POST needs a
+  // uuid4 for its Idempotency-Key, so a regression here breaks all writes.
+  let descriptor: PropertyDescriptor | undefined;
+
+  beforeEach(() => {
+    descriptor = Object.getOwnPropertyDescriptor(globalThis, 'crypto');
+    if (descriptor) {
+      delete (globalThis as any).crypto;
+    }
+  });
+
+  afterEach(() => {
+    if (descriptor) {
+      Object.defineProperty(globalThis, 'crypto', descriptor);
+    }
+  });
+
+  it('still generates a valid v4 UUID', () => {
+    expect(typeof globalThis.crypto).to.equal('undefined');
+    expect(new NodePlatformFunctions().uuid4()).to.match(
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    );
+  });
+
+  it('generates a distinct key each call', () => {
+    const fns = new NodePlatformFunctions();
+    expect(fns.uuid4()).to.not.equal(fns.uuid4());
+  });
+
+  it('is why the override exists: the base implementation cannot', () => {
+    expect(() => new PlatformFunctions().uuid4()).to.throw(
+      /no cryptographically secure random number generator is available/
+    );
+  });
+});
