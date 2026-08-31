@@ -21,8 +21,7 @@ class StreamProcessingError extends StripeError {}
 export class NodePlatformFunctions extends PlatformFunctions {
   /** @override */
   uuid4(): string {
-    // Available since v14.17, so available on every Node versions we support
-    // The base PlatformFunctions implementation reads `globalThis.crypto`, which is only unflagged as of Node 19 (and we support down to Node 18 until Sept 2026)
+    // we need to override the base `uuid4` implementation because it uses `globalThis.crypto`, which isn't available in unflagged in node until Node 19
     // TODO(https://go/j/DEVSDK-3253)
     return crypto.randomUUID();
   }

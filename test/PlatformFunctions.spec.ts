@@ -14,8 +14,9 @@ import {SubtleCryptoProvider} from '../src/crypto/SubtleCryptoProvider.js';
 import {expect} from 'chai';
 import {webcrypto} from 'crypto';
 
+// TODO(https://go/j/DEVSDK-3253)
 if (process.versions.node < '19') {
-  // Node 18 has no `globalThis.crypto` in CommonJS module scope, so WebPlatformFunctions has no CSPRNG to derive a boundary from.
+  // Node 18 has no `globalThis.crypto`, so we can only run our WebPlatformFunctions tests on more modern node versions
   console.log(
     `Skipping WebPlatformFunctions tests. No 'globalThis.crypto' in module scope for ${process.version}.`
   );
@@ -446,16 +447,12 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
   });
 }
 
-describe('PlatformFunctions.uuid4 without crypto.randomUUID', () => {
-  // `crypto.randomUUID` is secure-context-only, so it is absent on plain
-  // `http://` origins and on browsers predating ~2022, where
-  // `crypto.getRandomValues` would still work. Every v1 POST calls uuid4 for
-  // its Idempotency-Key, so this is the error those runtimes surface.
-  // Tracked by https://go/j/DEVSDK-3253.
-  //
-  // On Node 18 there is no `globalThis.crypto` in CommonJS module scope at all
-  // (it landed unflagged in Node 19), so the condition under test is already
-  // ambient and there is nothing to stub.
+describe('PlatformFunctions.uuid4 without globalThis.crypto', () => {
+  // because uuid4 is used in a cryptographic context, PlatformFunctions.uuid4 should throw if it can't access a CSPRNG
+
+  // some extra housekeeping for node 18, which truly _doesn't_ have the global crypto
+  // no need to remove what isn't there
+  // TODO(https://go/j/DEVSDK-3253) - can remove when we drop node 18
   const hasCryptoGlobal = typeof globalThis.crypto !== 'undefined';
 
   beforeEach(() => {
@@ -495,43 +492,24 @@ describe('PlatformFunctions.uuid4 without crypto.randomUUID', () => {
 });
 
 // TODO(https://go/j/DEVSDK-3253) - can remove when we drop node 18
-describe('NodePlatformFunctions.uuid4 without globalThis.crypto', () => {
-  // This is the property that keeps Node 18 working: Node 18 exposes no
-  // `globalThis.crypto` in CommonJS module scope (it landed unflagged in Node
-  // 19), so NodePlatformFunctions must depend on the `crypto` *module* alone.
-  // Simulating the absence means the guarantee is checked on every Node
-  // version rather than only when CI happens to run 18. Every v1 POST needs a
-  // uuid4 for its Idempotency-Key, so a regression here breaks all writes.
-  let descriptor: PropertyDescriptor | undefined;
+if (process.versions.node < '19') {
+  describe('NodePlatformFunctions.uuid4 without globalThis.crypto', () => {
+    it('still generates a valid v4 UUID', () => {
+      expect(typeof globalThis.crypto).to.equal('undefined');
+      expect(new NodePlatformFunctions().uuid4()).to.match(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+      );
+    });
 
-  beforeEach(() => {
-    descriptor = Object.getOwnPropertyDescriptor(globalThis, 'crypto');
-    if (descriptor) {
-      delete (globalThis as any).crypto;
-    }
-  });
+    it('generates a distinct key each call', () => {
+      const fns = new NodePlatformFunctions();
+      expect(fns.uuid4()).to.not.equal(fns.uuid4());
+    });
 
-  afterEach(() => {
-    if (descriptor) {
-      Object.defineProperty(globalThis, 'crypto', descriptor);
-    }
+    it('is why the override exists: the base implementation cannot', () => {
+      expect(() => new PlatformFunctions().uuid4()).to.throw(
+        /no cryptographically secure random number generator is available/
+      );
+    });
   });
-
-  it('still generates a valid v4 UUID', () => {
-    expect(typeof globalThis.crypto).to.equal('undefined');
-    expect(new NodePlatformFunctions().uuid4()).to.match(
-      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-    );
-  });
-
-  it('generates a distinct key each call', () => {
-    const fns = new NodePlatformFunctions();
-    expect(fns.uuid4()).to.not.equal(fns.uuid4());
-  });
-
-  it('is why the override exists: the base implementation cannot', () => {
-    expect(() => new PlatformFunctions().uuid4()).to.throw(
-      /no cryptographically secure random number generator is available/
-    );
-  });
-});
+}
