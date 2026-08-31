@@ -153,14 +153,14 @@ export namespace CreditNoteLineItem {
     type: 'tax_rate_details';
   }
 
-  export type Type = 'custom_line_item' | 'invoice_line_item';
+  export type Type = 'custom_line_item' | 'invoice_line_item' | OtherString;
 
   export namespace PretaxCreditAmount {
     export type Type = 'credit_balance_transaction' | 'discount' | OtherString;
   }
 
   export namespace Tax {
-    export type TaxBehavior = 'exclusive' | 'inclusive';
+    export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
 
     export interface TaxRateDetails {
       /**

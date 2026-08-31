@@ -158,7 +158,7 @@ export interface SetupIntent {
   /**
    * The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this list when determining the payment methods to offer.
    */
-  allowed_payment_method_types?: Array<
+  allowed_payment_method_types: Array<
     SetupIntent.AllowedPaymentMethodType
   > | null;
 
@@ -392,6 +392,7 @@ export namespace SetupIntent {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -420,7 +421,8 @@ export namespace SetupIntent {
   export type CancellationReason =
     | 'abandoned'
     | 'duplicate'
-    | 'requested_by_customer';
+    | 'requested_by_customer'
+    | OtherString;
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
@@ -478,7 +480,7 @@ export namespace SetupIntent {
     | 'zip'
     | OtherString;
 
-  export type FlowDirection = 'inbound' | 'outbound';
+  export type FlowDirection = 'inbound' | 'outbound' | OtherString;
 
   export interface LastSetupError {
     /**
@@ -672,7 +674,8 @@ export namespace SetupIntent {
     | 'requires_action'
     | 'requires_confirmation'
     | 'requires_payment_method'
-    | 'succeeded';
+    | 'succeeded'
+    | OtherString;
 
   export namespace AutomaticPaymentMethods {
     export type AllowRedirects = 'always' | 'never' | OtherString;
@@ -696,6 +699,7 @@ export namespace SetupIntent {
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
+      | 'authentication_failure'
       | 'authentication_required'
       | 'balance_insufficient'
       | 'balance_invalid_parameter'
@@ -708,6 +712,7 @@ export namespace SetupIntent {
       | 'bank_account_verification_failed'
       | 'billing_invalid_mandate'
       | 'bitcoin_upgrade_required'
+      | 'capability_not_active'
       | 'capture_charge_authorization_expired'
       | 'capture_unauthorized_payment'
       | 'card_decline_rate_limit_exceeded'
@@ -732,6 +737,7 @@ export namespace SetupIntent {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'expired_payment_method'
       | 'failed_tax_calculation'
       | 'financial_account_balance_does_not_support_currency'
       | 'financial_account_capability_not_enabled'
@@ -750,6 +756,7 @@ export namespace SetupIntent {
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'
+      | 'incorrect_postal_code'
       | 'incorrect_zip'
       | 'india_recurring_payment_mandate_canceled'
       | 'instant_payouts_config_disabled'
@@ -759,6 +766,7 @@ export namespace SetupIntent {
       | 'insufficient_funds'
       | 'intent_invalid_state'
       | 'intent_verification_method_missing'
+      | 'invalid_canceled_subscription_fields'
       | 'invalid_card_type'
       | 'invalid_characters'
       | 'invalid_charge_amount'
@@ -818,6 +826,7 @@ export namespace SetupIntent {
       | 'payment_method_not_available'
       | 'payment_method_provider_decline'
       | 'payment_method_provider_timeout'
+      | 'payment_method_restricted'
       | 'payment_method_unactivated'
       | 'payment_method_unexpected_state'
       | 'payment_method_unsupported_type'
@@ -874,13 +883,15 @@ export namespace SetupIntent {
       | 'token_in_use'
       | 'transfer_source_balance_parameters_mismatch'
       | 'transfers_not_allowed'
-      | 'url_invalid';
+      | 'url_invalid'
+      | OtherString;
 
     export type Type =
       | 'api_error'
       | 'card_error'
       | 'idempotency_error'
-      | 'invalid_request_error';
+      | 'invalid_request_error'
+      | OtherString;
   }
 
   export namespace NextAction {
@@ -1235,7 +1246,8 @@ export namespace SetupIntent {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestThreeDSecure =
         | 'any'
@@ -1244,9 +1256,15 @@ export namespace SetupIntent {
         | OtherString;
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
     }
 
@@ -1696,6 +1714,7 @@ export namespace SetupIntentCreateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -2211,7 +2230,7 @@ export namespace SetupIntentCreateParams {
         user_agent: string;
       }
 
-      export type Type = 'offline' | 'online';
+      export type Type = 'offline' | 'online' | OtherString;
     }
   }
 
@@ -2606,11 +2625,12 @@ export namespace SetupIntentCreateParams {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -2637,7 +2657,8 @@ export namespace SetupIntentCreateParams {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace Ideal {
@@ -2661,7 +2682,8 @@ export namespace SetupIntentCreateParams {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -3040,7 +3062,8 @@ export namespace SetupIntentCreateParams {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestThreeDSecure =
         | 'any'
@@ -3094,9 +3117,15 @@ export namespace SetupIntentCreateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace ThreeDSecure {
@@ -3525,7 +3554,8 @@ export namespace SetupIntentCreateParams {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
@@ -3534,12 +3564,12 @@ export namespace SetupIntentCreateParams {
           | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
       }
 
       export namespace Networks {
-        export type Requested = 'ach' | 'us_domestic_wire';
+        export type Requested = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
   }
@@ -3728,6 +3758,7 @@ export namespace SetupIntentUpdateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -4557,11 +4588,12 @@ export namespace SetupIntentUpdateParams {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -4588,7 +4620,8 @@ export namespace SetupIntentUpdateParams {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace Ideal {
@@ -4612,7 +4645,8 @@ export namespace SetupIntentUpdateParams {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -4991,7 +5025,8 @@ export namespace SetupIntentUpdateParams {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestThreeDSecure =
         | 'any'
@@ -5045,9 +5080,15 @@ export namespace SetupIntentUpdateParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace ThreeDSecure {
@@ -5476,7 +5517,8 @@ export namespace SetupIntentUpdateParams {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
@@ -5485,12 +5527,12 @@ export namespace SetupIntentUpdateParams {
           | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
       }
 
       export namespace Networks {
-        export type Requested = 'ach' | 'us_domestic_wire';
+        export type Requested = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
   }
@@ -5543,7 +5585,8 @@ export namespace SetupIntentCancelParams {
   export type CancellationReason =
     | 'abandoned'
     | 'duplicate'
-    | 'requested_by_customer';
+    | 'requested_by_customer'
+    | OtherString;
 }
 export interface SetupIntentConfirmParams {
   /**
@@ -5684,6 +5727,7 @@ export namespace SetupIntentConfirmParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -6109,7 +6153,7 @@ export namespace SetupIntentConfirmParams {
         user_agent?: string;
       }
 
-      export type Type = 'offline' | 'online';
+      export type Type = 'offline' | 'online' | OtherString;
     }
   }
 
@@ -6504,11 +6548,12 @@ export namespace SetupIntentConfirmParams {
         | 'sparda_bank_wien'
         | 'volksbank_gruppe'
         | 'volkskreditbank_ag'
-        | 'vr_bank_braunau';
+        | 'vr_bank_braunau'
+        | OtherString;
     }
 
     export namespace Fpx {
-      export type AccountHolderType = 'company' | 'individual';
+      export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type Bank =
         | 'affin_bank'
@@ -6535,7 +6580,8 @@ export namespace SetupIntentConfirmParams {
         | 'public_bank'
         | 'rhb'
         | 'standard_chartered'
-        | 'uob';
+        | 'uob'
+        | OtherString;
     }
 
     export namespace Ideal {
@@ -6559,7 +6605,8 @@ export namespace SetupIntentConfirmParams {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | 'yoursafe';
+        | 'yoursafe'
+        | OtherString;
     }
 
     export namespace Klarna {
@@ -6938,7 +6985,8 @@ export namespace SetupIntentConfirmParams {
         | 'mastercard'
         | 'unionpay'
         | 'unknown'
-        | 'visa';
+        | 'visa'
+        | OtherString;
 
       export type RequestThreeDSecure =
         | 'any'
@@ -6992,9 +7040,15 @@ export namespace SetupIntentConfirmParams {
       }
 
       export namespace MandateOptions {
-        export type AmountType = 'fixed' | 'maximum';
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
 
-        export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
       }
 
       export namespace ThreeDSecure {
@@ -7423,7 +7477,8 @@ export namespace SetupIntentConfirmParams {
           | 'balances'
           | 'ownership'
           | 'payment_method'
-          | 'transactions';
+          | 'transactions'
+          | OtherString;
 
         export type Prefetch =
           | 'balances'
@@ -7432,12 +7487,12 @@ export namespace SetupIntentConfirmParams {
           | OtherString;
 
         export namespace Filters {
-          export type AccountSubcategory = 'checking' | 'savings';
+          export type AccountSubcategory = 'checking' | 'savings' | OtherString;
         }
       }
 
       export namespace Networks {
-        export type Requested = 'ach' | 'us_domestic_wire';
+        export type Requested = 'ach' | 'us_domestic_wire' | OtherString;
       }
     }
   }

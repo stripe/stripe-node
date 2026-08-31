@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {Transaction} from './../../Issuing/Transactions.js';
-import {Decimal} from '../../../shared.js';
+import {OtherString, Decimal} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class TransactionResource extends StripeResource {
@@ -817,7 +817,8 @@ export namespace TestHelpers {
           | 'wires_money_orders'
           | 'womens_accessory_and_specialty_shops'
           | 'womens_ready_to_wear_stores'
-          | 'wrecking_and_salvage_yards';
+          | 'wrecking_and_salvage_yards'
+          | OtherString;
       }
 
       export namespace PurchaseDetails {
@@ -950,7 +951,8 @@ export namespace TestHelpers {
           export type PurchaseType =
             | 'fuel_and_non_fuel_purchase'
             | 'fuel_purchase'
-            | 'non_fuel_purchase';
+            | 'non_fuel_purchase'
+            | OtherString;
 
           export interface ReportedBreakdown {
             /**
@@ -972,7 +974,8 @@ export namespace TestHelpers {
           export type ServiceType =
             | 'full_service'
             | 'non_fuel_transaction'
-            | 'self_service';
+            | 'self_service'
+            | OtherString;
 
           export namespace ReportedBreakdown {
             export interface Fuel {
@@ -1043,7 +1046,8 @@ export namespace TestHelpers {
             | 'other'
             | 'unleaded_plus'
             | 'unleaded_regular'
-            | 'unleaded_super';
+            | 'unleaded_super'
+            | OtherString;
 
           export type Unit =
             | 'charging_minute'
@@ -1053,7 +1057,8 @@ export namespace TestHelpers {
             | 'liter'
             | 'other'
             | 'pound'
-            | 'us_gallon';
+            | 'us_gallon'
+            | OtherString;
         }
       }
     }
@@ -1468,7 +1473,8 @@ export namespace TestHelpers {
           | 'wires_money_orders'
           | 'womens_accessory_and_specialty_shops'
           | 'womens_ready_to_wear_stores'
-          | 'wrecking_and_salvage_yards';
+          | 'wrecking_and_salvage_yards'
+          | OtherString;
       }
 
       export namespace PurchaseDetails {
@@ -1601,7 +1607,8 @@ export namespace TestHelpers {
           export type PurchaseType =
             | 'fuel_and_non_fuel_purchase'
             | 'fuel_purchase'
-            | 'non_fuel_purchase';
+            | 'non_fuel_purchase'
+            | OtherString;
 
           export interface ReportedBreakdown {
             /**
@@ -1623,7 +1630,8 @@ export namespace TestHelpers {
           export type ServiceType =
             | 'full_service'
             | 'non_fuel_transaction'
-            | 'self_service';
+            | 'self_service'
+            | OtherString;
 
           export namespace ReportedBreakdown {
             export interface Fuel {
@@ -1694,7 +1702,8 @@ export namespace TestHelpers {
             | 'other'
             | 'unleaded_plus'
             | 'unleaded_regular'
-            | 'unleaded_super';
+            | 'unleaded_super'
+            | OtherString;
 
           export type Unit =
             | 'charging_minute'
@@ -1704,7 +1713,8 @@ export namespace TestHelpers {
             | 'liter'
             | 'other'
             | 'pound'
-            | 'us_gallon';
+            | 'us_gallon'
+            | OtherString;
         }
       }
     }

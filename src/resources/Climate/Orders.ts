@@ -198,7 +198,7 @@ export interface Order {
   delivery_details: Array<Order.DeliveryDetail>;
 
   /**
-   * The year this order is expected to be delivered.
+   * The year this order is expected to be delivered. If the year is in the past, the order is a spot purchase and will be delivered within 30 days of purchase.
    */
   expected_delivery_year: number;
 

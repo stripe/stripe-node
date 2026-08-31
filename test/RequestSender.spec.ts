@@ -3,6 +3,7 @@ import {expect} from 'chai';
 import nock = require('nock');
 
 import {
+  StripeAPIError,
   StripeAuthenticationError,
   StripeConnectionError,
   StripeError,
@@ -89,7 +90,7 @@ describe('RequestSender', () => {
       expect(headers).to.not.include.keys('Stripe-Context');
     });
     describe('idempotency keys', () => {
-      it('only creates creates an idempotency key if a v1 request will retry', () => {
+      it('creates an idempotency key for v1 POST requests', () => {
         const headers = sender._makeHeaders({
           method: 'POST',
           userSuppliedSettings: {maxNetworkRetries: 3},
@@ -97,10 +98,19 @@ describe('RequestSender', () => {
         });
         expect(headers['Idempotency-Key']).matches(/^stripe-node-retry/);
       });
-      // should probably always create an IK; until then, codify the behavior
-      it("skips idempotency generation for v1 request if we're not retrying the request", () => {
+      // closed-connection errors are retried even with retries disabled, so
+      // these requests still need a key to dedupe against
+      it('creates an idempotency key for v1 POST requests when retries are disabled', () => {
         const headers = sender._makeHeaders({
           method: 'POST',
+          userSuppliedSettings: {maxNetworkRetries: 0},
+          apiMode: 'v1',
+        });
+        expect(headers['Idempotency-Key']).matches(/^stripe-node-retry/);
+      });
+      it('does not create an idempotency key for v1 GET requests', () => {
+        const headers = sender._makeHeaders({
+          method: 'GET',
           userSuppliedSettings: {maxNetworkRetries: 0},
           apiMode: 'v1',
         });
@@ -115,8 +125,8 @@ describe('RequestSender', () => {
         expect(headers['Idempotency-Key']).matches(/^stripe-node-retry/);
       });
       it('generates a new key every time', () => {
-        expect(sender._defaultIdempotencyKey('POST', {}, 'v2')).not.to.equal(
-          sender._defaultIdempotencyKey('POST', {}, 'v2')
+        expect(sender._defaultIdempotencyKey('POST', 'v2')).not.to.equal(
+          sender._defaultIdempotencyKey('POST', 'v2')
         );
       });
     });
@@ -164,6 +174,30 @@ describe('RequestSender', () => {
         1,
         2
       );
+
+      expect(res).to.equal(false);
+    });
+
+    // a closed connection is retried once regardless of maxNetworkRetries,
+    // since the request almost certainly never reached the API
+    it('should return true on a connection-closed error even if retries are disabled', () => {
+      const econnreset = RequestSender._shouldRetry(null, 0, 0, {
+        code: 'ECONNRESET',
+      });
+      const epipe = RequestSender._shouldRetry(null, 0, 0, {code: 'EPIPE'});
+
+      expect(econnreset).to.equal(true);
+      expect(epipe).to.equal(true);
+    });
+
+    it('should only bypass maxNetworkRetries for the first connection-closed error', () => {
+      const res = RequestSender._shouldRetry(null, 1, 0, {code: 'ECONNRESET'});
+
+      expect(res).to.equal(false);
+    });
+
+    it('should not bypass maxNetworkRetries for other error codes', () => {
+      const res = RequestSender._shouldRetry(null, 0, 0, {code: 'ETIMEDOUT'});
 
       expect(res).to.equal(false);
     });
@@ -957,6 +991,178 @@ describe('RequestSender', () => {
         );
       });
 
+      // The `timeout` option has to cover reading the response body, not just
+      // the time to headers. See https://github.com/stripe/stripe-node/issues/2814
+      [
+        {name: 'the Node client', httpClient: undefined},
+        {
+          name: 'the fetch client',
+          httpClient: require('../src/stripe.cjs.node.js').createFetchHttpClient(),
+        },
+      ].forEach(({name, httpClient}) => {
+        describe(`response body failures with ${name}`, () => {
+          // Routes a failed assertion to `done` rather than letting it reject an
+          // orphaned promise, where it would surface as a mocha timeout and be
+          // indistinguishable from the hang these tests guard against.
+          const expectRejection = (promise, closeServer, done, assertions) => {
+            promise
+              .then(
+                () => {
+                  throw new Error('Expected an error');
+                },
+                (err) => assertions(err)
+              )
+              .then(
+                () => {
+                  closeServer();
+                  done();
+                },
+                (err) => {
+                  closeServer();
+                  done(err);
+                }
+              );
+          };
+
+          it('throws a timeout error when the body stalls after the headers arrive', (done) => {
+            return getTestServerStripe(
+              {timeout: 50, maxNetworkRetries: 0, httpClient},
+              (req, res) => {
+                // Promise more body than we send, then never finish it.
+                res.writeHead(200, {'Content-Length': '100'});
+                res.write('{"ab');
+                return {shouldStayOpen: true};
+              },
+              (err, stripe, closeServer) => {
+                if (err) {
+                  return done(err);
+                }
+                expectRejection(
+                  stripe.charges.create(options.data),
+                  closeServer,
+                  done,
+                  (err) => {
+                    expect(err).to.be.an.instanceOf(StripeConnectionError);
+                    expect(err.message).to.deep.equal(
+                      'Request aborted due to timeout being reached (50ms)'
+                    );
+                  }
+                );
+              }
+            );
+          });
+
+          // The reported reproduction, which stalls a GET rather than a POST.
+          it('throws a timeout error on a GET whose body stalls', (done) => {
+            return getTestServerStripe(
+              {timeout: 50, maxNetworkRetries: 0, httpClient},
+              (req, res) => {
+                res.writeHead(200, {
+                  'Content-Type': 'application/json',
+                  'Content-Length': '100',
+                });
+                res.write('{"id": "cus_123", "objec');
+                return {shouldStayOpen: true};
+              },
+              (err, stripe, closeServer) => {
+                if (err) {
+                  return done(err);
+                }
+                expectRejection(
+                  stripe.customers.retrieve('cus_123'),
+                  closeServer,
+                  done,
+                  (err) => {
+                    expect(err).to.be.an.instanceOf(StripeConnectionError);
+                    expect(err.message).to.deep.equal(
+                      'Request aborted due to timeout being reached (50ms)'
+                    );
+                  }
+                );
+              }
+            );
+          });
+
+          // A StripeAPIError is not really the right shape for a severed
+          // connection, but it is what the fetch client already threw here, so
+          // it is preserved until the next major.
+          // TODO(DEVSDK-3247): report every HttpClientResponseBodyError as a
+          it('throws an API error when the connection drops after the headers arrive', (done) => {
+            return getTestServerStripe(
+              {timeout: 5000, maxNetworkRetries: 0, httpClient},
+              (req, res) => {
+                res.writeHead(200, {'Content-Length': '100'});
+                res.write('{"ab');
+                // Flush the headers and partial body before severing, so this
+                // fails while reading the body rather than before it.
+                setTimeout(() => res.socket.destroy(), 20);
+                return {shouldStayOpen: true};
+              },
+              (err, stripe, closeServer) => {
+                if (err) {
+                  return done(err);
+                }
+                expectRejection(
+                  stripe.charges.create(options.data),
+                  closeServer,
+                  done,
+                  (err) => {
+                    expect(err).to.be.an.instanceOf(StripeAPIError);
+                    expect(err.message).to.deep.equal(
+                      'Invalid JSON received from the Stripe API'
+                    );
+                  }
+                );
+              }
+            );
+          });
+        });
+      });
+
+      // Pins the error identity a stalled download surfaces, which is the
+      // coupled cost of reporting a stalled toJSON() body as a timeout. The
+      // TODO(DEVSDK-3247) in NodeHttpClient will deliberately change this back
+      // to an ECONNRESET Error with the message 'aborted'.
+      it('surfaces a stalled streaming response as an ETIMEDOUT error', (done) => {
+        return getTestServerStripe(
+          {timeout: 50, maxNetworkRetries: 0},
+          (req, res) => {
+            res.writeHead(200, {'Content-Type': 'application/pdf'});
+            res.write('%PDF-1.4 partial');
+            return {shouldStayOpen: true};
+          },
+          (err, stripe, closeServer) => {
+            if (err) {
+              return done(err);
+            }
+            stripe
+              .rawRequest('GET', '/v1/quotes/qt_123/pdf', {}, {streaming: true})
+              .then((stream) => {
+                // Flowing mode, so the stall is in the body rather than in our
+                // own backpressure.
+                stream.on('data', () => {});
+                stream.on('error', (streamErr) => {
+                  closeServer();
+                  try {
+                    expect(streamErr.code).to.equal('ETIMEDOUT');
+                    done();
+                  } catch (e) {
+                    done(e);
+                  }
+                });
+                stream.on('end', () => {
+                  closeServer();
+                  done(new Error('Expected the stream to error'));
+                });
+              })
+              .catch((e) => {
+                closeServer();
+                done(e);
+              });
+          }
+        );
+      });
+
       it('throws a StripeAuthenticationError on 401', (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)
@@ -1164,6 +1370,32 @@ describe('RequestSender', () => {
             expect(err.detail.code).to.deep.equal('ECONNRESET');
             done();
           });
+      });
+
+      // this retry bypasses maxNetworkRetries, so it must still carry a key to
+      // dedupe against the original in case the API did process it
+      it('reuses an idempotency key on the closed-connection retry', (done) => {
+        const keys = [];
+
+        const scope = nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .replyWithError({code: 'ECONNRESET', errno: 'ECONNRESET'})
+          .post(options.path, options.params)
+          .reply(200, {id: 'ch_123', object: 'charge', amount: 1000});
+
+        scope.on('request', (req) => {
+          keys.push(req.headers['idempotency-key']);
+        });
+
+        realStripe.charges
+          .create(options.data)
+          .then(() => {
+            expect(keys).to.have.lengthOf(2);
+            expect(keys[0]).to.match(/^stripe-node-retry/);
+            expect(keys[1]).to.equal(keys[0]);
+            done();
+          })
+          .catch(done);
       });
 
       it('should retry the request if max retries are set', (done) => {

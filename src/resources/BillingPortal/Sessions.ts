@@ -87,6 +87,11 @@ export namespace Session {
     after_completion: Flow.AfterCompletion;
 
     /**
+     * Configuration when `flow.type=customer_update`.
+     */
+    customer_update: Flow.CustomerUpdate | null;
+
+    /**
      * Configuration when `flow.type=subscription_cancel`.
      */
     subscription_cancel: Flow.SubscriptionCancel | null;
@@ -175,6 +180,8 @@ export namespace Session {
       type: AfterCompletion.Type;
     }
 
+    export interface CustomerUpdate {}
+
     export interface SubscriptionCancel {
       /**
        * Specify a retention strategy to be used in the cancellation flow.
@@ -212,6 +219,7 @@ export namespace Session {
     }
 
     export type Type =
+      | 'customer_update'
       | 'payment_method_update'
       | 'subscription_cancel'
       | 'subscription_update'
@@ -471,6 +479,7 @@ export namespace BillingPortal {
       }
 
       export type Type =
+        | 'customer_update'
         | 'payment_method_update'
         | 'subscription_cancel'
         | 'subscription_update'

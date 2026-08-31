@@ -7,6 +7,7 @@ import {Account} from './Accounts.js';
 import {Charge} from './Charges.js';
 import {
   MetadataParam,
+  OtherString,
   Emptyable,
   PaginationParams,
   RangeQueryParam,
@@ -276,7 +277,7 @@ export interface TransferCreateParams {
   transfer_group?: string;
 }
 export namespace TransferCreateParams {
-  export type SourceType = 'bank_account' | 'card' | 'fpx';
+  export type SourceType = 'bank_account' | 'card' | 'fpx' | OtherString;
 }
 export interface TransferRetrieveParams {
   /**

@@ -10,7 +10,7 @@ import {
   StripeRawError,
   DEFAULT_BASE_ADDRESSES,
 } from './Types.js';
-import {createWebhooks} from './Webhooks.js';
+import {createWebhooks, WebhookHeader, WebhookPayload} from './Webhooks.js';
 import {ApiVersion, ApiMajorVersion} from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
@@ -24,6 +24,12 @@ import {
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
+import {
+  FallbackCallback,
+  StripeEventNotificationHandler,
+  StripeEventNotificationHandlerWithoutVerification,
+  UnhandledNotificationDetails,
+} from './StripeEventNotificationHandler.js';
 import {
   Response,
   RequestOptions,
@@ -54,7 +60,7 @@ import {
   Emptyable,
   Decimal,
 } from './shared.js';
-import {EventNotification as V2EventNotification} from './resources/V2/Core/Events.js';
+import {UnknownEventNotification} from './resources/V2/Core/Events.js';
 
 // StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
 import {
@@ -957,7 +963,7 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 export class Stripe {
-  static PACKAGE_VERSION = '22.5.0';
+  static PACKAGE_VERSION = '22.6.0';
   static API_VERSION: typeof ApiVersion = ApiVersion;
   /**
    * The major API version that this SDK uses. Objects retrieved using the same
@@ -1661,8 +1667,8 @@ export class Stripe {
    * `parseEventNotificationWithoutVerification`.
    */
   parseEventNotification(
-    payload: string | Uint8Array,
-    header: string | Uint8Array,
+    payload: WebhookPayload,
+    header: WebhookHeader,
     secret: string,
     tolerance?: number,
     cryptoProvider?: CryptoProvider,
@@ -1688,8 +1694,8 @@ export class Stripe {
   }
 
   async parseEventNotificationAsync(
-    payload: string | Uint8Array,
-    header: string | Uint8Array,
+    payload: WebhookPayload,
+    header: WebhookHeader,
     secret: string,
     tolerance?: number,
     cryptoProvider?: CryptoProvider,
@@ -1721,8 +1727,12 @@ export class Stripe {
    * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge), or
    * [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload). Or, to verify &
    * construct in a single call, use `webhooks.constructEvent(...)` instead.
+   *
+   * @deprecated Use `stripe.webhooks.constructEventWithoutVerification(...)` instead.
+   * This will be removed in the next major version.
    */
   constructEventWithoutVerification(payload: string): Event {
+    // TODO(DEVSDK-3248) remove this
     return this.webhooks.constructEventWithoutVerification(payload);
   }
 
@@ -1735,10 +1745,30 @@ export class Stripe {
    * parse in a single call, use `parseEventNotification(...)` instead.
    */
   parseEventNotificationWithoutVerification(
-    payload: string
+    payload: WebhookPayload
   ): V2.Core.EventNotification {
     return this._buildEventNotification(
       maybeExtractFromCloudProviderEnvelope(payload)
+    );
+  }
+
+  notificationHandler(
+    webhookSecret: string,
+    fallbackCallback: FallbackCallback
+  ): StripeEventNotificationHandler {
+    return new StripeEventNotificationHandler(
+      this,
+      webhookSecret,
+      fallbackCallback
+    );
+  }
+
+  notificationHandlerWithoutVerification(
+    fallbackCallback: FallbackCallback
+  ): StripeEventNotificationHandlerWithoutVerification {
+    return StripeEventNotificationHandler.withoutVerification(
+      this,
+      fallbackCallback
     );
   }
 }
@@ -2628,6 +2658,12 @@ export declare namespace Stripe {
 
   export {StripeContext as StripeContextType};
   export {StripeRawError};
+  // Type-only: these classes are not attached as statics on the Stripe constructor,
+  // so they can be named in annotations but not used as values. Construct handlers
+  // through stripe.notificationHandler() / stripe.notificationHandlerWithoutVerification().
+  export type UnhandledNotificationDetails = import('./StripeEventNotificationHandler.js').UnhandledNotificationDetails;
+  export type StripeEventNotificationHandler = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandler;
+  export type StripeEventNotificationHandlerWithoutVerification = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandlerWithoutVerification;
   // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
   export namespace ErrorType {
     export type StripeError = InstanceType<typeof _Error.StripeError>;

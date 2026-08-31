@@ -151,6 +151,81 @@ describe('FetchHttpClient', () => {
 
     expect(capturedBody).to.be.undefined;
   });
+
+  // The timeout has to cover reading the body, not just the time to headers.
+  // See https://github.com/stripe/stripe-node/issues/2814
+  describe('response body timeout', () => {
+    /** A body which sends a partial payload and then stalls forever. */
+    const stalledBody = (): Readable => {
+      let sentPartialBody = false;
+      return new Readable({
+        read() {
+          if (!sentPartialBody) {
+            sentPartialBody = true;
+            this.push('{"ab');
+          }
+          // Never push again and never end, so the read stalls.
+        },
+      });
+    };
+
+    const sendRequest = (client) =>
+      client.makeRequest(
+        'stripe.com',
+        80,
+        '/test',
+        'GET',
+        {},
+        undefined,
+        'http',
+        50
+      );
+
+    afterEach(() => {
+      nock.cleanAll();
+    });
+
+    it('times out reading the body when aborting', async () => {
+      nock('http://stripe.com')
+        .get('/test')
+        .reply(200, stalledBody);
+
+      const response = await sendRequest(createFetchHttpClient());
+
+      try {
+        await response.toJSON();
+        throw new Error('Expected an error to be thrown');
+      } catch (e) {
+        expect(e.code).to.equal('ETIMEDOUT');
+      }
+    });
+
+    it('times out reading the body when racing', async () => {
+      nock('http://stripe.com')
+        .get('/test')
+        .reply(200, stalledBody);
+
+      // Runtimes without AbortController fall back to racing a timer, which
+      // cannot cancel the read but still has to stop the request from hanging.
+      const {AbortController} = globalThis;
+      delete globalThis.AbortController;
+      let client;
+      try {
+        client = new FetchHttpClient(fetch);
+      } finally {
+        globalThis.AbortController = AbortController;
+      }
+
+      const response = await sendRequest(client);
+
+      try {
+        await response.toJSON();
+        throw new Error('Expected an error to be thrown');
+      } catch (e) {
+        expect(e.code).to.equal('ETIMEDOUT');
+      }
+    });
+  });
 });
 
 export {};

@@ -9,6 +9,7 @@ import {
   MetadataParam,
   PaginationParams,
   RangeQueryParam,
+  OtherString,
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
@@ -177,7 +178,7 @@ export interface Topup {
   transfer_group: string | null;
 }
 export namespace Topup {
-  export type InitiatedBy = 'stripe' | 'user';
+  export type InitiatedBy = 'stripe' | 'user' | OtherString;
 
   export interface PaymentMethodOptions {
     /**
@@ -191,7 +192,8 @@ export namespace Topup {
     | 'failed'
     | 'pending'
     | 'reversed'
-    | 'succeeded';
+    | 'succeeded'
+    | OtherString;
 
   export namespace PaymentMethodOptions {
     export interface UsBankAccount {
@@ -308,7 +310,12 @@ export interface TopupListParams extends PaginationParams {
   status?: TopupListParams.Status;
 }
 export namespace TopupListParams {
-  export type Status = 'canceled' | 'failed' | 'pending' | 'succeeded';
+  export type Status =
+    | 'canceled'
+    | 'failed'
+    | 'pending'
+    | 'succeeded'
+    | OtherString;
 }
 export interface TopupCancelParams {
   /**

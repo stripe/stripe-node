@@ -319,6 +319,13 @@ const stripeClient = Stripe('sk_test_...', {
 });
 ```
 
+> [!NOTE]
+> Even with `maxNetworkRetries: 0`, a request that fails with a closed connection
+> (`ECONNRESET` or `EPIPE`) is still reattempted once. These usually mean the
+> request never reached the API — most often a stale keep-alive socket, such as
+> one held across a frozen AWS Lambda execution context. Subsequent
+> connection-closed errors are not retried.
+
 ```js
 const stripeClient = Stripe('sk_test_...', {
   maxNetworkRetries: 2, // Retry a request twice before giving up
