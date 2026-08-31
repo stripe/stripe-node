@@ -14,9 +14,10 @@ import {SubtleCryptoProvider} from '../src/crypto/SubtleCryptoProvider.js';
 import {expect} from 'chai';
 import {webcrypto} from 'crypto';
 
-if (process.versions.node < '15') {
+if (process.versions.node < '19') {
+  // Node 18 has no `globalThis.crypto` in CommonJS module scope, so WebPlatformFunctions has no CSPRNG to derive a boundary from.
   console.log(
-    `Skipping WebPlatformFunctions tests. Cannot load WebPlatformFunctions because 'Event' is not available in the global scope for ${process.version}.`
+    `Skipping WebPlatformFunctions tests. No 'globalThis.crypto' in module scope for ${process.version}.`
   );
 } else {
   import(
@@ -451,7 +452,14 @@ describe('PlatformFunctions.uuid4 without crypto.randomUUID', () => {
   // `crypto.getRandomValues` would still work. Every v1 POST calls uuid4 for
   // its Idempotency-Key, so this is the error those runtimes surface.
   // Tracked by https://go/j/DEVSDK-3253.
+  //
+  // On Node 18 there is no `globalThis.crypto` in CommonJS module scope at all
+  // (it landed unflagged in Node 19), so the condition under test is already
+  // ambient and there is nothing to stub.
+  const hasCryptoGlobal = typeof globalThis.crypto !== 'undefined';
+
   beforeEach(() => {
+    if (!hasCryptoGlobal) return;
     Object.defineProperty(globalThis.crypto, 'randomUUID', {
       value: undefined,
       configurable: true,
@@ -460,6 +468,7 @@ describe('PlatformFunctions.uuid4 without crypto.randomUUID', () => {
   });
 
   afterEach(() => {
+    if (!hasCryptoGlobal) return;
     delete (globalThis.crypto as any).randomUUID;
   });
 

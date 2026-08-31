@@ -18,13 +18,10 @@ const file = {
   type: 'application/pdf',
 };
 
-// The `worker`/`workerd`/`browser`/`bun`/`deno` exports all resolve to
-// WebPlatformFunctions, which has no `uuid4` override — it uses the base
-// implementation. Run the whole suite against both so the boundary is covered
-// on the web path too, not just the Node one the bug was reported against.
-if (process.versions.node < '15') {
+if (process.versions.node < '19') {
+  // Node 18 has no `globalThis.crypto` in CommonJS module scope, so WebPlatformFunctions has no CSPRNG to derive a boundary from.
   console.log(
-    `Skipping WebPlatformFunctions multipart tests. Cannot load WebPlatformFunctions because 'Event' is not available in the global scope for ${process.version}.`
+    `Skipping WebPlatformFunctions multipart tests. No 'globalThis.crypto' in module scope for ${process.version}.`
   );
 } else {
   import(
