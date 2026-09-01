@@ -127,6 +127,12 @@ jobs:
           # Disable automatic dependency caching to reduce cache poisoning risk
           package-manager-cache: false
       - name: Publish to NPM
+        env:
+          # needed because setup-node writes a .npmrc file with `registry-url` and
+          # `_authToken=${NODE_AUTH_TOKEN}`. OIDC overwrites this with a real token
+          # before anything is uploaded, but we need to have a value for yarn install
+          # to work.
+          NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
         run: |
           set -euxo pipefail
           VERSION=$(cat package.json | jq -r '.version')
