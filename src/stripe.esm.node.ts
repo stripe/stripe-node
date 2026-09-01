@@ -964,7 +964,7 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 export class Stripe {
-  static PACKAGE_VERSION = '22.6.0';
+  static PACKAGE_VERSION = '22.6.1';
   static API_VERSION: typeof ApiVersion = ApiVersion;
   /**
    * The major API version that this SDK uses. Objects retrieved using the same
