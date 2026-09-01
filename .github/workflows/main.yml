@@ -123,9 +123,15 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
           # Disable automatic dependency caching to reduce cache poisoning risk
           package-manager-cache: false
+          # Deliberately no `registry-url`. It makes setup-node write an .npmrc holding
+          # `_authToken=${NODE_AUTH_TOKEN}` and point NPM_CONFIG_USERCONFIG at it, but as
+          # of v7 setup-node only exports NODE_AUTH_TOKEN when the caller supplied one.
+          # `npm publish` runs `prepack`, which runs yarn, and yarn aborts rather than
+          # leave an unresolvable `${...}` in a config it reads. OIDC supplies the
+          # credential and the registry is passed to `npm publish` below, so that file
+          # has nothing left to contribute.
       - name: Publish to NPM
         run: |
           set -euxo pipefail
@@ -133,7 +139,7 @@ jobs:
           # use the tag correlating to this release channel
           NPM_TAG=$(cat package.json | jq -r '.version | if contains("beta") then "public-preview" else if contains("alpha") then "private-preview" else "latest" end end')
           echo "Publishing $VERSION with $NPM_TAG tag."
-          npm publish --tag $NPM_TAG
+          npm publish --registry https://registry.npmjs.org --tag $NPM_TAG
       - uses: stripe/openapi/actions/notify-release@master
         if: always()
         with:
