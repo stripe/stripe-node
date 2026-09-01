@@ -128,13 +128,10 @@ jobs:
           package-manager-cache: false
       - name: Publish to NPM
         env:
-          # `registry-url` above makes setup-node write an .npmrc holding
-          # `_authToken=${NODE_AUTH_TOKEN}` and point NPM_CONFIG_USERCONFIG at it. Through
-          # v4 the action supplied this placeholder itself; v7 only exports the variable
-          # when the caller already set one (actions/setup-node#1558). Publishing here goes
-          # through OIDC, so nothing sets it, and yarn -- which `npm publish` runs via
-          # `prepack` -- aborts rather than leave an unresolvable `${...}` in a config it
-          # reads. OIDC overwrites this with a real token before anything is uploaded.
+          # needed because setup-node writes a .npmrc file with `registry-url` and
+          # `_authToken=${NODE_AUTH_TOKEN}`. OIDC overwrites this with a real token
+          # before anything is uploaded, but we need to have a value for yarn install
+          # to work.
           NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
         run: |
           set -euxo pipefail
