@@ -74,19 +74,25 @@ describe('V2 int64_string integration', () => {
       expect(stripe.LAST_REQUEST.data).to.deep.equal({amount: 42});
     });
 
-    it('handles null body data gracefully', () => {
+    it('coerces int64_string fields in GET query parameters', () => {
       const resource = new StripeResource(stripe);
 
-      // GET requests have no body data, so coercion should be a no-op
-      resource._makeRequest('GET', '/v2/test/resources', undefined, undefined, {
-        requestSchema: {
-          kind: 'object',
-          fields: {
-            amount: {kind: 'int64_string'},
+      resource._makeRequest(
+        'GET',
+        '/v2/test/resources',
+        {amount: 42},
+        undefined,
+        {
+          requestSchema: {
+            kind: 'object',
+            fields: {
+              amount: {kind: 'int64_string'},
+            },
           },
-        },
-      });
+        }
+      );
       expect(stripe.LAST_REQUEST.data).to.equal(null);
+      expect(stripe.LAST_REQUEST.url).to.equal('/v2/test/resources?amount=42');
     });
   });
 
