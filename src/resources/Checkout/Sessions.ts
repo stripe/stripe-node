@@ -1515,7 +1515,7 @@ export namespace Session {
     /**
      * The type of the item.
      */
-    type: 'subscription';
+    type: Item.Type;
   }
 
   export type Locale =
@@ -1681,6 +1681,8 @@ export namespace Session {
     scalapay?: PaymentMethodOptions.Scalapay;
 
     sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+    sequra?: PaymentMethodOptions.Sequra;
 
     sofort?: PaymentMethodOptions.Sofort;
 
@@ -2840,6 +2842,8 @@ export namespace Session {
       trial_settings: Subscription.TrialSettings | null;
     }
 
+    export type Type = 'subscription' | OtherString;
+
     export namespace Subscription {
       export interface Item {
         /**
@@ -3022,7 +3026,7 @@ export namespace Session {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Alipay.SetupFutureUsage;
     }
 
     export interface Alma {
@@ -3098,7 +3102,7 @@ export namespace Session {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Bancontact.SetupFutureUsage;
     }
 
     export interface Billie {
@@ -3639,6 +3643,13 @@ export namespace Session {
       target_date?: string;
     }
 
+    export interface Sequra {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+    }
+
     export interface Sofort {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -3750,7 +3761,7 @@ export namespace Session {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export namespace AcssDebit {
@@ -3808,6 +3819,10 @@ export namespace Session {
       }
     }
 
+    export namespace Alipay {
+      export type SetupFutureUsage = 'none' | OtherString;
+    }
+
     export namespace AmazonPay {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -3825,6 +3840,10 @@ export namespace Session {
         | 'off_session'
         | 'on_session'
         | OtherString;
+    }
+
+    export namespace Bancontact {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Bizum {
@@ -4255,6 +4274,8 @@ export namespace Session {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -5355,7 +5376,7 @@ export namespace Checkout {
       /**
        * The type of item.
        */
-      type: 'subscription';
+      type: Item.Type;
     }
 
     export interface LineItem {
@@ -6589,6 +6610,8 @@ export namespace Checkout {
         trial_settings?: Subscription.TrialSettings;
       }
 
+      export type Type = 'subscription' | OtherString;
+
       export namespace Subscription {
         export interface BillingCycleAnchorConfig {
           /**
@@ -7156,7 +7179,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: Alipay.SetupFutureUsage;
       }
 
       export interface Alma {
@@ -7964,7 +7987,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: WechatPay.SetupFutureUsage;
       }
 
       export namespace AcssDebit {
@@ -8022,6 +8045,10 @@ export namespace Checkout {
 
           export type TransactionType = 'business' | 'personal' | OtherString;
         }
+      }
+
+      export namespace Alipay {
+        export type SetupFutureUsage = 'none' | OtherString;
       }
 
       export namespace AmazonPay {
@@ -8112,6 +8139,11 @@ export namespace Checkout {
            * The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they can't complete the payment.
            */
           brands_blocked?: Array<Restrictions.BrandsBlocked>;
+
+          /**
+           * Card funding types to block for this Checkout Session. Supported values are `credit`, `debit`, and `prepaid`.
+           */
+          funding_types_blocked?: Array<Restrictions.FundingTypesBlocked>;
         }
 
         export type SetupFutureUsage =
@@ -8125,6 +8157,12 @@ export namespace Checkout {
             | 'discover_global_network'
             | 'mastercard'
             | 'visa'
+            | OtherString;
+
+          export type FundingTypesBlocked =
+            | 'credit'
+            | 'debit'
+            | 'prepaid'
             | OtherString;
         }
       }
@@ -8512,6 +8550,8 @@ export namespace Checkout {
 
       export namespace WechatPay {
         export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+        export type SetupFutureUsage = 'none' | OtherString;
       }
     }
 
@@ -9173,6 +9213,13 @@ export namespace Checkout {
     metadata?: Emptyable<MetadataParam>;
 
     /**
+     * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
+     *
+     * You can only update these parameters when `ui_mode` is `elements` and while the session is active.
+     */
+    payment_intent_data?: SessionUpdateParams.PaymentIntentData;
+
+    /**
      * The shipping rate options to apply to this Session. Up to a maximum of 5.
      */
     shipping_options?: Emptyable<Array<SessionUpdateParams.ShippingOption>>;
@@ -9252,6 +9299,54 @@ export namespace Checkout {
        * The [tax rates](https://docs.stripe.com/api/tax_rates) which apply to this line item.
        */
       tax_rates?: Emptyable<Array<string>>;
+    }
+
+    export interface PaymentIntentData {
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users. Pass an empty string to clear a previously configured value.
+       */
+      description?: Emptyable<string>;
+
+      /**
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Emptyable<MetadataParam>;
+
+      /**
+       * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails). Pass an empty string to clear a previously configured recipient.
+       */
+      receipt_email?: Emptyable<string>;
+
+      /**
+       * Indicates that you intend to [make future payments](https://docs.stripe.com/payments/payment-intents#future-usage) with the payment method collected by this Checkout Session.
+       *
+       * When setting this to `on_session`, Checkout will show a notice to the customer that their payment details will be saved.
+       *
+       * When setting this to `off_session`, Checkout will show a notice to the customer that their payment details will be saved and used for future payments.
+       *
+       * If a Customer has been provided or Checkout creates a new Customer, Checkout will attach the payment method to the Customer.
+       *
+       * If Checkout does not create a Customer, the payment method is not attached to a Customer. To reuse the payment method, you can retrieve it from the Checkout Session's PaymentIntent.
+       *
+       * When processing card payments, Checkout also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as SCA.
+       *
+       * Pass an empty string to remove a previously supplied configuration.
+       */
+      setup_future_usage?: Emptyable<PaymentIntentData.SetupFutureUsage>;
+
+      /**
+       * Text that appears on the customer's statement as the statement descriptor for a non-card charge. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
+       *
+       * Setting this value for a card charge returns an error. For card charges, set the [statement_descriptor_suffix](https://docs.stripe.com/get-started/account/statement-descriptors#dynamic) instead.
+       *  Pass an empty string to clear a previously configured value.
+       */
+      statement_descriptor?: Emptyable<string>;
+
+      /**
+       * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
+       *  Pass an empty string to clear a previously configured value.
+       */
+      statement_descriptor_suffix?: Emptyable<string>;
     }
 
     export interface ShippingOption {
@@ -9565,6 +9660,10 @@ export namespace Checkout {
             | OtherString;
         }
       }
+    }
+
+    export namespace PaymentIntentData {
+      export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
     }
 
     export namespace ShippingOption {

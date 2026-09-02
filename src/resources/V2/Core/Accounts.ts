@@ -10789,6 +10789,13 @@ export namespace Account {
     locales?: Array<Defaults.Locale>;
 
     /**
+     * Default payout methods per currency. Keys are three-letter [ISO currency codes](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Values are v2 Payout Method IDs.
+     */
+    payout_methods?: {
+      [key: string]: string;
+    };
+
+    /**
      * Account profile information.
      */
     profile?: Defaults.Profile;
@@ -12997,11 +13004,6 @@ export namespace Account {
          * The ID of the payment method to use for gross settlement payouts.
          */
         payment_method?: string;
-
-        /**
-         * Whether to collect a payment method for gross settlement.
-         */
-        payment_method_collection?: GrossSettlement.PaymentMethodCollection;
       }
 
       export interface KonbiniPayments {
@@ -17183,10 +17185,6 @@ export namespace Account {
            */
           cvc_failure?: boolean;
         }
-      }
-
-      export namespace GrossSettlement {
-        export type PaymentMethodCollection = 'always' | 'never';
       }
 
       export namespace KonbiniPayments {
@@ -24247,7 +24245,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: BankAccountOwnershipVerification.Type;
         }
 
         export interface CompanyLicense {
@@ -24259,7 +24257,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: CompanyLicense.Type;
         }
 
         export interface CompanyMemorandumOfAssociation {
@@ -24271,7 +24269,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: CompanyMemorandumOfAssociation.Type;
         }
 
         export interface CompanyMinisterialDecree {
@@ -24283,7 +24281,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: CompanyMinisterialDecree.Type;
         }
 
         export interface CompanyRegistrationVerification {
@@ -24295,7 +24293,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: CompanyRegistrationVerification.Type;
         }
 
         export interface CompanyTaxIdVerification {
@@ -24307,7 +24305,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: CompanyTaxIdVerification.Type;
         }
 
         export interface PrimaryVerification {
@@ -24319,7 +24317,7 @@ export namespace Account {
           /**
            * The format of the verification document. Currently supports `front_back` only.
            */
-          type: 'front_back';
+          type: PrimaryVerification.Type;
         }
 
         export interface ProofOfAddress {
@@ -24331,7 +24329,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: ProofOfAddress.Type;
         }
 
         export interface ProofOfRegistration {
@@ -24348,7 +24346,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: ProofOfRegistration.Type;
         }
 
         export interface ProofOfUltimateBeneficialOwnership {
@@ -24365,7 +24363,31 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: ProofOfUltimateBeneficialOwnership.Type;
+        }
+
+        export namespace BankAccountOwnershipVerification {
+          export type Type = 'files' | OtherString;
+        }
+
+        export namespace CompanyLicense {
+          export type Type = 'files' | OtherString;
+        }
+
+        export namespace CompanyMemorandumOfAssociation {
+          export type Type = 'files' | OtherString;
+        }
+
+        export namespace CompanyMinisterialDecree {
+          export type Type = 'files' | OtherString;
+        }
+
+        export namespace CompanyRegistrationVerification {
+          export type Type = 'files' | OtherString;
+        }
+
+        export namespace CompanyTaxIdVerification {
+          export type Type = 'files' | OtherString;
         }
 
         export namespace PrimaryVerification {
@@ -24380,6 +24402,12 @@ export namespace Account {
              */
             front: string;
           }
+
+          export type Type = 'front_back' | OtherString;
+        }
+
+        export namespace ProofOfAddress {
+          export type Type = 'files' | OtherString;
         }
 
         export namespace ProofOfRegistration {
@@ -24389,6 +24417,8 @@ export namespace Account {
              */
             person: string;
           }
+
+          export type Type = 'files' | OtherString;
         }
 
         export namespace ProofOfUltimateBeneficialOwnership {
@@ -24398,6 +24428,8 @@ export namespace Account {
              */
             person: string;
           }
+
+          export type Type = 'files' | OtherString;
         }
       }
 
@@ -24902,7 +24934,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: CompanyAuthorization.Type;
         }
 
         export interface Passport {
@@ -24914,7 +24946,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: Passport.Type;
         }
 
         export interface PrimaryVerification {
@@ -24926,7 +24958,7 @@ export namespace Account {
           /**
            * The format of the verification document. Currently supports `front_back` only.
            */
-          type: 'front_back';
+          type: PrimaryVerification.Type;
         }
 
         export interface SecondaryVerification {
@@ -24938,7 +24970,7 @@ export namespace Account {
           /**
            * The format of the verification document. Currently supports `front_back` only.
            */
-          type: 'front_back';
+          type: SecondaryVerification.Type;
         }
 
         export interface Visa {
@@ -24950,7 +24982,15 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: Visa.Type;
+        }
+
+        export namespace CompanyAuthorization {
+          export type Type = 'files' | OtherString;
+        }
+
+        export namespace Passport {
+          export type Type = 'files' | OtherString;
         }
 
         export namespace PrimaryVerification {
@@ -24965,6 +25005,8 @@ export namespace Account {
              */
             front: string;
           }
+
+          export type Type = 'front_back' | OtherString;
         }
 
         export namespace SecondaryVerification {
@@ -24979,6 +25021,12 @@ export namespace Account {
              */
             front: string;
           }
+
+          export type Type = 'front_back' | OtherString;
+        }
+
+        export namespace Visa {
+          export type Type = 'files' | OtherString;
         }
       }
 
@@ -25578,7 +25626,7 @@ export namespace V2 {
   export namespace Core {
     export interface AccountCreateParams {
       /**
-       * The account token generated by the account token api.
+       * The account token generated by the account token API.
        */
       account_token?: string;
 
@@ -26892,11 +26940,6 @@ export namespace V2 {
              * The ID of the payment method to use for gross settlement payouts.
              */
             payment_method?: string;
-
-            /**
-             * Whether to collect a payment method for gross settlement.
-             */
-            payment_method_collection?: GrossSettlement.PaymentMethodCollection;
           }
 
           export interface KonbiniPayments {
@@ -28353,10 +28396,6 @@ export namespace V2 {
                */
               cvc_failure?: boolean;
             }
-          }
-
-          export namespace GrossSettlement {
-            export type PaymentMethodCollection = 'always' | 'never';
           }
 
           export namespace KonbiniPayments {
@@ -32051,7 +32090,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: BankAccountOwnershipVerification.Type;
             }
 
             export interface CompanyLicense {
@@ -32063,7 +32102,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyLicense.Type;
             }
 
             export interface CompanyMemorandumOfAssociation {
@@ -32075,7 +32114,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyMemorandumOfAssociation.Type;
             }
 
             export interface CompanyMinisterialDecree {
@@ -32087,7 +32126,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyMinisterialDecree.Type;
             }
 
             export interface CompanyRegistrationVerification {
@@ -32099,7 +32138,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyRegistrationVerification.Type;
             }
 
             export interface CompanyTaxIdVerification {
@@ -32111,7 +32150,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyTaxIdVerification.Type;
             }
 
             export interface PrimaryVerification {
@@ -32123,7 +32162,7 @@ export namespace V2 {
               /**
                * The format of the verification document. Currently supports `front_back` only.
                */
-              type: 'front_back';
+              type: PrimaryVerification.Type;
             }
 
             export interface ProofOfAddress {
@@ -32135,7 +32174,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: ProofOfAddress.Type;
             }
 
             export interface ProofOfRegistration {
@@ -32152,7 +32191,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: ProofOfRegistration.Type;
             }
 
             export interface ProofOfUltimateBeneficialOwnership {
@@ -32169,7 +32208,31 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: ProofOfUltimateBeneficialOwnership.Type;
+            }
+
+            export namespace BankAccountOwnershipVerification {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyLicense {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyMemorandumOfAssociation {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyMinisterialDecree {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyRegistrationVerification {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyTaxIdVerification {
+              export type Type = 'files' | OtherString;
             }
 
             export namespace PrimaryVerification {
@@ -32184,6 +32247,12 @@ export namespace V2 {
                  */
                 front: string;
               }
+
+              export type Type = 'front_back' | OtherString;
+            }
+
+            export namespace ProofOfAddress {
+              export type Type = 'files' | OtherString;
             }
 
             export namespace ProofOfRegistration {
@@ -32193,6 +32262,8 @@ export namespace V2 {
                  */
                 person: string;
               }
+
+              export type Type = 'files' | OtherString;
             }
 
             export namespace ProofOfUltimateBeneficialOwnership {
@@ -32202,6 +32273,8 @@ export namespace V2 {
                  */
                 person: string;
               }
+
+              export type Type = 'files' | OtherString;
             }
           }
 
@@ -32670,7 +32743,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyAuthorization.Type;
             }
 
             export interface Passport {
@@ -32682,7 +32755,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: Passport.Type;
             }
 
             export interface PrimaryVerification {
@@ -32694,7 +32767,7 @@ export namespace V2 {
               /**
                * The format of the verification document. Currently supports `front_back` only.
                */
-              type: 'front_back';
+              type: PrimaryVerification.Type;
             }
 
             export interface SecondaryVerification {
@@ -32706,7 +32779,7 @@ export namespace V2 {
               /**
                * The format of the verification document. Currently supports `front_back` only.
                */
-              type: 'front_back';
+              type: SecondaryVerification.Type;
             }
 
             export interface Visa {
@@ -32718,7 +32791,15 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: Visa.Type;
+            }
+
+            export namespace CompanyAuthorization {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace Passport {
+              export type Type = 'files' | OtherString;
             }
 
             export namespace PrimaryVerification {
@@ -32733,6 +32814,8 @@ export namespace V2 {
                  */
                 front: string;
               }
+
+              export type Type = 'front_back' | OtherString;
             }
 
             export namespace SecondaryVerification {
@@ -32747,6 +32830,12 @@ export namespace V2 {
                  */
                 front: string;
               }
+
+              export type Type = 'front_back' | OtherString;
+            }
+
+            export namespace Visa {
+              export type Type = 'files' | OtherString;
             }
           }
 
@@ -32985,7 +33074,7 @@ export namespace V2 {
   export namespace Core {
     export interface AccountUpdateParams {
       /**
-       * The account token generated by the account token api.
+       * The account token generated by the account token API.
        */
       account_token?: string;
 
@@ -33075,6 +33164,13 @@ export namespace V2 {
          * The Account's preferred locales (languages), ordered by preference.
          */
         locales?: Array<Defaults.Locale>;
+
+        /**
+         * Default payout methods per currency. Keys are three-letter [ISO currency codes](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Values are v2 Payout Method IDs.
+         */
+        payout_methods?: {
+          [key: string]: string;
+        };
 
         /**
          * Account profile information.
@@ -34341,11 +34437,6 @@ export namespace V2 {
              * The ID of the payment method to use for gross settlement payouts.
              */
             payment_method?: string;
-
-            /**
-             * Whether to collect a payment method for gross settlement.
-             */
-            payment_method_collection?: GrossSettlement.PaymentMethodCollection;
           }
 
           export interface KonbiniPayments {
@@ -35802,10 +35893,6 @@ export namespace V2 {
                */
               cvc_failure?: boolean;
             }
-          }
-
-          export namespace GrossSettlement {
-            export type PaymentMethodCollection = 'always' | 'never';
           }
 
           export namespace KonbiniPayments {
@@ -39424,7 +39511,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: BankAccountOwnershipVerification.Type;
             }
 
             export interface CompanyLicense {
@@ -39436,7 +39523,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyLicense.Type;
             }
 
             export interface CompanyMemorandumOfAssociation {
@@ -39448,7 +39535,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyMemorandumOfAssociation.Type;
             }
 
             export interface CompanyMinisterialDecree {
@@ -39460,7 +39547,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyMinisterialDecree.Type;
             }
 
             export interface CompanyRegistrationVerification {
@@ -39472,7 +39559,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyRegistrationVerification.Type;
             }
 
             export interface CompanyTaxIdVerification {
@@ -39484,7 +39571,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyTaxIdVerification.Type;
             }
 
             export interface PrimaryVerification {
@@ -39496,7 +39583,7 @@ export namespace V2 {
               /**
                * The format of the verification document. Currently supports `front_back` only.
                */
-              type: 'front_back';
+              type: PrimaryVerification.Type;
             }
 
             export interface ProofOfAddress {
@@ -39508,7 +39595,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: ProofOfAddress.Type;
             }
 
             export interface ProofOfRegistration {
@@ -39525,7 +39612,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: ProofOfRegistration.Type;
             }
 
             export interface ProofOfUltimateBeneficialOwnership {
@@ -39542,7 +39629,31 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: ProofOfUltimateBeneficialOwnership.Type;
+            }
+
+            export namespace BankAccountOwnershipVerification {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyLicense {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyMemorandumOfAssociation {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyMinisterialDecree {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyRegistrationVerification {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyTaxIdVerification {
+              export type Type = 'files' | OtherString;
             }
 
             export namespace PrimaryVerification {
@@ -39557,6 +39668,12 @@ export namespace V2 {
                  */
                 front?: string;
               }
+
+              export type Type = 'front_back' | OtherString;
+            }
+
+            export namespace ProofOfAddress {
+              export type Type = 'files' | OtherString;
             }
 
             export namespace ProofOfRegistration {
@@ -39566,6 +39683,8 @@ export namespace V2 {
                  */
                 person: string;
               }
+
+              export type Type = 'files' | OtherString;
             }
 
             export namespace ProofOfUltimateBeneficialOwnership {
@@ -39575,6 +39694,8 @@ export namespace V2 {
                  */
                 person: string;
               }
+
+              export type Type = 'files' | OtherString;
             }
           }
 
@@ -39930,7 +40051,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyAuthorization.Type;
             }
 
             export interface Passport {
@@ -39942,7 +40063,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: Passport.Type;
             }
 
             export interface PrimaryVerification {
@@ -39954,7 +40075,7 @@ export namespace V2 {
               /**
                * The format of the verification document. Currently supports `front_back` only.
                */
-              type: 'front_back';
+              type: PrimaryVerification.Type;
             }
 
             export interface SecondaryVerification {
@@ -39966,7 +40087,7 @@ export namespace V2 {
               /**
                * The format of the verification document. Currently supports `front_back` only.
                */
-              type: 'front_back';
+              type: SecondaryVerification.Type;
             }
 
             export interface Visa {
@@ -39978,7 +40099,15 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: Visa.Type;
+            }
+
+            export namespace CompanyAuthorization {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace Passport {
+              export type Type = 'files' | OtherString;
             }
 
             export namespace PrimaryVerification {
@@ -39993,6 +40122,8 @@ export namespace V2 {
                  */
                 front?: string;
               }
+
+              export type Type = 'front_back' | OtherString;
             }
 
             export namespace SecondaryVerification {
@@ -40007,6 +40138,12 @@ export namespace V2 {
                  */
                 front?: string;
               }
+
+              export type Type = 'front_back' | OtherString;
+            }
+
+            export namespace Visa {
+              export type Type = 'files' | OtherString;
             }
           }
 

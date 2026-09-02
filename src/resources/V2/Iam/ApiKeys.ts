@@ -182,7 +182,7 @@ export namespace ApiKey {
     /**
      * The type of entity.
      */
-    type: 'application';
+    type: ManagedBy.Type;
   }
 
   export interface PublishableKey {
@@ -220,6 +220,8 @@ export namespace ApiKey {
        */
       id: string;
     }
+
+    export type Type = 'application' | OtherString;
   }
 
   export namespace SecretKey {

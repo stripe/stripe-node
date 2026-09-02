@@ -553,7 +553,7 @@ export namespace PaymentEvaluation {
   export namespace PaymentDetails {
     export interface MoneyMovementDetails {
       /**
-       * Describes card money movement details for the payment evaluation.
+       * Describes card money movement details.
        */
       card: MoneyMovementDetails.Card | null;
 
@@ -843,7 +843,7 @@ export namespace Radar {
     export namespace PaymentDetails {
       export interface MoneyMovementDetails {
         /**
-         * Describes card money movement details for the payment evaluation.
+         * Describes card money movement details.
          */
         card?: MoneyMovementDetails.Card;
 

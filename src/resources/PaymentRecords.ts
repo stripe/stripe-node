@@ -552,6 +552,8 @@ export namespace PaymentRecord {
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
+    sequra?: PaymentMethodDetails.Sequra;
+
     shopeepay?: PaymentMethodDetails.Shopeepay;
 
     sofort?: PaymentMethodDetails.Sofort;
@@ -1952,6 +1954,13 @@ export namespace PaymentRecord {
       mandate: string | null;
     }
 
+    export interface Sequra {
+      /**
+       * The SeQura transaction ID associated with this payment.
+       */
+      transaction_id: string | null;
+    }
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -2148,7 +2157,7 @@ export namespace PaymentRecord {
         /**
          * funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -2188,6 +2197,8 @@ export namespace PaymentRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
@@ -2388,7 +2399,6 @@ export namespace PaymentRecord {
         export type Result =
           | 'attempt_acknowledged'
           | 'authenticated'
-          | 'data_share_only'
           | 'exempted'
           | 'failed'
           | 'not_supported'
@@ -2918,7 +2928,7 @@ export namespace PaymentRecord {
         /**
          * Funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -2958,6 +2968,8 @@ export namespace PaymentRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
@@ -3187,6 +3199,11 @@ export interface PaymentRecordReportPaymentParams {
   payment_method_details: PaymentRecordReportPaymentParams.PaymentMethodDetails;
 
   /**
+   * Information about the payment attempt cancelation.
+   */
+  canceled?: PaymentRecordReportPaymentParams.Canceled;
+
+  /**
    * Customer information for this payment.
    */
   customer_details?: PaymentRecordReportPaymentParams.CustomerDetails;
@@ -3274,6 +3291,23 @@ export namespace PaymentRecordReportPaymentParams {
      * The type of the payment method details. An additional hash is included on the payment_method_details with a name matching this value. It contains additional information specific to the type.
      */
     type?: PaymentMethodDetails.Type;
+  }
+
+  export interface Canceled {
+    /**
+     * When the reported payment was canceled. Measured in seconds since the Unix epoch.
+     */
+    canceled_at: number;
+
+    /**
+     * Payment evaluations associated with this reported payment.
+     */
+    payment_evaluations?: Array<string>;
+
+    /**
+     * The reason the payment attempt was canceled.
+     */
+    reason?: Canceled.Reason;
   }
 
   export interface CustomerDetails {
@@ -3368,6 +3402,13 @@ export namespace PaymentRecordReportPaymentParams {
      * The shipping recipient's phone number.
      */
     phone?: string;
+  }
+
+  export namespace Canceled {
+    export type Reason =
+      | 'blocked_for_fraud'
+      | 'merchant_canceled'
+      | OtherString;
   }
 
   export namespace Failed {
@@ -3532,6 +3573,11 @@ export interface PaymentRecordReportPaymentAttemptParams {
   initiated_at: number;
 
   /**
+   * Information about the payment attempt cancelation.
+   */
+  canceled?: PaymentRecordReportPaymentAttemptParams.Canceled;
+
+  /**
    * An arbitrary string attached to the object. Often useful for displaying to users.
    */
   description?: string;
@@ -3572,6 +3618,23 @@ export interface PaymentRecordReportPaymentAttemptParams {
   shipping_details?: PaymentRecordReportPaymentAttemptParams.ShippingDetails;
 }
 export namespace PaymentRecordReportPaymentAttemptParams {
+  export interface Canceled {
+    /**
+     * When the reported payment was canceled. Measured in seconds since the Unix epoch.
+     */
+    canceled_at: number;
+
+    /**
+     * Payment evaluations associated with this reported payment.
+     */
+    payment_evaluations?: Array<string>;
+
+    /**
+     * The reason the payment attempt was canceled.
+     */
+    reason?: Canceled.Reason;
+  }
+
   export interface Failed {
     /**
      * When the reported payment failed. Measured in seconds since the Unix epoch.
@@ -3655,6 +3718,13 @@ export namespace PaymentRecordReportPaymentAttemptParams {
      * The shipping recipient's phone number.
      */
     phone?: string;
+  }
+
+  export namespace Canceled {
+    export type Reason =
+      | 'blocked_for_fraud'
+      | 'merchant_canceled'
+      | OtherString;
   }
 
   export namespace Failed {
@@ -3827,7 +3897,10 @@ export interface PaymentRecordReportPaymentAttemptCanceledParams {
   /**
    * The reason the payment attempt was canceled.
    */
-  reason?: 'blocked_for_fraud';
+  reason?: PaymentRecordReportPaymentAttemptCanceledParams.Reason;
+}
+export namespace PaymentRecordReportPaymentAttemptCanceledParams {
+  export type Reason = 'blocked_for_fraud' | 'merchant_canceled' | OtherString;
 }
 export interface PaymentRecordReportPaymentAttemptFailedParams {
   /**

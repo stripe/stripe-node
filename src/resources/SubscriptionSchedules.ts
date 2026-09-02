@@ -976,7 +976,7 @@ export namespace SubscriptionSchedule {
         /**
          * The type of pause settings.
          */
-        type: 'subscription';
+        type: Settings.Type;
       }
 
       export interface Status {
@@ -999,6 +999,8 @@ export namespace SubscriptionSchedule {
           | 'invoice'
           | 'pending_invoice_item'
           | OtherString;
+
+        export type Type = 'subscription' | OtherString;
 
         export namespace BillFor {
           export interface OutstandingUsageThrough {
@@ -2244,7 +2246,7 @@ export namespace SubscriptionScheduleCreateParams {
         /**
          * The pause type. Currently only `subscription` is supported.
          */
-        type?: 'subscription';
+        type?: Settings.Type;
       }
 
       export namespace PauseAt {
@@ -2268,6 +2270,8 @@ export namespace SubscriptionScheduleCreateParams {
           | 'invoice'
           | 'pending_invoice_item'
           | OtherString;
+
+        export type Type = 'subscription' | OtherString;
 
         export namespace BillFor {
           export interface OutstandingUsageThrough {
@@ -3716,7 +3720,7 @@ export namespace SubscriptionScheduleUpdateParams {
         /**
          * The pause type. Currently only `subscription` is supported.
          */
-        type?: 'subscription';
+        type?: Settings.Type;
       }
 
       export namespace PauseAt {
@@ -3740,6 +3744,8 @@ export namespace SubscriptionScheduleUpdateParams {
           | 'invoice'
           | 'pending_invoice_item'
           | OtherString;
+
+        export type Type = 'subscription' | OtherString;
 
         export namespace BillFor {
           export interface OutstandingUsageThrough {

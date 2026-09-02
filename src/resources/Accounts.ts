@@ -1002,6 +1002,11 @@ export namespace Account {
     sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
     /**
+     * The status of the SeQura capability of the account, or whether the account can directly process SeQura payments.
+     */
+    sequra_payments?: Capabilities.SequraPayments;
+
+    /**
      * The status of the ShopeePay capability of the account, or whether the account can directly process ShopeePay payments.
      */
     shopeepay_payments?: Capabilities.ShopeepayPayments;
@@ -1717,6 +1722,12 @@ export namespace Account {
       | OtherString;
 
     export type SepaDebitPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
+
+    export type SequraPayments =
       | 'active'
       | 'inactive'
       | 'pending'

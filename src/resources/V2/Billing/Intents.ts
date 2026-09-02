@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Decimal, OtherString, MetadataParam} from '../../../shared.js';
+import {OtherString, Decimal, MetadataParam} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {ActionResource} from './Intents/Actions.js';
 import {Stripe} from '../../../stripe.core.js';
@@ -772,7 +772,7 @@ export namespace V2 {
             /**
              * The entity that the discount rule applies to, for example, the cadence.
              */
-            applies_to: 'cadence';
+            applies_to: InvoiceDiscountRule.AppliesTo;
 
             /**
              * Configuration for percentage off discount.
@@ -782,7 +782,7 @@ export namespace V2 {
             /**
              * Type of the discount rule.
              */
-            type: 'percent_off';
+            type: InvoiceDiscountRule.Type;
           }
 
           export interface SpendModifierRule {
@@ -799,7 +799,7 @@ export namespace V2 {
             /**
              * Type of the spend modifier.
              */
-            type: 'max_billing_period_spend';
+            type: SpendModifierRule.Type;
           }
 
           export type Type =
@@ -822,6 +822,8 @@ export namespace V2 {
           }
 
           export namespace InvoiceDiscountRule {
+            export type AppliesTo = 'cadence' | OtherString;
+
             export interface PercentOff {
               /**
                * The maximum number of times this discount can be applied for this cadence.
@@ -834,12 +836,18 @@ export namespace V2 {
               percent_off: Decimal;
             }
 
+            export type Type = 'percent_off' | OtherString;
+
             export namespace PercentOff {
               export interface MaximumApplications {
                 /**
                  * The type of maximum applications configuration.
                  */
-                type: 'indefinite';
+                type: MaximumApplications.Type;
+              }
+
+              export namespace MaximumApplications {
+                export type Type = 'indefinite' | OtherString;
               }
             }
           }
@@ -856,6 +864,8 @@ export namespace V2 {
                */
               custom_pricing_unit_overage_rate: MaxBillingPeriodSpend.CustomPricingUnitOverageRate;
             }
+
+            export type Type = 'max_billing_period_spend' | OtherString;
 
             export namespace MaxBillingPeriodSpend {
               export interface Amount {

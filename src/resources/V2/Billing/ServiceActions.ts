@@ -341,7 +341,7 @@ export namespace ServiceAction {
       /**
        * The type of the expiry configuration. We currently support `end_of_service_period`.
        */
-      type: 'end_of_service_period';
+      type: ExpiryConfig.Type;
     }
 
     export namespace Amount {
@@ -375,8 +375,16 @@ export namespace ServiceAction {
         /**
          * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
          */
-        price_type?: 'metered';
+        price_type?: Scope.PriceType;
       }
+
+      export namespace Scope {
+        export type PriceType = 'metered' | OtherString;
+      }
+    }
+
+    export namespace ExpiryConfig {
+      export type Type = 'end_of_service_period' | OtherString;
     }
   }
 
@@ -411,7 +419,7 @@ export namespace ServiceAction {
       /**
        * The type of the expiry configuration. We currently support `end_of_service_period`.
        */
-      type: 'end_of_service_period';
+      type: ExpiryConfig.Type;
     }
 
     export namespace Amount {
@@ -445,8 +453,16 @@ export namespace ServiceAction {
         /**
          * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
          */
-        price_type?: 'metered';
+        price_type?: Scope.PriceType;
       }
+
+      export namespace Scope {
+        export type PriceType = 'metered' | OtherString;
+      }
+    }
+
+    export namespace ExpiryConfig {
+      export type Type = 'end_of_service_period' | OtherString;
     }
   }
 }
@@ -592,7 +608,7 @@ export namespace V2 {
           /**
            * The type of the expiry configuration. We currently support `end_of_service_period`.
            */
-          type: 'end_of_service_period';
+          type: ExpiryConfig.Type;
         }
 
         export namespace Amount {
@@ -621,8 +637,16 @@ export namespace V2 {
             /**
              * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
              */
-            price_type?: 'metered';
+            price_type?: Scope.PriceType;
           }
+
+          export namespace Scope {
+            export type PriceType = 'metered' | OtherString;
+          }
+        }
+
+        export namespace ExpiryConfig {
+          export type Type = 'end_of_service_period' | OtherString;
         }
       }
 
@@ -657,7 +681,7 @@ export namespace V2 {
           /**
            * The type of the expiry configuration. We currently support `end_of_service_period`.
            */
-          type: 'end_of_service_period';
+          type: ExpiryConfig.Type;
         }
 
         export interface GrantCondition {
@@ -669,7 +693,7 @@ export namespace V2 {
           /**
            * The type of the grant condition. We currently support `meter_event_first_per_period`.
            */
-          type: 'meter_event_first_per_period';
+          type: GrantCondition.Type;
         }
 
         export namespace Amount {
@@ -698,8 +722,16 @@ export namespace V2 {
             /**
              * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
              */
-            price_type?: 'metered';
+            price_type?: Scope.PriceType;
           }
+
+          export namespace Scope {
+            export type PriceType = 'metered' | OtherString;
+          }
+        }
+
+        export namespace ExpiryConfig {
+          export type Type = 'end_of_service_period' | OtherString;
         }
 
         export namespace GrantCondition {
@@ -712,6 +744,8 @@ export namespace V2 {
             >;
           }
 
+          export type Type = 'meter_event_first_per_period' | OtherString;
+
           export namespace MeterEventFirstPerPeriod {
             export interface MeterSegmentCondition {
               /**
@@ -722,7 +756,7 @@ export namespace V2 {
               /**
                * The type of the meter segment condition. We currently support `dimension`.
                */
-              type: 'dimension';
+              type: MeterSegmentCondition.Type;
             }
 
             export namespace MeterSegmentCondition {
@@ -737,6 +771,8 @@ export namespace V2 {
                  */
                 value: string;
               }
+
+              export type Type = 'dimension' | OtherString;
             }
           }
         }

@@ -24,6 +24,7 @@ import {AuthorizationResource as IssuingAuthorizations} from './resources/Issuin
 import {AuthorizationResource as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {BatchJobResource as V2CoreBatchJobs} from './resources/V2/Core/BatchJobs.js';
 import {BillSettingResource as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
+import {BillingEvaluationResource as RadarBillingEvaluations} from './resources/Radar/BillingEvaluations.js';
 import {BlocklistEntryResource as IdentityBlocklistEntries} from './resources/Identity/BlocklistEntries.js';
 import {BusinessProfileResource as V2NetworkBusinessProfiles} from './resources/V2/Network/BusinessProfiles.js';
 import {CadenceResource as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
@@ -61,6 +62,7 @@ import {EventResource as V2CoreEvents} from './resources/V2/Core/Events.js';
 import {FeatureResource as EntitlementsFeatures} from './resources/Entitlements/Features.js';
 import {FeeBatchResource as V2CoreFeeBatches} from './resources/V2/Core/FeeBatches.js';
 import {FeeEntryResource as V2CoreFeeEntries} from './resources/V2/Core/FeeEntries.js';
+import {FeedbackOptionResource as BillingFeedbackOptions} from './resources/Billing/FeedbackOptions.js';
 import {FinancialAccountResource as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
 import {FinancialAccountResource as V2MoneyManagementFinancialAccounts} from './resources/V2/MoneyManagement/FinancialAccounts.js';
 import {FinancialAddressResource as V2MoneyManagementFinancialAddresses} from './resources/V2/MoneyManagement/FinancialAddresses.js';
@@ -82,6 +84,7 @@ import {InboundTransferResource as TreasuryInboundTransfers} from './resources/T
 import {InboundTransferResource as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
 import {InquiryResource as V2RiskInquiries} from './resources/V2/Risk/Inquiries.js';
 import {InstitutionResource as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
+import {IntegrationConfigurationResource as V2TaxIntegrationConfigurations} from './resources/V2/Tax/IntegrationConfigurations.js';
 import {IntentResource as V2BillingIntents} from './resources/V2/Billing/Intents.js';
 import {IssuedTokenResource as SharedPaymentIssuedTokens} from './resources/SharedPayment/IssuedTokens.js';
 import {IssuingAuthorizationEvaluationResource as RadarIssuingAuthorizationEvaluations} from './resources/Radar/IssuingAuthorizationEvaluations.js';
@@ -120,6 +123,8 @@ import {OutboundTransferResource as V2MoneyManagementOutboundTransfers} from './
 import {PaymentAttemptResource as OrchestrationPaymentAttempts} from './resources/Orchestration/PaymentAttempts.js';
 import {PaymentEvaluationResource as RadarPaymentEvaluations} from './resources/Radar/PaymentEvaluations.js';
 import {PaymentIntentResource as TestHelpersPaymentIntents} from './resources/TestHelpers/PaymentIntents.js';
+import {PaymentRetryEvaluationResource as V2SignalsPaymentRetryEvaluations} from './resources/V2/Signals/PaymentRetryEvaluations.js';
+import {PaymentRetrySignalResource as V2SignalsPaymentRetrySignals} from './resources/V2/Signals/PaymentRetrySignals.js';
 import {PayoutIntentResource as V2MoneyManagementPayoutIntents} from './resources/V2/MoneyManagement/PayoutIntents.js';
 import {PayoutMethodResource as V2MoneyManagementPayoutMethods} from './resources/V2/MoneyManagement/PayoutMethods.js';
 import {PayoutMethodsBankAccountSpecResource as V2MoneyManagementPayoutMethodsBankAccountSpec} from './resources/V2/MoneyManagement/PayoutMethodsBankAccountSpec.js';
@@ -259,6 +264,7 @@ export const Billing = resourceNamespace('billing', {
   CreditBalanceSummary: BillingCreditBalanceSummary,
   CreditBalanceTransactions: BillingCreditBalanceTransactions,
   CreditGrants: BillingCreditGrants,
+  FeedbackOptions: BillingFeedbackOptions,
   MeterEventAdjustments: BillingMeterEventAdjustments,
   MeterEvents: BillingMeterEvents,
   Meters: BillingMeters,
@@ -337,6 +343,7 @@ export const ProductCatalog = resourceNamespace('productCatalog', {
 });
 export const Radar = resourceNamespace('radar', {
   AccountEvaluations: RadarAccountEvaluations,
+  BillingEvaluations: RadarBillingEvaluations,
   CustomerEvaluations: RadarCustomerEvaluations,
   EarlyFraudWarnings: RadarEarlyFraudWarnings,
   IssuingAuthorizationEvaluations: RadarIssuingAuthorizationEvaluations,
@@ -525,8 +532,11 @@ export const V2 = resourceNamespace('v2', {
     AccountActivity: V2SignalsAccountActivity,
     AccountEvaluations: V2SignalsAccountEvaluations,
     AccountSignals: V2SignalsAccountSignals,
+    PaymentRetryEvaluations: V2SignalsPaymentRetryEvaluations,
+    PaymentRetrySignals: V2SignalsPaymentRetrySignals,
   }),
   Tax: resourceNamespace('tax', {
+    IntegrationConfigurations: V2TaxIntegrationConfigurations,
     ManualRules: V2TaxManualRules,
     Operations: V2TaxOperations,
   }),

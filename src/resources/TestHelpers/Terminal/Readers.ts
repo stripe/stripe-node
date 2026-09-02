@@ -131,7 +131,7 @@ export namespace TestHelpers {
         /**
          * The brand of the gift card.
          */
-        brand: 'svs';
+        brand: GiftCard.Brand;
 
         /**
          * Simulated track 2 data for the gift card payment method.
@@ -152,6 +152,10 @@ export namespace TestHelpers {
         | 'gift_card'
         | 'interac_present'
         | OtherString;
+
+      export namespace GiftCard {
+        export type Brand = 'svs' | OtherString;
+      }
     }
   }
 }

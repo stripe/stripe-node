@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {OtherString} from '../../../shared.js';
+import {RangeQueryParam, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ApprovalRequestResource extends StripeResource {
@@ -40,6 +40,22 @@ export class ApprovalRequestResource extends StripeResource {
     ) as any;
   }
   /**
+   * POST /v2/core/approval_requests/:id
+   * Updates a pending approval request's mutable fields.
+   */
+  update(
+    id: string,
+    params?: V2.Core.ApprovalRequestUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<ApprovalRequest>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/approval_requests/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
    * POST /v2/core/approval_requests/:id/cancel
    * Cancels a pending approval request.
    */
@@ -51,38 +67,6 @@ export class ApprovalRequestResource extends StripeResource {
     return this._makeRequest(
       'POST',
       `/v2/core/approval_requests/${encodeURIComponent(id)}/cancel`,
-      params,
-      options
-    ) as any;
-  }
-  /**
-   * POST /v2/core/approval_requests/:id/execute
-   * Executes an approved approval request.
-   */
-  execute(
-    id: string,
-    params?: V2.Core.ApprovalRequestExecuteParams,
-    options?: RequestOptions
-  ): Promise<Response<ApprovalRequest>> {
-    return this._makeRequest(
-      'POST',
-      `/v2/core/approval_requests/${encodeURIComponent(id)}/execute`,
-      params,
-      options
-    ) as any;
-  }
-  /**
-   * POST /v2/core/approval_requests/:id/submit
-   * Moves a pending approval request into the reviewer queue for auto-execution upon approval.
-   */
-  submit(
-    id: string,
-    params?: V2.Core.ApprovalRequestSubmitParams,
-    options?: RequestOptions
-  ): Promise<Response<ApprovalRequest>> {
-    return this._makeRequest(
-      'POST',
-      `/v2/core/approval_requests/${encodeURIComponent(id)}/submit`,
       params,
       options
     ) as any;
@@ -115,11 +99,6 @@ export interface ApprovalRequest {
   dashboard_url?: string;
 
   /**
-   * A description of the approval request.
-   */
-  description?: string;
-
-  /**
    * The timestamp at which this ApprovalRequest will expire.
    */
   expires_at: string;
@@ -128,6 +107,11 @@ export interface ApprovalRequest {
    * Whether this ApprovalRequest is livemode.
    */
   livemode: boolean;
+
+  /**
+   * Context provided by the requester (e.g. an agent) to help reviewers evaluate the request.
+   */
+  reason?: string;
 
   /**
    * The requester of this ApprovalRequest.
@@ -181,14 +165,19 @@ export namespace ApprovalRequest {
 
   export interface RequestedBy {
     /**
-     * Stripe-defined identifier for the requester (e.g. a restricted API key token).
+     * Present when `type` is `api_key`.
      */
-    id: string;
+    api_key?: RequestedBy.ApiKey;
 
     /**
-     * Merchant-defined name for the requester.
+     * The type of actor that made the request.
      */
-    name?: string;
+    type: RequestedBy.Type;
+
+    /**
+     * Present when `type` is `user`.
+     */
+    user?: RequestedBy.User;
   }
 
   export interface Review {
@@ -289,6 +278,11 @@ export namespace ApprovalRequest {
 
   export interface StatusTransitions {
     /**
+     * Timestamp when the approval request was approved.
+     */
+    approved_at?: string;
+
+    /**
      * Timestamp when the approval request was canceled.
      */
     canceled_at?: string;
@@ -309,14 +303,32 @@ export namespace ApprovalRequest {
     rejected_at?: string;
 
     /**
-     * Timestamp when the approval request moved to requires_execution status.
-     */
-    requires_execution_at?: string;
-
-    /**
      * Timestamp when the approval request succeeded.
      */
     succeeded_at?: string;
+  }
+
+  export namespace RequestedBy {
+    export interface ApiKey {
+      /**
+       * Stripe-defined identifier for the API key (e.g. a restricted API key token).
+       */
+      id: string;
+
+      /**
+       * Merchant-defined name for the API key.
+       */
+      name?: string;
+    }
+
+    export type Type = 'api_key' | 'user' | OtherString;
+
+    export interface User {
+      /**
+       * Email address of the dashboard user.
+       */
+      email: string;
+    }
   }
 
   export namespace Review {
@@ -324,14 +336,42 @@ export namespace ApprovalRequest {
 
     export interface ReviewedBy {
       /**
-       * Stripe-defined identifier for the reviewer (e.g. a restricted API key token).
+       * Present when `type` is `api_key`.
        */
-      id: string;
+      api_key?: ReviewedBy.ApiKey;
 
       /**
-       * Merchant-defined name for the reviewer.
+       * The type of actor that reviewed the request.
        */
-      name: string;
+      type: ReviewedBy.Type;
+
+      /**
+       * Present when `type` is `user`.
+       */
+      user?: ReviewedBy.User;
+    }
+
+    export namespace ReviewedBy {
+      export interface ApiKey {
+        /**
+         * Stripe-defined identifier for the API key (e.g. a restricted API key token).
+         */
+        id: string;
+
+        /**
+         * Merchant-defined name for the API key.
+         */
+        name?: string;
+      }
+
+      export type Type = 'api_key' | 'user' | OtherString;
+
+      export interface User {
+        /**
+         * Email address of the dashboard user.
+         */
+        email: string;
+      }
     }
   }
 
@@ -442,31 +482,41 @@ export namespace V2 {
 }
 export namespace V2 {
   export namespace Core {
+    export interface ApprovalRequestUpdateParams {
+      /**
+       * The updated reason for the approval request.
+       */
+      reason?: string;
+    }
+  }
+}
+export namespace V2 {
+  export namespace Core {
     export interface ApprovalRequestListParams {
+      /**
+       * Filter by action type (e.g. "refund.create", "payment_intent.create", "payout.create").
+       */
+      action?: string;
+
+      /**
+       * Filter by creation time.
+       */
+      created?: RangeQueryParam;
+
       /**
        * Maximum number of results to return.
        */
       limit?: number;
+
+      /**
+       * Filter by approval request status (e.g. "requires_review", "approved", "succeeded", "failed", "rejected", "canceled", "expired").
+       */
+      status?: string;
     }
   }
 }
 export namespace V2 {
   export namespace Core {
     export interface ApprovalRequestCancelParams {}
-  }
-}
-export namespace V2 {
-  export namespace Core {
-    export interface ApprovalRequestExecuteParams {}
-  }
-}
-export namespace V2 {
-  export namespace Core {
-    export interface ApprovalRequestSubmitParams {
-      /**
-       * The reason for submitting the approval request.
-       */
-      reason?: string;
-    }
   }
 }

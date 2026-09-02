@@ -409,9 +409,19 @@ export interface CustomerSessionCreateParams {
 export namespace CustomerSessionCreateParams {
   export interface Components {
     /**
+     * Configuration for active entitlements.
+     */
+    active_entitlements?: Components.ActiveEntitlements;
+
+    /**
      * Configuration for buy button.
      */
     buy_button?: Components.BuyButton;
+
+    /**
+     * Configuration for customer portal.
+     */
+    customer_portal?: Components.CustomerPortal;
 
     /**
      * Configuration for the customer sheet.
@@ -440,9 +450,23 @@ export namespace CustomerSessionCreateParams {
   }
 
   export namespace Components {
+    export interface ActiveEntitlements {
+      /**
+       * Whether the active entitlements is enabled.
+       */
+      enabled: boolean;
+    }
+
     export interface BuyButton {
       /**
        * Whether the buy button is enabled.
+       */
+      enabled: boolean;
+    }
+
+    export interface CustomerPortal {
+      /**
+       * Whether the customer portal is enabled.
        */
       enabled: boolean;
     }

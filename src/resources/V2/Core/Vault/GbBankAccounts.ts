@@ -163,6 +163,11 @@ export interface GbBankAccount {
   livemode: boolean;
 
   /**
+   * Whether the GB Bank Account is currently unusable for money movement, despite potentially being correctly set up. Please reach out to Stripe Support for more information.
+   */
+  restricted: boolean;
+
+  /**
    * The Sort Code of the bank account.
    */
   sort_code?: string;

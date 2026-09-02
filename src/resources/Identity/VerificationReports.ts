@@ -197,9 +197,19 @@ export namespace VerificationReport {
 
   export interface Email {
     /**
+     * Confidence that the provided address matches the email records.
+     */
+    address_match_confidence?: Email.AddressMatchConfidence;
+
+    /**
      * Additional email verification details
      */
     details?: Email.Details;
+
+    /**
+     * Two-letter country code of the email domain's country.
+     */
+    domain_country?: string;
 
     /**
      * Email to be verified.
@@ -207,9 +217,34 @@ export namespace VerificationReport {
     email: string | null;
 
     /**
+     * Confidence that the email address exists.
+     */
+    email_exists_confidence?: Email.EmailExistsConfidence;
+
+    /**
      * Details on the verification error. Present when status is `unverified`.
      */
     error: Email.Error | null;
+
+    /**
+     * Confidence that the provided name matches the email records.
+     */
+    name_match_confidence?: Email.NameMatchConfidence;
+
+    /**
+     * The observed number of days the email domain has existed.
+     */
+    observed_domain_tenure_days?: number;
+
+    /**
+     * The observed number of days the email address has existed.
+     */
+    observed_email_tenure_days?: number;
+
+    /**
+     * Confidence that the provided phone matches the email records.
+     */
+    phone_match_confidence?: Email.PhoneMatchConfidence;
 
     /**
      * Status of this `email` check.
@@ -262,9 +297,34 @@ export namespace VerificationReport {
 
   export interface Phone {
     /**
+     * Confidence that the provided address matches the phone records.
+     */
+    address_match_confidence?: Phone.AddressMatchConfidence;
+
+    /**
+     * The phone carrier.
+     */
+    carrier?: string;
+
+    /**
      * Details on the verification error. Present when status is `unverified`.
      */
     error: Phone.Error | null;
+
+    /**
+     * The type of phone line.
+     */
+    line_type?: Phone.LineType;
+
+    /**
+     * Confidence that the provided name matches the phone records.
+     */
+    name_match_confidence?: Phone.NameMatchConfidence;
+
+    /**
+     * The observed number of days the person has owned the phone number.
+     */
+    observed_phone_tenure_days?: number;
 
     /**
      * Phone to be verified.
@@ -396,6 +456,13 @@ export namespace VerificationReport {
   }
 
   export namespace Email {
+    export type AddressMatchConfidence =
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'unknown'
+      | OtherString;
+
     export interface Details {
       /**
        * Number of days from the time when the email domain was first observed to the time of verification.
@@ -413,6 +480,13 @@ export namespace VerificationReport {
       domain_country?: string;
     }
 
+    export type EmailExistsConfidence =
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'unknown'
+      | OtherString;
+
     export interface Error {
       /**
        * A short machine-readable string giving the reason for the verification failure.
@@ -425,10 +499,29 @@ export namespace VerificationReport {
       reason: string | null;
     }
 
+    export type NameMatchConfidence =
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'unknown'
+      | OtherString;
+
+    export type PhoneMatchConfidence =
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'unknown'
+      | OtherString;
+
     export type Status = 'unverified' | 'verified' | OtherString;
 
     export namespace Error {
       export type Code =
+        | 'email_address_mismatch'
+        | 'email_name_mismatch'
+        | 'email_ownership_unverified'
+        | 'email_phone_mismatch'
+        | 'email_short_tenure'
         | 'email_unverified_other'
         | 'email_verification_declined'
         | OtherString;
@@ -513,6 +606,13 @@ export namespace VerificationReport {
   }
 
   export namespace Phone {
+    export type AddressMatchConfidence =
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'unknown'
+      | OtherString;
+
     export interface Error {
       /**
        * A short machine-readable string giving the reason for the verification failure.
@@ -525,10 +625,26 @@ export namespace VerificationReport {
       reason: string | null;
     }
 
+    export type LineType = 'landline' | 'mobile' | 'voip' | OtherString;
+
+    export type NameMatchConfidence =
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'unknown'
+      | OtherString;
+
     export type Status = 'unverified' | 'verified' | OtherString;
 
     export namespace Error {
       export type Code =
+        | 'phone_address_mismatch'
+        | 'phone_invalid'
+        | 'phone_invalid_line_type'
+        | 'phone_name_mismatch'
+        | 'phone_ownership_unverified'
+        | 'phone_short_tenure'
+        | 'phone_unsupported_country'
         | 'phone_unverified_other'
         | 'phone_verification_declined'
         | OtherString;

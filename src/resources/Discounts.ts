@@ -3,6 +3,7 @@
 import {Customer, DeletedCustomer} from './Customers.js';
 import {PromotionCode} from './PromotionCodes.js';
 import {Coupon} from './Coupons.js';
+import {OtherString} from '../shared.js';
 import {RequestOptions} from '../lib.js';
 export interface Discount {
   /**
@@ -157,7 +158,11 @@ export namespace DeletedDiscount {
     /**
      * The source type of the discount.
      */
-    type: 'coupon';
+    type: Source.Type;
+  }
+
+  export namespace Source {
+    export type Type = 'coupon' | OtherString;
   }
 }
 export namespace Discount {
@@ -182,6 +187,10 @@ export namespace Discount {
     /**
      * The source type of the discount.
      */
-    type: 'coupon';
+    type: Source.Type;
+  }
+
+  export namespace Source {
+    export type Type = 'coupon' | OtherString;
   }
 }

@@ -350,6 +350,8 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.core.health.issuing_authorization_request_timeout.resolved',
   'v2.core.health.meter_event_summaries_delayed.firing',
   'v2.core.health.meter_event_summaries_delayed.resolved',
+  'v2.core.health.metronome_notification_latency.firing',
+  'v2.core.health.metronome_notification_latency.resolved',
   'v2.core.health.payment_method_error.firing',
   'v2.core.health.payment_method_error.resolved',
   'v2.core.health.sepa_debit_delayed.firing',
@@ -408,6 +410,11 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.money_management.outbound_transfer.returned',
   'v2.money_management.outbound_transfer.under_review',
   'v2.money_management.outbound_transfer.updated',
+  'v2.money_management.payout_intent.canceled',
+  'v2.money_management.payout_intent.created',
+  'v2.money_management.payout_intent.posted',
+  'v2.money_management.payout_intent.processing',
+  'v2.money_management.payout_intent.requires_action',
   'v2.money_management.payout_method.created',
   'v2.money_management.payout_method.updated',
   'v2.money_management.received_credit.available',
@@ -465,6 +472,7 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.signals.account_signal.fraudulent_website_ready',
   'v2.signals.account_signal.merchant_delinquency_ready',
   'v2.signals.account_signal.payment_delinquency_exposure_ready',
+  'v2.signals.payment_retry_evaluations.retry_recommended',
   // event-types: The end of the section generated from our OpenAPI spec
 ]);
 

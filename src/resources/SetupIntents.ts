@@ -159,7 +159,7 @@ export interface SetupIntent {
   /**
    * The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this list when determining the payment methods to offer.
    */
-  allowed_payment_method_types?: Array<
+  allowed_payment_method_types: Array<
     SetupIntent.AllowedPaymentMethodType
   > | null;
 
@@ -400,6 +400,7 @@ export namespace SetupIntent {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -483,6 +484,7 @@ export namespace SetupIntent {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -742,6 +744,7 @@ export namespace SetupIntent {
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
+      | 'authentication_failure'
       | 'authentication_required'
       | 'balance_insufficient'
       | 'balance_invalid_parameter'
@@ -754,6 +757,7 @@ export namespace SetupIntent {
       | 'bank_account_verification_failed'
       | 'billing_invalid_mandate'
       | 'bitcoin_upgrade_required'
+      | 'capability_not_active'
       | 'capture_charge_authorization_expired'
       | 'capture_unauthorized_payment'
       | 'card_decline_rate_limit_exceeded'
@@ -778,6 +782,7 @@ export namespace SetupIntent {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'expired_payment_method'
       | 'failed_tax_calculation'
       | 'financial_account_balance_does_not_support_currency'
       | 'financial_account_capability_not_enabled'
@@ -797,6 +802,7 @@ export namespace SetupIntent {
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'
+      | 'incorrect_postal_code'
       | 'incorrect_zip'
       | 'india_recurring_payment_mandate_canceled'
       | 'instant_payouts_config_disabled'
@@ -806,6 +812,7 @@ export namespace SetupIntent {
       | 'insufficient_funds'
       | 'intent_invalid_state'
       | 'intent_verification_method_missing'
+      | 'invalid_canceled_subscription_fields'
       | 'invalid_card_type'
       | 'invalid_characters'
       | 'invalid_charge_amount'
@@ -865,6 +872,7 @@ export namespace SetupIntent {
       | 'payment_method_not_available'
       | 'payment_method_provider_decline'
       | 'payment_method_provider_timeout'
+      | 'payment_method_restricted'
       | 'payment_method_unactivated'
       | 'payment_method_unexpected_state'
       | 'payment_method_unsupported_type'
@@ -1094,6 +1102,8 @@ export namespace SetupIntent {
 
     export interface BacsDebit {
       mandate_options?: BacsDebit.MandateOptions;
+
+      verification_method?: BacsDebit.VerificationMethod;
     }
 
     export interface Bizum {}
@@ -1241,6 +1251,8 @@ export namespace SetupIntent {
          */
         reference_prefix?: string;
       }
+
+      export type VerificationMethod = 'automatic' | 'payer_name_verification';
     }
 
     export namespace Card {
@@ -1721,11 +1733,6 @@ export interface SetupIntentCreateParams {
   payment_method_options?: SetupIntentCreateParams.PaymentMethodOptions;
 
   /**
-   * The list of payment method types (for example, card) that this SetupIntent can use. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
-   */
-  payment_method_types?: Array<string>;
-
-  /**
    * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. To redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter can only be used with [`confirm=true`](https://docs.stripe.com/api/setup_intents/create#create_setup_intent-confirm).
    */
   return_url?: string;
@@ -1841,6 +1848,7 @@ export namespace SetupIntentCreateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -1918,6 +1926,7 @@ export namespace SetupIntentCreateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -2800,6 +2809,7 @@ export namespace SetupIntentCreateParams {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -3098,6 +3108,8 @@ export namespace SetupIntentCreateParams {
        * Additional fields for Mandate creation
        */
       mandate_options?: BacsDebit.MandateOptions;
+
+      verification_method?: BacsDebit.VerificationMethod;
     }
 
     export interface Bizum {}
@@ -3295,6 +3307,8 @@ export namespace SetupIntentCreateParams {
          */
         reference_prefix?: Emptyable<string>;
       }
+
+      export type VerificationMethod = 'automatic' | 'payer_name_verification';
     }
 
     export namespace Card {
@@ -4027,11 +4041,6 @@ export interface SetupIntentUpdateParams {
   payment_method_options?: SetupIntentUpdateParams.PaymentMethodOptions;
 
   /**
-   * The list of payment method types (for example, card) that this SetupIntent can set up. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
-   */
-  payment_method_types?: Array<string>;
-
-  /**
    * Provides industry-specific information about the SetupIntent.
    */
   setup_details?: SetupIntentUpdateParams.SetupDetails;
@@ -4125,6 +4134,7 @@ export namespace SetupIntentUpdateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -4188,6 +4198,7 @@ export namespace SetupIntentUpdateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -5003,6 +5014,7 @@ export namespace SetupIntentUpdateParams {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -5301,6 +5313,8 @@ export namespace SetupIntentUpdateParams {
        * Additional fields for Mandate creation
        */
       mandate_options?: BacsDebit.MandateOptions;
+
+      verification_method?: BacsDebit.VerificationMethod;
     }
 
     export interface Bizum {}
@@ -5498,6 +5512,8 @@ export namespace SetupIntentUpdateParams {
          */
         reference_prefix?: Emptyable<string>;
       }
+
+      export type VerificationMethod = 'automatic' | 'payer_name_verification';
     }
 
     export namespace Card {
@@ -6334,6 +6350,7 @@ export namespace SetupIntentConfirmParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -7193,6 +7210,7 @@ export namespace SetupIntentConfirmParams {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -7491,6 +7509,8 @@ export namespace SetupIntentConfirmParams {
        * Additional fields for Mandate creation
        */
       mandate_options?: BacsDebit.MandateOptions;
+
+      verification_method?: BacsDebit.VerificationMethod;
     }
 
     export interface Bizum {}
@@ -7688,6 +7708,8 @@ export namespace SetupIntentConfirmParams {
          */
         reference_prefix?: Emptyable<string>;
       }
+
+      export type VerificationMethod = 'automatic' | 'payer_name_verification';
     }
 
     export namespace Card {

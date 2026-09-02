@@ -2,16 +2,31 @@
 
 import {RequestOptions} from '../lib.js';
 export interface CustomerTaxExemption {
+  /**
+   * Unique identifier for the object.
+   */
   id: string;
 
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
   object: 'customer_tax_exemption';
 
   ca?: CustomerTaxExemption.Ca;
 
+  /**
+   * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+   */
   country: string;
 
+  /**
+   * Time at which the object was created. Measured in seconds since the Unix epoch.
+   */
   created: number;
 
+  /**
+   * ID of the customer this tax exemption belongs to.
+   */
   customer: string;
 
   /**
@@ -29,6 +44,9 @@ export interface CustomerTaxExemption {
    */
   expiration_date: string | null;
 
+  /**
+   * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
+   */
   livemode: boolean;
 
   us?: CustomerTaxExemption.Us;

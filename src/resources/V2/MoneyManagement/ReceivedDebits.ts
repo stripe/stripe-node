@@ -141,6 +141,11 @@ export interface ReceivedDebit {
 export namespace ReceivedDebit {
   export interface BalanceTransfer {
     /**
+     * The ID of the v1 account that received the balance transfer.
+     */
+    to_account?: string;
+
+    /**
      * The ID of the topup object that originated the ReceivedDebit.
      */
     topup?: string;
@@ -148,7 +153,7 @@ export namespace ReceivedDebit {
     /**
      * Open Enum. The type of balance transfer that originated the ReceivedDebit.
      */
-    type: 'topup';
+    type: BalanceTransfer.Type;
   }
 
   export interface BankTransfer {
@@ -283,6 +288,10 @@ export namespace ReceivedDebit {
     | 'stripe_balance_payment'
     | OtherString;
 
+  export namespace BalanceTransfer {
+    export type Type = 'topup' | OtherString;
+  }
+
   export namespace BankTransfer {
     export interface GbBankAccount {
       /**
@@ -303,7 +312,7 @@ export namespace ReceivedDebit {
       /**
        * Open Enum. The bank network the debit was originated on.
        */
-      network: 'bacs';
+      network: GbBankAccount.Network;
 
       /**
        * The ID of the mandate associated with this debit.
@@ -335,12 +344,20 @@ export namespace ReceivedDebit {
       /**
        * Open Enum. The bank network the debit was originated on.
        */
-      network: 'ach';
+      network: UsBankAccount.Network;
 
       /**
        * The routing number of the bank that originated the debit.
        */
       routing_number?: string;
+    }
+
+    export namespace GbBankAccount {
+      export type Network = 'bacs' | OtherString;
+    }
+
+    export namespace UsBankAccount {
+      export type Network = 'ach' | OtherString;
     }
   }
 
@@ -382,7 +399,7 @@ export namespace ReceivedDebit {
       /**
        * Open Enum. The reason the ReceivedDebit was returned.
        */
-      reason: 'originator_initiated';
+      reason: Returned.Reason;
     }
 
     export namespace Failed {
@@ -393,6 +410,10 @@ export namespace ReceivedDebit {
         | 'no_mandate'
         | 'stripe_rejected'
         | OtherString;
+    }
+
+    export namespace Returned {
+      export type Reason = 'originator_initiated' | OtherString;
     }
   }
 }

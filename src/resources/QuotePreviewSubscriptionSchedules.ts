@@ -717,7 +717,7 @@ export namespace QuotePreviewSubscriptionSchedule {
         /**
          * The type of pause settings.
          */
-        type: 'subscription';
+        type: Settings.Type;
       }
 
       export interface Status {
@@ -740,6 +740,8 @@ export namespace QuotePreviewSubscriptionSchedule {
           | 'invoice'
           | 'pending_invoice_item'
           | OtherString;
+
+        export type Type = 'subscription' | OtherString;
 
         export namespace BillFor {
           export interface OutstandingUsageThrough {

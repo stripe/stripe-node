@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {OtherString} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 import {DeletedObject} from './../../V2/DeletedObject.js';
 
@@ -73,6 +73,18 @@ export interface AccountActivity {
   account_evaluation?: string;
 
   /**
+   * Details for the account restriction. Present only when type is account_restricted. The activity
+   * requires an existing account_details.account or account_details.customer; inline data is unsupported.
+   */
+  account_restricted?: AccountActivity.AccountRestricted;
+
+  /**
+   * Details for the account suspension. Present only when type is account_suspended. The activity
+   * requires an existing account_details.customer; account_details.account and inline data are unsupported.
+   */
+  account_suspended?: AccountActivity.AccountSuspended;
+
+  /**
    * Timestamp at which the account activity was created.
    */
   created: string;
@@ -91,6 +103,11 @@ export interface AccountActivity {
    * Details for the login decision. Present only when type is login_decision.
    */
   login_decision?: AccountActivity.LoginDecision;
+
+  /**
+   * Additional information about the activity.
+   */
+  metadata?: Metadata;
 
   /**
    * Timestamp at which the activity occurred. Defaults to the created time if not provided.
@@ -130,6 +147,20 @@ export namespace AccountActivity {
     data?: AccountDetails.Data;
   }
 
+  export interface AccountRestricted {
+    /**
+     * The reason the account or customer was restricted.
+     */
+    reason: AccountRestricted.Reason;
+  }
+
+  export interface AccountSuspended {
+    /**
+     * The reason the customer was suspended.
+     */
+    reason: AccountSuspended.Reason;
+  }
+
   export interface LoginAttempt {
     /**
      * Client details captured for the attempt.
@@ -159,6 +190,8 @@ export namespace AccountActivity {
   }
 
   export type Type =
+    | 'account_restricted'
+    | 'account_suspended'
     | 'login_attempt'
     | 'login_decision'
     | 'registration_attempt'
@@ -221,6 +254,14 @@ export namespace AccountActivity {
         }
       }
     }
+  }
+
+  export namespace AccountRestricted {
+    export type Reason = 'abuse' | 'other' | OtherString;
+  }
+
+  export namespace AccountSuspended {
+    export type Reason = 'abuse' | 'other' | OtherString;
   }
 
   export namespace LoginAttempt {
@@ -316,6 +357,18 @@ export namespace V2 {
       account_evaluation?: string;
 
       /**
+       * Details for the account restriction. Provide only when type is account_restricted. The activity
+       * requires an existing account_details.account or account_details.customer; inline data is unsupported.
+       */
+      account_restricted?: AccountActivityCreateParams.AccountRestricted;
+
+      /**
+       * Details for the account suspension. Provide only when type is account_suspended. The activity
+       * requires an existing account_details.customer; account_details.account and inline data are unsupported.
+       */
+      account_suspended?: AccountActivityCreateParams.AccountSuspended;
+
+      /**
        * Details for the login attempt. Provide only when type is login_attempt.
        */
       login_attempt?: AccountActivityCreateParams.LoginAttempt;
@@ -324,6 +377,11 @@ export namespace V2 {
        * Details for the login decision. Provide only when type is login_decision.
        */
       login_decision?: AccountActivityCreateParams.LoginDecision;
+
+      /**
+       * Additional information about the activity.
+       */
+      metadata?: MetadataParam;
 
       /**
        * Timestamp at which the activity occurred. Defaults to the created time if not provided.
@@ -343,6 +401,8 @@ export namespace V2 {
 
     export namespace AccountActivityCreateParams {
       export type Type =
+        | 'account_restricted'
+        | 'account_suspended'
         | 'login_attempt'
         | 'login_decision'
         | 'registration_attempt'
@@ -364,6 +424,20 @@ export namespace V2 {
          * Inline account data to evaluate without creating a v2 account.
          */
         data?: AccountDetails.Data;
+      }
+
+      export interface AccountRestricted {
+        /**
+         * The reason the account or customer was restricted.
+         */
+        reason: AccountRestricted.Reason;
+      }
+
+      export interface AccountSuspended {
+        /**
+         * The reason the customer was suspended.
+         */
+        reason: AccountSuspended.Reason;
       }
 
       export interface LoginAttempt {
@@ -450,6 +524,14 @@ export namespace V2 {
             }
           }
         }
+      }
+
+      export namespace AccountRestricted {
+        export type Reason = 'abuse' | 'other' | OtherString;
+      }
+
+      export namespace AccountSuspended {
+        export type Reason = 'abuse' | 'other' | OtherString;
       }
 
       export namespace LoginAttempt {

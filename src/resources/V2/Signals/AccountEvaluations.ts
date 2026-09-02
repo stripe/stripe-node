@@ -306,7 +306,6 @@ export namespace AccountEvaluation {
         | 'highest'
         | 'low'
         | 'normal'
-        | 'not_assessed'
         | 'unknown';
     }
 
@@ -316,7 +315,6 @@ export namespace AccountEvaluation {
         | 'highest'
         | 'low'
         | 'normal'
-        | 'not_assessed'
         | 'unknown';
     }
 
@@ -326,7 +324,6 @@ export namespace AccountEvaluation {
         | 'highest'
         | 'low'
         | 'normal'
-        | 'not_assessed'
         | 'unknown';
     }
   }
@@ -425,6 +422,8 @@ export namespace V2 {
           }
 
           export type Type =
+            | 'account_restricted'
+            | 'account_suspended'
             | 'login_attempt'
             | 'login_decision'
             | 'registration_attempt'

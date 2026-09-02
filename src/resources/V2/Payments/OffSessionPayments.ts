@@ -680,7 +680,7 @@ export namespace V2 {
         /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
-        type: 'card';
+        type: PaymentMethodData.Type;
       }
 
       export interface PaymentMethodOptions {
@@ -849,6 +849,8 @@ export namespace V2 {
            */
           number?: string;
         }
+
+        export type Type = 'card' | OtherString;
       }
 
       export namespace PaymentMethodOptions {

@@ -439,7 +439,7 @@ export namespace PricingPlanSubscription {
     /**
      * System-generated reason for cancellation.
      */
-    reason?: 'cancellation_requested';
+    reason?: CancellationDetails.Reason;
   }
 
   export type CollectionStatus =
@@ -570,6 +570,8 @@ export namespace PricingPlanSubscription {
       | 'too_expensive'
       | 'unused'
       | OtherString;
+
+    export type Reason = 'cancellation_requested' | OtherString;
   }
 
   export namespace DiscountDetail {
@@ -872,7 +874,7 @@ export namespace PricingPlanSubscription {
           /**
            * The type of the expiry configuration. We currently support `end_of_service_period`.
            */
-          type: 'end_of_service_period';
+          type: ExpiryConfig.Type;
         }
 
         export namespace Amount {
@@ -906,8 +908,16 @@ export namespace PricingPlanSubscription {
             /**
              * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
              */
-            price_type?: 'metered';
+            price_type?: Scope.PriceType;
           }
+
+          export namespace Scope {
+            export type PriceType = 'metered' | OtherString;
+          }
+        }
+
+        export namespace ExpiryConfig {
+          export type Type = 'end_of_service_period' | OtherString;
         }
       }
 
@@ -940,7 +950,7 @@ export namespace PricingPlanSubscription {
           /**
            * The type of the expiry configuration. We currently support `end_of_service_period`.
            */
-          type: 'end_of_service_period';
+          type: ExpiryConfig.Type;
         }
 
         export namespace Amount {
@@ -974,8 +984,16 @@ export namespace PricingPlanSubscription {
             /**
              * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
              */
-            price_type?: 'metered';
+            price_type?: Scope.PriceType;
           }
+
+          export namespace Scope {
+            export type PriceType = 'metered' | OtherString;
+          }
+        }
+
+        export namespace ExpiryConfig {
+          export type Type = 'end_of_service_period' | OtherString;
         }
       }
 
@@ -1071,7 +1089,7 @@ export namespace V2 {
         /**
          * A string identifying the type of the payer. Currently the only supported value is `customer`.
          */
-        type: 'customer';
+        type: Payer.Type;
       }
 
       export type ServicingStatus =
@@ -1079,6 +1097,10 @@ export namespace V2 {
         | 'canceled'
         | 'paused'
         | 'pending';
+
+      export namespace Payer {
+        export type Type = 'customer' | OtherString;
+      }
     }
   }
 }

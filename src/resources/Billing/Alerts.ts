@@ -499,7 +499,7 @@ export namespace Alert {
     /**
      * Defines the period over which spend is aggregated.
      */
-    aggregation_period: 'billing';
+    aggregation_period: SpendThreshold.AggregationPeriod;
 
     /**
      * Filters to scope the spend calculation.
@@ -644,6 +644,8 @@ export namespace Alert {
   }
 
   export namespace SpendThreshold {
+    export type AggregationPeriod = 'billing' | OtherString;
+
     export interface Filters {
       /**
        * Filter by billing cadence ID.
@@ -818,7 +820,7 @@ export namespace Billing {
       /**
        * Defines the period over which spend is aggregated.
        */
-      aggregation_period: 'billing';
+      aggregation_period: SpendThreshold.AggregationPeriod;
 
       /**
        * Filters to scope the spend calculation.
@@ -981,6 +983,8 @@ export namespace Billing {
     }
 
     export namespace SpendThreshold {
+      export type AggregationPeriod = 'billing' | OtherString;
+
       export interface Filters {
         /**
          * Filter by billable item IDs. Maximum of 20 billable items.

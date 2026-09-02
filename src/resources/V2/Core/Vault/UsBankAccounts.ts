@@ -185,6 +185,11 @@ export interface UsBankAccount {
   livemode: boolean;
 
   /**
+   * Whether the US Bank Account is currently unusable for money movement, despite potentially being correctly set up. Please reach out to Stripe Support for more information.
+   */
+  restricted: boolean;
+
+  /**
    * The ACH routing number of the bank account.
    */
   routing_number?: string;

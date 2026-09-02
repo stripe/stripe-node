@@ -354,7 +354,7 @@ export namespace ReceivedCredit {
       /**
        * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
        */
-      network: 'acss';
+      network: CaBankAccount.Network;
     }
 
     export interface EuBankAccount {
@@ -381,7 +381,7 @@ export namespace ReceivedCredit {
       /**
        * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
        */
-      network: 'sepa';
+      network: EuBankAccount.Network;
     }
 
     export interface GbBankAccount {
@@ -430,7 +430,7 @@ export namespace ReceivedCredit {
       /**
        * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
        */
-      network: 'spei';
+      network: MxBankAccount.Network;
     }
 
     export type OriginType =
@@ -472,7 +472,7 @@ export namespace ReceivedCredit {
       /**
        * The money transmission network used to send funds for this ReceivedCredit.
        */
-      network: 'sepa_credit_transfer';
+      network: SepaBankAccount.Network;
     }
 
     export interface UsBankAccount {
@@ -502,8 +502,24 @@ export namespace ReceivedCredit {
       routing_number?: string;
     }
 
+    export namespace CaBankAccount {
+      export type Network = 'acss' | OtherString;
+    }
+
+    export namespace EuBankAccount {
+      export type Network = 'sepa' | OtherString;
+    }
+
     export namespace GbBankAccount {
       export type Network = 'chaps' | 'fps' | OtherString;
+    }
+
+    export namespace MxBankAccount {
+      export type Network = 'spei' | OtherString;
+    }
+
+    export namespace SepaBankAccount {
+      export type Network = 'sepa_credit_transfer' | OtherString;
     }
 
     export namespace UsBankAccount {
@@ -582,7 +598,7 @@ export namespace ReceivedCredit {
       /**
        * Open Enum. The `returned` status reason.
        */
-      reason: 'originator_initiated_reversal';
+      reason: Returned.Reason;
     }
 
     export namespace Failed {
@@ -592,6 +608,10 @@ export namespace ReceivedCredit {
         | 'financial_address_inactive'
         | 'stripe_rejected'
         | OtherString;
+    }
+
+    export namespace Returned {
+      export type Reason = 'originator_initiated_reversal' | OtherString;
     }
   }
 
@@ -605,7 +625,11 @@ export namespace ReceivedCredit {
       /**
        * Open Enum. The type of the sender.
        */
-      type: 'network_business_profile';
+      type: From.Type;
+    }
+
+    export namespace From {
+      export type Type = 'network_business_profile' | OtherString;
     }
   }
 }

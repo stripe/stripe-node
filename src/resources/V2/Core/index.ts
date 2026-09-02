@@ -118,9 +118,8 @@ export declare namespace Core {
   export {AccountToken, AccountTokenResource};
   export import ApprovalRequestListParams = V2Namespace4.Core.ApprovalRequestListParams;
   export import ApprovalRequestRetrieveParams = V2Namespace4.Core.ApprovalRequestRetrieveParams;
+  export import ApprovalRequestUpdateParams = V2Namespace4.Core.ApprovalRequestUpdateParams;
   export import ApprovalRequestCancelParams = V2Namespace4.Core.ApprovalRequestCancelParams;
-  export import ApprovalRequestExecuteParams = V2Namespace4.Core.ApprovalRequestExecuteParams;
-  export import ApprovalRequestSubmitParams = V2Namespace4.Core.ApprovalRequestSubmitParams;
   export {ApprovalRequest, ApprovalRequestResource};
   export import BatchJobCreateParams = V2Namespace5.Core.BatchJobCreateParams;
   export import BatchJobRetrieveParams = V2Namespace5.Core.BatchJobRetrieveParams;

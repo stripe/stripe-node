@@ -408,7 +408,7 @@ export interface PaymentIntent {
   /**
    * The list of payment method types allowed for use with this payment. Stripe automatically returns compatible payment methods from this list in the `payment_method_types` field of the response, based on the other PaymentIntent parameters, such as `currency`, `amount`, and `customer`.
    */
-  allowed_payment_method_types?: Array<
+  allowed_payment_method_types: Array<
     PaymentIntent.AllowedPaymentMethodType
   > | null;
 
@@ -795,6 +795,7 @@ export namespace PaymentIntent {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -919,6 +920,7 @@ export namespace PaymentIntent {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -1282,6 +1284,8 @@ export namespace PaymentIntent {
 
     sepa_debit?: PaymentMethodOptions.SepaDebit;
 
+    sequra?: PaymentMethodOptions.Sequra;
+
     shopeepay?: PaymentMethodOptions.Shopeepay;
 
     sofort?: PaymentMethodOptions.Sofort;
@@ -1609,6 +1613,7 @@ export namespace PaymentIntent {
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
+      | 'authentication_failure'
       | 'authentication_required'
       | 'balance_insufficient'
       | 'balance_invalid_parameter'
@@ -1621,6 +1626,7 @@ export namespace PaymentIntent {
       | 'bank_account_verification_failed'
       | 'billing_invalid_mandate'
       | 'bitcoin_upgrade_required'
+      | 'capability_not_active'
       | 'capture_charge_authorization_expired'
       | 'capture_unauthorized_payment'
       | 'card_decline_rate_limit_exceeded'
@@ -1645,6 +1651,7 @@ export namespace PaymentIntent {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'expired_payment_method'
       | 'failed_tax_calculation'
       | 'financial_account_balance_does_not_support_currency'
       | 'financial_account_capability_not_enabled'
@@ -1664,6 +1671,7 @@ export namespace PaymentIntent {
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'
+      | 'incorrect_postal_code'
       | 'incorrect_zip'
       | 'india_recurring_payment_mandate_canceled'
       | 'instant_payouts_config_disabled'
@@ -1673,6 +1681,7 @@ export namespace PaymentIntent {
       | 'insufficient_funds'
       | 'intent_invalid_state'
       | 'intent_verification_method_missing'
+      | 'invalid_canceled_subscription_fields'
       | 'invalid_card_type'
       | 'invalid_characters'
       | 'invalid_charge_amount'
@@ -1732,6 +1741,7 @@ export namespace PaymentIntent {
       | 'payment_method_not_available'
       | 'payment_method_provider_decline'
       | 'payment_method_provider_timeout'
+      | 'payment_method_restricted'
       | 'payment_method_unactivated'
       | 'payment_method_unexpected_state'
       | 'payment_method_unsupported_type'
@@ -4501,6 +4511,8 @@ export namespace PaymentIntent {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+
+      verification_method?: BacsDebit.VerificationMethod;
     }
 
     export interface Bancontact {
@@ -5361,6 +5373,24 @@ export namespace PaymentIntent {
       target_date?: string;
     }
 
+    export interface Sequra {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
     export interface Shopeepay {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -5546,7 +5576,7 @@ export namespace PaymentIntent {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -5637,6 +5667,8 @@ export namespace PaymentIntent {
         | 'off_session'
         | 'on_session'
         | OtherString;
+
+      export type VerificationMethod = 'automatic' | 'payer_name_verification';
     }
 
     export namespace Bancontact {
@@ -6605,6 +6637,8 @@ export namespace PaymentIntent {
         | 'mini_program'
         | 'web'
         | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -6813,11 +6847,6 @@ export interface PaymentIntentCreateParams {
   payment_method_options?: PaymentIntentCreateParams.PaymentMethodOptions;
 
   /**
-   * The list of payment method types (for example, a card) that this PaymentIntent can use. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
-   */
-  payment_method_types?: Array<string>;
-
-  /**
    * When you enable this parameter, this PaymentIntent will route your payment to processors that you configure in the dashboard.
    */
   payments_orchestration?: PaymentIntentCreateParams.PaymentsOrchestration;
@@ -6982,6 +7011,7 @@ export namespace PaymentIntentCreateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -7110,6 +7140,7 @@ export namespace PaymentIntentCreateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -10974,6 +11005,7 @@ export namespace PaymentIntentCreateParams {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -11428,6 +11460,8 @@ export namespace PaymentIntentCreateParams {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+
+      verification_method?: BacsDebit.VerificationMethod;
     }
 
     export interface Bancontact {
@@ -12738,7 +12772,7 @@ export namespace PaymentIntentCreateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -12833,6 +12867,8 @@ export namespace PaymentIntentCreateParams {
         | 'off_session'
         | 'on_session'
         | OtherString;
+
+      export type VerificationMethod = 'automatic' | 'payer_name_verification';
     }
 
     export namespace Bancontact {
@@ -15302,6 +15338,8 @@ export namespace PaymentIntentCreateParams {
         | 'mini_program'
         | 'web'
         | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -15448,11 +15486,6 @@ export interface PaymentIntentUpdateParams {
   payment_method_options?: PaymentIntentUpdateParams.PaymentMethodOptions;
 
   /**
-   * The list of payment method types (for example, card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
-   */
-  payment_method_types?: Array<string>;
-
-  /**
    * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
    */
   receipt_email?: Emptyable<string>;
@@ -15593,6 +15626,7 @@ export namespace PaymentIntentUpdateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -15705,6 +15739,7 @@ export namespace PaymentIntentUpdateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -19509,6 +19544,7 @@ export namespace PaymentIntentUpdateParams {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -19963,6 +19999,8 @@ export namespace PaymentIntentUpdateParams {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+
+      verification_method?: BacsDebit.VerificationMethod;
     }
 
     export interface Bancontact {
@@ -21273,7 +21311,7 @@ export namespace PaymentIntentUpdateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -21368,6 +21406,8 @@ export namespace PaymentIntentUpdateParams {
         | 'off_session'
         | 'on_session'
         | OtherString;
+
+      export type VerificationMethod = 'automatic' | 'payer_name_verification';
     }
 
     export namespace Bancontact {
@@ -23837,6 +23877,8 @@ export namespace PaymentIntentUpdateParams {
         | 'mini_program'
         | 'web'
         | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -26611,11 +26653,6 @@ export interface PaymentIntentConfirmParams {
   payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
 
   /**
-   * The list of payment method types (for example, a card) that this PaymentIntent can use. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
-   */
-  payment_method_types?: Array<string>;
-
-  /**
    * Options to configure Radar. Learn more about [Radar Sessions](https://docs.stripe.com/radar/radar-session).
    */
   radar_options?: PaymentIntentConfirmParams.RadarOptions;
@@ -26751,6 +26788,7 @@ export namespace PaymentIntentConfirmParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'touch_n_go'
     | 'truemoney'
     | 'twint'
     | 'upi'
@@ -26863,6 +26901,7 @@ export namespace PaymentIntentConfirmParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -30673,6 +30712,7 @@ export namespace PaymentIntentConfirmParams {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -31127,6 +31167,8 @@ export namespace PaymentIntentConfirmParams {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+
+      verification_method?: BacsDebit.VerificationMethod;
     }
 
     export interface Bancontact {
@@ -32437,7 +32479,7 @@ export namespace PaymentIntentConfirmParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -32532,6 +32574,8 @@ export namespace PaymentIntentConfirmParams {
         | 'off_session'
         | 'on_session'
         | OtherString;
+
+      export type VerificationMethod = 'automatic' | 'payer_name_verification';
     }
 
     export namespace Bancontact {
@@ -35001,6 +35045,8 @@ export namespace PaymentIntentConfirmParams {
         | 'mini_program'
         | 'web'
         | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 }

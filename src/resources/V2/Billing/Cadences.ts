@@ -421,7 +421,7 @@ export namespace Cadence {
     /**
      * The type of the discount.
      */
-    type: 'percent_off';
+    type: InvoiceDiscountRule.Type;
   }
 
   export interface Payer {
@@ -438,7 +438,7 @@ export namespace Cadence {
     /**
      * A string identifying the type of the payer. Currently the only supported value is `customer`.
      */
-    type: 'customer';
+    type: Payer.Type;
   }
 
   export interface Settings {
@@ -635,14 +635,24 @@ export namespace Cadence {
       percent_off: Decimal;
     }
 
+    export type Type = 'percent_off' | OtherString;
+
     export namespace PercentOff {
       export interface MaximumApplications {
         /**
          * Max applications type of this discount, ex: indefinite.
          */
-        type: 'indefinite';
+        type: MaximumApplications.Type;
+      }
+
+      export namespace MaximumApplications {
+        export type Type = 'indefinite' | OtherString;
       }
     }
+  }
+
+  export namespace Payer {
+    export type Type = 'customer' | OtherString;
   }
 
   export namespace Settings {
@@ -872,7 +882,7 @@ export namespace Cadence {
           /**
            * The funding method type to be used when there are not enough funds in the customer balance. Currently the only supported value is `bank_transfer`.
            */
-          funding_type?: 'bank_transfer';
+          funding_type?: CustomerBalance.FundingType;
         }
 
         export interface Konbini {}
@@ -960,6 +970,8 @@ export namespace Cadence {
              */
             type?: BankTransfer.Type;
           }
+
+          export type FundingType = 'bank_transfer' | OtherString;
 
           export namespace BankTransfer {
             export interface EuBankTransfer {
@@ -1496,7 +1508,11 @@ export namespace V2 {
         /**
          * A string identifying the type of the payer. Currently the only supported value is `customer`.
          */
-        type: 'customer';
+        type: Payer.Type;
+      }
+
+      export namespace Payer {
+        export type Type = 'customer' | OtherString;
       }
     }
   }

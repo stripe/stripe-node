@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Decimal} from '../../../shared.js';
+import {Decimal, OtherString} from '../../../shared.js';
 import {RequestOptions} from '../../../lib.js';
 export interface ContractPricingLineQuantityChange {
   /**
@@ -53,6 +53,10 @@ export namespace ContractPricingLineQuantityChange {
     /**
      * The type of pricing.
      */
-    type: 'price';
+    type: Pricing.Type;
+  }
+
+  export namespace Pricing {
+    export type Type = 'price' | OtherString;
   }
 }

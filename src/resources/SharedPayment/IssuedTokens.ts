@@ -212,6 +212,11 @@ export namespace IssuedToken {
     max_amount: number;
 
     /**
+     * The recurring schedule for the shared payment token's amount usage restrictions.
+     */
+    recurring?: UsageLimits.Recurring | null;
+
+    /**
      * The recurring interval at which the shared payment token's amount usage restrictions reset.
      */
     recurring_interval?: UsageLimits.RecurringInterval | null;
@@ -346,7 +351,23 @@ export namespace IssuedToken {
   }
 
   export namespace UsageLimits {
+    export interface Recurring {
+      /**
+       * The interval at which the shared payment token's amount usage restrictions reset.
+       */
+      interval: Recurring.Interval;
+
+      /**
+       * The number of intervals between each reset.
+       */
+      interval_count: number;
+    }
+
     export type RecurringInterval = 'month' | 'week' | 'year' | OtherString;
+
+    export namespace Recurring {
+      export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
+    }
   }
 }
 export namespace SharedPayment {
@@ -424,13 +445,34 @@ export namespace SharedPayment {
       max_amount: number;
 
       /**
+       * The recurring schedule for the shared payment token's amount usage restrictions.
+       */
+      recurring?: UsageLimits.Recurring;
+
+      /**
        * The recurring interval at which the shared payment token's amount usage restrictions reset.
        */
       recurring_interval?: UsageLimits.RecurringInterval;
     }
 
     export namespace UsageLimits {
+      export interface Recurring {
+        /**
+         * The interval at which the shared payment token's amount usage restrictions reset.
+         */
+        interval: Recurring.Interval;
+
+        /**
+         * The number of intervals between each reset. Defaults to 1.
+         */
+        interval_count?: number;
+      }
+
       export type RecurringInterval = 'month' | 'week' | 'year' | OtherString;
+
+      export namespace Recurring {
+        export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
+      }
     }
   }
 }

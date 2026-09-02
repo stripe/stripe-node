@@ -67,7 +67,7 @@ export interface PaymentLocationCapability {
   /**
    * The identifier for the capability.
    */
-  capability: 'fr_meal_vouchers_conecs_payments';
+  capability: PaymentLocationCapability.Capability;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -97,6 +97,8 @@ export interface PaymentLocationCapability {
   status: PaymentLocationCapability.Status;
 }
 export namespace PaymentLocationCapability {
+  export type Capability = 'fr_meal_vouchers_conecs_payments' | OtherString;
+
   export interface Requirements {
     /**
      * Fields that need to be collected to keep the capability enabled.
