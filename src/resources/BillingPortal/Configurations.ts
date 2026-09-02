@@ -597,6 +597,11 @@ export namespace BillingPortal {
           enabled: boolean;
 
           /**
+           * The IDs of custom feedback options to use for this cancellation reason.
+           */
+          feedback_options?: Emptyable<Array<string>>;
+
+          /**
            * Which cancellation reasons will be given as options to the customer.
            */
           options: Emptyable<Array<CancellationReason.Option>>;
@@ -921,6 +926,11 @@ export namespace BillingPortal {
            * Whether the feature is enabled.
            */
           enabled: boolean;
+
+          /**
+           * The IDs of custom feedback options to use for this cancellation reason.
+           */
+          feedback_options?: Emptyable<Array<string>>;
 
           /**
            * Which cancellation reasons will be given as options to the customer.

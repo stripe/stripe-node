@@ -585,6 +585,8 @@ export namespace Charge {
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
+    sequra?: PaymentMethodDetails.Sequra;
+
     shopeepay?: PaymentMethodDetails.Shopeepay;
 
     sofort?: PaymentMethodDetails.Sofort;
@@ -2075,6 +2077,13 @@ export namespace Charge {
       mandate: string | null;
     }
 
+    export interface Sequra {
+      /**
+       * The SeQura transaction ID associated with this payment.
+       */
+      transaction_id: string | null;
+    }
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -2590,7 +2599,6 @@ export namespace Charge {
         export type Result =
           | 'attempt_acknowledged'
           | 'authenticated'
-          | 'data_share_only'
           | 'exempted'
           | 'failed'
           | 'not_supported'

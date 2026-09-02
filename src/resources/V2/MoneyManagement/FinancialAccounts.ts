@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
+import {
+  MetadataParam,
+  OtherString,
+  Metadata,
+  Decimal,
+} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {StatementResource} from './FinancialAccounts/Statements.js';
 import {Stripe} from '../../../stripe.core.js';
@@ -27,6 +32,33 @@ export class FinancialAccountResource extends StripeResource {
       options,
       {
         methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  savings: {
+                    kind: 'object',
+                    fields: {
+                      interest: {
+                        kind: 'object',
+                        fields: {
+                          rate: {
+                            kind: 'object',
+                            fields: {percentage: {kind: 'decimal_string'}},
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       }
     ) as any;
   }
@@ -43,7 +75,28 @@ export class FinancialAccountResource extends StripeResource {
       'POST',
       '/v2/money_management/financial_accounts',
       params,
-      options
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            savings: {
+              kind: 'object',
+              fields: {
+                interest: {
+                  kind: 'object',
+                  fields: {
+                    rate: {
+                      kind: 'object',
+                      fields: {percentage: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
     ) as any;
   }
   /**
@@ -58,7 +111,28 @@ export class FinancialAccountResource extends StripeResource {
       'GET',
       `/v2/money_management/financial_accounts/${encodeURIComponent(id)}`,
       params,
-      options
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            savings: {
+              kind: 'object',
+              fields: {
+                interest: {
+                  kind: 'object',
+                  fields: {
+                    rate: {
+                      kind: 'object',
+                      fields: {percentage: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
     ) as any;
   }
   /**
@@ -73,7 +147,28 @@ export class FinancialAccountResource extends StripeResource {
       'POST',
       `/v2/money_management/financial_accounts/${encodeURIComponent(id)}`,
       params,
-      options
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            savings: {
+              kind: 'object',
+              fields: {
+                interest: {
+                  kind: 'object',
+                  fields: {
+                    rate: {
+                      kind: 'object',
+                      fields: {percentage: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
     ) as any;
   }
   /**
@@ -89,7 +184,28 @@ export class FinancialAccountResource extends StripeResource {
       'POST',
       `/v2/money_management/financial_accounts/${encodeURIComponent(id)}/close`,
       params,
-      options
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            savings: {
+              kind: 'object',
+              fields: {
+                interest: {
+                  kind: 'object',
+                  fields: {
+                    rate: {
+                      kind: 'object',
+                      fields: {percentage: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
     ) as any;
   }
 }
@@ -158,6 +274,11 @@ export interface FinancialAccount {
    * If this is a `payments` FinancialAccount, this hash include details specific to `payments` FinancialAccount.
    */
   payments?: FinancialAccount.Payments;
+
+  /**
+   * If this is a `savings` FinancialAccount, this hash includes details specific to `savings` FinancialAccounts.
+   */
+  savings?: FinancialAccount.Savings;
 
   /**
    * Closed Enum. An enum representing the status of the FinancialAccount. This indicates whether or not the FinancialAccount can be used for any money movement flows.
@@ -265,6 +386,18 @@ export namespace FinancialAccount {
     starting_balance?: Payments.StartingBalance;
   }
 
+  export interface Savings {
+    /**
+     * The currencies that this savings FinancialAccount can hold.
+     */
+    holds_currencies: Array<string>;
+
+    /**
+     * Interest details for this savings FinancialAccount. Populated by the server.
+     */
+    interest?: Savings.Interest;
+  }
+
   export type Status = 'closed' | 'open' | 'pending';
 
   export interface StatusDetails {
@@ -292,6 +425,7 @@ export namespace FinancialAccount {
     | 'multiprocessor_settlement'
     | 'other'
     | 'payments'
+    | 'savings'
     | 'storage';
 
   export namespace AccruedFees {
@@ -399,6 +533,33 @@ export namespace FinancialAccount {
     }
   }
 
+  export namespace Savings {
+    export interface Interest {
+      /**
+       * The interest rate applied to this savings FinancialAccount.
+       */
+      rate: Interest.Rate;
+    }
+
+    export namespace Interest {
+      export interface Rate {
+        /**
+         * Current variable rate, e.g. "3.00".
+         */
+        percentage: Decimal;
+
+        /**
+         * The period over which interest accrues.
+         */
+        period: Rate.Period;
+      }
+
+      export namespace Rate {
+        export type Period = 'annual' | OtherString;
+      }
+    }
+  }
+
   export namespace StatusDetails {
     export interface Closed {
       /**
@@ -452,13 +613,25 @@ export namespace V2 {
       metadata?: MetadataParam;
 
       /**
+       * Parameters specific to creating `savings` type FinancialAccounts.
+       */
+      savings?: FinancialAccountCreateParams.Savings;
+
+      /**
        * Parameters specific to creating `storage` type FinancialAccounts.
        */
       storage?: FinancialAccountCreateParams.Storage;
     }
 
     export namespace FinancialAccountCreateParams {
-      export type Type = 'credit' | 'storage';
+      export type Type = 'credit' | 'savings' | 'storage';
+
+      export interface Savings {
+        /**
+         * The currencies that this savings FinancialAccount can hold. Three-letter ISO currency code, in lowercase.
+         */
+        holds_currencies: Array<string>;
+      }
 
       export interface Storage {
         /**
@@ -551,6 +724,7 @@ export namespace V2 {
         | 'credit'
         | 'multiprocessor_settlement'
         | 'payments'
+        | 'savings'
         | 'storage'
         | OtherString;
     }

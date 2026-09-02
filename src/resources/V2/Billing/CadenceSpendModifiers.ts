@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../../../shared.js';
 import {RequestOptions} from '../../../lib.js';
 export interface CadenceSpendModifier {
   /**
@@ -35,7 +36,7 @@ export interface CadenceSpendModifier {
   /**
    * The type of the spend modifier.
    */
-  type: 'max_billing_period_spend';
+  type: CadenceSpendModifier.Type;
 }
 export namespace CadenceSpendModifier {
   export interface MaxBillingPeriodSpend {
@@ -65,6 +66,8 @@ export namespace CadenceSpendModifier {
     effective_until?: string;
   }
 
+  export type Type = 'max_billing_period_spend' | OtherString;
+
   export namespace MaxBillingPeriodSpend {
     export interface Amount {
       /**
@@ -75,7 +78,7 @@ export namespace CadenceSpendModifier {
       /**
        * The type of the spend modifier amount.
        */
-      type: 'custom_pricing_unit';
+      type: Amount.Type;
     }
 
     export interface CustomPricingUnitOverageRate {
@@ -97,6 +100,8 @@ export namespace CadenceSpendModifier {
          */
         value: string;
       }
+
+      export type Type = 'custom_pricing_unit' | OtherString;
     }
   }
 }

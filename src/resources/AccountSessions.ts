@@ -76,6 +76,11 @@ export namespace AccountSession {
 
     capital_financing_application?: Components.CapitalFinancingApplication | null;
 
+    /**
+     * Configuration for the [Capital financing manual payment](https://docs.stripe.com/connect/supported-embedded-components/capital-financing-manual-payment/) embedded component.
+     */
+    capital_financing_manual_payment?: Components.CapitalFinancingManualPayment | null;
+
     capital_financing_promotion?: Components.CapitalFinancingPromotion | null;
 
     /**
@@ -231,6 +236,15 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: CapitalFinancingApplication.Features;
+    }
+
+    export interface CapitalFinancingManualPayment {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: CapitalFinancingManualPayment.Features;
     }
 
     export interface CapitalFinancingPromotion {
@@ -574,6 +588,10 @@ export namespace AccountSession {
     }
 
     export namespace CapitalFinancingApplication {
+      export interface Features {}
+    }
+
+    export namespace CapitalFinancingManualPayment {
       export interface Features {}
     }
 
@@ -1936,7 +1954,12 @@ export namespace AccountSessionCreateParams {
     }
 
     export namespace PaymentMethodSettings {
-      export interface Features {}
+      export interface Features {
+        /**
+         * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. This is `false` by default.
+         */
+        disable_stripe_user_authentication?: boolean;
+      }
     }
 
     export namespace Payments {

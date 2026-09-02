@@ -202,7 +202,11 @@ export namespace SettlementAllocationIntent {
       /**
        * Open Enum. The `errored` status reason.
        */
-      reason_code: 'amount_mismatch';
+      reason_code: Errored.ReasonCode;
+    }
+
+    export namespace Errored {
+      export type ReasonCode = 'amount_mismatch' | OtherString;
     }
   }
 }

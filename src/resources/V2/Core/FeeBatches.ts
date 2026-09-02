@@ -134,6 +134,11 @@ export namespace FeeBatch {
     credit_transaction?: string;
 
     /**
+     * The ID of the associated crypto transaction.
+     */
+    crypto_transaction?: string;
+
+    /**
      * The ID of the associated v2 money management transaction.
      */
     money_management_transaction?: string;
@@ -215,6 +220,7 @@ export namespace FeeBatch {
     export type Type =
       | 'balance_transaction'
       | 'credit_transaction'
+      | 'crypto_transaction'
       | 'money_management_transaction'
       | 'payable_invoice'
       | OtherString;

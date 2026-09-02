@@ -59,6 +59,24 @@ export class PayoutMethodResource extends StripeResource {
     ) as any;
   }
   /**
+   * Disable a PayoutMethod object. The payout method will not be available for use in outbound money movement.
+   * To re-enable the payout method, create an OutboundSetupIntent
+   * using [`POST /v2/money_management/outbound_setup_intents`](https://docs.stripe.com/api/v2/money-management/outbound-setup-intents/create).
+   * @throws Stripe.CannotProceedError
+   */
+  disable(
+    id: string,
+    params?: V2.MoneyManagement.PayoutMethodDisableParams,
+    options?: RequestOptions
+  ): Promise<Response<PayoutMethod>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/payout_methods/${encodeURIComponent(id)}/disable`,
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Unarchive an PayoutMethod object.
    * @throws Stripe.ControlledByDashboardError
    * @throws Stripe.InvalidPayoutMethodError
@@ -140,7 +158,7 @@ export interface PayoutMethod {
   restricted: boolean;
 
   /**
-   * Closed Enum. The type of payout method.
+   * Open Enum. The type of payout method.
    */
   type: PayoutMethod.Type;
 
@@ -195,7 +213,7 @@ export namespace PayoutMethod {
     /**
      * List of enabled flows for this bank account (wire or local).
      */
-    enabled_delivery_options: Array<string>;
+    enabled_delivery_schemes: Array<string>;
 
     /**
      * The ID of the Financial Connections Account used to create the bank account.
@@ -299,11 +317,13 @@ export namespace PayoutMethod {
   export interface UsageStatus {
     /**
      * Payments status - used when sending OutboundPayments (sending funds to recipients).
+     * If disabled, enable the payout method by creating an OutboundSetupIntent using [`POST /v2/money_management/outbound_setup_intents`](https://docs.stripe.com/api/v2/money-management/outbound-setup-intents/create).
      */
     payments: UsageStatus.Payments;
 
     /**
      * Transfers status - used when making an OutboundTransfer (sending funds to yourself).
+     * If disabled, enable the payout method by creating an OutboundSetupIntent using [`POST /v2/money_management/outbound_setup_intents`](https://docs.stripe.com/api/v2/money-management/outbound-setup-intents/create).
      */
     transfers: UsageStatus.Transfers;
   }
@@ -331,9 +351,17 @@ export namespace PayoutMethod {
   }
 
   export namespace UsageStatus {
-    export type Payments = 'eligible' | 'invalid' | 'requires_action';
+    export type Payments =
+      | 'disabled'
+      | 'eligible'
+      | 'invalid'
+      | 'requires_action';
 
-    export type Transfers = 'eligible' | 'invalid' | 'requires_action';
+    export type Transfers =
+      | 'disabled'
+      | 'eligible'
+      | 'invalid'
+      | 'requires_action';
   }
 }
 export namespace V2 {
@@ -369,9 +397,17 @@ export namespace V2 {
       }
 
       export namespace UsageStatus {
-        export type Payment = 'eligible' | 'invalid' | 'requires_action';
+        export type Payment =
+          | 'disabled'
+          | 'eligible'
+          | 'invalid'
+          | 'requires_action';
 
-        export type Transfer = 'eligible' | 'invalid' | 'requires_action';
+        export type Transfer =
+          | 'disabled'
+          | 'eligible'
+          | 'invalid'
+          | 'requires_action';
       }
     }
   }
@@ -379,6 +415,11 @@ export namespace V2 {
 export namespace V2 {
   export namespace MoneyManagement {
     export interface PayoutMethodArchiveParams {}
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface PayoutMethodDisableParams {}
   }
 }
 export namespace V2 {

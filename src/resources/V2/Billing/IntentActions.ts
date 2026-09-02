@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Decimal, OtherString, Metadata} from '../../../shared.js';
+import {OtherString, Decimal, Metadata} from '../../../shared.js';
 import {RequestOptions} from '../../../lib.js';
 export interface IntentAction {
   /**
@@ -226,7 +226,7 @@ export namespace IntentAction {
       /**
        * The entity that the discount rule applies to, for example, the Billing Cadence.
        */
-      applies_to: 'cadence';
+      applies_to: InvoiceDiscountRule.AppliesTo;
 
       /**
        * The ID of the created discount rule. This is only present once the Billing Intent is committed and the discount rule is created.
@@ -241,7 +241,7 @@ export namespace IntentAction {
       /**
        * Type of the discount rule.
        */
-      type: 'percent_off';
+      type: InvoiceDiscountRule.Type;
     }
 
     export interface SpendModifierRule {
@@ -263,7 +263,7 @@ export namespace IntentAction {
       /**
        * Type of the spend modifier.
        */
-      type: 'max_billing_period_spend';
+      type: SpendModifierRule.Type;
     }
 
     export type Type =
@@ -286,6 +286,8 @@ export namespace IntentAction {
     }
 
     export namespace InvoiceDiscountRule {
+      export type AppliesTo = 'cadence' | OtherString;
+
       export interface PercentOff {
         /**
          * The maximum number of times this discount can be applied for this Billing Cadence.
@@ -298,12 +300,18 @@ export namespace IntentAction {
         percent_off: Decimal;
       }
 
+      export type Type = 'percent_off' | OtherString;
+
       export namespace PercentOff {
         export interface MaximumApplications {
           /**
            * The type of maximum applications configuration.
            */
-          type: 'indefinite';
+          type: MaximumApplications.Type;
+        }
+
+        export namespace MaximumApplications {
+          export type Type = 'indefinite' | OtherString;
         }
       }
     }
@@ -320,6 +328,8 @@ export namespace IntentAction {
          */
         custom_pricing_unit_overage_rate: MaxBillingPeriodSpend.CustomPricingUnitOverageRate;
       }
+
+      export type Type = 'max_billing_period_spend' | OtherString;
 
       export namespace MaxBillingPeriodSpend {
         export interface Amount {

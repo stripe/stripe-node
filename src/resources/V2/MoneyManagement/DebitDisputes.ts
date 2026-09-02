@@ -113,7 +113,7 @@ export interface DebitDispute {
   /**
    * The type of the DebitDispute.
    */
-  type: 'bank_transfer';
+  type: DebitDispute.Type;
 }
 export namespace DebitDispute {
   export interface BankTransfer {
@@ -157,6 +157,8 @@ export namespace DebitDispute {
     succeeded_at?: string;
   }
 
+  export type Type = 'bank_transfer' | OtherString;
+
   export namespace BankTransfer {
     export type Network = 'ach' | 'bacs' | OtherString;
 
@@ -177,7 +179,11 @@ export namespace DebitDispute {
       /**
        * The reason for the failure of the DebitDispute.
        */
-      reason: 'unknown';
+      reason: Failed.Reason;
+    }
+
+    export namespace Failed {
+      export type Reason = 'unknown' | OtherString;
     }
   }
 }

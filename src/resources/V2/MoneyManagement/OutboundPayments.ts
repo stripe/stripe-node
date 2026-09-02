@@ -145,7 +145,7 @@ export interface OutboundPayment {
   /**
    * The purpose of the OutboundPayment.
    */
-  purpose?: 'payroll';
+  purpose?: OutboundPayment.Purpose;
 
   /**
    * A link to the Stripe-hosted receipt for this OutboundPayment. The receipt link remains active for 60 days from the OutboundPayment creation date. After this period, the link will expire and the receipt url value will be null.
@@ -229,6 +229,8 @@ export namespace OutboundPayment {
      */
     financial_account: string;
   }
+
+  export type Purpose = 'payroll' | OtherString;
 
   export interface RecipientNotification {
     /**
@@ -384,7 +386,7 @@ export namespace OutboundPayment {
       /**
        * Open Enum. The `processing` status reason.
        */
-      reason: 'under_review';
+      reason: Processing.Reason;
     }
 
     export interface Returned {
@@ -409,6 +411,10 @@ export namespace OutboundPayment {
         | 'review_rejected'
         | 'unknown_failure'
         | OtherString;
+    }
+
+    export namespace Processing {
+      export type Reason = 'under_review' | OtherString;
     }
 
     export namespace Returned {
@@ -480,11 +486,13 @@ export namespace OutboundPayment {
             /**
              * The transaction purpose for this ACH payment.
              */
-            transaction_purpose?: 'payroll';
+            transaction_purpose?: Ach.TransactionPurpose;
           }
 
           export namespace Ach {
             export type Submission = 'next_day' | 'same_day' | OtherString;
+
+            export type TransactionPurpose = 'payroll' | OtherString;
           }
         }
       }
@@ -617,7 +625,7 @@ export namespace V2 {
       /**
        * The purpose of the OutboundPayment.
        */
-      purpose?: 'payroll';
+      purpose?: OutboundPaymentCreateParams.Purpose;
 
       /**
        * Details about the notification settings for the OutboundPayment recipient.
@@ -692,6 +700,8 @@ export namespace V2 {
          */
         speed?: DeliveryOptions.Speed;
       }
+
+      export type Purpose = 'payroll' | OtherString;
 
       export interface RecipientNotification {
         /**
@@ -793,11 +803,13 @@ export namespace V2 {
                 /**
                  * The transaction purpose for this ACH payment.
                  */
-                transaction_purpose?: 'payroll';
+                transaction_purpose?: Ach.TransactionPurpose;
               }
 
               export namespace Ach {
                 export type Submission = 'next_day' | 'same_day' | OtherString;
+
+                export type TransactionPurpose = 'payroll' | OtherString;
               }
             }
           }

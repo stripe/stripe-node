@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RangeQueryParam, Decimal, OtherString} from '../../../shared.js';
+import {OtherString, RangeQueryParam, Decimal} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class EventResource extends StripeResource {
@@ -130,7 +130,7 @@ export namespace Event {
     /**
      * Event reason type.
      */
-    type: 'request';
+    type: Reason.Type;
   }
 
   export namespace Reason {
@@ -150,6 +150,8 @@ export namespace Event {
        */
       idempotency_key: string;
     }
+
+    export type Type = 'request' | OtherString;
 
     export namespace Request {
       export interface Client {
@@ -216,7 +218,11 @@ export namespace V2 {
       /**
        * Additional fields to include in the response.
        */
-      include?: Array<'reason.request.client'>;
+      include?: Array<EventRetrieveParams.Include>;
+    }
+
+    export namespace EventRetrieveParams {
+      export type Include = 'reason.request.client' | OtherString;
     }
   }
 }
@@ -231,7 +237,7 @@ export namespace V2 {
       /**
        * Additional fields to include in the response.
        */
-      include?: Array<'reason.request.client'>;
+      include?: Array<EventListParams.Include>;
 
       /**
        * The page size.
@@ -247,6 +253,10 @@ export namespace V2 {
        * An array of up to 20 strings containing specific event names.
        */
       types?: Array<string>;
+    }
+
+    export namespace EventListParams {
+      export type Include = 'reason.request.client' | OtherString;
     }
   }
 }
@@ -637,6 +647,8 @@ export type Event =
   | V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEvent
   | V2CoreHealthMeterEventSummariesDelayedFiringEvent
   | V2CoreHealthMeterEventSummariesDelayedResolvedEvent
+  | V2CoreHealthMetronomeNotificationLatencyFiringEvent
+  | V2CoreHealthMetronomeNotificationLatencyResolvedEvent
   | V2CoreHealthPaymentMethodErrorFiringEvent
   | V2CoreHealthPaymentMethodErrorResolvedEvent
   | V2CoreHealthSepaDebitDelayedFiringEvent
@@ -695,6 +707,11 @@ export type Event =
   | V2MoneyManagementOutboundTransferReturnedEvent
   | V2MoneyManagementOutboundTransferUnderReviewEvent
   | V2MoneyManagementOutboundTransferUpdatedEvent
+  | V2MoneyManagementPayoutIntentCanceledEvent
+  | V2MoneyManagementPayoutIntentCreatedEvent
+  | V2MoneyManagementPayoutIntentPostedEvent
+  | V2MoneyManagementPayoutIntentProcessingEvent
+  | V2MoneyManagementPayoutIntentRequiresActionEvent
   | V2MoneyManagementPayoutMethodCreatedEvent
   | V2MoneyManagementPayoutMethodUpdatedEvent
   | V2MoneyManagementReceivedCreditAvailableEvent
@@ -751,7 +768,8 @@ export type Event =
   | V2SignalsAccountSignalFraudulentMerchantReadyEvent
   | V2SignalsAccountSignalFraudulentWebsiteReadyEvent
   | V2SignalsAccountSignalMerchantDelinquencyReadyEvent
-  | V2SignalsAccountSignalPaymentDelinquencyExposureReadyEvent;
+  | V2SignalsAccountSignalPaymentDelinquencyExposureReadyEvent
+  | V2SignalsPaymentRetryEvaluationsRetryRecommendedEvent;
 
 export type EventNotification =
   | V1AccountApplicationAuthorizedEventNotification
@@ -1080,6 +1098,8 @@ export type EventNotification =
   | V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEventNotification
   | V2CoreHealthMeterEventSummariesDelayedFiringEventNotification
   | V2CoreHealthMeterEventSummariesDelayedResolvedEventNotification
+  | V2CoreHealthMetronomeNotificationLatencyFiringEventNotification
+  | V2CoreHealthMetronomeNotificationLatencyResolvedEventNotification
   | V2CoreHealthPaymentMethodErrorFiringEventNotification
   | V2CoreHealthPaymentMethodErrorResolvedEventNotification
   | V2CoreHealthSepaDebitDelayedFiringEventNotification
@@ -1138,6 +1158,11 @@ export type EventNotification =
   | V2MoneyManagementOutboundTransferReturnedEventNotification
   | V2MoneyManagementOutboundTransferUnderReviewEventNotification
   | V2MoneyManagementOutboundTransferUpdatedEventNotification
+  | V2MoneyManagementPayoutIntentCanceledEventNotification
+  | V2MoneyManagementPayoutIntentCreatedEventNotification
+  | V2MoneyManagementPayoutIntentPostedEventNotification
+  | V2MoneyManagementPayoutIntentProcessingEventNotification
+  | V2MoneyManagementPayoutIntentRequiresActionEventNotification
   | V2MoneyManagementPayoutMethodCreatedEventNotification
   | V2MoneyManagementPayoutMethodUpdatedEventNotification
   | V2MoneyManagementReceivedCreditAvailableEventNotification
@@ -1194,7 +1219,8 @@ export type EventNotification =
   | V2SignalsAccountSignalFraudulentMerchantReadyEventNotification
   | V2SignalsAccountSignalFraudulentWebsiteReadyEventNotification
   | V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification
-  | V2SignalsAccountSignalPaymentDelinquencyExposureReadyEventNotification;
+  | V2SignalsAccountSignalPaymentDelinquencyExposureReadyEventNotification
+  | V2SignalsPaymentRetryEvaluationsRetryRecommendedEventNotification;
 
 import {StripeContext} from '../../../StripeContext.js';
 
@@ -7054,7 +7080,11 @@ export namespace V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpda
     /**
      * Open Enum. The capability which had its status updated.
      */
-    updated_capability: 'automatic_indirect_tax';
+    updated_capability: Data.UpdatedCapability;
+  }
+
+  export namespace Data {
+    export type UpdatedCapability = 'automatic_indirect_tax' | OtherString;
   }
 }
 
@@ -9604,7 +9634,11 @@ export namespace V2CoreHealthMeterEventSummariesDelayedFiringEvent {
       /**
        * The ingestion method.
        */
-      ingestion_method?: 'import_sets';
+      ingestion_method?: Impact.IngestionMethod;
+    }
+
+    export namespace Impact {
+      export type IngestionMethod = 'import_sets' | OtherString;
     }
   }
 }
@@ -9662,7 +9696,140 @@ export namespace V2CoreHealthMeterEventSummariesDelayedResolvedEvent {
       /**
        * The ingestion method.
        */
-      ingestion_method?: 'import_sets';
+      ingestion_method?: Impact.IngestionMethod;
+    }
+
+    export namespace Impact {
+      export type IngestionMethod = 'import_sets' | OtherString;
+    }
+  }
+}
+
+/**
+ * Occurs when a Metronome notification latency alert is firing.
+ */
+export interface V2CoreHealthMetronomeNotificationLatencyFiringEvent
+  extends EventBase {
+  type: 'v2.core.health.metronome_notification_latency.firing';
+  // Retrieves data specific to this event.
+  data: V2CoreHealthMetronomeNotificationLatencyFiringEvent.Data;
+}
+export interface V2CoreHealthMetronomeNotificationLatencyFiringEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.health.metronome_notification_latency.firing';
+  fetchEvent(): Promise<V2CoreHealthMetronomeNotificationLatencyFiringEvent>;
+}
+
+export namespace V2CoreHealthMetronomeNotificationLatencyFiringEvent {
+  export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
+     * The grouping key for the alert.
+     */
+    grouping_key: string;
+
+    /**
+     * The user impact.
+     */
+    impact: Data.Impact;
+
+    /**
+     * The time when impact on the user experience was first detected.
+     */
+    started_at: string;
+
+    /**
+     * A short description of the alert.
+     */
+    summary: string;
+  }
+
+  export namespace Data {
+    export interface Impact {
+      /**
+       * The impacted Metronome billing pipeline.
+       */
+      pipeline: Impact.Pipeline;
+    }
+
+    export namespace Impact {
+      export type Pipeline =
+        | 'configuration_triggered'
+        | 'high_cardinality_usage_triggered'
+        | 'standard_usage_triggered'
+        | 'time_triggered'
+        | OtherString;
+    }
+  }
+}
+
+/**
+ * Occurs when a Metronome notification latency alert is resolved.
+ */
+export interface V2CoreHealthMetronomeNotificationLatencyResolvedEvent
+  extends EventBase {
+  type: 'v2.core.health.metronome_notification_latency.resolved';
+  // Retrieves data specific to this event.
+  data: V2CoreHealthMetronomeNotificationLatencyResolvedEvent.Data;
+}
+export interface V2CoreHealthMetronomeNotificationLatencyResolvedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.health.metronome_notification_latency.resolved';
+  fetchEvent(): Promise<V2CoreHealthMetronomeNotificationLatencyResolvedEvent>;
+}
+
+export namespace V2CoreHealthMetronomeNotificationLatencyResolvedEvent {
+  export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
+     * The grouping key for the alert.
+     */
+    grouping_key: string;
+
+    /**
+     * The user impact.
+     */
+    impact: Data.Impact;
+
+    /**
+     * The time when the user experience has returned to expected levels.
+     */
+    resolved_at: string;
+
+    /**
+     * The time when impact on the user experience was first detected.
+     */
+    started_at: string;
+
+    /**
+     * A short description of the alert.
+     */
+    summary: string;
+  }
+
+  export namespace Data {
+    export interface Impact {
+      /**
+       * The impacted Metronome billing pipeline.
+       */
+      pipeline: Impact.Pipeline;
+    }
+
+    export namespace Impact {
+      export type Pipeline =
+        | 'configuration_triggered'
+        | 'high_cardinality_usage_triggered'
+        | 'standard_usage_triggered'
+        | 'time_triggered'
+        | OtherString;
     }
   }
 }
@@ -11553,6 +11720,108 @@ export interface V2MoneyManagementOutboundTransferUpdatedEventNotification
 }
 
 /**
+ * Occurs when a PayoutIntent transitions into the canceled state.
+ */
+export interface V2MoneyManagementPayoutIntentCanceledEvent extends EventBase {
+  type: 'v2.money_management.payout_intent.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+}
+export interface V2MoneyManagementPayoutIntentCanceledEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.payout_intent.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+  fetchEvent(): Promise<V2MoneyManagementPayoutIntentCanceledEvent>;
+}
+
+/**
+ * Occurs when a PayoutIntent is created.
+ */
+export interface V2MoneyManagementPayoutIntentCreatedEvent extends EventBase {
+  type: 'v2.money_management.payout_intent.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+}
+export interface V2MoneyManagementPayoutIntentCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.payout_intent.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+  fetchEvent(): Promise<V2MoneyManagementPayoutIntentCreatedEvent>;
+}
+
+/**
+ * Occurs when a PayoutIntent transitions into the posted state.
+ */
+export interface V2MoneyManagementPayoutIntentPostedEvent extends EventBase {
+  type: 'v2.money_management.payout_intent.posted';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+}
+export interface V2MoneyManagementPayoutIntentPostedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.payout_intent.posted';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+  fetchEvent(): Promise<V2MoneyManagementPayoutIntentPostedEvent>;
+}
+
+/**
+ * Occurs when a PayoutIntent transitions into the processing state.
+ */
+export interface V2MoneyManagementPayoutIntentProcessingEvent
+  extends EventBase {
+  type: 'v2.money_management.payout_intent.processing';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+}
+export interface V2MoneyManagementPayoutIntentProcessingEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.payout_intent.processing';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+  fetchEvent(): Promise<V2MoneyManagementPayoutIntentProcessingEvent>;
+}
+
+/**
+ * Occurs when a PayoutIntent transitions into the requires_action state.
+ */
+export interface V2MoneyManagementPayoutIntentRequiresActionEvent
+  extends EventBase {
+  type: 'v2.money_management.payout_intent.requires_action';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+}
+export interface V2MoneyManagementPayoutIntentRequiresActionEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.payout_intent.requires_action';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+  fetchEvent(): Promise<V2MoneyManagementPayoutIntentRequiresActionEvent>;
+}
+
+/**
  * Occurs when a PayoutMethod is created.
  */
 export interface V2MoneyManagementPayoutMethodCreatedEvent extends EventBase {
@@ -12643,7 +12912,11 @@ export namespace V2PaymentsSettlementAllocationIntentErroredEvent {
     /**
      * Open Enum. The `errored` status reason.
      */
-    reason_code: 'amount_mismatch';
+    reason_code: Data.ReasonCode;
+  }
+
+  export namespace Data {
+    export type ReasonCode = 'amount_mismatch' | OtherString;
   }
 }
 
@@ -12996,7 +13269,7 @@ export namespace V2SignalsAccountSignalFraudulentMerchantReadyEvent {
     /**
      * The type of account signal. Currently only fraudulent_merchant is supported.
      */
-    type: 'fraudulent_merchant';
+    type: Data.Type;
   }
 
   export namespace Data {
@@ -13016,6 +13289,8 @@ export namespace V2SignalsAccountSignalFraudulentMerchantReadyEvent {
        */
       risk_level: FraudulentMerchant.RiskLevel;
     }
+
+    export type Type = 'fraudulent_merchant' | OtherString;
 
     export namespace FraudulentMerchant {
       export interface Indicator {
@@ -13132,6 +13407,46 @@ export interface V2SignalsAccountSignalPaymentDelinquencyExposureReadyEventNotif
   fetchEvent(): Promise<
     V2SignalsAccountSignalPaymentDelinquencyExposureReadyEvent
   >;
+}
+
+/**
+ * Occurs when the ML scoring model determines it's a good time to retry a failed payment.
+ * This is a thin event — the merchant must call GET to retrieve the full evaluation.
+ */
+export interface V2SignalsPaymentRetryEvaluationsRetryRecommendedEvent
+  extends EventBase {
+  type: 'v2.signals.payment_retry_evaluations.retry_recommended';
+  // Retrieves data specific to this event.
+  data: V2SignalsPaymentRetryEvaluationsRetryRecommendedEvent.Data;
+}
+export interface V2SignalsPaymentRetryEvaluationsRetryRecommendedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.signals.payment_retry_evaluations.retry_recommended';
+  fetchEvent(): Promise<V2SignalsPaymentRetryEvaluationsRetryRecommendedEvent>;
+}
+
+export namespace V2SignalsPaymentRetryEvaluationsRetryRecommendedEvent {
+  export interface Data {
+    /**
+     * Unique identifier for the payment retry evaluation.
+     */
+    id: string;
+
+    /**
+     * Whether the event was created in livemode.
+     */
+    livemode: boolean;
+
+    /**
+     * The PaymentIntent ID. Present when the evaluation is for a PaymentIntent.
+     */
+    payment_intent?: string;
+
+    /**
+     * The PaymentRecord ID. Present when the evaluation is for a PaymentRecord.
+     */
+    payment_record?: string;
+  }
 }
 
 export declare namespace Events {
@@ -13463,6 +13778,8 @@ export declare namespace Events {
     V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEvent,
     V2CoreHealthMeterEventSummariesDelayedFiringEvent,
     V2CoreHealthMeterEventSummariesDelayedResolvedEvent,
+    V2CoreHealthMetronomeNotificationLatencyFiringEvent,
+    V2CoreHealthMetronomeNotificationLatencyResolvedEvent,
     V2CoreHealthPaymentMethodErrorFiringEvent,
     V2CoreHealthPaymentMethodErrorResolvedEvent,
     V2CoreHealthSepaDebitDelayedFiringEvent,
@@ -13521,6 +13838,11 @@ export declare namespace Events {
     V2MoneyManagementOutboundTransferReturnedEvent,
     V2MoneyManagementOutboundTransferUnderReviewEvent,
     V2MoneyManagementOutboundTransferUpdatedEvent,
+    V2MoneyManagementPayoutIntentCanceledEvent,
+    V2MoneyManagementPayoutIntentCreatedEvent,
+    V2MoneyManagementPayoutIntentPostedEvent,
+    V2MoneyManagementPayoutIntentProcessingEvent,
+    V2MoneyManagementPayoutIntentRequiresActionEvent,
     V2MoneyManagementPayoutMethodCreatedEvent,
     V2MoneyManagementPayoutMethodUpdatedEvent,
     V2MoneyManagementReceivedCreditAvailableEvent,
@@ -13578,6 +13900,7 @@ export declare namespace Events {
     V2SignalsAccountSignalFraudulentWebsiteReadyEvent,
     V2SignalsAccountSignalMerchantDelinquencyReadyEvent,
     V2SignalsAccountSignalPaymentDelinquencyExposureReadyEvent,
+    V2SignalsPaymentRetryEvaluationsRetryRecommendedEvent,
     V1AccountApplicationAuthorizedEventNotification,
     V1AccountApplicationDeauthorizedEventNotification,
     V1AccountExternalAccountCreatedEventNotification,
@@ -13904,6 +14227,8 @@ export declare namespace Events {
     V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEventNotification,
     V2CoreHealthMeterEventSummariesDelayedFiringEventNotification,
     V2CoreHealthMeterEventSummariesDelayedResolvedEventNotification,
+    V2CoreHealthMetronomeNotificationLatencyFiringEventNotification,
+    V2CoreHealthMetronomeNotificationLatencyResolvedEventNotification,
     V2CoreHealthPaymentMethodErrorFiringEventNotification,
     V2CoreHealthPaymentMethodErrorResolvedEventNotification,
     V2CoreHealthSepaDebitDelayedFiringEventNotification,
@@ -13962,6 +14287,11 @@ export declare namespace Events {
     V2MoneyManagementOutboundTransferReturnedEventNotification,
     V2MoneyManagementOutboundTransferUnderReviewEventNotification,
     V2MoneyManagementOutboundTransferUpdatedEventNotification,
+    V2MoneyManagementPayoutIntentCanceledEventNotification,
+    V2MoneyManagementPayoutIntentCreatedEventNotification,
+    V2MoneyManagementPayoutIntentPostedEventNotification,
+    V2MoneyManagementPayoutIntentProcessingEventNotification,
+    V2MoneyManagementPayoutIntentRequiresActionEventNotification,
     V2MoneyManagementPayoutMethodCreatedEventNotification,
     V2MoneyManagementPayoutMethodUpdatedEventNotification,
     V2MoneyManagementReceivedCreditAvailableEventNotification,
@@ -14019,5 +14349,6 @@ export declare namespace Events {
     V2SignalsAccountSignalFraudulentWebsiteReadyEventNotification,
     V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification,
     V2SignalsAccountSignalPaymentDelinquencyExposureReadyEventNotification,
+    V2SignalsPaymentRetryEvaluationsRetryRecommendedEventNotification,
   };
 }

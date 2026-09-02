@@ -2539,6 +2539,7 @@ export namespace Invoice {
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
+      | 'authentication_failure'
       | 'authentication_required'
       | 'balance_insufficient'
       | 'balance_invalid_parameter'
@@ -2551,6 +2552,7 @@ export namespace Invoice {
       | 'bank_account_verification_failed'
       | 'billing_invalid_mandate'
       | 'bitcoin_upgrade_required'
+      | 'capability_not_active'
       | 'capture_charge_authorization_expired'
       | 'capture_unauthorized_payment'
       | 'card_decline_rate_limit_exceeded'
@@ -2575,6 +2577,7 @@ export namespace Invoice {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'expired_payment_method'
       | 'failed_tax_calculation'
       | 'financial_account_balance_does_not_support_currency'
       | 'financial_account_capability_not_enabled'
@@ -2594,6 +2597,7 @@ export namespace Invoice {
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'
+      | 'incorrect_postal_code'
       | 'incorrect_zip'
       | 'india_recurring_payment_mandate_canceled'
       | 'instant_payouts_config_disabled'
@@ -2603,6 +2607,7 @@ export namespace Invoice {
       | 'insufficient_funds'
       | 'intent_invalid_state'
       | 'intent_verification_method_missing'
+      | 'invalid_canceled_subscription_fields'
       | 'invalid_card_type'
       | 'invalid_characters'
       | 'invalid_charge_amount'
@@ -2662,6 +2667,7 @@ export namespace Invoice {
       | 'payment_method_not_available'
       | 'payment_method_provider_decline'
       | 'payment_method_provider_timeout'
+      | 'payment_method_restricted'
       | 'payment_method_unactivated'
       | 'payment_method_unexpected_state'
       | 'payment_method_unsupported_type'
@@ -2950,6 +2956,7 @@ export namespace Invoice {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'truemoney'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -3981,6 +3988,7 @@ export namespace InvoiceCreateParams {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'truemoney'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -5066,6 +5074,7 @@ export namespace InvoiceUpdateParams {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'truemoney'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -9102,7 +9111,7 @@ export namespace InvoiceCreatePreviewParams {
       /**
        * The type of pause to apply. Defaults to `subscription`.
        */
-      type?: 'subscription';
+      type?: Pause.Type;
     }
 
     export interface Prebilling {
@@ -9425,6 +9434,8 @@ export namespace InvoiceCreatePreviewParams {
         | 'invoice'
         | 'pending_invoice_item'
         | OtherString;
+
+      export type Type = 'subscription' | OtherString;
 
       export namespace BillFor {
         export interface OutstandingUsageThrough {

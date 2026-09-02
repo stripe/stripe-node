@@ -557,7 +557,7 @@ export namespace Alert {
     /**
      * The ingestion method.
      */
-    ingestion_method?: 'import_sets';
+    ingestion_method?: MeterEventSummariesDelayed.IngestionMethod;
   }
 
   export interface MetronomeNotificationLatency {
@@ -821,6 +821,10 @@ export namespace Alert {
 
   export namespace FraudRate {
     export type AttackType = 'spike' | 'sustained_attack' | OtherString;
+  }
+
+  export namespace MeterEventSummariesDelayed {
+    export type IngestionMethod = 'import_sets' | OtherString;
   }
 
   export namespace MetronomeNotificationLatency {

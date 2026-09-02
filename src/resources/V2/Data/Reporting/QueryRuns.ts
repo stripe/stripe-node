@@ -122,7 +122,7 @@ export namespace QueryRun {
     /**
      * The type of the `ReportRun` or `QueryRun` result.
      */
-    type: 'file';
+    type: Result.Type;
   }
 
   export interface ResultOptions {
@@ -169,6 +169,8 @@ export namespace QueryRun {
        */
       size: bigint;
     }
+
+    export type Type = 'file' | OtherString;
 
     export namespace File {
       export type ContentType = 'csv' | 'zip' | OtherString;
@@ -249,7 +251,11 @@ export namespace V2 {
         /**
          * Any optional includes (see https://docs.stripe.com/api-includable-response-values).
          */
-        include?: Array<'result.file.schema'>;
+        include?: Array<QueryRunRetrieveParams.Include>;
+      }
+
+      export namespace QueryRunRetrieveParams {
+        export type Include = 'result.file.schema' | OtherString;
       }
     }
   }

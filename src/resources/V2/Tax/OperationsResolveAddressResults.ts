@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Address} from '../../../shared.js';
+import {Address, OtherString} from '../../../shared.js';
 import {RequestOptions} from '../../../lib.js';
 export interface OperationsResolveAddressResult {
   /**
@@ -77,7 +77,7 @@ export namespace OperationsResolveAddressResult {
       /**
        * A code describing the issue.
        */
-      code: 'required_for_improved_precision';
+      code: Issue.Code;
 
       /**
        * The address field with the issue.
@@ -86,6 +86,8 @@ export namespace OperationsResolveAddressResult {
     }
 
     export namespace Issue {
+      export type Code = 'required_for_improved_precision' | OtherString;
+
       export type Field =
         | 'city'
         | 'country'

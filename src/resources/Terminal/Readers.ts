@@ -338,7 +338,7 @@ export interface Reader {
   serial_number: string;
 
   /**
-   * The networking status of the reader. We do not recommend using this field in flows that may block taking payments.
+   * The networking status of the reader. This value is `null` for mobile readers. We do not recommend using this field in flows that may block taking payments.
    */
   status: Reader.Status | null;
 }
@@ -889,6 +889,7 @@ export namespace Reader {
         | 'api_key_expired'
         | 'application_fees_not_allowed'
         | 'approval_required'
+        | 'authentication_failure'
         | 'authentication_required'
         | 'balance_insufficient'
         | 'balance_invalid_parameter'
@@ -901,6 +902,7 @@ export namespace Reader {
         | 'bank_account_verification_failed'
         | 'billing_invalid_mandate'
         | 'bitcoin_upgrade_required'
+        | 'capability_not_active'
         | 'capture_charge_authorization_expired'
         | 'capture_unauthorized_payment'
         | 'card_decline_rate_limit_exceeded'
@@ -925,6 +927,7 @@ export namespace Reader {
         | 'debit_not_authorized'
         | 'email_invalid'
         | 'expired_card'
+        | 'expired_payment_method'
         | 'failed_tax_calculation'
         | 'financial_account_balance_does_not_support_currency'
         | 'financial_account_capability_not_enabled'
@@ -944,6 +947,7 @@ export namespace Reader {
         | 'incorrect_address'
         | 'incorrect_cvc'
         | 'incorrect_number'
+        | 'incorrect_postal_code'
         | 'incorrect_zip'
         | 'india_recurring_payment_mandate_canceled'
         | 'instant_payouts_config_disabled'
@@ -953,6 +957,7 @@ export namespace Reader {
         | 'insufficient_funds'
         | 'intent_invalid_state'
         | 'intent_verification_method_missing'
+        | 'invalid_canceled_subscription_fields'
         | 'invalid_card_type'
         | 'invalid_characters'
         | 'invalid_charge_amount'
@@ -1012,6 +1017,7 @@ export namespace Reader {
         | 'payment_method_not_available'
         | 'payment_method_provider_decline'
         | 'payment_method_provider_timeout'
+        | 'payment_method_restricted'
         | 'payment_method_unactivated'
         | 'payment_method_unexpected_state'
         | 'payment_method_unsupported_type'
@@ -1556,7 +1562,7 @@ export namespace Terminal {
     /**
      * The brand of the gift card.
      */
-    brand: 'svs';
+    brand: ReaderActivateGiftCardParams.Brand;
 
     /**
      * The initial balance to set on the gift card.
@@ -1575,6 +1581,8 @@ export namespace Terminal {
   }
 
   export namespace ReaderActivateGiftCardParams {
+    export type Brand = 'svs' | OtherString;
+
     export interface Balance {
       /**
        * The initial balance amount to be loaded when activating the gift card, in the smallest currency unit
@@ -1601,7 +1609,7 @@ export namespace Terminal {
     /**
      * The brand of the gift card.
      */
-    brand: 'svs';
+    brand: ReaderCashoutGiftCardParams.Brand;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -1613,13 +1621,17 @@ export namespace Terminal {
      */
     on_behalf_of?: string;
   }
+
+  export namespace ReaderCashoutGiftCardParams {
+    export type Brand = 'svs' | OtherString;
+  }
 }
 export namespace Terminal {
   export interface ReaderCheckGiftCardBalanceParams {
     /**
      * The brand of the gift card.
      */
-    brand: 'svs';
+    brand: ReaderCheckGiftCardBalanceParams.Brand;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -1630,6 +1642,10 @@ export namespace Terminal {
      * The Stripe account ID to process the gift card operation on behalf of.
      */
     on_behalf_of?: string;
+  }
+
+  export namespace ReaderCheckGiftCardBalanceParams {
+    export type Brand = 'svs' | OtherString;
   }
 }
 export namespace Terminal {
@@ -1796,7 +1812,7 @@ export namespace Terminal {
       /**
        * The gift card brand to use in the transaction.
        */
-      gift_card_brand?: 'svs';
+      gift_card_brand?: CollectConfig.GiftCardBrand;
 
       /**
        * Override showing a tipping selection screen on this transaction.
@@ -1815,6 +1831,8 @@ export namespace Terminal {
         | 'limited'
         | 'unspecified'
         | OtherString;
+
+      export type GiftCardBrand = 'svs' | OtherString;
 
       export interface Tipping {
         /**
@@ -1885,7 +1903,7 @@ export namespace Terminal {
       /**
        * The gift card brand to use in the transaction.
        */
-      gift_card_brand?: 'svs';
+      gift_card_brand?: ProcessConfig.GiftCardBrand;
 
       /**
        * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. If you'd prefer to redirect to a mobile application, you can alternatively supply an application URI scheme.
@@ -1909,6 +1927,8 @@ export namespace Terminal {
         | 'limited'
         | 'unspecified'
         | OtherString;
+
+      export type GiftCardBrand = 'svs' | OtherString;
 
       export interface Tipping {
         /**
@@ -2019,7 +2039,7 @@ export namespace Terminal {
     /**
      * The brand of the gift card.
      */
-    brand: 'svs';
+    brand: ReaderReloadGiftCardParams.Brand;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -2035,6 +2055,10 @@ export namespace Terminal {
      * The Stripe account ID to process the gift card operation on behalf of.
      */
     on_behalf_of?: string;
+  }
+
+  export namespace ReaderReloadGiftCardParams {
+    export type Brand = 'svs' | OtherString;
   }
 }
 export namespace Terminal {

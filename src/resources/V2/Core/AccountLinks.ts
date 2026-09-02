@@ -139,7 +139,7 @@ export namespace AccountLink {
       /**
        * Open Enum. A v2/core/account can be configured to enable certain functionality. The configuration param targets the v2/core/account_link to collect information for the specified v2/core/account configuration/s.
        */
-      configurations: Array<'recipient'>;
+      configurations: Array<RecipientOnboarding.Configuration>;
 
       /**
        * The URL the user will be redirected to if the AccountLink is expired, has been used, or is otherwise invalid. The URL you specify should attempt to generate a new AccountLink with the same parameters used to create the original AccountLink, then redirect the user to the new AccountLink's URL so they can continue the flow. If a new AccountLink cannot be generated or the redirect fails you should display a useful error to the user. Please make sure to implement authentication before redirecting the user in case this URL is leaked to a third party.
@@ -161,7 +161,7 @@ export namespace AccountLink {
       /**
        * Open Enum. A v2/account can be configured to enable certain functionality. The configuration param targets the v2/account_link to collect information for the specified v2/account configuration/s.
        */
-      configurations: Array<'recipient'>;
+      configurations: Array<RecipientUpdate.Configuration>;
 
       /**
        * The URL the user will be redirected to if the Account Link is expired, has been used, or is otherwise invalid. The URL you specify should attempt to generate a new Account Link with the same parameters used to create the original Account Link, then redirect the user to the new Account Link URL so they can continue the flow. Make sure to authenticate the user before redirecting to the new Account Link, in case the URL leaks to a third party. If a new Account Link can't be generated, or if the redirect fails, you should display a useful error to the user.
@@ -250,6 +250,8 @@ export namespace AccountLink {
         future_requirements?: CollectionOptions.FutureRequirements;
       }
 
+      export type Configuration = 'recipient' | OtherString;
+
       export namespace CollectionOptions {
         export type Fields = 'currently_due' | 'eventually_due' | OtherString;
 
@@ -269,6 +271,8 @@ export namespace AccountLink {
          */
         future_requirements?: CollectionOptions.FutureRequirements;
       }
+
+      export type Configuration = 'recipient' | OtherString;
 
       export namespace CollectionOptions {
         export type Fields = 'currently_due' | 'eventually_due' | OtherString;
@@ -374,7 +378,7 @@ export namespace V2 {
           /**
            * Open Enum. A v2/core/account can be configured to enable certain functionality. The configuration param targets the v2/core/account_link to collect information for the specified v2/core/account configuration/s.
            */
-          configurations: Array<'recipient'>;
+          configurations: Array<RecipientOnboarding.Configuration>;
 
           /**
            * The URL the user will be redirected to if the AccountLink is expired, has been used, or is otherwise invalid. The URL you specify should attempt to generate a new AccountLink with the same parameters used to create the original AccountLink, then redirect the user to the new AccountLink's URL so they can continue the flow. If a new AccountLink cannot be generated or the redirect fails you should display a useful error to the user. Please make sure to implement authentication before redirecting the user in case this URL is leaked to a third party.
@@ -396,7 +400,7 @@ export namespace V2 {
           /**
            * Open Enum. A v2/account can be configured to enable certain functionality. The configuration param targets the v2/account_link to collect information for the specified v2/account configuration/s.
            */
-          configurations: Array<'recipient'>;
+          configurations: Array<RecipientUpdate.Configuration>;
 
           /**
            * The URL the user will be redirected to if the Account Link is expired, has been used, or is otherwise invalid. The URL you specify should attempt to generate a new Account Link with the same parameters used to create the original Account Link, then redirect the user to the new Account Link URL so they can continue the flow. Make sure to authenticate the user before redirecting to the new Account Link, in case the URL leaks to a third party. If a new Account Link can't be generated, or if the redirect fails, you should display a useful error to the user.
@@ -491,6 +495,8 @@ export namespace V2 {
             future_requirements?: CollectionOptions.FutureRequirements;
           }
 
+          export type Configuration = 'recipient' | OtherString;
+
           export namespace CollectionOptions {
             export type Fields =
               | 'currently_due'
@@ -513,6 +519,8 @@ export namespace V2 {
              */
             future_requirements?: CollectionOptions.FutureRequirements;
           }
+
+          export type Configuration = 'recipient' | OtherString;
 
           export namespace CollectionOptions {
             export type Fields =

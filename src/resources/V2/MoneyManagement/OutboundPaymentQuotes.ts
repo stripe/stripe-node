@@ -281,11 +281,13 @@ export namespace OutboundPaymentQuote {
             /**
              * The transaction purpose for this ACH payment.
              */
-            transaction_purpose?: 'payroll';
+            transaction_purpose?: Ach.TransactionPurpose;
           }
 
           export namespace Ach {
             export type Submission = 'next_day' | 'same_day' | OtherString;
+
+            export type TransactionPurpose = 'payroll' | OtherString;
           }
         }
       }
@@ -431,11 +433,13 @@ export namespace V2 {
                 /**
                  * The transaction purpose for this ACH payment.
                  */
-                transaction_purpose?: 'payroll';
+                transaction_purpose?: Ach.TransactionPurpose;
               }
 
               export namespace Ach {
                 export type Submission = 'next_day' | 'same_day' | OtherString;
+
+                export type TransactionPurpose = 'payroll' | OtherString;
               }
             }
           }

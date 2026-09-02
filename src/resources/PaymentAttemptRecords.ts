@@ -523,6 +523,8 @@ export namespace PaymentAttemptRecord {
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
+    sequra?: PaymentMethodDetails.Sequra;
+
     shopeepay?: PaymentMethodDetails.Shopeepay;
 
     sofort?: PaymentMethodDetails.Sofort;
@@ -1923,6 +1925,13 @@ export namespace PaymentAttemptRecord {
       mandate: string | null;
     }
 
+    export interface Sequra {
+      /**
+       * The SeQura transaction ID associated with this payment.
+       */
+      transaction_id: string | null;
+    }
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -2119,7 +2128,7 @@ export namespace PaymentAttemptRecord {
         /**
          * funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -2159,6 +2168,8 @@ export namespace PaymentAttemptRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
@@ -2359,7 +2370,6 @@ export namespace PaymentAttemptRecord {
         export type Result =
           | 'attempt_acknowledged'
           | 'authenticated'
-          | 'data_share_only'
           | 'exempted'
           | 'failed'
           | 'not_supported'
@@ -2889,7 +2899,7 @@ export namespace PaymentAttemptRecord {
         /**
          * Funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -2929,6 +2939,8 @@ export namespace PaymentAttemptRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
@@ -3171,7 +3183,10 @@ export interface PaymentAttemptRecordReportCanceledParams {
   /**
    * The reason the payment attempt was canceled.
    */
-  reason?: 'blocked_for_fraud';
+  reason?: PaymentAttemptRecordReportCanceledParams.Reason;
+}
+export namespace PaymentAttemptRecordReportCanceledParams {
+  export type Reason = 'blocked_for_fraud' | 'merchant_canceled' | OtherString;
 }
 export interface PaymentAttemptRecordReportEarlyFraudWarningParams {
   /**

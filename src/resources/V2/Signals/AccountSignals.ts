@@ -207,13 +207,12 @@ export namespace AccountSignal {
 
   export interface FraudulentMerchant {
     /**
-     * Array of objects representing individual factors that contributed to the calculated probability. Absent when risk level is not_assessed or unknown,
-     * or when the user is not on a product tier that includes indicators.
+     * Supplementary contextual data for the signal, including indicators.
      */
-    indicators: Array<FraudulentMerchant.Indicator>;
+    additional_details?: FraudulentMerchant.AdditionalDetails;
 
     /**
-     * The probability of the merchant being fraudulent. Can be between 0.00 and 100.00. Absent when risk level is not_assessed or unknown,
+     * The probability of the merchant being fraudulent. Can be between 0.00 and 100.00. Absent when risk level is unknown,
      * or when the user is not on a product tier that includes numeric scores.
      */
     probability?: Decimal;
@@ -238,13 +237,12 @@ export namespace AccountSignal {
 
   export interface MerchantDelinquency {
     /**
-     * Array of objects representing individual factors that contributed to the calculated probability of delinquency. Absent when risk level is not_assessed or unknown,
-     * or when the user is not on a product tier that includes indicators.
+     * Supplementary contextual data for the signal, including indicators.
      */
-    indicators: Array<MerchantDelinquency.Indicator>;
+    additional_details?: MerchantDelinquency.AdditionalDetails;
 
     /**
-     * The probability of delinquency. Can be between 0.00 and 100.00. Absent when risk level is not_assessed or unknown,
+     * The probability of delinquency. Can be between 0.00 and 100.00. Absent when risk level is unknown,
      * or when the user is not on a product tier that includes numeric scores.
      */
     probability?: Decimal;
@@ -303,21 +301,12 @@ export namespace AccountSignal {
   }
 
   export namespace FraudulentMerchant {
-    export interface Indicator {
+    export interface AdditionalDetails {
       /**
-       * A brief explanation of how this indicator contributed to the fraudulent merchant probability.
+       * Array of objects representing individual factors that contributed to the calculated probability. Absent when risk level is unknown,
+       * or when the user is not on a product tier that includes indicators.
        */
-      explanation: string;
-
-      /**
-       * The effect this indicator had on the overall risk level.
-       */
-      impact: Indicator.Impact;
-
-      /**
-       * The name of the specific indicator used in the risk assessment.
-       */
-      indicator: Indicator.Indicator;
+      indicators: Array<AdditionalDetails.Indicator>;
     }
 
     export type RiskLevel =
@@ -325,26 +314,44 @@ export namespace AccountSignal {
       | 'highest'
       | 'low'
       | 'normal'
-      | 'not_assessed'
       | 'unknown';
 
-    export namespace Indicator {
-      export type Impact =
-        | 'decrease'
-        | 'neutral'
-        | 'slight_increase'
-        | 'strong_increase';
+    export namespace AdditionalDetails {
+      export interface Indicator {
+        /**
+         * A brief explanation of how this indicator contributed to the fraudulent merchant probability.
+         */
+        explanation: string;
 
-      export type Indicator =
-        | 'bank_account'
-        | 'business_information_and_account_activity'
-        | 'disputes'
-        | 'failures'
-        | 'geolocation'
-        | 'other'
-        | 'other_related_accounts'
-        | 'other_transaction_activity'
-        | 'owner_email';
+        /**
+         * The effect this indicator had on the overall risk level.
+         */
+        impact: Indicator.Impact;
+
+        /**
+         * The name of the specific indicator used in the risk assessment.
+         */
+        indicator: Indicator.Indicator;
+      }
+
+      export namespace Indicator {
+        export type Impact =
+          | 'decrease'
+          | 'neutral'
+          | 'slight_increase'
+          | 'strong_increase';
+
+        export type Indicator =
+          | 'bank_account'
+          | 'business_information_and_account_activity'
+          | 'disputes'
+          | 'failures'
+          | 'geolocation'
+          | 'other'
+          | 'other_related_accounts'
+          | 'other_transaction_activity'
+          | 'owner_email';
+      }
     }
   }
 
@@ -354,26 +361,16 @@ export namespace AccountSignal {
       | 'highest'
       | 'low'
       | 'normal'
-      | 'not_assessed'
       | 'unknown';
   }
 
   export namespace MerchantDelinquency {
-    export interface Indicator {
+    export interface AdditionalDetails {
       /**
-       * A brief explanation of how this indicator contributed to the delinquency probability.
+       * Array of objects representing individual factors that contributed to the calculated probability of delinquency. Absent when risk level is unknown,
+       * or when the user is not on a product tier that includes indicators.
        */
-      explanation: string;
-
-      /**
-       * The effect this indicator had on the overall risk level.
-       */
-      impact: Indicator.Impact;
-
-      /**
-       * The name of the specific indicator used in the risk assessment.
-       */
-      indicator: Indicator.Indicator;
+      indicators: Array<AdditionalDetails.Indicator>;
     }
 
     export type RiskLevel =
@@ -381,33 +378,51 @@ export namespace AccountSignal {
       | 'highest'
       | 'low'
       | 'normal'
-      | 'not_assessed'
       | 'unknown';
 
-    export namespace Indicator {
-      export type Impact =
-        | 'decrease'
-        | 'neutral'
-        | 'slight_increase'
-        | 'strong_increase';
+    export namespace AdditionalDetails {
+      export interface Indicator {
+        /**
+         * A brief explanation of how this indicator contributed to the delinquency probability.
+         */
+        explanation: string;
 
-      export type Indicator =
-        | 'account_balance'
-        | 'aov'
-        | 'charge_concentration'
-        | 'disputes'
-        | 'dispute_window'
-        | 'exposure'
-        | 'firmographic'
-        | 'lifetime_metrics'
-        | 'other'
-        | 'payment_processing'
-        | 'payment_volume'
-        | 'payouts'
-        | 'refunds'
-        | 'related_accounts'
-        | 'tenure'
-        | 'transfers';
+        /**
+         * The effect this indicator had on the overall risk level.
+         */
+        impact: Indicator.Impact;
+
+        /**
+         * The name of the specific indicator used in the risk assessment.
+         */
+        indicator: Indicator.Indicator;
+      }
+
+      export namespace Indicator {
+        export type Impact =
+          | 'decrease'
+          | 'neutral'
+          | 'slight_increase'
+          | 'strong_increase';
+
+        export type Indicator =
+          | 'account_balance'
+          | 'aov'
+          | 'charge_concentration'
+          | 'disputes'
+          | 'dispute_window'
+          | 'exposure'
+          | 'firmographic'
+          | 'lifetime_metrics'
+          | 'other'
+          | 'payment_processing'
+          | 'payment_volume'
+          | 'payouts'
+          | 'refunds'
+          | 'related_accounts'
+          | 'tenure'
+          | 'transfers';
+      }
     }
   }
 
@@ -462,7 +477,6 @@ export namespace AccountSignal {
       | 'highest'
       | 'low'
       | 'normal'
-      | 'not_assessed'
       | 'unknown';
   }
 
@@ -472,7 +486,6 @@ export namespace AccountSignal {
       | 'highest'
       | 'low'
       | 'normal'
-      | 'not_assessed'
       | 'unknown';
   }
 }

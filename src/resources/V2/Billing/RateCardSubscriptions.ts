@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {MetadataParam, Metadata} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class RateCardSubscriptionResource extends StripeResource {
@@ -297,7 +297,7 @@ export namespace V2 {
         /**
          * A string identifying the type of the payer. Currently the only supported value is `customer`.
          */
-        type: 'customer';
+        type: Payer.Type;
       }
 
       export type ServicingStatus =
@@ -305,6 +305,10 @@ export namespace V2 {
         | 'canceled'
         | 'paused'
         | 'pending';
+
+      export namespace Payer {
+        export type Type = 'customer' | OtherString;
+      }
     }
   }
 }

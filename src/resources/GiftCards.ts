@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {GiftCardOperation} from './GiftCardOperations.js';
+import {OtherString} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class GiftCardResource extends StripeResource {
@@ -119,7 +120,7 @@ export interface GiftCard {
   /**
    * The brand of the gift card.
    */
-  brand: 'svs';
+  brand: GiftCard.Brand;
 
   /**
    * The expiration month of the gift card.
@@ -151,11 +152,14 @@ export interface GiftCard {
    */
   livemode: boolean;
 }
+export namespace GiftCard {
+  export type Brand = 'svs' | OtherString;
+}
 export interface GiftCardCreateParams {
   /**
    * The brand of the gift card.
    */
-  brand: 'svs';
+  brand: GiftCardCreateParams.Brand;
 
   /**
    * Two-digit number representing the gift card's expiration month.
@@ -181,6 +185,9 @@ export interface GiftCardCreateParams {
    * The gift card PIN.
    */
   pin?: string;
+}
+export namespace GiftCardCreateParams {
+  export type Brand = 'svs' | OtherString;
 }
 export interface GiftCardRetrieveParams {
   /**

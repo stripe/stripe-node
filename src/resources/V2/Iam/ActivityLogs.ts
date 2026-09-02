@@ -290,7 +290,7 @@ export namespace ActivityLog {
         /**
          * The type of entity.
          */
-        type: 'application';
+        type: ManagedBy.Type;
       }
 
       export type Type = 'publishable_key' | 'secret_key';
@@ -302,6 +302,8 @@ export namespace ActivityLog {
            */
           id: string;
         }
+
+        export type Type = 'application' | OtherString;
       }
     }
 
@@ -444,11 +446,13 @@ export namespace ActivityLog {
           /**
            * Type of risk signal.
            */
-          type: 'novel_device';
+          type: Signal.Type;
         }
 
         export namespace Signal {
           export interface NovelDevice {}
+
+          export type Type = 'novel_device' | OtherString;
         }
       }
     }

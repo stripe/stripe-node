@@ -5,7 +5,7 @@ import {Customer} from './Customers.js';
 import {SetupAttempt} from './SetupAttempts.js';
 import {Charge} from './Charges.js';
 import {PaymentMethod} from './PaymentMethods.js';
-import {OtherString, Address} from '../shared.js';
+import {Metadata, OtherString, Address} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class ConfirmationTokenResource extends StripeResource {
@@ -55,6 +55,11 @@ export interface ConfirmationToken {
    * Data used for generating a Mandate.
    */
   mandate_data?: ConfirmationToken.MandateData | null;
+
+  /**
+   * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   */
+  metadata: Metadata | null;
 
   /**
    * ID of the PaymentIntent that this ConfirmationToken was used to confirm, or null if this ConfirmationToken has not yet been used.
@@ -235,6 +240,8 @@ export namespace ConfirmationToken {
     scalapay?: PaymentMethodPreview.Scalapay;
 
     sepa_debit?: PaymentMethodPreview.SepaDebit;
+
+    sequra?: PaymentMethodPreview.Sequra;
 
     shopeepay?: PaymentMethodPreview.Shopeepay;
 
@@ -709,7 +716,7 @@ export namespace ConfirmationToken {
       /**
        * The brand of the gift card.
        */
-      brand: 'svs';
+      brand: GiftCard.Brand;
 
       /**
        * The expiration month of the gift card.
@@ -1038,6 +1045,8 @@ export namespace ConfirmationToken {
       last4: string | null;
     }
 
+    export interface Sequra {}
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -1118,6 +1127,7 @@ export namespace ConfirmationToken {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -1753,6 +1763,10 @@ export namespace ConfirmationToken {
         | 'standard_chartered'
         | 'uob'
         | OtherString;
+    }
+
+    export namespace GiftCard {
+      export type Brand = 'svs' | OtherString;
     }
 
     export namespace IdBankTransfer {

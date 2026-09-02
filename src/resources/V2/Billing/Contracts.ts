@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {V2Amount} from './../V2Amounts.js';
 import {
   MetadataParam,
   OtherString,
@@ -68,6 +69,7 @@ export class ContractResource extends StripeResource {
   }
   /**
    * Create a draft contract.
+   * @throws Stripe.AlreadyExistsError
    */
   create(
     params: V2.Billing.ContractCreateParams,
@@ -196,6 +198,8 @@ export class ContractResource extends StripeResource {
   }
   /**
    * Update a draft or active contract.
+   * @throws Stripe.AlreadyExistsError
+   * @throws Stripe.CannotProceedError
    */
   update(
     id: string,
@@ -442,6 +446,11 @@ export interface Contract {
   metadata?: Metadata;
 
   /**
+   * The one-time fees. Only populated when `one_time_fees` is passed in the `include` parameter.
+   */
+  one_time_fees?: Contract.OneTimeFees;
+
+  /**
    * The pricing lines. Only populated when `pricing_lines` is passed in the `include` parameter.
    */
   pricing_lines?: Contract.PricingLines;
@@ -484,6 +493,13 @@ export namespace Contract {
      * The collection settings details configures how payments are collected on the contract.
      */
     collection_settings_details: BillingSettings.CollectionSettingsDetails;
+  }
+
+  export interface OneTimeFees {
+    /**
+     * The one-time fees for this page.
+     */
+    data: Array<OneTimeFees.Data>;
   }
 
   export interface PricingLines {
@@ -608,6 +624,44 @@ export namespace Contract {
     }
   }
 
+  export namespace OneTimeFees {
+    export interface Data {
+      /**
+       * The amount billed for this fee.
+       */
+      amount: V2Amount;
+
+      /**
+       * When this fee will be billed. Always contains a concrete timestamp.
+       */
+      bill_at: Data.BillAt;
+
+      /**
+       * The id of the one-time fee.
+       */
+      id: string;
+
+      /**
+       * The user-provided lookup key.
+       */
+      lookup_key?: string;
+
+      /**
+       * The id of the product for this fee.
+       */
+      product: string;
+    }
+
+    export namespace Data {
+      export interface BillAt {
+        /**
+         * The timestamp at which the fee will be billed.
+         */
+        timestamp: string;
+      }
+    }
+  }
+
   export namespace PricingLines {
     export interface Data {
       /**
@@ -658,7 +712,7 @@ export namespace Contract {
         /**
          * The type of pricing.
          */
-        type: 'price';
+        type: Pricing.Type;
       }
 
       export interface StartsAt {
@@ -685,6 +739,8 @@ export namespace Contract {
            */
           pricing_overrides?: PriceDetails.PricingOverrides;
         }
+
+        export type Type = 'price' | OtherString;
 
         export namespace PriceDetails {
           export interface PricingOverrides {
@@ -734,7 +790,7 @@ export namespace Contract {
               /**
                * The type of override.
                */
-              type: 'overwrite_price';
+              type: Data.Type;
             }
 
             export namespace Data {
@@ -758,6 +814,8 @@ export namespace Contract {
                  */
                 timestamp: string;
               }
+
+              export type Type = 'overwrite_price' | OtherString;
             }
           }
         }
@@ -805,7 +863,7 @@ export namespace Contract {
       /**
        * The type of pricing override.
        */
-      type: 'multiply_pricing';
+      type: Data.Type;
     }
 
     export namespace Data {
@@ -834,6 +892,8 @@ export namespace Contract {
          */
         timestamp: string;
       }
+
+      export type Type = 'multiply_pricing' | OtherString;
 
       export namespace MultiplyPricing {
         export interface Criterion {
@@ -865,6 +925,7 @@ export namespace V2 {
     export interface ContractCreateParams {
       /**
        * A unique user-provided contract number e.g. C-2026-0001.
+       * Maximum length of 200 characters.
        */
       contract_number: string;
 
@@ -893,6 +954,11 @@ export namespace V2 {
        * Set of key-value pairs that you can attach to an object.
        */
       metadata?: MetadataParam;
+
+      /**
+       * A list of one-time fees to create with the contract. Each fee is billed as individual invoice items per its bill_schedule.
+       */
+      one_time_fees?: Array<ContractCreateParams.OneTimeFee>;
 
       /**
        * A list of pricing lines to create with the contract.
@@ -946,6 +1012,28 @@ export namespace V2 {
         | 'pricing_lines'
         | 'pricing_overrides'
         | OtherString;
+
+      export interface OneTimeFee {
+        /**
+         * The amount to bill.
+         */
+        amount: V2Amount;
+
+        /**
+         * When this fee should be billed.
+         */
+        bill_at: OneTimeFee.BillAt;
+
+        /**
+         * A user-provided lookup key.
+         */
+        lookup_key?: string;
+
+        /**
+         * The id of the product for this fee.
+         */
+        product: string;
+      }
 
       export interface PricingLine {
         /**
@@ -1008,7 +1096,7 @@ export namespace V2 {
         /**
          * The type of pricing override.
          */
-        type: 'multiply_pricing';
+        type: PricingOverride.Type;
       }
 
       export namespace BillingCycleAnchor {
@@ -1133,6 +1221,24 @@ export namespace V2 {
         }
       }
 
+      export namespace OneTimeFee {
+        export interface BillAt {
+          /**
+           * The timestamp at which the entry should be billed. Required if `type` is `timestamp`.
+           */
+          timestamp?: string;
+
+          /**
+           * The type of the bill_at.
+           */
+          type: BillAt.Type;
+        }
+
+        export namespace BillAt {
+          export type Type = 'now' | 'timestamp' | OtherString;
+        }
+      }
+
       export namespace PricingLine {
         export interface EndsAt {
           /**
@@ -1143,7 +1249,7 @@ export namespace V2 {
           /**
            * The type of the ends_at.
            */
-          type: 'timestamp';
+          type: EndsAt.Type;
         }
 
         export interface Pricing {
@@ -1155,7 +1261,7 @@ export namespace V2 {
           /**
            * The type of pricing.
            */
-          type: 'price';
+          type: Pricing.Type;
         }
 
         export interface StartsAt {
@@ -1167,7 +1273,11 @@ export namespace V2 {
           /**
            * The type of the starts_at.
            */
-          type: 'timestamp';
+          type: StartsAt.Type;
+        }
+
+        export namespace EndsAt {
+          export type Type = 'timestamp' | OtherString;
         }
 
         export namespace Pricing {
@@ -1188,6 +1298,8 @@ export namespace V2 {
              */
             quantity_changes?: Array<PriceDetails.QuantityChange>;
           }
+
+          export type Type = 'price' | OtherString;
 
           export namespace PriceDetails {
             export interface PricingOverride {
@@ -1224,7 +1336,7 @@ export namespace V2 {
               /**
                * The type of override.
                */
-              type: 'overwrite_price';
+              type: PricingOverride.Type;
             }
 
             export interface QuantityChange {
@@ -1249,7 +1361,7 @@ export namespace V2 {
                 /**
                  * The type of the ends_at.
                  */
-                type: 'timestamp';
+                type: EndsAt.Type;
               }
 
               export interface OverwritePrice {
@@ -1268,7 +1380,17 @@ export namespace V2 {
                 /**
                  * The type of the starts_at.
                  */
-                type: 'timestamp';
+                type: StartsAt.Type;
+              }
+
+              export type Type = 'overwrite_price' | OtherString;
+
+              export namespace EndsAt {
+                export type Type = 'timestamp' | OtherString;
+              }
+
+              export namespace StartsAt {
+                export type Type = 'timestamp' | OtherString;
               }
             }
 
@@ -1282,10 +1404,18 @@ export namespace V2 {
                 /**
                  * The type of the effective at.
                  */
-                type: 'timestamp';
+                type: EffectiveAt.Type;
+              }
+
+              export namespace EffectiveAt {
+                export type Type = 'timestamp' | OtherString;
               }
             }
           }
+        }
+
+        export namespace StartsAt {
+          export type Type = 'timestamp' | OtherString;
         }
       }
 
@@ -1299,7 +1429,7 @@ export namespace V2 {
           /**
            * The type of the ends_at.
            */
-          type: 'timestamp';
+          type: EndsAt.Type;
         }
 
         export interface MultiplyPricing {
@@ -1323,7 +1453,13 @@ export namespace V2 {
           /**
            * The type of the starts_at.
            */
-          type: 'timestamp';
+          type: StartsAt.Type;
+        }
+
+        export type Type = 'multiply_pricing' | OtherString;
+
+        export namespace EndsAt {
+          export type Type = 'timestamp' | OtherString;
         }
 
         export namespace MultiplyPricing {
@@ -1347,6 +1483,10 @@ export namespace V2 {
           export namespace Criterion {
             export type Type = 'exclude' | 'include' | OtherString;
           }
+        }
+
+        export namespace StartsAt {
+          export type Type = 'timestamp' | OtherString;
         }
       }
     }
@@ -1385,6 +1525,11 @@ export namespace V2 {
       metadata?: MetadataParam;
 
       /**
+       * One-time fee actions to apply.
+       */
+      one_time_fee_actions?: Array<ContractUpdateParams.OneTimeFeeAction>;
+
+      /**
        * Pricing line actions to apply.
        */
       pricing_line_actions?: Array<ContractUpdateParams.PricingLineAction>;
@@ -1404,6 +1549,28 @@ export namespace V2 {
         | 'pricing_lines'
         | 'pricing_overrides'
         | OtherString;
+
+      export interface OneTimeFeeAction {
+        /**
+         * Parameters for adding a one-time fee.
+         */
+        add?: OneTimeFeeAction.Add;
+
+        /**
+         * Parameters for removing a one-time fee.
+         */
+        remove?: OneTimeFeeAction.Remove;
+
+        /**
+         * The type of one-time fee action.
+         */
+        type: OneTimeFeeAction.Type;
+
+        /**
+         * Parameters for updating a one-time fee.
+         */
+        update?: OneTimeFeeAction.Update;
+      }
 
       export interface PricingLineAction {
         /**
@@ -1447,6 +1614,102 @@ export namespace V2 {
          * Update a pricing override.
          */
         update?: PricingOverrideAction.Update;
+      }
+
+      export namespace OneTimeFeeAction {
+        export interface Add {
+          /**
+           * The amount to bill.
+           */
+          amount: V2Amount;
+
+          /**
+           * When this fee should be billed.
+           */
+          bill_at: Add.BillAt;
+
+          /**
+           * A user-provided lookup key.
+           */
+          lookup_key?: string;
+
+          /**
+           * The id of the product for this fee.
+           */
+          product: string;
+        }
+
+        export interface Remove {
+          /**
+           * The id of the one-time fee to remove.
+           */
+          id?: string;
+
+          /**
+           * The lookup key of the one-time fee to remove.
+           */
+          lookup_key?: string;
+        }
+
+        export type Type = 'add' | 'remove' | 'update';
+
+        export interface Update {
+          /**
+           * The updated amount to bill.
+           */
+          amount?: V2Amount;
+
+          /**
+           * The updated bill_at schedule.
+           */
+          bill_at?: Update.BillAt;
+
+          /**
+           * The id of the one-time fee to update.
+           */
+          id?: string;
+
+          /**
+           * The lookup key of the one-time fee to update.
+           */
+          lookup_key?: string;
+        }
+
+        export namespace Add {
+          export interface BillAt {
+            /**
+             * The timestamp at which the entry should be billed. Required if `type` is `timestamp`.
+             */
+            timestamp?: string;
+
+            /**
+             * The type of the bill_at.
+             */
+            type: BillAt.Type;
+          }
+
+          export namespace BillAt {
+            export type Type = 'now' | 'timestamp' | OtherString;
+          }
+        }
+
+        export namespace Update {
+          export interface BillAt {
+            /**
+             * The timestamp at which the entry should be billed. Required if `type` is `timestamp`.
+             */
+            timestamp?: string;
+
+            /**
+             * The type of the bill_at.
+             */
+            type: BillAt.Type;
+          }
+
+          export namespace BillAt {
+            export type Type = 'now' | 'timestamp' | OtherString;
+          }
+        }
       }
 
       export namespace PricingLineAction {
@@ -1523,7 +1786,7 @@ export namespace V2 {
             /**
              * The type of end time to apply.
              */
-            type: 'timestamp';
+            type: EndsAt.Type;
           }
 
           export interface Pricing {
@@ -1535,7 +1798,7 @@ export namespace V2 {
             /**
              * The type of pricing.
              */
-            type: 'price';
+            type: Pricing.Type;
           }
 
           export interface StartsAt {
@@ -1547,7 +1810,11 @@ export namespace V2 {
             /**
              * The type of start time to apply.
              */
-            type: 'timestamp';
+            type: StartsAt.Type;
+          }
+
+          export namespace EndsAt {
+            export type Type = 'timestamp' | OtherString;
           }
 
           export namespace Pricing {
@@ -1568,6 +1835,8 @@ export namespace V2 {
                */
               quantity_changes?: Array<PriceDetails.QuantityChange>;
             }
+
+            export type Type = 'price' | OtherString;
 
             export namespace PriceDetails {
               export interface PricingOverride {
@@ -1604,7 +1873,7 @@ export namespace V2 {
                 /**
                  * The type of override.
                  */
-                type: 'overwrite_price';
+                type: PricingOverride.Type;
               }
 
               export interface QuantityChange {
@@ -1629,7 +1898,7 @@ export namespace V2 {
                   /**
                    * The type of the ends_at.
                    */
-                  type: 'timestamp';
+                  type: EndsAt.Type;
                 }
 
                 export interface OverwritePrice {
@@ -1648,7 +1917,17 @@ export namespace V2 {
                   /**
                    * The type of the starts_at.
                    */
-                  type: 'timestamp';
+                  type: StartsAt.Type;
+                }
+
+                export type Type = 'overwrite_price' | OtherString;
+
+                export namespace EndsAt {
+                  export type Type = 'timestamp' | OtherString;
+                }
+
+                export namespace StartsAt {
+                  export type Type = 'timestamp' | OtherString;
                 }
               }
 
@@ -1662,10 +1941,18 @@ export namespace V2 {
                   /**
                    * The type of the effective at.
                    */
-                  type: 'timestamp';
+                  type: EffectiveAt.Type;
+                }
+
+                export namespace EffectiveAt {
+                  export type Type = 'timestamp' | OtherString;
                 }
               }
             }
+          }
+
+          export namespace StartsAt {
+            export type Type = 'timestamp' | OtherString;
           }
         }
 
@@ -1679,7 +1966,7 @@ export namespace V2 {
             /**
              * The type of end time to apply.
              */
-            type: 'timestamp';
+            type: EndsAt.Type;
           }
 
           export interface Pricing {
@@ -1698,7 +1985,11 @@ export namespace V2 {
             /**
              * The type of start time to apply.
              */
-            type: 'timestamp';
+            type: StartsAt.Type;
+          }
+
+          export namespace EndsAt {
+            export type Type = 'timestamp' | OtherString;
           }
 
           export namespace Pricing {
@@ -1786,7 +2077,7 @@ export namespace V2 {
                   /**
                    * The type of override to add.
                    */
-                  type: 'overwrite_price';
+                  type: Add.Type;
                 }
 
                 export interface Remove {
@@ -1840,7 +2131,7 @@ export namespace V2 {
                     /**
                      * The type of end time to apply.
                      */
-                    type: 'timestamp';
+                    type: EndsAt.Type;
                   }
 
                   export interface OverwritePrice {
@@ -1859,7 +2150,17 @@ export namespace V2 {
                     /**
                      * The type of start time to apply.
                      */
-                    type: 'timestamp';
+                    type: StartsAt.Type;
+                  }
+
+                  export type Type = 'overwrite_price' | OtherString;
+
+                  export namespace EndsAt {
+                    export type Type = 'timestamp' | OtherString;
+                  }
+
+                  export namespace StartsAt {
+                    export type Type = 'timestamp' | OtherString;
                   }
                 }
 
@@ -1873,7 +2174,7 @@ export namespace V2 {
                     /**
                      * The type of end time to apply.
                      */
-                    type: 'timestamp';
+                    type: EndsAt.Type;
                   }
 
                   export interface StartsAt {
@@ -1885,7 +2186,15 @@ export namespace V2 {
                     /**
                      * The type of start time to apply.
                      */
-                    type: 'timestamp';
+                    type: StartsAt.Type;
+                  }
+
+                  export namespace EndsAt {
+                    export type Type = 'timestamp' | OtherString;
+                  }
+
+                  export namespace StartsAt {
+                    export type Type = 'timestamp' | OtherString;
                   }
                 }
               }
@@ -1900,10 +2209,18 @@ export namespace V2 {
                   /**
                    * The type of the effective at.
                    */
-                  type: 'timestamp';
+                  type: EffectiveAt.Type;
+                }
+
+                export namespace EffectiveAt {
+                  export type Type = 'timestamp' | OtherString;
                 }
               }
             }
+          }
+
+          export namespace StartsAt {
+            export type Type = 'timestamp' | OtherString;
           }
         }
       }
@@ -1948,7 +2265,7 @@ export namespace V2 {
           /**
            * The type of pricing override to add.
            */
-          type: 'multiply_pricing';
+          type: Add.Type;
         }
 
         export interface Remove {
@@ -1992,7 +2309,7 @@ export namespace V2 {
             /**
              * The type of end time to apply.
              */
-            type: 'timestamp';
+            type: EndsAt.Type;
           }
 
           export interface MultiplyPricing {
@@ -2023,7 +2340,13 @@ export namespace V2 {
             /**
              * The type of start time to apply.
              */
-            type: 'timestamp';
+            type: StartsAt.Type;
+          }
+
+          export type Type = 'multiply_pricing' | OtherString;
+
+          export namespace EndsAt {
+            export type Type = 'timestamp' | OtherString;
           }
 
           export namespace MultiplyPricing {
@@ -2048,6 +2371,10 @@ export namespace V2 {
               export type Type = 'exclude' | 'include' | OtherString;
             }
           }
+
+          export namespace StartsAt {
+            export type Type = 'timestamp' | OtherString;
+          }
         }
 
         export namespace Update {
@@ -2060,7 +2387,7 @@ export namespace V2 {
             /**
              * The type of end time to apply.
              */
-            type: 'timestamp';
+            type: EndsAt.Type;
           }
 
           export interface StartsAt {
@@ -2072,7 +2399,15 @@ export namespace V2 {
             /**
              * The type of start time to apply.
              */
-            type: 'timestamp';
+            type: StartsAt.Type;
+          }
+
+          export namespace EndsAt {
+            export type Type = 'timestamp' | OtherString;
+          }
+
+          export namespace StartsAt {
+            export type Type = 'timestamp' | OtherString;
           }
         }
       }

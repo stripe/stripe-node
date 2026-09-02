@@ -110,7 +110,7 @@ export interface ReceivedDebitMandate {
   /**
    * The type of the ReceivedDebitMandate.
    */
-  type: 'bank_transfer';
+  type: ReceivedDebitMandate.Type;
 }
 export namespace ReceivedDebitMandate {
   export interface BankTransfer {
@@ -127,7 +127,7 @@ export namespace ReceivedDebitMandate {
     /**
      * The bank transfer network for this mandate.
      */
-    network: 'bacs';
+    network: BankTransfer.Network;
 
     /**
      * The bank transfer reference provided by the bank.
@@ -181,6 +181,12 @@ export namespace ReceivedDebitMandate {
     pending_cancellation_at?: string;
   }
 
+  export type Type = 'bank_transfer' | OtherString;
+
+  export namespace BankTransfer {
+    export type Network = 'bacs' | OtherString;
+  }
+
   export namespace StatusDetails {
     export interface Canceled {
       /**
@@ -224,7 +230,7 @@ export namespace V2 {
       /**
        * The type of ReceivedDebitMandate to filter by.
        */
-      type?: 'bank_transfer';
+      type?: ReceivedDebitMandateListParams.Type;
     }
 
     export namespace ReceivedDebitMandateListParams {
@@ -234,6 +240,8 @@ export namespace V2 {
         | 'expired'
         | 'pending_cancellation'
         | OtherString;
+
+      export type Type = 'bank_transfer' | OtherString;
     }
   }
 }

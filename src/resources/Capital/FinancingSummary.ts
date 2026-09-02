@@ -122,6 +122,7 @@ export namespace FinancingSummary {
     export type DisclaimerVariant =
       | 'celtic_us_loan'
       | 'fundbox_au_financing'
+      | 'fundbox_ca_financing'
       | 'youlend_de_financing'
       | 'youlend_fr_financing'
       | 'youlend_uk_mca'

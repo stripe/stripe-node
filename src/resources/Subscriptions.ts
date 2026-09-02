@@ -2274,6 +2274,7 @@ export namespace Subscription {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'truemoney'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -2461,7 +2462,11 @@ export namespace Subscription {
           /**
            * Indicates the mandate amount type.
            */
-          amount_type?: 'fixed';
+          amount_type?: MandateOptions.AmountType;
+        }
+
+        export namespace MandateOptions {
+          export type AmountType = 'fixed' | OtherString;
         }
       }
 
@@ -2742,7 +2747,7 @@ export namespace Subscription {
       /**
        * The type of pause.
        */
-      type: 'subscription';
+      type: Paused.Type;
     }
 
     export namespace Paused {
@@ -2752,6 +2757,8 @@ export namespace Subscription {
          */
         type: Subscription.Type;
       }
+
+      export type Type = 'subscription' | OtherString;
 
       export namespace Subscription {
         export type Type =
@@ -4032,6 +4039,7 @@ export namespace SubscriptionCreateParams {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'truemoney'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -4253,7 +4261,11 @@ export namespace SubscriptionCreateParams {
           /**
            * Indicates the mandate amount type.
            */
-          amount_type: 'fixed';
+          amount_type: MandateOptions.AmountType;
+        }
+
+        export namespace MandateOptions {
+          export type AmountType = 'fixed' | OtherString;
         }
       }
 
@@ -4683,6 +4695,11 @@ export interface SubscriptionUpdateParams {
   prebilling?: SubscriptionUpdateParams.Prebilling;
 
   /**
+   * Token used to resolve the presentment currency and FX rate applied to this subscription's adaptive pricing.
+   */
+  pricing_token?: string;
+
+  /**
    * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
    */
   proration_behavior?: SubscriptionUpdateParams.ProrationBehavior;
@@ -4814,6 +4831,11 @@ export namespace SubscriptionUpdateParams {
      * The customer submitted reason for why they canceled, if the subscription was canceled explicitly by the user.
      */
     feedback?: Emptyable<CancellationDetails.Feedback>;
+
+    /**
+     * Customized feedback options that provide deeper insight into why the subscription was canceled, if the subscription was canceled explicitly by the user.
+     */
+    feedback_option?: string;
   }
 
   export type CollectionMethod =
@@ -5751,6 +5773,7 @@ export namespace SubscriptionUpdateParams {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'truemoney'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -5972,7 +5995,11 @@ export namespace SubscriptionUpdateParams {
           /**
            * Indicates the mandate amount type.
            */
-          amount_type: 'fixed';
+          amount_type: MandateOptions.AmountType;
+        }
+
+        export namespace MandateOptions {
+          export type AmountType = 'fixed' | OtherString;
         }
       }
 
@@ -6385,6 +6412,11 @@ export namespace SubscriptionCancelParams {
      * The customer submitted reason for why they canceled, if the subscription was canceled explicitly by the user.
      */
     feedback?: Emptyable<CancellationDetails.Feedback>;
+
+    /**
+     * Customized feedback options that provide deeper insight into why the subscription was canceled, if the subscription was canceled explicitly by the user.
+     */
+    feedback_option?: string;
   }
 
   export namespace CancellationDetails {
@@ -6457,7 +6489,7 @@ export interface SubscriptionPauseParams {
   /**
    * The type of pause to apply. Defaults to `subscription`.
    */
-  type?: 'subscription';
+  type?: SubscriptionPauseParams.Type;
 }
 export namespace SubscriptionPauseParams {
   export interface BillFor {
@@ -6476,6 +6508,8 @@ export namespace SubscriptionPauseParams {
     | 'invoice'
     | 'pending_invoice_item'
     | OtherString;
+
+  export type Type = 'subscription' | OtherString;
 
   export namespace BillFor {
     export interface OutstandingUsageThrough {

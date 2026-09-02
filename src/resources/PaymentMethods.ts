@@ -730,7 +730,7 @@ export namespace PaymentMethod {
     /**
      * The brand of the gift card.
      */
-    brand: 'svs';
+    brand: GiftCard.Brand;
 
     /**
      * The expiration month of the gift card.
@@ -1153,6 +1153,7 @@ export namespace PaymentMethod {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -1802,6 +1803,10 @@ export namespace PaymentMethod {
       | 'standard_chartered'
       | 'uob'
       | OtherString;
+  }
+
+  export namespace GiftCard {
+    export type Brand = 'svs' | OtherString;
   }
 
   export namespace IdBankTransfer {
@@ -2839,6 +2844,7 @@ export namespace PaymentMethodCreateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -3364,6 +3370,7 @@ export namespace PaymentMethodListParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'

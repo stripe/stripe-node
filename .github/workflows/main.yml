@@ -29,25 +29,17 @@ jobs:
       contents: read
 
     steps:
-      - uses: extractions/setup-just@v2
-      - uses: actions/checkout@v2
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '22'
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> "$GITHUB_OUTPUT"
-
-      - uses: actions/cache@v4
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          # Disable automatic dependency caching to reduce cache poisoning risk
+          package-manager-cache: false
 
       - name: Verify Linting
         run: just lint-check
@@ -83,42 +75,29 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: extractions/setup-just@v2
-      - uses: actions/checkout@v2
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ matrix.node }}
+          # Disable automatic dependency caching to reduce cache poisoning risk
+          package-manager-cache: false
 
       - name: Print Node.js version
         run: node -v
 
       # used for one of the integration tests
       - name: Setup Deno
-        uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
         with:
           deno-version: v1.x
 
       - name: Print Deno version
         run: deno -V
-
-      - name: Get yarn cache directory path
-        # caches are platform-specific and there's only one windows job, so don't bother caching
-        if: runner.os != 'Windows'
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> "$GITHUB_OUTPUT"
-
-      - uses: actions/cache@v4
-        # caches are platform-specific and there's only one windows job, so don't bother caching
-        if: runner.os != 'Windows'
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          # searching very deep deps can time out, so only cache on the root yarn.lock
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
 
       - uses: stripe/openapi/actions/stripe-mock@master
 
@@ -137,14 +116,23 @@ jobs:
       id-token: write # Required for OIDC
     steps:
       # just is called in `yarn prepack`, which is called during the `publish` operation
-      - uses: extractions/setup-just@v2
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v4
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm install -g npm@11
+          # Disable automatic dependency caching to reduce cache poisoning risk
+          package-manager-cache: false
       - name: Publish to NPM
+        env:
+          # needed because setup-node writes a .npmrc file with `registry-url` and
+          # `_authToken=${NODE_AUTH_TOKEN}`. OIDC overwrites this with a real token
+          # before anything is uploaded, but we need to have a value for yarn install
+          # to work.
+          NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
         run: |
           set -euxo pipefail
           VERSION=$(cat package.json | jq -r '.version')

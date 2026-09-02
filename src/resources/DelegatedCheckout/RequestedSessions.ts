@@ -220,7 +220,7 @@ export interface RequestedSession {
   /**
    * Whether or not the payment method should be saved for future use.
    */
-  setup_future_usage: 'on_session' | null;
+  setup_future_usage: RequestedSession.SetupFutureUsage | null;
 
   /**
    * The metadata shared with the seller.
@@ -513,6 +513,8 @@ export namespace RequestedSession {
      */
     terms_of_service_url: string | null;
   }
+
+  export type SetupFutureUsage = 'on_session' | OtherString;
 
   export type Status =
     | 'completed'
@@ -933,11 +935,13 @@ export namespace RequestedSession {
         /**
          * The type of disclosure.
          */
-        type: 'disclaimer';
+        type: Disclosure.Type;
       }
 
       export namespace Disclosure {
         export type ContentType = 'link' | 'markdown' | 'plain' | OtherString;
+
+        export type Type = 'disclaimer' | OtherString;
       }
     }
   }
@@ -1159,7 +1163,7 @@ export namespace DelegatedCheckout {
     /**
      * The setup future usage for this requested session.
      */
-    setup_future_usage?: 'on_session';
+    setup_future_usage?: RequestedSessionCreateParams.SetupFutureUsage;
 
     /**
      * The shared metadata for this requested session.
@@ -1295,6 +1299,8 @@ export namespace DelegatedCheckout {
         PaymentMethodOptions.ExcludedPaymentMethodType
       >;
     }
+
+    export type SetupFutureUsage = 'on_session' | OtherString;
 
     export namespace AffiliateAttribution {
       export interface Source {
