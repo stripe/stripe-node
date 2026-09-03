@@ -133,6 +133,11 @@ jobs:
           # before anything is uploaded, but we need to have a value for yarn install
           # to work.
           NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+          # npm hides its HTTP exchange, and the OIDC token exchange with it, below
+          # `verbose`. `notice` is npm's own default, so an ordinary release logs exactly
+          # what it does today, and re-running this job with debug logging enabled shows
+          # where a failed publish gave up.
+          NPM_CONFIG_LOGLEVEL: ${{ runner.debug && 'verbose' || 'notice' }}
         run: |
           set -euxo pipefail
           VERSION=$(cat package.json | jq -r '.version')
