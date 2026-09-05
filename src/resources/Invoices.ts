@@ -7815,7 +7815,7 @@ export namespace InvoiceCreatePreviewParams {
       /**
        * The type of pause to apply. Defaults to `subscription`.
        */
-      type?: 'subscription';
+      type?: Pause.Type;
     }
 
     export interface Prebilling {
@@ -8067,6 +8067,8 @@ export namespace InvoiceCreatePreviewParams {
         | 'invoice'
         | 'pending_invoice_item'
         | OtherString;
+
+      export type Type = 'subscription' | OtherString;
 
       export namespace BillFor {
         export interface OutstandingUsageThrough {

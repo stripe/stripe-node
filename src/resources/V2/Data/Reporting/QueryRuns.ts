@@ -122,7 +122,7 @@ export namespace QueryRun {
     /**
      * The type of the `ReportRun` or `QueryRun` result.
      */
-    type: 'file';
+    type: Result.Type;
   }
 
   export interface ResultOptions {
@@ -164,6 +164,8 @@ export namespace QueryRun {
        */
       size: bigint;
     }
+
+    export type Type = 'file' | OtherString;
 
     export namespace File {
       export type ContentType = 'csv' | 'zip' | OtherString;

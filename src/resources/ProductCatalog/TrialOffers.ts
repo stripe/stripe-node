@@ -99,7 +99,7 @@ export namespace TrialOffer {
     /**
      * The type of behavior when the trial offer ends.
      */
-    type: 'transition';
+    type: EndBehavior.Type;
   }
 
   export namespace Duration {
@@ -120,6 +120,8 @@ export namespace TrialOffer {
        */
       price: string | Price | DeletedPrice;
     }
+
+    export type Type = 'transition' | OtherString;
   }
 }
 export namespace ProductCatalog {
