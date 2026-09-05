@@ -375,6 +375,11 @@ export namespace Calculation {
        */
       amount: number;
 
+      /**
+       * The ID of the [customer tax exemption](https://docs.stripe.com/api/tax/exemptions) that was applied to this tax breakdown.
+       */
+      customer_tax_exemption?: string;
+
       jurisdiction: TaxBreakdown.Jurisdiction;
 
       /**

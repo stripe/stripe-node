@@ -18049,6 +18049,7 @@ declare namespace StripeConstructor {
       export type Options = Stripe_.Identity.VerificationReport.Options;
       export type Phone = Stripe_.Identity.VerificationReport.Phone;
       export type Selfie = Stripe_.Identity.VerificationReport.Selfie;
+      export type Signals = Stripe_.Identity.VerificationReport.Signals;
       export type Type = Stripe_.Identity.VerificationReport.Type;
       export namespace Document {
         export type Dob = Stripe_.Identity.VerificationReport.Document.Dob;
@@ -18105,6 +18106,35 @@ declare namespace StripeConstructor {
         export type Status = Stripe_.Identity.VerificationReport.Selfie.Status;
         export namespace Error {
           export type Code = Stripe_.Identity.VerificationReport.Selfie.Error.Code;
+        }
+      }
+      export namespace Signals {
+        export type FraudulentEmail = Stripe_.Identity.VerificationReport.Signals.FraudulentEmail;
+        export type FraudulentPerson = Stripe_.Identity.VerificationReport.Signals.FraudulentPerson;
+        export type FraudulentPhone = Stripe_.Identity.VerificationReport.Signals.FraudulentPhone;
+        export namespace FraudulentEmail {
+          export type Indicator = Stripe_.Identity.VerificationReport.Signals.FraudulentEmail.Indicator;
+          export type RiskLevel = Stripe_.Identity.VerificationReport.Signals.FraudulentEmail.RiskLevel;
+          export namespace Indicator {
+            export type Impact = Stripe_.Identity.VerificationReport.Signals.FraudulentEmail.Indicator.Impact;
+            export type Indicator = Stripe_.Identity.VerificationReport.Signals.FraudulentEmail.Indicator.Indicator;
+          }
+        }
+        export namespace FraudulentPerson {
+          export type Indicator = Stripe_.Identity.VerificationReport.Signals.FraudulentPerson.Indicator;
+          export type RiskLevel = Stripe_.Identity.VerificationReport.Signals.FraudulentPerson.RiskLevel;
+          export namespace Indicator {
+            export type Impact = Stripe_.Identity.VerificationReport.Signals.FraudulentPerson.Indicator.Impact;
+            export type Indicator = Stripe_.Identity.VerificationReport.Signals.FraudulentPerson.Indicator.Indicator;
+          }
+        }
+        export namespace FraudulentPhone {
+          export type Indicator = Stripe_.Identity.VerificationReport.Signals.FraudulentPhone.Indicator;
+          export type RiskLevel = Stripe_.Identity.VerificationReport.Signals.FraudulentPhone.RiskLevel;
+          export namespace Indicator {
+            export type Impact = Stripe_.Identity.VerificationReport.Signals.FraudulentPhone.Indicator.Impact;
+            export type Indicator = Stripe_.Identity.VerificationReport.Signals.FraudulentPhone.Indicator.Indicator;
+          }
         }
       }
     }
