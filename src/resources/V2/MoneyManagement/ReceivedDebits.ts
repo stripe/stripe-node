@@ -116,7 +116,7 @@ export namespace ReceivedDebit {
     /**
      * Open Enum. The type of the payment method used to originate the debit.
      */
-    payment_method_type: 'us_bank_account';
+    payment_method_type: BankTransfer.PaymentMethodType;
 
     /**
      * The statement descriptor set by the originator of the debit.
@@ -169,6 +169,8 @@ export namespace ReceivedDebit {
   export type Type = 'bank_transfer' | 'external_debit' | OtherString;
 
   export namespace BankTransfer {
+    export type PaymentMethodType = 'us_bank_account' | OtherString;
+
     export interface UsBankAccount {
       /**
        * The name of the bank the debit originated from.
@@ -178,12 +180,16 @@ export namespace ReceivedDebit {
       /**
        * Open Enum. The bank network the debit was originated on.
        */
-      network: 'ach';
+      network: UsBankAccount.Network;
 
       /**
        * The routing number of the bank that originated the debit.
        */
       routing_number?: string;
+    }
+
+    export namespace UsBankAccount {
+      export type Network = 'ach' | OtherString;
     }
   }
 

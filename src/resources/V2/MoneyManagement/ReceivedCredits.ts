@@ -294,7 +294,7 @@ export namespace ReceivedCredit {
       /**
        * The money transmission network used to send funds for this ReceivedCredit.
        */
-      network: 'sepa_credit_transfer';
+      network: SepaBankAccount.Network;
     }
 
     export interface UsBankAccount {
@@ -328,6 +328,10 @@ export namespace ReceivedCredit {
       export type Network = 'chaps' | 'fps' | OtherString;
     }
 
+    export namespace SepaBankAccount {
+      export type Network = 'sepa_credit_transfer' | OtherString;
+    }
+
     export namespace UsBankAccount {
       export type Network = 'ach' | 'rtp' | 'us_domestic_wire' | OtherString;
     }
@@ -345,7 +349,7 @@ export namespace ReceivedCredit {
       /**
        * Open Enum. The `returned` status reason.
        */
-      reason: 'originator_initiated_reversal';
+      reason: Returned.Reason;
     }
 
     export namespace Failed {
@@ -355,6 +359,10 @@ export namespace ReceivedCredit {
         | 'financial_address_inactive'
         | 'stripe_rejected'
         | OtherString;
+    }
+
+    export namespace Returned {
+      export type Reason = 'originator_initiated_reversal' | OtherString;
     }
   }
 }

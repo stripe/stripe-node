@@ -125,7 +125,7 @@ export namespace Event {
     /**
      * Event reason type.
      */
-    type: 'request';
+    type: Reason.Type;
   }
 
   export namespace Reason {
@@ -140,6 +140,8 @@ export namespace Event {
        */
       idempotency_key: string;
     }
+
+    export type Type = 'request' | OtherString;
   }
 }
 export namespace V2 {
@@ -809,7 +811,11 @@ export namespace V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpda
     /**
      * Open Enum. The capability which had its status updated.
      */
-    updated_capability: 'automatic_indirect_tax';
+    updated_capability: Data.UpdatedCapability;
+  }
+
+  export namespace Data {
+    export type UpdatedCapability = 'automatic_indirect_tax' | OtherString;
   }
 }
 

@@ -458,7 +458,11 @@ export namespace V2 {
       /**
        * Additional fields to include in the response.
        */
-      include?: Array<'webhook_endpoint.url'>;
+      include?: Array<EventDestinationRetrieveParams.Include>;
+    }
+
+    export namespace EventDestinationRetrieveParams {
+      export type Include = 'webhook_endpoint.url' | OtherString;
     }
   }
 }
@@ -478,7 +482,7 @@ export namespace V2 {
       /**
        * Additional fields to include in the response. Currently supports `webhook_endpoint.url`.
        */
-      include?: Array<'webhook_endpoint.url'>;
+      include?: Array<EventDestinationUpdateParams.Include>;
 
       /**
        * Metadata.
@@ -497,6 +501,8 @@ export namespace V2 {
     }
 
     export namespace EventDestinationUpdateParams {
+      export type Include = 'webhook_endpoint.url' | OtherString;
+
       export interface WebhookEndpoint {
         /**
          * The URL of the webhook endpoint.
@@ -512,12 +518,16 @@ export namespace V2 {
       /**
        * Additional fields to include in the response. Currently supports `webhook_endpoint.url`.
        */
-      include?: Array<'webhook_endpoint.url'>;
+      include?: Array<EventDestinationListParams.Include>;
 
       /**
        * The page size.
        */
       limit?: number;
+    }
+
+    export namespace EventDestinationListParams {
+      export type Include = 'webhook_endpoint.url' | OtherString;
     }
   }
 }
