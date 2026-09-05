@@ -2797,6 +2797,11 @@ export namespace Session {
   export namespace Item {
     export interface Subscription {
       /**
+       * The Unix timestamp marking the subscription's backdated start date.
+       */
+      backdate_start_date?: number | null;
+
+      /**
        * The description for the subscription.
        */
       description: string | null;
@@ -4931,7 +4936,7 @@ export namespace Checkout {
      *
      * For `subscription` mode, there is a maximum of 20 line items and optional items with recurring Prices and 20 line items and optional items with one-time Prices.
      *
-     * You can't set this parameter if `ui_mode` is `custom`.
+     * You can't set this parameter if `ui_mode` is `elements` or `form`.
      */
     optional_items?: Array<SessionCreateParams.OptionalItem>;
 
@@ -5892,6 +5897,7 @@ export namespace Checkout {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'sunbit'
@@ -6559,6 +6565,11 @@ export namespace Checkout {
 
     export namespace Item {
       export interface Subscription {
+        /**
+         * A past timestamp to backdate the subscription's start date to.
+         */
+        backdate_start_date?: number;
+
         /**
          * Configures when the subscription schedule's billing cycle anchors to a specific day of the week or month.
          */

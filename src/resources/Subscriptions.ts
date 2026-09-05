@@ -2775,7 +2775,7 @@ export namespace Subscription {
       /**
        * Indicates how the subscription's billing cycle anchor is reset when a trial ends. If not set, the default is `now`.
        */
-      billing_cycle_anchor?: EndBehavior.BillingCycleAnchor | null;
+      billing_cycle_anchor: EndBehavior.BillingCycleAnchor | null;
 
       /**
        * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
