@@ -258,6 +258,12 @@ export function createWebhooks(
         encodedHeader,
         this.EXPECTED_SCHEME
       );
+      if (!secret) {
+        throw new StripeSignatureVerificationError(header, payload, {
+          message:
+            'No webhook secret value was provided. It should start with `whsec_`',
+        });
+      }
       const secretContainsWhitespace = /\s/.test(secret);
 
       cryptoProvider = cryptoProvider || getCryptoProvider();
@@ -303,6 +309,12 @@ export function createWebhooks(
         encodedHeader,
         this.EXPECTED_SCHEME
       );
+      if (!secret) {
+        throw new StripeSignatureVerificationError(header, payload, {
+          message:
+            'No webhook secret value was provided. It should start with `whsec_`',
+        });
+      }
       const secretContainsWhitespace = /\s/.test(secret);
 
       cryptoProvider = cryptoProvider || getCryptoProvider();
