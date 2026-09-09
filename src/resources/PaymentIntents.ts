@@ -72,7 +72,7 @@ export class PaymentIntentResource extends StripeResource {
    *
    * You can retrieve a PaymentIntent client-side using a publishable key when the client_secret is in the query string.
    *
-   * If you retrieve a PaymentIntent with a publishable key, it only returns a subset of properties. Refer to the [payment intent](https://docs.stripe.com/api#payment_intent_object) object reference for more details.
+   * If you retrieve a PaymentIntent with a publishable key, it only returns a subset of properties. Refer to the [payment intent](https://docs.stripe.com/api/payment_intents/object) object reference for more details.
    */
   retrieve(
     id: string,
@@ -588,7 +588,7 @@ export interface PaymentIntent {
   /**
    * ID of the [Payment Record object](https://docs.stripe.com/api/payment-record) created by this PaymentIntent.
    */
-  payment_record?: string | PaymentRecord | null;
+  payment_record: string | PaymentRecord | null;
 
   /**
    * When you enable this parameter, this PaymentIntent will route your payment to processors that you configure in the dashboard.
@@ -8062,6 +8062,11 @@ export namespace PaymentIntentCreateParams {
        * The unit cost of the line item represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
        */
       unit_cost: number;
+
+      /**
+       * The number of decimal places implied in the unit_cost. For example, if unit_cost is 10000 and unit_cost_precision is 1, the actual unit cost is 1000.0. Defaults to 0 if not provided.
+       */
+      unit_cost_precision?: number;
 
       /**
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
@@ -16621,6 +16626,11 @@ export namespace PaymentIntentUpdateParams {
       unit_cost: number;
 
       /**
+       * The number of decimal places implied in the unit_cost. For example, if unit_cost is 10000 and unit_cost_precision is 1, the actual unit cost is 1000.0. Defaults to 0 if not provided.
+       */
+      unit_cost_precision?: number;
+
+      /**
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
@@ -24181,6 +24191,11 @@ export namespace PaymentIntentCaptureParams {
       unit_cost: number;
 
       /**
+       * The number of decimal places implied in the unit_cost. For example, if unit_cost is 10000 and unit_cost_precision is 1, the actual unit cost is 1000.0. Defaults to 0 if not provided.
+       */
+      unit_cost_precision?: number;
+
+      /**
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
@@ -27773,6 +27788,11 @@ export namespace PaymentIntentConfirmParams {
        * The unit cost of the line item represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
        */
       unit_cost: number;
+
+      /**
+       * The number of decimal places implied in the unit_cost. For example, if unit_cost is 10000 and unit_cost_precision is 1, the actual unit cost is 1000.0. Defaults to 0 if not provided.
+       */
+      unit_cost_precision?: number;
 
       /**
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
@@ -35218,6 +35238,11 @@ export namespace PaymentIntentDecrementAuthorizationParams {
       unit_cost: number;
 
       /**
+       * The number of decimal places implied in the unit_cost. For example, if unit_cost is 10000 and unit_cost_precision is 1, the actual unit cost is 1000.0. Defaults to 0 if not provided.
+       */
+      unit_cost_precision?: number;
+
+      /**
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
@@ -35714,6 +35739,11 @@ export namespace PaymentIntentIncrementAuthorizationParams {
        * The unit cost of the line item represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
        */
       unit_cost: number;
+
+      /**
+       * The number of decimal places implied in the unit_cost. For example, if unit_cost is 10000 and unit_cost_precision is 1, the actual unit cost is 1000.0. Defaults to 0 if not provided.
+       */
+      unit_cost_precision?: number;
 
       /**
        * A unit of measure for the line item, such as gallons, feet, meters, etc.

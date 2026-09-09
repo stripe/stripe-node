@@ -204,6 +204,11 @@ export namespace ProductCatalog {
 export namespace ProductCatalog {
   export interface TrialOfferListParams extends PaginationParams {
     /**
+     * Only return trial offers that are active (`true`) or archived (`false`). If omitted, both active and archived trial offers are returned.
+     */
+    active?: boolean;
+
+    /**
      * Only return trial offers that were created during the given date interval.
      */
     created?: RangeQueryParam | number;

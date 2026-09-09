@@ -97,6 +97,8 @@ export interface VerificationReport {
    */
   selfie?: VerificationReport.Selfie;
 
+  signals?: VerificationReport.Signals;
+
   /**
    * Type of report.
    */
@@ -362,6 +364,14 @@ export namespace VerificationReport {
      * Status of this `selfie` check.
      */
     status: Selfie.Status;
+  }
+
+  export interface Signals {
+    fraudulent_email?: Signals.FraudulentEmail;
+
+    fraudulent_person?: Signals.FraudulentPerson;
+
+    fraudulent_phone?: Signals.FraudulentPhone;
   }
 
   export type Type =
@@ -673,6 +683,185 @@ export namespace VerificationReport {
         | 'selfie_manipulated'
         | 'selfie_unverified_other'
         | OtherString;
+    }
+  }
+
+  export namespace Signals {
+    export interface FraudulentEmail {
+      /**
+       * Array of objects representing individual factors that contributed to the calculated risk level.
+       */
+      indicators: Array<FraudulentEmail.Indicator>;
+
+      /**
+       * Categorical assessment of the email risk.
+       */
+      risk_level: FraudulentEmail.RiskLevel;
+    }
+
+    export interface FraudulentPerson {
+      /**
+       * Array of objects representing individual factors that contributed to the calculated risk level.
+       */
+      indicators: Array<FraudulentPerson.Indicator>;
+
+      /**
+       * Categorical assessment of the fraudulent person risk.
+       */
+      risk_level: FraudulentPerson.RiskLevel;
+    }
+
+    export interface FraudulentPhone {
+      /**
+       * Array of objects representing individual factors that contributed to the calculated risk level.
+       */
+      indicators: Array<FraudulentPhone.Indicator>;
+
+      /**
+       * Categorical assessment of the phone risk.
+       */
+      risk_level: FraudulentPhone.RiskLevel;
+    }
+
+    export namespace FraudulentEmail {
+      export interface Indicator {
+        /**
+         * A brief explanation of how this indicator contributed to the risk level
+         */
+        explanation: string;
+
+        /**
+         * The effect this indicator had on the overall risk level.
+         */
+        impact: Indicator.Impact;
+
+        /**
+         * The name of the specific indicator used in the risk assessment.
+         */
+        indicator: Indicator.Indicator;
+      }
+
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'not_assessed'
+        | 'unknown'
+        | OtherString;
+
+      export namespace Indicator {
+        export type Impact =
+          | 'decrease'
+          | 'neutral'
+          | 'slight_increase'
+          | 'strong_increase'
+          | OtherString;
+
+        export type Indicator =
+          | 'address_mismatch'
+          | 'domain_reputation'
+          | 'domain_tenure'
+          | 'email_reputation'
+          | 'email_tenure'
+          | 'gibberish_email'
+          | 'invalid_email'
+          | 'name_mismatch'
+          | 'other'
+          | 'phone_mismatch'
+          | OtherString;
+      }
+    }
+
+    export namespace FraudulentPerson {
+      export interface Indicator {
+        /**
+         * A brief explanation of how this indicator contributed to the risk level
+         */
+        explanation: string;
+
+        /**
+         * The effect this indicator had on the overall risk level.
+         */
+        impact: Indicator.Impact;
+
+        /**
+         * The name of the specific indicator used in the risk assessment.
+         */
+        indicator: Indicator.Indicator;
+      }
+
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'not_assessed'
+        | 'unknown'
+        | OtherString;
+
+      export namespace Indicator {
+        export type Impact =
+          | 'decrease'
+          | 'neutral'
+          | 'slight_increase'
+          | 'strong_increase'
+          | OtherString;
+
+        export type Indicator =
+          | 'fraudulent_person_match'
+          | 'no_transaction_match'
+          | 'other'
+          | OtherString;
+      }
+    }
+
+    export namespace FraudulentPhone {
+      export interface Indicator {
+        /**
+         * A brief explanation of how this indicator contributed to the risk level
+         */
+        explanation: string;
+
+        /**
+         * The effect this indicator had on the overall risk level.
+         */
+        impact: Indicator.Impact;
+
+        /**
+         * The name of the specific indicator used in the risk assessment.
+         */
+        indicator: Indicator.Indicator;
+      }
+
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'not_assessed'
+        | 'unknown'
+        | OtherString;
+
+      export namespace Indicator {
+        export type Impact =
+          | 'decrease'
+          | 'neutral'
+          | 'slight_increase'
+          | 'strong_increase'
+          | OtherString;
+
+        export type Indicator =
+          | 'address_mismatch'
+          | 'carrier_reputation'
+          | 'line_type'
+          | 'name_mismatch'
+          | 'other'
+          | 'phone_reputation'
+          | 'phone_tenure'
+          | 'phone_velocity'
+          | OtherString;
+      }
     }
   }
 }
