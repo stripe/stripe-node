@@ -249,6 +249,23 @@ export namespace V2 {
   }
 }
 
+export namespace V2 {
+  export namespace Core {
+    export namespace Events {
+      /**
+       * A reference to an API resource that has no standalone identifier, so there is no `id` to retrieve it by.
+       */ export interface RelatedSingletonObject {
+        /**
+         * Type of the object relevant to the event.
+         */ type: string;
+        /**
+         * URL to retrieve the resource.
+         */ url: string;
+      }
+    }
+  }
+}
+
 /**
  * Represents the shape of an EventNotification that the SDK didn't know about when it was generated.
  */ export interface UnknownEventNotification extends EventNotificationBase {
@@ -1157,4 +1174,6 @@ export declare namespace Events {
     V2CoreAccountPersonUpdatedEventNotification,
     V2CoreEventDestinationPingEventNotification,
   };
+  export type RelatedObject = V2.Core.Events.RelatedObject;
+  export type RelatedSingletonObject = V2.Core.Events.RelatedSingletonObject;
 }

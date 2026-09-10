@@ -395,6 +395,24 @@ async (): Promise<void> => {
   let g: Stripe.V2.Core.Event;
   // union of all v1 events
   let h: Stripe.Event;
+  // the shape of an event's `related_object`
+  let i: Stripe.Events.RelatedObject;
+  // ...and the variant that "singleton" events use, whose related object has no
+  // standalone id
+  let j: Stripe.Events.RelatedSingletonObject;
+}
+
+{
+  // a singleton related object is reachable only by url
+  const singleton = {} as Stripe.Events.RelatedSingletonObject;
+  const singletonType: string = singleton.type;
+  const singletonUrl: string = singleton.url;
+  // @ts-expect-error - a singleton related object has no id
+  singleton.id;
+
+  // whereas the usual related object does have one
+  const related = {} as Stripe.Events.RelatedObject;
+  const relatedId: string = related.id;
 }
 
 async (): Promise<void> => {
