@@ -1174,6 +1174,6 @@ export declare namespace Events {
     V2CoreAccountPersonUpdatedEventNotification,
     V2CoreEventDestinationPingEventNotification,
   };
-  export import RelatedObject = V2.Core.Events.RelatedObject;
-  export import RelatedSingletonObject = V2.Core.Events.RelatedSingletonObject;
+  export type RelatedObject = V2.Core.Events.RelatedObject;
+  export type RelatedSingletonObject = V2.Core.Events.RelatedSingletonObject;
 }
