@@ -115,6 +115,13 @@ export interface StripeConfig {
   stripeContext?: string | StripeContext;
 }
 
+/**
+ * Configuration for `Stripe.forWorkloadIdentity`. Identical to `StripeConfig`,
+ * except `authenticator` is omitted since `forWorkloadIdentity` manages
+ * authentication itself.
+ */
+export type WorkloadIdentityConfig = Omit<StripeConfig, 'authenticator'>;
+
 export interface RequestOptions {
   /**
    * Use a specific API Key for this request.

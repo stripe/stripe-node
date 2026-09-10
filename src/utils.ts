@@ -406,6 +406,23 @@ export function createApiKeyAuthenticator(
 }
 
 /**
+ * Type guard for the authenticator produced by
+ * `createWorkloadIdentityAuthenticator` (see `src/platform/AwsWorkloadIdentity.ts`).
+ * Used by RequestSender to recognize workload-identity clients so it can
+ * invalidate the cached token and replay a request exactly once on a 401,
+ * a behavior that must never apply to plain API-key authenticators.
+ */
+export function isWorkloadIdentityAuthenticator(
+  authenticator: RequestAuthenticator | null | undefined
+): authenticator is RequestAuthenticator & {_invalidate: () => void} {
+  return (
+    !!authenticator &&
+    (authenticator as RequestAuthenticator & {_isWorkloadIdentity?: boolean})
+      ._isWorkloadIdentity === true
+  );
+}
+
+/**
  * Joins an array of Uint8Arrays into a single Uint8Array
  */
 export function concat(arrays: Array<Uint8Array>): Uint8Array {

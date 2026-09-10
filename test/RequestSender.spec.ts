@@ -2203,4 +2203,139 @@ describe('RequestSender', () => {
       done();
     });
   });
+
+  describe('Workload identity 401 replay', () => {
+    // A minimal stand-in for `createWorkloadIdentityAuthenticator`'s
+    // authenticator: it satisfies `isWorkloadIdentityAuthenticator` and lets
+    // each test control what token is attached and observe invalidations.
+    const makeFakeWorkloadAuthenticator = () => {
+      let token = 'tok_initial';
+      let invalidateCalls = 0;
+      const authenticator = (request) => {
+        request.headers.Authorization = `Bearer ${token}`;
+        return Promise.resolve();
+      };
+      authenticator._isWorkloadIdentity = true;
+      authenticator._invalidate = () => {
+        invalidateCalls += 1;
+        token = `tok_refreshed_${invalidateCalls}`;
+      };
+      return {
+        authenticator,
+        getInvalidateCalls: () => invalidateCalls,
+      };
+    };
+
+    afterEach(() => {
+      nock.cleanAll();
+    });
+
+    it('invalidates and replays exactly once after a single 401', (done) => {
+      const {authenticator, getInvalidateCalls} = makeFakeWorkloadAuthenticator();
+      const realStripe = require('../src/stripe.cjs.node.js')('', {
+        authenticator,
+      });
+
+      const host = `https://${stripe.getConstant('DEFAULT_HOST')}`;
+      const authHeaders: Array<string | undefined> = [];
+      nock(host)
+        .get('/v1/balance')
+        .reply(function () {
+          authHeaders.push(this.req.headers.authorization);
+          return [401, {error: {message: 'expired token'}}];
+        })
+        .get('/v1/balance')
+        .reply(function () {
+          authHeaders.push(this.req.headers.authorization);
+          return [200, '{}'];
+        });
+
+      realStripe.balance
+        .retrieve()
+        .then(() => {
+          expect(getInvalidateCalls()).to.equal(1);
+          expect(authHeaders).to.deep.equal([
+            'Bearer tok_initial',
+            'Bearer tok_refreshed_1',
+          ]);
+          done();
+        })
+        .catch(done);
+    });
+
+    it('does not attempt a third try after a second consecutive 401', (done) => {
+      const {authenticator, getInvalidateCalls} = makeFakeWorkloadAuthenticator();
+      const realStripe = require('../src/stripe.cjs.node.js')('', {
+        authenticator,
+      });
+
+      const host = `https://${stripe.getConstant('DEFAULT_HOST')}`;
+      const scope = nock(host)
+        .get('/v1/balance')
+        .twice()
+        .reply(401, {error: {message: 'still unauthorized'}});
+
+      realStripe.balance
+        .retrieve()
+        .then(() => {
+          done(new Error('Expected an error'));
+        })
+        .catch((err) => {
+          expect(err).to.be.an.instanceOf(StripeAuthenticationError);
+          expect(getInvalidateCalls()).to.equal(1);
+          scope.done();
+          done();
+        });
+    });
+
+    it('preserves the Idempotency-Key across the replay', (done) => {
+      const {authenticator} = makeFakeWorkloadAuthenticator();
+      const realStripe = require('../src/stripe.cjs.node.js')('', {
+        authenticator,
+      });
+
+      const host = `https://${stripe.getConstant('DEFAULT_HOST')}`;
+      const idempotencyKeys: Array<string | undefined> = [];
+      nock(host)
+        .post('/v1/charges')
+        .reply(function () {
+          idempotencyKeys.push(this.req.headers['idempotency-key']);
+          return [401, {error: {message: 'expired token'}}];
+        })
+        .post('/v1/charges')
+        .reply(function () {
+          idempotencyKeys.push(this.req.headers['idempotency-key']);
+          return [200, '{}'];
+        });
+
+      realStripe.charges
+        .create({amount: 1000, currency: 'usd', source: 'tok_visa'})
+        .then(() => {
+          expect(idempotencyKeys[0]).to.match(IDEMPOTENCY_KEY);
+          expect(idempotencyKeys[1]).to.equal(idempotencyKeys[0]);
+          done();
+        })
+        .catch(done);
+    });
+
+    it('never replays for API-key clients on 401', (done) => {
+      const realStripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY);
+      const host = `https://${stripe.getConstant('DEFAULT_HOST')}`;
+      const scope = nock(host)
+        .get('/v1/balance')
+        .once()
+        .reply(401, {error: {message: 'invalid key'}});
+
+      realStripe.balance
+        .retrieve()
+        .then(() => {
+          done(new Error('Expected an error'));
+        })
+        .catch((err) => {
+          expect(err).to.be.an.instanceOf(StripeAuthenticationError);
+          scope.done();
+          done();
+        });
+    });
+  });
 });
