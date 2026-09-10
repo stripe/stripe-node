@@ -86,6 +86,8 @@ export type StripeRequest = {
   protocol: string;
 };
 export type RequestAuthenticator = (request: StripeRequest) => Promise<void>;
+
+export type WorkloadIdentityProvider = 'aws';
 export type RequestCallback = (
   this: void,
   error: Error | null,

@@ -151,6 +151,58 @@ describe('Stripe Module', function() {
     });
   });
 
+  describe('forWorkloadIdentity', () => {
+    it('throws if the client ID is empty', () => {
+      expect(() => Stripe.forWorkloadIdentity('', 'aws')).to.throw(
+        /non-empty workload identity client ID/
+      );
+    });
+
+    it('throws if the client ID is not a string', () => {
+      expect(() => Stripe.forWorkloadIdentity(123, 'aws')).to.throw(
+        /non-empty workload identity client ID/
+      );
+    });
+
+    it('throws if given a Stripe API key instead of a client ID', () => {
+      expect(() => Stripe.forWorkloadIdentity(FAKE_API_KEY, 'aws')).to.throw(
+        /passed a Stripe API key to Stripe\.forWorkloadIdentity/
+      );
+
+      expect(() =>
+        Stripe.forWorkloadIdentity('rk_test_123', 'aws')
+      ).to.throw(/passed a Stripe API key to Stripe\.forWorkloadIdentity/);
+    });
+
+    it('throws for an unsupported provider', () => {
+      expect(() =>
+        Stripe.forWorkloadIdentity('oacli_123', 'gcp')
+      ).to.throw(/Unsupported workload identity provider 'gcp'/);
+    });
+
+    it('none of the validation errors require AWS/network access', () => {
+      // These all throw synchronously before any AWS SDK or HTTP call is made.
+      expect(() => Stripe.forWorkloadIdentity('', 'aws')).to.throw();
+      expect(() => Stripe.forWorkloadIdentity(FAKE_API_KEY, 'aws')).to.throw();
+      expect(() =>
+        Stripe.forWorkloadIdentity('oacli_123', 'unsupported')
+      ).to.throw();
+    });
+  });
+
+  describe('workload identity client ID passed to the standard constructor', () => {
+    it('throws and points at Stripe.forWorkloadIdentity', () => {
+      expect(() => Stripe('oacli_abc123')).to.throw(
+        /Use `Stripe\.forWorkloadIdentity\(clientId, 'aws', config\)` instead/
+      );
+    });
+
+    it('does not affect normal secret/restricted keys', () => {
+      expect(() => Stripe(FAKE_API_KEY)).to.not.throw();
+      expect(() => Stripe('rk_test_123')).to.not.throw();
+    });
+  });
+
   describe('GetClientUserAgent', () => {
     it('Should return a user-agent serialized JSON object', () =>
       expect(

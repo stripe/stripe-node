@@ -16,6 +16,7 @@ import {
   RequestEvent,
   ResponseEvent,
   RequestAuthenticator,
+  WorkloadIdentityProvider,
 } from '../Types.js';
 
 export interface StripeEmitterInterface {
@@ -90,6 +91,20 @@ export class PlatformFunctions {
    */
   createDefaultAuthenticator(): RequestAuthenticator | null {
     return null;
+  }
+
+  /**
+   * Creates a `RequestAuthenticator` backed by workload identity federation
+   * for the given cloud provider. Only supported in Node.js: other
+   * platforms don't have access to cloud-provider SDKs/credential chains.
+   */
+  createWorkloadIdentityAuthenticator(
+    _clientId: string,
+    _provider: WorkloadIdentityProvider
+  ): RequestAuthenticator {
+    throw new Error(
+      'Stripe: Workload identity authentication (Stripe.forWorkloadIdentity) is only supported in Node.js environments.'
+    );
   }
 
   /**
