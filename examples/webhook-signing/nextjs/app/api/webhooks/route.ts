@@ -10,10 +10,17 @@ export async function POST(req: Request) {
   try {
     const stripeSignature = (await headers()).get('stripe-signature');
 
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    if (!webhookSecret) {
+      throw new Error(
+        'Please set the STRIPE_WEBHOOK_SECRET environment variable'
+      );
+    }
+
     event = stripe.webhooks.constructEvent(
       await req.text(),
       stripeSignature as string,
-      process.env.STRIPE_WEBHOOK_SECRET as string
+      webhookSecret
     );
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : 'Unknown error';

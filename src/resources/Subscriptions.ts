@@ -2456,7 +2456,7 @@ export namespace Subscription {
       /**
        * The type of pause.
        */
-      type: 'subscription';
+      type: Paused.Type;
     }
 
     export namespace Paused {
@@ -2466,6 +2466,8 @@ export namespace Subscription {
          */
         type: Subscription.Type;
       }
+
+      export type Type = 'subscription' | OtherString;
 
       export namespace Subscription {
         export type Type =
@@ -5635,7 +5637,7 @@ export interface SubscriptionPauseParams {
   /**
    * The type of pause to apply. Defaults to `subscription`.
    */
-  type?: 'subscription';
+  type?: SubscriptionPauseParams.Type;
 }
 export namespace SubscriptionPauseParams {
   export interface BillFor {
@@ -5654,6 +5656,8 @@ export namespace SubscriptionPauseParams {
     | 'invoice'
     | 'pending_invoice_item'
     | OtherString;
+
+  export type Type = 'subscription' | OtherString;
 
   export namespace BillFor {
     export interface OutstandingUsageThrough {

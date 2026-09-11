@@ -1053,7 +1053,7 @@ export namespace Registration {
       /**
        * Type of registration in `country`.
        */
-      type: 'simplified';
+      type: Th.Type;
     }
 
     export interface Tj {
@@ -2264,6 +2264,10 @@ export namespace Registration {
           | 'standard'
           | OtherString;
       }
+    }
+
+    export namespace Th {
+      export type Type = 'simplified' | OtherString;
     }
 
     export namespace Us {
@@ -3960,7 +3964,7 @@ export namespace Tax {
         /**
          * Type of registration to be created in `country`.
          */
-        type: 'simplified';
+        type: Th.Type;
       }
 
       export interface Tj {
@@ -5529,6 +5533,10 @@ export namespace Tax {
             | 'standard'
             | OtherString;
         }
+      }
+
+      export namespace Th {
+        export type Type = 'simplified' | OtherString;
       }
 
       export namespace Us {

@@ -379,7 +379,7 @@ export namespace CollectionSetting {
       /**
        * The funding method type to be used when there are not enough funds in the customer balance. Currently the only supported value is `bank_transfer`.
        */
-      funding_type?: 'bank_transfer';
+      funding_type?: CustomerBalance.FundingType;
     }
 
     export interface Konbini {}
@@ -462,6 +462,8 @@ export namespace CollectionSetting {
          */
         type?: BankTransfer.Type;
       }
+
+      export type FundingType = 'bank_transfer' | OtherString;
 
       export namespace BankTransfer {
         export interface EuBankTransfer {
@@ -693,7 +695,7 @@ export namespace V2 {
           /**
            * The funding method type to be used when there are not enough funds in the customer balance. Currently the only supported value is `bank_transfer`.
            */
-          funding_type?: 'bank_transfer';
+          funding_type?: CustomerBalance.FundingType;
         }
 
         export interface Konbini {}
@@ -781,6 +783,8 @@ export namespace V2 {
              */
             type?: BankTransfer.Type;
           }
+
+          export type FundingType = 'bank_transfer' | OtherString;
 
           export namespace BankTransfer {
             export interface EuBankTransfer {
@@ -1029,7 +1033,7 @@ export namespace V2 {
           /**
            * The funding method type to be used when there are not enough funds in the customer balance. Currently the only supported value is `bank_transfer`.
            */
-          funding_type?: 'bank_transfer';
+          funding_type?: CustomerBalance.FundingType;
         }
 
         export interface Konbini {}
@@ -1117,6 +1121,8 @@ export namespace V2 {
              */
             type?: BankTransfer.Type;
           }
+
+          export type FundingType = 'bank_transfer' | OtherString;
 
           export namespace BankTransfer {
             export interface EuBankTransfer {

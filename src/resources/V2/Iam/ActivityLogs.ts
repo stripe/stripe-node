@@ -237,7 +237,7 @@ export namespace ActivityLog {
         /**
          * The type of entity.
          */
-        type: 'application';
+        type: ManagedBy.Type;
       }
 
       export type Type = 'publishable_key' | 'secret_key';
@@ -249,6 +249,8 @@ export namespace ActivityLog {
            */
           id: string;
         }
+
+        export type Type = 'application' | OtherString;
       }
     }
 

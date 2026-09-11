@@ -1198,7 +1198,7 @@ export namespace Order {
            *
            * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: WechatPay.SetupFutureUsage;
         }
 
         export namespace AcssDebit {
@@ -1454,6 +1454,8 @@ export namespace Order {
 
         export namespace WechatPay {
           export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+          export type SetupFutureUsage = 'none' | OtherString;
         }
       }
     }
@@ -2599,7 +2601,7 @@ export namespace OrderCreateParams {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: WechatPay.SetupFutureUsage;
         }
 
         export namespace AcssDebit {
@@ -4195,6 +4197,8 @@ export namespace OrderCreateParams {
 
         export namespace WechatPay {
           export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+          export type SetupFutureUsage = 'none' | OtherString;
         }
       }
     }
@@ -5375,7 +5379,7 @@ export namespace OrderUpdateParams {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: WechatPay.SetupFutureUsage;
         }
 
         export namespace AcssDebit {
@@ -6971,6 +6975,8 @@ export namespace OrderUpdateParams {
 
         export namespace WechatPay {
           export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+          export type SetupFutureUsage = 'none' | OtherString;
         }
       }
     }

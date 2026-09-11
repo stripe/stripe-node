@@ -2002,7 +2002,7 @@ export namespace PaymentRecord {
         /**
          * funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -2042,6 +2042,8 @@ export namespace PaymentRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
@@ -2734,7 +2736,7 @@ export namespace PaymentRecord {
         /**
          * Funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -2774,6 +2776,8 @@ export namespace PaymentRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
