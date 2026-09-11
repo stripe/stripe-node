@@ -466,6 +466,27 @@ function createWebhooksTestSuite(stripe) {
         );
       });
 
+      it('should raise a SignatureVerificationError when the signing secret is empty or nullish', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        const expectedMessage = /No webhook secret value was provided\. It should start with `whsec_`/;
+
+        await expect(
+          verifyHeaderFn(EVENT_PAYLOAD_STRING, header, '')
+        ).to.be.rejectedWith(StripeSignatureVerificationError, expectedMessage);
+
+        await expect(
+          verifyHeaderFn(EVENT_PAYLOAD_STRING, header, null)
+        ).to.be.rejectedWith(StripeSignatureVerificationError, expectedMessage);
+
+        await expect(
+          verifyHeaderFn(EVENT_PAYLOAD_STRING, header, undefined)
+        ).to.be.rejectedWith(StripeSignatureVerificationError, expectedMessage);
+      });
+
       describe('custom CryptoProvider', () => {
         const cryptoProvider = new FakeCryptoProvider();
 

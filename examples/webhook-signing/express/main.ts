@@ -9,7 +9,12 @@ env.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET;
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+if (!webhookSecret) {
+  console.error('Please set the STRIPE_WEBHOOK_SECRET environment variable');
+  process.exit(1);
+}
 
 const app = express();
 

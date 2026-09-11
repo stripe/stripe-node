@@ -74,10 +74,9 @@ describe('V2 int64_string integration', () => {
       expect(stripe.LAST_REQUEST.data).to.deep.equal({amount: 42});
     });
 
-    it('handles null body data gracefully', () => {
+    it('keeps the GET request body null when a request schema is present', () => {
       const resource = new StripeResource(stripe);
 
-      // GET requests have no body data, so coercion should be a no-op
       resource._makeRequest('GET', '/v2/test/resources', undefined, undefined, {
         requestSchema: {
           kind: 'object',

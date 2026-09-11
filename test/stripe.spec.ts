@@ -1669,7 +1669,7 @@ describe('Stripe Module', function() {
       );
     });
 
-    it('should throw a descriptive error when an absolute URL is passed as path with FetchHttpClient', async () => {
+    it('should throw a descriptive error when an absolute URL is passed as path', async () => {
       const fetchStripe = Stripe(FAKE_API_KEY, {
         httpClient: new FetchHttpClient(require('node-fetch')),
       });
@@ -1680,8 +1680,24 @@ describe('Stripe Module', function() {
         caughtError = e;
       }
       expect(caughtError).to.exist;
-      expect(caughtError.detail?.message).to.match(
-        /Only relative paths are supported/
+      expect(caughtError.message).to.match(
+        /must be a string beginning with a single/
+      );
+    });
+
+    it('should reject a path that would move the request authority', async () => {
+      // A webhook body's related_object.url or a response's next_page_url
+      // reaches this sink, so a path like this must never be sent.
+      const stripe = Stripe(FAKE_API_KEY);
+      let caughtError: any;
+      try {
+        await stripe.rawRequest('GET', '@evil.example/v1/leak');
+      } catch (e) {
+        caughtError = e;
+      }
+      expect(caughtError).to.exist;
+      expect(caughtError.message).to.match(
+        /must be a string beginning with a single/
       );
     });
   });
