@@ -2943,6 +2943,7 @@ declare namespace StripeConstructor {
         export type Funding = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.AmazonPay.Funding;
         export namespace Funding {
           export type Card = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.AmazonPay.Funding.Card;
+          export type Type = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.AmazonPay.Funding.Type;
         }
       }
       export namespace Bancontact {
@@ -3047,6 +3048,7 @@ declare namespace StripeConstructor {
         export type Funding = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.RevolutPay.Funding;
         export namespace Funding {
           export type Card = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.RevolutPay.Funding.Card;
+          export type Type = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.RevolutPay.Funding.Type;
         }
       }
       export namespace Sofort {
@@ -3443,6 +3445,7 @@ declare namespace StripeConstructor {
       }
       export namespace WechatPay {
         export type Client = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.WechatPay.Client;
+        export type SetupFutureUsage = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.WechatPay.SetupFutureUsage;
       }
     }
     export namespace TransferData {
@@ -3815,6 +3818,7 @@ declare namespace StripeConstructor {
       }
       export namespace WechatPay {
         export type Client = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.WechatPay.Client;
+        export type SetupFutureUsage = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.WechatPay.SetupFutureUsage;
       }
     }
     export namespace TransferData {
@@ -4230,6 +4234,7 @@ declare namespace StripeConstructor {
       }
       export namespace WechatPay {
         export type Client = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.WechatPay.Client;
+        export type SetupFutureUsage = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.WechatPay.SetupFutureUsage;
       }
     }
   }
@@ -4576,6 +4581,7 @@ declare namespace StripeConstructor {
       }
       export namespace WechatPay {
         export type Client = Stripe_.PaymentIntent.PaymentMethodOptions.WechatPay.Client;
+        export type SetupFutureUsage = Stripe_.PaymentIntent.PaymentMethodOptions.WechatPay.SetupFutureUsage;
       }
     }
     export namespace Processing {
@@ -6706,6 +6712,7 @@ declare namespace StripeConstructor {
         export type Funding = Stripe_.PaymentRecord.PaymentMethodDetails.AmazonPay.Funding;
         export namespace Funding {
           export type Card = Stripe_.PaymentRecord.PaymentMethodDetails.AmazonPay.Funding.Card;
+          export type Type = Stripe_.PaymentRecord.PaymentMethodDetails.AmazonPay.Funding.Type;
         }
       }
       export namespace Bancontact {
@@ -6810,6 +6817,7 @@ declare namespace StripeConstructor {
         export type Funding = Stripe_.PaymentRecord.PaymentMethodDetails.RevolutPay.Funding;
         export namespace Funding {
           export type Card = Stripe_.PaymentRecord.PaymentMethodDetails.RevolutPay.Funding.Card;
+          export type Type = Stripe_.PaymentRecord.PaymentMethodDetails.RevolutPay.Funding.Type;
         }
       }
       export namespace Sofort {
@@ -9097,9 +9105,15 @@ declare namespace StripeConstructor {
   }
   export namespace DeletedDiscount {
     export type Source = Stripe_.DeletedDiscount.Source;
+    export namespace Source {
+      export type Type = Stripe_.DeletedDiscount.Source.Type;
+    }
   }
   export namespace Discount {
     export type Source = Stripe_.Discount.Source;
+    export namespace Source {
+      export type Type = Stripe_.Discount.Source.Type;
+    }
   }
   export namespace FundingInstructions {
     export type BankTransfer = Stripe_.FundingInstructions.BankTransfer;
@@ -9845,6 +9859,9 @@ declare namespace StripeConstructor {
             export type TransactionType = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.AcssDebit.MandateOptions.TransactionType;
           }
         }
+        export namespace Alipay {
+          export type SetupFutureUsage = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Alipay.SetupFutureUsage;
+        }
         export namespace AmazonPay {
           export type SetupFutureUsage = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.AmazonPay.SetupFutureUsage;
         }
@@ -9953,6 +9970,7 @@ declare namespace StripeConstructor {
         }
         export namespace WechatPay {
           export type Client = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.WechatPay.Client;
+          export type SetupFutureUsage = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.WechatPay.SetupFutureUsage;
         }
       }
       export namespace Permissions {
@@ -10205,6 +10223,9 @@ declare namespace StripeConstructor {
             export type TransactionType = Stripe_.Checkout.Session.PaymentMethodOptions.AcssDebit.MandateOptions.TransactionType;
           }
         }
+        export namespace Alipay {
+          export type SetupFutureUsage = Stripe_.Checkout.Session.PaymentMethodOptions.Alipay.SetupFutureUsage;
+        }
         export namespace AmazonPay {
           export type SetupFutureUsage = Stripe_.Checkout.Session.PaymentMethodOptions.AmazonPay.SetupFutureUsage;
         }
@@ -10309,6 +10330,7 @@ declare namespace StripeConstructor {
         }
         export namespace WechatPay {
           export type Client = Stripe_.Checkout.Session.PaymentMethodOptions.WechatPay.Client;
+          export type SetupFutureUsage = Stripe_.Checkout.Session.PaymentMethodOptions.WechatPay.SetupFutureUsage;
         }
       }
       export namespace Permissions {
@@ -11877,6 +11899,9 @@ declare namespace StripeConstructor {
             export type PlaceOfSupplyScheme = Stripe_.Tax.RegistrationCreateParams.CountryOptions.Sr.Standard.PlaceOfSupplyScheme;
           }
         }
+        export namespace Th {
+          export type Type = Stripe_.Tax.RegistrationCreateParams.CountryOptions.Th.Type;
+        }
         export namespace Us {
           export type LocalAmusementTax = Stripe_.Tax.RegistrationCreateParams.CountryOptions.Us.LocalAmusementTax;
           export type LocalLeaseTax = Stripe_.Tax.RegistrationCreateParams.CountryOptions.Us.LocalLeaseTax;
@@ -12364,6 +12389,9 @@ declare namespace StripeConstructor {
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Sk.Standard.PlaceOfSupplyScheme;
           }
+        }
+        export namespace Th {
+          export type Type = Stripe_.Tax.Registration.CountryOptions.Th.Type;
         }
         export namespace Us {
           export type LocalAmusementTax = Stripe_.Tax.Registration.CountryOptions.Us.LocalAmusementTax;
@@ -13094,10 +13122,12 @@ declare namespace StripeConstructor {
       export type MeterEventSessionResource = Stripe_.V2.Billing.MeterEventSessionResource;
       export namespace MeterEventAdjustmentCreateParams {
         export type Cancel = Stripe_.V2.Billing.MeterEventAdjustmentCreateParams.Cancel;
+        export type Type = Stripe_.V2.Billing.MeterEventAdjustmentCreateParams.Type;
       }
       export namespace MeterEventAdjustment {
         export type Cancel = Stripe_.V2.Billing.MeterEventAdjustment.Cancel;
         export type Status = Stripe_.V2.Billing.MeterEventAdjustment.Status;
+        export type Type = Stripe_.V2.Billing.MeterEventAdjustment.Type;
       }
     }
     export namespace Core {
@@ -13300,14 +13330,38 @@ declare namespace StripeConstructor {
               export type ProofOfAddress = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.ProofOfAddress;
               export type ProofOfRegistration = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.ProofOfRegistration;
               export type ProofOfUltimateBeneficialOwnership = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.ProofOfUltimateBeneficialOwnership;
+              export namespace BankAccountOwnershipVerification {
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.BankAccountOwnershipVerification.Type;
+              }
+              export namespace CompanyLicense {
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.CompanyLicense.Type;
+              }
+              export namespace CompanyMemorandumOfAssociation {
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.CompanyMemorandumOfAssociation.Type;
+              }
+              export namespace CompanyMinisterialDecree {
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.CompanyMinisterialDecree.Type;
+              }
+              export namespace CompanyRegistrationVerification {
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.CompanyRegistrationVerification.Type;
+              }
+              export namespace CompanyTaxIdVerification {
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.CompanyTaxIdVerification.Type;
+              }
               export namespace PrimaryVerification {
                 export type FrontBack = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.PrimaryVerification.FrontBack;
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.PrimaryVerification.Type;
+              }
+              export namespace ProofOfAddress {
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.ProofOfAddress.Type;
               }
               export namespace ProofOfRegistration {
                 export type Signer = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.ProofOfRegistration.Signer;
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.ProofOfRegistration.Type;
               }
               export namespace ProofOfUltimateBeneficialOwnership {
                 export type Signer = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.ProofOfUltimateBeneficialOwnership.Signer;
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.BusinessDetails.Documents.ProofOfUltimateBeneficialOwnership.Type;
               }
             }
             export namespace IdNumber {
@@ -13343,11 +13397,22 @@ declare namespace StripeConstructor {
               export type PrimaryVerification = Stripe_.V2.Core.AccountCreateParams.Identity.Individual.Documents.PrimaryVerification;
               export type SecondaryVerification = Stripe_.V2.Core.AccountCreateParams.Identity.Individual.Documents.SecondaryVerification;
               export type Visa = Stripe_.V2.Core.AccountCreateParams.Identity.Individual.Documents.Visa;
+              export namespace CompanyAuthorization {
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.Individual.Documents.CompanyAuthorization.Type;
+              }
+              export namespace Passport {
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.Individual.Documents.Passport.Type;
+              }
               export namespace PrimaryVerification {
                 export type FrontBack = Stripe_.V2.Core.AccountCreateParams.Identity.Individual.Documents.PrimaryVerification.FrontBack;
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.Individual.Documents.PrimaryVerification.Type;
               }
               export namespace SecondaryVerification {
                 export type FrontBack = Stripe_.V2.Core.AccountCreateParams.Identity.Individual.Documents.SecondaryVerification.FrontBack;
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.Individual.Documents.SecondaryVerification.Type;
+              }
+              export namespace Visa {
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Identity.Individual.Documents.Visa.Type;
               }
             }
             export namespace IdNumber {
@@ -13978,14 +14043,38 @@ declare namespace StripeConstructor {
               export type ProofOfAddress = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.ProofOfAddress;
               export type ProofOfRegistration = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.ProofOfRegistration;
               export type ProofOfUltimateBeneficialOwnership = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.ProofOfUltimateBeneficialOwnership;
+              export namespace BankAccountOwnershipVerification {
+                export type Type = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.BankAccountOwnershipVerification.Type;
+              }
+              export namespace CompanyLicense {
+                export type Type = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.CompanyLicense.Type;
+              }
+              export namespace CompanyMemorandumOfAssociation {
+                export type Type = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.CompanyMemorandumOfAssociation.Type;
+              }
+              export namespace CompanyMinisterialDecree {
+                export type Type = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.CompanyMinisterialDecree.Type;
+              }
+              export namespace CompanyRegistrationVerification {
+                export type Type = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.CompanyRegistrationVerification.Type;
+              }
+              export namespace CompanyTaxIdVerification {
+                export type Type = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.CompanyTaxIdVerification.Type;
+              }
               export namespace PrimaryVerification {
                 export type FrontBack = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.PrimaryVerification.FrontBack;
+                export type Type = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.PrimaryVerification.Type;
+              }
+              export namespace ProofOfAddress {
+                export type Type = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.ProofOfAddress.Type;
               }
               export namespace ProofOfRegistration {
                 export type Signer = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.ProofOfRegistration.Signer;
+                export type Type = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.ProofOfRegistration.Type;
               }
               export namespace ProofOfUltimateBeneficialOwnership {
                 export type Signer = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.ProofOfUltimateBeneficialOwnership.Signer;
+                export type Type = Stripe_.V2.Core.Account.Identity.BusinessDetails.Documents.ProofOfUltimateBeneficialOwnership.Type;
               }
             }
             export namespace IdNumber {
@@ -14025,11 +14114,22 @@ declare namespace StripeConstructor {
               export type PrimaryVerification = Stripe_.V2.Core.Account.Identity.Individual.Documents.PrimaryVerification;
               export type SecondaryVerification = Stripe_.V2.Core.Account.Identity.Individual.Documents.SecondaryVerification;
               export type Visa = Stripe_.V2.Core.Account.Identity.Individual.Documents.Visa;
+              export namespace CompanyAuthorization {
+                export type Type = Stripe_.V2.Core.Account.Identity.Individual.Documents.CompanyAuthorization.Type;
+              }
+              export namespace Passport {
+                export type Type = Stripe_.V2.Core.Account.Identity.Individual.Documents.Passport.Type;
+              }
               export namespace PrimaryVerification {
                 export type FrontBack = Stripe_.V2.Core.Account.Identity.Individual.Documents.PrimaryVerification.FrontBack;
+                export type Type = Stripe_.V2.Core.Account.Identity.Individual.Documents.PrimaryVerification.Type;
               }
               export namespace SecondaryVerification {
                 export type FrontBack = Stripe_.V2.Core.Account.Identity.Individual.Documents.SecondaryVerification.FrontBack;
+                export type Type = Stripe_.V2.Core.Account.Identity.Individual.Documents.SecondaryVerification.Type;
+              }
+              export namespace Visa {
+                export type Type = Stripe_.V2.Core.Account.Identity.Individual.Documents.Visa.Type;
               }
             }
             export namespace IdNumber {
@@ -14179,14 +14279,38 @@ declare namespace StripeConstructor {
               export type ProofOfAddress = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.ProofOfAddress;
               export type ProofOfRegistration = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.ProofOfRegistration;
               export type ProofOfUltimateBeneficialOwnership = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.ProofOfUltimateBeneficialOwnership;
+              export namespace BankAccountOwnershipVerification {
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.BankAccountOwnershipVerification.Type;
+              }
+              export namespace CompanyLicense {
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.CompanyLicense.Type;
+              }
+              export namespace CompanyMemorandumOfAssociation {
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.CompanyMemorandumOfAssociation.Type;
+              }
+              export namespace CompanyMinisterialDecree {
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.CompanyMinisterialDecree.Type;
+              }
+              export namespace CompanyRegistrationVerification {
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.CompanyRegistrationVerification.Type;
+              }
+              export namespace CompanyTaxIdVerification {
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.CompanyTaxIdVerification.Type;
+              }
               export namespace PrimaryVerification {
                 export type FrontBack = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.PrimaryVerification.FrontBack;
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.PrimaryVerification.Type;
+              }
+              export namespace ProofOfAddress {
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.ProofOfAddress.Type;
               }
               export namespace ProofOfRegistration {
                 export type Signer = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.ProofOfRegistration.Signer;
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.ProofOfRegistration.Type;
               }
               export namespace ProofOfUltimateBeneficialOwnership {
                 export type Signer = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.ProofOfUltimateBeneficialOwnership.Signer;
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.BusinessDetails.Documents.ProofOfUltimateBeneficialOwnership.Type;
               }
             }
             export namespace IdNumber {
@@ -14217,11 +14341,22 @@ declare namespace StripeConstructor {
               export type PrimaryVerification = Stripe_.V2.Core.AccountTokenCreateParams.Identity.Individual.Documents.PrimaryVerification;
               export type SecondaryVerification = Stripe_.V2.Core.AccountTokenCreateParams.Identity.Individual.Documents.SecondaryVerification;
               export type Visa = Stripe_.V2.Core.AccountTokenCreateParams.Identity.Individual.Documents.Visa;
+              export namespace CompanyAuthorization {
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.Individual.Documents.CompanyAuthorization.Type;
+              }
+              export namespace Passport {
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.Individual.Documents.Passport.Type;
+              }
               export namespace PrimaryVerification {
                 export type FrontBack = Stripe_.V2.Core.AccountTokenCreateParams.Identity.Individual.Documents.PrimaryVerification.FrontBack;
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.Individual.Documents.PrimaryVerification.Type;
               }
               export namespace SecondaryVerification {
                 export type FrontBack = Stripe_.V2.Core.AccountTokenCreateParams.Identity.Individual.Documents.SecondaryVerification.FrontBack;
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.Individual.Documents.SecondaryVerification.Type;
+              }
+              export namespace Visa {
+                export type Type = Stripe_.V2.Core.AccountTokenCreateParams.Identity.Individual.Documents.Visa.Type;
               }
             }
             export namespace IdNumber {
@@ -14239,6 +14374,7 @@ declare namespace StripeConstructor {
         export type Reason = Stripe_.V2.Core.Event.Reason;
         export namespace Reason {
           export type Request = Stripe_.V2.Core.Event.Reason.Request;
+          export type Type = Stripe_.V2.Core.Event.Reason.Type;
         }
       }
       export namespace EventDestinationCreateParams {
@@ -14295,11 +14431,22 @@ declare namespace StripeConstructor {
           export type PrimaryVerification = Stripe_.V2.Core.AccountPerson.Documents.PrimaryVerification;
           export type SecondaryVerification = Stripe_.V2.Core.AccountPerson.Documents.SecondaryVerification;
           export type Visa = Stripe_.V2.Core.AccountPerson.Documents.Visa;
+          export namespace CompanyAuthorization {
+            export type Type = Stripe_.V2.Core.AccountPerson.Documents.CompanyAuthorization.Type;
+          }
+          export namespace Passport {
+            export type Type = Stripe_.V2.Core.AccountPerson.Documents.Passport.Type;
+          }
           export namespace PrimaryVerification {
             export type FrontBack = Stripe_.V2.Core.AccountPerson.Documents.PrimaryVerification.FrontBack;
+            export type Type = Stripe_.V2.Core.AccountPerson.Documents.PrimaryVerification.Type;
           }
           export namespace SecondaryVerification {
             export type FrontBack = Stripe_.V2.Core.AccountPerson.Documents.SecondaryVerification.FrontBack;
+            export type Type = Stripe_.V2.Core.AccountPerson.Documents.SecondaryVerification.Type;
+          }
+          export namespace Visa {
+            export type Type = Stripe_.V2.Core.AccountPerson.Documents.Visa.Type;
           }
         }
         export namespace IdNumber {
