@@ -3185,7 +3185,7 @@ export namespace PaymentIntent {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -3839,6 +3839,8 @@ export namespace PaymentIntent {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -6985,7 +6987,7 @@ export namespace PaymentIntentCreateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -7926,6 +7928,8 @@ export namespace PaymentIntentCreateParams {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -10901,7 +10905,7 @@ export namespace PaymentIntentUpdateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -11842,6 +11846,8 @@ export namespace PaymentIntentUpdateParams {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -15195,7 +15201,7 @@ export namespace PaymentIntentConfirmParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -16136,6 +16142,8 @@ export namespace PaymentIntentConfirmParams {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 }
