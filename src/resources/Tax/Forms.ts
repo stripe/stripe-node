@@ -198,7 +198,7 @@ export namespace Form {
     external_reference: string | null;
 
     /**
-     * Either `account` or `external_reference`.
+     * Specifies the payee type.
      */
     type: Payee.Type;
   }
@@ -303,7 +303,7 @@ export namespace Tax {
       external_reference?: string;
 
       /**
-       * Specifies the payee type. Either `account` or `external_reference`.
+       * Specifies the payee type.
        */
       type?: Payee.Type;
     }

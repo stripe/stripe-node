@@ -9,7 +9,7 @@ import {RequestOptions, Response} from '../../lib.js';
 
 export class AuthorizationResource extends StripeResource {
   /**
-   * Retrieves the details of an Financial Connections Authorization.
+   * Retrieves the details of a Financial Connections Authorization.
    */
   retrieve(
     id: string,

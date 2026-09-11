@@ -1252,7 +1252,10 @@ export namespace SetupIntent {
         reference_prefix?: string;
       }
 
-      export type VerificationMethod = 'automatic' | 'payer_name_verification';
+      export type VerificationMethod =
+        | 'automatic'
+        | 'payer_name_verification'
+        | OtherString;
     }
 
     export namespace Card {
@@ -1977,12 +1980,12 @@ export namespace SetupIntentCreateParams {
     allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
     /**
-     * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+     * If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
      */
     alma?: PaymentMethodData.Alma;
 
     /**
-     * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+     * If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
      */
     amazon_pay?: PaymentMethodData.AmazonPay;
 
@@ -3308,7 +3311,10 @@ export namespace SetupIntentCreateParams {
         reference_prefix?: Emptyable<string>;
       }
 
-      export type VerificationMethod = 'automatic' | 'payer_name_verification';
+      export type VerificationMethod =
+        | 'automatic'
+        | 'payer_name_verification'
+        | OtherString;
     }
 
     export namespace Card {
@@ -4242,12 +4248,12 @@ export namespace SetupIntentUpdateParams {
     allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
     /**
-     * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+     * If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
      */
     alma?: PaymentMethodData.Alma;
 
     /**
-     * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+     * If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
      */
     amazon_pay?: PaymentMethodData.AmazonPay;
 
@@ -5513,7 +5519,10 @@ export namespace SetupIntentUpdateParams {
         reference_prefix?: Emptyable<string>;
       }
 
-      export type VerificationMethod = 'automatic' | 'payer_name_verification';
+      export type VerificationMethod =
+        | 'automatic'
+        | 'payer_name_verification'
+        | OtherString;
     }
 
     export namespace Card {
@@ -6396,12 +6405,12 @@ export namespace SetupIntentConfirmParams {
     allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
     /**
-     * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+     * If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
      */
     alma?: PaymentMethodData.Alma;
 
     /**
-     * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+     * If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
      */
     amazon_pay?: PaymentMethodData.AmazonPay;
 
@@ -7709,7 +7718,10 @@ export namespace SetupIntentConfirmParams {
         reference_prefix?: Emptyable<string>;
       }
 
-      export type VerificationMethod = 'automatic' | 'payer_name_verification';
+      export type VerificationMethod =
+        | 'automatic'
+        | 'payer_name_verification'
+        | OtherString;
     }
 
     export namespace Card {

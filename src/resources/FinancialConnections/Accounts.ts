@@ -28,7 +28,7 @@ export class AccountResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieves the details of an Financial Connections Account.
+   * Retrieves the details of a Financial Connections Account.
    */
   retrieve(
     id: string,

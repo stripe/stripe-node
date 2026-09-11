@@ -470,7 +470,7 @@ export namespace InvoiceItem {
     credited_items: ProrationDetails.CreditedItems | null;
 
     /**
-     * Discount amounts applied when the proration was created.
+     * Discount amounts applied when the proration was created. This field is only populated for prorations created from subscriptions with `billing_mode=flexible`.
      */
     discount_amounts: Array<ProrationDetails.DiscountAmount>;
   }

@@ -383,8 +383,6 @@ export namespace Registration {
     }
 
     export interface At {
-      igic?: At.Igic;
-
       standard?: At.Standard;
 
       /**
@@ -438,8 +436,6 @@ export namespace Registration {
     }
 
     export interface Be {
-      igic?: Be.Igic;
-
       standard?: Be.Standard;
 
       /**
@@ -456,8 +452,6 @@ export namespace Registration {
     }
 
     export interface Bg {
-      igic?: Bg.Igic;
-
       standard?: Bg.Standard;
 
       /**
@@ -555,8 +549,6 @@ export namespace Registration {
     }
 
     export interface Cy {
-      igic?: Cy.Igic;
-
       standard?: Cy.Standard;
 
       /**
@@ -566,8 +558,6 @@ export namespace Registration {
     }
 
     export interface Cz {
-      igic?: Cz.Igic;
-
       standard?: Cz.Standard;
 
       /**
@@ -577,8 +567,6 @@ export namespace Registration {
     }
 
     export interface De {
-      igic?: De.Igic;
-
       standard?: De.Standard;
 
       /**
@@ -588,8 +576,6 @@ export namespace Registration {
     }
 
     export interface Dk {
-      igic?: Dk.Igic;
-
       standard?: Dk.Standard;
 
       /**
@@ -606,8 +592,6 @@ export namespace Registration {
     }
 
     export interface Ee {
-      igic?: Ee.Igic;
-
       standard?: Ee.Standard;
 
       /**
@@ -629,7 +613,7 @@ export namespace Registration {
       standard?: Es.Standard;
 
       /**
-       * Type of registration in an EU country.
+       * Type of registration in ES.
        */
       type: Es.Type;
     }
@@ -642,8 +626,6 @@ export namespace Registration {
     }
 
     export interface Fi {
-      igic?: Fi.Igic;
-
       standard?: Fi.Standard;
 
       /**
@@ -653,8 +635,6 @@ export namespace Registration {
     }
 
     export interface Fr {
-      igic?: Fr.Igic;
-
       standard?: Fr.Standard;
 
       /**
@@ -687,8 +667,6 @@ export namespace Registration {
     }
 
     export interface Gr {
-      igic?: Gr.Igic;
-
       standard?: Gr.Standard;
 
       /**
@@ -698,8 +676,6 @@ export namespace Registration {
     }
 
     export interface Hr {
-      igic?: Hr.Igic;
-
       standard?: Hr.Standard;
 
       /**
@@ -709,8 +685,6 @@ export namespace Registration {
     }
 
     export interface Hu {
-      igic?: Hu.Igic;
-
       standard?: Hu.Standard;
 
       /**
@@ -727,8 +701,6 @@ export namespace Registration {
     }
 
     export interface Ie {
-      igic?: Ie.Igic;
-
       standard?: Ie.Standard;
 
       /**
@@ -752,8 +724,6 @@ export namespace Registration {
     }
 
     export interface It {
-      igic?: It.Igic;
-
       standard?: It.Standard;
 
       /**
@@ -821,8 +791,6 @@ export namespace Registration {
     }
 
     export interface Lt {
-      igic?: Lt.Igic;
-
       standard?: Lt.Standard;
 
       /**
@@ -832,8 +800,6 @@ export namespace Registration {
     }
 
     export interface Lu {
-      igic?: Lu.Igic;
-
       standard?: Lu.Standard;
 
       /**
@@ -843,8 +809,6 @@ export namespace Registration {
     }
 
     export interface Lv {
-      igic?: Lv.Igic;
-
       standard?: Lv.Standard;
 
       /**
@@ -889,8 +853,6 @@ export namespace Registration {
     }
 
     export interface Mt {
-      igic?: Mt.Igic;
-
       standard?: Mt.Standard;
 
       /**
@@ -921,8 +883,6 @@ export namespace Registration {
     }
 
     export interface Nl {
-      igic?: Nl.Igic;
-
       standard?: Nl.Standard;
 
       /**
@@ -978,8 +938,6 @@ export namespace Registration {
     }
 
     export interface Pl {
-      igic?: Pl.Igic;
-
       standard?: Pl.Standard;
 
       /**
@@ -989,8 +947,6 @@ export namespace Registration {
     }
 
     export interface Pt {
-      igic?: Pt.Igic;
-
       standard?: Pt.Standard;
 
       /**
@@ -1000,8 +956,6 @@ export namespace Registration {
     }
 
     export interface Ro {
-      igic?: Ro.Igic;
-
       standard?: Ro.Standard;
 
       /**
@@ -1032,8 +986,6 @@ export namespace Registration {
     }
 
     export interface Se {
-      igic?: Se.Igic;
-
       standard?: Se.Standard;
 
       /**
@@ -1052,8 +1004,6 @@ export namespace Registration {
     }
 
     export interface Si {
-      igic?: Si.Igic;
-
       standard?: Si.Standard;
 
       /**
@@ -1063,8 +1013,6 @@ export namespace Registration {
     }
 
     export interface Sk {
-      igic?: Sk.Igic;
-
       standard?: Sk.Standard;
 
       /**
@@ -1235,13 +1183,6 @@ export namespace Registration {
     }
 
     export namespace At {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1255,10 +1196,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1286,13 +1223,6 @@ export namespace Registration {
     }
 
     export namespace Be {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1306,10 +1236,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1321,13 +1247,6 @@ export namespace Registration {
     }
 
     export namespace Bg {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1341,10 +1260,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1387,13 +1302,6 @@ export namespace Registration {
     }
 
     export namespace Cy {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1407,10 +1315,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1422,13 +1326,6 @@ export namespace Registration {
     }
 
     export namespace Cz {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1442,10 +1339,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1457,13 +1350,6 @@ export namespace Registration {
     }
 
     export namespace De {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1477,10 +1363,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1492,13 +1374,6 @@ export namespace Registration {
     }
 
     export namespace Dk {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1512,10 +1387,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1527,13 +1398,6 @@ export namespace Registration {
     }
 
     export namespace Ee {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1547,10 +1411,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1577,6 +1437,7 @@ export namespace Registration {
       }
 
       export type Type =
+        | 'igic'
         | 'ioss'
         | 'oss_non_union'
         | 'oss_union'
@@ -1597,13 +1458,6 @@ export namespace Registration {
     }
 
     export namespace Fi {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1617,10 +1471,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1632,13 +1482,6 @@ export namespace Registration {
     }
 
     export namespace Fr {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1652,10 +1495,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1683,13 +1522,6 @@ export namespace Registration {
     }
 
     export namespace Gr {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1703,10 +1535,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1718,13 +1546,6 @@ export namespace Registration {
     }
 
     export namespace Hr {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1738,10 +1559,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1753,13 +1570,6 @@ export namespace Registration {
     }
 
     export namespace Hu {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1773,10 +1583,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1788,13 +1594,6 @@ export namespace Registration {
     }
 
     export namespace Ie {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1808,10 +1607,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1823,13 +1618,6 @@ export namespace Registration {
     }
 
     export namespace It {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1843,10 +1631,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1874,13 +1658,6 @@ export namespace Registration {
     }
 
     export namespace Lt {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1894,10 +1671,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1909,13 +1682,6 @@ export namespace Registration {
     }
 
     export namespace Lu {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1929,10 +1695,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1944,13 +1706,6 @@ export namespace Registration {
     }
 
     export namespace Lv {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1964,10 +1719,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -1979,13 +1730,6 @@ export namespace Registration {
     }
 
     export namespace Mt {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1999,10 +1743,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -2014,13 +1754,6 @@ export namespace Registration {
     }
 
     export namespace Nl {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -2034,10 +1767,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -2081,13 +1810,6 @@ export namespace Registration {
     }
 
     export namespace Pl {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -2101,10 +1823,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -2116,13 +1834,6 @@ export namespace Registration {
     }
 
     export namespace Pt {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -2136,10 +1847,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -2151,13 +1858,6 @@ export namespace Registration {
     }
 
     export namespace Ro {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -2171,10 +1871,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -2186,13 +1882,6 @@ export namespace Registration {
     }
 
     export namespace Se {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -2206,10 +1895,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -2237,13 +1922,6 @@ export namespace Registration {
     }
 
     export namespace Si {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -2257,10 +1935,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -2272,13 +1946,6 @@ export namespace Registration {
     }
 
     export namespace Sk {
-      export interface Igic {
-        /**
-         * Place of supply scheme used in an IGIC registration.
-         */
-        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
-      }
-
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -2292,10 +1959,6 @@ export namespace Registration {
         | 'oss_union'
         | 'standard'
         | OtherString;
-
-      export namespace Igic {
-        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =

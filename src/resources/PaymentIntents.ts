@@ -5668,7 +5668,10 @@ export namespace PaymentIntent {
         | 'on_session'
         | OtherString;
 
-      export type VerificationMethod = 'automatic' | 'payer_name_verification';
+      export type VerificationMethod =
+        | 'automatic'
+        | 'payer_name_verification'
+        | OtherString;
     }
 
     export namespace Bancontact {
@@ -7274,12 +7277,12 @@ export namespace PaymentIntentCreateParams {
     allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
     /**
-     * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+     * If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
      */
     alma?: PaymentMethodData.Alma;
 
     /**
-     * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+     * If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
      */
     amazon_pay?: PaymentMethodData.AmazonPay;
 
@@ -12873,7 +12876,10 @@ export namespace PaymentIntentCreateParams {
         | 'on_session'
         | OtherString;
 
-      export type VerificationMethod = 'automatic' | 'payer_name_verification';
+      export type VerificationMethod =
+        | 'automatic'
+        | 'payer_name_verification'
+        | OtherString;
     }
 
     export namespace Bancontact {
@@ -15876,12 +15882,12 @@ export namespace PaymentIntentUpdateParams {
     allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
     /**
-     * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+     * If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
      */
     alma?: PaymentMethodData.Alma;
 
     /**
-     * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+     * If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
      */
     amazon_pay?: PaymentMethodData.AmazonPay;
 
@@ -21417,7 +21423,10 @@ export namespace PaymentIntentUpdateParams {
         | 'on_session'
         | OtherString;
 
-      export type VerificationMethod = 'automatic' | 'payer_name_verification';
+      export type VerificationMethod =
+        | 'automatic'
+        | 'payer_name_verification'
+        | OtherString;
     }
 
     export namespace Bancontact {
@@ -27050,12 +27059,12 @@ export namespace PaymentIntentConfirmParams {
     allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
     /**
-     * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+     * If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
      */
     alma?: PaymentMethodData.Alma;
 
     /**
-     * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+     * If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
      */
     amazon_pay?: PaymentMethodData.AmazonPay;
 
@@ -32595,7 +32604,10 @@ export namespace PaymentIntentConfirmParams {
         | 'on_session'
         | OtherString;
 
-      export type VerificationMethod = 'automatic' | 'payer_name_verification';
+      export type VerificationMethod =
+        | 'automatic'
+        | 'payer_name_verification'
+        | OtherString;
     }
 
     export namespace Bancontact {
