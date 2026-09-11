@@ -1,0 +1,886 @@
+{
+  "versions": [
+    {
+      "version": "22.7.0-beta.1",
+      "released_on": "2026-08-26",
+      "pinned_api_version": "2026-08-26.preview",
+      "minimum_runtime_version": "18"
+    },
+    {
+      "version": "22.5.0-beta.1",
+      "released_on": "2026-07-29",
+      "pinned_api_version": "2026-07-29.preview",
+      "minimum_runtime_version": "18"
+    },
+    {
+      "version": "22.4.0-beta.1",
+      "released_on": "2026-06-24",
+      "pinned_api_version": "2026-06-24.preview",
+      "minimum_runtime_version": "18"
+    },
+    {
+      "version": "22.3.0-beta.1",
+      "released_on": "2026-05-27",
+      "pinned_api_version": "2026-05-27.preview",
+      "minimum_runtime_version": "18"
+    },
+    {
+      "version": "22.2.0-beta.3",
+      "released_on": "2026-05-07",
+      "pinned_api_version": "2026-04-22.preview",
+      "minimum_runtime_version": "18"
+    },
+    {
+      "version": "22.2.0-beta.2",
+      "released_on": "2026-04-24",
+      "pinned_api_version": "2026-04-22.preview",
+      "minimum_runtime_version": "18"
+    },
+    {
+      "version": "22.2.0-beta.1",
+      "released_on": "2026-04-23",
+      "pinned_api_version": "2026-04-22.preview",
+      "minimum_runtime_version": "18"
+    },
+    {
+      "version": "22.1.0-beta.3",
+      "released_on": "2026-04-16",
+      "pinned_api_version": "2026-03-25.preview",
+      "minimum_runtime_version": "18"
+    },
+    {
+      "version": "22.1.0-beta.2",
+      "released_on": "2026-04-08",
+      "pinned_api_version": "2026-03-25.preview",
+      "minimum_runtime_version": "18"
+    },
+    {
+      "version": "22.1.0-beta.1",
+      "released_on": "2026-04-02",
+      "pinned_api_version": "2026-03-25.preview",
+      "minimum_runtime_version": "18"
+    },
+    {
+      "version": "21.1.0-beta.2",
+      "released_on": "2026-03-26",
+      "pinned_api_version": "2026-03-25.preview",
+      "minimum_runtime_version": "18"
+    },
+    {
+      "version": "21.1.0-beta.1",
+      "released_on": "2026-03-25",
+      "pinned_api_version": "2026-03-25.preview",
+      "minimum_runtime_version": "18"
+    },
+    {
+      "version": "20.5.0-beta.1",
+      "released_on": "2026-02-25",
+      "pinned_api_version": "2026-02-25.preview",
+      "minimum_runtime_version": "16"
+    },
+    {
+      "version": "20.4.0-beta.2",
+      "released_on": "2026-02-05",
+      "pinned_api_version": "2026-01-28.preview",
+      "minimum_runtime_version": "16"
+    },
+    {
+      "version": "20.4.0-beta.1",
+      "released_on": "2026-01-28",
+      "pinned_api_version": "2026-01-28.preview",
+      "minimum_runtime_version": "16"
+    },
+    {
+      "version": "20.2.0-beta.2",
+      "released_on": "2026-01-08",
+      "pinned_api_version": "2025-12-15.preview",
+      "minimum_runtime_version": "16"
+    },
+    {
+      "version": "20.2.0-beta.1",
+      "released_on": "2025-12-16",
+      "pinned_api_version": "2025-12-15.preview",
+      "minimum_runtime_version": "16"
+    },
+    {
+      "version": "20.1.0-beta.1",
+      "released_on": "2025-11-18",
+      "pinned_api_version": "2025-11-17.preview",
+      "minimum_runtime_version": "16"
+    },
+    {
+      "version": "19.3.0-beta.1",
+      "released_on": "2025-10-29",
+      "pinned_api_version": "2025-10-29.preview",
+      "minimum_runtime_version": "16"
+    },
+    {
+      "version": "19.2.0-beta.1",
+      "released_on": "2025-10-03",
+      "pinned_api_version": "2025-09-30.preview",
+      "minimum_runtime_version": "16"
+    },
+    {
+      "version": "19.1.0-beta.1",
+      "released_on": "2025-09-30",
+      "pinned_api_version": "2025-09-30.preview",
+      "minimum_runtime_version": "16"
+    },
+    {
+      "version": "18.6.0-beta.1",
+      "released_on": "2025-08-27",
+      "pinned_api_version": "2025-08-27.preview",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "18.5.0-beta.2",
+      "released_on": "2025-08-06",
+      "pinned_api_version": "2025-07-30.preview",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "18.5.0-beta.1",
+      "released_on": "2025-07-30",
+      "pinned_api_version": "2025-07-30.preview",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "18.4.0-beta.2",
+      "released_on": "2025-07-09",
+      "pinned_api_version": "2025-06-30.preview",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "18.4.0-beta.1",
+      "released_on": "2025-07-01",
+      "pinned_api_version": "2025-06-30.preview",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "18.3.0-beta.2",
+      "released_on": "2025-06-26",
+      "pinned_api_version": "2025-05-28.preview",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "18.3.0-beta.1",
+      "released_on": "2025-05-29",
+      "pinned_api_version": "2025-05-28.preview",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "18.2.0-beta.1",
+      "released_on": "2025-04-30",
+      "pinned_api_version": "2025-04-30.preview",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "18.1.0-beta.3",
+      "released_on": "2025-04-17",
+      "pinned_api_version": "2025-03-31.preview",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "18.1.0-beta.2",
+      "released_on": "2025-04-10",
+      "pinned_api_version": "2025-03-31.preview",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "18.1.0-beta.1",
+      "released_on": "2025-04-02",
+      "pinned_api_version": "2025-03-31.preview",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.8.0-beta.1",
+      "released_on": "2025-03-18",
+      "pinned_api_version": "2025-02-24.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.7.0-beta.1",
+      "released_on": "2025-02-07",
+      "pinned_api_version": "2025-01-27.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.6.0-beta.3",
+      "released_on": "2025-01-23",
+      "pinned_api_version": "2025-01-27.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.6.0-beta.2",
+      "released_on": "2025-01-17",
+      "pinned_api_version": "2025-01-27.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.6.0-beta.1",
+      "released_on": "2025-01-09",
+      "pinned_api_version": "2024-12-18.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.5.0-beta.3",
+      "released_on": "2024-12-12",
+      "pinned_api_version": "2024-12-18.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.5.0-beta.2",
+      "released_on": "2024-12-05",
+      "pinned_api_version": "2024-11-20.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.5.0-beta.1",
+      "released_on": "2024-11-21",
+      "pinned_api_version": "2024-11-20.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.4.0-beta.3",
+      "released_on": "2024-11-14",
+      "pinned_api_version": "2024-11-20.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.4.0-beta.2",
+      "released_on": "2024-11-07",
+      "pinned_api_version": "2024-10-28.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.4.0-beta.1",
+      "released_on": "2024-10-29",
+      "pinned_api_version": "2024-10-28.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.3.0-beta.1",
+      "released_on": "2024-10-18",
+      "pinned_api_version": "2024-09-30.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.2.0-beta.2",
+      "released_on": "2024-10-08",
+      "pinned_api_version": "2024-09-30.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "17.2.0-beta.1",
+      "released_on": "2024-10-03",
+      "pinned_api_version": "2024-09-30.acacia",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "16.13.0-beta.1",
+      "released_on": "2024-09-18",
+      "pinned_api_version": "2024-06-20",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "16.12.0-beta.1",
+      "released_on": "2024-09-13",
+      "pinned_api_version": "2024-06-20",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "16.11.0-beta.1",
+      "released_on": "2024-09-05",
+      "pinned_api_version": "2024-06-20",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "16.9.0-beta.2",
+      "released_on": "2024-08-22",
+      "pinned_api_version": "2024-06-20",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "16.9.0-beta.1",
+      "released_on": "2024-08-15",
+      "pinned_api_version": "2024-06-20",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "16.8.0-beta.1",
+      "released_on": "2024-08-12",
+      "pinned_api_version": "2024-06-20",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "16.7.0-beta.1",
+      "released_on": "2024-08-01",
+      "pinned_api_version": "2024-06-20",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "16.6.0-beta.1",
+      "released_on": "2024-07-25",
+      "pinned_api_version": "2024-06-20",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "16.4.0-beta.1",
+      "released_on": "2024-07-11",
+      "pinned_api_version": "2024-06-20",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "16.3.0-beta.1",
+      "released_on": "2024-07-05",
+      "pinned_api_version": "2024-06-20",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "16.2.0-beta.1",
+      "released_on": "2024-06-27",
+      "pinned_api_version": "2024-06-20",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "15.12.0-beta.1",
+      "released_on": "2024-06-13",
+      "pinned_api_version": "2024-04-10",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "15.11.0-beta.1",
+      "released_on": "2024-06-06",
+      "pinned_api_version": "2024-04-10",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "15.10.0-beta.1",
+      "released_on": "2024-05-30",
+      "pinned_api_version": "2024-04-10",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "15.9.0-beta.1",
+      "released_on": "2024-05-23",
+      "pinned_api_version": "2024-04-10",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "15.8.0-beta.1",
+      "released_on": "2024-05-16",
+      "pinned_api_version": "2024-04-10",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "15.7.0-beta.1",
+      "released_on": "2024-05-09",
+      "pinned_api_version": "2024-04-10",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "15.6.0-beta.1",
+      "released_on": "2024-05-02",
+      "pinned_api_version": "2024-04-10",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "15.5.0-beta.1",
+      "released_on": "2024-04-25",
+      "pinned_api_version": "2024-04-10",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "15.4.0-beta.1",
+      "released_on": "2024-04-18",
+      "pinned_api_version": "2024-04-10",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "15.2.0-beta.1",
+      "released_on": "2024-04-11",
+      "pinned_api_version": "2024-04-10",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.25.0-beta.1",
+      "released_on": "2024-04-04",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.24.0-beta.1",
+      "released_on": "2024-03-28",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.23.0-beta.1",
+      "released_on": "2024-03-21",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.22.0-beta.1",
+      "released_on": "2024-03-14",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.21.0-beta.1",
+      "released_on": "2024-03-07",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.20.0-beta.1",
+      "released_on": "2024-02-29",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.19.0-beta.1",
+      "released_on": "2024-02-22",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.18.0-beta.1",
+      "released_on": "2024-02-16",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.17.0-beta.1",
+      "released_on": "2024-02-08",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.15.0-beta.2",
+      "released_on": "2024-02-01",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.15.0-beta.1",
+      "released_on": "2024-01-25",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.14.0-beta.1",
+      "released_on": "2024-01-18",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.13.0-beta.1",
+      "released_on": "2024-01-12",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.12.0-beta.1",
+      "released_on": "2024-01-04",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.11.0-beta.1",
+      "released_on": "2023-12-22",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.10.0-beta.1",
+      "released_on": "2023-12-14",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.9.0-beta.1",
+      "released_on": "2023-12-08",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.8.0-beta.1",
+      "released_on": "2023-11-30",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.7.0-beta.2",
+      "released_on": "2023-11-27",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.7.0-beta.1",
+      "released_on": "2023-11-21",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.6.0-beta.1",
+      "released_on": "2023-11-16",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.5.0-beta.1",
+      "released_on": "2023-11-10",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.4.0-beta.1",
+      "released_on": "2023-11-02",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.3.0-beta.1",
+      "released_on": "2023-10-26",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "14.2.0-beta.1",
+      "released_on": "2023-10-17",
+      "pinned_api_version": "2023-10-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "13.12.0-beta.1",
+      "released_on": "2023-10-16",
+      "pinned_api_version": "2023-08-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "13.11.0-beta.1",
+      "released_on": "2023-10-11",
+      "pinned_api_version": "2023-08-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "13.10.0-beta.1",
+      "released_on": "2023-10-05",
+      "pinned_api_version": "2023-08-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "13.9.0-beta.1",
+      "released_on": "2023-09-28",
+      "pinned_api_version": "2023-08-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "13.8.0-beta.1",
+      "released_on": "2023-09-21",
+      "pinned_api_version": "2023-08-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "13.7.0-beta.1",
+      "released_on": "2023-09-14",
+      "pinned_api_version": "2023-08-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "13.6.0-beta.1",
+      "released_on": "2023-09-07",
+      "pinned_api_version": "2023-08-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "13.5.0-beta.1",
+      "released_on": "2023-08-31",
+      "pinned_api_version": "2023-08-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "13.0.0-beta.1",
+      "released_on": "2023-08-24",
+      "pinned_api_version": "2023-08-16",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.19.0-beta.1",
+      "released_on": "2023-08-10",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.18.0-beta.1",
+      "released_on": "2023-08-03",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.17.0-beta.1",
+      "released_on": "2023-07-27",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.14.0-beta.1",
+      "released_on": "2023-07-13",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.12.0-beta.1",
+      "released_on": "2023-06-29",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.11.0-beta.1",
+      "released_on": "2023-06-22",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.10.0-beta.2",
+      "released_on": "2023-06-15",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.10.0-beta.1",
+      "released_on": "2023-06-08",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.9.0-beta.1",
+      "released_on": "2023-06-01",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.8.0-beta.1",
+      "released_on": "2023-05-25",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.7.0-beta.1",
+      "released_on": "2023-05-19",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.6.0-beta.1",
+      "released_on": "2023-05-11",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.5.0-beta.1",
+      "released_on": "2023-05-04",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.4.0-beta.1",
+      "released_on": "2023-04-27",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.3.0-beta.1",
+      "released_on": "2023-04-20",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.2.0-beta.1",
+      "released_on": "2023-04-13",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "12.1.0-beta.1",
+      "released_on": "2023-04-06",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.18.0-beta.1",
+      "released_on": "2023-03-30",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.17.0-beta.1",
+      "released_on": "2023-03-23",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.16.0-beta.1",
+      "released_on": "2023-03-17",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.15.0-beta.1",
+      "released_on": "2023-03-09",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.14.0-beta.2",
+      "released_on": "2023-03-03",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.14.0-beta.1",
+      "released_on": "2023-03-02",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.13.0-beta.1",
+      "released_on": "2023-02-23",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.12.0-beta.1",
+      "released_on": "2023-02-16",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.11.0-beta.1",
+      "released_on": "2023-02-13",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.10.0-beta.1",
+      "released_on": "2023-02-02",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.9.0-beta.1",
+      "released_on": "2023-01-26",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.8.0-beta.1",
+      "released_on": "2023-01-19",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.7.0-beta.2",
+      "released_on": "2023-01-12",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.7.0-beta.1",
+      "released_on": "2023-01-05",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.6.0-beta.1",
+      "released_on": "2022-12-22",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.5.0-beta.1",
+      "released_on": "2022-12-15",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "11.3.0-beta.1",
+      "released_on": "2022-12-08",
+      "pinned_api_version": "2022-11-15",
+      "minimum_runtime_version": "12"
+    },
+    {
+      "version": "10.18.0-beta.1",
+      "released_on": "2022-11-10",
+      "pinned_api_version": "2022-08-01",
+      "minimum_runtime_version": "8.1"
+    },
+    {
+      "version": "10.16.0-beta.2",
+      "released_on": "2022-11-02",
+      "pinned_api_version": "2022-08-01",
+      "minimum_runtime_version": "8.1"
+    },
+    {
+      "version": "10.16.0-beta.1",
+      "released_on": "2022-10-21",
+      "pinned_api_version": "2022-08-01",
+      "minimum_runtime_version": "8.1"
+    },
+    {
+      "version": "10.15.0-beta.1",
+      "released_on": "2022-10-14",
+      "pinned_api_version": "2022-08-01",
+      "minimum_runtime_version": "8.1"
+    },
+    {
+      "version": "10.14.0-beta.1",
+      "released_on": "2022-10-07",
+      "pinned_api_version": "2022-08-01",
+      "minimum_runtime_version": "8.1"
+    },
+    {
+      "version": "10.12.0-beta.1",
+      "released_on": "2022-09-26",
+      "pinned_api_version": "2022-08-01",
+      "minimum_runtime_version": "8.1"
+    },
+    {
+      "version": "10.6.0-beta.1",
+      "released_on": "2022-08-26",
+      "pinned_api_version": "2022-08-01",
+      "minimum_runtime_version": "8.1"
+    },
+    {
+      "version": "10.4.0-beta.1",
+      "released_on": "2022-08-23",
+      "pinned_api_version": "2022-08-01",
+      "minimum_runtime_version": "8.1"
+    },
+    {
+      "version": "10.3.0-beta.1",
+      "released_on": "2022-08-11",
+      "minimum_runtime_version": "8.1"
+    },
+    {
+      "version": "10.1.0-beta.1",
+      "released_on": "2022-08-03",
+      "minimum_runtime_version": "8.1"
+    },
+    {
+      "version": "9.15.0-beta.1",
+      "released_on": "2022-07-22",
+      "minimum_runtime_version": "8.1"
+    },
+    {
+      "version": "9.13.0-beta.1",
+      "released_on": "2022-07-07",
+      "minimum_runtime_version": "8.1"
+    },
+    {
+      "version": "9.8.0-beta.1",
+      "released_on": "2022-06-08",
+      "minimum_runtime_version": "8.1"
+    }
+  ]
+}
