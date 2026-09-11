@@ -12,4 +12,4 @@ List out the key changes made in this PR, e.g.
 
 ## Configuration
 
-- [ ] `skip-changefile`: This PR does not need a changefile. (requires CI re-run)
+- [ ] `skip-changefile`: This PR is not a user-facing change, so there's no changefile.
