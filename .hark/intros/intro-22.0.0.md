@@ -1,0 +1,1 @@
+This release uses the same pinned API version to `2026-03-25.dahlia` as the last major release. The breaking changes in this release are prefixed with ⚠️ below. There's also a [detailed migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v22) to simplify your upgrade process.
