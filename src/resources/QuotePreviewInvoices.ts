@@ -1460,6 +1460,11 @@ export namespace QuotePreviewInvoice {
       acss_debit: PaymentMethodOptions.AcssDebit | null;
 
       /**
+       * If paying by `bacs_debit`, this sub-hash contains details about the Bacs Direct Debit payment method options to pass to the invoice's PaymentIntent.
+       */
+      bacs_debit?: PaymentMethodOptions.BacsDebit | null;
+
+      /**
        * If paying by `bancontact`, this sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
        */
       bancontact: PaymentMethodOptions.Bancontact | null;
@@ -1607,6 +1612,15 @@ export namespace QuotePreviewInvoice {
         verification_method?: AcssDebit.VerificationMethod;
       }
 
+      export interface BacsDebit {
+        /**
+         * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+         */
+        target_date?: string;
+
+        verification_method?: BacsDebit.VerificationMethod;
+      }
+
       export interface Bancontact {
         /**
          * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -1711,6 +1725,13 @@ export namespace QuotePreviewInvoice {
         export namespace MandateOptions {
           export type TransactionType = 'business' | 'personal' | OtherString;
         }
+      }
+
+      export namespace BacsDebit {
+        export type VerificationMethod =
+          | 'automatic'
+          | 'payer_name_verification'
+          | OtherString;
       }
 
       export namespace Bancontact {

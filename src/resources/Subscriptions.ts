@@ -2145,6 +2145,11 @@ export namespace Subscription {
       acss_debit: PaymentMethodOptions.AcssDebit | null;
 
       /**
+       * This sub-hash contains details about the Bacs Direct Debit payment method options to pass to invoices created by the subscription.
+       */
+      bacs_debit?: PaymentMethodOptions.BacsDebit | null;
+
+      /**
        * This sub-hash contains details about the Bancontact payment method options to pass to invoices created by the subscription.
        */
       bancontact: PaymentMethodOptions.Bancontact | null;
@@ -2297,6 +2302,15 @@ export namespace Subscription {
         verification_method?: AcssDebit.VerificationMethod;
       }
 
+      export interface BacsDebit {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        debit_behavior: string;
+
+        verification_method?: BacsDebit.VerificationMethod;
+      }
+
       export interface Bancontact {
         /**
          * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -2402,6 +2416,13 @@ export namespace Subscription {
         export namespace MandateOptions {
           export type TransactionType = 'business' | 'personal' | OtherString;
         }
+      }
+
+      export namespace BacsDebit {
+        export type VerificationMethod =
+          | 'automatic'
+          | 'payer_name_verification'
+          | OtherString;
       }
 
       export namespace Bancontact {
@@ -3910,6 +3931,11 @@ export namespace SubscriptionCreateParams {
       acss_debit?: Emptyable<PaymentMethodOptions.AcssDebit>;
 
       /**
+       * This sub-hash contains details about the Bacs Direct Debit payment method options to pass to the invoice's PaymentIntent.
+       */
+      bacs_debit?: Emptyable<PaymentMethodOptions.BacsDebit>;
+
+      /**
        * This sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
        */
       bancontact?: Emptyable<PaymentMethodOptions.Bancontact>;
@@ -4065,6 +4091,15 @@ export namespace SubscriptionCreateParams {
         verification_method?: AcssDebit.VerificationMethod;
       }
 
+      export interface BacsDebit {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        debit_behavior?: string;
+
+        verification_method?: BacsDebit.VerificationMethod;
+      }
+
       export interface Bancontact {
         /**
          * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -4197,6 +4232,13 @@ export namespace SubscriptionCreateParams {
         export namespace MandateOptions {
           export type TransactionType = 'business' | 'personal' | OtherString;
         }
+      }
+
+      export namespace BacsDebit {
+        export type VerificationMethod =
+          | 'automatic'
+          | 'payer_name_verification'
+          | OtherString;
       }
 
       export namespace Bancontact {
@@ -4939,12 +4981,12 @@ export namespace SubscriptionUpdateParams {
     plan?: string;
 
     /**
-     * The ID of the price object. One of `price` or `price_data` is required. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+     * The ID of the price object. You can use either `price` or `price_data`, but not both, to set or change this item's price. If you're updating an existing item without changing its price, omit both. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
      */
     price?: string;
 
     /**
-     * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
+     * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. You can use either `price` or `price_data`, but not both, to set or change this item's price. If you're updating an existing item without changing its price, omit both.
      */
     price_data?: Item.PriceData;
 
@@ -5644,6 +5686,11 @@ export namespace SubscriptionUpdateParams {
       acss_debit?: Emptyable<PaymentMethodOptions.AcssDebit>;
 
       /**
+       * This sub-hash contains details about the Bacs Direct Debit payment method options to pass to the invoice's PaymentIntent.
+       */
+      bacs_debit?: Emptyable<PaymentMethodOptions.BacsDebit>;
+
+      /**
        * This sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
        */
       bancontact?: Emptyable<PaymentMethodOptions.Bancontact>;
@@ -5799,6 +5846,15 @@ export namespace SubscriptionUpdateParams {
         verification_method?: AcssDebit.VerificationMethod;
       }
 
+      export interface BacsDebit {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        debit_behavior?: string;
+
+        verification_method?: BacsDebit.VerificationMethod;
+      }
+
       export interface Bancontact {
         /**
          * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -5931,6 +5987,13 @@ export namespace SubscriptionUpdateParams {
         export namespace MandateOptions {
           export type TransactionType = 'business' | 'personal' | OtherString;
         }
+      }
+
+      export namespace BacsDebit {
+        export type VerificationMethod =
+          | 'automatic'
+          | 'payer_name_verification'
+          | OtherString;
       }
 
       export namespace Bancontact {

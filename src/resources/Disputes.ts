@@ -206,6 +206,8 @@ export namespace Dispute {
      */
     access_activity_log: string | null;
 
+    appeal?: Evidence.Appeal;
+
     /**
      * The billing address provided by the customer.
      */
@@ -413,12 +415,30 @@ export namespace Dispute {
     | OtherString;
 
   export namespace Evidence {
+    export interface Appeal {
+      card?: Appeal.Card;
+    }
+
     export interface EnhancedEvidence {
       mastercard_compliance?: EnhancedEvidence.MastercardCompliance;
 
       visa_compelling_evidence_3?: EnhancedEvidence.VisaCompellingEvidence3;
 
       visa_compliance?: EnhancedEvidence.VisaCompliance;
+    }
+
+    export namespace Appeal {
+      export interface Card {
+        /**
+         * The reason for filing the appeal.
+         */
+        reason_for_filing?: string;
+
+        /**
+         * One or more document IDs returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `dispute_evidence` to support the appeal.
+         */
+        supporting_files?: Array<string>;
+      }
     }
 
     export namespace EnhancedEvidence {

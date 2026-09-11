@@ -134,6 +134,9 @@ This release changes the pinned API version to 2026-08-26.preview.
   * Add support for new value `blik_recurring_payments` on enum `EventsV2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent.updated_capability`
 * [#2817](https://github.com/stripe/stripe-node/pull/2817) Add non-verified manged handlers
 
+## 22.6.2 - 2026-09-09
+* [#2841](https://github.com/stripe/stripe-node/pull/2841) Validate that webhook secrets are non-empty
+
 ## 22.6.1 - 2026-09-01
 * [#2831](https://github.com/stripe/stripe-node/pull/2831) Use cryptographically secure boundaries for multipart file uploads
 * [#2836](https://github.com/stripe/stripe-node/pull/2836) update OtherString docstring

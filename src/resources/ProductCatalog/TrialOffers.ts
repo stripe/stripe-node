@@ -94,7 +94,7 @@ export namespace TrialOffer {
   }
 
   export interface EndBehavior {
-    transition: EndBehavior.Transition;
+    transition?: EndBehavior.Transition;
 
     /**
      * The type of behavior when the trial offer ends.
