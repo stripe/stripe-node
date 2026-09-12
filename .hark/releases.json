@@ -3,7 +3,7 @@
     "language": "node",
     "channel": "private-preview"
   },
-  "versions": [
+  "releases": [
     {
       "version": "22.7.0-alpha.3",
       "released_on": "2026-09-09",
