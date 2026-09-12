@@ -1,6 +1,6 @@
 ---
 title: Interpret any string in args as API Key instead of a regex
-pr_link: https://github.com/stripe/stripe-node/pull/660
+pr_url: https://github.com/stripe/stripe-node/pull/660
 is_breaking: true
 released_in_version: 7.5.0
 ---

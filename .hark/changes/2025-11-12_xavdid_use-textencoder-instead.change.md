@@ -1,6 +1,6 @@
 ---
 title: Use `TextEncoder` instead of `Buffer` to ensure support in other JS environments
-pr_link: https://github.com/stripe/stripe-node/pull/2500
+pr_url: https://github.com/stripe/stripe-node/pull/2500
 released_in_version: 19.3.1
 ---
 

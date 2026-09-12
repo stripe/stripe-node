@@ -1,6 +1,6 @@
 ---
 title: Add type safety to Stripe constructor config (no runtime change)
-pr_link: https://github.com/stripe/stripe-node/pull/2667
+pr_url: https://github.com/stripe/stripe-node/pull/2667
 released_in_version: 22.0.1
 ---
 

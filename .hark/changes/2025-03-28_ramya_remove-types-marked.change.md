@@ -1,6 +1,6 @@
 ---
 title: Remove types that were marked as deprecated in Feb 2024
-pr_link: https://github.com/stripe/stripe-node/pull/2286
+pr_url: https://github.com/stripe/stripe-node/pull/2286
 is_breaking: true
 section: ⚠️ Other Breaking changes in the SDK
 released_in_version: 18.0.0

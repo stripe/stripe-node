@@ -1,6 +1,6 @@
 ---
 title: add/adjust event parsing helpers
-pr_link: https://github.com/stripe/stripe-node/pull/2794
+pr_url: https://github.com/stripe/stripe-node/pull/2794
 released_in_version: 22.5.0
 ---
 

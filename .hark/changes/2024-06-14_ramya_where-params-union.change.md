@@ -1,6 +1,6 @@
 ---
 title: Where params are union of types, merge the types instead of having numbered suffixes in type names
-pr_link: https://github.com/stripe/stripe-node/pull/2111
+pr_url: https://github.com/stripe/stripe-node/pull/2111
 is_stripe_api_change: true
 released_in_version: 15.12.0
 ---

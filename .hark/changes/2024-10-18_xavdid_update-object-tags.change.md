@@ -1,6 +1,6 @@
 ---
 title: update object tags for meter-related classes
-pr_link: https://github.com/stripe/stripe-node/pull/2210
+pr_url: https://github.com/stripe/stripe-node/pull/2210
 released_in_version: 17.2.1
 ---
 

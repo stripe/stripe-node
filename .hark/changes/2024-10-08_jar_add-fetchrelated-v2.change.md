@@ -1,6 +1,6 @@
 ---
 title: Add fetchRelatedObject to V2 Events if needed
-pr_link: https://github.com/stripe/stripe-node/pull/2201
+pr_url: https://github.com/stripe/stripe-node/pull/2201
 released_in_version: 17.2.0
 ---
 

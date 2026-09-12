@@ -1,6 +1,6 @@
 ---
 title: Fixed file uploading in Bun runtimes
-pr_link: https://github.com/stripe/stripe-node/pull/2420
+pr_url: https://github.com/stripe/stripe-node/pull/2420
 released_in_version: 19.0.0
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "Fix file upload regression: restore multipart request data processor"
-pr_link: https://github.com/stripe/stripe-node/pull/2704
+pr_url: https://github.com/stripe/stripe-node/pull/2704
 released_in_version: 22.1.1
 ---
 

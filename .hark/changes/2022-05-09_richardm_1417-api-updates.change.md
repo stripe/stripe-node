@@ -1,6 +1,6 @@
 ---
 title: "[#1417](https://github.com/stripe/stripe-node/pull/1417) API Updates"
-pr_link: https://github.com/stripe/stripe-node/pull/1415
+pr_url: https://github.com/stripe/stripe-node/pull/1415
 is_breaking: true
 released_in_version: 9.0.0
 ---

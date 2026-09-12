@@ -1,6 +1,6 @@
 ---
 title: Stop sending Content-Length header for verbs which don't have bodies.
-pr_link: https://github.com/stripe/stripe-node/pull/1388
+pr_url: https://github.com/stripe/stripe-node/pull/1388
 released_in_version: 8.215.0
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Allow data to be set in only `POST` rawRequests
-pr_link: https://github.com/stripe/stripe-node/pull/2346
+pr_url: https://github.com/stripe/stripe-node/pull/2346
 released_in_version: 18.2.1
 ---
 

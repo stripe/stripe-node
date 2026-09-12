@@ -1,6 +1,6 @@
 ---
 title: Deprecate Node methods and params based on OpenAPI spec
-pr_link: https://github.com/stripe/stripe-node/pull/2077
+pr_url: https://github.com/stripe/stripe-node/pull/2077
 released_in_version: 15.5.0
 ---
 

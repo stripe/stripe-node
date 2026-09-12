@@ -1,6 +1,6 @@
 ---
 title: Multiple API changes reflect in Typescript definitions
-pr_link: https://github.com/stripe/stripe-node/pull/803
+pr_url: https://github.com/stripe/stripe-node/pull/803
 released_in_version: 8.16.0
 ---
 

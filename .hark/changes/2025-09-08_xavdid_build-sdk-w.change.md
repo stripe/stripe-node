@@ -1,6 +1,6 @@
 ---
 title: Build SDK w/ V2 OpenAPI spec
-pr_link: https://github.com/stripe/stripe-node/pull/2398
+pr_url: https://github.com/stripe/stripe-node/pull/2398
 is_breaking: true
 released_in_version: 19.0.0
 ---

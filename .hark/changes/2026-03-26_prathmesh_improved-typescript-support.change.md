@@ -1,6 +1,6 @@
 ---
 title: Improved TypeScript support in the Node SDK
-pr_link: https://github.com/stripe/stripe-node/pull/2619
+pr_url: https://github.com/stripe/stripe-node/pull/2619
 is_breaking: true
 released_in_version: 22.0.0
 ---

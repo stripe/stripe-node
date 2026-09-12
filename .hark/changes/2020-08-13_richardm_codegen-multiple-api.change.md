@@ -1,6 +1,6 @@
 ---
 title: "[codegen] Multiple API Changes"
-pr_link: https://github.com/stripe/stripe-node/pull/980
+pr_url: https://github.com/stripe/stripe-node/pull/980
 released_in_version: 8.85.0
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Remove empty resources created for service groupings
-pr_link: https://github.com/stripe/stripe-node/pull/2215
+pr_url: https://github.com/stripe/stripe-node/pull/2215
 released_in_version: 17.4.0
 ---
 

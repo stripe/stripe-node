@@ -1,6 +1,6 @@
 ---
 title: Add support for `Bancontact/iDEAL/Sofort -> SEPA`
-pr_link: https://github.com/stripe/stripe-node/pull/1028
+pr_url: https://github.com/stripe/stripe-node/pull/1028
 is_stripe_api_change: true
 released_in_version: 8.108.0
 ---

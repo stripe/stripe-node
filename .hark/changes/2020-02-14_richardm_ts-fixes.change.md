@@ -1,6 +1,6 @@
 ---
 title: TS Fixes
-pr_link: https://github.com/stripe/stripe-node/pull/802
+pr_url: https://github.com/stripe/stripe-node/pull/802
 released_in_version: 8.18.0
 ---
 

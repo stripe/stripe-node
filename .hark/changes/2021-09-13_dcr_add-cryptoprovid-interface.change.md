@@ -1,5 +1,5 @@
 ---
 title: Add a CryptoProvider interface and NodeCryptoProvider implementation.
-pr_link: https://github.com/stripe/stripe-node/pull/1237
+pr_url: https://github.com/stripe/stripe-node/pull/1237
 released_in_version: 8.175.0
 ---

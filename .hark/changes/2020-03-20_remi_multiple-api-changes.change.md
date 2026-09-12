@@ -1,6 +1,6 @@
 ---
 title: "Multiple API changes for Issuing:"
-pr_link: https://github.com/stripe/stripe-node/pull/842
+pr_url: https://github.com/stripe/stripe-node/pull/842
 released_in_version: 8.33.0
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: correctly throw connection errors if the server drops while sending the HTTP response body
-pr_link: https://github.com/stripe/stripe-node/pull/2815
+pr_url: https://github.com/stripe/stripe-node/pull/2815
 released_in_version: 22.6.0
 ---
 

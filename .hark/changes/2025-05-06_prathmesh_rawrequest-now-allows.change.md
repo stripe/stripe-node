@@ -1,6 +1,6 @@
 ---
 title: RawRequest now allows you set `host` and `streaming` in request options.
-pr_link: https://github.com/stripe/stripe-node/pull/2308
+pr_url: https://github.com/stripe/stripe-node/pull/2308
 released_in_version: 18.1.1
 ---
 

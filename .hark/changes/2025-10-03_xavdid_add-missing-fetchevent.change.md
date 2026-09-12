@@ -1,6 +1,6 @@
 ---
 title: add missing fetchEvent type for UnknownEventNotification
-pr_link: https://github.com/stripe/stripe-node/pull/2453
+pr_url: https://github.com/stripe/stripe-node/pull/2453
 released_in_version: 19.1.0
 ---
 

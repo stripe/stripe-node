@@ -1,6 +1,6 @@
 ---
 title: Add constructor based initialization for CJS based TypeScript imports
-pr_link: https://github.com/stripe/stripe-node/pull/2669
+pr_url: https://github.com/stripe/stripe-node/pull/2669
 released_in_version: 22.0.1
 ---
 

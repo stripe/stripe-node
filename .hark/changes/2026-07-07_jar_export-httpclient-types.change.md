@@ -1,6 +1,6 @@
 ---
 title: Export HttpClient types as interfaces instead of classes
-pr_link: https://github.com/stripe/stripe-node/pull/2779
+pr_url: https://github.com/stripe/stripe-node/pull/2779
 released_in_version: 22.3.1
 ---
 

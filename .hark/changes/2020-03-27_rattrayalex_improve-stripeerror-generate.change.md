@@ -1,6 +1,6 @@
 ---
 title: Improve StripeError.generate()
-pr_link: https://github.com/stripe/stripe-node/pull/853
+pr_url: https://github.com/stripe/stripe-node/pull/853
 released_in_version: 8.38.0
 ---
 

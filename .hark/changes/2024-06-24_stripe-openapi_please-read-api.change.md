@@ -1,6 +1,6 @@
 ---
 title: Please read the [API Changelog](https://docs.stripe.com/changelog/2024-06-20) and carefully review the API changes before upgrading.
-pr_link: https://github.com/stripe/stripe-node/pull/2113
+pr_url: https://github.com/stripe/stripe-node/pull/2113
 released_in_version: 16.0.0
 ---
 

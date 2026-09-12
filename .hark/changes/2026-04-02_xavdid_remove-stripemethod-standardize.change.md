@@ -1,6 +1,6 @@
 ---
 title: Remove `stripeMethod` and standardize how function args are handled (including removing callback support)
-pr_link: https://github.com/stripe/stripe-node/pull/2645
+pr_url: https://github.com/stripe/stripe-node/pull/2645
 is_breaking: true
 released_in_version: 22.0.0
 ---

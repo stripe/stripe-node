@@ -1,6 +1,6 @@
 ---
 title: Restore missing public type exports from v21 Stripe namespace
-pr_link: https://github.com/stripe/stripe-node/pull/2778
+pr_url: https://github.com/stripe/stripe-node/pull/2778
 released_in_version: 22.3.1
 ---
 

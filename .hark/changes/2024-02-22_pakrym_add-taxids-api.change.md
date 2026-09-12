@@ -1,6 +1,6 @@
 ---
 title: Add TaxIds API
-pr_link: https://github.com/stripe/stripe-node/pull/2021
+pr_url: https://github.com/stripe/stripe-node/pull/2021
 released_in_version: 14.18.0
 ---
 

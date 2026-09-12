@@ -1,6 +1,6 @@
 ---
 title: Add ES module package entry point
-pr_link: https://github.com/stripe/stripe-node/pull/1709
+pr_url: https://github.com/stripe/stripe-node/pull/1709
 released_in_version: 11.15.0
 ---
 

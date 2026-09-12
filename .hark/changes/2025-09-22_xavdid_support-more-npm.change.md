@@ -1,6 +1,6 @@
 ---
 title: support more npm tags
-pr_link: https://github.com/stripe/stripe-node/pull/2405
+pr_url: https://github.com/stripe/stripe-node/pull/2405
 is_breaking: true
 released_in_version: 19.0.0
 ---

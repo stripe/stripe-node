@@ -1,6 +1,6 @@
 ---
 title: Update generated code
-pr_link: https://github.com/stripe/stripe-node/pull/2057
+pr_url: https://github.com/stripe/stripe-node/pull/2057
 released_in_version: 15.0.0
 ---
 

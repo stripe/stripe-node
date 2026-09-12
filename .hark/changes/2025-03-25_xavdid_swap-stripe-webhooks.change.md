@@ -1,6 +1,6 @@
 ---
 title: Swap Stripe.webhooks from a factory function to a static property
-pr_link: https://github.com/stripe/stripe-node/pull/2277
+pr_url: https://github.com/stripe/stripe-node/pull/2277
 is_breaking: true
 section: ⚠️ Other Breaking changes in the SDK
 released_in_version: 18.0.0

@@ -1,6 +1,6 @@
 ---
 title: Update v2 array parameter serialization to use indexed format
-pr_link: https://github.com/stripe/stripe-node/pull/2497
+pr_url: https://github.com/stripe/stripe-node/pull/2497
 released_in_version: 20.0.0
 ---
 

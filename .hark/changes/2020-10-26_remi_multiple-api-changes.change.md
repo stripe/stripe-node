@@ -1,6 +1,6 @@
 ---
 title: Multiple API changes
-pr_link: https://github.com/stripe/stripe-node/pull/1053
+pr_url: https://github.com/stripe/stripe-node/pull/1053
 is_stripe_api_change: true
 released_in_version: 8.118.0
 ---

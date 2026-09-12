@@ -1,6 +1,6 @@
 ---
 title: Update generated code
-pr_link: https://github.com/stripe/stripe-node/pull/1754
+pr_url: https://github.com/stripe/stripe-node/pull/1754
 is_stripe_api_change: true
 released_in_version: 12.1.0
 ---

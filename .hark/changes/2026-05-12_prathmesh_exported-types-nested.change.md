@@ -1,6 +1,6 @@
 ---
 title: Exported types for nested param classes
-pr_link: https://github.com/stripe/stripe-node/pull/2712
+pr_url: https://github.com/stripe/stripe-node/pull/2712
 released_in_version: 22.2.0
 ---
 

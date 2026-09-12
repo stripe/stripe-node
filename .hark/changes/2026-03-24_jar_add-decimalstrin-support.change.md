@@ -1,6 +1,6 @@
 ---
 title: Add decimal_string support with vendored Decimal type
-pr_link: https://github.com/stripe/stripe-node/pull/2617
+pr_url: https://github.com/stripe/stripe-node/pull/2617
 is_breaking: true
 released_in_version: 21.0.0
 ---

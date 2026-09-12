@@ -1,6 +1,6 @@
 ---
 title: Introduce separate entry point for worker environments
-pr_link: https://github.com/stripe/stripe-node/pull/1660
+pr_url: https://github.com/stripe/stripe-node/pull/1660
 released_in_version: 11.8.0
 ---
 

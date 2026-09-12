@@ -1,6 +1,6 @@
 ---
 title: "fix: CJS companion namespace access for resource types at all depths"
-pr_link: https://github.com/stripe/stripe-node/pull/2765
+pr_url: https://github.com/stripe/stripe-node/pull/2765
 released_in_version: 22.3.0
 ---
 

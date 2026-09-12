@@ -1,6 +1,6 @@
 ---
 title: Added `string[]` to `WebhookHeader` type for compatibility with express
-pr_link: https://github.com/stripe/stripe-node/pull/2652
+pr_url: https://github.com/stripe/stripe-node/pull/2652
 released_in_version: 22.0.1
 ---
 

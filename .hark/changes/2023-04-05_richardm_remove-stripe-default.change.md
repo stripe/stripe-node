@@ -1,6 +1,6 @@
 ---
 title: Remove `Stripe.default` and `Stripe.Stripe`
-pr_link: https://github.com/stripe/stripe-node/pull/1743
+pr_url: https://github.com/stripe/stripe-node/pull/1743
 released_in_version: 12.0.0
 ---
 

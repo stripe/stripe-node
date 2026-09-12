@@ -1,6 +1,6 @@
 ---
 title: Add emitEventBodies config to include bodies in request/response events
-pr_link: https://github.com/stripe/stripe-node/pull/2681
+pr_url: https://github.com/stripe/stripe-node/pull/2681
 released_in_version: 22.0.2
 ---
 

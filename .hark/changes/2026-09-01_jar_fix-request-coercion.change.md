@@ -1,6 +1,6 @@
 ---
 title: Fix request coercion for GET and DELETE parameters
-pr_link: https://github.com/stripe/stripe-node/pull/2835
+pr_url: https://github.com/stripe/stripe-node/pull/2835
 released_in_version: 22.6.1
 ---
 

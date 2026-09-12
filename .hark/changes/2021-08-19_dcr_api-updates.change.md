@@ -1,6 +1,6 @@
 ---
 title: API Updates
-pr_link: https://github.com/stripe/stripe-node/pull/1223
+pr_url: https://github.com/stripe/stripe-node/pull/1223
 is_stripe_api_change: true
 released_in_version: 8.170.0
 ---

@@ -1,6 +1,6 @@
 ---
 title: Pin latest API version as the default
-pr_link: https://github.com/stripe/stripe-node/pull/1743
+pr_url: https://github.com/stripe/stripe-node/pull/1743
 released_in_version: 12.0.0
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Add V2List and V2ListPromise types for v2 list endpoints
-pr_link: https://github.com/stripe/stripe-node/pull/2717
+pr_url: https://github.com/stripe/stripe-node/pull/2717
 released_in_version: 22.2.0
 ---
 

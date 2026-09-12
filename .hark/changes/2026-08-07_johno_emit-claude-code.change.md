@@ -1,6 +1,6 @@
 ---
 title: Emit Claude Code plugin hint at module load time
-pr_link: https://github.com/stripe/stripe-node/pull/2805
+pr_url: https://github.com/stripe/stripe-node/pull/2805
 released_in_version: 22.5.0
 ---
 
