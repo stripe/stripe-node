@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "language": "node",
+    "channel": "private-preview"
+  },
   "versions": [
     {
       "version": "22.7.0-alpha.3",
