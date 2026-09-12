@@ -1,6 +1,6 @@
 ---
 title: Handle external_resource field
-pr_link: https://github.com/stripe/stripe-node/pull/2300
+pr_url: https://github.com/stripe/stripe-node/pull/2300
 released_in_version: 18.1.0-beta.2
 ---
 

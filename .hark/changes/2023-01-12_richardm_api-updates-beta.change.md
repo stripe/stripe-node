@@ -1,6 +1,6 @@
 ---
 title: API Updates for beta branch
-pr_link: https://github.com/stripe/stripe-node/pull/1653
+pr_url: https://github.com/stripe/stripe-node/pull/1653
 is_stripe_api_change: true
 released_in_version: 11.7.0-beta.2
 ---

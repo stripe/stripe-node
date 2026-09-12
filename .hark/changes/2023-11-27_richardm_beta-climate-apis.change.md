@@ -1,6 +1,6 @@
 ---
 title: "beta: climate APIs"
-pr_link: https://github.com/stripe/stripe-node/pull/1966
+pr_url: https://github.com/stripe/stripe-node/pull/1966
 is_stripe_api_change: true
 released_in_version: 14.7.0-beta.2
 ---

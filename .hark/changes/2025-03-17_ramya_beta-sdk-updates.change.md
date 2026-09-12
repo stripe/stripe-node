@@ -1,6 +1,6 @@
 ---
 title: Beta SDK updates between Open API versions 1473 and 1505
-pr_link: https://github.com/stripe/stripe-node/pull/2271
+pr_url: https://github.com/stripe/stripe-node/pull/2271
 released_in_version: 17.8.0-beta.1
 ---
 

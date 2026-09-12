@@ -1,6 +1,6 @@
 ---
 title: Update generated code for beta (new)
-pr_link: https://github.com/stripe/stripe-node/pull/1724
+pr_url: https://github.com/stripe/stripe-node/pull/1724
 is_stripe_api_change: true
 released_in_version: 11.17.0-beta.1
 ---

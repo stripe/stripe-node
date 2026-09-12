@@ -1,6 +1,6 @@
 ---
 title: Bring back GA invoice payments APIs that were missing in the public preview SDKs
-pr_link: https://github.com/stripe/stripe-node/pull/2383
+pr_url: https://github.com/stripe/stripe-node/pull/2383
 released_in_version: 18.5.0-beta.2
 ---
 

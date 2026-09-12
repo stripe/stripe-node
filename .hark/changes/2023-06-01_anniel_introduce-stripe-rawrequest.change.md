@@ -1,6 +1,6 @@
 ---
 title: Introduce stripe.rawRequest as a canonical way to request APIs without definitions
-pr_link: https://github.com/stripe/stripe-node/pull/1775
+pr_url: https://github.com/stripe/stripe-node/pull/1775
 released_in_version: 12.9.0-beta.1
 ---
 

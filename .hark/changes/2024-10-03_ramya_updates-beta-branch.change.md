@@ -1,6 +1,6 @@
 ---
 title: Updates beta branch with changes in master
-pr_link: https://github.com/stripe/stripe-node/pull/2200
+pr_url: https://github.com/stripe/stripe-node/pull/2200
 is_stripe_api_change: true
 released_in_version: 17.2.0-beta.1
 ---
