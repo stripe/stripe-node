@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "language": "node",
+    "channel": "beta"
+  },
   "versions": [
     {
       "version": "22.7.0-beta.1",
