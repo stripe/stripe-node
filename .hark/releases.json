@@ -3,7 +3,7 @@
     "language": "node",
     "channel": "ga"
   },
-  "versions": [
+  "releases": [
     {
       "version": "22.6.2",
       "released_on": "2026-09-09",
