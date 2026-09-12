@@ -3,7 +3,7 @@
     "language": "node",
     "channel": "beta"
   },
-  "versions": [
+  "releases": [
     {
       "version": "22.7.0-beta.1",
       "released_on": "2026-08-26",
