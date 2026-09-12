@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "language": "node",
+    "channel": "ga"
+  },
   "versions": [
     {
       "version": "22.6.2",
