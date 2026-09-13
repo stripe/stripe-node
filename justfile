@@ -84,3 +84,7 @@ update-version version:
 # remove build artifacts
 clean:
     rm -rf ./node_modules/.cache ./esm ./cjs
+
+# the lowest Node this SDK supports, for the changelog
+minimum-runtime-version:
+    rg -N --color never -o '"node": ">=([^"]+)"' --replace '$1' package.json
