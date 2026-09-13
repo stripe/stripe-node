@@ -85,6 +85,9 @@ update-version version:
 clean:
     rm -rf ./node_modules/.cache ./esm ./cjs
 
-# the lowest Node this SDK supports, for the changelog
-minimum-runtime-version:
-    rg -N --color never -o '"node": ">=([^"]+)"' --replace '$1' package.json
+# ⭐ print the API version this SDK pins and the lowest runtime it supports
+print-version-info:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "pinned-api-version: $(rg -N --color never -m1 -o '[0-9]{4}-[0-9]{2}-[0-9]{2}[.\w-]*' src/apiVersion.ts)"
+    echo "minimum-runtime-version: $(rg -N --color never -o '"node": ">=([^"]+)"' --replace '$1' package.json)"
