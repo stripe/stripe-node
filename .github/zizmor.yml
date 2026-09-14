@@ -6,3 +6,4 @@ rules:
     config:
       policies:
         "stripe/openapi/*": ref-pin
+        "stripe/hark/*": ref-pin
