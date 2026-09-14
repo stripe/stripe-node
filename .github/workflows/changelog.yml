@@ -1,0 +1,21 @@
+name: Changelog
+
+on:
+  pull_request:
+    # opened, synchronize and reopened are the defaults; `edited` is what makes this
+    # re-run when someone toggles an opt-out box in the description
+    types: [opened, synchronize, reopened, edited]
+
+permissions: {}
+
+jobs:
+  changefile:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read # check out the repo so `hark validate` can read .hark/
+      pull-requests: read # list the files this pull request adds
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: stripe/hark/actions/checks@master
