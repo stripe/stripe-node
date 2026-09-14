@@ -1,6 +1,6 @@
 ---
 title: "Generated changes from [#2611](https://github.com/stripe/stripe-node/pull/2611), [#2620](https://github.com/stripe/stripe-node/pull/2620), [#2618](https://github.com/stripe/stripe-node/pull/2618)"
-is_breaking: true
+semver_level: major
 is_stripe_api_change: true
 section: ⚠️ Breaking changes due to changes in the Stripe API
 released_in_version: 21.0.0

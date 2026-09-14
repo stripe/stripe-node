@@ -1,6 +1,6 @@
 ---
 title: Remove legacy parameter support in `invoices.retrieveUpcoming()`
 pr_url: https://github.com/stripe/stripe-node/pull/621
-is_breaking: true
+semver_level: major
 released_in_version: 7.0.0
 ---

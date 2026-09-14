@@ -1,7 +1,7 @@
 ---
 title: Remove deprecated basic method definitions.
 pr_url: https://github.com/stripe/stripe-node/pull/1600
-is_breaking: true
+semver_level: major
 section: ⚠️ Removed
 released_in_version: 11.0.0
 ---

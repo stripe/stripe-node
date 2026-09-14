@@ -1,7 +1,7 @@
 ---
 title: Add `StripeContext` object
 pr_url: https://github.com/stripe/stripe-node/pull/2426
-is_breaking: true
+semver_level: major
 released_in_version: 19.0.0
 ---
 

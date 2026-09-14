@@ -1,7 +1,7 @@
 ---
 title: Add strongly typed EventNotifications
 pr_url: https://github.com/stripe/stripe-node/pull/2370
-is_breaking: true
+semver_level: major
 released_in_version: 19.0.0
 ---
 

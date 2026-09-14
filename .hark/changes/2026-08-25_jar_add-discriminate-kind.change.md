@@ -1,7 +1,7 @@
 ---
 title: Add discriminatedUnion kind to V2RuntimeSchema coercion
 pr_url: https://github.com/stripe/stripe-node/pull/2801
-is_breaking: true
+semver_level: major
 released_in_version: 22.6.0
 ---
 

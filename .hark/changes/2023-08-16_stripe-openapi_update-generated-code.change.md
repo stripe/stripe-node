@@ -1,7 +1,7 @@
 ---
 title: Update generated code
 pr_url: https://github.com/stripe/stripe-node/pull/1872
-is_breaking: true
+semver_level: major
 is_stripe_api_change: true
 released_in_version: 13.0.0
 ---

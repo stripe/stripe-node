@@ -1,7 +1,7 @@
 ---
 title: "Multiple API changes:"
 pr_url: https://github.com/stripe/stripe-node/pull/826
-is_breaking: true
+semver_level: major
 released_in_version: 8.25.0
 ---
 
