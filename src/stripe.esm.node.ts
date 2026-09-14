@@ -1136,7 +1136,7 @@ export class Stripe {
 
   /**
    * Creates a Stripe client authenticated via workload identity federation
-   * instead of an API key. Workload identity is additive: it's never used as 
+   * instead of an API key. Workload identity is additive: it's never used as
    * a fallback for a missing or invalid API key, and API-key clients never attempt it.
    */
   static forWorkloadIdentity(
@@ -1156,12 +1156,6 @@ export class Stripe {
           'Use `new Stripe(apiKey)` for API-key authentication instead.'
       );
     }
-    if (provider !== 'aws') {
-      throw new Error(
-        `Stripe: Unsupported workload identity provider '${provider}'. Only 'aws' is currently supported.`
-      );
-    }
-
     const authenticator = Stripe._platformFunctions.createWorkloadIdentityAuthenticator(
       clientId,
       provider

@@ -7,7 +7,7 @@ import {
   StripeInvalidGrantError,
   StripeWorkloadIdentityError,
 } from '../src/Error.js';
-import {createWorkloadIdentityAuthenticator} from '../src/platform/AwsWorkloadIdentity.js';
+import {createWorkloadIdentityAuthenticator} from '../src/WorkloadIdentity/WorkloadIdentity.js';
 import {isWorkloadIdentityAuthenticator} from '../src/utils.js';
 import {NodeHttpClient} from '../src/net/NodeHttpClient.js';
 

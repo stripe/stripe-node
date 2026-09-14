@@ -18,10 +18,7 @@ import {
   RequestAuthenticator,
   WorkloadIdentityProvider,
 } from '../Types.js';
-import {
-  createAwsAssertionFetcher,
-  createWorkloadIdentityAuthenticator,
-} from './AwsWorkloadIdentity.js';
+import {createCloudCapableWorkloadIdentityAuthenticator} from '../WorkloadIdentity/CloudCapableWorkloadIdentity.js';
 
 class StreamProcessingError extends StripeError {}
 
@@ -207,14 +204,10 @@ export class NodePlatformFunctions extends PlatformFunctions {
     clientId: string,
     provider: WorkloadIdentityProvider
   ): RequestAuthenticator {
-    if (provider !== 'aws') {
-      throw new Error(
-        `Stripe: Unsupported workload identity provider '${provider}'. Only 'aws' is currently supported.`
-      );
-    }
-    return createWorkloadIdentityAuthenticator(
+    return createCloudCapableWorkloadIdentityAuthenticator(
       clientId,
-      createAwsAssertionFetcher()
+      provider,
+      () => super.createWorkloadIdentityAuthenticator(clientId, provider)
     );
   }
 }

@@ -1,13 +1,8 @@
-// This file is only ever imported by NodePlatformFunctions.ts, so the AWS SDK
-// dependency it pulls in is never bundled into browser/worker/Deno/Bun builds.
 import {generateOAuthError, StripeWorkloadIdentityError} from '../Error.js';
 import {NodeHttpClient} from '../net/NodeHttpClient.js';
 import {HttpClientInterface} from '../net/HttpClient.js';
 import {RequestAuthenticator, StripeRequest} from '../Types.js';
 
-const WORKLOAD_IDENTITY_AUDIENCE = 'https://access.stripe.com/wif';
-const ASSERTION_DURATION_SECONDS = 3600;
-const ASSERTION_SIGNING_ALGORITHM = 'ES384';
 const TOKEN_EXCHANGE_HOST = 'api.stripe.com';
 const TOKEN_EXCHANGE_PORT = '443';
 const TOKEN_EXCHANGE_PATH = '/stripe-workload/oauth2/token';
@@ -17,62 +12,8 @@ const JWT_BEARER_GRANT_TYPE = 'urn:ietf:params:oauth:grant-type:jwt-bearer';
 // remains, so a request never races a token that's about to expire.
 const REFRESH_WINDOW_MS = 5 * 60 * 1000;
 
-/** Acquires a fresh, opaque AWS web identity assertion. Never persisted. */
+/** Acquires a fresh, opaque cloud workload identity assertion. Never persisted. */
 export type AssertionFetcher = () => Promise<string>;
-
-/**
- * Loads `@aws-sdk/client-sts` on first use. It's a peer dependency, so it may
- * not be installed until a caller actually needs AWS workload identity.
- */
-async function loadStsSdk(): Promise<typeof import('@aws-sdk/client-sts')> {
-  try {
-    return await import('@aws-sdk/client-sts');
-  } catch (e) {
-    throw new StripeWorkloadIdentityError(
-      "Stripe: AWS workload identity authentication requires the '@aws-sdk/client-sts' package, " +
-        "which isn't installed. Run `npm install @aws-sdk/client-sts` (or your package manager's " +
-        'equivalent) to use Stripe.forWorkloadIdentity with the \'aws\' provider.',
-      e
-    );
-  }
-}
-
-/**
- * Builds an `AssertionFetcher` that calls AWS STS's `GetWebIdentityToken`,
- * using the ambient AWS credential chain (no long-lived AWS credentials are
- * ever passed to Stripe). Kept as a small standalone factory so tests can
- * substitute a fake fetcher instead of exercising real AWS SDK calls.
- */
-export function createAwsAssertionFetcher(): AssertionFetcher {
-  return async function fetchAwsAssertion(): Promise<string> {
-    const {STSClient, GetWebIdentityTokenCommand} = await loadStsSdk();
-
-    const client = new STSClient({});
-    let response;
-    try {
-      response = await client.send(
-        new GetWebIdentityTokenCommand({
-          Audience: [WORKLOAD_IDENTITY_AUDIENCE],
-          DurationSeconds: ASSERTION_DURATION_SECONDS,
-          SigningAlgorithm: ASSERTION_SIGNING_ALGORITHM,
-        })
-      );
-    } catch (e) {
-      throw new StripeWorkloadIdentityError(
-        'Stripe: Unable to obtain an AWS web identity token for workload identity authentication. ' +
-          'Confirm that AWS credentials are available in this environment (e.g. via the instance/task role) ' +
-          "and that they're permitted to call sts:GetWebIdentityToken.",
-        e
-      );
-    }
-    if (!response.WebIdentityToken) {
-      throw new StripeWorkloadIdentityError(
-        'Stripe: AWS STS returned an empty web identity token for workload identity authentication.'
-      );
-    }
-    return response.WebIdentityToken;
-  };
-}
 
 type CachedToken = {accessToken: string; expiresAt: number};
 
@@ -81,8 +22,8 @@ type CachedToken = {accessToken: string; expiresAt: number};
  * authentication: it caches the exchanged Stripe access token in memory,
  * shares a single in-flight refresh across concurrent callers, and exposes
  * `_invalidate()` so RequestSender can force a one-time re-exchange after a
- * 401. The AWS assertion fetcher is injected so tests never need real AWS
- * credentials.
+ * 401. The assertion fetcher is injected so this logic is provider-agnostic
+ * and tests never need real cloud credentials.
  */
 export function createWorkloadIdentityAuthenticator(
   clientId: string,

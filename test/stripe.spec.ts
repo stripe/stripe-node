@@ -169,15 +169,15 @@ describe('Stripe Module', function() {
         /passed a Stripe API key to Stripe\.forWorkloadIdentity/
       );
 
-      expect(() =>
-        Stripe.forWorkloadIdentity('rk_test_123', 'aws')
-      ).to.throw(/passed a Stripe API key to Stripe\.forWorkloadIdentity/);
+      expect(() => Stripe.forWorkloadIdentity('rk_test_123', 'aws')).to.throw(
+        /passed a Stripe API key to Stripe\.forWorkloadIdentity/
+      );
     });
 
     it('throws for an unsupported provider', () => {
-      expect(() =>
-        Stripe.forWorkloadIdentity('oacli_123', 'gcp')
-      ).to.throw(/Unsupported workload identity provider 'gcp'/);
+      expect(() => Stripe.forWorkloadIdentity('oacli_123', 'gcp')).to.throw(
+        /Workload identity provider 'gcp' is not available in this environment/
+      );
     });
 
     it('none of the validation errors require AWS/network access', () => {

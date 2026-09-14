@@ -95,15 +95,17 @@ export class PlatformFunctions {
 
   /**
    * Creates a `RequestAuthenticator` backed by workload identity federation
-   * for the given cloud provider. Only supported in Node.js: other
-   * platforms don't have access to cloud-provider SDKs/credential chains.
+   * for the given cloud provider. The base implementation supports no
+   * providers; platforms with access to a provider's SDK and an ambient
+   * credential chain override this to handle the providers they support,
+   * falling back to `super` for any others.
    */
   createWorkloadIdentityAuthenticator(
     _clientId: string,
-    _provider: WorkloadIdentityProvider
+    provider: WorkloadIdentityProvider
   ): RequestAuthenticator {
     throw new Error(
-      'Stripe: Workload identity authentication (Stripe.forWorkloadIdentity) is only supported in Node.js environments.'
+      `Stripe: Workload identity provider '${provider}' is not available in this environment.`
     );
   }
 
