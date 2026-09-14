@@ -126,19 +126,43 @@ class BaseEventNotificationHandler {
     return keys;
   }
 
+  private createClientWithContext(
+    stripeContext: Stripe.V2.Core.EventNotification['context']
+  ): Stripe {
+    // Use the runtime constructor so this works for the separate Node ESM and
+    // shared core clients. Reuse configuration and the HTTP client, but create
+    // new resources and a new request sender bound to the event-scoped client.
+    const StripeClient = this.client.constructor as typeof Stripe;
+    const eventClient = new StripeClient('', {
+      apiVersion: this.client.getApiField('version'),
+      authenticator: this.client._authenticator ?? undefined,
+      typescript:
+        StripeClient.USER_AGENT.typescript === true ? true : undefined,
+      maxNetworkRetries: this.client.getApiField('maxNetworkRetries'),
+      httpClient: this.client.getApiField('httpClient'),
+      timeout: this.client.getApiField('timeout'),
+      host: this.client.getApiField('host'),
+      port: this.client.getApiField('port'),
+      protocol: this.client.getApiField('protocol'),
+      telemetry: this.client.getTelemetryEnabled(),
+      emitEventBodies: this.client.getEmitEventBodiesEnabled(),
+      appInfo: this.client._appInfo,
+      stripeAccount: this.client.getApiField('stripeAccount') ?? undefined,
+      stripeContext,
+    });
+
+    const clientId = this.client.getClientId();
+    if (clientId) {
+      eventClient.setClientId(clientId);
+    }
+
+    return eventClient;
+  }
+
   protected async dispatchEvent(
     event: Stripe.V2.Core.EventNotification
   ): Promise<void> {
-    // Create a new client with the event's context instead of modifying the shared client
-    // This ensures thread-safety when processing webhooks in parallel
-    // We create a shallow copy and override _api with a new object containing the event context
-    // This reuses expensive resources like httpClient (Flyweight pattern)
-    const eventClient = Object.create(Object.getPrototypeOf(this.client));
-    Object.assign(eventClient, this.client);
-    eventClient._api = {
-      ...this.client._api,
-      stripeContext: event.context,
-    };
+    const eventClient = this.createClientWithContext(event.context);
 
     if (
       this.preHandleCallback &&
