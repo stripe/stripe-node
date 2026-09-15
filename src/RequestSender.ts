@@ -113,8 +113,7 @@ export class RequestSender {
     const suppressionValue = this._stripe._platformFunctions
       .getEnv()
       ?.STRIPE_SUPPRESS_NOTICES?.toLowerCase();
-    const shouldSuppress =
-      !aiAgent && (suppressionValue === 'true' || suppressionValue === '1');
+    const shouldSuppress = !aiAgent && suppressionValue === 'true';
     if (shouldSuppress) {
       return;
     }

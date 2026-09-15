@@ -2099,14 +2099,14 @@ describe('RequestSender', () => {
       ]);
     });
 
-    for (const suppressionValue of ['true', 'TRUE', '1']) {
+    for (const suppressionValue of ['true', 'TRUE']) {
       it(`suppresses stripe notices for humans when STRIPE_SUPPRESS_NOTICES=${suppressionValue}`, () => {
         expect(emitNotice({STRIPE_SUPPRESS_NOTICES: suppressionValue})).to.be
           .empty;
       });
     }
 
-    for (const suppressionValue of ['', 'false', 'invalid']) {
+    for (const suppressionValue of ['', 'false', '1', 'invalid']) {
       it(`does not suppress stripe notices when STRIPE_SUPPRESS_NOTICES=${suppressionValue}`, () => {
         expect(
           emitNotice({STRIPE_SUPPRESS_NOTICES: suppressionValue})
