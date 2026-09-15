@@ -125,7 +125,7 @@ export namespace Event {
     /**
      * Event reason type.
      */
-    type: 'request';
+    type: Reason.Type;
   }
 
   export namespace Reason {
@@ -140,6 +140,8 @@ export namespace Event {
        */
       idempotency_key: string;
     }
+
+    export type Type = 'request' | OtherString;
   }
 }
 export namespace V2 {
@@ -238,6 +240,23 @@ export namespace V2 {
         /**
          * Unique identifier for the object relevant to the event.
          */ id: string;
+        /**
+         * Type of the object relevant to the event.
+         */ type: string;
+        /**
+         * URL to retrieve the resource.
+         */ url: string;
+      }
+    }
+  }
+}
+
+export namespace V2 {
+  export namespace Core {
+    export namespace Events {
+      /**
+       * A reference to an API resource that has no standalone identifier, so there is no `id` to retrieve it by.
+       */ export interface RelatedSingletonObject {
         /**
          * Type of the object relevant to the event.
          */ type: string;
@@ -664,7 +683,11 @@ export namespace V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpda
     /**
      * Open Enum. The capability which had its status updated.
      */
-    updated_capability: 'automatic_indirect_tax';
+    updated_capability: Data.UpdatedCapability;
+  }
+
+  export namespace Data {
+    export type UpdatedCapability = 'automatic_indirect_tax' | OtherString;
   }
 }
 
@@ -1157,4 +1180,6 @@ export declare namespace Events {
     V2CoreAccountPersonUpdatedEventNotification,
     V2CoreEventDestinationPingEventNotification,
   };
+  export type RelatedObject = V2.Core.Events.RelatedObject;
+  export type RelatedSingletonObject = V2.Core.Events.RelatedSingletonObject;
 }
