@@ -44,7 +44,7 @@ import {
 export type HttpClientResponseError = {code: string};
 
 const STRIPE_NOTICE_SUPPRESSION_MESSAGE =
-  'To suppress Stripe notices in test and sandbox environments, set STRIPE_SUPPRESS_NOTICES=true.';
+  'To suppress Stripe notices in test and sandbox environments, set the STRIPE_SUPPRESS_NOTICES environment variable to true.';
 
 export class RequestSender {
   protected _stripe: Stripe;

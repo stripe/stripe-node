@@ -2095,7 +2095,7 @@ describe('RequestSender', () => {
 
     it('tells humans how to suppress stripe notices', () => {
       expect(emitNotice({})).to.deep.equal([
-        'test notice\nTo suppress Stripe notices in test and sandbox environments, set STRIPE_SUPPRESS_NOTICES=true.',
+        'test notice\nTo suppress Stripe notices in test and sandbox environments, set the STRIPE_SUPPRESS_NOTICES environment variable to true.',
       ]);
     });
 
