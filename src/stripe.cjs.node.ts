@@ -14375,6 +14375,8 @@ declare namespace StripeConstructor {
   }
   export namespace Events {
     export type UnknownEventNotification = Stripe_.V2.Core.Events.UnknownEventNotification;
+    export type RelatedObject = Stripe_.V2.Core.Events.RelatedObject;
+    export type RelatedSingletonObject = Stripe_.V2.Core.Events.RelatedSingletonObject;
     export type V1BillingMeterErrorReportTriggeredEvent = Stripe_.V2.Core.Events.V1BillingMeterErrorReportTriggeredEvent;
     export type V1BillingMeterErrorReportTriggeredEventNotification = Stripe_.V2.Core.Events.V1BillingMeterErrorReportTriggeredEventNotification;
     export type V1BillingMeterNoMeterFoundEvent = Stripe_.V2.Core.Events.V1BillingMeterNoMeterFoundEvent;
