@@ -43,6 +43,9 @@ import {
 
 export type HttpClientResponseError = {code: string};
 
+const STRIPE_NOTICE_SUPPRESSION_MESSAGE =
+  'To suppress Stripe notices in test and sandbox environments, set STRIPE_SUPPRESS_NOTICES=true.';
+
 export class RequestSender {
   protected _stripe: Stripe;
   private readonly _maxBufferedRequestMetric: number;
@@ -102,11 +105,26 @@ export class RequestSender {
 
   private _emitStripeNotice(headers: ResponseHeaders): void {
     const notice = headers['stripe-notice'];
-    if (notice) {
-      this._stripe._platformFunctions.emitWarning(
-        typeof notice === 'string' ? notice : notice[0]
-      );
+    if (!notice) {
+      return;
     }
+
+    const aiAgent = this._stripe.getConstant('AI_AGENT') as string;
+    const suppressionValue = this._stripe._platformFunctions
+      .getEnv()
+      ?.STRIPE_SUPPRESS_NOTICES?.toLowerCase();
+    const shouldSuppress =
+      !aiAgent && (suppressionValue === 'true' || suppressionValue === '1');
+    if (shouldSuppress) {
+      return;
+    }
+
+    const noticeMessage = typeof notice === 'string' ? notice : notice[0];
+    this._stripe._platformFunctions.emitWarning(
+      aiAgent
+        ? noticeMessage
+        : `${noticeMessage}\n${STRIPE_NOTICE_SUPPRESSION_MESSAGE}`
+    );
   }
 
   /**
