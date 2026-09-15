@@ -9,6 +9,7 @@ import {
   RequestData,
   StripeRawError,
   DEFAULT_BASE_ADDRESSES,
+  WorkloadIdentityProvider,
 } from './Types.js';
 import {createWebhooks, WebhookHeader, WebhookPayload} from './Webhooks.js';
 import {ApiVersion, ApiMajorVersion} from './apiVersion.js';
@@ -42,6 +43,7 @@ import {
   ApiSearchResult,
   StripeStreamResponse,
   StripeConfig,
+  WorkloadIdentityConfig,
   RequestEvent,
   ResponseEvent,
   AppInfo,
@@ -1132,7 +1134,47 @@ export class Stripe {
     };
   }
 
+  /**
+   * Creates a Stripe client authenticated via workload identity federation
+   * instead of an API key. Workload identity is additive: it's never used as
+   * a fallback for a missing or invalid API key, and API-key clients never attempt it.
+   */
+  static forWorkloadIdentity(
+    clientId: string,
+    provider: WorkloadIdentityProvider,
+    config: WorkloadIdentityConfig = {}
+  ): Stripe {
+    if (typeof clientId !== 'string' || clientId.length === 0) {
+      throw new Error(
+        'Stripe: Stripe.forWorkloadIdentity requires a non-empty workload identity client ID as its first argument. ' +
+          'If you meant to authenticate with an API key, use `new Stripe(apiKey)` instead.'
+      );
+    }
+    if (/^(sk|rk)_/.test(clientId)) {
+      throw new Error(
+        'Stripe: It looks like you passed a Stripe API key to Stripe.forWorkloadIdentity. ' +
+          'Use `new Stripe(apiKey)` for API-key authentication instead.'
+      );
+    }
+    const authenticator = Stripe._platformFunctions.createWorkloadIdentityAuthenticator(
+      clientId,
+      provider
+    );
+
+    return new Stripe('', {
+      ...config,
+      authenticator,
+    } as StripeConfig);
+  }
+
   constructor(key: string, config: StripeConfig = {}) {
+    if (typeof key === 'string' && key.startsWith('oacli_')) {
+      throw new Error(
+        'Stripe: It looks like you passed a workload identity client ID to `new Stripe()`. ' +
+          "Use `Stripe.forWorkloadIdentity(clientId, 'aws', config)` instead."
+      );
+    }
+
     const props = this._getPropsFromConfig(config);
 
     this._platformFunctions = Stripe._platformFunctions;
@@ -1787,6 +1829,8 @@ export function createStripe(
 }
 
 export declare namespace Stripe {
+  export type WorkloadIdentityProvider = import('./Types.js').WorkloadIdentityProvider;
+  export type WorkloadIdentityConfig = import('./lib.js').WorkloadIdentityConfig;
   // StripeInterfaceExports: The beginning of the section generated from our OpenAPI spec
   export {
     Account,
