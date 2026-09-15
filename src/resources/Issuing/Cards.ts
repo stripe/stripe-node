@@ -4,6 +4,8 @@ import {StripeResource} from '../../StripeResource.js';
 import {Cardholder} from './Cardholders.js';
 import {PersonalizationDesign} from './PersonalizationDesigns.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   Emptyable,
   OtherString,
@@ -18,10 +20,10 @@ export class CardResource extends StripeResource {
   /**
    * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
-  list(
-    params?: Issuing.CardListParams,
+  list<E extends string = never>(
+    params?: Issuing.CardListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Card> {
+  ): ApiListPromise<ApplyExpandListItem<Card, E>> {
     return this._makeRequest('GET', '/v1/issuing/cards', params, options, {
       methodType: 'list',
     }) as any;
@@ -29,10 +31,10 @@ export class CardResource extends StripeResource {
   /**
    * Creates an Issuing Card object.
    */
-  create(
-    params: Issuing.CardCreateParams,
+  create<E extends string = never>(
+    params: Issuing.CardCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Card>> {
+  ): Promise<Response<ApplyExpand<Card, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/issuing/cards',
@@ -43,11 +45,11 @@ export class CardResource extends StripeResource {
   /**
    * Retrieves an Issuing Card object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Issuing.CardRetrieveParams,
+    params?: Issuing.CardRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Card>> {
+  ): Promise<Response<ApplyExpand<Card, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/issuing/cards/${encodeURIComponent(id)}`,
@@ -58,11 +60,11 @@ export class CardResource extends StripeResource {
   /**
    * Updates the specified Issuing Card object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Issuing.CardUpdateParams,
+    params?: Issuing.CardUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Card>> {
+  ): Promise<Response<ApplyExpand<Card, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/issuing/cards/${encodeURIComponent(id)}`,
@@ -1413,7 +1415,7 @@ export namespace Card {
   }
 }
 export namespace Issuing {
-  export interface CardCreateParams {
+  export interface CardCreateParams<E extends string = string> {
     /**
      * The currency for the card.
      */
@@ -1442,7 +1444,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The new financial account ID the card will be associated with. This field allows a card to be reassigned to a different financial account.
@@ -2604,15 +2606,15 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface CardRetrieveParams {
+  export interface CardRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Issuing {
-  export interface CardUpdateParams {
+  export interface CardUpdateParams<E extends string = string> {
     /**
      * Reason why the `status` of this card is `canceled`.
      */
@@ -2621,7 +2623,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -3737,7 +3739,8 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface CardListParams extends PaginationParams {
+  export interface CardListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Only return cards belonging to the Cardholder with the provided ID.
      */
@@ -3761,7 +3764,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return cards that have the given last four digits.

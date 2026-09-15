@@ -2,18 +2,18 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {Transaction} from './../../Issuing/Transactions.js';
-import {OtherString, Decimal} from '../../../shared.js';
+import {ApplyExpand, OtherString, Decimal} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class TransactionResource extends StripeResource {
   /**
    * Refund a test-mode Transaction.
    */
-  refund(
+  refund<E extends string = never>(
     id: string,
-    params?: TestHelpers.Issuing.TransactionRefundParams,
+    params?: TestHelpers.Issuing.TransactionRefundParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transaction>> {
+  ): Promise<Response<ApplyExpand<Transaction, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/transactions/${encodeURIComponent(id)}/refund`,
@@ -108,10 +108,10 @@ export class TransactionResource extends StripeResource {
   /**
    * Allows the user to capture an arbitrary amount, also known as a forced capture.
    */
-  createForceCapture(
-    params: TestHelpers.Issuing.TransactionCreateForceCaptureParams,
+  createForceCapture<E extends string = never>(
+    params: TestHelpers.Issuing.TransactionCreateForceCaptureParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transaction>> {
+  ): Promise<Response<ApplyExpand<Transaction, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/test_helpers/issuing/transactions/create_force_capture',
@@ -259,10 +259,10 @@ export class TransactionResource extends StripeResource {
   /**
    * Allows the user to refund an arbitrary amount, also known as a unlinked refund.
    */
-  createUnlinkedRefund(
-    params: TestHelpers.Issuing.TransactionCreateUnlinkedRefundParams,
+  createUnlinkedRefund<E extends string = never>(
+    params: TestHelpers.Issuing.TransactionCreateUnlinkedRefundParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transaction>> {
+  ): Promise<Response<ApplyExpand<Transaction, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/test_helpers/issuing/transactions/create_unlinked_refund',
@@ -410,7 +410,9 @@ export class TransactionResource extends StripeResource {
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface TransactionCreateForceCaptureParams {
+    export interface TransactionCreateForceCaptureParams<
+      E extends string = string
+    > {
       /**
        * The total amount to attempt to capture. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
        */
@@ -429,7 +431,7 @@ export namespace TestHelpers {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * Details about the seller (grocery store, e-commerce website, etc.) where the card authorization happened.
@@ -1066,7 +1068,9 @@ export namespace TestHelpers {
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface TransactionCreateUnlinkedRefundParams {
+    export interface TransactionCreateUnlinkedRefundParams<
+      E extends string = string
+    > {
       /**
        * The total amount to attempt to refund. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
        */
@@ -1085,7 +1089,7 @@ export namespace TestHelpers {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * Details about the seller (grocery store, e-commerce website, etc.) where the card authorization happened.
@@ -1722,11 +1726,11 @@ export namespace TestHelpers {
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface TransactionRefundParams {
+    export interface TransactionRefundParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * The total amount to attempt to refund. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).

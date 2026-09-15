@@ -1,17 +1,22 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams, OtherString} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  OtherString,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class PhysicalBundleResource extends StripeResource {
   /**
    * Returns a list of physical bundle objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
-  list(
-    params?: Issuing.PhysicalBundleListParams,
+  list<E extends string = never>(
+    params?: Issuing.PhysicalBundleListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<PhysicalBundle> {
+  ): ApiListPromise<ApplyExpandListItem<PhysicalBundle, E>> {
     return this._makeRequest(
       'GET',
       '/v1/issuing/physical_bundles',
@@ -25,11 +30,11 @@ export class PhysicalBundleResource extends StripeResource {
   /**
    * Retrieves a physical bundle object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Issuing.PhysicalBundleRetrieveParams,
+    params?: Issuing.PhysicalBundleRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PhysicalBundle>> {
+  ): Promise<Response<ApplyExpand<PhysicalBundle, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/issuing/physical_bundles/${encodeURIComponent(id)}`,
@@ -114,19 +119,20 @@ export namespace PhysicalBundle {
   }
 }
 export namespace Issuing {
-  export interface PhysicalBundleRetrieveParams {
+  export interface PhysicalBundleRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Issuing {
-  export interface PhysicalBundleListParams extends PaginationParams {
+  export interface PhysicalBundleListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return physical bundles with the given status.

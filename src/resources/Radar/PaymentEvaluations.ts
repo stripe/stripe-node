@@ -3,6 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaymentMethod} from './../PaymentMethods.js';
 import {
+  ApplyExpand,
   MetadataParam,
   OtherString,
   AddressParam,
@@ -15,10 +16,10 @@ export class PaymentEvaluationResource extends StripeResource {
   /**
    * Request a Radar API fraud risk score from Stripe for a payment before sending it for external processor authorization.
    */
-  create(
-    params: Radar.PaymentEvaluationCreateParams,
+  create<E extends string = never>(
+    params: Radar.PaymentEvaluationCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentEvaluation>> {
+  ): Promise<Response<ApplyExpand<PaymentEvaluation, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/radar/payment_evaluations',
@@ -632,7 +633,7 @@ export namespace PaymentEvaluation {
   }
 }
 export namespace Radar {
-  export interface PaymentEvaluationCreateParams {
+  export interface PaymentEvaluationCreateParams<E extends string = string> {
     /**
      * Details about the customer associated with the payment evaluation.
      */
@@ -651,7 +652,7 @@ export namespace Radar {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

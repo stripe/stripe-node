@@ -5,6 +5,8 @@ import {ApplicationFee} from './ApplicationFees.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {ExternalAccount, DeletedExternalAccount} from './ExternalAccounts.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   OtherString,
   Emptyable,
@@ -18,10 +20,10 @@ export class PayoutResource extends StripeResource {
   /**
    * Returns a list of existing payouts sent to third-party bank accounts or payouts that Stripe sent to you. The payouts return in sorted order, with the most recently created payouts appearing first.
    */
-  list(
-    params?: PayoutListParams,
+  list<E extends string = never>(
+    params?: PayoutListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Payout> {
+  ): ApiListPromise<ApplyExpandListItem<Payout, E>> {
     return this._makeRequest('GET', '/v1/payouts', params, options, {
       methodType: 'list',
     }) as any;
@@ -33,20 +35,20 @@ export class PayoutResource extends StripeResource {
    *
    * If you create a manual payout on a Stripe account that uses multiple payment source types, you need to specify the source type balance that the payout draws from. The [balance object](https://docs.stripe.com/api/balances/object) details available and pending amounts by source type.
    */
-  create(
-    params: PayoutCreateParams,
+  create<E extends string = never>(
+    params: PayoutCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Payout>> {
+  ): Promise<Response<ApplyExpand<Payout, E>>> {
     return this._makeRequest('POST', '/v1/payouts', params, options) as any;
   }
   /**
    * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list. Stripe returns the corresponding payout information.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: PayoutRetrieveParams,
+    params?: PayoutRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Payout>> {
+  ): Promise<Response<ApplyExpand<Payout, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/payouts/${encodeURIComponent(id)}`,
@@ -57,11 +59,11 @@ export class PayoutResource extends StripeResource {
   /**
    * Updates the specified payout by setting the values of the parameters you pass. We don't change parameters that you don't provide. This request only accepts the metadata as arguments.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: PayoutUpdateParams,
+    params?: PayoutUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Payout>> {
+  ): Promise<Response<ApplyExpand<Payout, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payouts/${encodeURIComponent(id)}`,
@@ -72,11 +74,11 @@ export class PayoutResource extends StripeResource {
   /**
    * You can cancel a previously created payout if its status is pending. Stripe refunds the funds to your available balance. You can't cancel automatic Stripe payouts.
    */
-  cancel(
+  cancel<E extends string = never>(
     id: string,
-    params?: PayoutCancelParams,
+    params?: PayoutCancelParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Payout>> {
+  ): Promise<Response<ApplyExpand<Payout, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payouts/${encodeURIComponent(id)}/cancel`,
@@ -89,11 +91,11 @@ export class PayoutResource extends StripeResource {
    *
    * By requesting a reversal through /v1/payouts/:id/reverse, you confirm that the authorized signatory of the selected bank account authorizes the debit on the bank account and that no other authorization is required.
    */
-  reverse(
+  reverse<E extends string = never>(
     id: string,
-    params?: PayoutReverseParams,
+    params?: PayoutReverseParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Payout>> {
+  ): Promise<Response<ApplyExpand<Payout, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payouts/${encodeURIComponent(id)}/reverse`,
@@ -259,7 +261,7 @@ export namespace Payout {
 
   export type Type = 'bank_account' | 'card' | OtherString;
 }
-export interface PayoutCreateParams {
+export interface PayoutCreateParams<E extends string = string> {
   /**
    * A positive integer in cents representing how much to payout.
    */
@@ -283,7 +285,7 @@ export interface PayoutCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -315,24 +317,25 @@ export namespace PayoutCreateParams {
 
   export type SourceType = 'bank_account' | 'card' | 'fpx' | OtherString;
 }
-export interface PayoutRetrieveParams {
+export interface PayoutRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PayoutUpdateParams {
+export interface PayoutUpdateParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }
-export interface PayoutListParams extends PaginationParams {
+export interface PayoutListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return payouts that are expected to arrive during the given date interval.
    */
@@ -351,24 +354,24 @@ export interface PayoutListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return payouts that have the given status: `pending`, `paid`, `failed`, or `canceled`.
    */
   status?: string;
 }
-export interface PayoutCancelParams {
+export interface PayoutCancelParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PayoutReverseParams {
+export interface PayoutReverseParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

@@ -4,6 +4,8 @@ import {StripeResource} from '../../StripeResource.js';
 import {File} from './../Files.js';
 import {PhysicalBundle} from './PhysicalBundles.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   Emptyable,
   PaginationParams,
@@ -16,10 +18,10 @@ export class PersonalizationDesignResource extends StripeResource {
   /**
    * Returns a list of personalization design objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
-  list(
-    params?: Issuing.PersonalizationDesignListParams,
+  list<E extends string = never>(
+    params?: Issuing.PersonalizationDesignListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<PersonalizationDesign> {
+  ): ApiListPromise<ApplyExpandListItem<PersonalizationDesign, E>> {
     return this._makeRequest(
       'GET',
       '/v1/issuing/personalization_designs',
@@ -33,10 +35,10 @@ export class PersonalizationDesignResource extends StripeResource {
   /**
    * Creates a personalization design object.
    */
-  create(
-    params: Issuing.PersonalizationDesignCreateParams,
+  create<E extends string = never>(
+    params: Issuing.PersonalizationDesignCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>> {
+  ): Promise<Response<ApplyExpand<PersonalizationDesign, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/issuing/personalization_designs',
@@ -47,11 +49,11 @@ export class PersonalizationDesignResource extends StripeResource {
   /**
    * Retrieves a personalization design object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Issuing.PersonalizationDesignRetrieveParams,
+    params?: Issuing.PersonalizationDesignRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>> {
+  ): Promise<Response<ApplyExpand<PersonalizationDesign, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/issuing/personalization_designs/${encodeURIComponent(id)}`,
@@ -62,11 +64,11 @@ export class PersonalizationDesignResource extends StripeResource {
   /**
    * Updates a card personalization object.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Issuing.PersonalizationDesignUpdateParams,
+    params?: Issuing.PersonalizationDesignUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>> {
+  ): Promise<Response<ApplyExpand<PersonalizationDesign, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/issuing/personalization_designs/${encodeURIComponent(id)}`,
@@ -213,7 +215,9 @@ export namespace PersonalizationDesign {
   }
 }
 export namespace Issuing {
-  export interface PersonalizationDesignCreateParams {
+  export interface PersonalizationDesignCreateParams<
+    E extends string = string
+  > {
     /**
      * The physical bundle object belonging to this personalization design.
      */
@@ -232,7 +236,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * A lookup key used to retrieve personalization designs dynamically from a static string. This may be up to 200 characters.
@@ -292,15 +296,19 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface PersonalizationDesignRetrieveParams {
+  export interface PersonalizationDesignRetrieveParams<
+    E extends string = string
+  > {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Issuing {
-  export interface PersonalizationDesignUpdateParams {
+  export interface PersonalizationDesignUpdateParams<
+    E extends string = string
+  > {
     /**
      * The file for the card logo, for use with physical bundles that support card logos. Must have a `purpose` value of `issuing_logo`.
      */
@@ -314,7 +322,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * A lookup key used to retrieve personalization designs dynamically from a static string. This may be up to 200 characters.
@@ -379,11 +387,12 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface PersonalizationDesignListParams extends PaginationParams {
+  export interface PersonalizationDesignListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return personalization designs with the given lookup keys.

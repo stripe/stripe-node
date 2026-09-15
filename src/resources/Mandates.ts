@@ -2,18 +2,18 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {PaymentMethod} from './PaymentMethods.js';
-import {OtherString} from '../shared.js';
+import {ApplyExpand, OtherString} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class MandateResource extends StripeResource {
   /**
    * Retrieves a Mandate object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: MandateRetrieveParams,
+    params?: MandateRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Mandate>> {
+  ): Promise<Response<ApplyExpand<Mandate, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/mandates/${encodeURIComponent(id)}`,
@@ -459,9 +459,9 @@ export namespace Mandate {
     }
   }
 }
-export interface MandateRetrieveParams {
+export interface MandateRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

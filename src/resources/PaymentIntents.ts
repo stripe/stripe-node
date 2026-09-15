@@ -11,6 +11,8 @@ import {Review} from './Reviews.js';
 import {CustomerSource, DeletedCustomerSource} from './CustomerSources.js';
 import {SetupIntent} from './SetupIntents.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   Emptyable,
   MetadataParam,
   OtherString,
@@ -32,10 +34,10 @@ export class PaymentIntentResource extends StripeResource {
   /**
    * Returns a list of PaymentIntents.
    */
-  list(
-    params?: PaymentIntentListParams,
+  list<E extends string = never>(
+    params?: PaymentIntentListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<PaymentIntent> {
+  ): ApiListPromise<ApplyExpandListItem<PaymentIntent, E>> {
     return this._makeRequest('GET', '/v1/payment_intents', params, options, {
       methodType: 'list',
     }) as any;
@@ -52,10 +54,10 @@ export class PaymentIntentResource extends StripeResource {
    * available in the [confirm API](https://docs.stripe.com/docs/api/payment_intents/confirm) when you supply
    * confirm=true.
    */
-  create(
-    params: PaymentIntentCreateParams,
+  create<E extends string = never>(
+    params: PaymentIntentCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>> {
+  ): Promise<Response<ApplyExpand<PaymentIntent, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/payment_intents',
@@ -70,11 +72,11 @@ export class PaymentIntentResource extends StripeResource {
    *
    * If you retrieve a PaymentIntent with a publishable key, it only returns a subset of properties. Refer to the [payment intent](https://docs.stripe.com/api#payment_intent_object) object reference for more details.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: PaymentIntentRetrieveParams,
+    params?: PaymentIntentRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>> {
+  ): Promise<Response<ApplyExpand<PaymentIntent, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/payment_intents/${encodeURIComponent(id)}`,
@@ -91,11 +93,11 @@ export class PaymentIntentResource extends StripeResource {
    * update and confirm at the same time, we recommend updating properties through
    * the [confirm API](https://docs.stripe.com/docs/api/payment_intents/confirm) instead.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: PaymentIntentUpdateParams,
+    params?: PaymentIntentUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>> {
+  ): Promise<Response<ApplyExpand<PaymentIntent, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_intents/${encodeURIComponent(id)}`,
@@ -109,10 +111,10 @@ export class PaymentIntentResource extends StripeResource {
    * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
    * to an hour behind during outages. Search functionality is not available to merchants in India.
    */
-  search(
-    params: PaymentIntentSearchParams,
+  search<E extends string = never>(
+    params: PaymentIntentSearchParams<E>,
     options?: RequestOptions
-  ): ApiSearchResultPromise<PaymentIntent> {
+  ): ApiSearchResultPromise<ApplyExpandListItem<PaymentIntent, E>> {
     return this._makeRequest(
       'GET',
       '/v1/payment_intents/search',
@@ -126,11 +128,11 @@ export class PaymentIntentResource extends StripeResource {
   /**
    * Manually reconcile the remaining amount for a customer_balance PaymentIntent.
    */
-  applyCustomerBalance(
+  applyCustomerBalance<E extends string = never>(
     id: string,
-    params?: PaymentIntentApplyCustomerBalanceParams,
+    params?: PaymentIntentApplyCustomerBalanceParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>> {
+  ): Promise<Response<ApplyExpand<PaymentIntent, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_intents/${encodeURIComponent(id)}/apply_customer_balance`,
@@ -145,11 +147,11 @@ export class PaymentIntentResource extends StripeResource {
    *
    * You can directly cancel the PaymentIntent for a Checkout Session only when the PaymentIntent has a status of requires_capture. Otherwise, you must [expire the Checkout Session](https://docs.stripe.com/docs/api/checkout/sessions/expire).
    */
-  cancel(
+  cancel<E extends string = never>(
     id: string,
-    params?: PaymentIntentCancelParams,
+    params?: PaymentIntentCancelParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>> {
+  ): Promise<Response<ApplyExpand<PaymentIntent, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_intents/${encodeURIComponent(id)}/cancel`,
@@ -164,11 +166,11 @@ export class PaymentIntentResource extends StripeResource {
    *
    * Learn more about [separate authorization and capture](https://docs.stripe.com/docs/payments/capture-later).
    */
-  capture(
+  capture<E extends string = never>(
     id: string,
-    params?: PaymentIntentCaptureParams,
+    params?: PaymentIntentCaptureParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>> {
+  ): Promise<Response<ApplyExpand<PaymentIntent, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_intents/${encodeURIComponent(id)}/capture`,
@@ -208,11 +210,11 @@ export class PaymentIntentResource extends StripeResource {
    * After this limit is reached, any further calls to this endpoint will
    * transition the PaymentIntent to the canceled state.
    */
-  confirm(
+  confirm<E extends string = never>(
     id: string,
-    params?: PaymentIntentConfirmParams,
+    params?: PaymentIntentConfirmParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>> {
+  ): Promise<Response<ApplyExpand<PaymentIntent, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_intents/${encodeURIComponent(id)}/confirm`,
@@ -248,11 +250,11 @@ export class PaymentIntentResource extends StripeResource {
    * [in-person payments](https://docs.stripe.com/docs/terminal/features/incremental-authorizations) and
    * [online payments](https://docs.stripe.com/docs/payments/incremental-authorization?platform=web&ui=elements).
    */
-  incrementAuthorization(
+  incrementAuthorization<E extends string = never>(
     id: string,
-    params: PaymentIntentIncrementAuthorizationParams,
+    params: PaymentIntentIncrementAuthorizationParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>> {
+  ): Promise<Response<ApplyExpand<PaymentIntent, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_intents/${encodeURIComponent(id)}/increment_authorization`,
@@ -263,11 +265,11 @@ export class PaymentIntentResource extends StripeResource {
   /**
    * Verifies microdeposits on a PaymentIntent object.
    */
-  verifyMicrodeposits(
+  verifyMicrodeposits<E extends string = never>(
     id: string,
-    params?: PaymentIntentVerifyMicrodepositsParams,
+    params?: PaymentIntentVerifyMicrodepositsParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>> {
+  ): Promise<Response<ApplyExpand<PaymentIntent, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_intents/${encodeURIComponent(id)}/verify_microdeposits`,
@@ -278,11 +280,13 @@ export class PaymentIntentResource extends StripeResource {
   /**
    * Lists all LineItems of a given PaymentIntent.
    */
-  listAmountDetailsLineItems(
+  listAmountDetailsLineItems<E extends string = never>(
     id: string,
-    params?: PaymentIntentListAmountDetailsLineItemsParams,
+    params?: PaymentIntentListAmountDetailsLineItemsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<PaymentIntentAmountDetailsLineItem> {
+  ): ApiListPromise<
+    ApplyExpandListItem<PaymentIntentAmountDetailsLineItem, E>
+  > {
     return this._makeRequest(
       'GET',
       `/v1/payment_intents/${encodeURIComponent(id)}/amount_details_line_items`,
@@ -308,9 +312,7 @@ export interface PaymentIntent {
   /**
    * The list of payment method types allowed for use with this payment. Stripe automatically returns compatible payment methods from this list in the `payment_method_types` field of the response, based on the other PaymentIntent parameters, such as `currency`, `amount`, and `customer`.
    */
-  allowed_payment_method_types: Array<
-    PaymentIntent.AllowedPaymentMethodType
-  > | null;
+  allowed_payment_method_types: Array<PaymentIntent.AllowedPaymentMethodType> | null;
 
   /**
    * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://docs.stripe.com/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
@@ -409,9 +411,7 @@ export interface PaymentIntent {
   /**
    * The list of payment method types to exclude from use with this payment.
    */
-  excluded_payment_method_types: Array<
-    PaymentIntent.ExcludedPaymentMethodType
-  > | null;
+  excluded_payment_method_types: Array<PaymentIntent.ExcludedPaymentMethodType> | null;
 
   hooks?: PaymentIntent.Hooks;
 
@@ -1524,9 +1524,7 @@ export namespace PaymentIntent {
       /**
        * A list of financial addresses that can be used to fund the customer balance
        */
-      financial_addresses?: Array<
-        DisplayBankTransferInstructions.FinancialAddress
-      >;
+      financial_addresses?: Array<DisplayBankTransferInstructions.FinancialAddress>;
 
       /**
        * A link to a hosted page that guides your customer through completing the transfer.
@@ -3185,7 +3183,7 @@ export namespace PaymentIntent {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -3839,6 +3837,8 @@ export namespace PaymentIntent {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -3876,7 +3876,7 @@ export namespace PaymentIntent {
     }
   }
 }
-export interface PaymentIntentCreateParams {
+export interface PaymentIntentCreateParams<E extends string = string> {
   /**
    * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://docs.stripe.com/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
    */
@@ -3890,9 +3890,7 @@ export interface PaymentIntentCreateParams {
   /**
    * The list of payment method types allowed for use with this payment. Stripe automatically returns compatible payment methods from this list in the `payment_method_types` field of the response, based on the other PaymentIntent parameters, such as `currency`, `amount`, and `customer`.
    */
-  allowed_payment_method_types?: Array<
-    PaymentIntentCreateParams.AllowedPaymentMethodType
-  >;
+  allowed_payment_method_types?: Array<PaymentIntentCreateParams.AllowedPaymentMethodType>;
 
   /**
    * Provides industry-specific information about the amount.
@@ -3962,14 +3960,12 @@ export interface PaymentIntentCreateParams {
   /**
    * The list of payment method types to exclude from use with this payment.
    */
-  excluded_payment_method_types?: Array<
-    PaymentIntentCreateParams.ExcludedPaymentMethodType
-  >;
+  excluded_payment_method_types?: Array<PaymentIntentCreateParams.ExcludedPaymentMethodType>;
 
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Automations to be run during the PaymentIntent lifecycle
@@ -6985,7 +6981,7 @@ export namespace PaymentIntentCreateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -7926,6 +7922,8 @@ export namespace PaymentIntentCreateParams {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -7943,7 +7941,7 @@ export namespace PaymentIntentCreateParams {
     }
   }
 }
-export interface PaymentIntentRetrieveParams {
+export interface PaymentIntentRetrieveParams<E extends string = string> {
   /**
    * The client secret of the PaymentIntent. We require it if you use a publishable key to retrieve the source.
    */
@@ -7952,15 +7950,13 @@ export interface PaymentIntentRetrieveParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentIntentUpdateParams {
+export interface PaymentIntentUpdateParams<E extends string = string> {
   /**
    * The list of payment method types allowed for use with this payment. Stripe automatically returns compatible payment methods from this list in the `payment_method_types` field of the response, based on the other PaymentIntent parameters, such as `currency`, `amount`, and `customer`.
    */
-  allowed_payment_method_types?: Array<
-    PaymentIntentUpdateParams.AllowedPaymentMethodType
-  >;
+  allowed_payment_method_types?: Array<PaymentIntentUpdateParams.AllowedPaymentMethodType>;
 
   /**
    * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://docs.stripe.com/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
@@ -8020,7 +8016,7 @@ export interface PaymentIntentUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Automations to be run during the PaymentIntent lifecycle
@@ -10901,7 +10897,7 @@ export namespace PaymentIntentUpdateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -11842,6 +11838,8 @@ export namespace PaymentIntentUpdateParams {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -11859,7 +11857,8 @@ export namespace PaymentIntentUpdateParams {
     }
   }
 }
-export interface PaymentIntentListParams extends PaginationParams {
+export interface PaymentIntentListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp or a dictionary with a number of different query options.
    */
@@ -11878,9 +11877,11 @@ export interface PaymentIntentListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentIntentApplyCustomerBalanceParams {
+export interface PaymentIntentApplyCustomerBalanceParams<
+  E extends string = string
+> {
   /**
    * Amount that you intend to apply to this PaymentIntent from the customer's cash balance. If the PaymentIntent was created by an Invoice, the full amount of the PaymentIntent is applied regardless of this parameter.
    *
@@ -11898,9 +11899,9 @@ export interface PaymentIntentApplyCustomerBalanceParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentIntentCancelParams {
+export interface PaymentIntentCancelParams<E extends string = string> {
   /**
    * Reason for canceling this PaymentIntent. Possible values are: `duplicate`, `fraudulent`, `requested_by_customer`, or `abandoned`
    */
@@ -11909,7 +11910,7 @@ export interface PaymentIntentCancelParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export namespace PaymentIntentCancelParams {
   export type CancellationReason =
@@ -11919,7 +11920,7 @@ export namespace PaymentIntentCancelParams {
     | 'requested_by_customer'
     | OtherString;
 }
-export interface PaymentIntentCaptureParams {
+export interface PaymentIntentCaptureParams<E extends string = string> {
   /**
    * Provides industry-specific information about the amount.
    */
@@ -11938,7 +11939,7 @@ export interface PaymentIntentCaptureParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Defaults to `true`. When capturing a PaymentIntent, setting `final_capture` to `false` notifies Stripe to not release the remaining uncaptured funds to make sure that they're captured in future requests. You can only use this setting when [multicapture](https://docs.stripe.com/payments/multicapture) is available for PaymentIntents.
@@ -12230,13 +12231,11 @@ export namespace PaymentIntentCaptureParams {
     }
   }
 }
-export interface PaymentIntentConfirmParams {
+export interface PaymentIntentConfirmParams<E extends string = string> {
   /**
    * The list of payment method types allowed for use with this payment. Stripe automatically returns compatible payment methods from this list in the `payment_method_types` field of the response, based on the other PaymentIntent parameters, such as `currency`, `amount`, and `customer`.
    */
-  allowed_payment_method_types?: Array<
-    PaymentIntentConfirmParams.AllowedPaymentMethodType
-  >;
+  allowed_payment_method_types?: Array<PaymentIntentConfirmParams.AllowedPaymentMethodType>;
 
   /**
    * Provides industry-specific information about the amount.
@@ -12275,7 +12274,7 @@ export interface PaymentIntentConfirmParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Automations to be run during the PaymentIntent lifecycle
@@ -15195,7 +15194,7 @@ export namespace PaymentIntentConfirmParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -16136,10 +16135,14 @@ export namespace PaymentIntentConfirmParams {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 }
-export interface PaymentIntentIncrementAuthorizationParams {
+export interface PaymentIntentIncrementAuthorizationParams<
+  E extends string = string
+> {
   /**
    * The updated total amount that you intend to collect from the cardholder. This amount must be greater than the currently authorized amount.
    */
@@ -16163,7 +16166,7 @@ export interface PaymentIntentIncrementAuthorizationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Automations to be run during the PaymentIntent lifecycle
@@ -16443,14 +16446,15 @@ export namespace PaymentIntentIncrementAuthorizationParams {
     }
   }
 }
-export interface PaymentIntentListAmountDetailsLineItemsParams
-  extends PaginationParams {
+export interface PaymentIntentListAmountDetailsLineItemsParams<
+  E extends string = string
+> extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentIntentSearchParams {
+export interface PaymentIntentSearchParams<E extends string = string> {
   /**
    * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for payment intents](https://docs.stripe.com/search#query-fields-for-paymentintents).
    */
@@ -16459,7 +16463,7 @@ export interface PaymentIntentSearchParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
@@ -16471,7 +16475,9 @@ export interface PaymentIntentSearchParams {
    */
   page?: string;
 }
-export interface PaymentIntentVerifyMicrodepositsParams {
+export interface PaymentIntentVerifyMicrodepositsParams<
+  E extends string = string
+> {
   /**
    * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
    */
@@ -16485,5 +16491,5 @@ export interface PaymentIntentVerifyMicrodepositsParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

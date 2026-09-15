@@ -189,3 +189,107 @@ export type Emptyable<T> = null | '' | T;
  * For more information, see: https://github.com/stripe/stripe-node#open-and-closed-enum
  */
 export type OtherString = string & Record<never, never>;
+
+type Nullish = null | undefined;
+
+/**
+ * The first segment of each dotted path in the union `P`.
+ * `'a.b.c' | 'd'` -> `'a' | 'd'`
+ */
+type PathRoot<P extends string> = P extends `${infer Head}.${string}`
+  ? Head
+  : P;
+
+/**
+ * The sub-paths of `P` that live beneath the key `K`.
+ * `P = 'a.b.c' | 'a.d' | 'e'`, `K = 'a'` -> `'b.c' | 'd'`
+ */
+type PathRest<
+  P extends string,
+  K extends string
+> = P extends `${K}.${infer Rest}` ? Rest : never;
+
+/**
+ * Drops the bare `string` (the unexpanded id) from an expandable field.
+ *
+ * The outer check makes this a no-op unless the field has a non-string, non-nullish
+ * member — that is, unless it's actually expandable. Without it, an open enum
+ * (`'a' | 'b' | OtherString`) would lose its `OtherString` escape hatch and a plain
+ * `string | null` field would collapse to `null`, because `string` is assignable to
+ * both of those.
+ */
+type Unexpand<V> = [Exclude<V, string | Nullish>] extends [never]
+  ? V
+  : UnexpandKnown<V>;
+
+// The array check is deliberately wrapped in a tuple: distributing over `V` would
+// test each member of `string | Customer | null` separately, the union-level
+// `Exclude` above would never run, and nothing would be unexpanded at all. Nullish
+// members are set aside first, so that `Array<string | Discount> | null` — which a
+// handful of fields really are — still reaches the array branch.
+type UnexpandKnown<V> = [Exclude<V, Nullish>] extends [readonly (infer U)[]]
+  ? Array<Unexpand<U>> | Extract<V, Nullish>
+  : Exclude<V, string>;
+
+// Recurses into the (already unexpanded) value of a field. Unlike `UnexpandKnown` above,
+// this one *should* distribute, so that `Subscription | null` keeps its `null`.
+type ExpandInto<V, R extends string> = V extends readonly (infer U)[]
+  ? Array<ExpandInto<U, R>>
+  : // `object` is the right test here: it's asking "is this something with properties
+  // to recurse into", and `Record<string, unknown>` wouldn't match a resource
+  // interface, which has no index signature.
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  V extends object
+  ? Expanded<V, R>
+  : V;
+
+type ExpandField<V, R extends string> = [R] extends [never]
+  ? Unexpand<V>
+  : ExpandInto<Unexpand<V>, R>;
+
+/**
+ * `T` as it looks when the fields named by `P` have been
+ * [expanded](https://stripe.com/docs/expand): every expanded field loses the `string`
+ * (id-only) half of its type.
+ *
+ * `P` is the union of dotted expand paths, and it nests the same way `expand` does, so
+ * an intermediate segment is treated as expanded too:
+ *
+ * ```ts
+ * type T = Stripe.Expanded<
+ *   Stripe.Checkout.Session,
+ *   'subscription' | 'subscription.items.data.price.product'
+ * >;
+ * // T['subscription'] is Stripe.Subscription | null, and
+ * // T['subscription']['items']['data'][number]['price']['product'] is
+ * // Stripe.Product | Stripe.DeletedProduct
+ * ```
+ *
+ * Paths that don't correspond to an expandable field are ignored.
+ */
+export type Expanded<T, P extends string> = {
+  [K in keyof T]: K extends PathRoot<P>
+    ? ExpandField<T[K], PathRest<P, K & string>>
+    : T[K];
+};
+
+/**
+ * @internal Referenced by generated method signatures. Resolves to `T` unchanged when
+ * `P` is `never` (no `expand` was passed) or `string` (a value that isn't a literal —
+ * e.g. a `string[]` variable — was passed, so there's nothing to narrow).
+ */
+export type ApplyExpand<T, P extends string> = [P] extends [never]
+  ? T
+  : string extends P
+  ? T
+  : Expanded<T, P>;
+
+/**
+ * @internal Referenced by generated `list` and `search` signatures. Expand paths on a
+ * list endpoint address the list envelope, so they're prefixed with `data.`; anything
+ * that isn't falls out to `never` and leaves the item type alone.
+ */
+export type ApplyExpandListItem<T, P extends string> = ApplyExpand<
+  T,
+  P extends `data.${infer Rest}` ? Rest : never
+>;

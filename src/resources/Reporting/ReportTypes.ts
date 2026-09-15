@@ -1,16 +1,17 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {ApplyExpandListItem, ApplyExpand} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class ReportTypeResource extends StripeResource {
   /**
    * Returns a full list of Report Types.
    */
-  list(
-    params?: Reporting.ReportTypeListParams,
+  list<E extends string = never>(
+    params?: Reporting.ReportTypeListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ReportType> {
+  ): ApiListPromise<ApplyExpandListItem<ReportType, E>> {
     return this._makeRequest(
       'GET',
       '/v1/reporting/report_types',
@@ -24,11 +25,11 @@ export class ReportTypeResource extends StripeResource {
   /**
    * Retrieves the details of a Report Type. (Certain report types require a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Reporting.ReportTypeRetrieveParams,
+    params?: Reporting.ReportTypeRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ReportType>> {
+  ): Promise<Response<ApplyExpand<ReportType, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/reporting/report_types/${encodeURIComponent(id)}`,
@@ -84,18 +85,18 @@ export interface ReportType {
   version: number;
 }
 export namespace Reporting {
-  export interface ReportTypeRetrieveParams {
+  export interface ReportTypeRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Reporting {
-  export interface ReportTypeListParams {
+  export interface ReportTypeListParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

@@ -242,7 +242,7 @@ describe('V2 Core Events Resource', () => {
       const respProm = mockStripe.v2.core.events.list({object_id: 'foo'});
       expect(respProm).ok;
       let totalEvents = 0;
-      await respProm.autoPagingEach(function(event) {
+      await respProm.autoPagingEach(function (event) {
         totalEvents += 1;
         expect(event.fetchRelatedObject).ok;
       });

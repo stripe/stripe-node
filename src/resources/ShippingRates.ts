@@ -3,6 +3,8 @@
 import {StripeResource} from '../StripeResource.js';
 import {TaxCode} from './TaxCodes.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   OtherString,
   Emptyable,
@@ -16,10 +18,10 @@ export class ShippingRateResource extends StripeResource {
   /**
    * Returns a list of your shipping rates.
    */
-  list(
-    params?: ShippingRateListParams,
+  list<E extends string = never>(
+    params?: ShippingRateListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ShippingRate> {
+  ): ApiListPromise<ApplyExpandListItem<ShippingRate, E>> {
     return this._makeRequest('GET', '/v1/shipping_rates', params, options, {
       methodType: 'list',
     }) as any;
@@ -27,10 +29,10 @@ export class ShippingRateResource extends StripeResource {
   /**
    * Creates a new shipping rate object.
    */
-  create(
-    params: ShippingRateCreateParams,
+  create<E extends string = never>(
+    params: ShippingRateCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ShippingRate>> {
+  ): Promise<Response<ApplyExpand<ShippingRate, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/shipping_rates',
@@ -41,11 +43,11 @@ export class ShippingRateResource extends StripeResource {
   /**
    * Returns the shipping rate object with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: ShippingRateRetrieveParams,
+    params?: ShippingRateRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ShippingRate>> {
+  ): Promise<Response<ApplyExpand<ShippingRate, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/shipping_rates/${encodeURIComponent(id)}`,
@@ -56,11 +58,11 @@ export class ShippingRateResource extends StripeResource {
   /**
    * Updates an existing shipping rate object.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: ShippingRateUpdateParams,
+    params?: ShippingRateUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ShippingRate>> {
+  ): Promise<Response<ApplyExpand<ShippingRate, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/shipping_rates/${encodeURIComponent(id)}`,
@@ -233,7 +235,7 @@ export namespace ShippingRate {
     }
   }
 }
-export interface ShippingRateCreateParams {
+export interface ShippingRateCreateParams<E extends string = string> {
   /**
    * The name of the shipping rate, meant to be displayable to the customer. This will appear on CheckoutSessions.
    */
@@ -247,7 +249,7 @@ export interface ShippingRateCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -380,13 +382,13 @@ export namespace ShippingRateCreateParams {
     }
   }
 }
-export interface ShippingRateRetrieveParams {
+export interface ShippingRateRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ShippingRateUpdateParams {
+export interface ShippingRateUpdateParams<E extends string = string> {
   /**
    * Whether the shipping rate can be used for new purchases. Defaults to `true`.
    */
@@ -395,7 +397,7 @@ export interface ShippingRateUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -450,7 +452,8 @@ export namespace ShippingRateUpdateParams {
     }
   }
 }
-export interface ShippingRateListParams extends PaginationParams {
+export interface ShippingRateListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return shipping rates that are active or inactive.
    */
@@ -469,5 +472,5 @@ export interface ShippingRateListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

@@ -3,17 +3,22 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Meter} from './Meters.js';
 import {Customer} from './../Customers.js';
-import {PaginationParams, OtherString} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  OtherString,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class AlertResource extends StripeResource {
   /**
    * Lists billing active and inactive alerts
    */
-  list(
-    params?: Billing.AlertListParams,
+  list<E extends string = never>(
+    params?: Billing.AlertListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Alert> {
+  ): ApiListPromise<ApplyExpandListItem<Alert, E>> {
     return this._makeRequest('GET', '/v1/billing/alerts', params, options, {
       methodType: 'list',
     }) as any;
@@ -21,10 +26,10 @@ export class AlertResource extends StripeResource {
   /**
    * Creates a billing alert
    */
-  create(
-    params: Billing.AlertCreateParams,
+  create<E extends string = never>(
+    params: Billing.AlertCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Alert>> {
+  ): Promise<Response<ApplyExpand<Alert, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/billing/alerts',
@@ -35,11 +40,11 @@ export class AlertResource extends StripeResource {
   /**
    * Retrieves a billing alert given an ID
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Billing.AlertRetrieveParams,
+    params?: Billing.AlertRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Alert>> {
+  ): Promise<Response<ApplyExpand<Alert, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/billing/alerts/${encodeURIComponent(id)}`,
@@ -50,11 +55,11 @@ export class AlertResource extends StripeResource {
   /**
    * Reactivates this alert, allowing it to trigger again.
    */
-  activate(
+  activate<E extends string = never>(
     id: string,
-    params?: Billing.AlertActivateParams,
+    params?: Billing.AlertActivateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Alert>> {
+  ): Promise<Response<ApplyExpand<Alert, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/billing/alerts/${encodeURIComponent(id)}/activate`,
@@ -65,11 +70,11 @@ export class AlertResource extends StripeResource {
   /**
    * Archives this alert, removing it from the list view and APIs. This is non-reversible.
    */
-  archive(
+  archive<E extends string = never>(
     id: string,
-    params?: Billing.AlertArchiveParams,
+    params?: Billing.AlertArchiveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Alert>> {
+  ): Promise<Response<ApplyExpand<Alert, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/billing/alerts/${encodeURIComponent(id)}/archive`,
@@ -80,11 +85,11 @@ export class AlertResource extends StripeResource {
   /**
    * Deactivates this alert, preventing it from triggering.
    */
-  deactivate(
+  deactivate<E extends string = never>(
     id: string,
-    params?: Billing.AlertDeactivateParams,
+    params?: Billing.AlertDeactivateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Alert>> {
+  ): Promise<Response<ApplyExpand<Alert, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/billing/alerts/${encodeURIComponent(id)}/deactivate`,
@@ -166,7 +171,7 @@ export namespace Alert {
   }
 }
 export namespace Billing {
-  export interface AlertCreateParams {
+  export interface AlertCreateParams<E extends string = string> {
     /**
      * The type of alert to create.
      */
@@ -180,7 +185,7 @@ export namespace Billing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The configuration of the usage threshold.
@@ -227,15 +232,16 @@ export namespace Billing {
   }
 }
 export namespace Billing {
-  export interface AlertRetrieveParams {
+  export interface AlertRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface AlertListParams extends PaginationParams {
+  export interface AlertListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Filter results to only include this type of alert.
      */
@@ -244,7 +250,7 @@ export namespace Billing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Filter results to only include alerts with the given meter.
@@ -253,26 +259,26 @@ export namespace Billing {
   }
 }
 export namespace Billing {
-  export interface AlertActivateParams {
+  export interface AlertActivateParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface AlertArchiveParams {
+  export interface AlertArchiveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface AlertDeactivateParams {
+  export interface AlertDeactivateParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

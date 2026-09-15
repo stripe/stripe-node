@@ -4,6 +4,8 @@ import {StripeResource} from '../../StripeResource.js';
 import {Transaction} from './Transactions.js';
 import {Mandate} from './../Mandates.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   PaginationParams,
   OtherString,
@@ -16,10 +18,10 @@ export class InboundTransferResource extends StripeResource {
   /**
    * Returns a list of InboundTransfers sent from the specified FinancialAccount.
    */
-  list(
-    params: Treasury.InboundTransferListParams,
+  list<E extends string = never>(
+    params: Treasury.InboundTransferListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<InboundTransfer> {
+  ): ApiListPromise<ApplyExpandListItem<InboundTransfer, E>> {
     return this._makeRequest(
       'GET',
       '/v1/treasury/inbound_transfers',
@@ -33,10 +35,10 @@ export class InboundTransferResource extends StripeResource {
   /**
    * Creates an InboundTransfer.
    */
-  create(
-    params: Treasury.InboundTransferCreateParams,
+  create<E extends string = never>(
+    params: Treasury.InboundTransferCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>> {
+  ): Promise<Response<ApplyExpand<InboundTransfer, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/treasury/inbound_transfers',
@@ -47,11 +49,11 @@ export class InboundTransferResource extends StripeResource {
   /**
    * Retrieves the details of an existing InboundTransfer.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Treasury.InboundTransferRetrieveParams,
+    params?: Treasury.InboundTransferRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>> {
+  ): Promise<Response<ApplyExpand<InboundTransfer, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/treasury/inbound_transfers/${encodeURIComponent(id)}`,
@@ -62,11 +64,11 @@ export class InboundTransferResource extends StripeResource {
   /**
    * Cancels an InboundTransfer.
    */
-  cancel(
+  cancel<E extends string = never>(
     id: string,
-    params?: Treasury.InboundTransferCancelParams,
+    params?: Treasury.InboundTransferCancelParams<E>,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>> {
+  ): Promise<Response<ApplyExpand<InboundTransfer, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/treasury/inbound_transfers/${encodeURIComponent(id)}/cancel`,
@@ -303,7 +305,7 @@ export namespace InboundTransfer {
   }
 }
 export namespace Treasury {
-  export interface InboundTransferCreateParams {
+  export interface InboundTransferCreateParams<E extends string = string> {
     /**
      * Amount (in cents) to be transferred.
      */
@@ -332,7 +334,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -346,15 +348,16 @@ export namespace Treasury {
   }
 }
 export namespace Treasury {
-  export interface InboundTransferRetrieveParams {
+  export interface InboundTransferRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Treasury {
-  export interface InboundTransferListParams extends PaginationParams {
+  export interface InboundTransferListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Returns objects associated with this FinancialAccount.
      */
@@ -363,7 +366,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return InboundTransfers that have the given status: `processing`, `succeeded`, `failed` or `canceled`.
@@ -381,10 +384,10 @@ export namespace Treasury {
   }
 }
 export namespace Treasury {
-  export interface InboundTransferCancelParams {
+  export interface InboundTransferCancelParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

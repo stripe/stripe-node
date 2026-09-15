@@ -1,17 +1,17 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams} from '../shared.js';
+import {ApplyExpandListItem, ApplyExpand, PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class TaxCodeResource extends StripeResource {
   /**
    * A list of [all tax codes available](https://stripe.com/docs/tax/tax-categories) to add to Products in order to allow specific tax calculations.
    */
-  list(
-    params?: TaxCodeListParams,
+  list<E extends string = never>(
+    params?: TaxCodeListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<TaxCode> {
+  ): ApiListPromise<ApplyExpandListItem<TaxCode, E>> {
     return this._makeRequest('GET', '/v1/tax_codes', params, options, {
       methodType: 'list',
     }) as any;
@@ -19,11 +19,11 @@ export class TaxCodeResource extends StripeResource {
   /**
    * Retrieves the details of an existing tax code. Supply the unique tax code ID and Stripe will return the corresponding tax code information.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: TaxCodeRetrieveParams,
+    params?: TaxCodeRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TaxCode>> {
+  ): Promise<Response<ApplyExpand<TaxCode, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/tax_codes/${encodeURIComponent(id)}`,
@@ -53,15 +53,16 @@ export interface TaxCode {
    */
   name: string;
 }
-export interface TaxCodeRetrieveParams {
+export interface TaxCodeRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface TaxCodeListParams extends PaginationParams {
+export interface TaxCodeListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

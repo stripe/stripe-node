@@ -1,17 +1,17 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {OtherString} from '../shared.js';
+import {ApplyExpand, OtherString} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class AccountLinkResource extends StripeResource {
   /**
    * Creates an AccountLink object that includes a single-use Stripe URL that the platform can redirect their user to in order to take them through the Connect Onboarding flow.
    */
-  create(
-    params: AccountLinkCreateParams,
+  create<E extends string = never>(
+    params: AccountLinkCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<AccountLink>> {
+  ): Promise<Response<ApplyExpand<AccountLink, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/account_links',
@@ -41,7 +41,7 @@ export interface AccountLink {
    */
   url: string;
 }
-export interface AccountLinkCreateParams {
+export interface AccountLinkCreateParams<E extends string = string> {
   /**
    * The identifier of the account to create an account link for.
    */
@@ -67,7 +67,7 @@ export interface AccountLinkCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The URL the user will be redirected to if the account link is expired, has been previously-visited, or is otherwise invalid. The URL you specify should attempt to generate a new account link with the same parameters used to create the original account link, then redirect the user to the new account link's URL so they can continue with Connect Onboarding. If a new account link cannot be generated or the redirect fails you should display a useful error to the user.

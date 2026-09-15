@@ -2,17 +2,23 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Card} from './Cards.js';
-import {OtherString, PaginationParams, RangeQueryParam} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  OtherString,
+  PaginationParams,
+  RangeQueryParam,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class TokenResource extends StripeResource {
   /**
    * Lists all Issuing Token objects for a given card.
    */
-  list(
-    params: Issuing.TokenListParams,
+  list<E extends string = never>(
+    params: Issuing.TokenListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Token> {
+  ): ApiListPromise<ApplyExpandListItem<Token, E>> {
     return this._makeRequest('GET', '/v1/issuing/tokens', params, options, {
       methodType: 'list',
     }) as any;
@@ -20,11 +26,11 @@ export class TokenResource extends StripeResource {
   /**
    * Retrieves an Issuing Token object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Issuing.TokenRetrieveParams,
+    params?: Issuing.TokenRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Token>> {
+  ): Promise<Response<ApplyExpand<Token, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/issuing/tokens/${encodeURIComponent(id)}`,
@@ -35,11 +41,11 @@ export class TokenResource extends StripeResource {
   /**
    * Attempts to update the specified Issuing Token object to the status specified.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params: Issuing.TokenUpdateParams,
+    params: Issuing.TokenUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Token>> {
+  ): Promise<Response<ApplyExpand<Token, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/issuing/tokens/${encodeURIComponent(id)}`,
@@ -329,15 +335,15 @@ export namespace Token {
   }
 }
 export namespace Issuing {
-  export interface TokenRetrieveParams {
+  export interface TokenRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Issuing {
-  export interface TokenUpdateParams {
+  export interface TokenUpdateParams<E extends string = string> {
     /**
      * Specifies which status the token should be updated to.
      */
@@ -346,7 +352,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 
   export namespace TokenUpdateParams {
@@ -354,7 +360,8 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface TokenListParams extends PaginationParams {
+  export interface TokenListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * The Issuing card identifier to list tokens for.
      */
@@ -368,7 +375,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Select Issuing tokens with the given status.

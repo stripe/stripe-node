@@ -7,6 +7,8 @@ import {Account} from './Accounts.js';
 import {TaxId, DeletedTaxId} from './TaxIds.js';
 import {ShippingRate} from './ShippingRates.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   Decimal,
   OtherString,
@@ -20,10 +22,10 @@ export class PaymentLinkResource extends StripeResource {
   /**
    * Returns a list of your payment links.
    */
-  list(
-    params?: PaymentLinkListParams,
+  list<E extends string = never>(
+    params?: PaymentLinkListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<PaymentLink> {
+  ): ApiListPromise<ApplyExpandListItem<PaymentLink, E>> {
     return this._makeRequest('GET', '/v1/payment_links', params, options, {
       methodType: 'list',
       responseSchema: {
@@ -113,10 +115,10 @@ export class PaymentLinkResource extends StripeResource {
   /**
    * Creates a payment link.
    */
-  create(
-    params: PaymentLinkCreateParams,
+  create<E extends string = never>(
+    params: PaymentLinkCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentLink>> {
+  ): Promise<Response<ApplyExpand<PaymentLink, E>>> {
     return this._makeRequest('POST', '/v1/payment_links', params, options, {
       requestSchema: {
         kind: 'object',
@@ -214,11 +216,11 @@ export class PaymentLinkResource extends StripeResource {
   /**
    * Retrieve a payment link.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: PaymentLinkRetrieveParams,
+    params?: PaymentLinkRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentLink>> {
+  ): Promise<Response<ApplyExpand<PaymentLink, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/payment_links/${encodeURIComponent(id)}`,
@@ -305,11 +307,11 @@ export class PaymentLinkResource extends StripeResource {
   /**
    * Updates a payment link.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: PaymentLinkUpdateParams,
+    params?: PaymentLinkUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentLink>> {
+  ): Promise<Response<ApplyExpand<PaymentLink, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_links/${encodeURIComponent(id)}`,
@@ -396,11 +398,11 @@ export class PaymentLinkResource extends StripeResource {
   /**
    * When retrieving a payment link, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
    */
-  listLineItems(
+  listLineItems<E extends string = never>(
     id: string,
-    params?: PaymentLinkListLineItemsParams,
+    params?: PaymentLinkListLineItemsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<LineItem> {
+  ): ApiListPromise<ApplyExpandListItem<LineItem, E>> {
     return this._makeRequest(
       'GET',
       `/v1/payment_links/${encodeURIComponent(id)}/line_items`,
@@ -1581,7 +1583,7 @@ export namespace PaymentLink {
     export type Required = 'if_supported' | 'never' | OtherString;
   }
 }
-export interface PaymentLinkCreateParams {
+export interface PaymentLinkCreateParams<E extends string = string> {
   /**
    * The line items representing what is being sold. Each line item represents an item being sold. Up to 20 line items are supported.
    */
@@ -1645,7 +1647,7 @@ export interface PaymentLinkCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The custom message to be displayed to a customer when a payment link is no longer active.
@@ -1882,9 +1884,7 @@ export namespace PaymentLinkCreateParams {
     /**
      * Custom text that should be displayed in place of the default terms of service agreement text.
      */
-    terms_of_service_acceptance?: Emptyable<
-      CustomText.TermsOfServiceAcceptance
-    >;
+    terms_of_service_acceptance?: Emptyable<CustomText.TermsOfServiceAcceptance>;
   }
 
   export type CustomerCreation = 'always' | 'if_required' | OtherString;
@@ -2880,13 +2880,13 @@ export namespace PaymentLinkCreateParams {
     export type Required = 'if_supported' | 'never' | OtherString;
   }
 }
-export interface PaymentLinkRetrieveParams {
+export interface PaymentLinkRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentLinkUpdateParams {
+export interface PaymentLinkUpdateParams<E extends string = string> {
   /**
    * Whether the payment link's `url` is active. If `false`, customers visiting the URL will be shown a page saying that the link has been deactivated.
    */
@@ -2945,7 +2945,7 @@ export interface PaymentLinkUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The custom message to be displayed to a customer when a payment link is no longer active.
@@ -3001,9 +3001,7 @@ export interface PaymentLinkUpdateParams {
   /**
    * Payment-method-specific configuration.
    */
-  payment_method_options?: Emptyable<
-    PaymentLinkUpdateParams.PaymentMethodOptions
-  >;
+  payment_method_options?: Emptyable<PaymentLinkUpdateParams.PaymentMethodOptions>;
 
   /**
    * The list of payment method types that customers can use. Pass an empty string to enable dynamic payment methods that use your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
@@ -3027,9 +3025,7 @@ export interface PaymentLinkUpdateParams {
   /**
    * Configuration for collecting the customer's shipping address.
    */
-  shipping_address_collection?: Emptyable<
-    PaymentLinkUpdateParams.ShippingAddressCollection
-  >;
+  shipping_address_collection?: Emptyable<PaymentLinkUpdateParams.ShippingAddressCollection>;
 
   /**
    * The shipping rate options to apply to [checkout sessions](https://docs.stripe.com/api/checkout/sessions) created by this payment link.
@@ -3166,9 +3162,7 @@ export namespace PaymentLinkUpdateParams {
     /**
      * Custom text that should be displayed in place of the default terms of service agreement text.
      */
-    terms_of_service_acceptance?: Emptyable<
-      CustomText.TermsOfServiceAcceptance
-    >;
+    terms_of_service_acceptance?: Emptyable<CustomText.TermsOfServiceAcceptance>;
   }
 
   export type CustomerCreation = 'always' | 'if_required' | OtherString;
@@ -4065,7 +4059,8 @@ export namespace PaymentLinkUpdateParams {
     export type Required = 'if_supported' | 'never' | OtherString;
   }
 }
-export interface PaymentLinkListParams extends PaginationParams {
+export interface PaymentLinkListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return payment links that are active or inactive (e.g., pass `false` to list all inactive payment links).
    */
@@ -4074,11 +4069,12 @@ export interface PaymentLinkListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentLinkListLineItemsParams extends PaginationParams {
+export interface PaymentLinkListLineItemsParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

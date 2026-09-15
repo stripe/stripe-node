@@ -2,18 +2,18 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {Reader} from './../../Terminal/Readers.js';
-import {OtherString} from '../../../shared.js';
+import {ApplyExpand, OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class ReaderResource extends StripeResource {
   /**
    * Presents a payment method on a simulated reader. Can be used to simulate accepting a payment, saving a card or refunding a transaction.
    */
-  presentPaymentMethod(
+  presentPaymentMethod<E extends string = never>(
     id: string,
-    params?: TestHelpers.Terminal.ReaderPresentPaymentMethodParams,
+    params?: TestHelpers.Terminal.ReaderPresentPaymentMethodParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<ApplyExpand<Reader, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/terminal/readers/${encodeURIComponent(
@@ -26,11 +26,11 @@ export class ReaderResource extends StripeResource {
   /**
    * Use this endpoint to trigger a successful input collection on a simulated reader.
    */
-  succeedInputCollection(
+  succeedInputCollection<E extends string = never>(
     id: string,
-    params?: TestHelpers.Terminal.ReaderSucceedInputCollectionParams,
+    params?: TestHelpers.Terminal.ReaderSucceedInputCollectionParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<ApplyExpand<Reader, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/terminal/readers/${encodeURIComponent(
@@ -43,11 +43,11 @@ export class ReaderResource extends StripeResource {
   /**
    * Use this endpoint to complete an input collection with a timeout error on a simulated reader.
    */
-  timeoutInputCollection(
+  timeoutInputCollection<E extends string = never>(
     id: string,
-    params?: TestHelpers.Terminal.ReaderTimeoutInputCollectionParams,
+    params?: TestHelpers.Terminal.ReaderTimeoutInputCollectionParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<ApplyExpand<Reader, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/terminal/readers/${encodeURIComponent(
@@ -60,7 +60,9 @@ export class ReaderResource extends StripeResource {
 }
 export namespace TestHelpers {
   export namespace Terminal {
-    export interface ReaderPresentPaymentMethodParams {
+    export interface ReaderPresentPaymentMethodParams<
+      E extends string = string
+    > {
       /**
        * Simulated on-reader tip amount.
        */
@@ -79,7 +81,7 @@ export namespace TestHelpers {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * Simulated data for the interac_present payment method.
@@ -139,11 +141,13 @@ export namespace TestHelpers {
 }
 export namespace TestHelpers {
   export namespace Terminal {
-    export interface ReaderSucceedInputCollectionParams {
+    export interface ReaderSucceedInputCollectionParams<
+      E extends string = string
+    > {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * This parameter defines the skip behavior for input collection.
@@ -158,11 +162,13 @@ export namespace TestHelpers {
 }
 export namespace TestHelpers {
   export namespace Terminal {
-    export interface ReaderTimeoutInputCollectionParams {
+    export interface ReaderTimeoutInputCollectionParams<
+      E extends string = string
+    > {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }

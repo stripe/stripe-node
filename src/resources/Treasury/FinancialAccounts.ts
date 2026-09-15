@@ -3,6 +3,8 @@
 import {StripeResource} from '../../StripeResource.js';
 import {FinancialAccountFeatures} from './FinancialAccountFeatures.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   Emptyable,
   OtherString,
@@ -16,10 +18,10 @@ export class FinancialAccountResource extends StripeResource {
   /**
    * Returns a list of FinancialAccounts.
    */
-  list(
-    params?: Treasury.FinancialAccountListParams,
+  list<E extends string = never>(
+    params?: Treasury.FinancialAccountListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<FinancialAccount> {
+  ): ApiListPromise<ApplyExpandListItem<FinancialAccount, E>> {
     return this._makeRequest(
       'GET',
       '/v1/treasury/financial_accounts',
@@ -33,10 +35,10 @@ export class FinancialAccountResource extends StripeResource {
   /**
    * Creates a new FinancialAccount. Each connected account can have up to three FinancialAccounts by default.
    */
-  create(
-    params: Treasury.FinancialAccountCreateParams,
+  create<E extends string = never>(
+    params: Treasury.FinancialAccountCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccount>> {
+  ): Promise<Response<ApplyExpand<FinancialAccount, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/treasury/financial_accounts',
@@ -47,11 +49,11 @@ export class FinancialAccountResource extends StripeResource {
   /**
    * Retrieves the details of a FinancialAccount.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Treasury.FinancialAccountRetrieveParams,
+    params?: Treasury.FinancialAccountRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccount>> {
+  ): Promise<Response<ApplyExpand<FinancialAccount, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/treasury/financial_accounts/${encodeURIComponent(id)}`,
@@ -62,11 +64,11 @@ export class FinancialAccountResource extends StripeResource {
   /**
    * Updates the details of a FinancialAccount.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Treasury.FinancialAccountUpdateParams,
+    params?: Treasury.FinancialAccountUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccount>> {
+  ): Promise<Response<ApplyExpand<FinancialAccount, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/treasury/financial_accounts/${encodeURIComponent(id)}`,
@@ -77,11 +79,11 @@ export class FinancialAccountResource extends StripeResource {
   /**
    * Closes a FinancialAccount. A FinancialAccount can only be closed if it has a zero balance, has no pending InboundTransfers, and has canceled all attached Issuing cards.
    */
-  close(
+  close<E extends string = never>(
     id: string,
-    params?: Treasury.FinancialAccountCloseParams,
+    params?: Treasury.FinancialAccountCloseParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccount>> {
+  ): Promise<Response<ApplyExpand<FinancialAccount, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/treasury/financial_accounts/${encodeURIComponent(id)}/close`,
@@ -92,11 +94,11 @@ export class FinancialAccountResource extends StripeResource {
   /**
    * Updates the Features associated with a FinancialAccount.
    */
-  updateFeatures(
+  updateFeatures<E extends string = never>(
     id: string,
-    params?: Treasury.FinancialAccountUpdateFeaturesParams,
+    params?: Treasury.FinancialAccountUpdateFeaturesParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccountFeatures>> {
+  ): Promise<Response<ApplyExpand<FinancialAccountFeatures, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/treasury/financial_accounts/${encodeURIComponent(id)}/features`,
@@ -107,11 +109,11 @@ export class FinancialAccountResource extends StripeResource {
   /**
    * Retrieves Features information associated with the FinancialAccount.
    */
-  retrieveFeatures(
+  retrieveFeatures<E extends string = never>(
     id: string,
-    params?: Treasury.FinancialAccountRetrieveFeaturesParams,
+    params?: Treasury.FinancialAccountRetrieveFeaturesParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccountFeatures>> {
+  ): Promise<Response<ApplyExpand<FinancialAccountFeatures, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/treasury/financial_accounts/${encodeURIComponent(id)}/features`,
@@ -365,7 +367,7 @@ export namespace FinancialAccount {
   }
 }
 export namespace Treasury {
-  export interface FinancialAccountCreateParams {
+  export interface FinancialAccountCreateParams<E extends string = string> {
     /**
      * The currencies the FinancialAccount can hold a balance in.
      */
@@ -374,7 +376,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Encodes whether a FinancialAccount has access to a particular feature. Stripe or the platform can control features via the requested field.
@@ -566,19 +568,19 @@ export namespace Treasury {
   }
 }
 export namespace Treasury {
-  export interface FinancialAccountRetrieveParams {
+  export interface FinancialAccountRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Treasury {
-  export interface FinancialAccountUpdateParams {
+  export interface FinancialAccountUpdateParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Encodes whether a FinancialAccount has access to a particular feature, with a status enum and associated `status_details`. Stripe or the platform may control features via the requested field.
@@ -796,7 +798,8 @@ export namespace Treasury {
   }
 }
 export namespace Treasury {
-  export interface FinancialAccountListParams extends PaginationParams {
+  export interface FinancialAccountListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Only return FinancialAccounts that were created during the given date interval.
      */
@@ -805,7 +808,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return FinancialAccounts that have the given status: `open` or `closed`
@@ -818,11 +821,11 @@ export namespace Treasury {
   }
 }
 export namespace Treasury {
-  export interface FinancialAccountCloseParams {
+  export interface FinancialAccountCloseParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * A different bank account where funds can be deposited/debited in order to get the closing FA's balance to $0
@@ -854,15 +857,19 @@ export namespace Treasury {
   }
 }
 export namespace Treasury {
-  export interface FinancialAccountRetrieveFeaturesParams {
+  export interface FinancialAccountRetrieveFeaturesParams<
+    E extends string = string
+  > {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Treasury {
-  export interface FinancialAccountUpdateFeaturesParams {
+  export interface FinancialAccountUpdateFeaturesParams<
+    E extends string = string
+  > {
     /**
      * Encodes the FinancialAccount's ability to be used with the Issuing product, including attaching cards to and drawing funds from the FinancialAccount.
      */
@@ -876,7 +883,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Contains Features that add FinancialAddresses to the FinancialAccount.

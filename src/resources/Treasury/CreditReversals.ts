@@ -3,6 +3,8 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Transaction} from './Transactions.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   PaginationParams,
   OtherString,
@@ -14,10 +16,10 @@ export class CreditReversalResource extends StripeResource {
   /**
    * Returns a list of CreditReversals.
    */
-  list(
-    params: Treasury.CreditReversalListParams,
+  list<E extends string = never>(
+    params: Treasury.CreditReversalListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<CreditReversal> {
+  ): ApiListPromise<ApplyExpandListItem<CreditReversal, E>> {
     return this._makeRequest(
       'GET',
       '/v1/treasury/credit_reversals',
@@ -31,10 +33,10 @@ export class CreditReversalResource extends StripeResource {
   /**
    * Reverses a ReceivedCredit and creates a CreditReversal object.
    */
-  create(
-    params: Treasury.CreditReversalCreateParams,
+  create<E extends string = never>(
+    params: Treasury.CreditReversalCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditReversal>> {
+  ): Promise<Response<ApplyExpand<CreditReversal, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/treasury/credit_reversals',
@@ -45,11 +47,11 @@ export class CreditReversalResource extends StripeResource {
   /**
    * Retrieves the details of an existing CreditReversal by passing the unique CreditReversal ID from either the CreditReversal creation request or CreditReversal list
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Treasury.CreditReversalRetrieveParams,
+    params?: Treasury.CreditReversalRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditReversal>> {
+  ): Promise<Response<ApplyExpand<CreditReversal, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/treasury/credit_reversals/${encodeURIComponent(id)}`,
@@ -139,7 +141,7 @@ export namespace CreditReversal {
   }
 }
 export namespace Treasury {
-  export interface CreditReversalCreateParams {
+  export interface CreditReversalCreateParams<E extends string = string> {
     /**
      * The ReceivedCredit to reverse.
      */
@@ -148,7 +150,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -157,15 +159,16 @@ export namespace Treasury {
   }
 }
 export namespace Treasury {
-  export interface CreditReversalRetrieveParams {
+  export interface CreditReversalRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Treasury {
-  export interface CreditReversalListParams extends PaginationParams {
+  export interface CreditReversalListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Returns objects associated with this FinancialAccount.
      */
@@ -174,7 +177,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return CreditReversals for the ReceivedCredit ID.

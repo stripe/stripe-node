@@ -7,6 +7,8 @@ import {Application} from './Applications.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {Charge} from './Charges.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   PaginationParams,
   RangeQueryParam,
   MetadataParam,
@@ -19,10 +21,10 @@ export class ApplicationFeeResource extends StripeResource {
   /**
    * Returns a list of application fees you've previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
    */
-  list(
-    params?: ApplicationFeeListParams,
+  list<E extends string = never>(
+    params?: ApplicationFeeListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ApplicationFee> {
+  ): ApiListPromise<ApplyExpandListItem<ApplicationFee, E>> {
     return this._makeRequest('GET', '/v1/application_fees', params, options, {
       methodType: 'list',
     }) as any;
@@ -30,11 +32,11 @@ export class ApplicationFeeResource extends StripeResource {
   /**
    * Retrieves the details of an application fee that your account has collected. The same information is returned when refunding the application fee.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: ApplicationFeeRetrieveParams,
+    params?: ApplicationFeeRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ApplicationFee>> {
+  ): Promise<Response<ApplyExpand<ApplicationFee, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/application_fees/${encodeURIComponent(id)}`,
@@ -45,12 +47,12 @@ export class ApplicationFeeResource extends StripeResource {
   /**
    * By default, you can see the 10 most recent refunds stored directly on the application fee object, but you can also retrieve details about a specific refund stored on the application fee.
    */
-  retrieveRefund(
+  retrieveRefund<E extends string = never>(
     feeId: string,
     id: string,
-    params?: ApplicationFeeRetrieveRefundParams,
+    params?: ApplicationFeeRetrieveRefundParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FeeRefund>> {
+  ): Promise<Response<ApplyExpand<FeeRefund, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/application_fees/${encodeURIComponent(
@@ -65,12 +67,12 @@ export class ApplicationFeeResource extends StripeResource {
    *
    * This request only accepts metadata as an argument.
    */
-  updateRefund(
+  updateRefund<E extends string = never>(
     feeId: string,
     id: string,
-    params?: ApplicationFeeUpdateRefundParams,
+    params?: ApplicationFeeUpdateRefundParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FeeRefund>> {
+  ): Promise<Response<ApplyExpand<FeeRefund, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/application_fees/${encodeURIComponent(
@@ -83,11 +85,11 @@ export class ApplicationFeeResource extends StripeResource {
   /**
    * You can see a list of the refunds belonging to a specific application fee. Note that the 10 most recent refunds are always available by default on the application fee object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
    */
-  listRefunds(
+  listRefunds<E extends string = never>(
     id: string,
-    params?: ApplicationFeeListRefundsParams,
+    params?: ApplicationFeeListRefundsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<FeeRefund> {
+  ): ApiListPromise<ApplyExpandListItem<FeeRefund, E>> {
     return this._makeRequest(
       'GET',
       `/v1/application_fees/${encodeURIComponent(id)}/refunds`,
@@ -109,11 +111,11 @@ export class ApplicationFeeResource extends StripeResource {
    * This method will raise an error when called on an already-refunded application fee,
    * or when trying to refund more money than is left on an application fee.
    */
-  createRefund(
+  createRefund<E extends string = never>(
     id: string,
-    params?: ApplicationFeeCreateRefundParams,
+    params?: ApplicationFeeCreateRefundParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FeeRefund>> {
+  ): Promise<Response<ApplyExpand<FeeRefund, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/application_fees/${encodeURIComponent(id)}/refunds`,
@@ -220,13 +222,14 @@ export namespace ApplicationFee {
     export type Type = 'charge' | 'payout' | OtherString;
   }
 }
-export interface ApplicationFeeRetrieveParams {
+export interface ApplicationFeeRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ApplicationFeeListParams extends PaginationParams {
+export interface ApplicationFeeListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return application fees for the charge specified by this charge ID.
    */
@@ -240,9 +243,9 @@ export interface ApplicationFeeListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ApplicationFeeCreateRefundParams {
+export interface ApplicationFeeCreateRefundParams<E extends string = string> {
   /**
    * A positive integer, in _cents (or local equivalent)_, representing how much of this fee to refund. Can refund only up to the remaining unrefunded amount of the fee.
    */
@@ -251,30 +254,31 @@ export interface ApplicationFeeCreateRefundParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: MetadataParam;
 }
-export interface ApplicationFeeListRefundsParams extends PaginationParams {
+export interface ApplicationFeeListRefundsParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ApplicationFeeRetrieveRefundParams {
+export interface ApplicationFeeRetrieveRefundParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ApplicationFeeUpdateRefundParams {
+export interface ApplicationFeeUpdateRefundParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

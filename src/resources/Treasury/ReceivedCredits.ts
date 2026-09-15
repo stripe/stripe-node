@@ -6,17 +6,23 @@ import {CreditReversal} from './CreditReversals.js';
 import {OutboundPayment} from './OutboundPayments.js';
 import {OutboundTransfer} from './OutboundTransfers.js';
 import {Payout} from './../Payouts.js';
-import {PaginationParams, OtherString, Address} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  OtherString,
+  Address,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class ReceivedCreditResource extends StripeResource {
   /**
    * Returns a list of ReceivedCredits.
    */
-  list(
-    params: Treasury.ReceivedCreditListParams,
+  list<E extends string = never>(
+    params: Treasury.ReceivedCreditListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ReceivedCredit> {
+  ): ApiListPromise<ApplyExpandListItem<ReceivedCredit, E>> {
     return this._makeRequest(
       'GET',
       '/v1/treasury/received_credits',
@@ -30,11 +36,11 @@ export class ReceivedCreditResource extends StripeResource {
   /**
    * Retrieves the details of an existing ReceivedCredit by passing the unique ReceivedCredit ID from the ReceivedCredit list.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Treasury.ReceivedCreditRetrieveParams,
+    params?: Treasury.ReceivedCreditRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ReceivedCredit>> {
+  ): Promise<Response<ApplyExpand<ReceivedCredit, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/treasury/received_credits/${encodeURIComponent(id)}`,
@@ -320,15 +326,16 @@ export namespace ReceivedCredit {
   }
 }
 export namespace Treasury {
-  export interface ReceivedCreditRetrieveParams {
+  export interface ReceivedCreditRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Treasury {
-  export interface ReceivedCreditListParams extends PaginationParams {
+  export interface ReceivedCreditListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * The FinancialAccount that received the funds.
      */
@@ -337,7 +344,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return ReceivedCredits described by the flow.

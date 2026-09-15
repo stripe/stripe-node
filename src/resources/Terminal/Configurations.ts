@@ -2,7 +2,13 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {File} from './../Files.js';
-import {Emptyable, OtherString, PaginationParams} from '../../shared.js';
+import {
+  ApplyExpand,
+  ApplyExpandListItem,
+  Emptyable,
+  OtherString,
+  PaginationParams,
+} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 
 export class ConfigurationResource extends StripeResource {
@@ -24,11 +30,11 @@ export class ConfigurationResource extends StripeResource {
   /**
    * Retrieves a Configuration object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Terminal.ConfigurationRetrieveParams,
+    params?: Terminal.ConfigurationRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Configuration | DeletedConfiguration>> {
+  ): Promise<Response<ApplyExpand<Configuration | DeletedConfiguration, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/terminal/configurations/${encodeURIComponent(id)}`,
@@ -39,11 +45,11 @@ export class ConfigurationResource extends StripeResource {
   /**
    * Updates a new Configuration object.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Terminal.ConfigurationUpdateParams,
+    params?: Terminal.ConfigurationUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Configuration | DeletedConfiguration>> {
+  ): Promise<Response<ApplyExpand<Configuration | DeletedConfiguration, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/configurations/${encodeURIComponent(id)}`,
@@ -54,10 +60,10 @@ export class ConfigurationResource extends StripeResource {
   /**
    * Returns a list of Configuration objects.
    */
-  list(
-    params?: Terminal.ConfigurationListParams,
+  list<E extends string = never>(
+    params?: Terminal.ConfigurationListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Configuration> {
+  ): ApiListPromise<ApplyExpandListItem<Configuration, E>> {
     return this._makeRequest(
       'GET',
       '/v1/terminal/configurations',
@@ -71,10 +77,10 @@ export class ConfigurationResource extends StripeResource {
   /**
    * Creates a new Configuration object.
    */
-  create(
-    params?: Terminal.ConfigurationCreateParams,
+  create<E extends string = never>(
+    params?: Terminal.ConfigurationCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Configuration>> {
+  ): Promise<Response<ApplyExpand<Configuration, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/terminal/configurations',
@@ -734,7 +740,7 @@ export namespace Configuration {
   }
 }
 export namespace Terminal {
-  export interface ConfigurationCreateParams {
+  export interface ConfigurationCreateParams<E extends string = string> {
     /**
      * An object containing device type specific settings for BBPOS WisePad 3 readers.
      */
@@ -753,7 +759,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Name of the configuration
@@ -1465,15 +1471,15 @@ export namespace Terminal {
   }
 }
 export namespace Terminal {
-  export interface ConfigurationRetrieveParams {
+  export interface ConfigurationRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Terminal {
-  export interface ConfigurationUpdateParams {
+  export interface ConfigurationUpdateParams<E extends string = string> {
     /**
      * An object containing device type specific settings for BBPOS WisePad 3 readers.
      */
@@ -1492,7 +1498,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Name of the configuration
@@ -2204,11 +2210,12 @@ export namespace Terminal {
   }
 }
 export namespace Terminal {
-  export interface ConfigurationListParams extends PaginationParams {
+  export interface ConfigurationListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * if present, only return the account default or non-default configurations.

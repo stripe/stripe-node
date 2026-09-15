@@ -27,7 +27,7 @@ const CUSTOMER_DETAILS = {
   email: 'jenny.rosen@example.com',
 };
 
-describe('Stripe Module', function() {
+describe('Stripe Module', function () {
   describe('config object', () => {
     it('should only accept either an object or a string', () => {
       expect(() => {
@@ -292,7 +292,9 @@ describe('Stripe Module', function() {
 
     it('Should omit telemetry_id field when telemetry is disabled', async () => {
       const noTelemetryStripe = Stripe(FAKE_API_KEY, {telemetry: false});
-      const orig = (noTelemetryStripe as any)._platformFunctions.getTelemetryId.bind(
+      const orig = (
+        noTelemetryStripe as any
+      )._platformFunctions.getTelemetryId.bind(
         (noTelemetryStripe as any)._platformFunctions
       );
       (noTelemetryStripe as any)._platformFunctions.getTelemetryId = () =>

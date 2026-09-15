@@ -4,6 +4,8 @@ import {multipartRequestDataProcessor} from '../multipart.js';
 import {StripeResource} from '../StripeResource.js';
 import {FileLink} from './FileLinks.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   OtherString,
   Emptyable,
   MetadataParam,
@@ -23,10 +25,10 @@ export class FileResource extends StripeResource {
   /**
    * Returns a list of the files that your account has access to. Stripe sorts and returns the files by their creation dates, placing the most recently created files at the top.
    */
-  list(
-    params?: FileListParams,
+  list<E extends string = never>(
+    params?: FileListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<File> {
+  ): ApiListPromise<ApplyExpandListItem<File, E>> {
     return this._makeRequest('GET', '/v1/files', params, options, {
       methodType: 'list',
     }) as any;
@@ -50,11 +52,11 @@ export class FileResource extends StripeResource {
   /**
    * Retrieves the details of an existing file object. After you supply a unique file ID, Stripe returns the corresponding file object. Learn how to [access file contents](https://docs.stripe.com/docs/file-upload#download-file-contents).
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: FileRetrieveParams,
+    params?: FileRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<File>> {
+  ): Promise<Response<ApplyExpand<File, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/files/${encodeURIComponent(id)}`,
@@ -144,7 +146,7 @@ export namespace File {
     | 'terminal_wifi_private_key'
     | OtherString;
 }
-export interface FileCreateParams {
+export interface FileCreateParams<E extends string = string> {
   /**
    * A file to upload. Make sure that the specifications follow RFC 2388, which defines file transfers for the `multipart/form-data` protocol.
    */
@@ -158,7 +160,7 @@ export interface FileCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Optional parameters that automatically create a [file link](https://api.stripe.com#file_links) for the newly created file.
@@ -201,13 +203,14 @@ export namespace FileCreateParams {
     metadata?: Emptyable<MetadataParam>;
   }
 }
-export interface FileRetrieveParams {
+export interface FileRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface FileListParams extends PaginationParams {
+export interface FileListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return files that were created during the given date interval.
    */
@@ -216,7 +219,7 @@ export interface FileListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Filter queries by the file purpose. If you don't provide a purpose, the queries return unfiltered files.

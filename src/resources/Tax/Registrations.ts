@@ -1,17 +1,23 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {OtherString, Emptyable, PaginationParams} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  OtherString,
+  Emptyable,
+  PaginationParams,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class RegistrationResource extends StripeResource {
   /**
    * Returns a list of Tax Registration objects.
    */
-  list(
-    params?: Tax.RegistrationListParams,
+  list<E extends string = never>(
+    params?: Tax.RegistrationListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Registration> {
+  ): ApiListPromise<ApplyExpandListItem<Registration, E>> {
     return this._makeRequest('GET', '/v1/tax/registrations', params, options, {
       methodType: 'list',
     }) as any;
@@ -19,10 +25,10 @@ export class RegistrationResource extends StripeResource {
   /**
    * Creates a new Tax Registration object.
    */
-  create(
-    params: Tax.RegistrationCreateParams,
+  create<E extends string = never>(
+    params: Tax.RegistrationCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Registration>> {
+  ): Promise<Response<ApplyExpand<Registration, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/tax/registrations',
@@ -33,11 +39,11 @@ export class RegistrationResource extends StripeResource {
   /**
    * Returns a Tax Registration object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Tax.RegistrationRetrieveParams,
+    params?: Tax.RegistrationRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Registration>> {
+  ): Promise<Response<ApplyExpand<Registration, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/tax/registrations/${encodeURIComponent(id)}`,
@@ -50,11 +56,11 @@ export class RegistrationResource extends StripeResource {
    *
    * A registration cannot be deleted after it has been created. If you wish to end a registration you may do so by setting expires_at.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Tax.RegistrationUpdateParams,
+    params?: Tax.RegistrationUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Registration>> {
+  ): Promise<Response<ApplyExpand<Registration, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/tax/registrations/${encodeURIComponent(id)}`,
@@ -1053,7 +1059,7 @@ export namespace Registration {
       /**
        * Type of registration in `country`.
        */
-      type: 'simplified';
+      type: Th.Type;
     }
 
     export interface Tj {
@@ -2250,6 +2256,10 @@ export namespace Registration {
       }
     }
 
+    export namespace Th {
+      export type Type = 'simplified' | OtherString;
+    }
+
     export namespace Us {
       export interface LocalAmusementTax {
         /**
@@ -2321,7 +2331,7 @@ export namespace Registration {
   }
 }
 export namespace Tax {
-  export interface RegistrationCreateParams {
+  export interface RegistrationCreateParams<E extends string = string> {
     /**
      * Time at which the Tax Registration becomes active. It can be either `now` to indicate the current time, or a future timestamp measured in seconds since the Unix epoch.
      */
@@ -2340,7 +2350,7 @@ export namespace Tax {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * If set, the Tax Registration stops being active at this time. If not set, the Tax Registration will be active indefinitely. Timestamp measured in seconds since the Unix epoch.
@@ -3880,7 +3890,7 @@ export namespace Tax {
         /**
          * Type of registration to be created in `country`.
          */
-        type: 'simplified';
+        type: Th.Type;
       }
 
       export interface Tj {
@@ -5411,6 +5421,10 @@ export namespace Tax {
         }
       }
 
+      export namespace Th {
+        export type Type = 'simplified' | OtherString;
+      }
+
       export namespace Us {
         export interface LocalAmusementTax {
           /**
@@ -5531,15 +5545,15 @@ export namespace Tax {
   }
 }
 export namespace Tax {
-  export interface RegistrationRetrieveParams {
+  export interface RegistrationRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Tax {
-  export interface RegistrationUpdateParams {
+  export interface RegistrationUpdateParams<E extends string = string> {
     /**
      * Time at which the registration becomes active. It can be either `now` to indicate the current time, or a timestamp measured in seconds since the Unix epoch.
      */
@@ -5548,7 +5562,7 @@ export namespace Tax {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * If set, the registration stops being active at this time. If not set, the registration will be active indefinitely. It can be either `now` to indicate the current time, or a timestamp measured in seconds since the Unix epoch.
@@ -5557,11 +5571,12 @@ export namespace Tax {
   }
 }
 export namespace Tax {
-  export interface RegistrationListParams extends PaginationParams {
+  export interface RegistrationListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The status of the Tax Registration.

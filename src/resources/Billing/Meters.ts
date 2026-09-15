@@ -2,17 +2,22 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {MeterEventSummary} from './MeterEventSummaries.js';
-import {OtherString, PaginationParams} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  OtherString,
+  PaginationParams,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class MeterResource extends StripeResource {
   /**
    * Retrieve a list of billing meters.
    */
-  list(
-    params?: Billing.MeterListParams,
+  list<E extends string = never>(
+    params?: Billing.MeterListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Meter> {
+  ): ApiListPromise<ApplyExpandListItem<Meter, E>> {
     return this._makeRequest('GET', '/v1/billing/meters', params, options, {
       methodType: 'list',
     }) as any;
@@ -20,10 +25,10 @@ export class MeterResource extends StripeResource {
   /**
    * Creates a billing meter.
    */
-  create(
-    params: Billing.MeterCreateParams,
+  create<E extends string = never>(
+    params: Billing.MeterCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Meter>> {
+  ): Promise<Response<ApplyExpand<Meter, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/billing/meters',
@@ -34,11 +39,11 @@ export class MeterResource extends StripeResource {
   /**
    * Retrieves a billing meter given an ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Billing.MeterRetrieveParams,
+    params?: Billing.MeterRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Meter>> {
+  ): Promise<Response<ApplyExpand<Meter, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/billing/meters/${encodeURIComponent(id)}`,
@@ -49,11 +54,11 @@ export class MeterResource extends StripeResource {
   /**
    * Updates a billing meter.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Billing.MeterUpdateParams,
+    params?: Billing.MeterUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Meter>> {
+  ): Promise<Response<ApplyExpand<Meter, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/billing/meters/${encodeURIComponent(id)}`,
@@ -64,11 +69,11 @@ export class MeterResource extends StripeResource {
   /**
    * When a meter is deactivated, no more meter events will be accepted for this meter. You can't attach a deactivated meter to a price.
    */
-  deactivate(
+  deactivate<E extends string = never>(
     id: string,
-    params?: Billing.MeterDeactivateParams,
+    params?: Billing.MeterDeactivateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Meter>> {
+  ): Promise<Response<ApplyExpand<Meter, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/billing/meters/${encodeURIComponent(id)}/deactivate`,
@@ -79,11 +84,11 @@ export class MeterResource extends StripeResource {
   /**
    * When a meter is reactivated, events for this meter can be accepted and you can attach the meter to a price.
    */
-  reactivate(
+  reactivate<E extends string = never>(
     id: string,
-    params?: Billing.MeterReactivateParams,
+    params?: Billing.MeterReactivateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Meter>> {
+  ): Promise<Response<ApplyExpand<Meter, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/billing/meters/${encodeURIComponent(id)}/reactivate`,
@@ -94,11 +99,11 @@ export class MeterResource extends StripeResource {
   /**
    * Retrieve a list of billing meter event summaries.
    */
-  listEventSummaries(
+  listEventSummaries<E extends string = never>(
     id: string,
-    params: Billing.MeterListEventSummariesParams,
+    params: Billing.MeterListEventSummariesParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<MeterEventSummary> {
+  ): ApiListPromise<ApplyExpandListItem<MeterEventSummary, E>> {
     return this._makeRequest(
       'GET',
       `/v1/billing/meters/${encodeURIComponent(id)}/event_summaries`,
@@ -207,7 +212,7 @@ export namespace Meter {
   }
 }
 export namespace Billing {
-  export interface MeterCreateParams {
+  export interface MeterCreateParams<E extends string = string> {
     /**
      * The default settings to aggregate a meter's events with.
      */
@@ -236,7 +241,7 @@ export namespace Billing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Fields that specify how to calculate a meter event's value.
@@ -279,15 +284,15 @@ export namespace Billing {
   }
 }
 export namespace Billing {
-  export interface MeterRetrieveParams {
+  export interface MeterRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface MeterUpdateParams {
+  export interface MeterUpdateParams<E extends string = string> {
     /**
      * The meter's name. Not visible to the customer.
      */
@@ -296,15 +301,16 @@ export namespace Billing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface MeterListParams extends PaginationParams {
+  export interface MeterListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Filter results to only include meters with the given status.
@@ -317,15 +323,16 @@ export namespace Billing {
   }
 }
 export namespace Billing {
-  export interface MeterDeactivateParams {
+  export interface MeterDeactivateParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface MeterListEventSummariesParams extends PaginationParams {
+  export interface MeterListEventSummariesParams<E extends string = string>
+    extends PaginationParams {
     /**
      * The customer for which to fetch event summaries.
      */
@@ -344,7 +351,7 @@ export namespace Billing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Specifies what granularity to use when generating event summaries. If not specified, a single event summary would be returned for the specified time range. For hourly granularity, start and end times must align with hour boundaries (e.g., 00:00, 01:00, ..., 23:00). For daily granularity, start and end times must align with UTC day boundaries (00:00 UTC).
@@ -357,10 +364,10 @@ export namespace Billing {
   }
 }
 export namespace Billing {
-  export interface MeterReactivateParams {
+  export interface MeterReactivateParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

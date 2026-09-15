@@ -3,17 +3,23 @@
 import {StripeResource} from '../StripeResource.js';
 import {Charge} from './Charges.js';
 import {PaymentIntent} from './PaymentIntents.js';
-import {PaginationParams, RangeQueryParam, OtherString} from '../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  RangeQueryParam,
+  OtherString,
+} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class ReviewResource extends StripeResource {
   /**
    * Returns a list of Review objects that have open set to true. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
-  list(
-    params?: ReviewListParams,
+  list<E extends string = never>(
+    params?: ReviewListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Review> {
+  ): ApiListPromise<ApplyExpandListItem<Review, E>> {
     return this._makeRequest('GET', '/v1/reviews', params, options, {
       methodType: 'list',
     }) as any;
@@ -21,11 +27,11 @@ export class ReviewResource extends StripeResource {
   /**
    * Retrieves a Review object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: ReviewRetrieveParams,
+    params?: ReviewRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Review>> {
+  ): Promise<Response<ApplyExpand<Review, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/reviews/${encodeURIComponent(id)}`,
@@ -36,11 +42,11 @@ export class ReviewResource extends StripeResource {
   /**
    * Approves a Review object, closing it and removing it from the list of reviews.
    */
-  approve(
+  approve<E extends string = never>(
     id: string,
-    params?: ReviewApproveParams,
+    params?: ReviewApproveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Review>> {
+  ): Promise<Response<ApplyExpand<Review, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/reviews/${encodeURIComponent(id)}/approve`,
@@ -182,13 +188,14 @@ export namespace Review {
     version: string | null;
   }
 }
-export interface ReviewRetrieveParams {
+export interface ReviewRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ReviewListParams extends PaginationParams {
+export interface ReviewListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return reviews that were created during the given date interval.
    */
@@ -197,11 +204,11 @@ export interface ReviewListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ReviewApproveParams {
+export interface ReviewApproveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

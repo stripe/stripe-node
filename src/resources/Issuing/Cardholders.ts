@@ -3,6 +3,8 @@
 import {StripeResource} from '../../StripeResource.js';
 import {File} from './../Files.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   Address,
   Emptyable,
@@ -17,10 +19,10 @@ export class CardholderResource extends StripeResource {
   /**
    * Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
-  list(
-    params?: Issuing.CardholderListParams,
+  list<E extends string = never>(
+    params?: Issuing.CardholderListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Cardholder> {
+  ): ApiListPromise<ApplyExpandListItem<Cardholder, E>> {
     return this._makeRequest(
       'GET',
       '/v1/issuing/cardholders',
@@ -34,10 +36,10 @@ export class CardholderResource extends StripeResource {
   /**
    * Creates a new Issuing Cardholder object that can be issued cards.
    */
-  create(
-    params: Issuing.CardholderCreateParams,
+  create<E extends string = never>(
+    params: Issuing.CardholderCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Cardholder>> {
+  ): Promise<Response<ApplyExpand<Cardholder, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/issuing/cardholders',
@@ -48,11 +50,11 @@ export class CardholderResource extends StripeResource {
   /**
    * Retrieves an Issuing Cardholder object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Issuing.CardholderRetrieveParams,
+    params?: Issuing.CardholderRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Cardholder>> {
+  ): Promise<Response<ApplyExpand<Cardholder, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/issuing/cardholders/${encodeURIComponent(id)}`,
@@ -63,11 +65,11 @@ export class CardholderResource extends StripeResource {
   /**
    * Updates the specified Issuing Cardholder object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Issuing.CardholderUpdateParams,
+    params?: Issuing.CardholderUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Cardholder>> {
+  ): Promise<Response<ApplyExpand<Cardholder, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/issuing/cardholders/${encodeURIComponent(id)}`,
@@ -1267,7 +1269,7 @@ export namespace Cardholder {
   }
 }
 export namespace Issuing {
-  export interface CardholderCreateParams {
+  export interface CardholderCreateParams<E extends string = string> {
     /**
      * The cardholder's billing address.
      */
@@ -1291,7 +1293,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Additional information about an `individual` cardholder.
@@ -2456,15 +2458,15 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface CardholderRetrieveParams {
+  export interface CardholderRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Issuing {
-  export interface CardholderUpdateParams {
+  export interface CardholderUpdateParams<E extends string = string> {
     /**
      * The cardholder's billing address.
      */
@@ -2483,7 +2485,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Additional information about an `individual` cardholder.
@@ -3641,7 +3643,8 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface CardholderListParams extends PaginationParams {
+  export interface CardholderListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Only return cardholders that were created during the given date interval.
      */
@@ -3655,7 +3658,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return cardholders that have the given phone number.

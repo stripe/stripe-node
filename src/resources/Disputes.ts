@@ -6,6 +6,8 @@ import {Charge} from './Charges.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {File} from './Files.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   Emptyable,
   MetadataParam,
   AddressParam,
@@ -21,10 +23,10 @@ export class DisputeResource extends StripeResource {
   /**
    * Returns a list of your disputes.
    */
-  list(
-    params?: DisputeListParams,
+  list<E extends string = never>(
+    params?: DisputeListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Dispute> {
+  ): ApiListPromise<ApplyExpandListItem<Dispute, E>> {
     return this._makeRequest('GET', '/v1/disputes', params, options, {
       methodType: 'list',
     }) as any;
@@ -32,11 +34,11 @@ export class DisputeResource extends StripeResource {
   /**
    * Retrieves the dispute with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: DisputeRetrieveParams,
+    params?: DisputeRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Dispute>> {
+  ): Promise<Response<ApplyExpand<Dispute, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/disputes/${encodeURIComponent(id)}`,
@@ -49,11 +51,11 @@ export class DisputeResource extends StripeResource {
    *
    * Depending on your dispute type, different evidence fields will give you a better chance of winning your dispute. To figure out which evidence fields to provide, see our [guide to dispute types](https://docs.stripe.com/docs/disputes/categories).
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: DisputeUpdateParams,
+    params?: DisputeUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Dispute>> {
+  ): Promise<Response<ApplyExpand<Dispute, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/disputes/${encodeURIComponent(id)}`,
@@ -66,11 +68,11 @@ export class DisputeResource extends StripeResource {
    *
    * The status of the dispute will change from needs_response to lost. Closing a dispute is irreversible.
    */
-  close(
+  close<E extends string = never>(
     id: string,
-    params?: DisputeCloseParams,
+    params?: DisputeCloseParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Dispute>> {
+  ): Promise<Response<ApplyExpand<Dispute, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/disputes/${encodeURIComponent(id)}/close`,
@@ -383,9 +385,7 @@ export namespace Dispute {
         /**
          * List of exactly two prior undisputed transaction objects for Visa Compelling Evidence 3.0 evidence submission.
          */
-        prior_undisputed_transactions: Array<
-          VisaCompellingEvidence3.PriorUndisputedTransaction
-        >;
+        prior_undisputed_transactions: Array<VisaCompellingEvidence3.PriorUndisputedTransaction>;
       }
 
       export interface VisaCompliance {
@@ -633,13 +633,13 @@ export namespace Dispute {
     }
   }
 }
-export interface DisputeRetrieveParams {
+export interface DisputeRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface DisputeUpdateParams {
+export interface DisputeUpdateParams<E extends string = string> {
   /**
    * Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review. The combined character count of all fields is limited to 150,000.
    */
@@ -648,7 +648,7 @@ export interface DisputeUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -838,9 +838,7 @@ export namespace DisputeUpdateParams {
         /**
          * List of exactly two prior undisputed transaction objects for Visa Compelling Evidence 3.0 evidence submission.
          */
-        prior_undisputed_transactions?: Array<
-          VisaCompellingEvidence3.PriorUndisputedTransaction
-        >;
+        prior_undisputed_transactions?: Array<VisaCompellingEvidence3.PriorUndisputedTransaction>;
       }
 
       export interface VisaCompliance {
@@ -945,7 +943,8 @@ export namespace DisputeUpdateParams {
     }
   }
 }
-export interface DisputeListParams extends PaginationParams {
+export interface DisputeListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return disputes associated to the charge specified by this charge ID.
    */
@@ -959,16 +958,16 @@ export interface DisputeListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return disputes associated to the PaymentIntent specified by this PaymentIntent ID.
    */
   payment_intent?: string;
 }
-export interface DisputeCloseParams {
+export interface DisputeCloseParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

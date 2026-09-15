@@ -15,6 +15,8 @@ import {PromotionCode} from './PromotionCodes.js';
 import {Plan, DeletedPlan} from './Plans.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   Emptyable,
   MetadataParam,
   OtherString,
@@ -29,10 +31,10 @@ export class SubscriptionScheduleResource extends StripeResource {
   /**
    * Retrieves the list of your subscription schedules.
    */
-  list(
-    params?: SubscriptionScheduleListParams,
+  list<E extends string = never>(
+    params?: SubscriptionScheduleListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<SubscriptionSchedule> {
+  ): ApiListPromise<ApplyExpandListItem<SubscriptionSchedule, E>> {
     return this._makeRequest(
       'GET',
       '/v1/subscription_schedules',
@@ -46,10 +48,10 @@ export class SubscriptionScheduleResource extends StripeResource {
   /**
    * Creates a new subscription schedule object. Each customer can have up to 500 active or scheduled subscriptions.
    */
-  create(
-    params?: SubscriptionScheduleCreateParams,
+  create<E extends string = never>(
+    params?: SubscriptionScheduleCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>> {
+  ): Promise<Response<ApplyExpand<SubscriptionSchedule, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/subscription_schedules',
@@ -103,11 +105,11 @@ export class SubscriptionScheduleResource extends StripeResource {
   /**
    * Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: SubscriptionScheduleRetrieveParams,
+    params?: SubscriptionScheduleRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>> {
+  ): Promise<Response<ApplyExpand<SubscriptionSchedule, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/subscription_schedules/${encodeURIComponent(id)}`,
@@ -118,11 +120,11 @@ export class SubscriptionScheduleResource extends StripeResource {
   /**
    * Updates an existing subscription schedule.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: SubscriptionScheduleUpdateParams,
+    params?: SubscriptionScheduleUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>> {
+  ): Promise<Response<ApplyExpand<SubscriptionSchedule, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/subscription_schedules/${encodeURIComponent(id)}`,
@@ -176,11 +178,11 @@ export class SubscriptionScheduleResource extends StripeResource {
   /**
    * Cancels a subscription schedule and its associated subscription immediately (if the subscription schedule has an active subscription). A subscription schedule can only be canceled if its status is not_started or active.
    */
-  cancel(
+  cancel<E extends string = never>(
     id: string,
-    params?: SubscriptionScheduleCancelParams,
+    params?: SubscriptionScheduleCancelParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>> {
+  ): Promise<Response<ApplyExpand<SubscriptionSchedule, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/subscription_schedules/${encodeURIComponent(id)}/cancel`,
@@ -191,11 +193,11 @@ export class SubscriptionScheduleResource extends StripeResource {
   /**
    * Releases the subscription schedule immediately, which will stop scheduling of its phases, but leave any existing subscription in place. A schedule can only be released if its status is not_started or active. If the subscription schedule is currently associated with a subscription, releasing it will remove its subscription property and set the subscription's ID to the released_subscription property.
    */
-  release(
+  release<E extends string = never>(
     id: string,
-    params?: SubscriptionScheduleReleaseParams,
+    params?: SubscriptionScheduleReleaseParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>> {
+  ): Promise<Response<ApplyExpand<SubscriptionSchedule, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/subscription_schedules/${encodeURIComponent(id)}/release`,
@@ -956,7 +958,7 @@ export namespace SubscriptionSchedule {
     }
   }
 }
-export interface SubscriptionScheduleCreateParams {
+export interface SubscriptionScheduleCreateParams<E extends string = string> {
   /**
    * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
    */
@@ -985,7 +987,7 @@ export interface SubscriptionScheduleCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Migrate an existing subscription to be managed by a subscription schedule. If this parameter is set, a subscription schedule will be created using the subscription's item(s), set to auto-renew using the subscription's interval. When using this parameter, other parameters (such as phase values) cannot be set. To create a subscription schedule with other modifications, we recommend making two separate API calls.
@@ -1760,13 +1762,13 @@ export namespace SubscriptionScheduleCreateParams {
     }
   }
 }
-export interface SubscriptionScheduleRetrieveParams {
+export interface SubscriptionScheduleRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface SubscriptionScheduleUpdateParams {
+export interface SubscriptionScheduleUpdateParams<E extends string = string> {
   /**
    * Object representing the subscription schedule's default settings.
    */
@@ -1780,7 +1782,7 @@ export interface SubscriptionScheduleUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -2534,7 +2536,8 @@ export namespace SubscriptionScheduleUpdateParams {
     }
   }
 }
-export interface SubscriptionScheduleListParams extends PaginationParams {
+export interface SubscriptionScheduleListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return subscription schedules that were created canceled the given date interval.
    */
@@ -2563,7 +2566,7 @@ export interface SubscriptionScheduleListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return subscription schedules that were released during the given date interval.
@@ -2575,11 +2578,11 @@ export interface SubscriptionScheduleListParams extends PaginationParams {
    */
   scheduled?: boolean;
 }
-export interface SubscriptionScheduleCancelParams {
+export interface SubscriptionScheduleCancelParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * If the subscription schedule is `active`, indicates if a final invoice will be generated that contains any un-invoiced metered usage and new/pending proration invoice items. Defaults to `true`.
@@ -2591,11 +2594,11 @@ export interface SubscriptionScheduleCancelParams {
    */
   prorate?: boolean;
 }
-export interface SubscriptionScheduleReleaseParams {
+export interface SubscriptionScheduleReleaseParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Keep any cancellation on the subscription that the schedule has set

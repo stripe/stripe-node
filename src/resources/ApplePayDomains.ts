@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams} from '../shared.js';
+import {ApplyExpand, ApplyExpandListItem, PaginationParams} from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 
 export class ApplePayDomainResource extends StripeResource {
@@ -23,11 +23,11 @@ export class ApplePayDomainResource extends StripeResource {
   /**
    * Retrieve an apple pay domain.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: ApplePayDomainRetrieveParams,
+    params?: ApplePayDomainRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ApplePayDomain>> {
+  ): Promise<Response<ApplyExpand<ApplePayDomain, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/apple_pay/domains/${encodeURIComponent(id)}`,
@@ -38,10 +38,10 @@ export class ApplePayDomainResource extends StripeResource {
   /**
    * List apple pay domains.
    */
-  list(
-    params?: ApplePayDomainListParams,
+  list<E extends string = never>(
+    params?: ApplePayDomainListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ApplePayDomain> {
+  ): ApiListPromise<ApplyExpandListItem<ApplePayDomain, E>> {
     return this._makeRequest('GET', '/v1/apple_pay/domains', params, options, {
       methodType: 'list',
     }) as any;
@@ -49,10 +49,10 @@ export class ApplePayDomainResource extends StripeResource {
   /**
    * Create an apple pay domain.
    */
-  create(
-    params: ApplePayDomainCreateParams,
+  create<E extends string = never>(
+    params: ApplePayDomainCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ApplePayDomain>> {
+  ): Promise<Response<ApplyExpand<ApplePayDomain, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/apple_pay/domains',
@@ -105,26 +105,27 @@ export interface DeletedApplePayDomain {
    */
   deleted: true;
 }
-export interface ApplePayDomainCreateParams {
+export interface ApplePayDomainCreateParams<E extends string = string> {
   domain_name: string;
 
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ApplePayDomainRetrieveParams {
+export interface ApplePayDomainRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ApplePayDomainListParams extends PaginationParams {
+export interface ApplePayDomainListParams<E extends string = string>
+  extends PaginationParams {
   domain_name?: string;
 
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export interface ApplePayDomainDeleteParams {}

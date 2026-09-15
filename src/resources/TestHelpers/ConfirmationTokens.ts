@@ -3,6 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {ConfirmationToken} from './../ConfirmationTokens.js';
 import {
+  ApplyExpand,
   MetadataParam,
   OtherString,
   Emptyable,
@@ -14,10 +15,10 @@ export class ConfirmationTokenResource extends StripeResource {
   /**
    * Creates a test mode Confirmation Token server side for your integration tests.
    */
-  create(
-    params?: TestHelpers.ConfirmationTokenCreateParams,
+  create<E extends string = never>(
+    params?: TestHelpers.ConfirmationTokenCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ConfirmationToken>> {
+  ): Promise<Response<ApplyExpand<ConfirmationToken, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/test_helpers/confirmation_tokens',
@@ -27,11 +28,11 @@ export class ConfirmationTokenResource extends StripeResource {
   }
 }
 export namespace TestHelpers {
-  export interface ConfirmationTokenCreateParams {
+  export interface ConfirmationTokenCreateParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * ID of an existing PaymentMethod.

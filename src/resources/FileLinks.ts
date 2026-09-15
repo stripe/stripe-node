@@ -3,6 +3,8 @@
 import {StripeResource} from '../StripeResource.js';
 import {File} from './Files.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   Emptyable,
   MetadataParam,
   PaginationParams,
@@ -15,10 +17,10 @@ export class FileLinkResource extends StripeResource {
   /**
    * Returns a list of file links.
    */
-  list(
-    params?: FileLinkListParams,
+  list<E extends string = never>(
+    params?: FileLinkListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<FileLink> {
+  ): ApiListPromise<ApplyExpandListItem<FileLink, E>> {
     return this._makeRequest('GET', '/v1/file_links', params, options, {
       methodType: 'list',
     }) as any;
@@ -26,20 +28,20 @@ export class FileLinkResource extends StripeResource {
   /**
    * Creates a new file link object.
    */
-  create(
-    params: FileLinkCreateParams,
+  create<E extends string = never>(
+    params: FileLinkCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FileLink>> {
+  ): Promise<Response<ApplyExpand<FileLink, E>>> {
     return this._makeRequest('POST', '/v1/file_links', params, options) as any;
   }
   /**
    * Retrieves the file link with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: FileLinkRetrieveParams,
+    params?: FileLinkRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FileLink>> {
+  ): Promise<Response<ApplyExpand<FileLink, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/file_links/${encodeURIComponent(id)}`,
@@ -50,11 +52,11 @@ export class FileLinkResource extends StripeResource {
   /**
    * Updates an existing file link object. Expired links can no longer be updated.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: FileLinkUpdateParams,
+    params?: FileLinkUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FileLink>> {
+  ): Promise<Response<ApplyExpand<FileLink, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/file_links/${encodeURIComponent(id)}`,
@@ -109,7 +111,7 @@ export interface FileLink {
    */
   url: string | null;
 }
-export interface FileLinkCreateParams {
+export interface FileLinkCreateParams<E extends string = string> {
   /**
    * The ID of the file. The file's `purpose` must be one of the following: `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `financial_account_statement`, `identity_document_downloadable`, `issuing_regulatory_reporting`, `pci_document`, `selfie`, `sigma_scheduled_query`, `tax_document_user_upload`, `terminal_android_apk`, or `terminal_reader_splashscreen`.
    */
@@ -118,7 +120,7 @@ export interface FileLinkCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The link isn't usable after this future timestamp.
@@ -130,17 +132,17 @@ export interface FileLinkCreateParams {
    */
   metadata?: Emptyable<MetadataParam>;
 }
-export interface FileLinkRetrieveParams {
+export interface FileLinkRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface FileLinkUpdateParams {
+export interface FileLinkUpdateParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A future timestamp after which the link will no longer be usable, or `now` to expire the link immediately.
@@ -152,7 +154,8 @@ export interface FileLinkUpdateParams {
    */
   metadata?: Emptyable<MetadataParam>;
 }
-export interface FileLinkListParams extends PaginationParams {
+export interface FileLinkListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return links that were created during the given date interval.
    */
@@ -161,7 +164,7 @@ export interface FileLinkListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Filter links by their expiration status. By default, Stripe returns all links.

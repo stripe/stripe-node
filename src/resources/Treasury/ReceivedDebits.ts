@@ -2,17 +2,23 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Transaction} from './Transactions.js';
-import {PaginationParams, OtherString, Address} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  OtherString,
+  Address,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class ReceivedDebitResource extends StripeResource {
   /**
    * Returns a list of ReceivedDebits.
    */
-  list(
-    params: Treasury.ReceivedDebitListParams,
+  list<E extends string = never>(
+    params: Treasury.ReceivedDebitListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ReceivedDebit> {
+  ): ApiListPromise<ApplyExpandListItem<ReceivedDebit, E>> {
     return this._makeRequest(
       'GET',
       '/v1/treasury/received_debits',
@@ -26,11 +32,11 @@ export class ReceivedDebitResource extends StripeResource {
   /**
    * Retrieves the details of an existing ReceivedDebit by passing the unique ReceivedDebit ID from the ReceivedDebit list
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Treasury.ReceivedDebitRetrieveParams,
+    params?: Treasury.ReceivedDebitRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ReceivedDebit>> {
+  ): Promise<Response<ApplyExpand<ReceivedDebit, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/treasury/received_debits/${encodeURIComponent(id)}`,
@@ -258,15 +264,16 @@ export namespace ReceivedDebit {
   }
 }
 export namespace Treasury {
-  export interface ReceivedDebitRetrieveParams {
+  export interface ReceivedDebitRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Treasury {
-  export interface ReceivedDebitListParams extends PaginationParams {
+  export interface ReceivedDebitListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * The FinancialAccount that funds were pulled from.
      */
@@ -275,7 +282,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return ReceivedDebits that have the given status: `succeeded` or `failed`.

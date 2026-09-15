@@ -11,6 +11,8 @@ import {ShippingRate} from './ShippingRates.js';
 import {TaxRate} from './TaxRates.js';
 import * as Billing from './Billing/index.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   OtherString,
   Emptyable,
@@ -25,10 +27,10 @@ export class CreditNoteResource extends StripeResource {
   /**
    * Returns a list of credit notes.
    */
-  list(
-    params?: CreditNoteListParams,
+  list<E extends string = never>(
+    params?: CreditNoteListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<CreditNote> {
+  ): ApiListPromise<ApplyExpandListItem<CreditNote, E>> {
     return this._makeRequest('GET', '/v1/credit_notes', params, options, {
       methodType: 'list',
       responseSchema: {
@@ -80,10 +82,10 @@ export class CreditNoteResource extends StripeResource {
    *
    * For invoices that also have refunds created through the [Refund API](https://docs.stripe.com/docs/api/refunds), the credit note API subtracts those refund amounts from the maximum creditable amount. This prevents the combined credit notes and refunds from exceeding the invoice amount. If you use both, ensure the combined total does not exceed the invoice's paid amount.
    */
-  create(
-    params: CreditNoteCreateParams,
+  create<E extends string = never>(
+    params: CreditNoteCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditNote>> {
+  ): Promise<Response<ApplyExpand<CreditNote, E>>> {
     return this._makeRequest('POST', '/v1/credit_notes', params, options, {
       requestSchema: {
         kind: 'object',
@@ -124,11 +126,11 @@ export class CreditNoteResource extends StripeResource {
   /**
    * Retrieves the credit note object with the given identifier.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: CreditNoteRetrieveParams,
+    params?: CreditNoteRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditNote>> {
+  ): Promise<Response<ApplyExpand<CreditNote, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/credit_notes/${encodeURIComponent(id)}`,
@@ -163,11 +165,11 @@ export class CreditNoteResource extends StripeResource {
   /**
    * Updates an existing credit note.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: CreditNoteUpdateParams,
+    params?: CreditNoteUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditNote>> {
+  ): Promise<Response<ApplyExpand<CreditNote, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/credit_notes/${encodeURIComponent(id)}`,
@@ -202,10 +204,10 @@ export class CreditNoteResource extends StripeResource {
   /**
    * Get a preview of a credit note without creating it.
    */
-  preview(
-    params: CreditNotePreviewParams,
+  preview<E extends string = never>(
+    params: CreditNotePreviewParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditNote>> {
+  ): Promise<Response<ApplyExpand<CreditNote, E>>> {
     return this._makeRequest(
       'GET',
       '/v1/credit_notes/preview',
@@ -252,11 +254,11 @@ export class CreditNoteResource extends StripeResource {
   /**
    * Marks a credit note as void. Learn more about [voiding credit notes](https://docs.stripe.com/docs/billing/invoices/credit-notes#voiding).
    */
-  voidCreditNote(
+  voidCreditNote<E extends string = never>(
     id: string,
-    params?: CreditNoteVoidCreditNoteParams,
+    params?: CreditNoteVoidCreditNoteParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditNote>> {
+  ): Promise<Response<ApplyExpand<CreditNote, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/credit_notes/${encodeURIComponent(id)}/void`,
@@ -291,10 +293,10 @@ export class CreditNoteResource extends StripeResource {
   /**
    * When retrieving a credit note preview, you'll get a lines property containing the first handful of those items. This URL you can retrieve the full (paginated) list of line items.
    */
-  listPreviewLineItems(
-    params: CreditNoteListPreviewLineItemsParams,
+  listPreviewLineItems<E extends string = never>(
+    params: CreditNoteListPreviewLineItemsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<CreditNoteLineItem> {
+  ): ApiListPromise<ApplyExpandListItem<CreditNoteLineItem, E>> {
     return this._makeRequest(
       'GET',
       '/v1/credit_notes/preview/lines',
@@ -337,11 +339,11 @@ export class CreditNoteResource extends StripeResource {
   /**
    * When retrieving a credit note, you'll get a lines property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
    */
-  listLineItems(
+  listLineItems<E extends string = never>(
     id: string,
-    params?: CreditNoteListLineItemsParams,
+    params?: CreditNoteListLineItemsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<CreditNoteLineItem> {
+  ): ApiListPromise<ApplyExpandListItem<CreditNoteLineItem, E>> {
     return this._makeRequest(
       'GET',
       `/v1/credit_notes/${encodeURIComponent(id)}/lines`,
@@ -764,7 +766,7 @@ export namespace CreditNote {
       | OtherString;
   }
 }
-export interface CreditNoteCreateParams {
+export interface CreditNoteCreateParams<E extends string = string> {
   /**
    * ID of the invoice.
    */
@@ -793,7 +795,7 @@ export interface CreditNoteCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Line items that make up the credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
@@ -963,17 +965,17 @@ export namespace CreditNoteCreateParams {
     export type Type = 'payment_record_refund' | 'refund' | OtherString;
   }
 }
-export interface CreditNoteRetrieveParams {
+export interface CreditNoteRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CreditNoteUpdateParams {
+export interface CreditNoteUpdateParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Credit note memo.
@@ -985,7 +987,8 @@ export interface CreditNoteUpdateParams {
    */
   metadata?: MetadataParam;
 }
-export interface CreditNoteListParams extends PaginationParams {
+export interface CreditNoteListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return credit notes that were created during the given date interval.
    */
@@ -1004,20 +1007,22 @@ export interface CreditNoteListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return credit notes for the invoice specified by this invoice ID.
    */
   invoice?: string;
 }
-export interface CreditNoteListLineItemsParams extends PaginationParams {
+export interface CreditNoteListLineItemsParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CreditNoteListPreviewLineItemsParams extends PaginationParams {
+export interface CreditNoteListPreviewLineItemsParams<E extends string = string>
+  extends PaginationParams {
   /**
    * ID of the invoice.
    */
@@ -1046,7 +1051,7 @@ export interface CreditNoteListPreviewLineItemsParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Line items that make up the credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
@@ -1216,7 +1221,7 @@ export namespace CreditNoteListPreviewLineItemsParams {
     export type Type = 'payment_record_refund' | 'refund' | OtherString;
   }
 }
-export interface CreditNotePreviewParams {
+export interface CreditNotePreviewParams<E extends string = string> {
   /**
    * ID of the invoice.
    */
@@ -1245,7 +1250,7 @@ export interface CreditNotePreviewParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Line items that make up the credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
@@ -1415,9 +1420,9 @@ export namespace CreditNotePreviewParams {
     export type Type = 'payment_record_refund' | 'refund' | OtherString;
   }
 }
-export interface CreditNoteVoidCreditNoteParams {
+export interface CreditNoteVoidCreditNoteParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

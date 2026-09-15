@@ -1,16 +1,17 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {ApplyExpand} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class OnboardingLinkResource extends StripeResource {
   /**
    * Creates a new OnboardingLink object that contains a redirect_url used for onboarding onto Tap to Pay on iPhone.
    */
-  create(
-    params: Terminal.OnboardingLinkCreateParams,
+  create<E extends string = never>(
+    params: Terminal.OnboardingLinkCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<OnboardingLink>> {
+  ): Promise<Response<ApplyExpand<OnboardingLink, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/terminal/onboarding_links',
@@ -65,7 +66,7 @@ export namespace OnboardingLink {
   }
 }
 export namespace Terminal {
-  export interface OnboardingLinkCreateParams {
+  export interface OnboardingLinkCreateParams<E extends string = string> {
     /**
      * Specific fields needed to generate the desired link type.
      */
@@ -79,7 +80,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Stripe account ID to generate the link for.

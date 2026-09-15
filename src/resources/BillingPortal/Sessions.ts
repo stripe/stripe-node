@@ -2,17 +2,17 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Configuration} from './Configurations.js';
-import {OtherString} from '../../shared.js';
+import {ApplyExpand, OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class SessionResource extends StripeResource {
   /**
    * Creates a session of the customer portal.
    */
-  create(
-    params?: BillingPortal.SessionCreateParams,
+  create<E extends string = never>(
+    params?: BillingPortal.SessionCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Session>> {
+  ): Promise<Response<ApplyExpand<Session, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/billing_portal/sessions',
@@ -304,7 +304,7 @@ export namespace Session {
   }
 }
 export namespace BillingPortal {
-  export interface SessionCreateParams {
+  export interface SessionCreateParams<E extends string = string> {
     /**
      * The ID of an existing [configuration](https://docs.stripe.com/api/customer_portal/configurations) to use for this session, describing its functionality and features. If not specified, the session uses the default configuration.
      */
@@ -323,7 +323,7 @@ export namespace BillingPortal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Information about a specific flow for the customer to go through. See the [docs](https://docs.stripe.com/customer-management/portal-deep-links) to learn more about using customer portal deep links and flows.

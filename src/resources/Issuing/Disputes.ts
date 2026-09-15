@@ -5,6 +5,8 @@ import {BalanceTransaction} from './../BalanceTransactions.js';
 import {Transaction} from './Transactions.js';
 import {File} from './../Files.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   Emptyable,
   OtherString,
@@ -18,10 +20,10 @@ export class DisputeResource extends StripeResource {
   /**
    * Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
-  list(
-    params?: Issuing.DisputeListParams,
+  list<E extends string = never>(
+    params?: Issuing.DisputeListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Dispute> {
+  ): ApiListPromise<ApplyExpandListItem<Dispute, E>> {
     return this._makeRequest('GET', '/v1/issuing/disputes', params, options, {
       methodType: 'list',
     }) as any;
@@ -29,10 +31,10 @@ export class DisputeResource extends StripeResource {
   /**
    * Creates an Issuing Dispute object. Individual pieces of evidence within the evidence object are optional at this point. Stripe only validates that required evidence is present during submission. Refer to [Dispute reasons and evidence](https://docs.stripe.com/docs/issuing/purchases/disputes#dispute-reasons-and-evidence) for more details about evidence requirements.
    */
-  create(
-    params?: Issuing.DisputeCreateParams,
+  create<E extends string = never>(
+    params?: Issuing.DisputeCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Dispute>> {
+  ): Promise<Response<ApplyExpand<Dispute, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/issuing/disputes',
@@ -43,11 +45,11 @@ export class DisputeResource extends StripeResource {
   /**
    * Retrieves an Issuing Dispute object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Issuing.DisputeRetrieveParams,
+    params?: Issuing.DisputeRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Dispute>> {
+  ): Promise<Response<ApplyExpand<Dispute, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/issuing/disputes/${encodeURIComponent(id)}`,
@@ -58,11 +60,11 @@ export class DisputeResource extends StripeResource {
   /**
    * Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Properties on the evidence object can be unset by passing in an empty string.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Issuing.DisputeUpdateParams,
+    params?: Issuing.DisputeUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Dispute>> {
+  ): Promise<Response<ApplyExpand<Dispute, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/issuing/disputes/${encodeURIComponent(id)}`,
@@ -73,11 +75,11 @@ export class DisputeResource extends StripeResource {
   /**
    * Submits an Issuing Dispute to the card network. Stripe validates that all evidence fields required for the dispute's reason are present. For more details, see [Dispute reasons and evidence](https://docs.stripe.com/docs/issuing/purchases/disputes#dispute-reasons-and-evidence).
    */
-  submit(
+  submit<E extends string = never>(
     id: string,
-    params?: Issuing.DisputeSubmitParams,
+    params?: Issuing.DisputeSubmitParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Dispute>> {
+  ): Promise<Response<ApplyExpand<Dispute, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/issuing/disputes/${encodeURIComponent(id)}/submit`,
@@ -470,7 +472,7 @@ export namespace Dispute {
   }
 }
 export namespace Issuing {
-  export interface DisputeCreateParams {
+  export interface DisputeCreateParams<E extends string = string> {
     /**
      * The dispute amount in the card's currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). If not set, defaults to the full transaction amount.
      */
@@ -484,7 +486,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -522,9 +524,7 @@ export namespace Issuing {
       /**
        * Evidence provided when `reason` is 'merchandise_not_as_described'.
        */
-      merchandise_not_as_described?: Emptyable<
-        Evidence.MerchandiseNotAsDescribed
-      >;
+      merchandise_not_as_described?: Emptyable<Evidence.MerchandiseNotAsDescribed>;
 
       /**
        * Evidence provided when `reason` is 'no_valid_authorization'.
@@ -814,15 +814,15 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface DisputeRetrieveParams {
+  export interface DisputeRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Issuing {
-  export interface DisputeUpdateParams {
+  export interface DisputeUpdateParams<E extends string = string> {
     /**
      * The dispute amount in the card's currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
      */
@@ -836,7 +836,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -864,9 +864,7 @@ export namespace Issuing {
       /**
        * Evidence provided when `reason` is 'merchandise_not_as_described'.
        */
-      merchandise_not_as_described?: Emptyable<
-        Evidence.MerchandiseNotAsDescribed
-      >;
+      merchandise_not_as_described?: Emptyable<Evidence.MerchandiseNotAsDescribed>;
 
       /**
        * Evidence provided when `reason` is 'no_valid_authorization'.
@@ -1149,7 +1147,8 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface DisputeListParams extends PaginationParams {
+  export interface DisputeListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Only return Issuing disputes that were created during the given date interval.
      */
@@ -1158,7 +1157,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Select Issuing disputes with the given status.
@@ -1182,11 +1181,11 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface DisputeSubmitParams {
+  export interface DisputeSubmitParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

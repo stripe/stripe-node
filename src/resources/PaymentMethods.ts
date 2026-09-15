@@ -5,6 +5,8 @@ import {Customer} from './Customers.js';
 import {SetupAttempt} from './SetupAttempts.js';
 import {Charge} from './Charges.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   OtherString,
   Emptyable,
@@ -19,10 +21,10 @@ export class PaymentMethodResource extends StripeResource {
   /**
    * Returns a list of all PaymentMethods.
    */
-  list(
-    params?: PaymentMethodListParams,
+  list<E extends string = never>(
+    params?: PaymentMethodListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<PaymentMethod> {
+  ): ApiListPromise<ApplyExpandListItem<PaymentMethod, E>> {
     return this._makeRequest('GET', '/v1/payment_methods', params, options, {
       methodType: 'list',
     }) as any;
@@ -32,10 +34,10 @@ export class PaymentMethodResource extends StripeResource {
    *
    * Instead of creating a PaymentMethod directly, we recommend using the [PaymentIntents API to accept a payment immediately or the <a href="/docs/payments/save-and-reuse">SetupIntent](https://docs.stripe.com/docs/payments/accept-a-payment) API to collect payment method details ahead of a future payment.
    */
-  create(
-    params?: PaymentMethodCreateParams,
+  create<E extends string = never>(
+    params?: PaymentMethodCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethod>> {
+  ): Promise<Response<ApplyExpand<PaymentMethod, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/payment_methods',
@@ -46,11 +48,11 @@ export class PaymentMethodResource extends StripeResource {
   /**
    * Retrieves a PaymentMethod object attached to the StripeAccount. To retrieve a payment method attached to a Customer, you should use [Retrieve a Customer's PaymentMethods](https://docs.stripe.com/docs/api/payment_methods/customer)
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: PaymentMethodRetrieveParams,
+    params?: PaymentMethodRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethod>> {
+  ): Promise<Response<ApplyExpand<PaymentMethod, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/payment_methods/${encodeURIComponent(id)}`,
@@ -61,11 +63,11 @@ export class PaymentMethodResource extends StripeResource {
   /**
    * Updates a PaymentMethod object. A PaymentMethod must be attached to a customer to be updated.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: PaymentMethodUpdateParams,
+    params?: PaymentMethodUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethod>> {
+  ): Promise<Response<ApplyExpand<PaymentMethod, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_methods/${encodeURIComponent(id)}`,
@@ -88,11 +90,11 @@ export class PaymentMethodResource extends StripeResource {
    * set [invoice_settings.default_payment_method](https://docs.stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method),
    * on the Customer to the PaymentMethod's ID.
    */
-  attach(
+  attach<E extends string = never>(
     id: string,
-    params?: PaymentMethodAttachParams,
+    params?: PaymentMethodAttachParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethod>> {
+  ): Promise<Response<ApplyExpand<PaymentMethod, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_methods/${encodeURIComponent(id)}/attach`,
@@ -103,11 +105,11 @@ export class PaymentMethodResource extends StripeResource {
   /**
    * Detaches a PaymentMethod object from a Customer. Detachment is permanent and irreversible — once detached, a PaymentMethod can no longer be used for payments or re-attached to a Customer.
    */
-  detach(
+  detach<E extends string = never>(
     id: string,
-    params?: PaymentMethodDetachParams,
+    params?: PaymentMethodDetachParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethod>> {
+  ): Promise<Response<ApplyExpand<PaymentMethod, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_methods/${encodeURIComponent(id)}/detach`,
@@ -1804,7 +1806,7 @@ export namespace PaymentMethod {
     }
   }
 }
-export interface PaymentMethodCreateParams {
+export interface PaymentMethodCreateParams<E extends string = string> {
   /**
    * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
    */
@@ -1918,7 +1920,7 @@ export interface PaymentMethodCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
@@ -2727,13 +2729,13 @@ export namespace PaymentMethodCreateParams {
     export type AccountType = 'checking' | 'savings' | OtherString;
   }
 }
-export interface PaymentMethodRetrieveParams {
+export interface PaymentMethodRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentMethodUpdateParams {
+export interface PaymentMethodUpdateParams<E extends string = string> {
   /**
    * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to `unspecified`.
    */
@@ -2752,7 +2754,7 @@ export interface PaymentMethodUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -2872,7 +2874,8 @@ export namespace PaymentMethodUpdateParams {
     export type AccountType = 'checking' | 'savings' | OtherString;
   }
 }
-export interface PaymentMethodListParams extends PaginationParams {
+export interface PaymentMethodListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow.
    */
@@ -2891,7 +2894,7 @@ export interface PaymentMethodListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Filters the list by the object `type` field. Unfiltered, the list returns all payment method types except `custom`. If your integration expects only one type of payment method in the response, specify that type value in the request to reduce your payload.
@@ -2963,7 +2966,7 @@ export namespace PaymentMethodListParams {
     | 'zip'
     | OtherString;
 }
-export interface PaymentMethodAttachParams {
+export interface PaymentMethodAttachParams<E extends string = string> {
   /**
    * The ID of the customer to which to attach the PaymentMethod.
    */
@@ -2977,11 +2980,11 @@ export interface PaymentMethodAttachParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentMethodDetachParams {
+export interface PaymentMethodDetachParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

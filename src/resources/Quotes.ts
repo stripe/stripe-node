@@ -12,6 +12,8 @@ import {Subscription} from './Subscriptions.js';
 import {SubscriptionSchedule} from './SubscriptionSchedules.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   Emptyable,
   MetadataParam,
   OtherString,
@@ -31,10 +33,10 @@ export class QuoteResource extends StripeResource {
   /**
    * Returns a list of your quotes.
    */
-  list(
-    params?: QuoteListParams,
+  list<E extends string = never>(
+    params?: QuoteListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Quote> {
+  ): ApiListPromise<ApplyExpandListItem<Quote, E>> {
     return this._makeRequest('GET', '/v1/quotes', params, options, {
       methodType: 'list',
       responseSchema: {
@@ -138,10 +140,10 @@ export class QuoteResource extends StripeResource {
   /**
    * A quote models prices and services for a customer. Default options for header, description, footer, and expires_at can be set in the dashboard via the [quote template](https://dashboard.stripe.com/settings/billing/quote).
    */
-  create(
-    params?: QuoteCreateParams,
+  create<E extends string = never>(
+    params?: QuoteCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Quote>> {
+  ): Promise<Response<ApplyExpand<Quote, E>>> {
     return this._makeRequest('POST', '/v1/quotes', params, options, {
       requestSchema: {
         kind: 'object',
@@ -249,11 +251,11 @@ export class QuoteResource extends StripeResource {
   /**
    * Retrieves the quote with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: QuoteRetrieveParams,
+    params?: QuoteRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Quote>> {
+  ): Promise<Response<ApplyExpand<Quote, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/quotes/${encodeURIComponent(id)}`,
@@ -354,11 +356,11 @@ export class QuoteResource extends StripeResource {
   /**
    * A quote models prices and services for a customer.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: QuoteUpdateParams,
+    params?: QuoteUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Quote>> {
+  ): Promise<Response<ApplyExpand<Quote, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/quotes/${encodeURIComponent(id)}`,
@@ -476,11 +478,11 @@ export class QuoteResource extends StripeResource {
   /**
    * Accepts the specified quote.
    */
-  accept(
+  accept<E extends string = never>(
     id: string,
-    params?: QuoteAcceptParams,
+    params?: QuoteAcceptParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Quote>> {
+  ): Promise<Response<ApplyExpand<Quote, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/quotes/${encodeURIComponent(id)}/accept`,
@@ -581,11 +583,11 @@ export class QuoteResource extends StripeResource {
   /**
    * Cancels the quote.
    */
-  cancel(
+  cancel<E extends string = never>(
     id: string,
-    params?: QuoteCancelParams,
+    params?: QuoteCancelParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Quote>> {
+  ): Promise<Response<ApplyExpand<Quote, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/quotes/${encodeURIComponent(id)}/cancel`,
@@ -686,11 +688,11 @@ export class QuoteResource extends StripeResource {
   /**
    * Finalizes the quote.
    */
-  finalizeQuote(
+  finalizeQuote<E extends string = never>(
     id: string,
-    params?: QuoteFinalizeQuoteParams,
+    params?: QuoteFinalizeQuoteParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Quote>> {
+  ): Promise<Response<ApplyExpand<Quote, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/quotes/${encodeURIComponent(id)}/finalize`,
@@ -791,9 +793,9 @@ export class QuoteResource extends StripeResource {
   /**
    * Download the PDF for a finalized quote. Explanation for special handling can be found [here](https://docs.stripe.com/quotes/overview#quote_pdf)
    */
-  pdf(
+  pdf<E extends string = never>(
     id: string,
-    params?: QuotePdfParams,
+    params?: QuotePdfParams<E>,
     options?: RequestOptions
   ): Promise<StripeStreamResponse> {
     return this._makeRequest(
@@ -810,11 +812,11 @@ export class QuoteResource extends StripeResource {
   /**
    * When retrieving a quote, there is an includable [computed.upfront.line_items](https://stripe.com/docs/api/quotes/object#quote_object-computed-upfront-line_items) property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of upfront line items.
    */
-  listComputedUpfrontLineItems(
+  listComputedUpfrontLineItems<E extends string = never>(
     id: string,
-    params?: QuoteListComputedUpfrontLineItemsParams,
+    params?: QuoteListComputedUpfrontLineItemsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<LineItem> {
+  ): ApiListPromise<ApplyExpandListItem<LineItem, E>> {
     return this._makeRequest(
       'GET',
       `/v1/quotes/${encodeURIComponent(id)}/computed_upfront_line_items`,
@@ -897,11 +899,11 @@ export class QuoteResource extends StripeResource {
   /**
    * When retrieving a quote, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
    */
-  listLineItems(
+  listLineItems<E extends string = never>(
     id: string,
-    params?: QuoteListLineItemsParams,
+    params?: QuoteListLineItemsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<LineItem> {
+  ): ApiListPromise<ApplyExpandListItem<LineItem, E>> {
     return this._makeRequest(
       'GET',
       `/v1/quotes/${encodeURIComponent(id)}/line_items`,
@@ -1694,7 +1696,7 @@ export namespace Quote {
     }
   }
 }
-export interface QuoteCreateParams {
+export interface QuoteCreateParams<E extends string = string> {
   /**
    * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. There cannot be any line items with recurring prices when using this field.
    */
@@ -1743,7 +1745,7 @@ export interface QuoteCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A future timestamp on which the quote will be canceled if in `open` or `draft` status. Measured in seconds since the Unix epoch. If no value is passed, the default expiration date configured in your [quote template settings](https://dashboard.stripe.com/settings/billing/quote) will be used.
@@ -2097,13 +2099,13 @@ export namespace QuoteCreateParams {
     }
   }
 }
-export interface QuoteRetrieveParams {
+export interface QuoteRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface QuoteUpdateParams {
+export interface QuoteUpdateParams<E extends string = string> {
   /**
    * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. There cannot be any line items with recurring prices when using this field.
    */
@@ -2152,7 +2154,7 @@ export interface QuoteUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A future timestamp on which the quote will be canceled if in `open` or `draft` status. Measured in seconds since the Unix epoch.
@@ -2455,7 +2457,8 @@ export namespace QuoteUpdateParams {
     }
   }
 }
-export interface QuoteListParams extends PaginationParams {
+export interface QuoteListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * The ID of the customer whose quotes you're retrieving.
    */
@@ -2469,7 +2472,7 @@ export interface QuoteListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The status of the quote.
@@ -2484,45 +2487,47 @@ export interface QuoteListParams extends PaginationParams {
 export namespace QuoteListParams {
   export type Status = 'accepted' | 'canceled' | 'draft' | 'open' | OtherString;
 }
-export interface QuoteAcceptParams {
+export interface QuoteAcceptParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface QuoteCancelParams {
+export interface QuoteCancelParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface QuoteFinalizeQuoteParams {
+export interface QuoteFinalizeQuoteParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A future timestamp on which the quote will be canceled if in `open` or `draft` status. Measured in seconds since the Unix epoch.
    */
   expires_at?: number;
 }
-export interface QuoteListComputedUpfrontLineItemsParams
+export interface QuoteListComputedUpfrontLineItemsParams<
+  E extends string = string
+> extends PaginationParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<E>;
+}
+export interface QuoteListLineItemsParams<E extends string = string>
   extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface QuoteListLineItemsParams extends PaginationParams {
+export interface QuotePdfParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
-}
-export interface QuotePdfParams {
-  /**
-   * Specifies which fields in the response should be expanded.
-   */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

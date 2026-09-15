@@ -8,6 +8,8 @@ import {Cardholder} from './Cardholders.js';
 import {Dispute} from './Disputes.js';
 import {Token} from './Tokens.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   Emptyable,
   MetadataParam,
   PaginationParams,
@@ -22,10 +24,10 @@ export class TransactionResource extends StripeResource {
   /**
    * Returns a list of Issuing Transaction objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
-  list(
-    params?: Issuing.TransactionListParams,
+  list<E extends string = never>(
+    params?: Issuing.TransactionListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Transaction> {
+  ): ApiListPromise<ApplyExpandListItem<Transaction, E>> {
     return this._makeRequest(
       'GET',
       '/v1/issuing/transactions',
@@ -129,11 +131,11 @@ export class TransactionResource extends StripeResource {
   /**
    * Retrieves an Issuing Transaction object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Issuing.TransactionRetrieveParams,
+    params?: Issuing.TransactionRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transaction>> {
+  ): Promise<Response<ApplyExpand<Transaction, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/issuing/transactions/${encodeURIComponent(id)}`,
@@ -228,11 +230,11 @@ export class TransactionResource extends StripeResource {
   /**
    * Updates the specified Issuing Transaction object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Issuing.TransactionUpdateParams,
+    params?: Issuing.TransactionUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transaction>> {
+  ): Promise<Response<ApplyExpand<Transaction, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/issuing/transactions/${encodeURIComponent(id)}`,
@@ -789,19 +791,19 @@ export namespace Transaction {
   }
 }
 export namespace Issuing {
-  export interface TransactionRetrieveParams {
+  export interface TransactionRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Issuing {
-  export interface TransactionUpdateParams {
+  export interface TransactionUpdateParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -810,7 +812,8 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface TransactionListParams extends PaginationParams {
+  export interface TransactionListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Only return transactions that belong to the given card.
      */
@@ -829,7 +832,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return transactions that have the given type. One of `capture` or `refund`.

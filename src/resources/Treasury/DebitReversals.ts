@@ -3,6 +3,8 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Transaction} from './Transactions.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   PaginationParams,
   OtherString,
@@ -14,10 +16,10 @@ export class DebitReversalResource extends StripeResource {
   /**
    * Returns a list of DebitReversals.
    */
-  list(
-    params: Treasury.DebitReversalListParams,
+  list<E extends string = never>(
+    params: Treasury.DebitReversalListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<DebitReversal> {
+  ): ApiListPromise<ApplyExpandListItem<DebitReversal, E>> {
     return this._makeRequest(
       'GET',
       '/v1/treasury/debit_reversals',
@@ -31,10 +33,10 @@ export class DebitReversalResource extends StripeResource {
   /**
    * Reverses a ReceivedDebit and creates a DebitReversal object.
    */
-  create(
-    params: Treasury.DebitReversalCreateParams,
+  create<E extends string = never>(
+    params: Treasury.DebitReversalCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<DebitReversal>> {
+  ): Promise<Response<ApplyExpand<DebitReversal, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/treasury/debit_reversals',
@@ -45,11 +47,11 @@ export class DebitReversalResource extends StripeResource {
   /**
    * Retrieves a DebitReversal object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Treasury.DebitReversalRetrieveParams,
+    params?: Treasury.DebitReversalRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<DebitReversal>> {
+  ): Promise<Response<ApplyExpand<DebitReversal, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/treasury/debit_reversals/${encodeURIComponent(id)}`,
@@ -151,7 +153,7 @@ export namespace DebitReversal {
   }
 }
 export namespace Treasury {
-  export interface DebitReversalCreateParams {
+  export interface DebitReversalCreateParams<E extends string = string> {
     /**
      * The ReceivedDebit to reverse.
      */
@@ -160,7 +162,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -169,15 +171,16 @@ export namespace Treasury {
   }
 }
 export namespace Treasury {
-  export interface DebitReversalRetrieveParams {
+  export interface DebitReversalRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Treasury {
-  export interface DebitReversalListParams extends PaginationParams {
+  export interface DebitReversalListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Returns objects associated with this FinancialAccount.
      */
@@ -186,7 +189,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return DebitReversals for the ReceivedDebit ID.

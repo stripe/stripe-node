@@ -2,17 +2,21 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Feature} from './Features.js';
-import {PaginationParams} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class ActiveEntitlementResource extends StripeResource {
   /**
    * Retrieve a list of active entitlements for a customer
    */
-  list(
-    params: Entitlements.ActiveEntitlementListParams,
+  list<E extends string = never>(
+    params: Entitlements.ActiveEntitlementListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ActiveEntitlement> {
+  ): ApiListPromise<ApplyExpandListItem<ActiveEntitlement, E>> {
     return this._makeRequest(
       'GET',
       '/v1/entitlements/active_entitlements',
@@ -26,11 +30,11 @@ export class ActiveEntitlementResource extends StripeResource {
   /**
    * Retrieve an active entitlement
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Entitlements.ActiveEntitlementRetrieveParams,
+    params?: Entitlements.ActiveEntitlementRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ActiveEntitlement>> {
+  ): Promise<Response<ApplyExpand<ActiveEntitlement, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/entitlements/active_entitlements/${encodeURIComponent(id)}`,
@@ -66,15 +70,16 @@ export interface ActiveEntitlement {
   lookup_key: string;
 }
 export namespace Entitlements {
-  export interface ActiveEntitlementRetrieveParams {
+  export interface ActiveEntitlementRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Entitlements {
-  export interface ActiveEntitlementListParams extends PaginationParams {
+  export interface ActiveEntitlementListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * The ID of the customer.
      */
@@ -83,6 +88,6 @@ export namespace Entitlements {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

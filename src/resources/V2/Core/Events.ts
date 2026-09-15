@@ -125,7 +125,7 @@ export namespace Event {
     /**
      * Event reason type.
      */
-    type: 'request';
+    type: Reason.Type;
   }
 
   export namespace Reason {
@@ -140,6 +140,8 @@ export namespace Event {
        */
       idempotency_key: string;
     }
+
+    export type Type = 'request' | OtherString;
   }
 }
 export namespace V2 {
@@ -569,9 +571,7 @@ export interface V2CommerceProductCatalogImportsSucceededWithErrorsEventNotifica
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
-  fetchEvent(): Promise<
-    V2CommerceProductCatalogImportsSucceededWithErrorsEvent
-  >;
+  fetchEvent(): Promise<V2CommerceProductCatalogImportsSucceededWithErrorsEvent>;
 }
 
 /**
@@ -654,9 +654,7 @@ export interface V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpda
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Core.Account>;
-  fetchEvent(): Promise<
-    V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent
-  >;
+  fetchEvent(): Promise<V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent>;
 }
 
 export namespace V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent {
@@ -664,7 +662,11 @@ export namespace V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpda
     /**
      * Open Enum. The capability which had its status updated.
      */
-    updated_capability: 'automatic_indirect_tax';
+    updated_capability: Data.UpdatedCapability;
+  }
+
+  export namespace Data {
+    export type UpdatedCapability = 'automatic_indirect_tax' | OtherString;
   }
 }
 
@@ -686,9 +688,7 @@ export interface V2CoreAccountIncludingConfigurationCustomerUpdatedEventNotifica
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Core.Account>;
-  fetchEvent(): Promise<
-    V2CoreAccountIncludingConfigurationCustomerUpdatedEvent
-  >;
+  fetchEvent(): Promise<V2CoreAccountIncludingConfigurationCustomerUpdatedEvent>;
 }
 
 /**
@@ -711,9 +711,7 @@ export interface V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Core.Account>;
-  fetchEvent(): Promise<
-    V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent
-  >;
+  fetchEvent(): Promise<V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent>;
 }
 
 export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent {
@@ -794,9 +792,7 @@ export interface V2CoreAccountIncludingConfigurationMerchantUpdatedEventNotifica
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Core.Account>;
-  fetchEvent(): Promise<
-    V2CoreAccountIncludingConfigurationMerchantUpdatedEvent
-  >;
+  fetchEvent(): Promise<V2CoreAccountIncludingConfigurationMerchantUpdatedEvent>;
 }
 
 /**
@@ -819,9 +815,7 @@ export interface V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpd
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Core.Account>;
-  fetchEvent(): Promise<
-    V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent
-  >;
+  fetchEvent(): Promise<V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent>;
 }
 
 export namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent {
@@ -862,9 +856,7 @@ export interface V2CoreAccountIncludingConfigurationRecipientUpdatedEventNotific
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Core.Account>;
-  fetchEvent(): Promise<
-    V2CoreAccountIncludingConfigurationRecipientUpdatedEvent
-  >;
+  fetchEvent(): Promise<V2CoreAccountIncludingConfigurationRecipientUpdatedEvent>;
 }
 
 /**

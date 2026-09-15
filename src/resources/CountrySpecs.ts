@@ -1,17 +1,17 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams} from '../shared.js';
+import {ApplyExpandListItem, ApplyExpand, PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class CountrySpecResource extends StripeResource {
   /**
    * Lists all Country Spec objects available in the API.
    */
-  list(
-    params?: CountrySpecListParams,
+  list<E extends string = never>(
+    params?: CountrySpecListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<CountrySpec> {
+  ): ApiListPromise<ApplyExpandListItem<CountrySpec, E>> {
     return this._makeRequest('GET', '/v1/country_specs', params, options, {
       methodType: 'list',
     }) as any;
@@ -19,11 +19,11 @@ export class CountrySpecResource extends StripeResource {
   /**
    * Returns a Country Spec for a given Country code.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: CountrySpecRetrieveParams,
+    params?: CountrySpecRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CountrySpec>> {
+  ): Promise<Response<ApplyExpand<CountrySpec, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/country_specs/${encodeURIComponent(id)}`,
@@ -105,15 +105,16 @@ export namespace CountrySpec {
     }
   }
 }
-export interface CountrySpecRetrieveParams {
+export interface CountrySpecRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CountrySpecListParams extends PaginationParams {
+export interface CountrySpecListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

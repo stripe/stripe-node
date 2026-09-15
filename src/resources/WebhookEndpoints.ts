@@ -2,6 +2,8 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   Emptyable,
   MetadataParam,
   PaginationParams,
@@ -28,11 +30,11 @@ export class WebhookEndpointResource extends StripeResource {
   /**
    * Retrieves the webhook endpoint with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: WebhookEndpointRetrieveParams,
+    params?: WebhookEndpointRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<WebhookEndpoint>> {
+  ): Promise<Response<ApplyExpand<WebhookEndpoint, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/webhook_endpoints/${encodeURIComponent(id)}`,
@@ -43,11 +45,11 @@ export class WebhookEndpointResource extends StripeResource {
   /**
    * Updates the webhook endpoint. You may edit the url, the list of enabled_events, and the status of your endpoint.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: WebhookEndpointUpdateParams,
+    params?: WebhookEndpointUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<WebhookEndpoint>> {
+  ): Promise<Response<ApplyExpand<WebhookEndpoint, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/webhook_endpoints/${encodeURIComponent(id)}`,
@@ -58,10 +60,10 @@ export class WebhookEndpointResource extends StripeResource {
   /**
    * Returns a list of your webhook endpoints.
    */
-  list(
-    params?: WebhookEndpointListParams,
+  list<E extends string = never>(
+    params?: WebhookEndpointListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<WebhookEndpoint> {
+  ): ApiListPromise<ApplyExpandListItem<WebhookEndpoint, E>> {
     return this._makeRequest('GET', '/v1/webhook_endpoints', params, options, {
       methodType: 'list',
     }) as any;
@@ -69,10 +71,10 @@ export class WebhookEndpointResource extends StripeResource {
   /**
    * A webhook endpoint must have a url and a list of enabled_events. You may optionally specify the Boolean connect parameter. If set to true, then a Connect webhook endpoint that notifies the specified url about events from all connected accounts is created; otherwise an account webhook endpoint that notifies the specified url only about events from your account is created. You can also create webhook endpoints in the [webhooks settings](https://dashboard.stripe.com/account/webhooks) section of the Dashboard.
    */
-  create(
-    params: WebhookEndpointCreateParams,
+  create<E extends string = never>(
+    params: WebhookEndpointCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<WebhookEndpoint>> {
+  ): Promise<Response<ApplyExpand<WebhookEndpoint, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/webhook_endpoints',
@@ -163,7 +165,7 @@ export interface DeletedWebhookEndpoint {
    */
   deleted: true;
 }
-export interface WebhookEndpointCreateParams {
+export interface WebhookEndpointCreateParams<E extends string = string> {
   /**
    * The list of events to enable for this endpoint. You may specify `['*']` to enable all events, except those that require explicit selection.
    */
@@ -192,7 +194,7 @@ export interface WebhookEndpointCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -597,13 +599,13 @@ export namespace WebhookEndpointCreateParams {
     | '2026-07-29.dahlia'
     | '2026-08-26.dahlia';
 }
-export interface WebhookEndpointRetrieveParams {
+export interface WebhookEndpointRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface WebhookEndpointUpdateParams {
+export interface WebhookEndpointUpdateParams<E extends string = string> {
   /**
    * An optional description of what the webhook is used for.
    */
@@ -622,7 +624,7 @@ export interface WebhookEndpointUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -903,10 +905,11 @@ export namespace WebhookEndpointUpdateParams {
     | 'treasury.received_credit.succeeded'
     | 'treasury.received_debit.created';
 }
-export interface WebhookEndpointListParams extends PaginationParams {
+export interface WebhookEndpointListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export interface WebhookEndpointDeleteParams {}

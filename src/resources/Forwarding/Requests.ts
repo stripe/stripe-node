@@ -2,6 +2,8 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   OtherString,
   PaginationParams,
@@ -14,10 +16,10 @@ export class RequestResource extends StripeResource {
   /**
    * Lists all ForwardingRequest objects.
    */
-  list(
-    params?: Forwarding.RequestListParams,
+  list<E extends string = never>(
+    params?: Forwarding.RequestListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Request> {
+  ): ApiListPromise<ApplyExpandListItem<Request, E>> {
     return this._makeRequest(
       'GET',
       '/v1/forwarding/requests',
@@ -31,10 +33,10 @@ export class RequestResource extends StripeResource {
   /**
    * Creates a ForwardingRequest object.
    */
-  create(
-    params: Forwarding.RequestCreateParams,
+  create<E extends string = never>(
+    params: Forwarding.RequestCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Request>> {
+  ): Promise<Response<ApplyExpand<Request, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/forwarding/requests',
@@ -45,11 +47,11 @@ export class RequestResource extends StripeResource {
   /**
    * Retrieves a ForwardingRequest object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Forwarding.RequestRetrieveParams,
+    params?: Forwarding.RequestRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Request>> {
+  ): Promise<Response<ApplyExpand<Request, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/forwarding/requests/${encodeURIComponent(id)}`,
@@ -198,7 +200,7 @@ export namespace Request {
   }
 }
 export namespace Forwarding {
-  export interface RequestCreateParams {
+  export interface RequestCreateParams<E extends string = string> {
     /**
      * The PaymentMethod to insert into the forwarded request. Forwarding previously consumed PaymentMethods is allowed.
      */
@@ -222,7 +224,7 @@ export namespace Forwarding {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -267,15 +269,16 @@ export namespace Forwarding {
   }
 }
 export namespace Forwarding {
-  export interface RequestRetrieveParams {
+  export interface RequestRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Forwarding {
-  export interface RequestListParams extends PaginationParams {
+  export interface RequestListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Similar to other List endpoints, filters results based on created timestamp. You can pass gt, gte, lt, and lte timestamp values.
      */
@@ -284,6 +287,6 @@ export namespace Forwarding {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

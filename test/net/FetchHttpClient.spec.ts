@@ -66,9 +66,7 @@ describe('FetchHttpClient', () => {
       return fetch(url, params);
     };
 
-    nock('http://stripe.com')
-      .post('/test', '')
-      .reply(200);
+    nock('http://stripe.com').post('/test', '').reply(200);
 
     const client = new FetchHttpClient(patchedFetch);
     client.makeRequest(
@@ -106,9 +104,7 @@ describe('FetchHttpClient', () => {
     });
 
     it('sends request to the correct host when given a relative path', async () => {
-      nock('https://api.stripe.com')
-        .get('/v1/charges')
-        .reply(200, '{}');
+      nock('https://api.stripe.com').get('/v1/charges').reply(200, '{}');
 
       const client = createFetchHttpClient();
       const response = await client.makeRequest(
@@ -133,9 +129,7 @@ describe('FetchHttpClient', () => {
       return fetch(url, params);
     };
 
-    nock('http://stripe.com')
-      .get('/test')
-      .reply(200);
+    nock('http://stripe.com').get('/test').reply(200);
 
     const client = new FetchHttpClient(patchedFetch);
     client.makeRequest(
@@ -186,9 +180,7 @@ describe('FetchHttpClient', () => {
     });
 
     it('times out reading the body when aborting', async () => {
-      nock('http://stripe.com')
-        .get('/test')
-        .reply(200, stalledBody);
+      nock('http://stripe.com').get('/test').reply(200, stalledBody);
 
       const response = await sendRequest(createFetchHttpClient());
 
@@ -201,9 +193,7 @@ describe('FetchHttpClient', () => {
     });
 
     it('times out reading the body when racing', async () => {
-      nock('http://stripe.com')
-        .get('/test')
-        .reply(200, stalledBody);
+      nock('http://stripe.com').get('/test').reply(200, stalledBody);
 
       // Runtimes without AbortController fall back to racing a timer, which
       // cannot cancel the read but still has to stop the request from hanging.

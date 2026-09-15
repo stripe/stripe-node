@@ -3,11 +3,11 @@ import {FAKE_API_KEY} from './testUtils.js';
 
 const nodeVersion = parseInt(process.versions.node.split('.')[0], 10);
 
-describe('Integration test', function() {
+describe('Integration test', function () {
   // these tests are expensive and start processes they don't clean up
   // so, skip them in the regular test suite (which we run locally) and run them via `just test-integrations`
   // (which is also called in CI)
-  before(function() {
+  before(function () {
     if (process.env.RUN_INTEGRATION_TESTS !== '1') {
       this.skip();
     }
@@ -49,7 +49,7 @@ describe('Integration test', function() {
   it('should work with CommonJS TypeScript imports', () =>
     runTestProject('cjs-ts'));
 
-  it('should work with ESModule imports', async function() {
+  it('should work with ESModule imports', async function () {
     // Node supports ES Modules starting at v12
     if (nodeVersion <= 12) {
       this.skip();
@@ -58,7 +58,7 @@ describe('Integration test', function() {
     await runTestProject('mjs');
   });
 
-  it('should work with Typescript ESModule imports', async function() {
+  it('should work with Typescript ESModule imports', async function () {
     // Node supports ES Modules starting at v12
     if (nodeVersion <= 12) {
       this.skip();
@@ -70,7 +70,7 @@ describe('Integration test', function() {
   it('should work with Bun', () => runTestProject('bun'));
 
   describe('esbuild', () => {
-    it('should not change error.type when minified', async function() {
+    it('should not change error.type when minified', async function () {
       // Node supports ES Modules starting at v12
       if (nodeVersion <= 12) {
         this.skip();
@@ -98,11 +98,11 @@ describe('Integration test', function() {
     return testExec(script);
   };
 
-  it('should build successfully in Cloudflare Workers', function() {
+  it('should build successfully in Cloudflare Workers', function () {
     runTestCloudflareProject('cloudflare-worker');
   });
 
-  it('should build successfully in Cloudflare Pages Functions', function() {
+  it('should build successfully in Cloudflare Pages Functions', function () {
     runTestCloudflareProject('cloudflare-pages');
   });
 
@@ -127,7 +127,7 @@ describe('Integration test', function() {
 
   it('Webhook sample koa', () => runWebhookTest('koa'));
 
-  it('Webhook sample nextjs', function() {
+  it('Webhook sample nextjs', function () {
     // Next.js supports Node.js >=16
     if (nodeVersion < 16) {
       this.skip();
@@ -138,7 +138,7 @@ describe('Integration test', function() {
 
   it('Webhook sample deno', () => runWebhookTest('deno'));
 
-  it('Webhook sample nestjs', function() {
+  it('Webhook sample nestjs', function () {
     // Next.js supports Node.js >=16
     if (nodeVersion < 16) {
       this.skip();

@@ -2,17 +2,18 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {Card} from './../../Issuing/Cards.js';
+import {ApplyExpand} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class CardResource extends StripeResource {
   /**
    * Updates the shipping status of the specified Issuing Card object to delivered.
    */
-  deliverCard(
+  deliverCard<E extends string = never>(
     id: string,
-    params?: TestHelpers.Issuing.CardDeliverCardParams,
+    params?: TestHelpers.Issuing.CardDeliverCardParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Card>> {
+  ): Promise<Response<ApplyExpand<Card, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/cards/${encodeURIComponent(
@@ -25,11 +26,11 @@ export class CardResource extends StripeResource {
   /**
    * Updates the shipping status of the specified Issuing Card object to failure.
    */
-  failCard(
+  failCard<E extends string = never>(
     id: string,
-    params?: TestHelpers.Issuing.CardFailCardParams,
+    params?: TestHelpers.Issuing.CardFailCardParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Card>> {
+  ): Promise<Response<ApplyExpand<Card, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/cards/${encodeURIComponent(id)}/shipping/fail`,
@@ -40,11 +41,11 @@ export class CardResource extends StripeResource {
   /**
    * Updates the shipping status of the specified Issuing Card object to returned.
    */
-  returnCard(
+  returnCard<E extends string = never>(
     id: string,
-    params?: TestHelpers.Issuing.CardReturnCardParams,
+    params?: TestHelpers.Issuing.CardReturnCardParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Card>> {
+  ): Promise<Response<ApplyExpand<Card, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/cards/${encodeURIComponent(
@@ -57,11 +58,11 @@ export class CardResource extends StripeResource {
   /**
    * Updates the shipping status of the specified Issuing Card object to shipped.
    */
-  shipCard(
+  shipCard<E extends string = never>(
     id: string,
-    params?: TestHelpers.Issuing.CardShipCardParams,
+    params?: TestHelpers.Issuing.CardShipCardParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Card>> {
+  ): Promise<Response<ApplyExpand<Card, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/cards/${encodeURIComponent(id)}/shipping/ship`,
@@ -72,11 +73,11 @@ export class CardResource extends StripeResource {
   /**
    * Updates the shipping status of the specified Issuing Card object to submitted. This method requires Stripe Version ‘2024-09-30.acacia' or later.
    */
-  submitCard(
+  submitCard<E extends string = never>(
     id: string,
-    params?: TestHelpers.Issuing.CardSubmitCardParams,
+    params?: TestHelpers.Issuing.CardSubmitCardParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Card>> {
+  ): Promise<Response<ApplyExpand<Card, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/cards/${encodeURIComponent(
@@ -89,51 +90,51 @@ export class CardResource extends StripeResource {
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface CardDeliverCardParams {
+    export interface CardDeliverCardParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface CardFailCardParams {
+    export interface CardFailCardParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface CardReturnCardParams {
+    export interface CardReturnCardParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface CardShipCardParams {
+    export interface CardShipCardParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface CardSubmitCardParams {
+    export interface CardSubmitCardParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }

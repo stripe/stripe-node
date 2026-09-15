@@ -17,6 +17,8 @@ import {TaxId, DeletedTaxId} from './TaxIds.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import * as Billing from './Billing/index.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   Emptyable,
   MetadataParam,
   OtherString,
@@ -41,11 +43,11 @@ export class SubscriptionResource extends StripeResource {
    *
    * By default, upon subscription cancellation, Stripe stops automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
    */
-  cancel(
+  cancel<E extends string = never>(
     id: string,
-    params?: SubscriptionCancelParams,
+    params?: SubscriptionCancelParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Subscription>> {
+  ): Promise<Response<ApplyExpand<Subscription, E>>> {
     return this._makeRequest(
       'DELETE',
       `/v1/subscriptions/${encodeURIComponent(id)}`,
@@ -154,11 +156,11 @@ export class SubscriptionResource extends StripeResource {
   /**
    * Retrieves the subscription with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: SubscriptionRetrieveParams,
+    params?: SubscriptionRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Subscription>> {
+  ): Promise<Response<ApplyExpand<Subscription, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/subscriptions/${encodeURIComponent(id)}`,
@@ -287,11 +289,11 @@ export class SubscriptionResource extends StripeResource {
    *
    * Updating the quantity on a subscription many times in an hour may result in [rate limiting. If you need to bill for a frequently changing quantity, consider integrating <a href="/docs/billing/subscriptions/usage-based">usage-based billing](https://docs.stripe.com/docs/rate-limits) instead.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: SubscriptionUpdateParams,
+    params?: SubscriptionUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Subscription>> {
+  ): Promise<Response<ApplyExpand<Subscription, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/subscriptions/${encodeURIComponent(id)}`,
@@ -444,10 +446,10 @@ export class SubscriptionResource extends StripeResource {
   /**
    * By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify status=canceled.
    */
-  list(
-    params?: SubscriptionListParams,
+  list<E extends string = never>(
+    params?: SubscriptionListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Subscription> {
+  ): ApiListPromise<ApplyExpandListItem<Subscription, E>> {
     return this._makeRequest('GET', '/v1/subscriptions', params, options, {
       methodType: 'list',
       responseSchema: {
@@ -565,10 +567,10 @@ export class SubscriptionResource extends StripeResource {
    * To start subscriptions where the first invoice always begins in a draft status, use [subscription schedules](https://docs.stripe.com/docs/billing/subscriptions/subscription-schedules#managing) instead.
    * Schedules provide the flexibility to model more complex billing configurations that change over time.
    */
-  create(
-    params?: SubscriptionCreateParams,
+  create<E extends string = never>(
+    params?: SubscriptionCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Subscription>> {
+  ): Promise<Response<ApplyExpand<Subscription, E>>> {
     return this._makeRequest('POST', '/v1/subscriptions', params, options, {
       requestSchema: {
         kind: 'object',
@@ -703,10 +705,10 @@ export class SubscriptionResource extends StripeResource {
    * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
    * to an hour behind during outages. Search functionality is not available to merchants in India.
    */
-  search(
-    params: SubscriptionSearchParams,
+  search<E extends string = never>(
+    params: SubscriptionSearchParams<E>,
     options?: RequestOptions
-  ): ApiSearchResultPromise<Subscription> {
+  ): ApiSearchResultPromise<ApplyExpandListItem<Subscription, E>> {
     return this._makeRequest(
       'GET',
       '/v1/subscriptions/search',
@@ -824,11 +826,11 @@ export class SubscriptionResource extends StripeResource {
   /**
    * Upgrade the billing_mode of an existing subscription.
    */
-  migrate(
+  migrate<E extends string = never>(
     id: string,
-    params: SubscriptionMigrateParams,
+    params: SubscriptionMigrateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Subscription>> {
+  ): Promise<Response<ApplyExpand<Subscription, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/subscriptions/${encodeURIComponent(id)}/migrate`,
@@ -937,11 +939,11 @@ export class SubscriptionResource extends StripeResource {
   /**
    * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. Resume is only available for subscriptions that use charge_automatically collection. If Stripe doesn't generate a resumption invoice, the subscription becomes active immediately. When a resumption invoice is generated, Stripe finalizes it immediately. If the invoice is paid or marked uncollectible, the subscription becomes active. If the invoice is manually voided, the subscription stays paused. If there is no payment attempt within 23 hours, Stripe voids the invoice and the subscription stays paused. Learn more about [resuming subscriptions](https://docs.stripe.com/docs/billing/subscriptions/pause#resume-subscriptions).
    */
-  resume(
+  resume<E extends string = never>(
     id: string,
-    params?: SubscriptionResumeParams,
+    params?: SubscriptionResumeParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Subscription>> {
+  ): Promise<Response<ApplyExpand<Subscription, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/subscriptions/${encodeURIComponent(id)}/resume`,
@@ -2167,7 +2169,7 @@ export namespace Subscription {
     }
   }
 }
-export interface SubscriptionCreateParams {
+export interface SubscriptionCreateParams<E extends string = string> {
   /**
    * A list of prices and quantities that will generate invoice items appended to the next invoice for this subscription. You may pass up to 20 items.
    */
@@ -2276,7 +2278,7 @@ export interface SubscriptionCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * All invoices will be billed using the specified settings.
@@ -2316,9 +2318,7 @@ export interface SubscriptionCreateParams {
   /**
    * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://docs.stripe.com/api/invoices/create) for the given subscription at the specified interval.
    */
-  pending_invoice_item_interval?: Emptyable<
-    SubscriptionCreateParams.PendingInvoiceItemInterval
-  >;
+  pending_invoice_item_interval?: Emptyable<SubscriptionCreateParams.PendingInvoiceItemInterval>;
 
   /**
    * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor`. If no value is passed, the default is `create_prorations`.
@@ -3401,13 +3401,13 @@ export namespace SubscriptionCreateParams {
     }
   }
 }
-export interface SubscriptionRetrieveParams {
+export interface SubscriptionRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface SubscriptionUpdateParams {
+export interface SubscriptionUpdateParams<E extends string = string> {
   /**
    * A list of prices and quantities that will generate invoice items appended to the next invoice for this subscription. You may pass up to 20 items.
    */
@@ -3493,7 +3493,7 @@ export interface SubscriptionUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * All invoices will be billed using the specified settings.
@@ -3538,9 +3538,7 @@ export interface SubscriptionUpdateParams {
   /**
    * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://docs.stripe.com/api/invoices/create) for the given subscription at the specified interval.
    */
-  pending_invoice_item_interval?: Emptyable<
-    SubscriptionUpdateParams.PendingInvoiceItemInterval
-  >;
+  pending_invoice_item_interval?: Emptyable<SubscriptionUpdateParams.PendingInvoiceItemInterval>;
 
   /**
    * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
@@ -4636,7 +4634,8 @@ export namespace SubscriptionUpdateParams {
     }
   }
 }
-export interface SubscriptionListParams extends PaginationParams {
+export interface SubscriptionListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Filter subscriptions by their automatic tax settings.
    */
@@ -4675,7 +4674,7 @@ export interface SubscriptionListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The ID of the plan whose subscriptions will be retrieved.
@@ -4723,7 +4722,7 @@ export namespace SubscriptionListParams {
     | 'unpaid'
     | OtherString;
 }
-export interface SubscriptionCancelParams {
+export interface SubscriptionCancelParams<E extends string = string> {
   /**
    * Details about why this subscription was cancelled
    */
@@ -4732,7 +4731,7 @@ export interface SubscriptionCancelParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items. Defaults to `false`.
@@ -4776,7 +4775,7 @@ export namespace SubscriptionCancelParams {
   }
 }
 export interface SubscriptionDeleteDiscountParams {}
-export interface SubscriptionMigrateParams {
+export interface SubscriptionMigrateParams<E extends string = string> {
   /**
    * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
    */
@@ -4785,7 +4784,7 @@ export interface SubscriptionMigrateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export namespace SubscriptionMigrateParams {
   export interface BillingMode {
@@ -4813,7 +4812,7 @@ export namespace SubscriptionMigrateParams {
     }
   }
 }
-export interface SubscriptionResumeParams {
+export interface SubscriptionResumeParams<E extends string = string> {
   /**
    * The billing cycle anchor that applies when the subscription is resumed. Either `now` or `unchanged`. The default is `now`. For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
    */
@@ -4822,7 +4821,7 @@ export interface SubscriptionResumeParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor` being `unchanged`. When the `billing_cycle_anchor` is set to `now` (default value), no prorations are generated. If no value is passed, the default is `create_prorations`.
@@ -4843,7 +4842,7 @@ export namespace SubscriptionResumeParams {
     | 'none'
     | OtherString;
 }
-export interface SubscriptionSearchParams {
+export interface SubscriptionSearchParams<E extends string = string> {
   /**
    * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for subscriptions](https://docs.stripe.com/search#query-fields-for-subscriptions).
    */
@@ -4852,7 +4851,7 @@ export interface SubscriptionSearchParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.

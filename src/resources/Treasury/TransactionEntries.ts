@@ -10,17 +10,23 @@ import {OutboundTransfer} from './OutboundTransfers.js';
 import {ReceivedCredit} from './ReceivedCredits.js';
 import {ReceivedDebit} from './ReceivedDebits.js';
 import * as Issuing from './../Issuing/index.js';
-import {PaginationParams, RangeQueryParam, OtherString} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  RangeQueryParam,
+  OtherString,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class TransactionEntryResource extends StripeResource {
   /**
    * Retrieves a list of TransactionEntry objects.
    */
-  list(
-    params: Treasury.TransactionEntryListParams,
+  list<E extends string = never>(
+    params: Treasury.TransactionEntryListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<TransactionEntry> {
+  ): ApiListPromise<ApplyExpandListItem<TransactionEntry, E>> {
     return this._makeRequest(
       'GET',
       '/v1/treasury/transaction_entries',
@@ -141,13 +147,13 @@ export class TransactionEntryResource extends StripeResource {
                                                       inner: {
                                                         kind: 'object',
                                                         fields: {
-                                                          gross_amount_decimal: {
-                                                            kind: 'nullable',
-                                                            inner: {
-                                                              kind:
-                                                                'decimal_string',
+                                                          gross_amount_decimal:
+                                                            {
+                                                              kind: 'nullable',
+                                                              inner: {
+                                                                kind: 'decimal_string',
+                                                              },
                                                             },
-                                                          },
                                                         },
                                                       },
                                                     },
@@ -156,13 +162,13 @@ export class TransactionEntryResource extends StripeResource {
                                                       inner: {
                                                         kind: 'object',
                                                         fields: {
-                                                          gross_amount_decimal: {
-                                                            kind: 'nullable',
-                                                            inner: {
-                                                              kind:
-                                                                'decimal_string',
+                                                          gross_amount_decimal:
+                                                            {
+                                                              kind: 'nullable',
+                                                              inner: {
+                                                                kind: 'decimal_string',
+                                                              },
                                                             },
-                                                          },
                                                         },
                                                       },
                                                     },
@@ -171,20 +177,20 @@ export class TransactionEntryResource extends StripeResource {
                                                       inner: {
                                                         kind: 'object',
                                                         fields: {
-                                                          local_amount_decimal: {
-                                                            kind: 'nullable',
-                                                            inner: {
-                                                              kind:
-                                                                'decimal_string',
+                                                          local_amount_decimal:
+                                                            {
+                                                              kind: 'nullable',
+                                                              inner: {
+                                                                kind: 'decimal_string',
+                                                              },
                                                             },
-                                                          },
-                                                          national_amount_decimal: {
-                                                            kind: 'nullable',
-                                                            inner: {
-                                                              kind:
-                                                                'decimal_string',
+                                                          national_amount_decimal:
+                                                            {
+                                                              kind: 'nullable',
+                                                              inner: {
+                                                                kind: 'decimal_string',
+                                                              },
                                                             },
-                                                          },
                                                         },
                                                       },
                                                     },
@@ -231,11 +237,11 @@ export class TransactionEntryResource extends StripeResource {
   /**
    * Retrieves a TransactionEntry object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Treasury.TransactionEntryRetrieveParams,
+    params?: Treasury.TransactionEntryRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TransactionEntry>> {
+  ): Promise<Response<ApplyExpand<TransactionEntry, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/treasury/transaction_entries/${encodeURIComponent(id)}`,
@@ -626,15 +632,16 @@ export namespace TransactionEntry {
   }
 }
 export namespace Treasury {
-  export interface TransactionEntryRetrieveParams {
+  export interface TransactionEntryRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Treasury {
-  export interface TransactionEntryListParams extends PaginationParams {
+  export interface TransactionEntryListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Returns objects associated with this FinancialAccount.
      */
@@ -650,7 +657,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The results are in reverse chronological order by `created` or `effective_at`. The default is `created`.

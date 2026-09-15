@@ -338,28 +338,28 @@ class DecimalImpl {
    * @public
    */
   add(other: Decimal): Decimal {
-    const otherImpl = (other as unknown) as DecimalImpl;
+    const otherImpl = other as unknown as DecimalImpl;
 
     // Align exponents — use the smaller (more precision) exponent as target.
     if (this._exponent === otherImpl._exponent) {
-      return (new DecimalImpl(
+      return new DecimalImpl(
         this._coefficient + otherImpl._coefficient,
         this._exponent
-      ) as unknown) as Decimal;
+      ) as unknown as Decimal;
     }
 
     if (this._exponent < otherImpl._exponent) {
       const scale = 10n ** BigInt(otherImpl._exponent - this._exponent);
-      return (new DecimalImpl(
+      return new DecimalImpl(
         this._coefficient + otherImpl._coefficient * scale,
         this._exponent
-      ) as unknown) as Decimal;
+      ) as unknown as Decimal;
     } else {
       const scale = 10n ** BigInt(this._exponent - otherImpl._exponent);
-      return (new DecimalImpl(
+      return new DecimalImpl(
         this._coefficient * scale + otherImpl._coefficient,
         otherImpl._exponent
-      ) as unknown) as Decimal;
+      ) as unknown as Decimal;
     }
   }
 
@@ -372,27 +372,27 @@ class DecimalImpl {
    * @public
    */
   sub(other: Decimal): Decimal {
-    const otherImpl = (other as unknown) as DecimalImpl;
+    const otherImpl = other as unknown as DecimalImpl;
 
     if (this._exponent === otherImpl._exponent) {
-      return (new DecimalImpl(
+      return new DecimalImpl(
         this._coefficient - otherImpl._coefficient,
         this._exponent
-      ) as unknown) as Decimal;
+      ) as unknown as Decimal;
     }
 
     if (this._exponent < otherImpl._exponent) {
       const scale = 10n ** BigInt(otherImpl._exponent - this._exponent);
-      return (new DecimalImpl(
+      return new DecimalImpl(
         this._coefficient - otherImpl._coefficient * scale,
         this._exponent
-      ) as unknown) as Decimal;
+      ) as unknown as Decimal;
     } else {
       const scale = 10n ** BigInt(this._exponent - otherImpl._exponent);
-      return (new DecimalImpl(
+      return new DecimalImpl(
         this._coefficient * scale - otherImpl._coefficient,
         otherImpl._exponent
-      ) as unknown) as Decimal;
+      ) as unknown as Decimal;
     }
   }
 
@@ -405,11 +405,11 @@ class DecimalImpl {
    * @public
    */
   mul(other: Decimal): Decimal {
-    const otherImpl = (other as unknown) as DecimalImpl;
-    return (new DecimalImpl(
+    const otherImpl = other as unknown as DecimalImpl;
+    return new DecimalImpl(
       this._coefficient * otherImpl._coefficient,
       this._exponent + otherImpl._exponent
-    ) as unknown) as Decimal;
+    ) as unknown as Decimal;
   }
 
   /**
@@ -447,7 +447,7 @@ class DecimalImpl {
       throw new Error('precision must be a non-negative integer');
     }
 
-    const otherImpl = (other as unknown) as DecimalImpl;
+    const otherImpl = other as unknown as DecimalImpl;
 
     if (otherImpl._coefficient === 0n) {
       throw new Error('Division by zero');
@@ -482,7 +482,7 @@ class DecimalImpl {
       direction
     );
 
-    return (new DecimalImpl(roundedQuotient, -precision) as unknown) as Decimal;
+    return new DecimalImpl(roundedQuotient, -precision) as unknown as Decimal;
   }
 
   // -------------------------------------------------------------------
@@ -507,7 +507,7 @@ class DecimalImpl {
    * @public
    */
   cmp(other: Decimal): -1 | 0 | 1 {
-    const otherImpl = (other as unknown) as DecimalImpl;
+    const otherImpl = other as unknown as DecimalImpl;
 
     if (this._exponent === otherImpl._exponent) {
       if (this._coefficient < otherImpl._coefficient) return -1;
@@ -641,10 +641,10 @@ class DecimalImpl {
    * @public
    */
   neg(): Decimal {
-    return (new DecimalImpl(
+    return new DecimalImpl(
       -this._coefficient,
       this._exponent
-    ) as unknown) as Decimal;
+    ) as unknown as Decimal;
   }
 
   /**
@@ -657,12 +657,12 @@ class DecimalImpl {
    */
   abs(): Decimal {
     if (this._coefficient < 0n) {
-      return (new DecimalImpl(
+      return new DecimalImpl(
         -this._coefficient,
         this._exponent
-      ) as unknown) as Decimal;
+      ) as unknown as Decimal;
     }
-    return (this as unknown) as Decimal;
+    return this as unknown as Decimal;
   }
 
   // -------------------------------------------------------------------
@@ -718,10 +718,12 @@ class DecimalImpl {
           // so the runtime guard below can produce a clear error for unrecognised
           // (e.g. declaration-merged) preset names that were not also added to
           // ROUNDING_PRESETS.
-          ((ROUNDING_PRESETS as unknown) as Record<
-            string,
-            DecimalRoundingOptions | undefined
-          >)[options]
+          (
+            ROUNDING_PRESETS as unknown as Record<
+              string,
+              DecimalRoundingOptions | undefined
+            >
+          )[options]
         : options;
 
     if (resolved === undefined) {
@@ -742,7 +744,7 @@ class DecimalImpl {
 
     // significant-figures: round to resolved.value total significant digits.
     if (this._coefficient === 0n) {
-      return (this as unknown) as Decimal;
+      return this as unknown as Decimal;
     }
 
     const coeffStr =
@@ -758,7 +760,7 @@ class DecimalImpl {
 
     if (currentSigFigs <= resolved.value) {
       // Already at or below requested precision — no rounding needed.
-      return (this as unknown) as Decimal;
+      return this as unknown as Decimal;
     }
 
     // We need to reduce the number of significant figures.
@@ -775,10 +777,10 @@ class DecimalImpl {
       direction
     );
     // The new exponent shifts to account for trimmed digits.
-    return (new DecimalImpl(
+    return new DecimalImpl(
       rounded,
       this._exponent + digitsToTrim
-    ) as unknown) as Decimal;
+    ) as unknown as Decimal;
   }
 
   // -------------------------------------------------------------------
@@ -1089,7 +1091,7 @@ export const Decimal = {
    */
   from(value: string | number | bigint): Decimal {
     if (typeof value === 'bigint') {
-      return (new DecimalImpl(value, 0) as unknown) as Decimal;
+      return new DecimalImpl(value, 0) as unknown as Decimal;
     }
 
     if (typeof value === 'number') {
@@ -1142,7 +1144,7 @@ export const Decimal = {
       );
     }
 
-    return (new DecimalImpl(coefficient, exponent) as unknown) as Decimal;
+    return new DecimalImpl(coefficient, exponent) as unknown as Decimal;
   },
 
   /**
@@ -1154,5 +1156,5 @@ export const Decimal = {
    *
    * @public
    */
-  zero: (new DecimalImpl(0n, 0) as unknown) as Decimal,
+  zero: new DecimalImpl(0n, 0) as unknown as Decimal,
 };

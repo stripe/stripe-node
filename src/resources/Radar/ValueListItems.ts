@@ -1,7 +1,12 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams, RangeQueryParam} from '../../shared.js';
+import {
+  ApplyExpand,
+  ApplyExpandListItem,
+  PaginationParams,
+  RangeQueryParam,
+} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 
 export class ValueListItemResource extends StripeResource {
@@ -23,11 +28,11 @@ export class ValueListItemResource extends StripeResource {
   /**
    * Retrieves a ValueListItem object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Radar.ValueListItemRetrieveParams,
+    params?: Radar.ValueListItemRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ValueListItem>> {
+  ): Promise<Response<ApplyExpand<ValueListItem, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/radar/value_list_items/${encodeURIComponent(id)}`,
@@ -38,10 +43,10 @@ export class ValueListItemResource extends StripeResource {
   /**
    * Returns a list of ValueListItem objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
-  list(
-    params: Radar.ValueListItemListParams,
+  list<E extends string = never>(
+    params: Radar.ValueListItemListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ValueListItem> {
+  ): ApiListPromise<ApplyExpandListItem<ValueListItem, E>> {
     return this._makeRequest(
       'GET',
       '/v1/radar/value_list_items',
@@ -55,10 +60,10 @@ export class ValueListItemResource extends StripeResource {
   /**
    * Creates a new ValueListItem object, which is added to the specified parent value list.
    */
-  create(
-    params: Radar.ValueListItemCreateParams,
+  create<E extends string = never>(
+    params: Radar.ValueListItemCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ValueListItem>> {
+  ): Promise<Response<ApplyExpand<ValueListItem, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/radar/value_list_items',
@@ -125,7 +130,7 @@ export interface DeletedValueListItem {
   deleted: true;
 }
 export namespace Radar {
-  export interface ValueListItemCreateParams {
+  export interface ValueListItemCreateParams<E extends string = string> {
     /**
      * The value of the item (whose type must match the type of the parent value list).
      */
@@ -139,19 +144,20 @@ export namespace Radar {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Radar {
-  export interface ValueListItemRetrieveParams {
+  export interface ValueListItemRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Radar {
-  export interface ValueListItemListParams extends PaginationParams {
+  export interface ValueListItemListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Identifier for the parent value list this item belongs to.
      */
@@ -165,7 +171,7 @@ export namespace Radar {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Return items belonging to the parent list whose value matches the specified value (using an "is like" match).

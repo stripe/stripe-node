@@ -24,9 +24,9 @@ if (process.versions.node < '19') {
     `Skipping WebPlatformFunctions multipart tests. No 'globalThis.crypto' in module scope for ${process.version}.`
   );
 } else {
-  import(
-    '../src/platform/WebPlatformFunctions.js'
-  ).then(({WebPlatformFunctions}) => testMultipart(new WebPlatformFunctions()));
+  import('../src/platform/WebPlatformFunctions.js').then(
+    ({WebPlatformFunctions}) => testMultipart(new WebPlatformFunctions())
+  );
 }
 
 testMultipart(new NodePlatformFunctions());
@@ -72,7 +72,8 @@ function testMultipart(platformFunctions: PlatformFunctions): void {
           const second = await generate({purpose: 'dispute_evidence', file});
 
           // A v4 UUID. Hyphens are legal boundary characters (RFC 2046 §5.1.1).
-          const v4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+          const v4 =
+            /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
           expect(first.boundary).to.match(v4);
           expect(second.boundary).to.match(v4);
           expect(first.boundary).to.not.equal(second.boundary);

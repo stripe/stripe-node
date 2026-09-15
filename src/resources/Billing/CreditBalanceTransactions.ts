@@ -4,17 +4,22 @@ import {StripeResource} from '../../StripeResource.js';
 import {CreditGrant} from './CreditGrants.js';
 import {Invoice} from './../Invoices.js';
 import * as TestHelpers from './../TestHelpers/index.js';
-import {PaginationParams, OtherString} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  OtherString,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class CreditBalanceTransactionResource extends StripeResource {
   /**
    * Retrieve a list of credit balance transactions.
    */
-  list(
-    params?: Billing.CreditBalanceTransactionListParams,
+  list<E extends string = never>(
+    params?: Billing.CreditBalanceTransactionListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<CreditBalanceTransaction> {
+  ): ApiListPromise<ApplyExpandListItem<CreditBalanceTransaction, E>> {
     return this._makeRequest(
       'GET',
       '/v1/billing/credit_balance_transactions',
@@ -28,11 +33,11 @@ export class CreditBalanceTransactionResource extends StripeResource {
   /**
    * Retrieves a credit balance transaction.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Billing.CreditBalanceTransactionRetrieveParams,
+    params?: Billing.CreditBalanceTransactionRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditBalanceTransaction>> {
+  ): Promise<Response<ApplyExpand<CreditBalanceTransaction, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/billing/credit_balance_transactions/${encodeURIComponent(id)}`,
@@ -215,15 +220,18 @@ export namespace CreditBalanceTransaction {
   }
 }
 export namespace Billing {
-  export interface CreditBalanceTransactionRetrieveParams {
+  export interface CreditBalanceTransactionRetrieveParams<
+    E extends string = string
+  > {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface CreditBalanceTransactionListParams extends PaginationParams {
+  export interface CreditBalanceTransactionListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * The credit grant for which to fetch credit balance transactions.
      */
@@ -242,6 +250,6 @@ export namespace Billing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

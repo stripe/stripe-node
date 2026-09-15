@@ -8,6 +8,8 @@ import {TaxRate} from './TaxRates.js';
 import {Price} from './Prices.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   Emptyable,
   MetadataParam,
   Decimal,
@@ -37,11 +39,11 @@ export class InvoiceItemResource extends StripeResource {
   /**
    * Retrieves the invoice item with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: InvoiceItemRetrieveParams,
+    params?: InvoiceItemRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<InvoiceItem>> {
+  ): Promise<Response<ApplyExpand<InvoiceItem, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/invoiceitems/${encodeURIComponent(id)}`,
@@ -72,11 +74,11 @@ export class InvoiceItemResource extends StripeResource {
   /**
    * Updates the amount or description of an invoice item on an upcoming invoice. Updating an invoice item is only possible before the invoice it's attached to is closed.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: InvoiceItemUpdateParams,
+    params?: InvoiceItemUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<InvoiceItem>> {
+  ): Promise<Response<ApplyExpand<InvoiceItem, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/invoiceitems/${encodeURIComponent(id)}`,
@@ -118,10 +120,10 @@ export class InvoiceItemResource extends StripeResource {
   /**
    * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
    */
-  list(
-    params?: InvoiceItemListParams,
+  list<E extends string = never>(
+    params?: InvoiceItemListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<InvoiceItem> {
+  ): ApiListPromise<ApplyExpandListItem<InvoiceItem, E>> {
     return this._makeRequest('GET', '/v1/invoiceitems', params, options, {
       methodType: 'list',
       responseSchema: {
@@ -155,10 +157,10 @@ export class InvoiceItemResource extends StripeResource {
   /**
    * Creates an item to be added to a draft invoice (up to 250 items per invoice). If no invoice is specified, the item will be on the next invoice created for the customer specified.
    */
-  create(
-    params?: InvoiceItemCreateParams,
+  create<E extends string = never>(
+    params?: InvoiceItemCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<InvoiceItem>> {
+  ): Promise<Response<ApplyExpand<InvoiceItem, E>>> {
     return this._makeRequest('POST', '/v1/invoiceitems', params, options, {
       requestSchema: {
         kind: 'object',
@@ -453,7 +455,7 @@ export namespace InvoiceItem {
     }
   }
 }
-export interface InvoiceItemCreateParams {
+export interface InvoiceItemCreateParams<E extends string = string> {
   /**
    * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
    */
@@ -492,7 +494,7 @@ export interface InvoiceItemCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The ID of an existing invoice to add this invoice item to. For subscription invoices, when left blank, the invoice item will be added to the next upcoming scheduled invoice. For standalone invoices, the invoice item won't be automatically added unless you pass `pending_invoice_item_behavior: 'include'` when creating the invoice. This is useful when adding invoice items in response to an invoice.created webhook. You can only add invoice items to draft invoices and there is a maximum of 250 items per invoice.
@@ -632,13 +634,13 @@ export namespace InvoiceItemCreateParams {
       | OtherString;
   }
 }
-export interface InvoiceItemRetrieveParams {
+export interface InvoiceItemRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface InvoiceItemUpdateParams {
+export interface InvoiceItemUpdateParams<E extends string = string> {
   /**
    * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. If you want to apply a credit to the customer's account, pass a negative amount.
    */
@@ -662,7 +664,7 @@ export interface InvoiceItemUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -792,7 +794,8 @@ export namespace InvoiceItemUpdateParams {
       | OtherString;
   }
 }
-export interface InvoiceItemListParams extends PaginationParams {
+export interface InvoiceItemListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return invoice items that were created during the given date interval.
    */
@@ -811,7 +814,7 @@ export interface InvoiceItemListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return invoice items belonging to this invoice. If none is provided, all invoice items will be returned. If specifying an invoice, no customer identifier is needed.

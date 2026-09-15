@@ -2,6 +2,8 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   Emptyable,
   PaginationParams,
@@ -13,10 +15,10 @@ export class FeatureResource extends StripeResource {
   /**
    * Retrieve a list of features
    */
-  list(
-    params?: Entitlements.FeatureListParams,
+  list<E extends string = never>(
+    params?: Entitlements.FeatureListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Feature> {
+  ): ApiListPromise<ApplyExpandListItem<Feature, E>> {
     return this._makeRequest(
       'GET',
       '/v1/entitlements/features',
@@ -30,10 +32,10 @@ export class FeatureResource extends StripeResource {
   /**
    * Creates a feature
    */
-  create(
-    params: Entitlements.FeatureCreateParams,
+  create<E extends string = never>(
+    params: Entitlements.FeatureCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Feature>> {
+  ): Promise<Response<ApplyExpand<Feature, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/entitlements/features',
@@ -44,11 +46,11 @@ export class FeatureResource extends StripeResource {
   /**
    * Retrieves a feature
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Entitlements.FeatureRetrieveParams,
+    params?: Entitlements.FeatureRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Feature>> {
+  ): Promise<Response<ApplyExpand<Feature, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/entitlements/features/${encodeURIComponent(id)}`,
@@ -59,11 +61,11 @@ export class FeatureResource extends StripeResource {
   /**
    * Update a feature's metadata or permanently deactivate it.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Entitlements.FeatureUpdateParams,
+    params?: Entitlements.FeatureUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Feature>> {
+  ): Promise<Response<ApplyExpand<Feature, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/entitlements/features/${encodeURIComponent(id)}`,
@@ -109,7 +111,7 @@ export interface Feature {
   name: string;
 }
 export namespace Entitlements {
-  export interface FeatureCreateParams {
+  export interface FeatureCreateParams<E extends string = string> {
     /**
      * A unique key you provide as your own system identifier. This may be up to 80 characters.
      */
@@ -123,7 +125,7 @@ export namespace Entitlements {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -132,15 +134,15 @@ export namespace Entitlements {
   }
 }
 export namespace Entitlements {
-  export interface FeatureRetrieveParams {
+  export interface FeatureRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Entitlements {
-  export interface FeatureUpdateParams {
+  export interface FeatureUpdateParams<E extends string = string> {
     /**
      * Inactive features cannot be attached to new products and will not be returned from the features list endpoint.
      */
@@ -149,7 +151,7 @@ export namespace Entitlements {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -163,7 +165,8 @@ export namespace Entitlements {
   }
 }
 export namespace Entitlements {
-  export interface FeatureListParams extends PaginationParams {
+  export interface FeatureListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * If set, filter results to only include features with the given archive status.
      */
@@ -172,7 +175,7 @@ export namespace Entitlements {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * If set, filter results to only include features with the given lookup_key.

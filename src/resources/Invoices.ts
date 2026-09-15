@@ -18,6 +18,8 @@ import {ShippingRate} from './ShippingRates.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import * as Billing from './Billing/index.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   Emptyable,
   MetadataParam,
   OtherString,
@@ -55,11 +57,11 @@ export class InvoiceResource extends StripeResource {
   /**
    * Retrieves the invoice with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: InvoiceRetrieveParams,
+    params?: InvoiceRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/invoices/${encodeURIComponent(id)}`,
@@ -111,11 +113,11 @@ export class InvoiceResource extends StripeResource {
    * sending reminders for, or [automatically reconciling](https://docs.stripe.com/docs/billing/invoices/reconciliation) invoices, pass
    * auto_advance=false.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: InvoiceUpdateParams,
+    params?: InvoiceUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/invoices/${encodeURIComponent(id)}`,
@@ -162,10 +164,10 @@ export class InvoiceResource extends StripeResource {
   /**
    * You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
    */
-  list(
-    params?: InvoiceListParams,
+  list<E extends string = never>(
+    params?: InvoiceListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Invoice> {
+  ): ApiListPromise<ApplyExpandListItem<Invoice, E>> {
     return this._makeRequest('GET', '/v1/invoices', params, options, {
       methodType: 'list',
       responseSchema: {
@@ -215,10 +217,10 @@ export class InvoiceResource extends StripeResource {
   /**
    * This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](/api/invoices/pay) or <a href="/api/invoices/send">send](https://docs.stripe.com/api/invoices/finalize) the invoice to your customers.
    */
-  create(
-    params?: InvoiceCreateParams,
+  create<E extends string = never>(
+    params?: InvoiceCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest('POST', '/v1/invoices', params, options, {
       responseSchema: {
         kind: 'object',
@@ -262,10 +264,10 @@ export class InvoiceResource extends StripeResource {
    * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
    * to an hour behind during outages. Search functionality is not available to merchants in India.
    */
-  search(
-    params: InvoiceSearchParams,
+  search<E extends string = never>(
+    params: InvoiceSearchParams<E>,
     options?: RequestOptions
-  ): ApiSearchResultPromise<Invoice> {
+  ): ApiSearchResultPromise<ApplyExpandListItem<Invoice, E>> {
     return this._makeRequest('GET', '/v1/invoices/search', params, options, {
       methodType: 'search',
       responseSchema: {
@@ -315,11 +317,11 @@ export class InvoiceResource extends StripeResource {
   /**
    * Adds multiple line items to an invoice. This is only possible when an invoice is still a draft.
    */
-  addLines(
+  addLines<E extends string = never>(
     id: string,
-    params: InvoiceAddLinesParams,
+    params: InvoiceAddLinesParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/invoices/${encodeURIComponent(id)}/add_lines`,
@@ -393,11 +395,11 @@ export class InvoiceResource extends StripeResource {
    *
    * See: [Partial payments](https://docs.stripe.com/docs/invoicing/partial-payments) to learn more.
    */
-  attachPayment(
+  attachPayment<E extends string = never>(
     id: string,
-    params?: InvoiceAttachPaymentParams,
+    params?: InvoiceAttachPaymentParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/invoices/${encodeURIComponent(id)}/attach_payment`,
@@ -444,11 +446,11 @@ export class InvoiceResource extends StripeResource {
   /**
    * Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
    */
-  finalizeInvoice(
+  finalizeInvoice<E extends string = never>(
     id: string,
-    params?: InvoiceFinalizeInvoiceParams,
+    params?: InvoiceFinalizeInvoiceParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/invoices/${encodeURIComponent(id)}/finalize`,
@@ -495,11 +497,11 @@ export class InvoiceResource extends StripeResource {
   /**
    * Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
    */
-  markUncollectible(
+  markUncollectible<E extends string = never>(
     id: string,
-    params?: InvoiceMarkUncollectibleParams,
+    params?: InvoiceMarkUncollectibleParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/invoices/${encodeURIComponent(id)}/mark_uncollectible`,
@@ -546,11 +548,11 @@ export class InvoiceResource extends StripeResource {
   /**
    * Stripe automatically creates and then attempts to collect payment on invoices for customers on subscriptions according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to attempt payment on an invoice out of the normal collection schedule or for some other reason, you can do so.
    */
-  pay(
+  pay<E extends string = never>(
     id: string,
-    params?: InvoicePayParams,
+    params?: InvoicePayParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/invoices/${encodeURIComponent(id)}/pay`,
@@ -597,11 +599,11 @@ export class InvoiceResource extends StripeResource {
   /**
    * Removes multiple line items from an invoice. This is only possible when an invoice is still a draft.
    */
-  removeLines(
+  removeLines<E extends string = never>(
     id: string,
-    params: InvoiceRemoveLinesParams,
+    params: InvoiceRemoveLinesParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/invoices/${encodeURIComponent(id)}/remove_lines`,
@@ -650,11 +652,11 @@ export class InvoiceResource extends StripeResource {
    *
    * Requests made in test-mode result in no emails being sent, despite sending an invoice.sent event.
    */
-  sendInvoice(
+  sendInvoice<E extends string = never>(
     id: string,
-    params?: InvoiceSendInvoiceParams,
+    params?: InvoiceSendInvoiceParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/invoices/${encodeURIComponent(id)}/send`,
@@ -701,11 +703,11 @@ export class InvoiceResource extends StripeResource {
   /**
    * Updates multiple line items on an invoice. This is only possible when an invoice is still a draft.
    */
-  updateLines(
+  updateLines<E extends string = never>(
     id: string,
-    params: InvoiceUpdateLinesParams,
+    params: InvoiceUpdateLinesParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/invoices/${encodeURIComponent(id)}/update_lines`,
@@ -772,11 +774,11 @@ export class InvoiceResource extends StripeResource {
    *
    * Consult with local regulations to determine whether and how an invoice might be amended, canceled, or voided in the jurisdiction you're doing business in. You might need to [issue another invoice or <a href="/api/credit_notes/create">credit note](https://docs.stripe.com/api/invoices/create) instead. Stripe recommends that you consult with your legal counsel for advice specific to your business.
    */
-  voidInvoice(
+  voidInvoice<E extends string = never>(
     id: string,
-    params?: InvoiceVoidInvoiceParams,
+    params?: InvoiceVoidInvoiceParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/invoices/${encodeURIComponent(id)}/void`,
@@ -831,10 +833,10 @@ export class InvoiceResource extends StripeResource {
    *
    * Note: Currency conversion calculations use the latest exchange rates. Exchange rates may vary between the time of the preview and the time of the actual invoice creation. [Learn more](https://docs.stripe.com/currencies/conversions)
    */
-  createPreview(
-    params?: InvoiceCreatePreviewParams,
+  createPreview<E extends string = never>(
+    params?: InvoiceCreatePreviewParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Invoice>> {
+  ): Promise<Response<ApplyExpand<Invoice, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/invoices/create_preview',
@@ -958,11 +960,11 @@ export class InvoiceResource extends StripeResource {
   /**
    * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
    */
-  listLineItems(
+  listLineItems<E extends string = never>(
     id: string,
-    params?: InvoiceListLineItemsParams,
+    params?: InvoiceListLineItemsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<InvoiceLineItem> {
+  ): ApiListPromise<ApplyExpandListItem<InvoiceLineItem, E>> {
     return this._makeRequest(
       'GET',
       `/v1/invoices/${encodeURIComponent(id)}/lines`,
@@ -1008,12 +1010,12 @@ export class InvoiceResource extends StripeResource {
    * item and the invoice line item, so updates on this endpoint will propagate to the invoice item as well.
    * Updating an invoice's line item is only possible before the invoice is finalized.
    */
-  updateLineItem(
+  updateLineItem<E extends string = never>(
     invoiceId: string,
     id: string,
-    params?: InvoiceUpdateLineItemParams,
+    params?: InvoiceUpdateLineItemParams<E>,
     options?: RequestOptions
-  ): Promise<Response<InvoiceLineItem>> {
+  ): Promise<Response<ApplyExpand<InvoiceLineItem, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/invoices/${encodeURIComponent(invoiceId)}/lines/${encodeURIComponent(
@@ -2800,7 +2802,7 @@ export namespace Invoice {
       | OtherString;
   }
 }
-export interface InvoiceCreateParams {
+export interface InvoiceCreateParams<E extends string = string> {
   /**
    * The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
    */
@@ -2894,7 +2896,7 @@ export interface InvoiceCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Footer to be displayed on the invoice.
@@ -3720,13 +3722,13 @@ export namespace InvoiceCreateParams {
     }
   }
 }
-export interface InvoiceRetrieveParams {
+export interface InvoiceRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface InvoiceUpdateParams {
+export interface InvoiceUpdateParams<E extends string = string> {
   /**
    * The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
    */
@@ -3805,7 +3807,7 @@ export interface InvoiceUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Footer to be displayed on the invoice.
@@ -4602,7 +4604,8 @@ export namespace InvoiceUpdateParams {
     }
   }
 }
-export interface InvoiceListParams extends PaginationParams {
+export interface InvoiceListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
    */
@@ -4628,7 +4631,7 @@ export interface InvoiceListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://docs.stripe.com/billing/invoices/workflow#workflow-overview)
@@ -4655,7 +4658,7 @@ export namespace InvoiceListParams {
     | OtherString;
 }
 export interface InvoiceDeleteParams {}
-export interface InvoiceAddLinesParams {
+export interface InvoiceAddLinesParams<E extends string = string> {
   /**
    * The line items to add.
    */
@@ -4664,7 +4667,7 @@ export interface InvoiceAddLinesParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -4972,11 +4975,11 @@ export namespace InvoiceAddLinesParams {
     }
   }
 }
-export interface InvoiceAttachPaymentParams {
+export interface InvoiceAttachPaymentParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The ID of the PaymentIntent to attach to the invoice.
@@ -4988,7 +4991,7 @@ export interface InvoiceAttachPaymentParams {
    */
   payment_record?: string;
 }
-export interface InvoiceCreatePreviewParams {
+export interface InvoiceCreatePreviewParams<E extends string = string> {
   /**
    * Settings for automatic tax lookup for this invoice preview.
    */
@@ -5022,7 +5025,7 @@ export interface InvoiceCreatePreviewParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * List of invoice items to add or update in the upcoming invoice preview (up to 250).
@@ -6400,7 +6403,7 @@ export namespace InvoiceCreatePreviewParams {
     }
   }
 }
-export interface InvoiceFinalizeInvoiceParams {
+export interface InvoiceFinalizeInvoiceParams<E extends string = string> {
   /**
    * Controls whether Stripe performs [automatic collection](https://docs.stripe.com/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
    */
@@ -6409,25 +6412,26 @@ export interface InvoiceFinalizeInvoiceParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface InvoiceListLineItemsParams extends PaginationParams {
+export interface InvoiceListLineItemsParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface InvoiceMarkUncollectibleParams {
+export interface InvoiceMarkUncollectibleParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface InvoicePayParams {
+export interface InvoicePayParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * In cases where the source used to pay the invoice has insufficient funds, passing `forgive=true` controls whether a charge should be attempted for the full amount available on the source, up to the amount to fully pay the invoice. This effectively forgives the difference between the amount available on the source and the amount due.
@@ -6461,7 +6465,7 @@ export interface InvoicePayParams {
    */
   source?: string;
 }
-export interface InvoiceRemoveLinesParams {
+export interface InvoiceRemoveLinesParams<E extends string = string> {
   /**
    * The line items to remove.
    */
@@ -6470,7 +6474,7 @@ export interface InvoiceRemoveLinesParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -6496,7 +6500,7 @@ export namespace InvoiceRemoveLinesParams {
     export type Behavior = 'delete' | 'unassign' | OtherString;
   }
 }
-export interface InvoiceSearchParams {
+export interface InvoiceSearchParams<E extends string = string> {
   /**
    * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for invoices](https://docs.stripe.com/search#query-fields-for-invoices).
    */
@@ -6505,7 +6509,7 @@ export interface InvoiceSearchParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
@@ -6517,13 +6521,13 @@ export interface InvoiceSearchParams {
    */
   page?: string;
 }
-export interface InvoiceSendInvoiceParams {
+export interface InvoiceSendInvoiceParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface InvoiceUpdateLinesParams {
+export interface InvoiceUpdateLinesParams<E extends string = string> {
   /**
    * The line items to update.
    */
@@ -6532,7 +6536,7 @@ export interface InvoiceUpdateLinesParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
@@ -6840,7 +6844,7 @@ export namespace InvoiceUpdateLinesParams {
     }
   }
 }
-export interface InvoiceUpdateLineItemParams {
+export interface InvoiceUpdateLineItemParams<E extends string = string> {
   /**
    * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. If you want to apply a credit to the customer's account, pass a negative amount.
    */
@@ -6864,7 +6868,7 @@ export interface InvoiceUpdateLineItemParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://docs.stripe.com/api/invoices/line_item) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](https://docs.stripe.com/api/invoices/line_item) line items, where any existing metadata on the invoice line is merged with the incoming data.
@@ -7136,9 +7140,9 @@ export namespace InvoiceUpdateLineItemParams {
     }
   }
 }
-export interface InvoiceVoidInvoiceParams {
+export interface InvoiceVoidInvoiceParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

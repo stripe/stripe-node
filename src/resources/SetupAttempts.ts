@@ -9,17 +9,22 @@ import {SetupIntent} from './SetupIntents.js';
 import {Mandate} from './Mandates.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {CustomerSource} from './CustomerSources.js';
-import {PaginationParams, RangeQueryParam, OtherString} from '../shared.js';
+import {
+  ApplyExpandListItem,
+  PaginationParams,
+  RangeQueryParam,
+  OtherString,
+} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class SetupAttemptResource extends StripeResource {
   /**
    * Returns a list of SetupAttempts that associate with a provided SetupIntent.
    */
-  list(
-    params: SetupAttemptListParams,
+  list<E extends string = never>(
+    params: SetupAttemptListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<SetupAttempt> {
+  ): ApiListPromise<ApplyExpandListItem<SetupAttempt, E>> {
     return this._makeRequest('GET', '/v1/setup_attempts', params, options, {
       methodType: 'list',
     }) as any;
@@ -949,7 +954,8 @@ export namespace SetupAttempt {
       | OtherString;
   }
 }
-export interface SetupAttemptListParams extends PaginationParams {
+export interface SetupAttemptListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return SetupAttempts created by the SetupIntent specified by
    * this ID.
@@ -966,5 +972,5 @@ export interface SetupAttemptListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

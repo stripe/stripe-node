@@ -2,18 +2,18 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {OutboundTransfer} from './../../Treasury/OutboundTransfers.js';
-import {OtherString} from '../../../shared.js';
+import {ApplyExpand, OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class OutboundTransferResource extends StripeResource {
   /**
    * Updates a test mode created OutboundTransfer with tracking details. The OutboundTransfer must not be cancelable, and cannot be in the canceled or failed states.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params: TestHelpers.Treasury.OutboundTransferUpdateParams,
+    params: TestHelpers.Treasury.OutboundTransferUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>> {
+  ): Promise<Response<ApplyExpand<OutboundTransfer, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/treasury/outbound_transfers/${encodeURIComponent(id)}`,
@@ -24,11 +24,11 @@ export class OutboundTransferResource extends StripeResource {
   /**
    * Transitions a test mode created OutboundTransfer to the failed status. The OutboundTransfer must already be in the processing state.
    */
-  fail(
+  fail<E extends string = never>(
     id: string,
-    params?: TestHelpers.Treasury.OutboundTransferFailParams,
+    params?: TestHelpers.Treasury.OutboundTransferFailParams<E>,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>> {
+  ): Promise<Response<ApplyExpand<OutboundTransfer, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/treasury/outbound_transfers/${encodeURIComponent(
@@ -41,11 +41,11 @@ export class OutboundTransferResource extends StripeResource {
   /**
    * Transitions a test mode created OutboundTransfer to the posted status. The OutboundTransfer must already be in the processing state.
    */
-  post(
+  post<E extends string = never>(
     id: string,
-    params?: TestHelpers.Treasury.OutboundTransferPostParams,
+    params?: TestHelpers.Treasury.OutboundTransferPostParams<E>,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>> {
+  ): Promise<Response<ApplyExpand<OutboundTransfer, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/treasury/outbound_transfers/${encodeURIComponent(
@@ -58,11 +58,11 @@ export class OutboundTransferResource extends StripeResource {
   /**
    * Transitions a test mode created OutboundTransfer to the returned status. The OutboundTransfer must already be in the processing state.
    */
-  returnOutboundTransfer(
+  returnOutboundTransfer<E extends string = never>(
     id: string,
-    params?: TestHelpers.Treasury.OutboundTransferReturnOutboundTransferParams,
+    params?: TestHelpers.Treasury.OutboundTransferReturnOutboundTransferParams<E>,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>> {
+  ): Promise<Response<ApplyExpand<OutboundTransfer, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/treasury/outbound_transfers/${encodeURIComponent(
@@ -75,7 +75,7 @@ export class OutboundTransferResource extends StripeResource {
 }
 export namespace TestHelpers {
   export namespace Treasury {
-    export interface OutboundTransferUpdateParams {
+    export interface OutboundTransferUpdateParams<E extends string = string> {
       /**
        * Details about network-specific tracking information.
        */
@@ -84,7 +84,7 @@ export namespace TestHelpers {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
 
     export namespace OutboundTransferUpdateParams {
@@ -137,31 +137,33 @@ export namespace TestHelpers {
 }
 export namespace TestHelpers {
   export namespace Treasury {
-    export interface OutboundTransferFailParams {
+    export interface OutboundTransferFailParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Treasury {
-    export interface OutboundTransferPostParams {
+    export interface OutboundTransferPostParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Treasury {
-    export interface OutboundTransferReturnOutboundTransferParams {
+    export interface OutboundTransferReturnOutboundTransferParams<
+      E extends string = string
+    > {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * Details about a returned OutboundTransfer.

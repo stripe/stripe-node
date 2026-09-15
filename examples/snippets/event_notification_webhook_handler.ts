@@ -77,7 +77,8 @@ app.post(
         // In that case, you ignore the type mismatch and cast to UnknownEventNotification
         // @ts-expect-error
       } else if (eventNotification.type === 'some.new.event') {
-        const unknownEvent = eventNotification as Stripe.Events.UnknownEventNotification;
+        const unknownEvent =
+          eventNotification as Stripe.Events.UnknownEventNotification;
 
         // you can still fetch the related object, if one exists
         // but its type is `unknown`

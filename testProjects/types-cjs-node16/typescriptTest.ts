@@ -38,7 +38,8 @@ let checkoutParams: Stripe.Checkout.SessionCreateParams;
 
 // V2List generic
 async (): Promise<void> => {
-  const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
+  const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> =
+    await stripe.v2.core.events.list();
 };
 
 // Shared types
@@ -69,9 +70,8 @@ const bad = new Stripe('sk_test_123', {unknownProperty: true});
 // Webhook methods: constructEventWithoutVerification and parseEventNotificationWithoutVerification
 event = stripe.webhooks.constructEventWithoutVerification('payload');
 event = stripe.constructEventWithoutVerification('payload');
-const _notificationWV: Stripe.V2.Core.EventNotification = stripe.parseEventNotificationWithoutVerification(
-  'payload'
-);
+const _notificationWV: Stripe.V2.Core.EventNotification =
+  stripe.parseEventNotificationWithoutVerification('payload');
 
 // Namespace type exports that must remain accessible (v21 parity).
 const _stripeConfig: Stripe.StripeConfig = {maxNetworkRetries: 3};
@@ -92,7 +92,8 @@ const _signatureType: Stripe.Signature = null as any;
 
 // Factory function return types must be assignable to their interface types.
 const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
-const _nodeCryptoProvider: Stripe.CryptoProvider = Stripe.createNodeCryptoProvider();
+const _nodeCryptoProvider: Stripe.CryptoProvider =
+  Stripe.createNodeCryptoProvider();
 
 // notificationHandlerWithoutVerification must be reachable under moduleResolution node16
 async (): Promise<void> => {
@@ -128,3 +129,66 @@ async (): Promise<void> => {
 // both handler types must be nameable off the namespace
 let _verifyingHandler: Stripe.StripeEventNotificationHandler;
 let _unverifiedHandler: Stripe.StripeEventNotificationHandlerWithoutVerification;
+
+// --- `expand`-aware return types -------------------------------------------------
+// Mutual assignability, not annotated locals: an annotated local only proves the
+// result is a subtype, so it would pass even if the expand machinery did nothing.
+type ExpandEq<A, B> = [A] extends [B]
+  ? [B] extends [A]
+    ? true
+    : false
+  : false;
+
+const _expandOne: true = true as ExpandEq<
+  Stripe.Expanded<Stripe.Charge, 'customer'>['customer'],
+  Stripe.Customer | Stripe.DeletedCustomer | null
+>;
+
+const _expandNullableString: true = true as ExpandEq<
+  Stripe.Expanded<Stripe.Charge, 'description'>['description'],
+  string | null
+>;
+
+const _expandOpenEnum: true = true as ExpandEq<
+  Stripe.Expanded<
+    Stripe.Subscription,
+    'collection_method'
+  >['collection_method'],
+  Stripe.Subscription.CollectionMethod
+>;
+
+const _expandArray: true = true as ExpandEq<
+  Stripe.Expanded<Stripe.Invoice, 'discounts'>['discounts'],
+  Array<Stripe.Discount | Stripe.DeletedDiscount>
+>;
+
+const _expandNone: true = true as ExpandEq<
+  Stripe.Expanded<Stripe.Charge, never>,
+  Stripe.Charge
+>;
+
+(async (): Promise<void> => {
+  const expandClient = new Stripe('sk_test_123');
+
+  const unexpanded = await expandClient.charges.retrieve('ch_123');
+  const _unexpanded: true = true as ExpandEq<
+    typeof unexpanded,
+    Stripe.Response<Stripe.Charge>
+  >;
+
+  const expanded = await expandClient.charges.retrieve('ch_123', {
+    expand: ['payment_intent.customer'],
+  });
+  if (expanded.payment_intent) {
+    const _nested: true = true as ExpandEq<
+      typeof expanded.payment_intent.customer,
+      Stripe.Customer | Stripe.DeletedCustomer | null
+    >;
+  }
+
+  const page = await expandClient.charges.list({expand: ['data.customer']});
+  const _listData: true = true as ExpandEq<
+    (typeof page.data)[number]['customer'],
+    Stripe.Customer | Stripe.DeletedCustomer | null
+  >;
+})();

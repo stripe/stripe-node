@@ -4,6 +4,8 @@ import {StripeResource} from '../../StripeResource.js';
 import {Customer, DeletedCustomer} from './../Customers.js';
 import * as TestHelpers from './../TestHelpers/index.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   OtherString,
   Emptyable,
@@ -16,10 +18,10 @@ export class CreditGrantResource extends StripeResource {
   /**
    * Retrieve a list of credit grants.
    */
-  list(
-    params?: Billing.CreditGrantListParams,
+  list<E extends string = never>(
+    params?: Billing.CreditGrantListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<CreditGrant> {
+  ): ApiListPromise<ApplyExpandListItem<CreditGrant, E>> {
     return this._makeRequest(
       'GET',
       '/v1/billing/credit_grants',
@@ -33,10 +35,10 @@ export class CreditGrantResource extends StripeResource {
   /**
    * Creates a credit grant.
    */
-  create(
-    params: Billing.CreditGrantCreateParams,
+  create<E extends string = never>(
+    params: Billing.CreditGrantCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>> {
+  ): Promise<Response<ApplyExpand<CreditGrant, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/billing/credit_grants',
@@ -47,11 +49,11 @@ export class CreditGrantResource extends StripeResource {
   /**
    * Retrieves a credit grant.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Billing.CreditGrantRetrieveParams,
+    params?: Billing.CreditGrantRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>> {
+  ): Promise<Response<ApplyExpand<CreditGrant, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/billing/credit_grants/${encodeURIComponent(id)}`,
@@ -62,11 +64,11 @@ export class CreditGrantResource extends StripeResource {
   /**
    * Updates a credit grant.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Billing.CreditGrantUpdateParams,
+    params?: Billing.CreditGrantUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>> {
+  ): Promise<Response<ApplyExpand<CreditGrant, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/billing/credit_grants/${encodeURIComponent(id)}`,
@@ -77,11 +79,11 @@ export class CreditGrantResource extends StripeResource {
   /**
    * Expires a credit grant.
    */
-  expire(
+  expire<E extends string = never>(
     id: string,
-    params?: Billing.CreditGrantExpireParams,
+    params?: Billing.CreditGrantExpireParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>> {
+  ): Promise<Response<ApplyExpand<CreditGrant, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/billing/credit_grants/${encodeURIComponent(id)}/expire`,
@@ -92,11 +94,11 @@ export class CreditGrantResource extends StripeResource {
   /**
    * Voids a credit grant.
    */
-  voidGrant(
+  voidGrant<E extends string = never>(
     id: string,
-    params?: Billing.CreditGrantVoidGrantParams,
+    params?: Billing.CreditGrantVoidGrantParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>> {
+  ): Promise<Response<ApplyExpand<CreditGrant, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/billing/credit_grants/${encodeURIComponent(id)}/void`,
@@ -242,7 +244,7 @@ export namespace CreditGrant {
   }
 }
 export namespace Billing {
-  export interface CreditGrantCreateParams {
+  export interface CreditGrantCreateParams<E extends string = string> {
     /**
      * Amount of this credit grant.
      */
@@ -276,7 +278,7 @@ export namespace Billing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The time when the billing credits expire. If not specified, the billing credits don't expire.
@@ -360,19 +362,19 @@ export namespace Billing {
   }
 }
 export namespace Billing {
-  export interface CreditGrantRetrieveParams {
+  export interface CreditGrantRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface CreditGrantUpdateParams {
+  export interface CreditGrantUpdateParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The time when the billing credits created by this credit grant expire. If set to empty, the billing credits never expire.
@@ -386,7 +388,8 @@ export namespace Billing {
   }
 }
 export namespace Billing {
-  export interface CreditGrantListParams extends PaginationParams {
+  export interface CreditGrantListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Only return credit grants for this customer.
      */
@@ -400,22 +403,22 @@ export namespace Billing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface CreditGrantExpireParams {
+  export interface CreditGrantExpireParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface CreditGrantVoidGrantParams {
+  export interface CreditGrantVoidGrantParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

@@ -4,6 +4,8 @@ import {StripeResource} from '../../StripeResource.js';
 import {Product} from './Products.js';
 import {Supplier} from './Suppliers.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   Decimal,
   Emptyable,
@@ -18,10 +20,10 @@ export class OrderResource extends StripeResource {
    * Lists all Climate order objects. The orders are returned sorted by creation date, with the
    * most recently created orders appearing first.
    */
-  list(
-    params?: Climate.OrderListParams,
+  list<E extends string = never>(
+    params?: Climate.OrderListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Order> {
+  ): ApiListPromise<ApplyExpandListItem<Order, E>> {
     return this._makeRequest('GET', '/v1/climate/orders', params, options, {
       methodType: 'list',
       responseSchema: {
@@ -42,10 +44,10 @@ export class OrderResource extends StripeResource {
    * Creates a Climate order object for a given Climate product. The order will be processed immediately
    * after creation and payment will be deducted your Stripe balance.
    */
-  create(
-    params: Climate.OrderCreateParams,
+  create<E extends string = never>(
+    params: Climate.OrderCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Order>> {
+  ): Promise<Response<ApplyExpand<Order, E>>> {
     return this._makeRequest('POST', '/v1/climate/orders', params, options, {
       requestSchema: {
         kind: 'object',
@@ -60,11 +62,11 @@ export class OrderResource extends StripeResource {
   /**
    * Retrieves the details of a Climate order object with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Climate.OrderRetrieveParams,
+    params?: Climate.OrderRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Order>> {
+  ): Promise<Response<ApplyExpand<Order, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/climate/orders/${encodeURIComponent(id)}`,
@@ -81,11 +83,11 @@ export class OrderResource extends StripeResource {
   /**
    * Updates the specified order by setting the values of the parameters passed.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Climate.OrderUpdateParams,
+    params?: Climate.OrderUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Order>> {
+  ): Promise<Response<ApplyExpand<Order, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/climate/orders/${encodeURIComponent(id)}`,
@@ -105,11 +107,11 @@ export class OrderResource extends StripeResource {
    * might cancel reservations if suppliers fail to deliver. If Frontier cancels the reservation, Stripe
    * provides 90 days advance notice and refunds the amount_total.
    */
-  cancel(
+  cancel<E extends string = never>(
     id: string,
-    params?: Climate.OrderCancelParams,
+    params?: Climate.OrderCancelParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Order>> {
+  ): Promise<Response<ApplyExpand<Order, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/climate/orders/${encodeURIComponent(id)}/cancel`,
@@ -311,7 +313,7 @@ export namespace Order {
   }
 }
 export namespace Climate {
-  export interface OrderCreateParams {
+  export interface OrderCreateParams<E extends string = string> {
     /**
      * Unique identifier of the Climate product.
      */
@@ -335,7 +337,7 @@ export namespace Climate {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -358,15 +360,15 @@ export namespace Climate {
   }
 }
 export namespace Climate {
-  export interface OrderRetrieveParams {
+  export interface OrderRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Climate {
-  export interface OrderUpdateParams {
+  export interface OrderUpdateParams<E extends string = string> {
     /**
      * Publicly sharable reference for the end beneficiary of carbon removal. Assumed to be the Stripe account if not set.
      */
@@ -375,7 +377,7 @@ export namespace Climate {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -393,18 +395,19 @@ export namespace Climate {
   }
 }
 export namespace Climate {
-  export interface OrderListParams extends PaginationParams {
+  export interface OrderListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Climate {
-  export interface OrderCancelParams {
+  export interface OrderCancelParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

@@ -2,17 +2,21 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {File} from './../Files.js';
-import {PaginationParams} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class ScheduledQueryRunResource extends StripeResource {
   /**
    * Returns a list of scheduled query runs.
    */
-  list(
-    params?: Sigma.ScheduledQueryRunListParams,
+  list<E extends string = never>(
+    params?: Sigma.ScheduledQueryRunListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ScheduledQueryRun> {
+  ): ApiListPromise<ApplyExpandListItem<ScheduledQueryRun, E>> {
     return this._makeRequest(
       'GET',
       '/v1/sigma/scheduled_query_runs',
@@ -26,11 +30,11 @@ export class ScheduledQueryRunResource extends StripeResource {
   /**
    * Retrieves the details of an scheduled query run.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Sigma.ScheduledQueryRunRetrieveParams,
+    params?: Sigma.ScheduledQueryRunRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ScheduledQueryRun>> {
+  ): Promise<Response<ApplyExpand<ScheduledQueryRun, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/sigma/scheduled_query_runs/${encodeURIComponent(id)}`,
@@ -101,18 +105,19 @@ export namespace ScheduledQueryRun {
   }
 }
 export namespace Sigma {
-  export interface ScheduledQueryRunRetrieveParams {
+  export interface ScheduledQueryRunRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Sigma {
-  export interface ScheduledQueryRunListParams extends PaginationParams {
+  export interface ScheduledQueryRunListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

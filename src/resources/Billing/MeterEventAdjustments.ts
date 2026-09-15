@@ -1,17 +1,17 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {OtherString} from '../../shared.js';
+import {ApplyExpand, OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class MeterEventAdjustmentResource extends StripeResource {
   /**
    * Creates a billing meter event adjustment.
    */
-  create(
-    params: Billing.MeterEventAdjustmentCreateParams,
+  create<E extends string = never>(
+    params: Billing.MeterEventAdjustmentCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<MeterEventAdjustment>> {
+  ): Promise<Response<ApplyExpand<MeterEventAdjustment, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/billing/meter_event_adjustments',
@@ -62,7 +62,7 @@ export namespace MeterEventAdjustment {
   export type Status = 'complete' | 'pending' | OtherString;
 }
 export namespace Billing {
-  export interface MeterEventAdjustmentCreateParams {
+  export interface MeterEventAdjustmentCreateParams<E extends string = string> {
     /**
      * The name of the meter event. Corresponds with the `event_name` field on a meter.
      */
@@ -81,7 +81,7 @@ export namespace Billing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 
   export namespace MeterEventAdjustmentCreateParams {

@@ -32,7 +32,8 @@ import {StripeContext} from '../src/StripeContext.js';
 
 const stripe = getSpyableStripe();
 
-const IDEMPOTENCY_KEY = /^stripe-node-retry-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const IDEMPOTENCY_KEY =
+  /^stripe-node-retry-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 describe('RequestSender', () => {
   const sender = new RequestSender(stripe, 0);
@@ -622,8 +623,7 @@ describe('RequestSender', () => {
               {id: 'si_123', deleted: true},
             ],
           },
-          body:
-            'customer=cus_123&items[0][plan]=foo&items[0][quantity]=2&items[1][id]=si_123&items[1][deleted]=true',
+          body: 'customer=cus_123&items[0][plan]=foo&items[0][quantity]=2&items[1][id]=si_123&items[1][deleted]=true',
         };
 
         const scope = nock(
@@ -999,7 +999,8 @@ describe('RequestSender', () => {
         {name: 'the Node client', httpClient: undefined},
         {
           name: 'the fetch client',
-          httpClient: require('../src/stripe.cjs.node.js').createFetchHttpClient(),
+          httpClient:
+            require('../src/stripe.cjs.node.js').createFetchHttpClient(),
         },
       ].forEach(({name, httpClient}) => {
         describe(`response body failures with ${name}`, () => {
@@ -1284,11 +1285,9 @@ describe('RequestSender', () => {
           message: 'you messed up',
         };
 
-        nock(`https://${options.host}`)
-          .post('/v1/customers', {})
-          .reply(400, {
-            error,
-          });
+        nock(`https://${options.host}`).post('/v1/customers', {}).reply(400, {
+          error,
+        });
 
         realStripe.customers
           .create({})
@@ -1415,9 +1414,8 @@ describe('RequestSender', () => {
             done(new Error('Expected an error'));
           })
           .catch((err) => {
-            const errorMessage = RequestSender._generateConnectionErrorMessage(
-              1
-            );
+            const errorMessage =
+              RequestSender._generateConnectionErrorMessage(1);
             expect(err.message).to.equal(errorMessage);
             expect(err.detail.message).to.deep.equal('worse stuff');
             done();
@@ -1468,9 +1466,8 @@ describe('RequestSender', () => {
             done(new Error('Expected an error'));
           })
           .catch((err) => {
-            const errorMessage = RequestSender._generateConnectionErrorMessage(
-              1
-            );
+            const errorMessage =
+              RequestSender._generateConnectionErrorMessage(1);
             expect(err.message).to.equal(errorMessage);
             expect(err.detail.message).to.deep.equal('worse stuff');
             expect(nReceivedRequests).to.equal(2);
@@ -1494,9 +1491,8 @@ describe('RequestSender', () => {
           })
           .catch((err) => {
             expect(err.detail.message).to.deep.equal('bad stuff');
-            const errorMessage = RequestSender._generateConnectionErrorMessage(
-              0
-            );
+            const errorMessage =
+              RequestSender._generateConnectionErrorMessage(0);
             expect(err.message).to.equal(errorMessage);
             done();
           });
@@ -1603,13 +1599,11 @@ describe('RequestSender', () => {
       });
 
       it('should handle OAuth errors gracefully', (done) => {
-        nock('https://connect.stripe.com')
-          .post('/oauth/token')
-          .reply(400, {
-            error: 'invalid_grant',
-            error_description:
-              'This authorization code has already been used. All tokens issued with this code have been revoked.',
-          });
+        nock('https://connect.stripe.com').post('/oauth/token').reply(400, {
+          error: 'invalid_grant',
+          error_description:
+            'This authorization code has already been used. All tokens issued with this code have been revoked.',
+        });
 
         realStripe._setApiNumberField('maxNetworkRetries', 1);
 
@@ -1627,12 +1621,10 @@ describe('RequestSender', () => {
       });
 
       it('should handle OAuth invalid_client errors', (done) => {
-        nock('https://connect.stripe.com')
-          .post('/oauth/token')
-          .reply(401, {
-            error: 'invalid_client',
-            error_description: 'No authentication was provided.',
-          });
+        nock('https://connect.stripe.com').post('/oauth/token').reply(401, {
+          error: 'invalid_client',
+          error_description: 'No authentication was provided.',
+        });
 
         realStripe.oauth
           .token(options.data)
@@ -1648,12 +1640,10 @@ describe('RequestSender', () => {
       });
 
       it('should handle OAuth invalid_request errors', (done) => {
-        nock('https://connect.stripe.com')
-          .post('/oauth/token')
-          .reply(400, {
-            error: 'invalid_request',
-            error_description: 'Missing required parameter.',
-          });
+        nock('https://connect.stripe.com').post('/oauth/token').reply(400, {
+          error: 'invalid_request',
+          error_description: 'Missing required parameter.',
+        });
 
         realStripe.oauth
           .token(options.data)
@@ -1669,12 +1659,10 @@ describe('RequestSender', () => {
       });
 
       it('should handle OAuth invalid_scope errors', (done) => {
-        nock('https://connect.stripe.com')
-          .post('/oauth/token')
-          .reply(400, {
-            error: 'invalid_scope',
-            error_description: 'Invalid scope.',
-          });
+        nock('https://connect.stripe.com').post('/oauth/token').reply(400, {
+          error: 'invalid_scope',
+          error_description: 'Invalid scope.',
+        });
 
         realStripe.oauth
           .token(options.data)
@@ -1690,12 +1678,10 @@ describe('RequestSender', () => {
       });
 
       it('should handle OAuth unsupported_grant_type errors', (done) => {
-        nock('https://connect.stripe.com')
-          .post('/oauth/token')
-          .reply(400, {
-            error: 'unsupported_grant_type',
-            error_description: 'Unsupported grant type.',
-          });
+        nock('https://connect.stripe.com').post('/oauth/token').reply(400, {
+          error: 'unsupported_grant_type',
+          error_description: 'Unsupported grant type.',
+        });
 
         realStripe.oauth
           .token(options.data)
@@ -1711,12 +1697,10 @@ describe('RequestSender', () => {
       });
 
       it('should handle OAuth unsupported_response_type errors', (done) => {
-        nock('https://connect.stripe.com')
-          .post('/oauth/token')
-          .reply(400, {
-            error: 'unsupported_response_type',
-            error_description: 'Unsupported response type.',
-          });
+        nock('https://connect.stripe.com').post('/oauth/token').reply(400, {
+          error: 'unsupported_response_type',
+          error_description: 'Unsupported response type.',
+        });
 
         realStripe.oauth
           .token(options.data)
@@ -1732,12 +1716,10 @@ describe('RequestSender', () => {
       });
 
       it('should handle unknown OAuth errors with generic StripeOAuthError', (done) => {
-        nock('https://connect.stripe.com')
-          .post('/oauth/token')
-          .reply(400, {
-            error: 'some_future_oauth_error',
-            error_description: 'Something new.',
-          });
+        nock('https://connect.stripe.com').post('/oauth/token').reply(400, {
+          error: 'some_future_oauth_error',
+          error_description: 'Something new.',
+        });
 
         realStripe.oauth
           .token(options.data)
@@ -1835,7 +1817,7 @@ describe('RequestSender', () => {
           .post(options.path, options.params)
           .replyWithError('bad stuff')
           .post(options.path, options.params)
-          .reply(function(uri, requestBody, cb) {
+          .reply(function (uri, requestBody, cb) {
             headers = this.req.headers;
 
             return cb(null, [
@@ -1866,7 +1848,7 @@ describe('RequestSender', () => {
           .get(`${options.path}/ch_123`)
           .replyWithError('bad stuff')
           .get(`${options.path}/ch_123`)
-          .reply(function(uri, requestBody, cb) {
+          .reply(function (uri, requestBody, cb) {
             headers = this.req.headers;
 
             return cb(null, [
@@ -1898,7 +1880,7 @@ describe('RequestSender', () => {
           .post(options.path, options.params)
           .replyWithError('bad stuff')
           .post(options.path, options.params)
-          .reply(function(uri, requestBody, cb) {
+          .reply(function (uri, requestBody, cb) {
             headers = this.req.headers;
 
             return cb(null, [
@@ -2088,9 +2070,10 @@ describe('RequestSender', () => {
             return done(err);
           }
 
-          const originalEmitWarning = stripe._platformFunctions.emitWarning.bind(
-            stripe._platformFunctions
-          );
+          const originalEmitWarning =
+            stripe._platformFunctions.emitWarning.bind(
+              stripe._platformFunctions
+            );
           stripe._platformFunctions.emitWarning = (warning: string): void => {
             warnings.push(warning);
             originalEmitWarning(warning);

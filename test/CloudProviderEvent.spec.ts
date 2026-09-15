@@ -88,9 +88,8 @@ const EVENTGRID_V2_PAYLOAD = JSON.stringify({
 
 describe('constructEventWithoutVerification', () => {
   it('is accessible via the webhooks entry point and parses EventBridge payload', () => {
-    const event = stripe.webhooks.constructEventWithoutVerification(
-      EVENTBRIDGE_PAYLOAD
-    );
+    const event =
+      stripe.webhooks.constructEventWithoutVerification(EVENTBRIDGE_PAYLOAD);
     expect(event.id).to.equal('evt_test_123');
     expect(event.type).to.equal('customer.created');
   });
@@ -250,9 +249,8 @@ describe('parseEventNotificationWithoutVerification', () => {
       livemode: false,
       related_object: null,
     });
-    const notification = stripe.parseEventNotificationWithoutVerification(
-      rawNotification
-    );
+    const notification =
+      stripe.parseEventNotificationWithoutVerification(rawNotification);
     expect(notification.id).to.equal('evt_234');
     expect(notification.object).to.equal('v2.core.event');
   });
@@ -268,9 +266,8 @@ describe('parseEventNotificationWithoutVerification', () => {
   });
 
   it('parses Event Grid payload with v2 notification', () => {
-    const notification = stripe.parseEventNotificationWithoutVerification(
-      EVENTGRID_V2_PAYLOAD
-    );
+    const notification =
+      stripe.parseEventNotificationWithoutVerification(EVENTGRID_V2_PAYLOAD);
     expect(notification.id).to.equal('evt_notif_test_012');
     expect(notification.type).to.equal(
       'v2.billing.meter.error_report_triggered'

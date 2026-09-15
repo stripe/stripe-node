@@ -2,18 +2,18 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {PersonalizationDesign} from './../../Issuing/PersonalizationDesigns.js';
-import {OtherString} from '../../../shared.js';
+import {ApplyExpand, OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class PersonalizationDesignResource extends StripeResource {
   /**
    * Updates the status of the specified testmode personalization design object to active.
    */
-  activate(
+  activate<E extends string = never>(
     id: string,
-    params?: TestHelpers.Issuing.PersonalizationDesignActivateParams,
+    params?: TestHelpers.Issuing.PersonalizationDesignActivateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>> {
+  ): Promise<Response<ApplyExpand<PersonalizationDesign, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/personalization_designs/${encodeURIComponent(
@@ -26,11 +26,11 @@ export class PersonalizationDesignResource extends StripeResource {
   /**
    * Updates the status of the specified testmode personalization design object to inactive.
    */
-  deactivate(
+  deactivate<E extends string = never>(
     id: string,
-    params?: TestHelpers.Issuing.PersonalizationDesignDeactivateParams,
+    params?: TestHelpers.Issuing.PersonalizationDesignDeactivateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>> {
+  ): Promise<Response<ApplyExpand<PersonalizationDesign, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/personalization_designs/${encodeURIComponent(
@@ -43,11 +43,11 @@ export class PersonalizationDesignResource extends StripeResource {
   /**
    * Updates the status of the specified testmode personalization design object to rejected.
    */
-  reject(
+  reject<E extends string = never>(
     id: string,
-    params: TestHelpers.Issuing.PersonalizationDesignRejectParams,
+    params: TestHelpers.Issuing.PersonalizationDesignRejectParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>> {
+  ): Promise<Response<ApplyExpand<PersonalizationDesign, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/personalization_designs/${encodeURIComponent(
@@ -60,27 +60,33 @@ export class PersonalizationDesignResource extends StripeResource {
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface PersonalizationDesignActivateParams {
+    export interface PersonalizationDesignActivateParams<
+      E extends string = string
+    > {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface PersonalizationDesignDeactivateParams {
+    export interface PersonalizationDesignDeactivateParams<
+      E extends string = string
+    > {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface PersonalizationDesignRejectParams {
+    export interface PersonalizationDesignRejectParams<
+      E extends string = string
+    > {
       /**
        * The reason(s) the personalization design was rejected.
        */
@@ -89,7 +95,7 @@ export namespace TestHelpers {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
 
     export namespace PersonalizationDesignRejectParams {

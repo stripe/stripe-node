@@ -21,9 +21,9 @@ if (process.versions.node < '19') {
     `Skipping WebPlatformFunctions tests. No 'globalThis.crypto' in module scope for ${process.version}.`
   );
 } else {
-  import(
-    '../src/platform/WebPlatformFunctions.js'
-  ).then(({WebPlatformFunctions}) => testPlatform(new WebPlatformFunctions()));
+  import('../src/platform/WebPlatformFunctions.js').then(
+    ({WebPlatformFunctions}) => testPlatform(new WebPlatformFunctions())
+  );
 }
 
 testPlatform(new NodePlatformFunctions());

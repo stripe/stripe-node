@@ -2,17 +2,23 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {File} from './../Files.js';
-import {OtherString, PaginationParams, RangeQueryParam} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  OtherString,
+  PaginationParams,
+  RangeQueryParam,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class ReportRunResource extends StripeResource {
   /**
    * Returns a list of Report Runs, with the most recent appearing first.
    */
-  list(
-    params?: Reporting.ReportRunListParams,
+  list<E extends string = never>(
+    params?: Reporting.ReportRunListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ReportRun> {
+  ): ApiListPromise<ApplyExpandListItem<ReportRun, E>> {
     return this._makeRequest(
       'GET',
       '/v1/reporting/report_runs',
@@ -26,10 +32,10 @@ export class ReportRunResource extends StripeResource {
   /**
    * Creates a new object and begin running the report. (Certain report types require a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
    */
-  create(
-    params: Reporting.ReportRunCreateParams,
+  create<E extends string = never>(
+    params: Reporting.ReportRunCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ReportRun>> {
+  ): Promise<Response<ApplyExpand<ReportRun, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/reporting/report_runs',
@@ -40,11 +46,11 @@ export class ReportRunResource extends StripeResource {
   /**
    * Retrieves the details of an existing Report Run.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Reporting.ReportRunRetrieveParams,
+    params?: Reporting.ReportRunRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ReportRun>> {
+  ): Promise<Response<ApplyExpand<ReportRun, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/reporting/report_runs/${encodeURIComponent(id)}`,
@@ -150,7 +156,7 @@ export namespace ReportRun {
   }
 }
 export namespace Reporting {
-  export interface ReportRunCreateParams {
+  export interface ReportRunCreateParams<E extends string = string> {
     /**
      * The ID of the [report type](https://docs.stripe.com/reporting/statements/api#report-types) to run, such as `"balance.summary.1"`.
      */
@@ -159,7 +165,7 @@ export namespace Reporting {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Parameters specifying how the report should be run. Different Report Types have different required and optional parameters, listed in the [API Access to Reports](https://docs.stripe.com/reporting/statements/api) documentation.
@@ -856,15 +862,16 @@ export namespace Reporting {
   }
 }
 export namespace Reporting {
-  export interface ReportRunRetrieveParams {
+  export interface ReportRunRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Reporting {
-  export interface ReportRunListParams extends PaginationParams {
+  export interface ReportRunListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Only return Report Runs that were created during the given date interval.
      */
@@ -873,6 +880,6 @@ export namespace Reporting {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

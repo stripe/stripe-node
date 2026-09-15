@@ -48,8 +48,8 @@ class StripeResource implements StripeResourceObject {
     );
     // @ts-ignore changing type of path - path comes from prototype as string, convert to interpolator
     const rawPath = this.path || '';
-    this.resourcePath = (rawPath as unknown) as string;
-    this.path = makeURLInterpolator((rawPath as unknown) as string);
+    this.resourcePath = rawPath as unknown as string;
+    this.path = makeURLInterpolator(rawPath as unknown as string);
 
     this.initialize(stripe, deprecatedUrlData);
   }

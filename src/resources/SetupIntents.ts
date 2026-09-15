@@ -10,6 +10,8 @@ import {PaymentMethod} from './PaymentMethods.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {CustomerSource} from './CustomerSources.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   Emptyable,
   MetadataParam,
   OtherString,
@@ -24,10 +26,10 @@ export class SetupIntentResource extends StripeResource {
   /**
    * Returns a list of SetupIntents.
    */
-  list(
-    params?: SetupIntentListParams,
+  list<E extends string = never>(
+    params?: SetupIntentListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<SetupIntent> {
+  ): ApiListPromise<ApplyExpandListItem<SetupIntent, E>> {
     return this._makeRequest('GET', '/v1/setup_intents', params, options, {
       methodType: 'list',
     }) as any;
@@ -38,10 +40,10 @@ export class SetupIntentResource extends StripeResource {
    * After you create the SetupIntent, attach a payment method and [confirm](https://docs.stripe.com/docs/api/setup_intents/confirm)
    * it to collect any required permissions to charge the payment method later.
    */
-  create(
-    params?: SetupIntentCreateParams,
+  create<E extends string = never>(
+    params?: SetupIntentCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SetupIntent>> {
+  ): Promise<Response<ApplyExpand<SetupIntent, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/setup_intents',
@@ -56,11 +58,11 @@ export class SetupIntentResource extends StripeResource {
    *
    * When retrieved with a publishable key, only a subset of properties will be returned. Please refer to the [SetupIntent](https://docs.stripe.com/api#setup_intent_object) object reference for more details.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: SetupIntentRetrieveParams,
+    params?: SetupIntentRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SetupIntent>> {
+  ): Promise<Response<ApplyExpand<SetupIntent, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/setup_intents/${encodeURIComponent(id)}`,
@@ -71,11 +73,11 @@ export class SetupIntentResource extends StripeResource {
   /**
    * Updates a SetupIntent object.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: SetupIntentUpdateParams,
+    params?: SetupIntentUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SetupIntent>> {
+  ): Promise<Response<ApplyExpand<SetupIntent, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/setup_intents/${encodeURIComponent(id)}`,
@@ -88,11 +90,11 @@ export class SetupIntentResource extends StripeResource {
    *
    * After you cancel it, setup is abandoned and any operations on the SetupIntent fail with an error. You can't cancel the SetupIntent for a Checkout Session. [Expire the Checkout Session](https://docs.stripe.com/docs/api/checkout/sessions/expire) instead.
    */
-  cancel(
+  cancel<E extends string = never>(
     id: string,
-    params?: SetupIntentCancelParams,
+    params?: SetupIntentCancelParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SetupIntent>> {
+  ): Promise<Response<ApplyExpand<SetupIntent, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/setup_intents/${encodeURIComponent(id)}/cancel`,
@@ -116,11 +118,11 @@ export class SetupIntentResource extends StripeResource {
    * requires_payment_method status or the canceled status if the
    * confirmation limit is reached.
    */
-  confirm(
+  confirm<E extends string = never>(
     id: string,
-    params?: SetupIntentConfirmParams,
+    params?: SetupIntentConfirmParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SetupIntent>> {
+  ): Promise<Response<ApplyExpand<SetupIntent, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/setup_intents/${encodeURIComponent(id)}/confirm`,
@@ -131,11 +133,11 @@ export class SetupIntentResource extends StripeResource {
   /**
    * Verifies microdeposits on a SetupIntent object.
    */
-  verifyMicrodeposits(
+  verifyMicrodeposits<E extends string = never>(
     id: string,
-    params?: SetupIntentVerifyMicrodepositsParams,
+    params?: SetupIntentVerifyMicrodepositsParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SetupIntent>> {
+  ): Promise<Response<ApplyExpand<SetupIntent, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/setup_intents/${encodeURIComponent(id)}/verify_microdeposits`,
@@ -158,9 +160,7 @@ export interface SetupIntent {
   /**
    * The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this list when determining the payment methods to offer.
    */
-  allowed_payment_method_types: Array<
-    SetupIntent.AllowedPaymentMethodType
-  > | null;
+  allowed_payment_method_types: Array<SetupIntent.AllowedPaymentMethodType> | null;
 
   /**
    * ID of the Connect application that created the SetupIntent.
@@ -218,9 +218,7 @@ export interface SetupIntent {
   /**
    * Payment method types that are excluded from this SetupIntent.
    */
-  excluded_payment_method_types: Array<
-    SetupIntent.ExcludedPaymentMethodType
-  > | null;
+  excluded_payment_method_types: Array<SetupIntent.ExcludedPaymentMethodType> | null;
 
   /**
    * Indicates the directions of money movement for which this payment method is intended to be used.
@@ -1492,13 +1490,11 @@ export namespace SetupIntent {
     }
   }
 }
-export interface SetupIntentCreateParams {
+export interface SetupIntentCreateParams<E extends string = string> {
   /**
    * The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this list when determining the payment methods to offer. A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
    */
-  allowed_payment_method_types?: Array<
-    SetupIntentCreateParams.AllowedPaymentMethodType
-  >;
+  allowed_payment_method_types?: Array<SetupIntentCreateParams.AllowedPaymentMethodType>;
 
   /**
    * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
@@ -1546,14 +1542,12 @@ export interface SetupIntentCreateParams {
   /**
    * The list of payment method types to exclude from use with this SetupIntent.
    */
-  excluded_payment_method_types?: Array<
-    SetupIntentCreateParams.ExcludedPaymentMethodType
-  >;
+  excluded_payment_method_types?: Array<SetupIntentCreateParams.ExcludedPaymentMethodType>;
 
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Indicates the directions of money movement for which this payment method is intended to be used.
@@ -3574,7 +3568,7 @@ export namespace SetupIntentCreateParams {
     }
   }
 }
-export interface SetupIntentRetrieveParams {
+export interface SetupIntentRetrieveParams<E extends string = string> {
   /**
    * The client secret of the SetupIntent. We require this string if you use a publishable key to retrieve the SetupIntent.
    */
@@ -3583,9 +3577,9 @@ export interface SetupIntentRetrieveParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface SetupIntentUpdateParams {
+export interface SetupIntentUpdateParams<E extends string = string> {
   /**
    * The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this list when determining the payment methods to offer. A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
    */
@@ -3629,7 +3623,7 @@ export interface SetupIntentUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Indicates the directions of money movement for which this payment method is intended to be used.
@@ -5537,7 +5531,8 @@ export namespace SetupIntentUpdateParams {
     }
   }
 }
-export interface SetupIntentListParams extends PaginationParams {
+export interface SetupIntentListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
    *
@@ -5563,14 +5558,14 @@ export interface SetupIntentListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return SetupIntents that associate with the specified payment method.
    */
   payment_method?: string;
 }
-export interface SetupIntentCancelParams {
+export interface SetupIntentCancelParams<E extends string = string> {
   /**
    * Reason for canceling this SetupIntent. Possible values are: `abandoned`, `requested_by_customer`, or `duplicate`
    */
@@ -5579,7 +5574,7 @@ export interface SetupIntentCancelParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export namespace SetupIntentCancelParams {
   export type CancellationReason =
@@ -5588,13 +5583,11 @@ export namespace SetupIntentCancelParams {
     | 'requested_by_customer'
     | OtherString;
 }
-export interface SetupIntentConfirmParams {
+export interface SetupIntentConfirmParams<E extends string = string> {
   /**
    * The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this list when determining the payment methods to offer. A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
    */
-  allowed_payment_method_types?: Array<
-    SetupIntentConfirmParams.AllowedPaymentMethodType
-  >;
+  allowed_payment_method_types?: Array<SetupIntentConfirmParams.AllowedPaymentMethodType>;
 
   /**
    * ID of the ConfirmationToken used to confirm this SetupIntent.
@@ -5606,7 +5599,7 @@ export interface SetupIntentConfirmParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   mandate_data?: Emptyable<SetupIntentConfirmParams.MandateData>;
 
@@ -7497,7 +7490,9 @@ export namespace SetupIntentConfirmParams {
     }
   }
 }
-export interface SetupIntentVerifyMicrodepositsParams {
+export interface SetupIntentVerifyMicrodepositsParams<
+  E extends string = string
+> {
   /**
    * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
    */
@@ -7511,5 +7506,5 @@ export interface SetupIntentVerifyMicrodepositsParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

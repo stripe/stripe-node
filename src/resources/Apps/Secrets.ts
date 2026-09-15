@@ -1,17 +1,22 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {OtherString, PaginationParams} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  OtherString,
+  PaginationParams,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class SecretResource extends StripeResource {
   /**
    * List all secrets stored on the given scope.
    */
-  list(
-    params: Apps.SecretListParams,
+  list<E extends string = never>(
+    params: Apps.SecretListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Secret> {
+  ): ApiListPromise<ApplyExpandListItem<Secret, E>> {
     return this._makeRequest('GET', '/v1/apps/secrets', params, options, {
       methodType: 'list',
     }) as any;
@@ -19,10 +24,10 @@ export class SecretResource extends StripeResource {
   /**
    * Create or replace a secret in the secret store.
    */
-  create(
-    params: Apps.SecretCreateParams,
+  create<E extends string = never>(
+    params: Apps.SecretCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Secret>> {
+  ): Promise<Response<ApplyExpand<Secret, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/apps/secrets',
@@ -33,10 +38,10 @@ export class SecretResource extends StripeResource {
   /**
    * Finds a secret in the secret store by name and scope.
    */
-  find(
-    params: Apps.SecretFindParams,
+  find<E extends string = never>(
+    params: Apps.SecretFindParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Secret>> {
+  ): Promise<Response<ApplyExpand<Secret, E>>> {
     return this._makeRequest(
       'GET',
       '/v1/apps/secrets/find',
@@ -47,10 +52,10 @@ export class SecretResource extends StripeResource {
   /**
    * Deletes a secret from the secret store by name and scope.
    */
-  deleteWhere(
-    params: Apps.SecretDeleteWhereParams,
+  deleteWhere<E extends string = never>(
+    params: Apps.SecretDeleteWhereParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Secret>> {
+  ): Promise<Response<ApplyExpand<Secret, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/apps/secrets/delete',
@@ -120,7 +125,7 @@ export namespace Secret {
   }
 }
 export namespace Apps {
-  export interface SecretCreateParams {
+  export interface SecretCreateParams<E extends string = string> {
     /**
      * A name for the secret that's unique within the scope.
      */
@@ -139,7 +144,7 @@ export namespace Apps {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The Unix timestamp for the expiry time of the secret, after which the secret deletes.
@@ -166,7 +171,8 @@ export namespace Apps {
   }
 }
 export namespace Apps {
-  export interface SecretListParams extends PaginationParams {
+  export interface SecretListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies the scoping of the secret. Requests originating from UI extensions can only access account-scoped secrets or secrets scoped to their own user.
      */
@@ -175,7 +181,7 @@ export namespace Apps {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 
   export namespace SecretListParams {
@@ -197,7 +203,7 @@ export namespace Apps {
   }
 }
 export namespace Apps {
-  export interface SecretDeleteWhereParams {
+  export interface SecretDeleteWhereParams<E extends string = string> {
     /**
      * A name for the secret that's unique within the scope.
      */
@@ -211,7 +217,7 @@ export namespace Apps {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 
   export namespace SecretDeleteWhereParams {
@@ -233,7 +239,7 @@ export namespace Apps {
   }
 }
 export namespace Apps {
-  export interface SecretFindParams {
+  export interface SecretFindParams<E extends string = string> {
     /**
      * A name for the secret that's unique within the scope.
      */
@@ -247,7 +253,7 @@ export namespace Apps {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 
   export namespace SecretFindParams {

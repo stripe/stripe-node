@@ -4,17 +4,22 @@ import {StripeResource} from '../../StripeResource.js';
 import {AccountOwner} from './AccountOwners.js';
 import {AccountOwnership} from './AccountOwnerships.js';
 import {Customer} from './../Customers.js';
-import {PaginationParams, OtherString} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  OtherString,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class AccountResource extends StripeResource {
   /**
    * Returns a list of Financial Connections Account objects.
    */
-  list(
-    params?: FinancialConnections.AccountListParams,
+  list<E extends string = never>(
+    params?: FinancialConnections.AccountListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Account> {
+  ): ApiListPromise<ApplyExpandListItem<Account, E>> {
     return this._makeRequest(
       'GET',
       '/v1/financial_connections/accounts',
@@ -28,11 +33,11 @@ export class AccountResource extends StripeResource {
   /**
    * Retrieves the details of an Financial Connections Account.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: FinancialConnections.AccountRetrieveParams,
+    params?: FinancialConnections.AccountRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Account>> {
+  ): Promise<Response<ApplyExpand<Account, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/financial_connections/accounts/${encodeURIComponent(id)}`,
@@ -43,11 +48,11 @@ export class AccountResource extends StripeResource {
   /**
    * Disables your access to a Financial Connections Account. You will no longer be able to access data associated with the account (e.g. balances, transactions).
    */
-  disconnect(
+  disconnect<E extends string = never>(
     id: string,
-    params?: FinancialConnections.AccountDisconnectParams,
+    params?: FinancialConnections.AccountDisconnectParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Account>> {
+  ): Promise<Response<ApplyExpand<Account, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/financial_connections/accounts/${encodeURIComponent(id)}/disconnect`,
@@ -58,11 +63,11 @@ export class AccountResource extends StripeResource {
   /**
    * Refreshes the data associated with a Financial Connections Account.
    */
-  refresh(
+  refresh<E extends string = never>(
     id: string,
-    params: FinancialConnections.AccountRefreshParams,
+    params: FinancialConnections.AccountRefreshParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Account>> {
+  ): Promise<Response<ApplyExpand<Account, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/financial_connections/accounts/${encodeURIComponent(id)}/refresh`,
@@ -73,11 +78,11 @@ export class AccountResource extends StripeResource {
   /**
    * Subscribes to periodic refreshes of data associated with a Financial Connections Account. When the account status is active, data is typically refreshed once a day.
    */
-  subscribe(
+  subscribe<E extends string = never>(
     id: string,
-    params: FinancialConnections.AccountSubscribeParams,
+    params: FinancialConnections.AccountSubscribeParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Account>> {
+  ): Promise<Response<ApplyExpand<Account, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/financial_connections/accounts/${encodeURIComponent(id)}/subscribe`,
@@ -88,11 +93,11 @@ export class AccountResource extends StripeResource {
   /**
    * Unsubscribes from periodic refreshes of data associated with a Financial Connections Account.
    */
-  unsubscribe(
+  unsubscribe<E extends string = never>(
     id: string,
-    params: FinancialConnections.AccountUnsubscribeParams,
+    params: FinancialConnections.AccountUnsubscribeParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Account>> {
+  ): Promise<Response<ApplyExpand<Account, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/financial_connections/accounts/${encodeURIComponent(
@@ -105,11 +110,11 @@ export class AccountResource extends StripeResource {
   /**
    * Lists all owners for a given Account
    */
-  listOwners(
+  listOwners<E extends string = never>(
     id: string,
-    params: FinancialConnections.AccountListOwnersParams,
+    params: FinancialConnections.AccountListOwnersParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<AccountOwner> {
+  ): ApiListPromise<ApplyExpandListItem<AccountOwner, E>> {
     return this._makeRequest(
       'GET',
       `/v1/financial_connections/accounts/${encodeURIComponent(id)}/owners`,
@@ -481,15 +486,16 @@ export namespace Account {
   }
 }
 export namespace FinancialConnections {
-  export interface AccountRetrieveParams {
+  export interface AccountRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace FinancialConnections {
-  export interface AccountListParams extends PaginationParams {
+  export interface AccountListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * If present, only return accounts that belong to the specified account holder. `account_holder[customer]` and `account_holder[account]` are mutually exclusive.
      */
@@ -498,7 +504,7 @@ export namespace FinancialConnections {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * If present, only return accounts that were collected as part of the given session.
@@ -526,15 +532,16 @@ export namespace FinancialConnections {
   }
 }
 export namespace FinancialConnections {
-  export interface AccountDisconnectParams {
+  export interface AccountDisconnectParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace FinancialConnections {
-  export interface AccountListOwnersParams extends PaginationParams {
+  export interface AccountListOwnersParams<E extends string = string>
+    extends PaginationParams {
     /**
      * The ID of the ownership object to fetch owners from.
      */
@@ -543,11 +550,11 @@ export namespace FinancialConnections {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace FinancialConnections {
-  export interface AccountRefreshParams {
+  export interface AccountRefreshParams<E extends string = string> {
     /**
      * The list of account features that you would like to refresh.
      */
@@ -556,7 +563,7 @@ export namespace FinancialConnections {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 
   export namespace AccountRefreshParams {
@@ -568,7 +575,7 @@ export namespace FinancialConnections {
   }
 }
 export namespace FinancialConnections {
-  export interface AccountSubscribeParams {
+  export interface AccountSubscribeParams<E extends string = string> {
     /**
      * The list of account features to which you would like to subscribe.
      */
@@ -577,11 +584,11 @@ export namespace FinancialConnections {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace FinancialConnections {
-  export interface AccountUnsubscribeParams {
+  export interface AccountUnsubscribeParams<E extends string = string> {
     /**
      * The list of account features from which you would like to unsubscribe.
      */
@@ -590,6 +597,6 @@ export namespace FinancialConnections {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

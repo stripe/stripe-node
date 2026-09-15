@@ -2,6 +2,8 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   Address,
   JapanAddressParam,
   Emptyable,
@@ -31,11 +33,11 @@ export class LocationResource extends StripeResource {
   /**
    * Retrieves a Location object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Terminal.LocationRetrieveParams,
+    params?: Terminal.LocationRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Location | DeletedLocation>> {
+  ): Promise<Response<ApplyExpand<Location | DeletedLocation, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/terminal/locations/${encodeURIComponent(id)}`,
@@ -46,11 +48,11 @@ export class LocationResource extends StripeResource {
   /**
    * Updates a Location object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Terminal.LocationUpdateParams,
+    params?: Terminal.LocationUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Location | DeletedLocation>> {
+  ): Promise<Response<ApplyExpand<Location | DeletedLocation, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/locations/${encodeURIComponent(id)}`,
@@ -61,10 +63,10 @@ export class LocationResource extends StripeResource {
   /**
    * Returns a list of Location objects.
    */
-  list(
-    params?: Terminal.LocationListParams,
+  list<E extends string = never>(
+    params?: Terminal.LocationListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Location> {
+  ): ApiListPromise<ApplyExpandListItem<Location, E>> {
     return this._makeRequest('GET', '/v1/terminal/locations', params, options, {
       methodType: 'list',
     }) as any;
@@ -73,10 +75,10 @@ export class LocationResource extends StripeResource {
    * Creates a new Location object.
    * For further details, including which address fields are required in each country, see the [Manage locations](https://docs.stripe.com/docs/terminal/fleet/locations) guide.
    */
-  create(
-    params?: Terminal.LocationCreateParams,
+  create<E extends string = never>(
+    params?: Terminal.LocationCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Location>> {
+  ): Promise<Response<ApplyExpand<Location, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/terminal/locations',
@@ -234,7 +236,7 @@ export namespace Location {
   }
 }
 export namespace Terminal {
-  export interface LocationCreateParams {
+  export interface LocationCreateParams<E extends string = string> {
     /**
      * The full address of the location.
      */
@@ -273,7 +275,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -321,15 +323,15 @@ export namespace Terminal {
   }
 }
 export namespace Terminal {
-  export interface LocationRetrieveParams {
+  export interface LocationRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Terminal {
-  export interface LocationUpdateParams {
+  export interface LocationUpdateParams<E extends string = string> {
     /**
      * The full address of the location. You can't change the location's `country`. If you need to modify the `country` field, create a new `Location` object and re-register any existing readers to that location.
      */
@@ -368,7 +370,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -382,11 +384,12 @@ export namespace Terminal {
   }
 }
 export namespace Terminal {
-  export interface LocationListParams extends PaginationParams {
+  export interface LocationListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Terminal {

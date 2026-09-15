@@ -6,6 +6,8 @@ import {Plan} from './Plans.js';
 import {Price} from './Prices.js';
 import {TaxRate} from './TaxRates.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   Emptyable,
   MetadataParam,
   OtherString,
@@ -34,11 +36,11 @@ export class SubscriptionItemResource extends StripeResource {
   /**
    * Retrieves the subscription item with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: SubscriptionItemRetrieveParams,
+    params?: SubscriptionItemRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionItem>> {
+  ): Promise<Response<ApplyExpand<SubscriptionItem, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/subscription_items/${encodeURIComponent(id)}`,
@@ -134,11 +136,11 @@ export class SubscriptionItemResource extends StripeResource {
   /**
    * Updates the plan or quantity of an item on a current subscription.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: SubscriptionItemUpdateParams,
+    params?: SubscriptionItemUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionItem>> {
+  ): Promise<Response<ApplyExpand<SubscriptionItem, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/subscription_items/${encodeURIComponent(id)}`,
@@ -243,10 +245,10 @@ export class SubscriptionItemResource extends StripeResource {
   /**
    * Returns a list of your subscription items for a given subscription.
    */
-  list(
-    params: SubscriptionItemListParams,
+  list<E extends string = never>(
+    params: SubscriptionItemListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<SubscriptionItem> {
+  ): ApiListPromise<ApplyExpandListItem<SubscriptionItem, E>> {
     return this._makeRequest('GET', '/v1/subscription_items', params, options, {
       methodType: 'list',
       responseSchema: {
@@ -345,10 +347,10 @@ export class SubscriptionItemResource extends StripeResource {
   /**
    * Adds a new item to an existing subscription. No existing items will be changed or replaced.
    */
-  create(
-    params: SubscriptionItemCreateParams,
+  create<E extends string = never>(
+    params: SubscriptionItemCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionItem>> {
+  ): Promise<Response<ApplyExpand<SubscriptionItem, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/subscription_items',
@@ -563,7 +565,7 @@ export namespace SubscriptionItem {
     usage_gte: number | null;
   }
 }
-export interface SubscriptionItemCreateParams {
+export interface SubscriptionItemCreateParams<E extends string = string> {
   /**
    * The identifier of the subscription to modify.
    */
@@ -572,9 +574,7 @@ export interface SubscriptionItemCreateParams {
   /**
    * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
    */
-  billing_thresholds?: Emptyable<
-    SubscriptionItemCreateParams.BillingThresholds
-  >;
+  billing_thresholds?: Emptyable<SubscriptionItemCreateParams.BillingThresholds>;
 
   /**
    * The coupons to redeem into discounts for the subscription item.
@@ -584,7 +584,7 @@ export interface SubscriptionItemCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -725,19 +725,17 @@ export namespace SubscriptionItemCreateParams {
     }
   }
 }
-export interface SubscriptionItemRetrieveParams {
+export interface SubscriptionItemRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface SubscriptionItemUpdateParams {
+export interface SubscriptionItemUpdateParams<E extends string = string> {
   /**
    * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
    */
-  billing_thresholds?: Emptyable<
-    SubscriptionItemUpdateParams.BillingThresholds
-  >;
+  billing_thresholds?: Emptyable<SubscriptionItemUpdateParams.BillingThresholds>;
 
   /**
    * The coupons to redeem into discounts for the subscription item.
@@ -747,7 +745,7 @@ export interface SubscriptionItemUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -893,7 +891,8 @@ export namespace SubscriptionItemUpdateParams {
     }
   }
 }
-export interface SubscriptionItemListParams extends PaginationParams {
+export interface SubscriptionItemListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * The ID of the subscription whose items will be retrieved.
    */
@@ -902,7 +901,7 @@ export interface SubscriptionItemListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export interface SubscriptionItemDeleteParams {
   /**

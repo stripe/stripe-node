@@ -13,6 +13,8 @@ import {DeletedTaxId, TaxId} from './TaxIds.js';
 import {Subscription} from './Subscriptions.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   Emptyable,
   AddressParam,
   MetadataParam,
@@ -49,11 +51,11 @@ export class CustomerResource extends StripeResource {
   /**
    * Retrieves a Customer object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: CustomerRetrieveParams,
+    params?: CustomerRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Customer | DeletedCustomer>> {
+  ): Promise<Response<ApplyExpand<Customer | DeletedCustomer, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/customers/${encodeURIComponent(id)}`,
@@ -66,11 +68,11 @@ export class CustomerResource extends StripeResource {
    *
    * This request accepts mostly the same arguments as the customer creation call.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: CustomerUpdateParams,
+    params?: CustomerUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Customer>> {
+  ): Promise<Response<ApplyExpand<Customer, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/customers/${encodeURIComponent(id)}`,
@@ -211,10 +213,10 @@ export class CustomerResource extends StripeResource {
   /**
    * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
    */
-  list(
-    params?: CustomerListParams,
+  list<E extends string = never>(
+    params?: CustomerListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Customer> {
+  ): ApiListPromise<ApplyExpandListItem<Customer, E>> {
     return this._makeRequest('GET', '/v1/customers', params, options, {
       methodType: 'list',
       responseSchema: {
@@ -343,10 +345,10 @@ export class CustomerResource extends StripeResource {
   /**
    * Creates a new customer object.
    */
-  create(
-    params?: CustomerCreateParams,
+  create<E extends string = never>(
+    params?: CustomerCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Customer>> {
+  ): Promise<Response<ApplyExpand<Customer, E>>> {
     return this._makeRequest('POST', '/v1/customers', params, options, {
       responseSchema: {
         kind: 'object',
@@ -465,10 +467,10 @@ export class CustomerResource extends StripeResource {
    * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
    * to an hour behind during outages. Search functionality is not available to merchants in India.
    */
-  search(
-    params: CustomerSearchParams,
+  search<E extends string = never>(
+    params: CustomerSearchParams<E>,
     options?: RequestOptions
-  ): ApiSearchResultPromise<Customer> {
+  ): ApiSearchResultPromise<ApplyExpandListItem<Customer, E>> {
     return this._makeRequest('GET', '/v1/customers/search', params, options, {
       methodType: 'search',
       responseSchema: {
@@ -597,11 +599,11 @@ export class CustomerResource extends StripeResource {
   /**
    * Returns a list of transactions that updated the customer's [balances](https://docs.stripe.com/docs/billing/customer/balance).
    */
-  listBalanceTransactions(
+  listBalanceTransactions<E extends string = never>(
     id: string,
-    params?: CustomerListBalanceTransactionsParams,
+    params?: CustomerListBalanceTransactionsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<CustomerBalanceTransaction> {
+  ): ApiListPromise<ApplyExpandListItem<CustomerBalanceTransaction, E>> {
     return this._makeRequest(
       'GET',
       `/v1/customers/${encodeURIComponent(id)}/balance_transactions`,
@@ -615,11 +617,11 @@ export class CustomerResource extends StripeResource {
   /**
    * Creates an immutable transaction that updates the customer's credit [balance](https://docs.stripe.com/docs/billing/customer/balance).
    */
-  createBalanceTransaction(
+  createBalanceTransaction<E extends string = never>(
     id: string,
-    params: CustomerCreateBalanceTransactionParams,
+    params: CustomerCreateBalanceTransactionParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CustomerBalanceTransaction>> {
+  ): Promise<Response<ApplyExpand<CustomerBalanceTransaction, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/customers/${encodeURIComponent(id)}/balance_transactions`,
@@ -630,12 +632,12 @@ export class CustomerResource extends StripeResource {
   /**
    * Retrieves a specific customer balance transaction that updated the customer's [balances](https://docs.stripe.com/docs/billing/customer/balance).
    */
-  retrieveBalanceTransaction(
+  retrieveBalanceTransaction<E extends string = never>(
     customerId: string,
     id: string,
-    params?: CustomerRetrieveBalanceTransactionParams,
+    params?: CustomerRetrieveBalanceTransactionParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CustomerBalanceTransaction>> {
+  ): Promise<Response<ApplyExpand<CustomerBalanceTransaction, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/customers/${encodeURIComponent(
@@ -648,12 +650,12 @@ export class CustomerResource extends StripeResource {
   /**
    * Most credit balance transaction fields are immutable, but you may update its description and metadata.
    */
-  updateBalanceTransaction(
+  updateBalanceTransaction<E extends string = never>(
     customerId: string,
     id: string,
-    params?: CustomerUpdateBalanceTransactionParams,
+    params?: CustomerUpdateBalanceTransactionParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CustomerBalanceTransaction>> {
+  ): Promise<Response<ApplyExpand<CustomerBalanceTransaction, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/customers/${encodeURIComponent(
@@ -666,11 +668,11 @@ export class CustomerResource extends StripeResource {
   /**
    * Retrieves a customer's cash balance.
    */
-  retrieveCashBalance(
+  retrieveCashBalance<E extends string = never>(
     id: string,
-    params?: CustomerRetrieveCashBalanceParams,
+    params?: CustomerRetrieveCashBalanceParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CashBalance>> {
+  ): Promise<Response<ApplyExpand<CashBalance, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/customers/${encodeURIComponent(id)}/cash_balance`,
@@ -681,11 +683,11 @@ export class CustomerResource extends StripeResource {
   /**
    * Changes the settings on a customer's cash balance.
    */
-  updateCashBalance(
+  updateCashBalance<E extends string = never>(
     id: string,
-    params?: CustomerUpdateCashBalanceParams,
+    params?: CustomerUpdateCashBalanceParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CashBalance>> {
+  ): Promise<Response<ApplyExpand<CashBalance, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/customers/${encodeURIComponent(id)}/cash_balance`,
@@ -696,11 +698,11 @@ export class CustomerResource extends StripeResource {
   /**
    * Returns a list of transactions that modified the customer's [cash balance](https://docs.stripe.com/docs/payments/customer-balance).
    */
-  listCashBalanceTransactions(
+  listCashBalanceTransactions<E extends string = never>(
     id: string,
-    params?: CustomerListCashBalanceTransactionsParams,
+    params?: CustomerListCashBalanceTransactionsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<CustomerCashBalanceTransaction> {
+  ): ApiListPromise<ApplyExpandListItem<CustomerCashBalanceTransaction, E>> {
     return this._makeRequest(
       'GET',
       `/v1/customers/${encodeURIComponent(id)}/cash_balance_transactions`,
@@ -714,12 +716,12 @@ export class CustomerResource extends StripeResource {
   /**
    * Retrieves a specific cash balance transaction, which updated the customer's [cash balance](https://docs.stripe.com/docs/payments/customer-balance).
    */
-  retrieveCashBalanceTransaction(
+  retrieveCashBalanceTransaction<E extends string = never>(
     customerId: string,
     id: string,
-    params?: CustomerRetrieveCashBalanceTransactionParams,
+    params?: CustomerRetrieveCashBalanceTransactionParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CustomerCashBalanceTransaction>> {
+  ): Promise<Response<ApplyExpand<CustomerCashBalanceTransaction, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/customers/${encodeURIComponent(
@@ -734,11 +736,11 @@ export class CustomerResource extends StripeResource {
    * funding instructions will be created. If funding instructions have already been created for a given customer, the same
    * funding instructions will be retrieved. In other words, we will return the same funding instructions each time.
    */
-  createFundingInstructions(
+  createFundingInstructions<E extends string = never>(
     id: string,
-    params: CustomerCreateFundingInstructionsParams,
+    params: CustomerCreateFundingInstructionsParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FundingInstructions>> {
+  ): Promise<Response<ApplyExpand<FundingInstructions, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/customers/${encodeURIComponent(id)}/funding_instructions`,
@@ -749,11 +751,11 @@ export class CustomerResource extends StripeResource {
   /**
    * Returns a list of PaymentMethods for a given Customer
    */
-  listPaymentMethods(
+  listPaymentMethods<E extends string = never>(
     id: string,
-    params?: CustomerListPaymentMethodsParams,
+    params?: CustomerListPaymentMethodsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<PaymentMethod> {
+  ): ApiListPromise<ApplyExpandListItem<PaymentMethod, E>> {
     return this._makeRequest(
       'GET',
       `/v1/customers/${encodeURIComponent(id)}/payment_methods`,
@@ -767,12 +769,12 @@ export class CustomerResource extends StripeResource {
   /**
    * Retrieves a PaymentMethod object for a given Customer.
    */
-  retrievePaymentMethod(
+  retrievePaymentMethod<E extends string = never>(
     customerId: string,
     id: string,
-    params?: CustomerRetrievePaymentMethodParams,
+    params?: CustomerRetrievePaymentMethodParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethod>> {
+  ): Promise<Response<ApplyExpand<PaymentMethod, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/customers/${encodeURIComponent(
@@ -785,11 +787,11 @@ export class CustomerResource extends StripeResource {
   /**
    * List sources for a specified customer.
    */
-  listSources(
+  listSources<E extends string = never>(
     id: string,
-    params?: CustomerListSourcesParams,
+    params?: CustomerListSourcesParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<CustomerSource> {
+  ): ApiListPromise<ApplyExpandListItem<CustomerSource, E>> {
     return this._makeRequest(
       'GET',
       `/v1/customers/${encodeURIComponent(id)}/sources`,
@@ -807,11 +809,11 @@ export class CustomerResource extends StripeResource {
    * However, if the owner already has a default, then it will not change.
    * To change the default, you should [update the customer](https://docs.stripe.com/api/customers/update) to have a new default_source.
    */
-  createSource(
+  createSource<E extends string = never>(
     id: string,
-    params: CustomerCreateSourceParams,
+    params: CustomerCreateSourceParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CustomerSource>> {
+  ): Promise<Response<ApplyExpand<CustomerSource, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/customers/${encodeURIComponent(id)}/sources`,
@@ -822,12 +824,12 @@ export class CustomerResource extends StripeResource {
   /**
    * Retrieve a specified source for a given customer.
    */
-  retrieveSource(
+  retrieveSource<E extends string = never>(
     customerId: string,
     id: string,
-    params?: CustomerRetrieveSourceParams,
+    params?: CustomerRetrieveSourceParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CustomerSource>> {
+  ): Promise<Response<ApplyExpand<CustomerSource, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/customers/${encodeURIComponent(
@@ -840,12 +842,12 @@ export class CustomerResource extends StripeResource {
   /**
    * Update a specified source for a given customer.
    */
-  updateSource(
+  updateSource<E extends string = never>(
     customerId: string,
     id: string,
-    params?: CustomerUpdateSourceParams,
+    params?: CustomerUpdateSourceParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CustomerSource>> {
+  ): Promise<Response<ApplyExpand<CustomerSource, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/customers/${encodeURIComponent(
@@ -858,12 +860,12 @@ export class CustomerResource extends StripeResource {
   /**
    * Delete a specified source for a given customer.
    */
-  deleteSource(
+  deleteSource<E extends string = never>(
     customerId: string,
     id: string,
-    params?: CustomerDeleteSourceParams,
+    params?: CustomerDeleteSourceParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CustomerSource | DeletedCustomerSource>> {
+  ): Promise<Response<ApplyExpand<CustomerSource | DeletedCustomerSource, E>>> {
     return this._makeRequest(
       'DELETE',
       `/v1/customers/${encodeURIComponent(
@@ -876,12 +878,12 @@ export class CustomerResource extends StripeResource {
   /**
    * Verify a specified bank account for a given customer.
    */
-  verifySource(
+  verifySource<E extends string = never>(
     customerId: string,
     id: string,
-    params?: CustomerVerifySourceParams,
+    params?: CustomerVerifySourceParams<E>,
     options?: RequestOptions
-  ): Promise<Response<BankAccount>> {
+  ): Promise<Response<ApplyExpand<BankAccount, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/customers/${encodeURIComponent(
@@ -912,12 +914,12 @@ export class CustomerResource extends StripeResource {
   /**
    * Retrieves the tax_id object with the given identifier.
    */
-  retrieveTaxId(
+  retrieveTaxId<E extends string = never>(
     customerId: string,
     id: string,
-    params?: CustomerRetrieveTaxIdParams,
+    params?: CustomerRetrieveTaxIdParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TaxId>> {
+  ): Promise<Response<ApplyExpand<TaxId, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/customers/${encodeURIComponent(
@@ -930,11 +932,11 @@ export class CustomerResource extends StripeResource {
   /**
    * Returns a list of tax IDs for a customer.
    */
-  listTaxIds(
+  listTaxIds<E extends string = never>(
     id: string,
-    params?: CustomerListTaxIdsParams,
+    params?: CustomerListTaxIdsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<TaxId> {
+  ): ApiListPromise<ApplyExpandListItem<TaxId, E>> {
     return this._makeRequest(
       'GET',
       `/v1/customers/${encodeURIComponent(id)}/tax_ids`,
@@ -948,11 +950,11 @@ export class CustomerResource extends StripeResource {
   /**
    * Creates a new tax_id object for a customer.
    */
-  createTaxId(
+  createTaxId<E extends string = never>(
     id: string,
-    params: CustomerCreateTaxIdParams,
+    params: CustomerCreateTaxIdParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TaxId>> {
+  ): Promise<Response<ApplyExpand<TaxId, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/customers/${encodeURIComponent(id)}/tax_ids`,
@@ -1279,7 +1281,7 @@ export namespace Customer {
     }
   }
 }
-export interface CustomerCreateParams {
+export interface CustomerCreateParams<E extends string = string> {
   /**
    * The customer's address. Learn about [country-specific requirements for calculating tax](https://docs.stripe.com/invoicing/taxes?dashboard-or-api=dashboard#set-up-customer).
    */
@@ -1313,7 +1315,7 @@ export interface CustomerCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The customer's full name. This may be up to *150 characters*.
@@ -1636,13 +1638,13 @@ export namespace CustomerCreateParams {
       | OtherString;
   }
 }
-export interface CustomerRetrieveParams {
+export interface CustomerRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CustomerUpdateParams {
+export interface CustomerUpdateParams<E extends string = string> {
   /**
    * The customer's address. Learn about [country-specific requirements for calculating tax](https://docs.stripe.com/invoicing/taxes?dashboard-or-api=dashboard#set-up-customer).
    */
@@ -1685,7 +1687,7 @@ export interface CustomerUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The customer's full name. This may be up to *150 characters*.
@@ -1866,7 +1868,8 @@ export namespace CustomerUpdateParams {
       | OtherString;
   }
 }
-export interface CustomerListParams extends PaginationParams {
+export interface CustomerListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return customers that were created during the given date interval.
    */
@@ -1880,7 +1883,7 @@ export interface CustomerListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Provides a list of customers that are associated with the specified test clock. The response will not include customers with test clocks if this parameter is not set.
@@ -1888,7 +1891,9 @@ export interface CustomerListParams extends PaginationParams {
   test_clock?: string;
 }
 export interface CustomerDeleteParams {}
-export interface CustomerCreateBalanceTransactionParams {
+export interface CustomerCreateBalanceTransactionParams<
+  E extends string = string
+> {
   /**
    * The integer amount in **cents (or local equivalent)** to apply to the customer's credit balance.
    */
@@ -1907,14 +1912,16 @@ export interface CustomerCreateBalanceTransactionParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }
-export interface CustomerCreateFundingInstructionsParams {
+export interface CustomerCreateFundingInstructionsParams<
+  E extends string = string
+> {
   /**
    * Additional parameters for `bank_transfer` funding types
    */
@@ -1933,7 +1940,7 @@ export interface CustomerCreateFundingInstructionsParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export namespace CustomerCreateFundingInstructionsParams {
   export interface BankTransfer {
@@ -1979,7 +1986,7 @@ export namespace CustomerCreateFundingInstructionsParams {
       | OtherString;
   }
 }
-export interface CustomerCreateSourceParams {
+export interface CustomerCreateSourceParams<E extends string = string> {
   /**
    * Please refer to full [documentation](https://api.stripe.com) instead.
    */
@@ -1988,7 +1995,7 @@ export interface CustomerCreateSourceParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1997,7 +2004,7 @@ export interface CustomerCreateSourceParams {
 
   validate?: boolean;
 }
-export interface CustomerCreateTaxIdParams {
+export interface CustomerCreateTaxIdParams<E extends string = string> {
   /**
    * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
    */
@@ -2011,7 +2018,7 @@ export interface CustomerCreateTaxIdParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export namespace CustomerCreateTaxIdParams {
   export type Type =
@@ -2135,15 +2142,16 @@ export namespace CustomerCreateTaxIdParams {
     | OtherString;
 }
 export interface CustomerDeleteDiscountParams {}
-export interface CustomerDeleteSourceParams {
+export interface CustomerDeleteSourceParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export interface CustomerDeleteTaxIdParams {}
-export interface CustomerListBalanceTransactionsParams
-  extends PaginationParams {
+export interface CustomerListBalanceTransactionsParams<
+  E extends string = string
+> extends PaginationParams {
   /**
    * Only return customer balance transactions that were created during the given date interval.
    */
@@ -2152,21 +2160,23 @@ export interface CustomerListBalanceTransactionsParams
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return transactions that are related to the specified invoice.
    */
   invoice?: string;
 }
-export interface CustomerListCashBalanceTransactionsParams
-  extends PaginationParams {
+export interface CustomerListCashBalanceTransactionsParams<
+  E extends string = string
+> extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CustomerListPaymentMethodsParams extends PaginationParams {
+export interface CustomerListPaymentMethodsParams<E extends string = string>
+  extends PaginationParams {
   /**
    * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow.
    */
@@ -2175,7 +2185,7 @@ export interface CustomerListPaymentMethodsParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * An optional filter on the list, based on the object `type` field. Without the filter, the list includes all current and future payment method types. If your integration expects only one type of payment method in the response, make sure to provide a type value in the request.
@@ -2247,60 +2257,68 @@ export namespace CustomerListPaymentMethodsParams {
     | 'zip'
     | OtherString;
 }
-export interface CustomerListSourcesParams extends PaginationParams {
+export interface CustomerListSourcesParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Filter sources according to a particular object type.
    */
   object?: string;
 }
-export interface CustomerListTaxIdsParams extends PaginationParams {
+export interface CustomerListTaxIdsParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CustomerRetrieveBalanceTransactionParams {
+export interface CustomerRetrieveBalanceTransactionParams<
+  E extends string = string
+> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CustomerRetrieveCashBalanceParams {
+export interface CustomerRetrieveCashBalanceParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CustomerRetrieveCashBalanceTransactionParams {
+export interface CustomerRetrieveCashBalanceTransactionParams<
+  E extends string = string
+> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CustomerRetrievePaymentMethodParams {
+export interface CustomerRetrievePaymentMethodParams<
+  E extends string = string
+> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CustomerRetrieveSourceParams {
+export interface CustomerRetrieveSourceParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CustomerRetrieveTaxIdParams {
+export interface CustomerRetrieveTaxIdParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CustomerSearchParams {
+export interface CustomerSearchParams<E extends string = string> {
   /**
    * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for customers](https://docs.stripe.com/search#query-fields-for-customers).
    */
@@ -2309,7 +2327,7 @@ export interface CustomerSearchParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
@@ -2321,7 +2339,9 @@ export interface CustomerSearchParams {
    */
   page?: string;
 }
-export interface CustomerUpdateBalanceTransactionParams {
+export interface CustomerUpdateBalanceTransactionParams<
+  E extends string = string
+> {
   /**
    * An arbitrary string attached to the object. Often useful for displaying to users.
    */
@@ -2330,18 +2350,18 @@ export interface CustomerUpdateBalanceTransactionParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }
-export interface CustomerUpdateCashBalanceParams {
+export interface CustomerUpdateCashBalanceParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A hash of settings for this cash balance.
@@ -2364,7 +2384,7 @@ export namespace CustomerUpdateCashBalanceParams {
       | OtherString;
   }
 }
-export interface CustomerUpdateSourceParams {
+export interface CustomerUpdateSourceParams<E extends string = string> {
   /**
    * The name of the person or business that owns the bank account.
    */
@@ -2418,7 +2438,7 @@ export interface CustomerUpdateSourceParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -2457,7 +2477,7 @@ export namespace CustomerUpdateSourceParams {
     phone?: string;
   }
 }
-export interface CustomerVerifySourceParams {
+export interface CustomerVerifySourceParams<E extends string = string> {
   /**
    * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
    */
@@ -2466,5 +2486,5 @@ export interface CustomerVerifySourceParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

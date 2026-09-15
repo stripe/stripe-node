@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {Emptyable, OtherString} from '../shared.js';
+import {ApplyExpand, Emptyable, OtherString} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class BalanceSettingResource extends StripeResource {
@@ -9,10 +9,10 @@ export class BalanceSettingResource extends StripeResource {
    * Retrieves balance settings for a given connected account.
    *  Related guide: [Making API calls for connected accounts](https://docs.stripe.com/connect/authentication)
    */
-  retrieve(
-    params?: BalanceSettingsRetrieveParams,
+  retrieve<E extends string = never>(
+    params?: BalanceSettingsRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<BalanceSettings>> {
+  ): Promise<Response<ApplyExpand<BalanceSettings, E>>> {
     return this._makeRequest(
       'GET',
       '/v1/balance_settings',
@@ -24,10 +24,10 @@ export class BalanceSettingResource extends StripeResource {
    * Updates balance settings for a given connected account.
    *  Related guide: [Making API calls for connected accounts](https://docs.stripe.com/connect/authentication)
    */
-  update(
-    params?: BalanceSettingsUpdateParams,
+  update<E extends string = never>(
+    params?: BalanceSettingsUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<BalanceSettings>> {
+  ): Promise<Response<ApplyExpand<BalanceSettings, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/balance_settings',
@@ -190,17 +190,17 @@ export namespace BalanceSettings {
     }
   }
 }
-export interface BalanceSettingsRetrieveParams {
+export interface BalanceSettingsRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface BalanceSettingsUpdateParams {
+export interface BalanceSettingsUpdateParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Settings that apply to the [Payments Balance](https://docs.stripe.com/api/balance).

@@ -5,6 +5,8 @@ import {BalanceTransaction} from './BalanceTransactions.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {Source} from './Sources.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   Emptyable,
   MetadataParam,
   PaginationParams,
@@ -18,10 +20,10 @@ export class TopupResource extends StripeResource {
   /**
    * Returns a list of top-ups.
    */
-  list(
-    params?: TopupListParams,
+  list<E extends string = never>(
+    params?: TopupListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Topup> {
+  ): ApiListPromise<ApplyExpandListItem<Topup, E>> {
     return this._makeRequest('GET', '/v1/topups', params, options, {
       methodType: 'list',
     }) as any;
@@ -29,20 +31,20 @@ export class TopupResource extends StripeResource {
   /**
    * Top up the balance of an account
    */
-  create(
-    params: TopupCreateParams,
+  create<E extends string = never>(
+    params: TopupCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Topup>> {
+  ): Promise<Response<ApplyExpand<Topup, E>>> {
     return this._makeRequest('POST', '/v1/topups', params, options) as any;
   }
   /**
    * Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: TopupRetrieveParams,
+    params?: TopupRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Topup>> {
+  ): Promise<Response<ApplyExpand<Topup, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/topups/${encodeURIComponent(id)}`,
@@ -53,11 +55,11 @@ export class TopupResource extends StripeResource {
   /**
    * Updates the metadata of a top-up. Other top-up details are not editable by design.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: TopupUpdateParams,
+    params?: TopupUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Topup>> {
+  ): Promise<Response<ApplyExpand<Topup, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/topups/${encodeURIComponent(id)}`,
@@ -68,11 +70,11 @@ export class TopupResource extends StripeResource {
   /**
    * Cancels a top-up. Only pending top-ups can be canceled.
    */
-  cancel(
+  cancel<E extends string = never>(
     id: string,
-    params?: TopupCancelParams,
+    params?: TopupCancelParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Topup>> {
+  ): Promise<Response<ApplyExpand<Topup, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/topups/${encodeURIComponent(id)}/cancel`,
@@ -204,7 +206,7 @@ export namespace Topup {
     }
   }
 }
-export interface TopupCreateParams {
+export interface TopupCreateParams<E extends string = string> {
   /**
    * A positive integer representing how much to transfer.
    */
@@ -223,7 +225,7 @@ export interface TopupCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -266,13 +268,13 @@ export namespace TopupCreateParams {
     }
   }
 }
-export interface TopupRetrieveParams {
+export interface TopupRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface TopupUpdateParams {
+export interface TopupUpdateParams<E extends string = string> {
   /**
    * An arbitrary string attached to the object. Often useful for displaying to users.
    */
@@ -281,14 +283,15 @@ export interface TopupUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }
-export interface TopupListParams extends PaginationParams {
+export interface TopupListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * A positive integer representing how much to transfer.
    */
@@ -302,7 +305,7 @@ export interface TopupListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return top-ups that have the given status. One of `canceled`, `failed`, `pending` or `succeeded`.
@@ -317,9 +320,9 @@ export namespace TopupListParams {
     | 'succeeded'
     | OtherString;
 }
-export interface TopupCancelParams {
+export interface TopupCancelParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

@@ -14,9 +14,8 @@ import {
 // monkey-patchable. We care about this because users in their test
 // suites might be using a library like "nock" which relies on the ability
 // to monkey-patch and intercept calls to http.request.
-const http = ((http_ as unknown) as {default: typeof http_}).default || http_;
-const https =
-  ((https_ as unknown) as {default: typeof https_}).default || https_;
+const http = (http_ as unknown as {default: typeof http_}).default || http_;
+const https = (https_ as unknown as {default: typeof https_}).default || https_;
 
 const defaultHttpAgent = new http.Agent({keepAlive: true});
 const defaultHttpsAgent = new https.Agent({keepAlive: true});
@@ -25,8 +24,10 @@ const defaultHttpsAgent = new https.Agent({keepAlive: true});
  * HTTP client which uses the Node `http` and `https` packages to issue
  * requests.`
  */
-export class NodeHttpClient extends HttpClient
-  implements NodeHttpClientInterface {
+export class NodeHttpClient
+  extends HttpClient
+  implements NodeHttpClientInterface
+{
   _agent?: http_.Agent | https_.Agent | undefined;
 
   constructor(agent?: http_.Agent | https_.Agent) {
@@ -127,8 +128,10 @@ export class NodeHttpClient extends HttpClient
   }
 }
 
-export class NodeHttpClientResponse extends HttpClientResponse
-  implements NodeHttpClientResponseInterface {
+export class NodeHttpClientResponse
+  extends HttpClientResponse
+  implements NodeHttpClientResponseInterface
+{
   _res: http_.IncomingMessage;
 
   constructor(res: http_.IncomingMessage) {

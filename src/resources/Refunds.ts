@@ -8,6 +8,8 @@ import {PaymentIntent} from './PaymentIntents.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {TransferReversal} from './TransferReversals.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   Emptyable,
   MetadataParam,
   OtherString,
@@ -21,10 +23,10 @@ export class RefundResource extends StripeResource {
   /**
    * Returns a list of all refunds you created. We return the refunds in sorted order, with the most recent refunds appearing first. The 10 most recent refunds are always available by default on the Charge object.
    */
-  list(
-    params?: RefundListParams,
+  list<E extends string = never>(
+    params?: RefundListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Refund> {
+  ): ApiListPromise<ApplyExpandListItem<Refund, E>> {
     return this._makeRequest('GET', '/v1/refunds', params, options, {
       methodType: 'list',
     }) as any;
@@ -42,20 +44,20 @@ export class RefundResource extends StripeResource {
    * This method will raise an error when called on an already-refunded charge,
    * or when trying to refund more money than is left on a charge.
    */
-  create(
-    params?: RefundCreateParams,
+  create<E extends string = never>(
+    params?: RefundCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Refund>> {
+  ): Promise<Response<ApplyExpand<Refund, E>>> {
     return this._makeRequest('POST', '/v1/refunds', params, options) as any;
   }
   /**
    * Retrieves the details of an existing refund.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: RefundRetrieveParams,
+    params?: RefundRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Refund>> {
+  ): Promise<Response<ApplyExpand<Refund, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/refunds/${encodeURIComponent(id)}`,
@@ -68,11 +70,11 @@ export class RefundResource extends StripeResource {
    *
    * This request only accepts metadata as an argument.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: RefundUpdateParams,
+    params?: RefundUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Refund>> {
+  ): Promise<Response<ApplyExpand<Refund, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/refunds/${encodeURIComponent(id)}`,
@@ -85,11 +87,11 @@ export class RefundResource extends StripeResource {
    *
    * You can't cancel refunds in other states. Only refunds for payment methods that require customer action can enter the requires_action state.
    */
-  cancel(
+  cancel<E extends string = never>(
     id: string,
-    params?: RefundCancelParams,
+    params?: RefundCancelParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Refund>> {
+  ): Promise<Response<ApplyExpand<Refund, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/refunds/${encodeURIComponent(id)}/cancel`,
@@ -592,7 +594,7 @@ export namespace Refund {
     }
   }
 }
-export interface RefundCreateParams {
+export interface RefundCreateParams<E extends string = string> {
   amount?: number;
 
   /**
@@ -613,7 +615,7 @@ export interface RefundCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * For payment methods without native refund support (e.g., Konbini, PromptPay), use this email from the customer to receive refund instructions.
@@ -659,24 +661,25 @@ export namespace RefundCreateParams {
     | 'requested_by_customer'
     | OtherString;
 }
-export interface RefundRetrieveParams {
+export interface RefundRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface RefundUpdateParams {
+export interface RefundUpdateParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }
-export interface RefundListParams extends PaginationParams {
+export interface RefundListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return refunds for the charge specified by this charge ID.
    */
@@ -690,16 +693,16 @@ export interface RefundListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return refunds for the PaymentIntent specified by this ID.
    */
   payment_intent?: string;
 }
-export interface RefundCancelParams {
+export interface RefundCancelParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

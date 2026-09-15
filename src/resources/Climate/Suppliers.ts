@@ -1,17 +1,22 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams, OtherString} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  OtherString,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class SupplierResource extends StripeResource {
   /**
    * Lists all available Climate supplier objects.
    */
-  list(
-    params?: Climate.SupplierListParams,
+  list<E extends string = never>(
+    params?: Climate.SupplierListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Supplier> {
+  ): ApiListPromise<ApplyExpandListItem<Supplier, E>> {
     return this._makeRequest('GET', '/v1/climate/suppliers', params, options, {
       methodType: 'list',
     }) as any;
@@ -19,11 +24,11 @@ export class SupplierResource extends StripeResource {
   /**
    * Retrieves a Climate supplier object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Climate.SupplierRetrieveParams,
+    params?: Climate.SupplierRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Supplier>> {
+  ): Promise<Response<ApplyExpand<Supplier, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/climate/suppliers/${encodeURIComponent(id)}`,
@@ -104,18 +109,19 @@ export namespace Supplier {
     | OtherString;
 }
 export namespace Climate {
-  export interface SupplierRetrieveParams {
+  export interface SupplierRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Climate {
-  export interface SupplierListParams extends PaginationParams {
+  export interface SupplierListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

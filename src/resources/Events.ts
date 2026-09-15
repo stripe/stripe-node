@@ -1,17 +1,22 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams, RangeQueryParam} from '../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  RangeQueryParam,
+} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class EventResource extends StripeResource {
   /**
    * List events, going back up to 30 days. Each event data is rendered according to Stripe API version at its creation time, specified in [event object](https://docs.stripe.com/api/events/object) api_version attribute (not according to your current Stripe API version or Stripe-Version header).
    */
-  list(
-    params?: EventListParams,
+  list<E extends string = never>(
+    params?: EventListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Event> {
+  ): ApiListPromise<ApplyExpandListItem<Event, E>> {
     return this._makeRequest('GET', '/v1/events', params, options, {
       methodType: 'list',
     }) as any;
@@ -19,11 +24,11 @@ export class EventResource extends StripeResource {
   /**
    * Retrieves the details of an event if it was created in the last 30 days. Supply the unique identifier of the event, which you might have received in a webhook.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: EventRetrieveParams,
+    params?: EventRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Event>> {
+  ): Promise<Response<ApplyExpand<Event, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/events/${encodeURIComponent(id)}`,
@@ -383,13 +388,14 @@ export namespace Event {
     export interface PreviousAttributes {}
   }
 }
-export interface EventRetrieveParams {
+export interface EventRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface EventListParams extends PaginationParams {
+export interface EventListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return events that were created during the given date interval.
    */
@@ -403,7 +409,7 @@ export interface EventListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A string containing a specific event name, or group of events using * as a wildcard. The list will be filtered to include only events with a matching event property.

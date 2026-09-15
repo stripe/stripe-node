@@ -2,17 +2,17 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {Authorization} from './../../Issuing/Authorizations.js';
-import {OtherString, Decimal} from '../../../shared.js';
+import {ApplyExpand, OtherString, Decimal} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class AuthorizationResource extends StripeResource {
   /**
    * Create a test-mode authorization.
    */
-  create(
-    params: TestHelpers.Issuing.AuthorizationCreateParams,
+  create<E extends string = never>(
+    params: TestHelpers.Issuing.AuthorizationCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Authorization>> {
+  ): Promise<Response<ApplyExpand<Authorization, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/test_helpers/issuing/authorizations',
@@ -224,11 +224,11 @@ export class AuthorizationResource extends StripeResource {
   /**
    * Capture a test-mode authorization.
    */
-  capture(
+  capture<E extends string = never>(
     id: string,
-    params?: TestHelpers.Issuing.AuthorizationCaptureParams,
+    params?: TestHelpers.Issuing.AuthorizationCaptureParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Authorization>> {
+  ): Promise<Response<ApplyExpand<Authorization, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/authorizations/${encodeURIComponent(
@@ -458,11 +458,11 @@ export class AuthorizationResource extends StripeResource {
   /**
    * Expire a test-mode Authorization.
    */
-  expire(
+  expire<E extends string = never>(
     id: string,
-    params?: TestHelpers.Issuing.AuthorizationExpireParams,
+    params?: TestHelpers.Issuing.AuthorizationExpireParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Authorization>> {
+  ): Promise<Response<ApplyExpand<Authorization, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/authorizations/${encodeURIComponent(
@@ -639,11 +639,11 @@ export class AuthorizationResource extends StripeResource {
   /**
    * Finalize the amount on an Authorization prior to capture, when the initial authorization was for an estimated amount.
    */
-  finalizeAmount(
+  finalizeAmount<E extends string = never>(
     id: string,
-    params: TestHelpers.Issuing.AuthorizationFinalizeAmountParams,
+    params: TestHelpers.Issuing.AuthorizationFinalizeAmountParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Authorization>> {
+  ): Promise<Response<ApplyExpand<Authorization, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/authorizations/${encodeURIComponent(
@@ -857,11 +857,11 @@ export class AuthorizationResource extends StripeResource {
   /**
    * Respond to a fraud challenge on a testmode Issuing authorization, simulating either a confirmation of fraud or a correction of legitimacy.
    */
-  respond(
+  respond<E extends string = never>(
     id: string,
-    params: TestHelpers.Issuing.AuthorizationRespondParams,
+    params: TestHelpers.Issuing.AuthorizationRespondParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Authorization>> {
+  ): Promise<Response<ApplyExpand<Authorization, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/authorizations/${encodeURIComponent(
@@ -1038,11 +1038,11 @@ export class AuthorizationResource extends StripeResource {
   /**
    * Increment a test-mode Authorization.
    */
-  increment(
+  increment<E extends string = never>(
     id: string,
-    params: TestHelpers.Issuing.AuthorizationIncrementParams,
+    params: TestHelpers.Issuing.AuthorizationIncrementParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Authorization>> {
+  ): Promise<Response<ApplyExpand<Authorization, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/authorizations/${encodeURIComponent(
@@ -1219,11 +1219,11 @@ export class AuthorizationResource extends StripeResource {
   /**
    * Reverse a test-mode Authorization.
    */
-  reverse(
+  reverse<E extends string = never>(
     id: string,
-    params?: TestHelpers.Issuing.AuthorizationReverseParams,
+    params?: TestHelpers.Issuing.AuthorizationReverseParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Authorization>> {
+  ): Promise<Response<ApplyExpand<Authorization, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/issuing/authorizations/${encodeURIComponent(
@@ -1400,7 +1400,7 @@ export class AuthorizationResource extends StripeResource {
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface AuthorizationCreateParams {
+    export interface AuthorizationCreateParams<E extends string = string> {
       /**
        * Card associated with this authorization.
        */
@@ -1429,7 +1429,7 @@ export namespace TestHelpers {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * Fleet-specific information for authorizations using Fleet cards.
@@ -2223,7 +2223,7 @@ export namespace TestHelpers {
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface AuthorizationCaptureParams {
+    export interface AuthorizationCaptureParams<E extends string = string> {
       /**
        * The amount to capture from the authorization. If not provided, the full amount of the authorization will be captured. This amount is in the authorization currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
        */
@@ -2237,7 +2237,7 @@ export namespace TestHelpers {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * Additional purchase information that is optionally provided by the merchant.
@@ -2523,17 +2523,19 @@ export namespace TestHelpers {
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface AuthorizationExpireParams {
+    export interface AuthorizationExpireParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface AuthorizationFinalizeAmountParams {
+    export interface AuthorizationFinalizeAmountParams<
+      E extends string = string
+    > {
       /**
        * The final authorization amount that will be captured by the merchant. This amount is in the authorization currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
        */
@@ -2542,7 +2544,7 @@ export namespace TestHelpers {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * Fleet-specific information for authorizations using Fleet cards.
@@ -2716,7 +2718,7 @@ export namespace TestHelpers {
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface AuthorizationIncrementParams {
+    export interface AuthorizationIncrementParams<E extends string = string> {
       /**
        * The amount to increment the authorization by. This amount is in the authorization currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
        */
@@ -2725,7 +2727,7 @@ export namespace TestHelpers {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * If set `true`, you may provide [amount](https://docs.stripe.com/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
@@ -2736,7 +2738,7 @@ export namespace TestHelpers {
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface AuthorizationRespondParams {
+    export interface AuthorizationRespondParams<E extends string = string> {
       /**
        * Whether to simulate the user confirming that the transaction was legitimate (true) or telling Stripe that it was fraudulent (false).
        */
@@ -2745,17 +2747,17 @@ export namespace TestHelpers {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Issuing {
-    export interface AuthorizationReverseParams {
+    export interface AuthorizationReverseParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * The amount to reverse from the authorization. If not provided, the full amount of the authorization will be reversed. This amount is in the authorization currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).

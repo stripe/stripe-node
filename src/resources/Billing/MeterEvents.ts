@@ -1,16 +1,17 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {ApplyExpand} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class MeterEventResource extends StripeResource {
   /**
    * Creates a billing meter event.
    */
-  create(
-    params: Billing.MeterEventCreateParams,
+  create<E extends string = never>(
+    params: Billing.MeterEventCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<MeterEvent>> {
+  ): Promise<Response<ApplyExpand<MeterEvent, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/billing/meter_events',
@@ -58,7 +59,7 @@ export interface MeterEvent {
   timestamp: number;
 }
 export namespace Billing {
-  export interface MeterEventCreateParams {
+  export interface MeterEventCreateParams<E extends string = string> {
     /**
      * The name of the meter event. Corresponds with the `event_name` field on a meter.
      */
@@ -74,7 +75,7 @@ export namespace Billing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * A unique identifier for the event. If not provided, one is generated. We recommend using UUID-like identifiers. Stripe enforces uniqueness within a rolling period of at least 24 hours. The enforcement of uniqueness primarily addresses issues arising from accidental retries or other problems occurring within extremely brief time intervals. This approach helps prevent duplicate entries and ensures data integrity in high-frequency operations.

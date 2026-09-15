@@ -519,8 +519,6 @@ function wrapAsyncIteratorWithCallback<T>(
       });
     }
 
-    asyncIteratorNext()
-      .then(handleIteration)
-      .catch(reject);
+    asyncIteratorNext().then(handleIteration).catch(reject);
   });
 }

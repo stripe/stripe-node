@@ -5,6 +5,6 @@ require('chai').use(require('chai-as-promised'));
 
 // Allow BigInt values to survive JSON serialization in mocha's parallel
 // worker IPC channel (which uses JSON.stringify internally).
-BigInt.prototype.toJSON = function() {
+BigInt.prototype.toJSON = function () {
   return this.toString();
 };

@@ -4,18 +4,18 @@ import {StripeResource} from '../StripeResource.js';
 import {Customer} from './Customers.js';
 import {SetupAttempt} from './SetupAttempts.js';
 import {Charge} from './Charges.js';
-import {Metadata, OtherString, Address} from '../shared.js';
+import {ApplyExpand, Metadata, OtherString, Address} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class ConfirmationTokenResource extends StripeResource {
   /**
    * Retrieves an existing ConfirmationToken object
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: ConfirmationTokenRetrieveParams,
+    params?: ConfirmationTokenRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ConfirmationToken>> {
+  ): Promise<Response<ApplyExpand<ConfirmationToken, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/confirmation_tokens/${encodeURIComponent(id)}`,
@@ -1829,9 +1829,9 @@ export namespace ConfirmationToken {
     }
   }
 }
-export interface ConfirmationTokenRetrieveParams {
+export interface ConfirmationTokenRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

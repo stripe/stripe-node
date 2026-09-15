@@ -3,6 +3,8 @@
 import {StripeResource} from '../../StripeResource.js';
 import {CalculationLineItem} from './CalculationLineItems.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   MetadataParam,
   OtherString,
   Address,
@@ -15,11 +17,11 @@ export class CalculationResource extends StripeResource {
   /**
    * Retrieves a Tax Calculation object, if the calculation hasn't expired.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Tax.CalculationRetrieveParams,
+    params?: Tax.CalculationRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Calculation>> {
+  ): Promise<Response<ApplyExpand<Calculation, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/tax/calculations/${encodeURIComponent(id)}`,
@@ -30,10 +32,10 @@ export class CalculationResource extends StripeResource {
   /**
    * Calculates tax based on the input and returns a Tax Calculation object.
    */
-  create(
-    params: Tax.CalculationCreateParams,
+  create<E extends string = never>(
+    params: Tax.CalculationCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Calculation>> {
+  ): Promise<Response<ApplyExpand<Calculation, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/tax/calculations',
@@ -44,11 +46,11 @@ export class CalculationResource extends StripeResource {
   /**
    * Retrieves the line items of a tax calculation as a collection, if the calculation hasn't expired.
    */
-  listLineItems(
+  listLineItems<E extends string = never>(
     id: string,
-    params?: Tax.CalculationListLineItemsParams,
+    params?: Tax.CalculationListLineItemsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<CalculationLineItem> {
+  ): ApiListPromise<ApplyExpandListItem<CalculationLineItem, E>> {
     return this._makeRequest(
       'GET',
       `/v1/tax/calculations/${encodeURIComponent(id)}/line_items`,
@@ -579,7 +581,7 @@ export namespace Calculation {
   }
 }
 export namespace Tax {
-  export interface CalculationCreateParams {
+  export interface CalculationCreateParams<E extends string = string> {
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
@@ -603,7 +605,7 @@ export namespace Tax {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Details about the address from which the goods are being shipped.
@@ -936,18 +938,19 @@ export namespace Tax {
   }
 }
 export namespace Tax {
-  export interface CalculationRetrieveParams {
+  export interface CalculationRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Tax {
-  export interface CalculationListLineItemsParams extends PaginationParams {
+  export interface CalculationListLineItemsParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

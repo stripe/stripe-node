@@ -139,18 +139,67 @@ We also recommend using `// @ts-ignore` if you have access to a beta feature and
 
 #### Using `expand` with TypeScript
 
-[Expandable][expanding_objects] fields are typed as `string | Foo`,
-so you must cast them appropriately, e.g.,
+[Expandable][expanding_objects] fields are typed as `string | Foo`, because without
+expanding them you only get the id. When you pass `expand`, the fields you named lose
+their `string` half, so you can use them directly:
 
 ```ts
-const paymentIntent: Stripe.PaymentIntent = await stripeClient.paymentIntents.retrieve(
-  'pi_123456789',
-  {
-    expand: ['customer'],
-  }
-);
-const customerEmail: string = (paymentIntent.customer as Stripe.Customer).email;
+const paymentIntent = await stripeClient.paymentIntents.retrieve('pi_123456789', {
+  expand: ['customer'],
+});
 
+// paymentIntent.customer is Stripe.Customer | Stripe.DeletedCustomer | null
+const customerEmail = paymentIntent.customer?.deleted
+  ? null
+  : paymentIntent.customer?.email;
+```
+
+This works for nested paths too, and — as with the API itself — naming a nested path
+expands everything above it:
+
+```ts
+const session = await stripeClient.checkout.sessions.retrieve('cs_123', {
+  expand: ['subscription', 'subscription.items.data.price.product'],
+});
+
+const product = session.subscription?.items.data[0].price.product;
+// product is Stripe.Product | Stripe.DeletedProduct | undefined
+```
+
+On `list` and `search`, expand paths address the list envelope and so start with
+`data.`, matching the API:
+
+```ts
+for await (const charge of stripeClient.charges.list({expand: ['data.customer']})) {
+  // charge.customer is Stripe.Customer | Stripe.DeletedCustomer | null
+}
+```
+
+The paths have to be inferrable as literals for this to work. Passing a `string[]`
+variable is still allowed, but the return type falls back to the unexpanded one:
+
+```ts
+const paths: string[] = ['customer'];
+// paymentIntent.customer is string | Stripe.Customer | ... | null
+const paymentIntent = await stripeClient.paymentIntents.retrieve('pi_123', {
+  expand: paths,
+});
+```
+
+You can also name the expanded type yourself with `Stripe.Expanded`, which is useful in
+your own function signatures:
+
+```ts
+function describe(
+  pi: Stripe.Expanded<Stripe.PaymentIntent, 'customer'>
+): string | null | undefined {
+  return pi.customer?.deleted ? null : pi.customer?.email;
+}
+```
+
+If you only need the id of a field you didn't expand:
+
+```ts
 // Define and use this helper method if you extract `id` often
 function getId(stripeObject: {id: string} | string) {
   return typeof stripeObject === 'string' ? stripeObject : stripeObject.id;

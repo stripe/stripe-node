@@ -4,6 +4,8 @@ import {StripeResource} from '../StripeResource.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Coupon} from './Coupons.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   Emptyable,
   PaginationParams,
@@ -16,10 +18,10 @@ export class PromotionCodeResource extends StripeResource {
   /**
    * Returns a list of your promotion codes.
    */
-  list(
-    params?: PromotionCodeListParams,
+  list<E extends string = never>(
+    params?: PromotionCodeListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<PromotionCode> {
+  ): ApiListPromise<ApplyExpandListItem<PromotionCode, E>> {
     return this._makeRequest('GET', '/v1/promotion_codes', params, options, {
       methodType: 'list',
     }) as any;
@@ -27,10 +29,10 @@ export class PromotionCodeResource extends StripeResource {
   /**
    * A promotion code points to an underlying promotion. You can optionally restrict the code to a specific customer, redemption limit, and expiration date.
    */
-  create(
-    params: PromotionCodeCreateParams,
+  create<E extends string = never>(
+    params: PromotionCodeCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PromotionCode>> {
+  ): Promise<Response<ApplyExpand<PromotionCode, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/promotion_codes',
@@ -41,11 +43,11 @@ export class PromotionCodeResource extends StripeResource {
   /**
    * Retrieves the promotion code with the given ID. In order to retrieve a promotion code by the customer-facing code use [list](https://docs.stripe.com/docs/api/promotion_codes/list) with the desired code.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: PromotionCodeRetrieveParams,
+    params?: PromotionCodeRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PromotionCode>> {
+  ): Promise<Response<ApplyExpand<PromotionCode, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/promotion_codes/${encodeURIComponent(id)}`,
@@ -56,11 +58,11 @@ export class PromotionCodeResource extends StripeResource {
   /**
    * Updates the specified promotion code by setting the values of the parameters passed. Most fields are, by design, not editable.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: PromotionCodeUpdateParams,
+    params?: PromotionCodeUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PromotionCode>> {
+  ): Promise<Response<ApplyExpand<PromotionCode, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/promotion_codes/${encodeURIComponent(id)}`,
@@ -180,7 +182,7 @@ export namespace PromotionCode {
     }
   }
 }
-export interface PromotionCodeCreateParams {
+export interface PromotionCodeCreateParams<E extends string = string> {
   /**
    * The promotion referenced by this promotion code.
    */
@@ -211,7 +213,7 @@ export interface PromotionCodeCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The timestamp at which this promotion code will expire. If the coupon has specified a `redeems_by`, then this value cannot be after the coupon's `redeems_by`.
@@ -279,13 +281,13 @@ export namespace PromotionCodeCreateParams {
     }
   }
 }
-export interface PromotionCodeRetrieveParams {
+export interface PromotionCodeRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PromotionCodeUpdateParams {
+export interface PromotionCodeUpdateParams<E extends string = string> {
   /**
    * Whether the promotion code is currently active. A promotion code can only be reactivated when the coupon is still valid and the promotion code is otherwise redeemable.
    */
@@ -294,7 +296,7 @@ export interface PromotionCodeUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -325,7 +327,8 @@ export namespace PromotionCodeUpdateParams {
     }
   }
 }
-export interface PromotionCodeListParams extends PaginationParams {
+export interface PromotionCodeListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Filter promotion codes by whether they are active.
    */
@@ -359,5 +362,5 @@ export interface PromotionCodeListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

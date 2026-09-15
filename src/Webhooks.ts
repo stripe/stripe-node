@@ -131,7 +131,7 @@ export function createWebhooks(
         'You passed a thin event notification to a function that expects a webhook. Use the corresponding EventNotification method instead.'
       );
     }
-    return (jsonPayload as unknown) as Event;
+    return jsonPayload as unknown as Event;
   }
 
   const Webhook: WebhookObject = {
@@ -201,7 +201,9 @@ export function createWebhooks(
       return buildEvent(maybeExtractFromCloudProviderEnvelope(payload));
     },
 
-    generateTestHeaderString: function(opts: WebhookTestHeaderOptions): string {
+    generateTestHeaderString: function (
+      opts: WebhookTestHeaderOptions
+    ): string {
       try {
         const preparedOpts = prepareOptions(opts);
 
@@ -221,7 +223,7 @@ export function createWebhooks(
         throw e;
       }
     },
-    generateTestHeaderStringAsync: async function(
+    generateTestHeaderStringAsync: async function (
       opts: WebhookTestHeaderOptions
     ) {
       const preparedOpts = prepareOptions(opts);
@@ -552,14 +554,13 @@ export function createWebhooks(
    */
   function getCryptoProvider(): CryptoProvider {
     if (!webhooksCryptoProviderInstance) {
-      webhooksCryptoProviderInstance = platformFunctions.createDefaultCryptoProvider();
+      webhooksCryptoProviderInstance =
+        platformFunctions.createDefaultCryptoProvider();
     }
     return webhooksCryptoProviderInstance;
   }
 
-  function prepareOptions(
-    opts: WebhookTestHeaderOptions
-  ): Omit<
+  function prepareOptions(opts: WebhookTestHeaderOptions): Omit<
     WebhookTestHeaderOptions,
     'timestamp' | 'scheme' | 'cryptoProvider'
   > & {

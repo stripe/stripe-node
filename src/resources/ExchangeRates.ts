@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams} from '../shared.js';
+import {ApplyExpandListItem, ApplyExpand, PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class ExchangeRateResource extends StripeResource {
@@ -11,10 +11,10 @@ export class ExchangeRateResource extends StripeResource {
    * Returns a list of objects that contain the rates at which foreign currencies are converted to one another. Only shows the currencies for which Stripe supports.
    * @deprecated
    */
-  list(
-    params?: ExchangeRateListParams,
+  list<E extends string = never>(
+    params?: ExchangeRateListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ExchangeRate> {
+  ): ApiListPromise<ApplyExpandListItem<ExchangeRate, E>> {
     return this._makeRequest('GET', '/v1/exchange_rates', params, options, {
       methodType: 'list',
     }) as any;
@@ -25,11 +25,11 @@ export class ExchangeRateResource extends StripeResource {
    * Retrieves the exchange rates from the given currency to every supported currency.
    * @deprecated
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: ExchangeRateRetrieveParams,
+    params?: ExchangeRateRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ExchangeRate>> {
+  ): Promise<Response<ApplyExpand<ExchangeRate, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/exchange_rates/${encodeURIComponent(id)}`,
@@ -56,15 +56,16 @@ export interface ExchangeRate {
     [key: string]: number;
   };
 }
-export interface ExchangeRateRetrieveParams {
+export interface ExchangeRateRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ExchangeRateListParams extends PaginationParams {
+export interface ExchangeRateListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

@@ -58,6 +58,7 @@ import {
   RangeQueryParam,
   PaginationParams,
   Emptyable,
+  Expanded,
   Decimal,
 } from './shared.js';
 import {UnknownEventNotification} from './resources/V2/Core/Events.js';
@@ -987,7 +988,8 @@ export class Stripe {
   static Decimal = Decimal;
 
   private static _platformFunctions: PlatformFunctions;
-  private static _requestSenderFactory: RequestSenderFactory = defaultRequestSenderFactory;
+  private static _requestSenderFactory: RequestSenderFactory =
+    defaultRequestSenderFactory;
   static webhooks: ReturnType<typeof createWebhooks>;
 
   static createNodeHttpClient: PlatformFunctions['createNodeHttpClient'];
@@ -1389,7 +1391,7 @@ export class Stripe {
       case 'INITIAL_NETWORK_RETRY_DELAY_SEC':
         return INITIAL_NETWORK_RETRY_DELAY_SEC;
     }
-    return ((Stripe as unknown) as Record<string, unknown>)[c];
+    return (Stripe as unknown as Record<string, unknown>)[c];
   }
 
   resolveBaseAddress(apiBase: BaseAddress): string {
@@ -1659,7 +1661,7 @@ export class Stripe {
       );
     };
 
-    return (parsed as unknown) as V2.Core.EventNotification;
+    return parsed as unknown as V2.Core.EventNotification;
   }
 
   /**
@@ -2631,6 +2633,7 @@ export declare namespace Stripe {
     RangeQueryParam,
     PaginationParams,
     Emptyable,
+    Expanded,
   };
 
   export {
@@ -2650,12 +2653,16 @@ export declare namespace Stripe {
   export type HttpAgent = import('./lib.js').HttpAgent;
   export type HttpProtocol = import('./lib.js').HttpProtocol;
   export type StripeResource = import('./StripeResource.js').StripeResource;
-  export type CryptoProvider = import('./crypto/CryptoProvider.js').CryptoProvider;
-  export type HttpClientInterface = import('./net/HttpClient.js').HttpClientInterface;
-  export type HttpClientResponseInterface = import('./net/HttpClient.js').HttpClientResponseInterface;
+  export type CryptoProvider =
+    import('./crypto/CryptoProvider.js').CryptoProvider;
+  export type HttpClientInterface =
+    import('./net/HttpClient.js').HttpClientInterface;
+  export type HttpClientResponseInterface =
+    import('./net/HttpClient.js').HttpClientResponseInterface;
   export type RawErrorType = import('./Types.js').RawErrorType;
   export type Webhooks = import('./Webhooks.js').WebhookObject;
-  export type WebhookTestHeaderOptions = import('./Webhooks.js').WebhookTestHeaderOptions;
+  export type WebhookTestHeaderOptions =
+    import('./Webhooks.js').WebhookTestHeaderOptions;
   export type Signature = import('./Webhooks.js').WebhookSignatureObject;
 
   export {StripeContext as StripeContextType};
@@ -2663,9 +2670,12 @@ export declare namespace Stripe {
   // Type-only: these classes are not attached as statics on the Stripe constructor,
   // so they can be named in annotations but not used as values. Construct handlers
   // through stripe.notificationHandler() / stripe.notificationHandlerWithoutVerification().
-  export type UnhandledNotificationDetails = import('./StripeEventNotificationHandler.js').UnhandledNotificationDetails;
-  export type StripeEventNotificationHandler = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandler;
-  export type StripeEventNotificationHandlerWithoutVerification = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandlerWithoutVerification;
+  export type UnhandledNotificationDetails =
+    import('./StripeEventNotificationHandler.js').UnhandledNotificationDetails;
+  export type StripeEventNotificationHandler =
+    import('./StripeEventNotificationHandler.js').StripeEventNotificationHandler;
+  export type StripeEventNotificationHandlerWithoutVerification =
+    import('./StripeEventNotificationHandler.js').StripeEventNotificationHandlerWithoutVerification;
   // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
   export namespace ErrorType {
     export type StripeError = InstanceType<typeof _Error.StripeError>;

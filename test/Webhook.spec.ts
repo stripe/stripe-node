@@ -256,7 +256,8 @@ function createWebhooksTestSuite(stripe) {
       it('should raise a SignatureVerificationError when the header does not have the expected format', async () => {
         const header = "I'm not even a real signature header";
 
-        const expectedMessage = /Unable to extract timestamp and signatures from header/;
+        const expectedMessage =
+          /Unable to extract timestamp and signatures from header/;
 
         await expect(
           verifyHeaderFn(EVENT_PAYLOAD_STRING, header, SECRET)
@@ -264,7 +265,8 @@ function createWebhooksTestSuite(stripe) {
       });
 
       it('should raise a SignatureVerificationError when the header is null or empty', async () => {
-        const expectedMessage = /No stripe-signature header value was provided./;
+        const expectedMessage =
+          /No stripe-signature header value was provided./;
 
         await expect(
           verifyHeaderFn(EVENT_PAYLOAD_STRING, null, SECRET)
@@ -472,7 +474,8 @@ function createWebhooksTestSuite(stripe) {
           secret: SECRET,
         });
 
-        const expectedMessage = /No webhook secret value was provided\. It should start with `whsec_`/;
+        const expectedMessage =
+          /No webhook secret value was provided\. It should start with `whsec_`/;
 
         await expect(
           verifyHeaderFn(EVENT_PAYLOAD_STRING, header, '')

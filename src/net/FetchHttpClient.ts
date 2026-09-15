@@ -43,8 +43,10 @@ type FetchWithTimeout = (
  * Fetch API. As an example, this could be the function provided by the
  * node-fetch package (https://github.com/node-fetch/node-fetch).
  */
-export class FetchHttpClient extends HttpClient
-  implements FetchHttpClientInterface {
+export class FetchHttpClient
+  extends HttpClient
+  implements FetchHttpClientInterface
+{
   private readonly _fetchFn: FetchWithTimeout;
 
   constructor(fetchFn?: typeof fetch) {
@@ -210,8 +212,10 @@ export class FetchHttpClient extends HttpClient
   }
 }
 
-export class FetchHttpClientResponse extends HttpClientResponse
-  implements FetchHttpClientResponseInterface {
+export class FetchHttpClientResponse
+  extends HttpClientResponse
+  implements FetchHttpClientResponseInterface
+{
   _res: Response;
   _requestTimeout: RequestTimeout;
 

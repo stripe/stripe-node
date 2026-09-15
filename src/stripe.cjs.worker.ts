@@ -16,7 +16,7 @@ type StripeCallableConstructor = typeof Stripe & {
 // the prototype chain wiring below makes both `new StripeConstructor()` and
 // `StripeConstructor()` work correctly.
 // eslint-disable-next-line func-style
-const StripeConstructor: StripeCallableConstructor = function(
+const StripeConstructor: StripeCallableConstructor = function (
   this: any,
   key: string,
   config?: StripeConfig

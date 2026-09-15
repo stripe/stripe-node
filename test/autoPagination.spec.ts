@@ -8,27 +8,23 @@ import {getMockStripe} from './testUtils.js';
 import {StripeAPIError} from '../src/Error.js';
 
 describe('auto pagination', () => {
-  const testCase = (mockPaginationFn) => ({
-    pages,
-    limit,
-    expectedIds,
-    expectedParamsLog,
-    initialArgs,
-  }) => {
-    const {paginator, paramsLog} = mockPaginationFn(pages, initialArgs);
+  const testCase =
+    (mockPaginationFn) =>
+    ({pages, limit, expectedIds, expectedParamsLog, initialArgs}) => {
+      const {paginator, paramsLog} = mockPaginationFn(pages, initialArgs);
 
-    return expect(
-      paginator.autoPagingToArray({limit}).then((result) => {
-        return {
-          ids: result.map((x) => x.id),
-          paramsLog,
-        };
-      })
-    ).to.eventually.deep.equal({
-      ids: expectedIds,
-      paramsLog: expectedParamsLog,
-    });
-  };
+      return expect(
+        paginator.autoPagingToArray({limit}).then((result) => {
+          return {
+            ids: result.map((x) => x.id),
+            paramsLog,
+          };
+        })
+      ).to.eventually.deep.equal({
+        ids: expectedIds,
+        paramsLog: expectedParamsLog,
+      });
+    };
   describe('V1 list response pagination', () => {
     const mockPaginationV1List = (pages, initialArgs) => {
       let i = 1;
@@ -197,10 +193,7 @@ describe('auto pagination', () => {
               resolve(customerIds);
             }
 
-            paginator
-              .autoPagingEach(onCustomer)
-              .then(onDone)
-              .catch(reject);
+            paginator.autoPagingEach(onCustomer).then(onDone).catch(reject);
           })
         ).to.eventually.deep.equal(OBJECT_IDS);
       });

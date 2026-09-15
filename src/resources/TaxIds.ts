@@ -4,7 +4,12 @@ import {StripeResource} from '../StripeResource.js';
 import {Customer} from './Customers.js';
 import {Account} from './Accounts.js';
 import {Application} from './Applications.js';
-import {OtherString, PaginationParams} from '../shared.js';
+import {
+  ApplyExpand,
+  ApplyExpandListItem,
+  OtherString,
+  PaginationParams,
+} from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 
 export class TaxIdResource extends StripeResource {
@@ -26,11 +31,11 @@ export class TaxIdResource extends StripeResource {
   /**
    * Retrieves an account or customer tax_id object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: TaxIdRetrieveParams,
+    params?: TaxIdRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TaxId>> {
+  ): Promise<Response<ApplyExpand<TaxId, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/tax_ids/${encodeURIComponent(id)}`,
@@ -41,10 +46,10 @@ export class TaxIdResource extends StripeResource {
   /**
    * Returns a list of tax IDs.
    */
-  list(
-    params?: TaxIdListParams,
+  list<E extends string = never>(
+    params?: TaxIdListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<TaxId> {
+  ): ApiListPromise<ApplyExpandListItem<TaxId, E>> {
     return this._makeRequest('GET', '/v1/tax_ids', params, options, {
       methodType: 'list',
     }) as any;
@@ -52,10 +57,10 @@ export class TaxIdResource extends StripeResource {
   /**
    * Creates a new account or customer tax_id object.
    */
-  create(
-    params: TaxIdCreateParams,
+  create<E extends string = never>(
+    params: TaxIdCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TaxId>> {
+  ): Promise<Response<ApplyExpand<TaxId, E>>> {
     return this._makeRequest('POST', '/v1/tax_ids', params, options) as any;
   }
 }
@@ -320,7 +325,7 @@ export namespace TaxId {
       | OtherString;
   }
 }
-export interface TaxIdCreateParams {
+export interface TaxIdCreateParams<E extends string = string> {
   /**
    * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
    */
@@ -334,7 +339,7 @@ export interface TaxIdCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The account or customer the tax ID belongs to. Defaults to `owner[type]=self`.
@@ -493,17 +498,18 @@ export namespace TaxIdCreateParams {
       | OtherString;
   }
 }
-export interface TaxIdRetrieveParams {
+export interface TaxIdRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface TaxIdListParams extends PaginationParams {
+export interface TaxIdListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The account or customer the tax ID belongs to. Defaults to `owner[type]=self`.

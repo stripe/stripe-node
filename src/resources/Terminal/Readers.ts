@@ -9,6 +9,8 @@ import {CustomerSource} from './../CustomerSources.js';
 import {Charge} from './../Charges.js';
 import {Refund} from './../Refunds.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   Emptyable,
   MetadataParam,
   PaginationParams,
@@ -36,11 +38,11 @@ export class ReaderResource extends StripeResource {
   /**
    * Retrieves a Reader object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Terminal.ReaderRetrieveParams,
+    params?: Terminal.ReaderRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader | DeletedReader>> {
+  ): Promise<Response<ApplyExpand<Reader | DeletedReader, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/terminal/readers/${encodeURIComponent(id)}`,
@@ -51,11 +53,11 @@ export class ReaderResource extends StripeResource {
   /**
    * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Terminal.ReaderUpdateParams,
+    params?: Terminal.ReaderUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader | DeletedReader>> {
+  ): Promise<Response<ApplyExpand<Reader | DeletedReader, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}`,
@@ -66,10 +68,10 @@ export class ReaderResource extends StripeResource {
   /**
    * Returns a list of Reader objects.
    */
-  list(
-    params?: Terminal.ReaderListParams,
+  list<E extends string = never>(
+    params?: Terminal.ReaderListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Reader> {
+  ): ApiListPromise<ApplyExpandListItem<Reader, E>> {
     return this._makeRequest('GET', '/v1/terminal/readers', params, options, {
       methodType: 'list',
     }) as any;
@@ -77,10 +79,10 @@ export class ReaderResource extends StripeResource {
   /**
    * Creates a new Reader object.
    */
-  create(
-    params: Terminal.ReaderCreateParams,
+  create<E extends string = never>(
+    params: Terminal.ReaderCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<ApplyExpand<Reader, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/terminal/readers',
@@ -91,11 +93,11 @@ export class ReaderResource extends StripeResource {
   /**
    * Cancels the current reader action. See [Programmatic Cancellation](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven#programmatic-cancellation) for more details.
    */
-  cancelAction(
+  cancelAction<E extends string = never>(
     id: string,
-    params?: Terminal.ReaderCancelActionParams,
+    params?: Terminal.ReaderCancelActionParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader | DeletedReader>> {
+  ): Promise<Response<ApplyExpand<Reader | DeletedReader, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}/cancel_action`,
@@ -106,11 +108,11 @@ export class ReaderResource extends StripeResource {
   /**
    * Initiates an [input collection flow](https://docs.stripe.com/docs/terminal/features/collect-inputs) on a Reader to display input forms and collect information from your customers.
    */
-  collectInputs(
+  collectInputs<E extends string = never>(
     id: string,
-    params: Terminal.ReaderCollectInputsParams,
+    params: Terminal.ReaderCollectInputsParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<ApplyExpand<Reader, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}/collect_inputs`,
@@ -121,11 +123,11 @@ export class ReaderResource extends StripeResource {
   /**
    * Initiates a payment flow on a Reader and updates the PaymentIntent with card details before manual confirmation. See [Collecting a Payment method](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven&process=inspect#collect-a-paymentmethod) for more details.
    */
-  collectPaymentMethod(
+  collectPaymentMethod<E extends string = never>(
     id: string,
-    params: Terminal.ReaderCollectPaymentMethodParams,
+    params: Terminal.ReaderCollectPaymentMethodParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<ApplyExpand<Reader, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}/collect_payment_method`,
@@ -136,11 +138,11 @@ export class ReaderResource extends StripeResource {
   /**
    * Finalizes a payment on a Reader. See [Confirming a Payment](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven&process=inspect#confirm-the-paymentintent) for more details.
    */
-  confirmPaymentIntent(
+  confirmPaymentIntent<E extends string = never>(
     id: string,
-    params: Terminal.ReaderConfirmPaymentIntentParams,
+    params: Terminal.ReaderConfirmPaymentIntentParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<ApplyExpand<Reader, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}/confirm_payment_intent`,
@@ -151,11 +153,11 @@ export class ReaderResource extends StripeResource {
   /**
    * Initiates a payment flow on a Reader. See [process the payment](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven&process=immediately#process-payment) for more details.
    */
-  processPaymentIntent(
+  processPaymentIntent<E extends string = never>(
     id: string,
-    params: Terminal.ReaderProcessPaymentIntentParams,
+    params: Terminal.ReaderProcessPaymentIntentParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<ApplyExpand<Reader, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}/process_payment_intent`,
@@ -166,11 +168,11 @@ export class ReaderResource extends StripeResource {
   /**
    * Initiates a SetupIntent flow on a Reader. See [Save directly without charging](https://docs.stripe.com/docs/terminal/features/saving-payment-details/save-directly) for more details.
    */
-  processSetupIntent(
+  processSetupIntent<E extends string = never>(
     id: string,
-    params: Terminal.ReaderProcessSetupIntentParams,
+    params: Terminal.ReaderProcessSetupIntentParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<ApplyExpand<Reader, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}/process_setup_intent`,
@@ -181,11 +183,11 @@ export class ReaderResource extends StripeResource {
   /**
    * Initiates an in-person refund on a Reader. See [Refund an Interac Payment](https://docs.stripe.com/docs/terminal/payments/regional?integration-country=CA#refund-an-interac-payment) for more details.
    */
-  refundPayment(
+  refundPayment<E extends string = never>(
     id: string,
-    params?: Terminal.ReaderRefundPaymentParams,
+    params?: Terminal.ReaderRefundPaymentParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<ApplyExpand<Reader, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}/refund_payment`,
@@ -196,11 +198,11 @@ export class ReaderResource extends StripeResource {
   /**
    * Sets the reader display to show [cart details](https://docs.stripe.com/docs/terminal/features/display).
    */
-  setReaderDisplay(
+  setReaderDisplay<E extends string = never>(
     id: string,
-    params: Terminal.ReaderSetReaderDisplayParams,
+    params: Terminal.ReaderSetReaderDisplayParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Reader>> {
+  ): Promise<Response<ApplyExpand<Reader, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}/set_reader_display`,
@@ -1264,7 +1266,7 @@ export namespace Reader {
   }
 }
 export namespace Terminal {
-  export interface ReaderCreateParams {
+  export interface ReaderCreateParams<E extends string = string> {
     /**
      * A code generated by the reader used for registering to an account.
      */
@@ -1273,7 +1275,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Custom label given to the reader for easier identification. If no label is specified, the registration code will be used.
@@ -1292,19 +1294,19 @@ export namespace Terminal {
   }
 }
 export namespace Terminal {
-  export interface ReaderRetrieveParams {
+  export interface ReaderRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Terminal {
-  export interface ReaderUpdateParams {
+  export interface ReaderUpdateParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The new label of the reader.
@@ -1318,7 +1320,8 @@ export namespace Terminal {
   }
 }
 export namespace Terminal {
-  export interface ReaderListParams extends PaginationParams {
+  export interface ReaderListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Filters readers by device type
      */
@@ -1327,7 +1330,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * A location ID to filter the response list to only readers at the specific location
@@ -1375,15 +1378,15 @@ export namespace Terminal {
   export interface ReaderDeleteParams {}
 }
 export namespace Terminal {
-  export interface ReaderCancelActionParams {
+  export interface ReaderCancelActionParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Terminal {
-  export interface ReaderCollectInputsParams {
+  export interface ReaderCollectInputsParams<E extends string = string> {
     /**
      * List of inputs to be collected from the customer using the Reader. Maximum 5 inputs.
      */
@@ -1392,7 +1395,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1514,7 +1517,7 @@ export namespace Terminal {
   }
 }
 export namespace Terminal {
-  export interface ReaderCollectPaymentMethodParams {
+  export interface ReaderCollectPaymentMethodParams<E extends string = string> {
     /**
      * The ID of the PaymentIntent to collect a payment method for.
      */
@@ -1528,7 +1531,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 
   export namespace ReaderCollectPaymentMethodParams {
@@ -1571,7 +1574,7 @@ export namespace Terminal {
   }
 }
 export namespace Terminal {
-  export interface ReaderConfirmPaymentIntentParams {
+  export interface ReaderConfirmPaymentIntentParams<E extends string = string> {
     /**
      * The ID of the PaymentIntent to confirm.
      */
@@ -1585,7 +1588,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 
   export namespace ReaderConfirmPaymentIntentParams {
@@ -1598,7 +1601,7 @@ export namespace Terminal {
   }
 }
 export namespace Terminal {
-  export interface ReaderProcessPaymentIntentParams {
+  export interface ReaderProcessPaymentIntentParams<E extends string = string> {
     /**
      * The ID of the PaymentIntent to process on the reader.
      */
@@ -1607,7 +1610,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Configuration overrides for this transaction, such as tipping and customer cancellation settings.
@@ -1660,7 +1663,7 @@ export namespace Terminal {
   }
 }
 export namespace Terminal {
-  export interface ReaderProcessSetupIntentParams {
+  export interface ReaderProcessSetupIntentParams<E extends string = string> {
     /**
      * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow.
      */
@@ -1674,7 +1677,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Configuration overrides for this setup, such as MOTO and customer cancellation settings.
@@ -1698,7 +1701,7 @@ export namespace Terminal {
   }
 }
 export namespace Terminal {
-  export interface ReaderRefundPaymentParams {
+  export interface ReaderRefundPaymentParams<E extends string = string> {
     /**
      * A positive integer in __cents__ representing how much of this charge to refund.
      */
@@ -1712,7 +1715,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1750,7 +1753,7 @@ export namespace Terminal {
   }
 }
 export namespace Terminal {
-  export interface ReaderSetReaderDisplayParams {
+  export interface ReaderSetReaderDisplayParams<E extends string = string> {
     /**
      * Type of information to display. Only `cart` is currently supported.
      */
@@ -1764,7 +1767,7 @@ export namespace Terminal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 
   export namespace ReaderSetReaderDisplayParams {

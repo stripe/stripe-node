@@ -2,7 +2,13 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {BalanceTransactionSource} from './BalanceTransactionSources.js';
-import {PaginationParams, RangeQueryParam, OtherString} from '../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  RangeQueryParam,
+  OtherString,
+} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class BalanceTransactionResource extends StripeResource {
@@ -11,10 +17,10 @@ export class BalanceTransactionResource extends StripeResource {
    *
    * The previous name of this endpoint was “Balance history,” and it used the path /v1/balance/history.
    */
-  list(
-    params?: BalanceTransactionListParams,
+  list<E extends string = never>(
+    params?: BalanceTransactionListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<BalanceTransaction> {
+  ): ApiListPromise<ApplyExpandListItem<BalanceTransaction, E>> {
     return this._makeRequest(
       'GET',
       '/v1/balance_transactions',
@@ -30,11 +36,11 @@ export class BalanceTransactionResource extends StripeResource {
    *
    * Note that this endpoint previously used the path /v1/balance/history/:id.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: BalanceTransactionRetrieveParams,
+    params?: BalanceTransactionRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<BalanceTransaction>> {
+  ): Promise<Response<ApplyExpand<BalanceTransaction, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/balance_transactions/${encodeURIComponent(id)}`,
@@ -212,13 +218,14 @@ export namespace BalanceTransaction {
     | 'transfer_refund'
     | OtherString;
 }
-export interface BalanceTransactionRetrieveParams {
+export interface BalanceTransactionRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface BalanceTransactionListParams extends PaginationParams {
+export interface BalanceTransactionListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return transactions that were created during the given date interval.
    */
@@ -232,7 +239,7 @@ export interface BalanceTransactionListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * For automatic Stripe payouts only, only returns transactions that were paid out on the specified payout ID.

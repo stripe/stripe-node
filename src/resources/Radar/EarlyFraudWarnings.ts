@@ -3,17 +3,22 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Charge} from './../Charges.js';
 import {PaymentIntent} from './../PaymentIntents.js';
-import {PaginationParams, RangeQueryParam} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  RangeQueryParam,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class EarlyFraudWarningResource extends StripeResource {
   /**
    * Returns a list of early fraud warnings.
    */
-  list(
-    params?: Radar.EarlyFraudWarningListParams,
+  list<E extends string = never>(
+    params?: Radar.EarlyFraudWarningListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<EarlyFraudWarning> {
+  ): ApiListPromise<ApplyExpandListItem<EarlyFraudWarning, E>> {
     return this._makeRequest(
       'GET',
       '/v1/radar/early_fraud_warnings',
@@ -29,11 +34,11 @@ export class EarlyFraudWarningResource extends StripeResource {
    *
    * Please refer to the [early fraud warning](https://docs.stripe.com/api#early_fraud_warning_object) object reference for more details.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Radar.EarlyFraudWarningRetrieveParams,
+    params?: Radar.EarlyFraudWarningRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<EarlyFraudWarning>> {
+  ): Promise<Response<ApplyExpand<EarlyFraudWarning, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/radar/early_fraud_warnings/${encodeURIComponent(id)}`,
@@ -84,15 +89,16 @@ export interface EarlyFraudWarning {
   payment_intent?: string | PaymentIntent;
 }
 export namespace Radar {
-  export interface EarlyFraudWarningRetrieveParams {
+  export interface EarlyFraudWarningRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Radar {
-  export interface EarlyFraudWarningListParams extends PaginationParams {
+  export interface EarlyFraudWarningListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Only return early fraud warnings for the charge specified by this charge ID.
      */
@@ -106,7 +112,7 @@ export namespace Radar {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return early fraud warnings for charges that were created by the PaymentIntent specified by this PaymentIntent ID.

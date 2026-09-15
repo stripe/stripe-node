@@ -46,9 +46,10 @@ describe('Charges Resource', () => {
 describe('Reader Resource', () => {
   describe('presentPaymentMethod', () => {
     it('Sends the correct request', async () => {
-      const reader = await stripe.testHelpers.terminal.readers.presentPaymentMethod(
-        'rdr_123'
-      );
+      const reader =
+        await stripe.testHelpers.terminal.readers.presentPaymentMethod(
+          'rdr_123'
+        );
       expect(reader).to.not.be.null;
     });
   });

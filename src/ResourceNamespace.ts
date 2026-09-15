@@ -34,7 +34,7 @@ export function resourceNamespace(
     new (...args: any[]) => StripeResourceObject | StripeResourceNamespaceObject
   >
 ): new (stripe: Stripe) => StripeResourceNamespaceObject {
-  return function(stripe: Stripe): StripeResourceNamespaceObject {
+  return function (stripe: Stripe): StripeResourceNamespaceObject {
     return new (ResourceNamespace as any)(stripe, resources);
   } as any;
 }

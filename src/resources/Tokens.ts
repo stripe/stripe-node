@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {BankAccount} from './BankAccounts.js';
 import {Card} from './Cards.js';
 import {
+  ApplyExpand,
   OtherString,
   AddressParam,
   JapanAddressParam,
@@ -16,11 +17,11 @@ export class TokenResource extends StripeResource {
   /**
    * Retrieves the token with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: TokenRetrieveParams,
+    params?: TokenRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Token>> {
+  ): Promise<Response<ApplyExpand<Token, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/tokens/${encodeURIComponent(id)}`,
@@ -32,10 +33,10 @@ export class TokenResource extends StripeResource {
    * Creates a single-use token that represents a bank account's details.
    * You can use this token with any v1 API method in place of a bank account dictionary. You can only use this token once. To do so, attach it to a [connected account](https://docs.stripe.com/api#accounts) where [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is application, which includes Custom accounts.
    */
-  create(
-    params?: TokenCreateParams,
+  create<E extends string = never>(
+    params?: TokenCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Token>> {
+  ): Promise<Response<ApplyExpand<Token, E>>> {
     return this._makeRequest('POST', '/v1/tokens', params, options) as any;
   }
 }
@@ -95,7 +96,7 @@ export interface Token {
    */
   used: boolean;
 }
-export interface TokenCreateParams {
+export interface TokenCreateParams<E extends string = string> {
   /**
    * Information for the account this token represents.
    */
@@ -124,7 +125,7 @@ export interface TokenCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Information for the person this token represents.
@@ -1172,9 +1173,9 @@ export namespace TokenCreateParams {
     }
   }
 }
-export interface TokenRetrieveParams {
+export interface TokenRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

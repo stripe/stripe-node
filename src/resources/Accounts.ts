@@ -8,6 +8,8 @@ import {DeletedPerson, Person} from './Persons.js';
 import {File} from './Files.js';
 import {TaxId} from './TaxIds.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   Emptyable,
   MetadataParam,
   AddressParam,
@@ -76,11 +78,11 @@ export class AccountResource extends StripeResource {
    * To update your own account, use the [Dashboard](https://dashboard.stripe.com/settings/account). Refer to our
    * [Connect](https://docs.stripe.com/docs/connect/updating-accounts) documentation to learn more about updating accounts.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: AccountUpdateParams,
+    params?: AccountUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Account>> {
+  ): Promise<Response<ApplyExpand<Account, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/accounts/${encodeURIComponent(id)}`,
@@ -91,19 +93,19 @@ export class AccountResource extends StripeResource {
   /**
    * Retrieves the details of an account.
    */
-  retrieveCurrent(
-    params?: AccountRetrieveCurrentParams,
+  retrieveCurrent<E extends string = never>(
+    params?: AccountRetrieveCurrentParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Account>> {
+  ): Promise<Response<ApplyExpand<Account, E>>> {
     return this._makeRequest('GET', '/v1/account', params, options) as any;
   }
   /**
    * Returns a list of accounts connected to your platform via [Connect](https://docs.stripe.com/docs/connect). If you're not a platform, the list is empty.
    */
-  list(
-    params?: AccountListParams,
+  list<E extends string = never>(
+    params?: AccountListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Account> {
+  ): ApiListPromise<ApplyExpandListItem<Account, E>> {
     return this._makeRequest('GET', '/v1/accounts', params, options, {
       methodType: 'list',
     }) as any;
@@ -116,10 +118,10 @@ export class AccountResource extends StripeResource {
    * creating the account. Connect Onboarding won't ask for the prefilled information during account onboarding.
    * You can prefill any information on the account.
    */
-  create(
-    params?: AccountCreateParams,
+  create<E extends string = never>(
+    params?: AccountCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Account>> {
+  ): Promise<Response<ApplyExpand<Account, E>>> {
     return this._makeRequest('POST', '/v1/accounts', params, options) as any;
   }
   /**
@@ -127,11 +129,11 @@ export class AccountResource extends StripeResource {
    *
    * Only accounts where your platform is liable for negative account balances, which includes Custom and Express accounts, can be rejected.
    */
-  reject(
+  reject<E extends string = never>(
     id: string,
-    params: AccountRejectParams,
+    params: AccountRejectParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Account>> {
+  ): Promise<Response<ApplyExpand<Account, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/accounts/${encodeURIComponent(id)}/reject`,
@@ -146,11 +148,11 @@ export class AccountResource extends StripeResource {
    *
    * Unreject will only enable charges and/or payouts if there are no other restrictions other than those placed by a previous rejection. If you have separately paused charges and/or payouts outside of rejection, those pauses will remain in place after unrejection.
    */
-  unreject(
+  unreject<E extends string = never>(
     id: string,
-    params?: AccountUnrejectParams,
+    params?: AccountUnrejectParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Account>> {
+  ): Promise<Response<ApplyExpand<Account, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/accounts/${encodeURIComponent(id)}/unreject`,
@@ -161,11 +163,11 @@ export class AccountResource extends StripeResource {
   /**
    * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
    */
-  listCapabilities(
+  listCapabilities<E extends string = never>(
     id: string,
-    params?: AccountListCapabilitiesParams,
+    params?: AccountListCapabilitiesParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Capability> {
+  ): ApiListPromise<ApplyExpandListItem<Capability, E>> {
     return this._makeRequest(
       'GET',
       `/v1/accounts/${encodeURIComponent(id)}/capabilities`,
@@ -179,12 +181,12 @@ export class AccountResource extends StripeResource {
   /**
    * Retrieves information about the specified Account Capability.
    */
-  retrieveCapability(
+  retrieveCapability<E extends string = never>(
     accountId: string,
     id: string,
-    params?: AccountRetrieveCapabilityParams,
+    params?: AccountRetrieveCapabilityParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Capability>> {
+  ): Promise<Response<ApplyExpand<Capability, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/accounts/${encodeURIComponent(
@@ -197,12 +199,12 @@ export class AccountResource extends StripeResource {
   /**
    * Updates an existing Account Capability. Request or remove a capability by updating its requested parameter.
    */
-  updateCapability(
+  updateCapability<E extends string = never>(
     accountId: string,
     id: string,
-    params?: AccountUpdateCapabilityParams,
+    params?: AccountUpdateCapabilityParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Capability>> {
+  ): Promise<Response<ApplyExpand<Capability, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/accounts/${encodeURIComponent(
@@ -233,12 +235,12 @@ export class AccountResource extends StripeResource {
   /**
    * Retrieve a specified external account for a given account.
    */
-  retrieveExternalAccount(
+  retrieveExternalAccount<E extends string = never>(
     accountId: string,
     id: string,
-    params?: AccountRetrieveExternalAccountParams,
+    params?: AccountRetrieveExternalAccountParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ExternalAccount>> {
+  ): Promise<Response<ApplyExpand<ExternalAccount, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/accounts/${encodeURIComponent(
@@ -258,12 +260,12 @@ export class AccountResource extends StripeResource {
    * You can re-enable a disabled bank account by performing an update call without providing any
    * arguments or changes.
    */
-  updateExternalAccount(
+  updateExternalAccount<E extends string = never>(
     accountId: string,
     id: string,
-    params?: AccountUpdateExternalAccountParams,
+    params?: AccountUpdateExternalAccountParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ExternalAccount>> {
+  ): Promise<Response<ApplyExpand<ExternalAccount, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/accounts/${encodeURIComponent(
@@ -276,11 +278,11 @@ export class AccountResource extends StripeResource {
   /**
    * List external accounts for an account.
    */
-  listExternalAccounts(
+  listExternalAccounts<E extends string = never>(
     id: string,
-    params?: AccountListExternalAccountsParams,
+    params?: AccountListExternalAccountsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ExternalAccount> {
+  ): ApiListPromise<ApplyExpandListItem<ExternalAccount, E>> {
     return this._makeRequest(
       'GET',
       `/v1/accounts/${encodeURIComponent(id)}/external_accounts`,
@@ -294,11 +296,11 @@ export class AccountResource extends StripeResource {
   /**
    * Create an external account for a given account.
    */
-  createExternalAccount(
+  createExternalAccount<E extends string = never>(
     id: string,
-    params: AccountCreateExternalAccountParams,
+    params: AccountCreateExternalAccountParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ExternalAccount>> {
+  ): Promise<Response<ApplyExpand<ExternalAccount, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/accounts/${encodeURIComponent(id)}/external_accounts`,
@@ -311,11 +313,11 @@ export class AccountResource extends StripeResource {
    *
    * You can only create login links for accounts that use the [Express Dashboard](https://docs.stripe.com/connect/express-dashboard) and are connected to your platform.
    */
-  createLoginLink(
+  createLoginLink<E extends string = never>(
     id: string,
-    params?: AccountCreateLoginLinkParams,
+    params?: AccountCreateLoginLinkParams<E>,
     options?: RequestOptions
-  ): Promise<Response<LoginLink>> {
+  ): Promise<Response<ApplyExpand<LoginLink, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/accounts/${encodeURIComponent(id)}/login_links`,
@@ -344,12 +346,12 @@ export class AccountResource extends StripeResource {
   /**
    * Retrieves an existing person.
    */
-  retrievePerson(
+  retrievePerson<E extends string = never>(
     accountId: string,
     id: string,
-    params?: AccountRetrievePersonParams,
+    params?: AccountRetrievePersonParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Person>> {
+  ): Promise<Response<ApplyExpand<Person, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/accounts/${encodeURIComponent(
@@ -362,12 +364,12 @@ export class AccountResource extends StripeResource {
   /**
    * Updates an existing person.
    */
-  updatePerson(
+  updatePerson<E extends string = never>(
     accountId: string,
     id: string,
-    params?: AccountUpdatePersonParams,
+    params?: AccountUpdatePersonParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Person>> {
+  ): Promise<Response<ApplyExpand<Person, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/accounts/${encodeURIComponent(
@@ -380,11 +382,11 @@ export class AccountResource extends StripeResource {
   /**
    * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
    */
-  listPersons(
+  listPersons<E extends string = never>(
     id: string,
-    params?: AccountListPersonsParams,
+    params?: AccountListPersonsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Person> {
+  ): ApiListPromise<ApplyExpandListItem<Person, E>> {
     return this._makeRequest(
       'GET',
       `/v1/accounts/${encodeURIComponent(id)}/persons`,
@@ -398,11 +400,11 @@ export class AccountResource extends StripeResource {
   /**
    * Creates a new person.
    */
-  createPerson(
+  createPerson<E extends string = never>(
     id: string,
-    params?: AccountCreatePersonParams,
+    params?: AccountCreatePersonParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Person>> {
+  ): Promise<Response<ApplyExpand<Person, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/accounts/${encodeURIComponent(id)}/persons`,
@@ -554,9 +556,7 @@ export namespace Account {
     /**
      * Whether the business is a minority-owned, women-owned, and/or LGBTQI+ -owned business.
      */
-    minority_owned_business_designation: Array<
-      BusinessProfile.MinorityOwnedBusinessDesignation
-    > | null;
+    minority_owned_business_designation: Array<BusinessProfile.MinorityOwnedBusinessDesignation> | null;
 
     monthly_estimated_revenue?: BusinessProfile.MonthlyEstimatedRevenue;
 
@@ -2338,7 +2338,7 @@ export namespace Account {
     }
   }
 }
-export interface AccountCreateParams {
+export interface AccountCreateParams<E extends string = string> {
   /**
    * An [account token](https://api.stripe.com#create_account_token), used to securely provide details to the account.
    */
@@ -2399,7 +2399,7 @@ export interface AccountCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A card or bank account to attach to the account for receiving [payouts](https://docs.stripe.com/connect/bank-debit-card-payouts) (you won't be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://docs.stripe.com/js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://docs.stripe.com/api#account_create_bank_account) creation.
@@ -2458,9 +2458,7 @@ export namespace AccountCreateParams {
     /**
      * Whether the business is a minority-owned, women-owned, and/or LGBTQI+ -owned business.
      */
-    minority_owned_business_designation?: Array<
-      BusinessProfile.MinorityOwnedBusinessDesignation
-    >;
+    minority_owned_business_designation?: Array<BusinessProfile.MinorityOwnedBusinessDesignation>;
 
     /**
      * An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
@@ -4311,13 +4309,13 @@ export namespace AccountCreateParams {
     }
   }
 }
-export interface AccountRetrieveParams {
+export interface AccountRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface AccountUpdateParams {
+export interface AccountUpdateParams<E extends string = string> {
   /**
    * An [account token](https://api.stripe.com#create_account_token), used to securely provide details to the account.
    */
@@ -4368,7 +4366,7 @@ export interface AccountUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A card or bank account to attach to the account for receiving [payouts](https://docs.stripe.com/connect/bank-debit-card-payouts) (you won't be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://docs.stripe.com/js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://docs.stripe.com/api#account_create_bank_account) creation.
@@ -4427,9 +4425,7 @@ export namespace AccountUpdateParams {
     /**
      * Whether the business is a minority-owned, women-owned, and/or LGBTQI+ -owned business.
      */
-    minority_owned_business_designation?: Array<
-      BusinessProfile.MinorityOwnedBusinessDesignation
-    >;
+    minority_owned_business_designation?: Array<BusinessProfile.MinorityOwnedBusinessDesignation>;
 
     /**
      * An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
@@ -6303,7 +6299,8 @@ export namespace AccountUpdateParams {
     }
   }
 }
-export interface AccountListParams extends PaginationParams {
+export interface AccountListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return connected accounts that were created during the given date interval.
    */
@@ -6312,10 +6309,10 @@ export interface AccountListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export interface AccountDeleteParams {}
-export interface AccountCreateExternalAccountParams {
+export interface AccountCreateExternalAccountParams<E extends string = string> {
   /**
    * A token, like the ones returned by [Stripe.js](https://docs.stripe.com/js) or a dictionary containing a user's external account details (with the options shown below). Please refer to full [documentation](https://stripe.com/docs/api/external_accounts) instead.
    */
@@ -6333,7 +6330,7 @@ export interface AccountCreateExternalAccountParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -6420,13 +6417,13 @@ export namespace AccountCreateExternalAccountParams {
     export type AccountHolderType = 'company' | 'individual' | OtherString;
   }
 }
-export interface AccountCreateLoginLinkParams {
+export interface AccountCreateLoginLinkParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface AccountCreatePersonParams {
+export interface AccountCreatePersonParams<E extends string = string> {
   /**
    * Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
    */
@@ -6465,7 +6462,7 @@ export interface AccountCreatePersonParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The person's first name.
@@ -6830,17 +6827,18 @@ export namespace AccountCreatePersonParams {
 }
 export interface AccountDeleteExternalAccountParams {}
 export interface AccountDeletePersonParams {}
-export interface AccountListCapabilitiesParams {
+export interface AccountListCapabilitiesParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface AccountListExternalAccountsParams extends PaginationParams {
+export interface AccountListExternalAccountsParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Filter external accounts according to a particular object type.
@@ -6850,11 +6848,12 @@ export interface AccountListExternalAccountsParams extends PaginationParams {
 export namespace AccountListExternalAccountsParams {
   export type Object = 'bank_account' | 'card' | OtherString;
 }
-export interface AccountListPersonsParams extends PaginationParams {
+export interface AccountListPersonsParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Filters on the list of people returned based on the person's relationship to the account's company.
@@ -6894,7 +6893,7 @@ export namespace AccountListPersonsParams {
     representative?: boolean;
   }
 }
-export interface AccountRejectParams {
+export interface AccountRejectParams<E extends string = string> {
   /**
    * The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.
    */
@@ -6903,7 +6902,7 @@ export interface AccountRejectParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Whether to pause payouts on the account as part of the rejection. Defaults to `pause`. Use `none` to leave payouts enabled.
@@ -6913,41 +6912,43 @@ export interface AccountRejectParams {
 export namespace AccountRejectParams {
   export type PayoutsAction = 'none' | 'pause';
 }
-export interface AccountRetrieveCurrentParams {
+export interface AccountRetrieveCurrentParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface AccountRetrieveCapabilityParams {
+export interface AccountRetrieveCapabilityParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface AccountRetrieveExternalAccountParams {
+export interface AccountRetrieveExternalAccountParams<
+  E extends string = string
+> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface AccountRetrievePersonParams {
+export interface AccountRetrievePersonParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface AccountUnrejectParams {
+export interface AccountUnrejectParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface AccountUpdateCapabilityParams {
+export interface AccountUpdateCapabilityParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * To request a new capability for an account, pass true. There can be a delay before the requested capability becomes active. If the capability has any activation requirements, the response includes them in the `requirements` arrays.
@@ -6956,7 +6957,7 @@ export interface AccountUpdateCapabilityParams {
    */
   requested?: boolean;
 }
-export interface AccountUpdateExternalAccountParams {
+export interface AccountUpdateExternalAccountParams<E extends string = string> {
   /**
    * The name of the person or business that owns the bank account.
    */
@@ -6965,9 +6966,7 @@ export interface AccountUpdateExternalAccountParams {
   /**
    * The type of entity that holds the account. This can be either `individual` or `company`.
    */
-  account_holder_type?: Emptyable<
-    AccountUpdateExternalAccountParams.AccountHolderType
-  >;
+  account_holder_type?: Emptyable<AccountUpdateExternalAccountParams.AccountHolderType>;
 
   /**
    * The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this can only be `futsu` or `toza`.
@@ -7027,7 +7026,7 @@ export interface AccountUpdateExternalAccountParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -7065,7 +7064,7 @@ export namespace AccountUpdateExternalAccountParams {
     }
   }
 }
-export interface AccountUpdatePersonParams {
+export interface AccountUpdatePersonParams<E extends string = string> {
   /**
    * Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
    */
@@ -7104,7 +7103,7 @@ export interface AccountUpdatePersonParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The person's first name.

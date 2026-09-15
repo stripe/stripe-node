@@ -14,6 +14,8 @@ import {Transfer} from './Transfers.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {Mandate} from './Mandates.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   Emptyable,
   MetadataParam,
   AddressParam,
@@ -35,10 +37,10 @@ export class ChargeResource extends StripeResource {
   /**
    * Returns a list of charges you've previously created. The charges are returned in sorted order, with the most recent charges appearing first.
    */
-  list(
-    params?: ChargeListParams,
+  list<E extends string = never>(
+    params?: ChargeListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Charge> {
+  ): ApiListPromise<ApplyExpandListItem<Charge, E>> {
     return this._makeRequest('GET', '/v1/charges', params, options, {
       methodType: 'list',
     }) as any;
@@ -48,20 +50,20 @@ export class ChargeResource extends StripeResource {
    * to initiate a new payment instead. Confirmation of the PaymentIntent creates the Charge
    * object used to request payment.
    */
-  create(
-    params?: ChargeCreateParams,
+  create<E extends string = never>(
+    params?: ChargeCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Charge>> {
+  ): Promise<Response<ApplyExpand<Charge, E>>> {
     return this._makeRequest('POST', '/v1/charges', params, options) as any;
   }
   /**
    * Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: ChargeRetrieveParams,
+    params?: ChargeRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Charge>> {
+  ): Promise<Response<ApplyExpand<Charge, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/charges/${encodeURIComponent(id)}`,
@@ -72,11 +74,11 @@ export class ChargeResource extends StripeResource {
   /**
    * Updates the specified charge by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: ChargeUpdateParams,
+    params?: ChargeUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Charge>> {
+  ): Promise<Response<ApplyExpand<Charge, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/charges/${encodeURIComponent(id)}`,
@@ -90,10 +92,10 @@ export class ChargeResource extends StripeResource {
    * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
    * to an hour behind during outages. Search functionality is not available to merchants in India.
    */
-  search(
-    params: ChargeSearchParams,
+  search<E extends string = never>(
+    params: ChargeSearchParams<E>,
     options?: RequestOptions
-  ): ApiSearchResultPromise<Charge> {
+  ): ApiSearchResultPromise<ApplyExpandListItem<Charge, E>> {
     return this._makeRequest('GET', '/v1/charges/search', params, options, {
       methodType: 'search',
     }) as any;
@@ -105,11 +107,11 @@ export class ChargeResource extends StripeResource {
    *
    * Don't use this method to capture a PaymentIntent-initiated charge. Use [Capture a PaymentIntent](https://docs.stripe.com/docs/api/payment_intents/capture).
    */
-  capture(
+  capture<E extends string = never>(
     id: string,
-    params?: ChargeCaptureParams,
+    params?: ChargeCaptureParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Charge>> {
+  ): Promise<Response<ApplyExpand<Charge, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/charges/${encodeURIComponent(id)}/capture`,
@@ -2900,7 +2902,7 @@ export namespace Charge {
     }
   }
 }
-export interface ChargeCreateParams {
+export interface ChargeCreateParams<E extends string = string> {
   /**
    * Amount intended to be collected by this payment. A positive integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://docs.stripe.com/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
    */
@@ -2938,7 +2940,7 @@ export interface ChargeCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -3056,13 +3058,13 @@ export namespace ChargeCreateParams {
     destination: string;
   }
 }
-export interface ChargeRetrieveParams {
+export interface ChargeRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ChargeUpdateParams {
+export interface ChargeUpdateParams<E extends string = string> {
   /**
    * The ID of an existing customer that will be associated with this request. This field may only be updated if there is no existing associated customer with this charge.
    */
@@ -3076,7 +3078,7 @@ export interface ChargeUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A set of key-value pairs you can attach to a charge giving information about its riskiness. If you believe a charge is fraudulent, include a `user_report` key with a value of `fraudulent`. If you believe a charge is safe, include a `user_report` key with a value of `safe`. Stripe will use the information you send to improve our fraud detection algorithms.
@@ -3142,7 +3144,8 @@ export namespace ChargeUpdateParams {
     export type UserReport = 'fraudulent' | 'safe' | OtherString;
   }
 }
-export interface ChargeListParams extends PaginationParams {
+export interface ChargeListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return charges that were created during the given date interval.
    */
@@ -3156,7 +3159,7 @@ export interface ChargeListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return charges that were created by the PaymentIntent specified by this PaymentIntent ID.
@@ -3168,7 +3171,7 @@ export interface ChargeListParams extends PaginationParams {
    */
   transfer_group?: string;
 }
-export interface ChargeCaptureParams {
+export interface ChargeCaptureParams<E extends string = string> {
   /**
    * The amount to capture, which must be less than or equal to the original amount.
    */
@@ -3187,7 +3190,7 @@ export interface ChargeCaptureParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The email address to send this charge's receipt to. This will override the previously-specified email address for this charge, if one was set. Receipts will not be sent in test mode.
@@ -3224,7 +3227,7 @@ export namespace ChargeCaptureParams {
     amount?: number;
   }
 }
-export interface ChargeSearchParams {
+export interface ChargeSearchParams<E extends string = string> {
   /**
    * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for charges](https://docs.stripe.com/search#query-fields-for-charges).
    */
@@ -3233,7 +3236,7 @@ export interface ChargeSearchParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.

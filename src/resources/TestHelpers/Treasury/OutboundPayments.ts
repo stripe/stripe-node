@@ -2,18 +2,18 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {OutboundPayment} from './../../Treasury/OutboundPayments.js';
-import {OtherString} from '../../../shared.js';
+import {ApplyExpand, OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class OutboundPaymentResource extends StripeResource {
   /**
    * Updates a test mode created OutboundPayment with tracking details. The OutboundPayment must not be cancelable, and cannot be in the canceled or failed states.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params: TestHelpers.Treasury.OutboundPaymentUpdateParams,
+    params: TestHelpers.Treasury.OutboundPaymentUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<OutboundPayment>> {
+  ): Promise<Response<ApplyExpand<OutboundPayment, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/treasury/outbound_payments/${encodeURIComponent(id)}`,
@@ -24,11 +24,11 @@ export class OutboundPaymentResource extends StripeResource {
   /**
    * Transitions a test mode created OutboundPayment to the failed status. The OutboundPayment must already be in the processing state.
    */
-  fail(
+  fail<E extends string = never>(
     id: string,
-    params?: TestHelpers.Treasury.OutboundPaymentFailParams,
+    params?: TestHelpers.Treasury.OutboundPaymentFailParams<E>,
     options?: RequestOptions
-  ): Promise<Response<OutboundPayment>> {
+  ): Promise<Response<ApplyExpand<OutboundPayment, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/treasury/outbound_payments/${encodeURIComponent(
@@ -41,11 +41,11 @@ export class OutboundPaymentResource extends StripeResource {
   /**
    * Transitions a test mode created OutboundPayment to the posted status. The OutboundPayment must already be in the processing state.
    */
-  post(
+  post<E extends string = never>(
     id: string,
-    params?: TestHelpers.Treasury.OutboundPaymentPostParams,
+    params?: TestHelpers.Treasury.OutboundPaymentPostParams<E>,
     options?: RequestOptions
-  ): Promise<Response<OutboundPayment>> {
+  ): Promise<Response<ApplyExpand<OutboundPayment, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/treasury/outbound_payments/${encodeURIComponent(
@@ -58,11 +58,11 @@ export class OutboundPaymentResource extends StripeResource {
   /**
    * Transitions a test mode created OutboundPayment to the returned status. The OutboundPayment must already be in the processing state.
    */
-  returnOutboundPayment(
+  returnOutboundPayment<E extends string = never>(
     id: string,
-    params?: TestHelpers.Treasury.OutboundPaymentReturnOutboundPaymentParams,
+    params?: TestHelpers.Treasury.OutboundPaymentReturnOutboundPaymentParams<E>,
     options?: RequestOptions
-  ): Promise<Response<OutboundPayment>> {
+  ): Promise<Response<ApplyExpand<OutboundPayment, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/treasury/outbound_payments/${encodeURIComponent(
@@ -75,7 +75,7 @@ export class OutboundPaymentResource extends StripeResource {
 }
 export namespace TestHelpers {
   export namespace Treasury {
-    export interface OutboundPaymentUpdateParams {
+    export interface OutboundPaymentUpdateParams<E extends string = string> {
       /**
        * Details about network-specific tracking information.
        */
@@ -84,7 +84,7 @@ export namespace TestHelpers {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
 
     export namespace OutboundPaymentUpdateParams {
@@ -137,31 +137,33 @@ export namespace TestHelpers {
 }
 export namespace TestHelpers {
   export namespace Treasury {
-    export interface OutboundPaymentFailParams {
+    export interface OutboundPaymentFailParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Treasury {
-    export interface OutboundPaymentPostParams {
+    export interface OutboundPaymentPostParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Treasury {
-    export interface OutboundPaymentReturnOutboundPaymentParams {
+    export interface OutboundPaymentReturnOutboundPaymentParams<
+      E extends string = string
+    > {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * Optional hash to set the return code.

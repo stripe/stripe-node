@@ -3,6 +3,8 @@
 import {StripeResource} from '../../StripeResource.js';
 import {VerificationReport} from './VerificationReports.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   Emptyable,
   OtherString,
@@ -17,10 +19,10 @@ export class VerificationSessionResource extends StripeResource {
   /**
    * Returns a list of VerificationSessions
    */
-  list(
-    params?: Identity.VerificationSessionListParams,
+  list<E extends string = never>(
+    params?: Identity.VerificationSessionListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<VerificationSession> {
+  ): ApiListPromise<ApplyExpandListItem<VerificationSession, E>> {
     return this._makeRequest(
       'GET',
       '/v1/identity/verification_sessions',
@@ -40,10 +42,10 @@ export class VerificationSessionResource extends StripeResource {
    *
    * Related guide: [Verify your users' identity documents](https://docs.stripe.com/docs/identity/verify-identity-documents)
    */
-  create(
-    params?: Identity.VerificationSessionCreateParams,
+  create<E extends string = never>(
+    params?: Identity.VerificationSessionCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<VerificationSession>> {
+  ): Promise<Response<ApplyExpand<VerificationSession, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/identity/verification_sessions',
@@ -57,11 +59,11 @@ export class VerificationSessionResource extends StripeResource {
    * When the session status is requires_input, you can use this method to retrieve a valid
    * client_secret or url to allow re-submission.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Identity.VerificationSessionRetrieveParams,
+    params?: Identity.VerificationSessionRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<VerificationSession>> {
+  ): Promise<Response<ApplyExpand<VerificationSession, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/identity/verification_sessions/${encodeURIComponent(id)}`,
@@ -75,11 +77,11 @@ export class VerificationSessionResource extends StripeResource {
    * When the session status is requires_input, you can use this method to update the
    * verification check and options.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Identity.VerificationSessionUpdateParams,
+    params?: Identity.VerificationSessionUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<VerificationSession>> {
+  ): Promise<Response<ApplyExpand<VerificationSession, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/identity/verification_sessions/${encodeURIComponent(id)}`,
@@ -92,11 +94,11 @@ export class VerificationSessionResource extends StripeResource {
    *
    * Once canceled, future submission attempts are disabled. This cannot be undone. [Learn more](https://docs.stripe.com/docs/identity/verification-sessions#cancel).
    */
-  cancel(
+  cancel<E extends string = never>(
     id: string,
-    params?: Identity.VerificationSessionCancelParams,
+    params?: Identity.VerificationSessionCancelParams<E>,
     options?: RequestOptions
-  ): Promise<Response<VerificationSession>> {
+  ): Promise<Response<ApplyExpand<VerificationSession, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/identity/verification_sessions/${encodeURIComponent(id)}/cancel`,
@@ -125,11 +127,11 @@ export class VerificationSessionResource extends StripeResource {
    *
    * [Learn more](https://docs.stripe.com/docs/identity/verification-sessions#redact).
    */
-  redact(
+  redact<E extends string = never>(
     id: string,
-    params?: Identity.VerificationSessionRedactParams,
+    params?: Identity.VerificationSessionRedactParams<E>,
     options?: RequestOptions
-  ): Promise<Response<VerificationSession>> {
+  ): Promise<Response<ApplyExpand<VerificationSession, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/identity/verification_sessions/${encodeURIComponent(id)}/redact`,
@@ -485,7 +487,7 @@ export namespace VerificationSession {
   }
 }
 export namespace Identity {
-  export interface VerificationSessionCreateParams {
+  export interface VerificationSessionCreateParams<E extends string = string> {
     /**
      * A string to reference this user. This can be a customer ID, a session ID, or similar, and can be used to reconcile this verification with your internal systems.
      */
@@ -494,7 +496,7 @@ export namespace Identity {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -610,19 +612,21 @@ export namespace Identity {
   }
 }
 export namespace Identity {
-  export interface VerificationSessionRetrieveParams {
+  export interface VerificationSessionRetrieveParams<
+    E extends string = string
+  > {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Identity {
-  export interface VerificationSessionUpdateParams {
+  export interface VerificationSessionUpdateParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -701,7 +705,8 @@ export namespace Identity {
   }
 }
 export namespace Identity {
-  export interface VerificationSessionListParams extends PaginationParams {
+  export interface VerificationSessionListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * A string to reference this user. This can be a customer ID, a session ID, or similar, and can be used to reconcile this verification with your internal systems.
      */
@@ -715,7 +720,7 @@ export namespace Identity {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Customer ID
@@ -743,18 +748,18 @@ export namespace Identity {
   }
 }
 export namespace Identity {
-  export interface VerificationSessionCancelParams {
+  export interface VerificationSessionCancelParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Identity {
-  export interface VerificationSessionRedactParams {
+  export interface VerificationSessionRedactParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

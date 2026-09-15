@@ -5,17 +5,23 @@ import {Invoice, DeletedInvoice} from './Invoices.js';
 import {Charge} from './Charges.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {PaymentRecord} from './PaymentRecords.js';
-import {PaginationParams, RangeQueryParam, OtherString} from '../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  RangeQueryParam,
+  OtherString,
+} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class InvoicePaymentResource extends StripeResource {
   /**
    * When retrieving an invoice, there is an includable payments property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of payments.
    */
-  list(
-    params?: InvoicePaymentListParams,
+  list<E extends string = never>(
+    params?: InvoicePaymentListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<InvoicePayment> {
+  ): ApiListPromise<ApplyExpandListItem<InvoicePayment, E>> {
     return this._makeRequest('GET', '/v1/invoice_payments', params, options, {
       methodType: 'list',
     }) as any;
@@ -23,11 +29,11 @@ export class InvoicePaymentResource extends StripeResource {
   /**
    * Retrieves the invoice payment with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: InvoicePaymentRetrieveParams,
+    params?: InvoicePaymentRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<InvoicePayment>> {
+  ): Promise<Response<ApplyExpand<InvoicePayment, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/invoice_payments/${encodeURIComponent(id)}`,
@@ -134,13 +140,14 @@ export namespace InvoicePayment {
       | OtherString;
   }
 }
-export interface InvoicePaymentRetrieveParams {
+export interface InvoicePaymentRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface InvoicePaymentListParams extends PaginationParams {
+export interface InvoicePaymentListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return invoice payments that were created during the given date interval.
    */
@@ -149,7 +156,7 @@ export interface InvoicePaymentListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The identifier of the invoice whose payments to return.

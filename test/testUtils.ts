@@ -245,9 +245,7 @@ export const getSpyableStripe = (config: Record<string, unknown>): Stripe => {
  * Get a random string for test Object creation
  */
 export const getRandomString = (): string => {
-  return Math.random()
-    .toString(36)
-    .slice(2);
+  return Math.random().toString(36).slice(2);
 };
 
 export class FakeCryptoProvider extends CryptoProvider {

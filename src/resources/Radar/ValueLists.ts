@@ -3,6 +3,8 @@
 import {StripeResource} from '../../StripeResource.js';
 import {ValueListItem} from './ValueListItems.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   MetadataParam,
   OtherString,
   PaginationParams,
@@ -30,11 +32,11 @@ export class ValueListResource extends StripeResource {
   /**
    * Retrieves a ValueList object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Radar.ValueListRetrieveParams,
+    params?: Radar.ValueListRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ValueList>> {
+  ): Promise<Response<ApplyExpand<ValueList, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/radar/value_lists/${encodeURIComponent(id)}`,
@@ -45,11 +47,11 @@ export class ValueListResource extends StripeResource {
   /**
    * Updates a ValueList object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Note that item_type is immutable.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Radar.ValueListUpdateParams,
+    params?: Radar.ValueListUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ValueList>> {
+  ): Promise<Response<ApplyExpand<ValueList, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/radar/value_lists/${encodeURIComponent(id)}`,
@@ -60,10 +62,10 @@ export class ValueListResource extends StripeResource {
   /**
    * Returns a list of ValueList objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
-  list(
-    params?: Radar.ValueListListParams,
+  list<E extends string = never>(
+    params?: Radar.ValueListListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ValueList> {
+  ): ApiListPromise<ApplyExpandListItem<ValueList, E>> {
     return this._makeRequest('GET', '/v1/radar/value_lists', params, options, {
       methodType: 'list',
     }) as any;
@@ -71,10 +73,10 @@ export class ValueListResource extends StripeResource {
   /**
    * Creates a new ValueList object, which can then be referenced in rules.
    */
-  create(
-    params: Radar.ValueListCreateParams,
+  create<E extends string = never>(
+    params: Radar.ValueListCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ValueList>> {
+  ): Promise<Response<ApplyExpand<ValueList, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/radar/value_lists',
@@ -172,7 +174,7 @@ export namespace ValueList {
     | OtherString;
 }
 export namespace Radar {
-  export interface ValueListCreateParams {
+  export interface ValueListCreateParams<E extends string = string> {
     /**
      * The name of the value list for use in rules.
      */
@@ -186,7 +188,7 @@ export namespace Radar {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Type of the items in the value list. One of `card_fingerprint`, `card_bin`, `crypto_fingerprint`, `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, `customer_id`, `account`, `sepa_debit_fingerprint`, or `us_bank_account_fingerprint`. Use `string` if the item type is unknown or mixed.
@@ -217,15 +219,15 @@ export namespace Radar {
   }
 }
 export namespace Radar {
-  export interface ValueListRetrieveParams {
+  export interface ValueListRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Radar {
-  export interface ValueListUpdateParams {
+  export interface ValueListUpdateParams<E extends string = string> {
     /**
      * The name of the value list for use in rules.
      */
@@ -234,7 +236,7 @@ export namespace Radar {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -248,7 +250,8 @@ export namespace Radar {
   }
 }
 export namespace Radar {
-  export interface ValueListListParams extends PaginationParams {
+  export interface ValueListListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * The alias used to reference the value list when writing rules.
      */
@@ -267,7 +270,7 @@ export namespace Radar {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Radar {

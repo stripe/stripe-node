@@ -3,17 +3,23 @@
 import {StripeResource} from '../StripeResource.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {Mandate} from './Mandates.js';
-import {Metadata, OtherString, Address} from '../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  Metadata,
+  OtherString,
+  Address,
+} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class PaymentAttemptRecordResource extends StripeResource {
   /**
    * List all the Payment Attempt Records attached to the specified Payment Record.
    */
-  list(
-    params: PaymentAttemptRecordListParams,
+  list<E extends string = never>(
+    params: PaymentAttemptRecordListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<PaymentAttemptRecord> {
+  ): ApiListPromise<ApplyExpandListItem<PaymentAttemptRecord, E>> {
     return this._makeRequest(
       'GET',
       '/v1/payment_attempt_records',
@@ -27,11 +33,11 @@ export class PaymentAttemptRecordResource extends StripeResource {
   /**
    * Retrieves a Payment Attempt Record with the given ID
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: PaymentAttemptRecordRetrieveParams,
+    params?: PaymentAttemptRecordRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>> {
+  ): Promise<Response<ApplyExpand<PaymentAttemptRecord, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/payment_attempt_records/${encodeURIComponent(id)}`,
@@ -1792,7 +1798,7 @@ export namespace PaymentAttemptRecord {
         /**
          * funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -1827,6 +1833,8 @@ export namespace PaymentAttemptRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
@@ -2509,7 +2517,7 @@ export namespace PaymentAttemptRecord {
         /**
          * Funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -2544,6 +2552,8 @@ export namespace PaymentAttemptRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
@@ -2575,13 +2585,13 @@ export namespace PaymentAttemptRecord {
     }
   }
 }
-export interface PaymentAttemptRecordRetrieveParams {
+export interface PaymentAttemptRecordRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentAttemptRecordListParams {
+export interface PaymentAttemptRecordListParams<E extends string = string> {
   /**
    * The ID of the Payment Record.
    */
@@ -2590,7 +2600,7 @@ export interface PaymentAttemptRecordListParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.

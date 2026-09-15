@@ -99,26 +99,26 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
   let product = await stripe.products.retrieve('prod_123', undefined, opts);
   product = await stripe.products.retrieve('prod_123', {expand: []}, opts);
 
-  const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
+  // Passing `expand` narrows the return type: expanded fields lose their `string` half.
+  const charge = await stripe.charges.retrieve('ch_123', {
     expand: ['customer'],
   });
+
+  // An expanded response is still assignable to the plain resource type.
+  const plainCharge: Stripe.Charge = charge;
 
   // Ignore null case.
   if (!charge.customer) throw Error('guard');
 
-  // Check you can cast an expandable field to the object:
-  const cusEmail: string | null = (charge.customer as Stripe.Customer).email;
-  // Check you can cast an expandable field to a string:
+  // No cast needed to read an expanded field:
+  const cusEmail: string | null = charge.customer.deleted
+    ? null
+    : charge.customer.email;
+  // Fields that weren't expanded still include the id:
   const btId: string = charge.balance_transaction as string;
 
   // Check you can deal with deleted:
-  if (
-    typeof charge.customer !== 'string' &&
-    // Not sure why `!charge.customer.deleted` doesn't work, it seems to in a playground:
-    // https://www.typescriptlang.org/play/index.html#code/JYOwLgpgTgZghgYwgAgGIHt3IN4ChnJwBcyAzmFKAOYDc+yADpQgNYA2AnieZSLfXABGiFtwrVkAH2QgArmzZSZsgLaDodAmA4MIJAOQxM+zcgAmENhEhmA-CQBu6YGboBfXKEixEKACKW1hBmGFh4Wjp6yIbGphZWNiQUshDuuLjausgAsnAc6qHIALxomEoBCcGh6RYIbHBQKAjoIOTIAB4kufkQ1Z4wyAAUAITtAHTxQWYAlDj0za1ghGK8VMUdY3C4Hri19Y3IC21cpVjSFVOF0jwS0nIK6cADgxzIAGRvyJkQ6AOvw0USvobnx9O9PsMOBNAjZZuFDi02sQyOI+OsoVsPEA
-    // Might be a complexity limit with our resources: https://github.com/microsoft/TypeScript/pull/30779/files#diff-c3ed224e4daa84352f7f1abcd23e8ccaR13219
-    !('deleted' in charge.customer)
-  ) {
+  if (!charge.customer.deleted) {
     const created: number = charge.customer.created;
   }
   const r = Math.random() - 0.5;
@@ -140,9 +140,11 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
     }
   }
 
-  const cusList: Stripe.ApiList<Stripe.Customer> = await stripe.customers.list();
+  const cusList: Stripe.ApiList<Stripe.Customer> =
+    await stripe.customers.list();
 
-  const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
+  const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> =
+    await stripe.v2.core.events.list();
 
   const aThousandCustomers: Array<Stripe.Customer> = await stripe.customers
     .list()
@@ -352,7 +354,8 @@ const v2Event = {} as Stripe.Events.V1BillingMeterErrorReportTriggeredEvent;
 const v2Context: string | undefined = v2Event.context;
 
 // but event notification is a context object
-const v2EventNotif = {} as Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification;
+const v2EventNotif =
+  {} as Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification;
 const v2ContextObj: Stripe.StripeContextType | undefined = v2EventNotif.context;
 
 async (): Promise<void> => {
@@ -361,14 +364,17 @@ async (): Promise<void> => {
 
   if (eventNotification.type === 'v1.billing.meter.error_report_triggered') {
     eventNotification.related_object;
-    const m: Stripe.Billing.Meter = await eventNotification.fetchRelatedObject();
-    const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent = await eventNotification.fetchEvent();
+    const m: Stripe.Billing.Meter =
+      await eventNotification.fetchRelatedObject();
+    const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent =
+      await eventNotification.fetchEvent();
     const d: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent.Data =
       e.data;
   } else if (eventNotification.type === 'v1.billing.meter.no_meter_found') {
     // @ts-expect-error - shouldn't be available
     eventNotification.related_object;
-    const e: Stripe.Events.V1BillingMeterNoMeterFoundEvent = await eventNotification.fetchEvent();
+    const e: Stripe.Events.V1BillingMeterNoMeterFoundEvent =
+      await eventNotification.fetchEvent();
     // @ts-expect-error - isn't a known type
   } else if (eventNotification.type === 'some.unknown.event') {
     const e = eventNotification as Stripe.Events.UnknownEventNotification;
@@ -456,7 +462,10 @@ async (): Promise<void> => {
 
   // Node exposes only the client factory; the handler classes are type-only.
   // @ts-expect-error - StripeEventNotificationHandler is not a runtime value
-  Stripe.StripeEventNotificationHandler.withoutVerification(stripe, async () => {});
+  Stripe.StripeEventNotificationHandler.withoutVerification(
+    stripe,
+    async () => {}
+  );
 };
 
 // both handler types must be nameable off the namespace
@@ -472,7 +481,8 @@ let subscriptionCancelParams: Stripe.SubscriptionCancelParams;
 // Stripe.Event (v1 webhook event)
 let event2683: Stripe.Event;
 
-const v2AccountCreateParamConfiguration: Stripe.V2.Core.AccountCreateParams.Configuration = {};
+const v2AccountCreateParamConfiguration: Stripe.V2.Core.AccountCreateParams.Configuration =
+  {};
 const checkoutSessionParam: Stripe.Checkout.SessionCreateParams = {};
 const v2EventListParams: Stripe.V2.Core.EventListParams = {};
 const v2AccountCreateParams: Stripe.V2.Core.AccountCreateParams = {};
@@ -510,9 +520,8 @@ const customerResource: Stripe.CustomerResource = new Stripe.CustomerResource(
 );
 
 // Access nested resource
-const v2AccountResource: Stripe.V2.Billing.MeterEventResource = new Stripe.V2.Billing.MeterEventResource(
-  stripe
-);
+const v2AccountResource: Stripe.V2.Billing.MeterEventResource =
+  new Stripe.V2.Billing.MeterEventResource(stripe);
 
 // Namespace type exports that must remain accessible (v21 parity).
 const _stripeConfig: Stripe.StripeConfig = {maxNetworkRetries: 3};
@@ -535,3 +544,66 @@ const _signatureType: Stripe.Signature = null as any;
 const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
 const _nodeCryptoProvider: Stripe.CryptoProvider =
   Stripe.createNodeCryptoProvider();
+
+// --- `expand`-aware return types -------------------------------------------------
+// Mutual assignability, not annotated locals: an annotated local only proves the
+// result is a subtype, so it would pass even if the expand machinery did nothing.
+type ExpandEq<A, B> = [A] extends [B]
+  ? [B] extends [A]
+    ? true
+    : false
+  : false;
+
+const _expandOne: true = true as ExpandEq<
+  Stripe.Expanded<Stripe.Charge, 'customer'>['customer'],
+  Stripe.Customer | Stripe.DeletedCustomer | null
+>;
+
+const _expandNullableString: true = true as ExpandEq<
+  Stripe.Expanded<Stripe.Charge, 'description'>['description'],
+  string | null
+>;
+
+const _expandOpenEnum: true = true as ExpandEq<
+  Stripe.Expanded<
+    Stripe.Subscription,
+    'collection_method'
+  >['collection_method'],
+  Stripe.Subscription.CollectionMethod
+>;
+
+const _expandArray: true = true as ExpandEq<
+  Stripe.Expanded<Stripe.Invoice, 'discounts'>['discounts'],
+  Array<Stripe.Discount | Stripe.DeletedDiscount>
+>;
+
+const _expandNone: true = true as ExpandEq<
+  Stripe.Expanded<Stripe.Charge, never>,
+  Stripe.Charge
+>;
+
+(async (): Promise<void> => {
+  const expandClient = new Stripe('sk_test_123');
+
+  const unexpanded = await expandClient.charges.retrieve('ch_123');
+  const _unexpanded: true = true as ExpandEq<
+    typeof unexpanded,
+    Stripe.Response<Stripe.Charge>
+  >;
+
+  const expanded = await expandClient.charges.retrieve('ch_123', {
+    expand: ['payment_intent.customer'],
+  });
+  if (expanded.payment_intent) {
+    const _nested: true = true as ExpandEq<
+      typeof expanded.payment_intent.customer,
+      Stripe.Customer | Stripe.DeletedCustomer | null
+    >;
+  }
+
+  const page = await expandClient.charges.list({expand: ['data.customer']});
+  const _listData: true = true as ExpandEq<
+    (typeof page.data)[number]['customer'],
+    Stripe.Customer | Stripe.DeletedCustomer | null
+  >;
+})();

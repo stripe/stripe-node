@@ -2,17 +2,17 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Customer, DeletedCustomer} from './../Customers.js';
-import {OtherString} from '../../shared.js';
+import {ApplyExpand, OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class CreditBalanceSummaryResource extends StripeResource {
   /**
    * Retrieves the credit balance summary for a customer.
    */
-  retrieve(
-    params: Billing.CreditBalanceSummaryRetrieveParams,
+  retrieve<E extends string = never>(
+    params: Billing.CreditBalanceSummaryRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CreditBalanceSummary>> {
+  ): Promise<Response<ApplyExpand<CreditBalanceSummary, E>>> {
     return this._makeRequest(
       'GET',
       '/v1/billing/credit_balance_summary',
@@ -109,7 +109,9 @@ export namespace CreditBalanceSummary {
   }
 }
 export namespace Billing {
-  export interface CreditBalanceSummaryRetrieveParams {
+  export interface CreditBalanceSummaryRetrieveParams<
+    E extends string = string
+  > {
     /**
      * The filter criteria for the credit balance summary.
      */
@@ -128,7 +130,7 @@ export namespace Billing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 
   export namespace CreditBalanceSummaryRetrieveParams {

@@ -1,17 +1,23 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {OtherString, PaginationParams, Emptyable} from '../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  OtherString,
+  PaginationParams,
+  Emptyable,
+} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class PaymentMethodConfigurationResource extends StripeResource {
   /**
    * List payment method configurations
    */
-  list(
-    params?: PaymentMethodConfigurationListParams,
+  list<E extends string = never>(
+    params?: PaymentMethodConfigurationListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<PaymentMethodConfiguration> {
+  ): ApiListPromise<ApplyExpandListItem<PaymentMethodConfiguration, E>> {
     return this._makeRequest(
       'GET',
       '/v1/payment_method_configurations',
@@ -25,10 +31,10 @@ export class PaymentMethodConfigurationResource extends StripeResource {
   /**
    * Creates a payment method configuration
    */
-  create(
-    params?: PaymentMethodConfigurationCreateParams,
+  create<E extends string = never>(
+    params?: PaymentMethodConfigurationCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodConfiguration>> {
+  ): Promise<Response<ApplyExpand<PaymentMethodConfiguration, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/payment_method_configurations',
@@ -39,11 +45,11 @@ export class PaymentMethodConfigurationResource extends StripeResource {
   /**
    * Retrieve payment method configuration
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: PaymentMethodConfigurationRetrieveParams,
+    params?: PaymentMethodConfigurationRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodConfiguration>> {
+  ): Promise<Response<ApplyExpand<PaymentMethodConfiguration, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/payment_method_configurations/${encodeURIComponent(id)}`,
@@ -54,11 +60,11 @@ export class PaymentMethodConfigurationResource extends StripeResource {
   /**
    * Update payment method configuration
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: PaymentMethodConfigurationUpdateParams,
+    params?: PaymentMethodConfigurationUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodConfiguration>> {
+  ): Promise<Response<ApplyExpand<PaymentMethodConfiguration, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_method_configurations/${encodeURIComponent(id)}`,
@@ -2197,7 +2203,9 @@ export namespace PaymentMethodConfiguration {
     }
   }
 }
-export interface PaymentMethodConfigurationCreateParams {
+export interface PaymentMethodConfigurationCreateParams<
+  E extends string = string
+> {
   /**
    * Canadian pre-authorized debit payments, check this [page](https://docs.stripe.com/payments/acss-debit) for more details like country availability.
    */
@@ -2306,7 +2314,7 @@ export interface PaymentMethodConfigurationCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Financial Process Exchange (FPX) is a Malaysia-based payment method that allows customers to complete transactions online using their bank credentials. Bank Negara Malaysia (BNM), the Central Bank of Malaysia, and eleven other major Malaysian financial institutions are members of the PayNet Group, which owns and operates FPX. It is one of the most popular online payment methods in Malaysia, with nearly 90 million transactions in 2018 according to BNM. Check this [page](https://docs.stripe.com/payments/fpx) for more details.
@@ -3714,13 +3722,17 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
   }
 }
-export interface PaymentMethodConfigurationRetrieveParams {
+export interface PaymentMethodConfigurationRetrieveParams<
+  E extends string = string
+> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentMethodConfigurationUpdateParams {
+export interface PaymentMethodConfigurationUpdateParams<
+  E extends string = string
+> {
   /**
    * Canadian pre-authorized debit payments, check this [page](https://docs.stripe.com/payments/acss-debit) for more details like country availability.
    */
@@ -3834,7 +3846,7 @@ export interface PaymentMethodConfigurationUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Financial Process Exchange (FPX) is a Malaysia-based payment method that allows customers to complete transactions online using their bank credentials. Bank Negara Malaysia (BNM), the Central Bank of Malaysia, and eleven other major Malaysian financial institutions are members of the PayNet Group, which owns and operates FPX. It is one of the most popular online payment methods in Malaysia, with nearly 90 million transactions in 2018 according to BNM. Check this [page](https://docs.stripe.com/payments/fpx) for more details.
@@ -5237,7 +5249,8 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
   }
 }
-export interface PaymentMethodConfigurationListParams extends PaginationParams {
+export interface PaymentMethodConfigurationListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Whether the configuration is active.
    */
@@ -5251,5 +5264,5 @@ export interface PaymentMethodConfigurationListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

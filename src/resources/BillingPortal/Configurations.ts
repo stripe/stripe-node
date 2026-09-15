@@ -4,6 +4,8 @@ import {StripeResource} from '../../StripeResource.js';
 import {Application, DeletedApplication} from './../Applications.js';
 import * as Billing from './../Billing/index.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   Emptyable,
   MetadataParam,
   OtherString,
@@ -16,10 +18,10 @@ export class ConfigurationResource extends StripeResource {
   /**
    * Returns a list of configurations that describe the functionality of the customer portal.
    */
-  list(
-    params?: BillingPortal.ConfigurationListParams,
+  list<E extends string = never>(
+    params?: BillingPortal.ConfigurationListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Configuration> {
+  ): ApiListPromise<ApplyExpandListItem<Configuration, E>> {
     return this._makeRequest(
       'GET',
       '/v1/billing_portal/configurations',
@@ -33,10 +35,10 @@ export class ConfigurationResource extends StripeResource {
   /**
    * Creates a configuration that describes the functionality and behavior of a PortalSession
    */
-  create(
-    params: BillingPortal.ConfigurationCreateParams,
+  create<E extends string = never>(
+    params: BillingPortal.ConfigurationCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Configuration>> {
+  ): Promise<Response<ApplyExpand<Configuration, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/billing_portal/configurations',
@@ -47,11 +49,11 @@ export class ConfigurationResource extends StripeResource {
   /**
    * Retrieves a configuration that describes the functionality of the customer portal.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: BillingPortal.ConfigurationRetrieveParams,
+    params?: BillingPortal.ConfigurationRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Configuration>> {
+  ): Promise<Response<ApplyExpand<Configuration, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/billing_portal/configurations/${encodeURIComponent(id)}`,
@@ -62,11 +64,11 @@ export class ConfigurationResource extends StripeResource {
   /**
    * Updates a configuration that describes the functionality of the customer portal.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: BillingPortal.ConfigurationUpdateParams,
+    params?: BillingPortal.ConfigurationUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Configuration>> {
+  ): Promise<Response<ApplyExpand<Configuration, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/billing_portal/configurations/${encodeURIComponent(id)}`,
@@ -396,7 +398,7 @@ export namespace Configuration {
   }
 }
 export namespace BillingPortal {
-  export interface ConfigurationCreateParams {
+  export interface ConfigurationCreateParams<E extends string = string> {
     /**
      * Information about the features available in the portal.
      */
@@ -415,7 +417,7 @@ export namespace BillingPortal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The hosted login page for this configuration. Learn more about the portal login page in our [integration docs](https://stripe.com/docs/billing/subscriptions/integrating-customer-portal#share).
@@ -712,15 +714,15 @@ export namespace BillingPortal {
   }
 }
 export namespace BillingPortal {
-  export interface ConfigurationRetrieveParams {
+  export interface ConfigurationRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace BillingPortal {
-  export interface ConfigurationUpdateParams {
+  export interface ConfigurationUpdateParams<E extends string = string> {
     /**
      * Whether the configuration is active and can be used to create portal sessions.
      */
@@ -739,7 +741,7 @@ export namespace BillingPortal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Information about the features available in the portal.
@@ -1043,7 +1045,8 @@ export namespace BillingPortal {
   }
 }
 export namespace BillingPortal {
-  export interface ConfigurationListParams extends PaginationParams {
+  export interface ConfigurationListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Only return configurations that are active or inactive (e.g., pass `true` to only list active configurations).
      */
@@ -1052,7 +1055,7 @@ export namespace BillingPortal {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return the default or non-default configurations (e.g., pass `true` to only list the default configuration).

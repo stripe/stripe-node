@@ -13,7 +13,7 @@ type StripeCallableConstructor = typeof Stripe & {
 // Callable constructor: supports both `new Stripe()` and `Stripe()` for CJS consumers.
 // typeof Stripe provides the construct signature and static members; the intersection
 // adds a call signature for backward compatibility.
-const StripeConstructor: StripeCallableConstructor = (function(
+const StripeConstructor: StripeCallableConstructor = function (
   this: any,
   key?: string,
   config?: StripeConfig
@@ -23,7 +23,7 @@ const StripeConstructor: StripeCallableConstructor = (function(
     return new Stripe(key || '', config);
   }
   return new Stripe(key || '', config);
-} as unknown) as StripeCallableConstructor;
+} as unknown as StripeCallableConstructor;
 
 // Copy all static properties from Stripe to the wrapper
 Object.setPrototypeOf(StripeConstructor, Stripe);

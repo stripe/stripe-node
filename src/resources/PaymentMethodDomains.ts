@@ -1,17 +1,22 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams, OtherString} from '../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  OtherString,
+} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class PaymentMethodDomainResource extends StripeResource {
   /**
    * Lists the details of existing payment method domains.
    */
-  list(
-    params?: PaymentMethodDomainListParams,
+  list<E extends string = never>(
+    params?: PaymentMethodDomainListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<PaymentMethodDomain> {
+  ): ApiListPromise<ApplyExpandListItem<PaymentMethodDomain, E>> {
     return this._makeRequest(
       'GET',
       '/v1/payment_method_domains',
@@ -25,10 +30,10 @@ export class PaymentMethodDomainResource extends StripeResource {
   /**
    * Creates a payment method domain.
    */
-  create(
-    params: PaymentMethodDomainCreateParams,
+  create<E extends string = never>(
+    params: PaymentMethodDomainCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodDomain>> {
+  ): Promise<Response<ApplyExpand<PaymentMethodDomain, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/payment_method_domains',
@@ -39,11 +44,11 @@ export class PaymentMethodDomainResource extends StripeResource {
   /**
    * Retrieves the details of an existing payment method domain.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: PaymentMethodDomainRetrieveParams,
+    params?: PaymentMethodDomainRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodDomain>> {
+  ): Promise<Response<ApplyExpand<PaymentMethodDomain, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/payment_method_domains/${encodeURIComponent(id)}`,
@@ -54,11 +59,11 @@ export class PaymentMethodDomainResource extends StripeResource {
   /**
    * Updates an existing payment method domain.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: PaymentMethodDomainUpdateParams,
+    params?: PaymentMethodDomainUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodDomain>> {
+  ): Promise<Response<ApplyExpand<PaymentMethodDomain, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_method_domains/${encodeURIComponent(id)}`,
@@ -74,11 +79,11 @@ export class PaymentMethodDomainResource extends StripeResource {
    *
    * Related guides: [Payment method domains](https://docs.stripe.com/docs/payments/payment-methods/pmd-registration).
    */
-  validate(
+  validate<E extends string = never>(
     id: string,
-    params?: PaymentMethodDomainValidateParams,
+    params?: PaymentMethodDomainValidateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodDomain>> {
+  ): Promise<Response<ApplyExpand<PaymentMethodDomain, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_method_domains/${encodeURIComponent(id)}/validate`,
@@ -287,7 +292,7 @@ export namespace PaymentMethodDomain {
     }
   }
 }
-export interface PaymentMethodDomainCreateParams {
+export interface PaymentMethodDomainCreateParams<E extends string = string> {
   /**
    * The domain name that this payment method domain object represents.
    */
@@ -301,15 +306,15 @@ export interface PaymentMethodDomainCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentMethodDomainRetrieveParams {
+export interface PaymentMethodDomainRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentMethodDomainUpdateParams {
+export interface PaymentMethodDomainUpdateParams<E extends string = string> {
   /**
    * Whether this payment method domain is enabled. If the domain is not enabled, payment methods that require a payment method domain will not appear in Elements or Embedded Checkout.
    */
@@ -318,9 +323,10 @@ export interface PaymentMethodDomainUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentMethodDomainListParams extends PaginationParams {
+export interface PaymentMethodDomainListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * The domain name that this payment method domain object represents.
    */
@@ -334,11 +340,11 @@ export interface PaymentMethodDomainListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentMethodDomainValidateParams {
+export interface PaymentMethodDomainValidateParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

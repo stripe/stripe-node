@@ -2,6 +2,8 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   OtherString,
   Emptyable,
@@ -15,10 +17,10 @@ export class TaxRateResource extends StripeResource {
   /**
    * Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most recently created tax rates appearing first.
    */
-  list(
-    params?: TaxRateListParams,
+  list<E extends string = never>(
+    params?: TaxRateListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<TaxRate> {
+  ): ApiListPromise<ApplyExpandListItem<TaxRate, E>> {
     return this._makeRequest('GET', '/v1/tax_rates', params, options, {
       methodType: 'list',
     }) as any;
@@ -26,20 +28,20 @@ export class TaxRateResource extends StripeResource {
   /**
    * Creates a new tax rate.
    */
-  create(
-    params: TaxRateCreateParams,
+  create<E extends string = never>(
+    params: TaxRateCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TaxRate>> {
+  ): Promise<Response<ApplyExpand<TaxRate, E>>> {
     return this._makeRequest('POST', '/v1/tax_rates', params, options) as any;
   }
   /**
    * Retrieves a tax rate with the given ID
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: TaxRateRetrieveParams,
+    params?: TaxRateRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TaxRate>> {
+  ): Promise<Response<ApplyExpand<TaxRate, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/tax_rates/${encodeURIComponent(id)}`,
@@ -50,11 +52,11 @@ export class TaxRateResource extends StripeResource {
   /**
    * Updates an existing tax rate.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: TaxRateUpdateParams,
+    params?: TaxRateUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TaxRate>> {
+  ): Promise<Response<ApplyExpand<TaxRate, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/tax_rates/${encodeURIComponent(id)}`,
@@ -199,7 +201,7 @@ export namespace TaxRate {
     | 'vat'
     | OtherString;
 }
-export interface TaxRateCreateParams {
+export interface TaxRateCreateParams<E extends string = string> {
   /**
    * The display name of the tax rate, which will be shown to users.
    */
@@ -233,7 +235,7 @@ export interface TaxRateCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The jurisdiction for the tax rate. You can use this label field for tax reporting purposes. It also appears on your customer's invoice.
@@ -275,13 +277,13 @@ export namespace TaxRateCreateParams {
     | 'vat'
     | OtherString;
 }
-export interface TaxRateRetrieveParams {
+export interface TaxRateRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface TaxRateUpdateParams {
+export interface TaxRateUpdateParams<E extends string = string> {
   /**
    * Flag determining whether the tax rate is active or inactive (archived). Inactive tax rates cannot be used with new applications or Checkout Sessions, but will still work for subscriptions and invoices that already have it set.
    */
@@ -305,7 +307,7 @@ export interface TaxRateUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The jurisdiction for the tax rate. You can use this label field for tax reporting purposes. It also appears on your customer's invoice.
@@ -347,7 +349,8 @@ export namespace TaxRateUpdateParams {
     | 'vat'
     | OtherString;
 }
-export interface TaxRateListParams extends PaginationParams {
+export interface TaxRateListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Optional flag to filter by tax rates that are either active or inactive (archived).
    */
@@ -361,7 +364,7 @@ export interface TaxRateListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Optional flag to filter by tax rates that are inclusive (or those that are not inclusive).

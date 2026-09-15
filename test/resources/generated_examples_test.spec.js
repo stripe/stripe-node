@@ -9,8 +9,8 @@ const {Decimal} = require('../../src/shared.js');
 const nock = require('nock');
 const expect = require('chai').expect;
 
-describe('Generated tests', function() {
-  it('test_account_links_post', async function() {
+describe('Generated tests', function () {
+  it('test_account_links_post', async function () {
     const accountLink = await stripe.accountLinks.create({
       account: 'acct_xxxxxxxxxxxxx',
       refresh_url: 'https://example.com/reauth',
@@ -20,14 +20,14 @@ describe('Generated tests', function() {
     expect(accountLink).not.to.be.null;
   });
 
-  it('test_accounts_capabilities_get', async function() {
+  it('test_accounts_capabilities_get', async function () {
     const capabilities = await stripe.accounts.listCapabilities(
       'acct_xxxxxxxxxxxxx'
     );
     expect(capabilities).not.to.be.null;
   });
 
-  it('test_accounts_capabilities_get_2', async function() {
+  it('test_accounts_capabilities_get_2', async function () {
     const capability = await stripe.accounts.retrieveCapability(
       'acct_xxxxxxxxxxxxx',
       'card_payments'
@@ -35,7 +35,7 @@ describe('Generated tests', function() {
     expect(capability).not.to.be.null;
   });
 
-  it('test_accounts_capabilities_post', async function() {
+  it('test_accounts_capabilities_post', async function () {
     const capability = await stripe.accounts.updateCapability(
       'acct_xxxxxxxxxxxxx',
       'card_payments',
@@ -46,12 +46,12 @@ describe('Generated tests', function() {
     expect(capability).not.to.be.null;
   });
 
-  it('test_accounts_delete', async function() {
+  it('test_accounts_delete', async function () {
     const deleted = await stripe.accounts.del('acct_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_accounts_external_accounts_delete', async function() {
+  it('test_accounts_external_accounts_delete', async function () {
     const deleted = await stripe.accounts.deleteExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx'
@@ -59,7 +59,7 @@ describe('Generated tests', function() {
     expect(deleted).not.to.be.null;
   });
 
-  it('test_accounts_external_accounts_delete_2', async function() {
+  it('test_accounts_external_accounts_delete_2', async function () {
     const deleted = await stripe.accounts.deleteExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx'
@@ -67,7 +67,7 @@ describe('Generated tests', function() {
     expect(deleted).not.to.be.null;
   });
 
-  it('test_accounts_external_accounts_get', async function() {
+  it('test_accounts_external_accounts_get', async function () {
     const externalAccounts = await stripe.accounts.listExternalAccounts(
       'acct_xxxxxxxxxxxxx',
       {
@@ -77,7 +77,7 @@ describe('Generated tests', function() {
     expect(externalAccounts).not.to.be.null;
   });
 
-  it('test_accounts_external_accounts_get_2', async function() {
+  it('test_accounts_external_accounts_get_2', async function () {
     const externalAccounts = await stripe.accounts.listExternalAccounts(
       'acct_xxxxxxxxxxxxx',
       {
@@ -88,7 +88,7 @@ describe('Generated tests', function() {
     expect(externalAccounts).not.to.be.null;
   });
 
-  it('test_accounts_external_accounts_get_3', async function() {
+  it('test_accounts_external_accounts_get_3', async function () {
     const externalAccounts = await stripe.accounts.listExternalAccounts(
       'acct_xxxxxxxxxxxxx',
       {
@@ -99,7 +99,7 @@ describe('Generated tests', function() {
     expect(externalAccounts).not.to.be.null;
   });
 
-  it('test_accounts_external_accounts_get_4', async function() {
+  it('test_accounts_external_accounts_get_4', async function () {
     const externalAccount = await stripe.accounts.retrieveExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx'
@@ -107,7 +107,7 @@ describe('Generated tests', function() {
     expect(externalAccount).not.to.be.null;
   });
 
-  it('test_accounts_external_accounts_get_5', async function() {
+  it('test_accounts_external_accounts_get_5', async function () {
     const externalAccount = await stripe.accounts.retrieveExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx'
@@ -115,7 +115,7 @@ describe('Generated tests', function() {
     expect(externalAccount).not.to.be.null;
   });
 
-  it('test_accounts_external_accounts_post', async function() {
+  it('test_accounts_external_accounts_post', async function () {
     const externalAccount = await stripe.accounts.createExternalAccount(
       'acct_xxxxxxxxxxxxx',
       {
@@ -125,7 +125,7 @@ describe('Generated tests', function() {
     expect(externalAccount).not.to.be.null;
   });
 
-  it('test_accounts_external_accounts_post_2', async function() {
+  it('test_accounts_external_accounts_post_2', async function () {
     const externalAccount = await stripe.accounts.createExternalAccount(
       'acct_xxxxxxxxxxxxx',
       {
@@ -135,7 +135,7 @@ describe('Generated tests', function() {
     expect(externalAccount).not.to.be.null;
   });
 
-  it('test_accounts_external_accounts_post_3', async function() {
+  it('test_accounts_external_accounts_post_3', async function () {
     const externalAccount = await stripe.accounts.updateExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx',
@@ -148,7 +148,7 @@ describe('Generated tests', function() {
     expect(externalAccount).not.to.be.null;
   });
 
-  it('test_accounts_external_accounts_post_4', async function() {
+  it('test_accounts_external_accounts_post_4', async function () {
     const externalAccount = await stripe.accounts.updateExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx',
@@ -161,19 +161,19 @@ describe('Generated tests', function() {
     expect(externalAccount).not.to.be.null;
   });
 
-  it('test_accounts_get', async function() {
+  it('test_accounts_get', async function () {
     const accounts = await stripe.accounts.list({
       limit: 3,
     });
     expect(accounts).not.to.be.null;
   });
 
-  it('test_accounts_get_2', async function() {
+  it('test_accounts_get_2', async function () {
     const account = await stripe.accounts.retrieve('acct_xxxxxxxxxxxxx');
     expect(account).not.to.be.null;
   });
 
-  it('test_accounts_get_3', async function() {
+  it('test_accounts_get_3', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -186,14 +186,14 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
-  it('test_accounts_login_links_post', async function() {
+  it('test_accounts_login_links_post', async function () {
     const loginLink = await stripe.accounts.createLoginLink(
       'acct_xxxxxxxxxxxxx'
     );
     expect(loginLink).not.to.be.null;
   });
 
-  it('test_accounts_persons_delete', async function() {
+  it('test_accounts_persons_delete', async function () {
     const deleted = await stripe.accounts.deletePerson(
       'acct_xxxxxxxxxxxxx',
       'person_xxxxxxxxxxxxx'
@@ -201,14 +201,14 @@ describe('Generated tests', function() {
     expect(deleted).not.to.be.null;
   });
 
-  it('test_accounts_persons_get', async function() {
+  it('test_accounts_persons_get', async function () {
     const persons = await stripe.accounts.listPersons('acct_xxxxxxxxxxxxx', {
       limit: 3,
     });
     expect(persons).not.to.be.null;
   });
 
-  it('test_accounts_persons_get_2', async function() {
+  it('test_accounts_persons_get_2', async function () {
     const person = await stripe.accounts.retrievePerson(
       'acct_xxxxxxxxxxxxx',
       'person_xxxxxxxxxxxxx'
@@ -216,7 +216,7 @@ describe('Generated tests', function() {
     expect(person).not.to.be.null;
   });
 
-  it('test_accounts_persons_post', async function() {
+  it('test_accounts_persons_post', async function () {
     const person = await stripe.accounts.createPerson('acct_xxxxxxxxxxxxx', {
       first_name: 'Jane',
       last_name: 'Diaz',
@@ -224,7 +224,7 @@ describe('Generated tests', function() {
     expect(person).not.to.be.null;
   });
 
-  it('test_accounts_persons_post_2', async function() {
+  it('test_accounts_persons_post_2', async function () {
     const person = await stripe.accounts.updatePerson(
       'acct_xxxxxxxxxxxxx',
       'person_xxxxxxxxxxxxx',
@@ -237,7 +237,7 @@ describe('Generated tests', function() {
     expect(person).not.to.be.null;
   });
 
-  it('test_accounts_post', async function() {
+  it('test_accounts_post', async function () {
     const account = await stripe.accounts.create({
       type: 'custom',
       country: 'US',
@@ -254,7 +254,7 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
-  it('test_accounts_post_2', async function() {
+  it('test_accounts_post_2', async function () {
     const account = await stripe.accounts.update('acct_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -263,28 +263,28 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
-  it('test_accounts_reject_post', async function() {
+  it('test_accounts_reject_post', async function () {
     const account = await stripe.accounts.reject('acct_xxxxxxxxxxxxx', {
       reason: 'fraud',
     });
     expect(account).not.to.be.null;
   });
 
-  it('test_application_fees_get', async function() {
+  it('test_application_fees_get', async function () {
     const applicationFees = await stripe.applicationFees.list({
       limit: 3,
     });
     expect(applicationFees).not.to.be.null;
   });
 
-  it('test_application_fees_get_2', async function() {
+  it('test_application_fees_get_2', async function () {
     const applicationFee = await stripe.applicationFees.retrieve(
       'fee_xxxxxxxxxxxxx'
     );
     expect(applicationFee).not.to.be.null;
   });
 
-  it('test_application_fees_refunds_get', async function() {
+  it('test_application_fees_refunds_get', async function () {
     const feeRefunds = await stripe.applicationFees.listRefunds(
       'fee_xxxxxxxxxxxxx',
       {
@@ -294,7 +294,7 @@ describe('Generated tests', function() {
     expect(feeRefunds).not.to.be.null;
   });
 
-  it('test_application_fees_refunds_get_2', async function() {
+  it('test_application_fees_refunds_get_2', async function () {
     const feeRefund = await stripe.applicationFees.retrieveRefund(
       'fee_xxxxxxxxxxxxx',
       'fr_xxxxxxxxxxxxx'
@@ -302,14 +302,14 @@ describe('Generated tests', function() {
     expect(feeRefund).not.to.be.null;
   });
 
-  it('test_application_fees_refunds_post', async function() {
+  it('test_application_fees_refunds_post', async function () {
     const feeRefund = await stripe.applicationFees.createRefund(
       'fee_xxxxxxxxxxxxx'
     );
     expect(feeRefund).not.to.be.null;
   });
 
-  it('test_application_fees_refunds_post_2', async function() {
+  it('test_application_fees_refunds_post_2', async function () {
     const feeRefund = await stripe.applicationFees.updateRefund(
       'fee_xxxxxxxxxxxxx',
       'fr_xxxxxxxxxxxxx',
@@ -322,7 +322,7 @@ describe('Generated tests', function() {
     expect(feeRefund).not.to.be.null;
   });
 
-  it('test_apps_secrets_delete_post', async function() {
+  it('test_apps_secrets_delete_post', async function () {
     const secret = await stripe.apps.secrets.deleteWhere({
       name: 'my-api-key',
       scope: {
@@ -332,7 +332,7 @@ describe('Generated tests', function() {
     expect(secret).not.to.be.null;
   });
 
-  it('test_apps_secrets_find_get', async function() {
+  it('test_apps_secrets_find_get', async function () {
     const secret = await stripe.apps.secrets.find({
       name: 'sec_123',
       scope: {
@@ -342,7 +342,7 @@ describe('Generated tests', function() {
     expect(secret).not.to.be.null;
   });
 
-  it('test_apps_secrets_get', async function() {
+  it('test_apps_secrets_get', async function () {
     const secrets = await stripe.apps.secrets.list({
       scope: {
         type: 'account',
@@ -352,7 +352,7 @@ describe('Generated tests', function() {
     expect(secrets).not.to.be.null;
   });
 
-  it('test_apps_secrets_get_2', async function() {
+  it('test_apps_secrets_get_2', async function () {
     const secrets = await stripe.apps.secrets.list({
       scope: {
         type: 'account',
@@ -362,7 +362,7 @@ describe('Generated tests', function() {
     expect(secrets).not.to.be.null;
   });
 
-  it('test_apps_secrets_post', async function() {
+  it('test_apps_secrets_post', async function () {
     const secret = await stripe.apps.secrets.create({
       name: 'sec_123',
       payload: 'very secret string',
@@ -373,7 +373,7 @@ describe('Generated tests', function() {
     expect(secret).not.to.be.null;
   });
 
-  it('test_apps_secrets_post_2', async function() {
+  it('test_apps_secrets_post_2', async function () {
     const secret = await stripe.apps.secrets.create({
       name: 'my-api-key',
       payload: 'secret_key_xxxxxx',
@@ -384,35 +384,35 @@ describe('Generated tests', function() {
     expect(secret).not.to.be.null;
   });
 
-  it('test_balance_transactions_get', async function() {
+  it('test_balance_transactions_get', async function () {
     const balanceTransactions = await stripe.balanceTransactions.list({
       limit: 3,
     });
     expect(balanceTransactions).not.to.be.null;
   });
 
-  it('test_balance_transactions_get_2', async function() {
+  it('test_balance_transactions_get_2', async function () {
     const balanceTransaction = await stripe.balanceTransactions.retrieve(
       'txn_xxxxxxxxxxxxx'
     );
     expect(balanceTransaction).not.to.be.null;
   });
 
-  it('test_billing_portal_configurations_get', async function() {
+  it('test_billing_portal_configurations_get', async function () {
     const configurations = await stripe.billingPortal.configurations.list({
       limit: 3,
     });
     expect(configurations).not.to.be.null;
   });
 
-  it('test_billing_portal_configurations_get_2', async function() {
+  it('test_billing_portal_configurations_get_2', async function () {
     const configuration = await stripe.billingPortal.configurations.retrieve(
       'bpc_xxxxxxxxxxxxx'
     );
     expect(configuration).not.to.be.null;
   });
 
-  it('test_billing_portal_configurations_post', async function() {
+  it('test_billing_portal_configurations_post', async function () {
     const configuration = await stripe.billingPortal.configurations.create({
       features: {
         customer_update: {
@@ -431,7 +431,7 @@ describe('Generated tests', function() {
     expect(configuration).not.to.be.null;
   });
 
-  it('test_billing_portal_configurations_post_2', async function() {
+  it('test_billing_portal_configurations_post_2', async function () {
     const configuration = await stripe.billingPortal.configurations.update(
       'bpc_xxxxxxxxxxxxx',
       {
@@ -444,7 +444,7 @@ describe('Generated tests', function() {
     expect(configuration).not.to.be.null;
   });
 
-  it('test_billing_portal_sessions_post', async function() {
+  it('test_billing_portal_sessions_post', async function () {
     const session = await stripe.billingPortal.sessions.create({
       customer: 'cus_xxxxxxxxxxxxx',
       return_url: 'https://example.com/account',
@@ -452,24 +452,24 @@ describe('Generated tests', function() {
     expect(session).not.to.be.null;
   });
 
-  it('test_charges_capture_post', async function() {
+  it('test_charges_capture_post', async function () {
     const charge = await stripe.charges.capture('ch_xxxxxxxxxxxxx');
     expect(charge).not.to.be.null;
   });
 
-  it('test_charges_get', async function() {
+  it('test_charges_get', async function () {
     const charges = await stripe.charges.list({
       limit: 3,
     });
     expect(charges).not.to.be.null;
   });
 
-  it('test_charges_get_2', async function() {
+  it('test_charges_get_2', async function () {
     const charge = await stripe.charges.retrieve('ch_xxxxxxxxxxxxx');
     expect(charge).not.to.be.null;
   });
 
-  it('test_charges_post', async function() {
+  it('test_charges_post', async function () {
     const charge = await stripe.charges.create({
       amount: 2000,
       currency: 'usd',
@@ -480,7 +480,7 @@ describe('Generated tests', function() {
     expect(charge).not.to.be.null;
   });
 
-  it('test_charges_post_2', async function() {
+  it('test_charges_post_2', async function () {
     const charge = await stripe.charges.update('ch_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -489,45 +489,45 @@ describe('Generated tests', function() {
     expect(charge).not.to.be.null;
   });
 
-  it('test_charges_search_get', async function() {
+  it('test_charges_search_get', async function () {
     const charges = await stripe.charges.search({
       query: "amount>999 AND metadata['order_id']:'6735'",
     });
     expect(charges).not.to.be.null;
   });
 
-  it('test_checkout_sessions_expire_post', async function() {
+  it('test_checkout_sessions_expire_post', async function () {
     const session = await stripe.checkout.sessions.expire('sess_xyz');
     expect(session).not.to.be.null;
   });
 
-  it('test_checkout_sessions_expire_post_2', async function() {
+  it('test_checkout_sessions_expire_post_2', async function () {
     const session = await stripe.checkout.sessions.expire(
       'cs_test_xxxxxxxxxxxxx'
     );
     expect(session).not.to.be.null;
   });
 
-  it('test_checkout_sessions_get', async function() {
+  it('test_checkout_sessions_get', async function () {
     const sessions = await stripe.checkout.sessions.list({
       limit: 3,
     });
     expect(sessions).not.to.be.null;
   });
 
-  it('test_checkout_sessions_get_2', async function() {
+  it('test_checkout_sessions_get_2', async function () {
     const session = await stripe.checkout.sessions.retrieve(
       'cs_test_xxxxxxxxxxxxx'
     );
     expect(session).not.to.be.null;
   });
 
-  it('test_checkout_sessions_line_items_get', async function() {
+  it('test_checkout_sessions_line_items_get', async function () {
     const lineItems = await stripe.checkout.sessions.listLineItems('sess_xyz');
     expect(lineItems).not.to.be.null;
   });
 
-  it('test_checkout_sessions_post', async function() {
+  it('test_checkout_sessions_post', async function () {
     const session = await stripe.checkout.sessions.create({
       success_url: 'https://example.com/success',
       cancel_url: 'https://example.com/cancel',
@@ -556,7 +556,7 @@ describe('Generated tests', function() {
     expect(session).not.to.be.null;
   });
 
-  it('test_checkout_sessions_post_2', async function() {
+  it('test_checkout_sessions_post_2', async function () {
     const session = await stripe.checkout.sessions.create({
       success_url: 'https://example.com/success',
       line_items: [
@@ -570,7 +570,7 @@ describe('Generated tests', function() {
     expect(session).not.to.be.null;
   });
 
-  it('test_core_events_get', async function() {
+  it('test_core_events_get', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -583,36 +583,36 @@ describe('Generated tests', function() {
     expect(event).not.to.be.null;
   });
 
-  it('test_country_specs_get', async function() {
+  it('test_country_specs_get', async function () {
     const countrySpecs = await stripe.countrySpecs.list({
       limit: 3,
     });
     expect(countrySpecs).not.to.be.null;
   });
 
-  it('test_country_specs_get_2', async function() {
+  it('test_country_specs_get_2', async function () {
     const countrySpec = await stripe.countrySpecs.retrieve('US');
     expect(countrySpec).not.to.be.null;
   });
 
-  it('test_coupons_delete', async function() {
+  it('test_coupons_delete', async function () {
     const deleted = await stripe.coupons.del('Z4OV52SU');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_coupons_get', async function() {
+  it('test_coupons_get', async function () {
     const coupons = await stripe.coupons.list({
       limit: 3,
     });
     expect(coupons).not.to.be.null;
   });
 
-  it('test_coupons_get_2', async function() {
+  it('test_coupons_get_2', async function () {
     const coupon = await stripe.coupons.retrieve('Z4OV52SU');
     expect(coupon).not.to.be.null;
   });
 
-  it('test_coupons_post', async function() {
+  it('test_coupons_post', async function () {
     const coupon = await stripe.coupons.create({
       percent_off: 25.5,
       duration: 'once',
@@ -620,7 +620,7 @@ describe('Generated tests', function() {
     expect(coupon).not.to.be.null;
   });
 
-  it('test_coupons_post_2', async function() {
+  it('test_coupons_post_2', async function () {
     const coupon = await stripe.coupons.update('Z4OV52SU', {
       metadata: {
         order_id: '6735',
@@ -629,14 +629,14 @@ describe('Generated tests', function() {
     expect(coupon).not.to.be.null;
   });
 
-  it('test_credit_notes_get', async function() {
+  it('test_credit_notes_get', async function () {
     const creditNotes = await stripe.creditNotes.list({
       limit: 3,
     });
     expect(creditNotes).not.to.be.null;
   });
 
-  it('test_credit_notes_lines_get', async function() {
+  it('test_credit_notes_lines_get', async function () {
     const creditNoteLineItems = await stripe.creditNotes.listLineItems(
       'cn_xxxxxxxxxxxxx',
       {
@@ -646,7 +646,7 @@ describe('Generated tests', function() {
     expect(creditNoteLineItems).not.to.be.null;
   });
 
-  it('test_credit_notes_post', async function() {
+  it('test_credit_notes_post', async function () {
     const creditNote = await stripe.creditNotes.create({
       invoice: 'in_xxxxxxxxxxxxx',
       lines: [
@@ -660,7 +660,7 @@ describe('Generated tests', function() {
     expect(creditNote).not.to.be.null;
   });
 
-  it('test_credit_notes_preview_get', async function() {
+  it('test_credit_notes_preview_get', async function () {
     const creditNote = await stripe.creditNotes.preview({
       invoice: 'in_xxxxxxxxxxxxx',
       lines: [
@@ -674,7 +674,7 @@ describe('Generated tests', function() {
     expect(creditNote).not.to.be.null;
   });
 
-  it('test_credit_notes_preview_lines_get', async function() {
+  it('test_credit_notes_preview_lines_get', async function () {
     const creditNoteLineItems = await stripe.creditNotes.listPreviewLineItems({
       limit: 3,
       invoice: 'in_xxxxxxxxxxxxx',
@@ -682,14 +682,14 @@ describe('Generated tests', function() {
     expect(creditNoteLineItems).not.to.be.null;
   });
 
-  it('test_credit_notes_void_post', async function() {
+  it('test_credit_notes_void_post', async function () {
     const creditNote = await stripe.creditNotes.voidCreditNote(
       'cn_xxxxxxxxxxxxx'
     );
     expect(creditNote).not.to.be.null;
   });
 
-  it('test_customer_sessions_post', async function() {
+  it('test_customer_sessions_post', async function () {
     const customerSession = await stripe.customerSessions.create({
       customer: 'cus_123',
       components: {
@@ -701,54 +701,52 @@ describe('Generated tests', function() {
     expect(customerSession).not.to.be.null;
   });
 
-  it('test_customers_balance_transactions_get', async function() {
-    const customerBalanceTransactions = await stripe.customers.listBalanceTransactions(
-      'cus_xxxxxxxxxxxxx',
-      {
+  it('test_customers_balance_transactions_get', async function () {
+    const customerBalanceTransactions =
+      await stripe.customers.listBalanceTransactions('cus_xxxxxxxxxxxxx', {
         limit: 3,
-      }
-    );
+      });
     expect(customerBalanceTransactions).not.to.be.null;
   });
 
-  it('test_customers_balance_transactions_get_2', async function() {
-    const customerBalanceTransaction = await stripe.customers.retrieveBalanceTransaction(
-      'cus_xxxxxxxxxxxxx',
-      'cbtxn_xxxxxxxxxxxxx'
-    );
+  it('test_customers_balance_transactions_get_2', async function () {
+    const customerBalanceTransaction =
+      await stripe.customers.retrieveBalanceTransaction(
+        'cus_xxxxxxxxxxxxx',
+        'cbtxn_xxxxxxxxxxxxx'
+      );
     expect(customerBalanceTransaction).not.to.be.null;
   });
 
-  it('test_customers_balance_transactions_post', async function() {
-    const customerBalanceTransaction = await stripe.customers.createBalanceTransaction(
-      'cus_xxxxxxxxxxxxx',
-      {
+  it('test_customers_balance_transactions_post', async function () {
+    const customerBalanceTransaction =
+      await stripe.customers.createBalanceTransaction('cus_xxxxxxxxxxxxx', {
         amount: -500,
         currency: 'usd',
-      }
-    );
+      });
     expect(customerBalanceTransaction).not.to.be.null;
   });
 
-  it('test_customers_balance_transactions_post_2', async function() {
-    const customerBalanceTransaction = await stripe.customers.updateBalanceTransaction(
-      'cus_xxxxxxxxxxxxx',
-      'cbtxn_xxxxxxxxxxxxx',
-      {
-        metadata: {
-          order_id: '6735',
-        },
-      }
-    );
+  it('test_customers_balance_transactions_post_2', async function () {
+    const customerBalanceTransaction =
+      await stripe.customers.updateBalanceTransaction(
+        'cus_xxxxxxxxxxxxx',
+        'cbtxn_xxxxxxxxxxxxx',
+        {
+          metadata: {
+            order_id: '6735',
+          },
+        }
+      );
     expect(customerBalanceTransaction).not.to.be.null;
   });
 
-  it('test_customers_cash_balance_get', async function() {
+  it('test_customers_cash_balance_get', async function () {
     const cashBalance = await stripe.customers.retrieveCashBalance('cus_123');
     expect(cashBalance).not.to.be.null;
   });
 
-  it('test_customers_cash_balance_post', async function() {
+  it('test_customers_cash_balance_post', async function () {
     const cashBalance = await stripe.customers.updateCashBalance('cus_123', {
       settings: {
         reconciliation_mode: 'manual',
@@ -757,56 +755,52 @@ describe('Generated tests', function() {
     expect(cashBalance).not.to.be.null;
   });
 
-  it('test_customers_cash_balance_transactions_get', async function() {
-    const customerCashBalanceTransactions = await stripe.customers.listCashBalanceTransactions(
-      'cus_123',
-      {
+  it('test_customers_cash_balance_transactions_get', async function () {
+    const customerCashBalanceTransactions =
+      await stripe.customers.listCashBalanceTransactions('cus_123', {
         limit: 3,
-      }
-    );
+      });
     expect(customerCashBalanceTransactions).not.to.be.null;
   });
 
-  it('test_customers_delete', async function() {
+  it('test_customers_delete', async function () {
     const deleted = await stripe.customers.del('cus_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_customers_funding_instructions_post', async function() {
-    const fundingInstructions = await stripe.customers.createFundingInstructions(
-      'cus_123',
-      {
+  it('test_customers_funding_instructions_post', async function () {
+    const fundingInstructions =
+      await stripe.customers.createFundingInstructions('cus_123', {
         bank_transfer: {
           requested_address_types: ['zengin'],
           type: 'jp_bank_transfer',
         },
         currency: 'usd',
         funding_type: 'bank_transfer',
-      }
-    );
+      });
     expect(fundingInstructions).not.to.be.null;
   });
 
-  it('test_customers_get', async function() {
+  it('test_customers_get', async function () {
     const customers = await stripe.customers.list({
       limit: 3,
     });
     expect(customers).not.to.be.null;
   });
 
-  it('test_customers_get_2', async function() {
+  it('test_customers_get_2', async function () {
     const customers = await stripe.customers.list({
       limit: 3,
     });
     expect(customers).not.to.be.null;
   });
 
-  it('test_customers_get_3', async function() {
+  it('test_customers_get_3', async function () {
     const customer = await stripe.customers.retrieve('cus_xxxxxxxxxxxxx');
     expect(customer).not.to.be.null;
   });
 
-  it('test_customers_payment_methods_get', async function() {
+  it('test_customers_payment_methods_get', async function () {
     const paymentMethods = await stripe.customers.listPaymentMethods(
       'cus_xyz',
       {
@@ -816,7 +810,7 @@ describe('Generated tests', function() {
     expect(paymentMethods).not.to.be.null;
   });
 
-  it('test_customers_payment_methods_get_2', async function() {
+  it('test_customers_payment_methods_get_2', async function () {
     const paymentMethods = await stripe.customers.listPaymentMethods(
       'cus_xxxxxxxxxxxxx',
       {
@@ -826,7 +820,7 @@ describe('Generated tests', function() {
     expect(paymentMethods).not.to.be.null;
   });
 
-  it('test_customers_post', async function() {
+  it('test_customers_post', async function () {
     const customer = await stripe.customers.create({
       description:
         'My First Test Customer (created for API docs at https://www.stripe.com/docs/api)',
@@ -834,7 +828,7 @@ describe('Generated tests', function() {
     expect(customer).not.to.be.null;
   });
 
-  it('test_customers_post_2', async function() {
+  it('test_customers_post_2', async function () {
     const customer = await stripe.customers.update('cus_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -843,21 +837,21 @@ describe('Generated tests', function() {
     expect(customer).not.to.be.null;
   });
 
-  it('test_customers_search_get', async function() {
+  it('test_customers_search_get', async function () {
     const customers = await stripe.customers.search({
       query: "name:'fakename' AND metadata['foo']:'bar'",
     });
     expect(customers).not.to.be.null;
   });
 
-  it('test_customers_search_get_2', async function() {
+  it('test_customers_search_get_2', async function () {
     const customers = await stripe.customers.search({
       query: "name:'fakename' AND metadata['foo']:'bar'",
     });
     expect(customers).not.to.be.null;
   });
 
-  it('test_customers_sources_delete', async function() {
+  it('test_customers_sources_delete', async function () {
     const customerSource = await stripe.customers.deleteSource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx'
@@ -865,7 +859,7 @@ describe('Generated tests', function() {
     expect(customerSource).not.to.be.null;
   });
 
-  it('test_customers_sources_delete_2', async function() {
+  it('test_customers_sources_delete_2', async function () {
     const customerSource = await stripe.customers.deleteSource(
       'cus_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx'
@@ -873,7 +867,7 @@ describe('Generated tests', function() {
     expect(customerSource).not.to.be.null;
   });
 
-  it('test_customers_sources_get', async function() {
+  it('test_customers_sources_get', async function () {
     const customerSources = await stripe.customers.listSources(
       'cus_xxxxxxxxxxxxx',
       {
@@ -884,7 +878,7 @@ describe('Generated tests', function() {
     expect(customerSources).not.to.be.null;
   });
 
-  it('test_customers_sources_get_2', async function() {
+  it('test_customers_sources_get_2', async function () {
     const customerSources = await stripe.customers.listSources(
       'cus_xxxxxxxxxxxxx',
       {
@@ -895,7 +889,7 @@ describe('Generated tests', function() {
     expect(customerSources).not.to.be.null;
   });
 
-  it('test_customers_sources_get_3', async function() {
+  it('test_customers_sources_get_3', async function () {
     const customerSource = await stripe.customers.retrieveSource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx'
@@ -903,7 +897,7 @@ describe('Generated tests', function() {
     expect(customerSource).not.to.be.null;
   });
 
-  it('test_customers_sources_get_4', async function() {
+  it('test_customers_sources_get_4', async function () {
     const customerSource = await stripe.customers.retrieveSource(
       'cus_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx'
@@ -911,7 +905,7 @@ describe('Generated tests', function() {
     expect(customerSource).not.to.be.null;
   });
 
-  it('test_customers_sources_post', async function() {
+  it('test_customers_sources_post', async function () {
     const customerSource = await stripe.customers.updateSource(
       'cus_123',
       'card_123',
@@ -922,7 +916,7 @@ describe('Generated tests', function() {
     expect(customerSource).not.to.be.null;
   });
 
-  it('test_customers_sources_post_2', async function() {
+  it('test_customers_sources_post_2', async function () {
     const customerSource = await stripe.customers.createSource(
       'cus_xxxxxxxxxxxxx',
       {
@@ -932,7 +926,7 @@ describe('Generated tests', function() {
     expect(customerSource).not.to.be.null;
   });
 
-  it('test_customers_sources_post_3', async function() {
+  it('test_customers_sources_post_3', async function () {
     const customerSource = await stripe.customers.createSource(
       'cus_xxxxxxxxxxxxx',
       {
@@ -942,7 +936,7 @@ describe('Generated tests', function() {
     expect(customerSource).not.to.be.null;
   });
 
-  it('test_customers_sources_post_4', async function() {
+  it('test_customers_sources_post_4', async function () {
     const customerSource = await stripe.customers.updateSource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx',
@@ -955,7 +949,7 @@ describe('Generated tests', function() {
     expect(customerSource).not.to.be.null;
   });
 
-  it('test_customers_sources_post_5', async function() {
+  it('test_customers_sources_post_5', async function () {
     const customerSource = await stripe.customers.updateSource(
       'cus_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx',
@@ -966,7 +960,7 @@ describe('Generated tests', function() {
     expect(customerSource).not.to.be.null;
   });
 
-  it('test_customers_sources_verify_post', async function() {
+  it('test_customers_sources_verify_post', async function () {
     const bankAccount = await stripe.customers.verifySource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx',
@@ -977,7 +971,7 @@ describe('Generated tests', function() {
     expect(bankAccount).not.to.be.null;
   });
 
-  it('test_customers_tax_ids_delete', async function() {
+  it('test_customers_tax_ids_delete', async function () {
     const deleted = await stripe.customers.deleteTaxId(
       'cus_xxxxxxxxxxxxx',
       'txi_xxxxxxxxxxxxx'
@@ -985,14 +979,14 @@ describe('Generated tests', function() {
     expect(deleted).not.to.be.null;
   });
 
-  it('test_customers_tax_ids_get', async function() {
+  it('test_customers_tax_ids_get', async function () {
     const taxIds = await stripe.customers.listTaxIds('cus_xxxxxxxxxxxxx', {
       limit: 3,
     });
     expect(taxIds).not.to.be.null;
   });
 
-  it('test_customers_tax_ids_get_2', async function() {
+  it('test_customers_tax_ids_get_2', async function () {
     const taxId = await stripe.customers.retrieveTaxId(
       'cus_xxxxxxxxxxxxx',
       'txi_xxxxxxxxxxxxx'
@@ -1000,7 +994,7 @@ describe('Generated tests', function() {
     expect(taxId).not.to.be.null;
   });
 
-  it('test_customers_tax_ids_post', async function() {
+  it('test_customers_tax_ids_post', async function () {
     const taxId = await stripe.customers.createTaxId('cus_xxxxxxxxxxxxx', {
       type: 'eu_vat',
       value: 'DE123456789',
@@ -1008,24 +1002,24 @@ describe('Generated tests', function() {
     expect(taxId).not.to.be.null;
   });
 
-  it('test_disputes_close_post', async function() {
+  it('test_disputes_close_post', async function () {
     const dispute = await stripe.disputes.close('dp_xxxxxxxxxxxxx');
     expect(dispute).not.to.be.null;
   });
 
-  it('test_disputes_get', async function() {
+  it('test_disputes_get', async function () {
     const disputes = await stripe.disputes.list({
       limit: 3,
     });
     expect(disputes).not.to.be.null;
   });
 
-  it('test_disputes_get_2', async function() {
+  it('test_disputes_get_2', async function () {
     const dispute = await stripe.disputes.retrieve('dp_xxxxxxxxxxxxx');
     expect(dispute).not.to.be.null;
   });
 
-  it('test_disputes_post', async function() {
+  it('test_disputes_post', async function () {
     const dispute = await stripe.disputes.update('dp_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -1034,38 +1028,38 @@ describe('Generated tests', function() {
     expect(dispute).not.to.be.null;
   });
 
-  it('test_events_get', async function() {
+  it('test_events_get', async function () {
     const events = await stripe.events.list({
       limit: 3,
     });
     expect(events).not.to.be.null;
   });
 
-  it('test_events_get_2', async function() {
+  it('test_events_get_2', async function () {
     const event = await stripe.events.retrieve('evt_xxxxxxxxxxxxx');
     expect(event).not.to.be.null;
   });
 
-  it('test_file_links_get', async function() {
+  it('test_file_links_get', async function () {
     const fileLinks = await stripe.fileLinks.list({
       limit: 3,
     });
     expect(fileLinks).not.to.be.null;
   });
 
-  it('test_file_links_get_2', async function() {
+  it('test_file_links_get_2', async function () {
     const fileLink = await stripe.fileLinks.retrieve('link_xxxxxxxxxxxxx');
     expect(fileLink).not.to.be.null;
   });
 
-  it('test_file_links_post', async function() {
+  it('test_file_links_post', async function () {
     const fileLink = await stripe.fileLinks.create({
       file: 'file_xxxxxxxxxxxxx',
     });
     expect(fileLink).not.to.be.null;
   });
 
-  it('test_file_links_post_2', async function() {
+  it('test_file_links_post_2', async function () {
     const fileLink = await stripe.fileLinks.update('link_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -1074,19 +1068,19 @@ describe('Generated tests', function() {
     expect(fileLink).not.to.be.null;
   });
 
-  it('test_files_get', async function() {
+  it('test_files_get', async function () {
     const files = await stripe.files.list({
       limit: 3,
     });
     expect(files).not.to.be.null;
   });
 
-  it('test_files_get_2', async function() {
+  it('test_files_get_2', async function () {
     const file = await stripe.files.retrieve('file_xxxxxxxxxxxxx');
     expect(file).not.to.be.null;
   });
 
-  it('test_files_post', async function() {
+  it('test_files_post', async function () {
     const file = await stripe.files.create({
       purpose: 'account_requirement',
       file: {
@@ -1098,33 +1092,33 @@ describe('Generated tests', function() {
     expect(file).not.to.be.null;
   });
 
-  it('test_financial_connections_accounts_disconnect_post', async function() {
+  it('test_financial_connections_accounts_disconnect_post', async function () {
     const account = await stripe.financialConnections.accounts.disconnect(
       'fca_xyz'
     );
     expect(account).not.to.be.null;
   });
 
-  it('test_financial_connections_accounts_disconnect_post_2', async function() {
+  it('test_financial_connections_accounts_disconnect_post_2', async function () {
     const account = await stripe.financialConnections.accounts.disconnect(
       'fca_xxxxxxxxxxxxx'
     );
     expect(account).not.to.be.null;
   });
 
-  it('test_financial_connections_accounts_get', async function() {
+  it('test_financial_connections_accounts_get', async function () {
     const accounts = await stripe.financialConnections.accounts.list();
     expect(accounts).not.to.be.null;
   });
 
-  it('test_financial_connections_accounts_get_2', async function() {
+  it('test_financial_connections_accounts_get_2', async function () {
     const account = await stripe.financialConnections.accounts.retrieve(
       'fca_xyz'
     );
     expect(account).not.to.be.null;
   });
 
-  it('test_financial_connections_accounts_get_3', async function() {
+  it('test_financial_connections_accounts_get_3', async function () {
     const accounts = await stripe.financialConnections.accounts.list({
       account_holder: {
         customer: 'cus_xxxxxxxxxxxxx',
@@ -1133,14 +1127,14 @@ describe('Generated tests', function() {
     expect(accounts).not.to.be.null;
   });
 
-  it('test_financial_connections_accounts_get_4', async function() {
+  it('test_financial_connections_accounts_get_4', async function () {
     const account = await stripe.financialConnections.accounts.retrieve(
       'fca_xxxxxxxxxxxxx'
     );
     expect(account).not.to.be.null;
   });
 
-  it('test_financial_connections_accounts_owners_get', async function() {
+  it('test_financial_connections_accounts_owners_get', async function () {
     const accountOwners = await stripe.financialConnections.accounts.listOwners(
       'fca_xyz',
       {
@@ -1150,7 +1144,7 @@ describe('Generated tests', function() {
     expect(accountOwners).not.to.be.null;
   });
 
-  it('test_financial_connections_accounts_owners_get_2', async function() {
+  it('test_financial_connections_accounts_owners_get_2', async function () {
     const accountOwners = await stripe.financialConnections.accounts.listOwners(
       'fca_xxxxxxxxxxxxx',
       {
@@ -1161,7 +1155,7 @@ describe('Generated tests', function() {
     expect(accountOwners).not.to.be.null;
   });
 
-  it('test_financial_connections_accounts_refresh_post', async function() {
+  it('test_financial_connections_accounts_refresh_post', async function () {
     const account = await stripe.financialConnections.accounts.refresh(
       'fca_xyz',
       {
@@ -1171,7 +1165,7 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
-  it('test_financial_connections_accounts_subscribe_post', async function() {
+  it('test_financial_connections_accounts_subscribe_post', async function () {
     const account = await stripe.financialConnections.accounts.subscribe(
       'fa_123',
       {
@@ -1181,7 +1175,7 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
-  it('test_financial_connections_accounts_unsubscribe_post', async function() {
+  it('test_financial_connections_accounts_unsubscribe_post', async function () {
     const account = await stripe.financialConnections.accounts.unsubscribe(
       'fa_123',
       {
@@ -1191,21 +1185,21 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
-  it('test_financial_connections_sessions_get', async function() {
+  it('test_financial_connections_sessions_get', async function () {
     const session = await stripe.financialConnections.sessions.retrieve(
       'fcsess_xyz'
     );
     expect(session).not.to.be.null;
   });
 
-  it('test_financial_connections_sessions_get_2', async function() {
+  it('test_financial_connections_sessions_get_2', async function () {
     const session = await stripe.financialConnections.sessions.retrieve(
       'fcsess_xxxxxxxxxxxxx'
     );
     expect(session).not.to.be.null;
   });
 
-  it('test_financial_connections_sessions_post', async function() {
+  it('test_financial_connections_sessions_post', async function () {
     const session = await stripe.financialConnections.sessions.create({
       account_holder: {
         type: 'customer',
@@ -1216,7 +1210,7 @@ describe('Generated tests', function() {
     expect(session).not.to.be.null;
   });
 
-  it('test_financial_connections_sessions_post_2', async function() {
+  it('test_financial_connections_sessions_post_2', async function () {
     const session = await stripe.financialConnections.sessions.create({
       account_holder: {
         type: 'customer',
@@ -1230,108 +1224,100 @@ describe('Generated tests', function() {
     expect(session).not.to.be.null;
   });
 
-  it('test_financial_connections_transactions_get', async function() {
+  it('test_financial_connections_transactions_get', async function () {
     const transaction = await stripe.financialConnections.transactions.retrieve(
       'tr_123'
     );
     expect(transaction).not.to.be.null;
   });
 
-  it('test_financial_connections_transactions_get_2', async function() {
+  it('test_financial_connections_transactions_get_2', async function () {
     const transactions = await stripe.financialConnections.transactions.list({
       account: 'fca_xyz',
     });
     expect(transactions).not.to.be.null;
   });
 
-  it('test_identity_verification_reports_get', async function() {
+  it('test_identity_verification_reports_get', async function () {
     const verificationReports = await stripe.identity.verificationReports.list({
       limit: 3,
     });
     expect(verificationReports).not.to.be.null;
   });
 
-  it('test_identity_verification_reports_get_2', async function() {
-    const verificationReport = await stripe.identity.verificationReports.retrieve(
-      'vr_xxxxxxxxxxxxx'
-    );
+  it('test_identity_verification_reports_get_2', async function () {
+    const verificationReport =
+      await stripe.identity.verificationReports.retrieve('vr_xxxxxxxxxxxxx');
     expect(verificationReport).not.to.be.null;
   });
 
-  it('test_identity_verification_sessions_cancel_post', async function() {
-    const verificationSession = await stripe.identity.verificationSessions.cancel(
-      'vs_xxxxxxxxxxxxx'
-    );
+  it('test_identity_verification_sessions_cancel_post', async function () {
+    const verificationSession =
+      await stripe.identity.verificationSessions.cancel('vs_xxxxxxxxxxxxx');
     expect(verificationSession).not.to.be.null;
   });
 
-  it('test_identity_verification_sessions_get', async function() {
-    const verificationSessions = await stripe.identity.verificationSessions.list(
-      {
+  it('test_identity_verification_sessions_get', async function () {
+    const verificationSessions =
+      await stripe.identity.verificationSessions.list({
         limit: 3,
-      }
-    );
+      });
     expect(verificationSessions).not.to.be.null;
   });
 
-  it('test_identity_verification_sessions_get_2', async function() {
-    const verificationSession = await stripe.identity.verificationSessions.retrieve(
-      'vs_xxxxxxxxxxxxx'
-    );
+  it('test_identity_verification_sessions_get_2', async function () {
+    const verificationSession =
+      await stripe.identity.verificationSessions.retrieve('vs_xxxxxxxxxxxxx');
     expect(verificationSession).not.to.be.null;
   });
 
-  it('test_identity_verification_sessions_post', async function() {
-    const verificationSession = await stripe.identity.verificationSessions.create(
-      {
+  it('test_identity_verification_sessions_post', async function () {
+    const verificationSession =
+      await stripe.identity.verificationSessions.create({
         type: 'document',
-      }
-    );
+      });
     expect(verificationSession).not.to.be.null;
   });
 
-  it('test_identity_verification_sessions_post_2', async function() {
-    const verificationSession = await stripe.identity.verificationSessions.update(
-      'vs_xxxxxxxxxxxxx',
-      {
+  it('test_identity_verification_sessions_post_2', async function () {
+    const verificationSession =
+      await stripe.identity.verificationSessions.update('vs_xxxxxxxxxxxxx', {
         type: 'id_number',
-      }
-    );
+      });
     expect(verificationSession).not.to.be.null;
   });
 
-  it('test_identity_verification_sessions_redact_post', async function() {
-    const verificationSession = await stripe.identity.verificationSessions.redact(
-      'vs_xxxxxxxxxxxxx'
-    );
+  it('test_identity_verification_sessions_redact_post', async function () {
+    const verificationSession =
+      await stripe.identity.verificationSessions.redact('vs_xxxxxxxxxxxxx');
     expect(verificationSession).not.to.be.null;
   });
 
-  it('test_invoiceitems_delete', async function() {
+  it('test_invoiceitems_delete', async function () {
     const deleted = await stripe.invoiceItems.del('ii_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_invoiceitems_get', async function() {
+  it('test_invoiceitems_get', async function () {
     const invoiceItems = await stripe.invoiceItems.list({
       limit: 3,
     });
     expect(invoiceItems).not.to.be.null;
   });
 
-  it('test_invoiceitems_get_2', async function() {
+  it('test_invoiceitems_get_2', async function () {
     const invoiceItem = await stripe.invoiceItems.retrieve('ii_xxxxxxxxxxxxx');
     expect(invoiceItem).not.to.be.null;
   });
 
-  it('test_invoiceitems_post', async function() {
+  it('test_invoiceitems_post', async function () {
     const invoiceItem = await stripe.invoiceItems.create({
       customer: 'cus_xxxxxxxxxxxxx',
     });
     expect(invoiceItem).not.to.be.null;
   });
 
-  it('test_invoiceitems_post_2', async function() {
+  it('test_invoiceitems_post_2', async function () {
     const invoiceItem = await stripe.invoiceItems.update('ii_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -1340,53 +1326,53 @@ describe('Generated tests', function() {
     expect(invoiceItem).not.to.be.null;
   });
 
-  it('test_invoices_delete', async function() {
+  it('test_invoices_delete', async function () {
     const deleted = await stripe.invoices.del('in_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_invoices_finalize_post', async function() {
+  it('test_invoices_finalize_post', async function () {
     const invoice = await stripe.invoices.finalizeInvoice('in_xxxxxxxxxxxxx');
     expect(invoice).not.to.be.null;
   });
 
-  it('test_invoices_get', async function() {
+  it('test_invoices_get', async function () {
     const invoices = await stripe.invoices.list({
       limit: 3,
     });
     expect(invoices).not.to.be.null;
   });
 
-  it('test_invoices_get_2', async function() {
+  it('test_invoices_get_2', async function () {
     const invoice = await stripe.invoices.retrieve('in_xxxxxxxxxxxxx');
     expect(invoice).not.to.be.null;
   });
 
-  it('test_invoices_get_3', async function() {
+  it('test_invoices_get_3', async function () {
     const invoice = await stripe.invoices.retrieve('in_xxxxxxxxxxxxx', {
       expand: ['customer'],
     });
     expect(invoice).not.to.be.null;
   });
 
-  it('test_invoices_mark_uncollectible_post', async function() {
+  it('test_invoices_mark_uncollectible_post', async function () {
     const invoice = await stripe.invoices.markUncollectible('in_xxxxxxxxxxxxx');
     expect(invoice).not.to.be.null;
   });
 
-  it('test_invoices_pay_post', async function() {
+  it('test_invoices_pay_post', async function () {
     const invoice = await stripe.invoices.pay('in_xxxxxxxxxxxxx');
     expect(invoice).not.to.be.null;
   });
 
-  it('test_invoices_post', async function() {
+  it('test_invoices_post', async function () {
     const invoice = await stripe.invoices.create({
       customer: 'cus_xxxxxxxxxxxxx',
     });
     expect(invoice).not.to.be.null;
   });
 
-  it('test_invoices_post_2', async function() {
+  it('test_invoices_post_2', async function () {
     const invoice = await stripe.invoices.update('in_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -1395,52 +1381,52 @@ describe('Generated tests', function() {
     expect(invoice).not.to.be.null;
   });
 
-  it('test_invoices_search_get', async function() {
+  it('test_invoices_search_get', async function () {
     const invoices = await stripe.invoices.search({
       query: "total>999 AND metadata['order_id']:'6735'",
     });
     expect(invoices).not.to.be.null;
   });
 
-  it('test_invoices_send_post', async function() {
+  it('test_invoices_send_post', async function () {
     const invoice = await stripe.invoices.sendInvoice('in_xxxxxxxxxxxxx');
     expect(invoice).not.to.be.null;
   });
 
-  it('test_invoices_void_post', async function() {
+  it('test_invoices_void_post', async function () {
     const invoice = await stripe.invoices.voidInvoice('in_xxxxxxxxxxxxx');
     expect(invoice).not.to.be.null;
   });
 
-  it('test_issuing_authorizations_approve_post', async function() {
+  it('test_issuing_authorizations_approve_post', async function () {
     const authorization = await stripe.issuing.authorizations.approve(
       'iauth_xxxxxxxxxxxxx'
     );
     expect(authorization).not.to.be.null;
   });
 
-  it('test_issuing_authorizations_decline_post', async function() {
+  it('test_issuing_authorizations_decline_post', async function () {
     const authorization = await stripe.issuing.authorizations.decline(
       'iauth_xxxxxxxxxxxxx'
     );
     expect(authorization).not.to.be.null;
   });
 
-  it('test_issuing_authorizations_get', async function() {
+  it('test_issuing_authorizations_get', async function () {
     const authorizations = await stripe.issuing.authorizations.list({
       limit: 3,
     });
     expect(authorizations).not.to.be.null;
   });
 
-  it('test_issuing_authorizations_get_2', async function() {
+  it('test_issuing_authorizations_get_2', async function () {
     const authorization = await stripe.issuing.authorizations.retrieve(
       'iauth_xxxxxxxxxxxxx'
     );
     expect(authorization).not.to.be.null;
   });
 
-  it('test_issuing_authorizations_post', async function() {
+  it('test_issuing_authorizations_post', async function () {
     const authorization = await stripe.issuing.authorizations.update(
       'iauth_xxxxxxxxxxxxx',
       {
@@ -1452,21 +1438,21 @@ describe('Generated tests', function() {
     expect(authorization).not.to.be.null;
   });
 
-  it('test_issuing_cardholders_get', async function() {
+  it('test_issuing_cardholders_get', async function () {
     const cardholders = await stripe.issuing.cardholders.list({
       limit: 3,
     });
     expect(cardholders).not.to.be.null;
   });
 
-  it('test_issuing_cardholders_get_2', async function() {
+  it('test_issuing_cardholders_get_2', async function () {
     const cardholder = await stripe.issuing.cardholders.retrieve(
       'ich_xxxxxxxxxxxxx'
     );
     expect(cardholder).not.to.be.null;
   });
 
-  it('test_issuing_cardholders_post', async function() {
+  it('test_issuing_cardholders_post', async function () {
     const cardholder = await stripe.issuing.cardholders.create({
       type: 'individual',
       name: 'Jenny Rosen',
@@ -1485,7 +1471,7 @@ describe('Generated tests', function() {
     expect(cardholder).not.to.be.null;
   });
 
-  it('test_issuing_cardholders_post_2', async function() {
+  it('test_issuing_cardholders_post_2', async function () {
     const cardholder = await stripe.issuing.cardholders.update(
       'ich_xxxxxxxxxxxxx',
       {
@@ -1497,19 +1483,19 @@ describe('Generated tests', function() {
     expect(cardholder).not.to.be.null;
   });
 
-  it('test_issuing_cards_get', async function() {
+  it('test_issuing_cards_get', async function () {
     const cards = await stripe.issuing.cards.list({
       limit: 3,
     });
     expect(cards).not.to.be.null;
   });
 
-  it('test_issuing_cards_get_2', async function() {
+  it('test_issuing_cards_get_2', async function () {
     const card = await stripe.issuing.cards.retrieve('ic_xxxxxxxxxxxxx');
     expect(card).not.to.be.null;
   });
 
-  it('test_issuing_cards_post', async function() {
+  it('test_issuing_cards_post', async function () {
     const card = await stripe.issuing.cards.create({
       cardholder: 'ich_xxxxxxxxxxxxx',
       currency: 'usd',
@@ -1518,7 +1504,7 @@ describe('Generated tests', function() {
     expect(card).not.to.be.null;
   });
 
-  it('test_issuing_cards_post_2', async function() {
+  it('test_issuing_cards_post_2', async function () {
     const card = await stripe.issuing.cards.update('ic_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -1527,19 +1513,19 @@ describe('Generated tests', function() {
     expect(card).not.to.be.null;
   });
 
-  it('test_issuing_disputes_get', async function() {
+  it('test_issuing_disputes_get', async function () {
     const disputes = await stripe.issuing.disputes.list({
       limit: 3,
     });
     expect(disputes).not.to.be.null;
   });
 
-  it('test_issuing_disputes_get_2', async function() {
+  it('test_issuing_disputes_get_2', async function () {
     const dispute = await stripe.issuing.disputes.retrieve('idp_xxxxxxxxxxxxx');
     expect(dispute).not.to.be.null;
   });
 
-  it('test_issuing_disputes_post', async function() {
+  it('test_issuing_disputes_post', async function () {
     const dispute = await stripe.issuing.disputes.create({
       transaction: 'ipi_xxxxxxxxxxxxx',
       evidence: {
@@ -1552,66 +1538,64 @@ describe('Generated tests', function() {
     expect(dispute).not.to.be.null;
   });
 
-  it('test_issuing_disputes_submit_post', async function() {
+  it('test_issuing_disputes_submit_post', async function () {
     const dispute = await stripe.issuing.disputes.submit('idp_xxxxxxxxxxxxx');
     expect(dispute).not.to.be.null;
   });
 
-  it('test_issuing_personalization_designs_get', async function() {
-    const personalizationDesigns = await stripe.issuing.personalizationDesigns.list();
+  it('test_issuing_personalization_designs_get', async function () {
+    const personalizationDesigns =
+      await stripe.issuing.personalizationDesigns.list();
     expect(personalizationDesigns).not.to.be.null;
   });
 
-  it('test_issuing_personalization_designs_get_2', async function() {
-    const personalizationDesign = await stripe.issuing.personalizationDesigns.retrieve(
-      'pd_xyz'
-    );
+  it('test_issuing_personalization_designs_get_2', async function () {
+    const personalizationDesign =
+      await stripe.issuing.personalizationDesigns.retrieve('pd_xyz');
     expect(personalizationDesign).not.to.be.null;
   });
 
-  it('test_issuing_personalization_designs_post', async function() {
-    const personalizationDesign = await stripe.issuing.personalizationDesigns.create(
-      {
+  it('test_issuing_personalization_designs_post', async function () {
+    const personalizationDesign =
+      await stripe.issuing.personalizationDesigns.create({
         physical_bundle: 'pb_xyz',
-      }
-    );
+      });
     expect(personalizationDesign).not.to.be.null;
   });
 
-  it('test_issuing_personalization_designs_post_2', async function() {
-    const personalizationDesign = await stripe.issuing.personalizationDesigns.update(
-      'pd_xyz'
-    );
+  it('test_issuing_personalization_designs_post_2', async function () {
+    const personalizationDesign =
+      await stripe.issuing.personalizationDesigns.update('pd_xyz');
     expect(personalizationDesign).not.to.be.null;
   });
 
-  it('test_issuing_physical_bundles_get', async function() {
+  it('test_issuing_physical_bundles_get', async function () {
     const physicalBundles = await stripe.issuing.physicalBundles.list();
     expect(physicalBundles).not.to.be.null;
   });
 
-  it('test_issuing_physical_bundles_get_2', async function() {
+  it('test_issuing_physical_bundles_get_2', async function () {
     const physicalBundle = await stripe.issuing.physicalBundles.retrieve(
       'pb_xyz'
     );
     expect(physicalBundle).not.to.be.null;
   });
 
-  it('test_issuing_transactions_get', async function() {
+  it('test_issuing_transactions_get', async function () {
     const transactions = await stripe.issuing.transactions.list({
       limit: 3,
     });
     expect(transactions).not.to.be.null;
   });
 
-  it('test_issuing_transactions_get_2', async function() {
+  it('test_issuing_transactions_get_2', async function () {
     const transaction = await stripe.issuing.transactions.retrieve(
       'ipi_xxxxxxxxxxxxx'
     );
     expect(transaction).not.to.be.null;
   });
 
-  it('test_issuing_transactions_post', async function() {
+  it('test_issuing_transactions_post', async function () {
     const transaction = await stripe.issuing.transactions.update(
       'ipi_xxxxxxxxxxxxx',
       {
@@ -1623,33 +1607,33 @@ describe('Generated tests', function() {
     expect(transaction).not.to.be.null;
   });
 
-  it('test_mandates_get', async function() {
+  it('test_mandates_get', async function () {
     const mandate = await stripe.mandates.retrieve('mandate_xxxxxxxxxxxxx');
     expect(mandate).not.to.be.null;
   });
 
-  it('test_payment_intents_apply_customer_balance_post', async function() {
+  it('test_payment_intents_apply_customer_balance_post', async function () {
     const paymentIntent = await stripe.paymentIntents.applyCustomerBalance(
       'pi_xxxxxxxxxxxxx'
     );
     expect(paymentIntent).not.to.be.null;
   });
 
-  it('test_payment_intents_cancel_post', async function() {
+  it('test_payment_intents_cancel_post', async function () {
     const paymentIntent = await stripe.paymentIntents.cancel(
       'pi_xxxxxxxxxxxxx'
     );
     expect(paymentIntent).not.to.be.null;
   });
 
-  it('test_payment_intents_capture_post', async function() {
+  it('test_payment_intents_capture_post', async function () {
     const paymentIntent = await stripe.paymentIntents.capture(
       'pi_xxxxxxxxxxxxx'
     );
     expect(paymentIntent).not.to.be.null;
   });
 
-  it('test_payment_intents_confirm_post', async function() {
+  it('test_payment_intents_confirm_post', async function () {
     const paymentIntent = await stripe.paymentIntents.confirm(
       'pi_xxxxxxxxxxxxx',
       {
@@ -1659,21 +1643,21 @@ describe('Generated tests', function() {
     expect(paymentIntent).not.to.be.null;
   });
 
-  it('test_payment_intents_get', async function() {
+  it('test_payment_intents_get', async function () {
     const paymentIntents = await stripe.paymentIntents.list({
       limit: 3,
     });
     expect(paymentIntents).not.to.be.null;
   });
 
-  it('test_payment_intents_get_2', async function() {
+  it('test_payment_intents_get_2', async function () {
     const paymentIntent = await stripe.paymentIntents.retrieve(
       'pi_xxxxxxxxxxxxx'
     );
     expect(paymentIntent).not.to.be.null;
   });
 
-  it('test_payment_intents_increment_authorization_post', async function() {
+  it('test_payment_intents_increment_authorization_post', async function () {
     const paymentIntent = await stripe.paymentIntents.incrementAuthorization(
       'pi_xxxxxxxxxxxxx',
       {
@@ -1683,7 +1667,7 @@ describe('Generated tests', function() {
     expect(paymentIntent).not.to.be.null;
   });
 
-  it('test_payment_intents_post', async function() {
+  it('test_payment_intents_post', async function () {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 1099,
       currency: 'eur',
@@ -1694,7 +1678,7 @@ describe('Generated tests', function() {
     expect(paymentIntent).not.to.be.null;
   });
 
-  it('test_payment_intents_post_2', async function() {
+  it('test_payment_intents_post_2', async function () {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 2000,
       currency: 'usd',
@@ -1705,7 +1689,7 @@ describe('Generated tests', function() {
     expect(paymentIntent).not.to.be.null;
   });
 
-  it('test_payment_intents_post_3', async function() {
+  it('test_payment_intents_post_3', async function () {
     const paymentIntent = await stripe.paymentIntents.update(
       'pi_xxxxxxxxxxxxx',
       {
@@ -1717,7 +1701,7 @@ describe('Generated tests', function() {
     expect(paymentIntent).not.to.be.null;
   });
 
-  it('test_payment_intents_post_4', async function() {
+  it('test_payment_intents_post_4', async function () {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 200,
       currency: 'usd',
@@ -1731,21 +1715,21 @@ describe('Generated tests', function() {
     expect(paymentIntent).not.to.be.null;
   });
 
-  it('test_payment_intents_search_get', async function() {
+  it('test_payment_intents_search_get', async function () {
     const paymentIntents = await stripe.paymentIntents.search({
       query: "status:'succeeded' AND metadata['order_id']:'6735'",
     });
     expect(paymentIntents).not.to.be.null;
   });
 
-  it('test_payment_intents_verify_microdeposits_post', async function() {
+  it('test_payment_intents_verify_microdeposits_post', async function () {
     const paymentIntent = await stripe.paymentIntents.verifyMicrodeposits(
       'pi_xxxxxxxxxxxxx'
     );
     expect(paymentIntent).not.to.be.null;
   });
 
-  it('test_payment_intents_verify_microdeposits_post_2', async function() {
+  it('test_payment_intents_verify_microdeposits_post_2', async function () {
     const paymentIntent = await stripe.paymentIntents.verifyMicrodeposits(
       'pi_xxxxxxxxxxxxx',
       {
@@ -1755,31 +1739,31 @@ describe('Generated tests', function() {
     expect(paymentIntent).not.to.be.null;
   });
 
-  it('test_payment_links_get', async function() {
+  it('test_payment_links_get', async function () {
     const paymentLink = await stripe.paymentLinks.retrieve('pl_xyz');
     expect(paymentLink).not.to.be.null;
   });
 
-  it('test_payment_links_get_2', async function() {
+  it('test_payment_links_get_2', async function () {
     const paymentLinks = await stripe.paymentLinks.list({
       limit: 3,
     });
     expect(paymentLinks).not.to.be.null;
   });
 
-  it('test_payment_links_get_3', async function() {
+  it('test_payment_links_get_3', async function () {
     const paymentLink = await stripe.paymentLinks.retrieve(
       'plink_xxxxxxxxxxxxx'
     );
     expect(paymentLink).not.to.be.null;
   });
 
-  it('test_payment_links_line_items_get', async function() {
+  it('test_payment_links_line_items_get', async function () {
     const lineItems = await stripe.paymentLinks.listLineItems('pl_xyz');
     expect(lineItems).not.to.be.null;
   });
 
-  it('test_payment_links_post', async function() {
+  it('test_payment_links_post', async function () {
     const paymentLink = await stripe.paymentLinks.create({
       line_items: [
         {
@@ -1791,7 +1775,7 @@ describe('Generated tests', function() {
     expect(paymentLink).not.to.be.null;
   });
 
-  it('test_payment_links_post_2', async function() {
+  it('test_payment_links_post_2', async function () {
     const paymentLink = await stripe.paymentLinks.create({
       line_items: [
         {
@@ -1803,7 +1787,7 @@ describe('Generated tests', function() {
     expect(paymentLink).not.to.be.null;
   });
 
-  it('test_payment_links_post_3', async function() {
+  it('test_payment_links_post_3', async function () {
     const paymentLink = await stripe.paymentLinks.update(
       'plink_xxxxxxxxxxxxx',
       {
@@ -1813,25 +1797,23 @@ describe('Generated tests', function() {
     expect(paymentLink).not.to.be.null;
   });
 
-  it('test_payment_method_configurations_get', async function() {
-    const paymentMethodConfigurations = await stripe.paymentMethodConfigurations.list(
-      {
+  it('test_payment_method_configurations_get', async function () {
+    const paymentMethodConfigurations =
+      await stripe.paymentMethodConfigurations.list({
         application: 'foo',
-      }
-    );
+      });
     expect(paymentMethodConfigurations).not.to.be.null;
   });
 
-  it('test_payment_method_configurations_get_2', async function() {
-    const paymentMethodConfiguration = await stripe.paymentMethodConfigurations.retrieve(
-      'foo'
-    );
+  it('test_payment_method_configurations_get_2', async function () {
+    const paymentMethodConfiguration =
+      await stripe.paymentMethodConfigurations.retrieve('foo');
     expect(paymentMethodConfiguration).not.to.be.null;
   });
 
-  it('test_payment_method_configurations_post', async function() {
-    const paymentMethodConfiguration = await stripe.paymentMethodConfigurations.create(
-      {
+  it('test_payment_method_configurations_post', async function () {
+    const paymentMethodConfiguration =
+      await stripe.paymentMethodConfigurations.create({
         acss_debit: {
           display_preference: {
             preference: 'none',
@@ -1842,26 +1824,23 @@ describe('Generated tests', function() {
             preference: 'none',
           },
         },
-      }
-    );
+      });
     expect(paymentMethodConfiguration).not.to.be.null;
   });
 
-  it('test_payment_method_configurations_post_2', async function() {
-    const paymentMethodConfiguration = await stripe.paymentMethodConfigurations.update(
-      'foo',
-      {
+  it('test_payment_method_configurations_post_2', async function () {
+    const paymentMethodConfiguration =
+      await stripe.paymentMethodConfigurations.update('foo', {
         acss_debit: {
           display_preference: {
             preference: 'on',
           },
         },
-      }
-    );
+      });
     expect(paymentMethodConfiguration).not.to.be.null;
   });
 
-  it('test_payment_methods_attach_post', async function() {
+  it('test_payment_methods_attach_post', async function () {
     const paymentMethod = await stripe.paymentMethods.attach(
       'pm_xxxxxxxxxxxxx',
       {
@@ -1871,14 +1850,14 @@ describe('Generated tests', function() {
     expect(paymentMethod).not.to.be.null;
   });
 
-  it('test_payment_methods_detach_post', async function() {
+  it('test_payment_methods_detach_post', async function () {
     const paymentMethod = await stripe.paymentMethods.detach(
       'pm_xxxxxxxxxxxxx'
     );
     expect(paymentMethod).not.to.be.null;
   });
 
-  it('test_payment_methods_get', async function() {
+  it('test_payment_methods_get', async function () {
     const paymentMethods = await stripe.paymentMethods.list({
       customer: 'cus_xxxxxxxxxxxxx',
       type: 'card',
@@ -1886,14 +1865,14 @@ describe('Generated tests', function() {
     expect(paymentMethods).not.to.be.null;
   });
 
-  it('test_payment_methods_get_2', async function() {
+  it('test_payment_methods_get_2', async function () {
     const paymentMethod = await stripe.paymentMethods.retrieve(
       'pm_xxxxxxxxxxxxx'
     );
     expect(paymentMethod).not.to.be.null;
   });
 
-  it('test_payment_methods_post', async function() {
+  it('test_payment_methods_post', async function () {
     const paymentMethod = await stripe.paymentMethods.create({
       type: 'card',
       card: {
@@ -1906,7 +1885,7 @@ describe('Generated tests', function() {
     expect(paymentMethod).not.to.be.null;
   });
 
-  it('test_payment_methods_post_2', async function() {
+  it('test_payment_methods_post_2', async function () {
     const paymentMethod = await stripe.paymentMethods.update(
       'pm_xxxxxxxxxxxxx',
       {
@@ -1918,24 +1897,24 @@ describe('Generated tests', function() {
     expect(paymentMethod).not.to.be.null;
   });
 
-  it('test_payouts_cancel_post', async function() {
+  it('test_payouts_cancel_post', async function () {
     const payout = await stripe.payouts.cancel('po_xxxxxxxxxxxxx');
     expect(payout).not.to.be.null;
   });
 
-  it('test_payouts_get', async function() {
+  it('test_payouts_get', async function () {
     const payouts = await stripe.payouts.list({
       limit: 3,
     });
     expect(payouts).not.to.be.null;
   });
 
-  it('test_payouts_get_2', async function() {
+  it('test_payouts_get_2', async function () {
     const payout = await stripe.payouts.retrieve('po_xxxxxxxxxxxxx');
     expect(payout).not.to.be.null;
   });
 
-  it('test_payouts_post', async function() {
+  it('test_payouts_post', async function () {
     const payout = await stripe.payouts.create({
       amount: 1100,
       currency: 'usd',
@@ -1943,7 +1922,7 @@ describe('Generated tests', function() {
     expect(payout).not.to.be.null;
   });
 
-  it('test_payouts_post_2', async function() {
+  it('test_payouts_post_2', async function () {
     const payout = await stripe.payouts.update('po_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -1952,29 +1931,29 @@ describe('Generated tests', function() {
     expect(payout).not.to.be.null;
   });
 
-  it('test_payouts_reverse_post', async function() {
+  it('test_payouts_reverse_post', async function () {
     const payout = await stripe.payouts.reverse('po_xxxxxxxxxxxxx');
     expect(payout).not.to.be.null;
   });
 
-  it('test_plans_delete', async function() {
+  it('test_plans_delete', async function () {
     const deleted = await stripe.plans.del('price_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_plans_get', async function() {
+  it('test_plans_get', async function () {
     const plans = await stripe.plans.list({
       limit: 3,
     });
     expect(plans).not.to.be.null;
   });
 
-  it('test_plans_get_2', async function() {
+  it('test_plans_get_2', async function () {
     const plan = await stripe.plans.retrieve('price_xxxxxxxxxxxxx');
     expect(plan).not.to.be.null;
   });
 
-  it('test_plans_post', async function() {
+  it('test_plans_post', async function () {
     const plan = await stripe.plans.create({
       amount: 2000,
       currency: 'usd',
@@ -1984,7 +1963,7 @@ describe('Generated tests', function() {
     expect(plan).not.to.be.null;
   });
 
-  it('test_plans_post_2', async function() {
+  it('test_plans_post_2', async function () {
     const plan = await stripe.plans.create({
       amount: 2000,
       currency: 'usd',
@@ -1996,7 +1975,7 @@ describe('Generated tests', function() {
     expect(plan).not.to.be.null;
   });
 
-  it('test_plans_post_3', async function() {
+  it('test_plans_post_3', async function () {
     const plan = await stripe.plans.update('price_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -2005,19 +1984,19 @@ describe('Generated tests', function() {
     expect(plan).not.to.be.null;
   });
 
-  it('test_prices_get', async function() {
+  it('test_prices_get', async function () {
     const prices = await stripe.prices.list({
       limit: 3,
     });
     expect(prices).not.to.be.null;
   });
 
-  it('test_prices_get_2', async function() {
+  it('test_prices_get_2', async function () {
     const price = await stripe.prices.retrieve('price_xxxxxxxxxxxxx');
     expect(price).not.to.be.null;
   });
 
-  it('test_prices_post', async function() {
+  it('test_prices_post', async function () {
     const price = await stripe.prices.create({
       unit_amount: 2000,
       currency: 'usd',
@@ -2037,7 +2016,7 @@ describe('Generated tests', function() {
     expect(price).not.to.be.null;
   });
 
-  it('test_prices_post_2', async function() {
+  it('test_prices_post_2', async function () {
     const price = await stripe.prices.create({
       unit_amount: 2000,
       currency: 'usd',
@@ -2049,7 +2028,7 @@ describe('Generated tests', function() {
     expect(price).not.to.be.null;
   });
 
-  it('test_prices_post_3', async function() {
+  it('test_prices_post_3', async function () {
     const price = await stripe.prices.update('price_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -2058,38 +2037,38 @@ describe('Generated tests', function() {
     expect(price).not.to.be.null;
   });
 
-  it('test_prices_search_get', async function() {
+  it('test_prices_search_get', async function () {
     const prices = await stripe.prices.search({
       query: "active:'true' AND metadata['order_id']:'6735'",
     });
     expect(prices).not.to.be.null;
   });
 
-  it('test_products_delete', async function() {
+  it('test_products_delete', async function () {
     const deleted = await stripe.products.del('prod_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_products_get', async function() {
+  it('test_products_get', async function () {
     const products = await stripe.products.list({
       limit: 3,
     });
     expect(products).not.to.be.null;
   });
 
-  it('test_products_get_2', async function() {
+  it('test_products_get_2', async function () {
     const product = await stripe.products.retrieve('prod_xxxxxxxxxxxxx');
     expect(product).not.to.be.null;
   });
 
-  it('test_products_post', async function() {
+  it('test_products_post', async function () {
     const product = await stripe.products.create({
       name: 'Gold Special',
     });
     expect(product).not.to.be.null;
   });
 
-  it('test_products_post_2', async function() {
+  it('test_products_post_2', async function () {
     const product = await stripe.products.update('prod_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -2098,28 +2077,28 @@ describe('Generated tests', function() {
     expect(product).not.to.be.null;
   });
 
-  it('test_products_search_get', async function() {
+  it('test_products_search_get', async function () {
     const products = await stripe.products.search({
       query: "active:'true' AND metadata['order_id']:'6735'",
     });
     expect(products).not.to.be.null;
   });
 
-  it('test_promotion_codes_get', async function() {
+  it('test_promotion_codes_get', async function () {
     const promotionCodes = await stripe.promotionCodes.list({
       limit: 3,
     });
     expect(promotionCodes).not.to.be.null;
   });
 
-  it('test_promotion_codes_get_2', async function() {
+  it('test_promotion_codes_get_2', async function () {
     const promotionCode = await stripe.promotionCodes.retrieve(
       'promo_xxxxxxxxxxxxx'
     );
     expect(promotionCode).not.to.be.null;
   });
 
-  it('test_promotion_codes_post', async function() {
+  it('test_promotion_codes_post', async function () {
     const promotionCode = await stripe.promotionCodes.create({
       promotion: {
         type: 'coupon',
@@ -2129,7 +2108,7 @@ describe('Generated tests', function() {
     expect(promotionCode).not.to.be.null;
   });
 
-  it('test_promotion_codes_post_2', async function() {
+  it('test_promotion_codes_post_2', async function () {
     const promotionCode = await stripe.promotionCodes.update(
       'promo_xxxxxxxxxxxxx',
       {
@@ -2141,44 +2120,44 @@ describe('Generated tests', function() {
     expect(promotionCode).not.to.be.null;
   });
 
-  it('test_quotes_accept_post', async function() {
+  it('test_quotes_accept_post', async function () {
     const quote = await stripe.quotes.accept('qt_xxxxxxxxxxxxx');
     expect(quote).not.to.be.null;
   });
 
-  it('test_quotes_cancel_post', async function() {
+  it('test_quotes_cancel_post', async function () {
     const quote = await stripe.quotes.cancel('qt_xxxxxxxxxxxxx');
     expect(quote).not.to.be.null;
   });
 
-  it('test_quotes_finalize_post', async function() {
+  it('test_quotes_finalize_post', async function () {
     const quote = await stripe.quotes.finalizeQuote('qt_xxxxxxxxxxxxx');
     expect(quote).not.to.be.null;
   });
 
-  it('test_quotes_get', async function() {
+  it('test_quotes_get', async function () {
     const quotes = await stripe.quotes.list({
       limit: 3,
     });
     expect(quotes).not.to.be.null;
   });
 
-  it('test_quotes_get_2', async function() {
+  it('test_quotes_get_2', async function () {
     const quote = await stripe.quotes.retrieve('qt_xxxxxxxxxxxxx');
     expect(quote).not.to.be.null;
   });
 
-  it('test_quotes_line_items_get', async function() {
+  it('test_quotes_line_items_get', async function () {
     const lineItems = await stripe.quotes.listLineItems('qt_xxxxxxxxxxxxx');
     expect(lineItems).not.to.be.null;
   });
 
-  it('test_quotes_pdf_get', async function() {
+  it('test_quotes_pdf_get', async function () {
     const file = await stripe.quotes.pdf('qt_xxxxxxxxxxxxx');
     expect(file).not.to.be.null;
   });
 
-  it('test_quotes_post', async function() {
+  it('test_quotes_post', async function () {
     const quote = await stripe.quotes.create({
       customer: 'cus_xxxxxxxxxxxxx',
       line_items: [
@@ -2191,7 +2170,7 @@ describe('Generated tests', function() {
     expect(quote).not.to.be.null;
   });
 
-  it('test_quotes_post_2', async function() {
+  it('test_quotes_post_2', async function () {
     const quote = await stripe.quotes.update('qt_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -2200,26 +2179,26 @@ describe('Generated tests', function() {
     expect(quote).not.to.be.null;
   });
 
-  it('test_radar_early_fraud_warnings_get', async function() {
+  it('test_radar_early_fraud_warnings_get', async function () {
     const earlyFraudWarnings = await stripe.radar.earlyFraudWarnings.list({
       limit: 3,
     });
     expect(earlyFraudWarnings).not.to.be.null;
   });
 
-  it('test_radar_early_fraud_warnings_get_2', async function() {
+  it('test_radar_early_fraud_warnings_get_2', async function () {
     const earlyFraudWarning = await stripe.radar.earlyFraudWarnings.retrieve(
       'issfr_xxxxxxxxxxxxx'
     );
     expect(earlyFraudWarning).not.to.be.null;
   });
 
-  it('test_radar_value_list_items_delete', async function() {
+  it('test_radar_value_list_items_delete', async function () {
     const deleted = await stripe.radar.valueListItems.del('rsli_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_radar_value_list_items_get', async function() {
+  it('test_radar_value_list_items_get', async function () {
     const valueListItems = await stripe.radar.valueListItems.list({
       limit: 3,
       value_list: 'rsl_xxxxxxxxxxxxx',
@@ -2227,14 +2206,14 @@ describe('Generated tests', function() {
     expect(valueListItems).not.to.be.null;
   });
 
-  it('test_radar_value_list_items_get_2', async function() {
+  it('test_radar_value_list_items_get_2', async function () {
     const valueListItem = await stripe.radar.valueListItems.retrieve(
       'rsli_xxxxxxxxxxxxx'
     );
     expect(valueListItem).not.to.be.null;
   });
 
-  it('test_radar_value_list_items_post', async function() {
+  it('test_radar_value_list_items_post', async function () {
     const valueListItem = await stripe.radar.valueListItems.create({
       value_list: 'rsl_xxxxxxxxxxxxx',
       value: '1.2.3.4',
@@ -2242,26 +2221,26 @@ describe('Generated tests', function() {
     expect(valueListItem).not.to.be.null;
   });
 
-  it('test_radar_value_lists_delete', async function() {
+  it('test_radar_value_lists_delete', async function () {
     const deleted = await stripe.radar.valueLists.del('rsl_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_radar_value_lists_get', async function() {
+  it('test_radar_value_lists_get', async function () {
     const valueLists = await stripe.radar.valueLists.list({
       limit: 3,
     });
     expect(valueLists).not.to.be.null;
   });
 
-  it('test_radar_value_lists_get_2', async function() {
+  it('test_radar_value_lists_get_2', async function () {
     const valueList = await stripe.radar.valueLists.retrieve(
       'rsl_xxxxxxxxxxxxx'
     );
     expect(valueList).not.to.be.null;
   });
 
-  it('test_radar_value_lists_post', async function() {
+  it('test_radar_value_lists_post', async function () {
     const valueList = await stripe.radar.valueLists.create({
       alias: 'custom_ip_xxxxxxxxxxxxx',
       name: 'Custom IP Blocklist',
@@ -2270,7 +2249,7 @@ describe('Generated tests', function() {
     expect(valueList).not.to.be.null;
   });
 
-  it('test_radar_value_lists_post_2', async function() {
+  it('test_radar_value_lists_post_2', async function () {
     const valueList = await stripe.radar.valueLists.update(
       'rsl_xxxxxxxxxxxxx',
       {
@@ -2280,31 +2259,31 @@ describe('Generated tests', function() {
     expect(valueList).not.to.be.null;
   });
 
-  it('test_refunds_cancel_post', async function() {
+  it('test_refunds_cancel_post', async function () {
     const refund = await stripe.refunds.cancel('re_xxxxxxxxxxxxx');
     expect(refund).not.to.be.null;
   });
 
-  it('test_refunds_get', async function() {
+  it('test_refunds_get', async function () {
     const refunds = await stripe.refunds.list({
       limit: 3,
     });
     expect(refunds).not.to.be.null;
   });
 
-  it('test_refunds_get_2', async function() {
+  it('test_refunds_get_2', async function () {
     const refund = await stripe.refunds.retrieve('re_xxxxxxxxxxxxx');
     expect(refund).not.to.be.null;
   });
 
-  it('test_refunds_post', async function() {
+  it('test_refunds_post', async function () {
     const refund = await stripe.refunds.create({
       charge: 'ch_xxxxxxxxxxxxx',
     });
     expect(refund).not.to.be.null;
   });
 
-  it('test_refunds_post_2', async function() {
+  it('test_refunds_post_2', async function () {
     const refund = await stripe.refunds.update('re_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -2313,21 +2292,21 @@ describe('Generated tests', function() {
     expect(refund).not.to.be.null;
   });
 
-  it('test_reporting_report_runs_get', async function() {
+  it('test_reporting_report_runs_get', async function () {
     const reportRuns = await stripe.reporting.reportRuns.list({
       limit: 3,
     });
     expect(reportRuns).not.to.be.null;
   });
 
-  it('test_reporting_report_runs_get_2', async function() {
+  it('test_reporting_report_runs_get_2', async function () {
     const reportRun = await stripe.reporting.reportRuns.retrieve(
       'frr_xxxxxxxxxxxxx'
     );
     expect(reportRun).not.to.be.null;
   });
 
-  it('test_reporting_report_runs_post', async function() {
+  it('test_reporting_report_runs_post', async function () {
     const reportRun = await stripe.reporting.reportRuns.create({
       report_type: 'balance.summary.1',
       parameters: {
@@ -2338,36 +2317,36 @@ describe('Generated tests', function() {
     expect(reportRun).not.to.be.null;
   });
 
-  it('test_reporting_report_types_get', async function() {
+  it('test_reporting_report_types_get', async function () {
     const reportTypes = await stripe.reporting.reportTypes.list();
     expect(reportTypes).not.to.be.null;
   });
 
-  it('test_reporting_report_types_get_2', async function() {
+  it('test_reporting_report_types_get_2', async function () {
     const reportType = await stripe.reporting.reportTypes.retrieve(
       'balance.summary.1'
     );
     expect(reportType).not.to.be.null;
   });
 
-  it('test_reviews_approve_post', async function() {
+  it('test_reviews_approve_post', async function () {
     const review = await stripe.reviews.approve('prv_xxxxxxxxxxxxx');
     expect(review).not.to.be.null;
   });
 
-  it('test_reviews_get', async function() {
+  it('test_reviews_get', async function () {
     const reviews = await stripe.reviews.list({
       limit: 3,
     });
     expect(reviews).not.to.be.null;
   });
 
-  it('test_reviews_get_2', async function() {
+  it('test_reviews_get_2', async function () {
     const review = await stripe.reviews.retrieve('prv_xxxxxxxxxxxxx');
     expect(review).not.to.be.null;
   });
 
-  it('test_setup_attempts_get', async function() {
+  it('test_setup_attempts_get', async function () {
     const setupAttempts = await stripe.setupAttempts.list({
       limit: 3,
       setup_intent: 'si_xyz',
@@ -2375,12 +2354,12 @@ describe('Generated tests', function() {
     expect(setupAttempts).not.to.be.null;
   });
 
-  it('test_setup_intents_cancel_post', async function() {
+  it('test_setup_intents_cancel_post', async function () {
     const setupIntent = await stripe.setupIntents.cancel('seti_xxxxxxxxxxxxx');
     expect(setupIntent).not.to.be.null;
   });
 
-  it('test_setup_intents_confirm_post', async function() {
+  it('test_setup_intents_confirm_post', async function () {
     const setupIntent = await stripe.setupIntents.confirm(
       'seti_xxxxxxxxxxxxx',
       {
@@ -2390,28 +2369,28 @@ describe('Generated tests', function() {
     expect(setupIntent).not.to.be.null;
   });
 
-  it('test_setup_intents_get', async function() {
+  it('test_setup_intents_get', async function () {
     const setupIntents = await stripe.setupIntents.list({
       limit: 3,
     });
     expect(setupIntents).not.to.be.null;
   });
 
-  it('test_setup_intents_get_2', async function() {
+  it('test_setup_intents_get_2', async function () {
     const setupIntent = await stripe.setupIntents.retrieve(
       'seti_xxxxxxxxxxxxx'
     );
     expect(setupIntent).not.to.be.null;
   });
 
-  it('test_setup_intents_post', async function() {
+  it('test_setup_intents_post', async function () {
     const setupIntent = await stripe.setupIntents.create({
       allowed_payment_method_types: ['card'],
     });
     expect(setupIntent).not.to.be.null;
   });
 
-  it('test_setup_intents_post_2', async function() {
+  it('test_setup_intents_post_2', async function () {
     const setupIntent = await stripe.setupIntents.update('seti_xxxxxxxxxxxxx', {
       metadata: {
         user_id: '3435453',
@@ -2420,14 +2399,14 @@ describe('Generated tests', function() {
     expect(setupIntent).not.to.be.null;
   });
 
-  it('test_setup_intents_verify_microdeposits_post', async function() {
+  it('test_setup_intents_verify_microdeposits_post', async function () {
     const setupIntent = await stripe.setupIntents.verifyMicrodeposits(
       'seti_xxxxxxxxxxxxx'
     );
     expect(setupIntent).not.to.be.null;
   });
 
-  it('test_setup_intents_verify_microdeposits_post_2', async function() {
+  it('test_setup_intents_verify_microdeposits_post_2', async function () {
     const setupIntent = await stripe.setupIntents.verifyMicrodeposits(
       'seti_xxxxxxxxxxxxx',
       {
@@ -2437,26 +2416,26 @@ describe('Generated tests', function() {
     expect(setupIntent).not.to.be.null;
   });
 
-  it('test_shipping_rates_get', async function() {
+  it('test_shipping_rates_get', async function () {
     const shippingRates = await stripe.shippingRates.list();
     expect(shippingRates).not.to.be.null;
   });
 
-  it('test_shipping_rates_get_2', async function() {
+  it('test_shipping_rates_get_2', async function () {
     const shippingRates = await stripe.shippingRates.list({
       limit: 3,
     });
     expect(shippingRates).not.to.be.null;
   });
 
-  it('test_shipping_rates_get_3', async function() {
+  it('test_shipping_rates_get_3', async function () {
     const shippingRate = await stripe.shippingRates.retrieve(
       'shr_xxxxxxxxxxxxx'
     );
     expect(shippingRate).not.to.be.null;
   });
 
-  it('test_shipping_rates_post', async function() {
+  it('test_shipping_rates_post', async function () {
     const shippingRate = await stripe.shippingRates.create({
       display_name: 'Sample Shipper',
       fixed_amount: {
@@ -2468,7 +2447,7 @@ describe('Generated tests', function() {
     expect(shippingRate).not.to.be.null;
   });
 
-  it('test_shipping_rates_post_2', async function() {
+  it('test_shipping_rates_post_2', async function () {
     const shippingRate = await stripe.shippingRates.create({
       display_name: 'Ground shipping',
       type: 'fixed_amount',
@@ -2480,7 +2459,7 @@ describe('Generated tests', function() {
     expect(shippingRate).not.to.be.null;
   });
 
-  it('test_shipping_rates_post_3', async function() {
+  it('test_shipping_rates_post_3', async function () {
     const shippingRate = await stripe.shippingRates.update(
       'shr_xxxxxxxxxxxxx',
       {
@@ -2492,31 +2471,31 @@ describe('Generated tests', function() {
     expect(shippingRate).not.to.be.null;
   });
 
-  it('test_sigma_scheduled_query_runs_get', async function() {
+  it('test_sigma_scheduled_query_runs_get', async function () {
     const scheduledQueryRuns = await stripe.sigma.scheduledQueryRuns.list({
       limit: 3,
     });
     expect(scheduledQueryRuns).not.to.be.null;
   });
 
-  it('test_sigma_scheduled_query_runs_get_2', async function() {
+  it('test_sigma_scheduled_query_runs_get_2', async function () {
     const scheduledQueryRun = await stripe.sigma.scheduledQueryRuns.retrieve(
       'sqr_xxxxxxxxxxxxx'
     );
     expect(scheduledQueryRun).not.to.be.null;
   });
 
-  it('test_sources_get', async function() {
+  it('test_sources_get', async function () {
     const source = await stripe.sources.retrieve('src_xxxxxxxxxxxxx');
     expect(source).not.to.be.null;
   });
 
-  it('test_sources_get_2', async function() {
+  it('test_sources_get_2', async function () {
     const source = await stripe.sources.retrieve('src_xxxxxxxxxxxxx');
     expect(source).not.to.be.null;
   });
 
-  it('test_sources_post', async function() {
+  it('test_sources_post', async function () {
     const source = await stripe.sources.update('src_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -2525,26 +2504,26 @@ describe('Generated tests', function() {
     expect(source).not.to.be.null;
   });
 
-  it('test_subscription_items_delete', async function() {
+  it('test_subscription_items_delete', async function () {
     const deleted = await stripe.subscriptionItems.del('si_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_subscription_items_get', async function() {
+  it('test_subscription_items_get', async function () {
     const subscriptionItems = await stripe.subscriptionItems.list({
       subscription: 'sub_xxxxxxxxxxxxx',
     });
     expect(subscriptionItems).not.to.be.null;
   });
 
-  it('test_subscription_items_get_2', async function() {
+  it('test_subscription_items_get_2', async function () {
     const subscriptionItem = await stripe.subscriptionItems.retrieve(
       'si_xxxxxxxxxxxxx'
     );
     expect(subscriptionItem).not.to.be.null;
   });
 
-  it('test_subscription_items_post', async function() {
+  it('test_subscription_items_post', async function () {
     const subscriptionItem = await stripe.subscriptionItems.create({
       subscription: 'sub_xxxxxxxxxxxxx',
       price: 'price_xxxxxxxxxxxxx',
@@ -2553,7 +2532,7 @@ describe('Generated tests', function() {
     expect(subscriptionItem).not.to.be.null;
   });
 
-  it('test_subscription_items_post_2', async function() {
+  it('test_subscription_items_post_2', async function () {
     const subscriptionItem = await stripe.subscriptionItems.update(
       'si_xxxxxxxxxxxxx',
       {
@@ -2565,28 +2544,28 @@ describe('Generated tests', function() {
     expect(subscriptionItem).not.to.be.null;
   });
 
-  it('test_subscription_schedules_cancel_post', async function() {
+  it('test_subscription_schedules_cancel_post', async function () {
     const subscriptionSchedule = await stripe.subscriptionSchedules.cancel(
       'sub_sched_xxxxxxxxxxxxx'
     );
     expect(subscriptionSchedule).not.to.be.null;
   });
 
-  it('test_subscription_schedules_get', async function() {
+  it('test_subscription_schedules_get', async function () {
     const subscriptionSchedules = await stripe.subscriptionSchedules.list({
       limit: 3,
     });
     expect(subscriptionSchedules).not.to.be.null;
   });
 
-  it('test_subscription_schedules_get_2', async function() {
+  it('test_subscription_schedules_get_2', async function () {
     const subscriptionSchedule = await stripe.subscriptionSchedules.retrieve(
       'sub_sched_xxxxxxxxxxxxx'
     );
     expect(subscriptionSchedule).not.to.be.null;
   });
 
-  it('test_subscription_schedules_post', async function() {
+  it('test_subscription_schedules_post', async function () {
     const subscriptionSchedule = await stripe.subscriptionSchedules.create({
       customer: 'cus_xxxxxxxxxxxxx',
       start_date: 1676070661,
@@ -2605,7 +2584,7 @@ describe('Generated tests', function() {
     expect(subscriptionSchedule).not.to.be.null;
   });
 
-  it('test_subscription_schedules_post_2', async function() {
+  it('test_subscription_schedules_post_2', async function () {
     const subscriptionSchedule = await stripe.subscriptionSchedules.update(
       'sub_sched_xxxxxxxxxxxxx',
       {
@@ -2615,38 +2594,38 @@ describe('Generated tests', function() {
     expect(subscriptionSchedule).not.to.be.null;
   });
 
-  it('test_subscription_schedules_release_post', async function() {
+  it('test_subscription_schedules_release_post', async function () {
     const subscriptionSchedule = await stripe.subscriptionSchedules.release(
       'sub_sched_xxxxxxxxxxxxx'
     );
     expect(subscriptionSchedule).not.to.be.null;
   });
 
-  it('test_subscriptions_delete', async function() {
+  it('test_subscriptions_delete', async function () {
     const subscription = await stripe.subscriptions.cancel('sub_xxxxxxxxxxxxx');
     expect(subscription).not.to.be.null;
   });
 
-  it('test_subscriptions_discount_delete', async function() {
+  it('test_subscriptions_discount_delete', async function () {
     const deleted = await stripe.subscriptions.deleteDiscount('sub_xyz');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_subscriptions_get', async function() {
+  it('test_subscriptions_get', async function () {
     const subscriptions = await stripe.subscriptions.list({
       limit: 3,
     });
     expect(subscriptions).not.to.be.null;
   });
 
-  it('test_subscriptions_get_2', async function() {
+  it('test_subscriptions_get_2', async function () {
     const subscription = await stripe.subscriptions.retrieve(
       'sub_xxxxxxxxxxxxx'
     );
     expect(subscription).not.to.be.null;
   });
 
-  it('test_subscriptions_post', async function() {
+  it('test_subscriptions_post', async function () {
     const subscription = await stripe.subscriptions.create({
       customer: 'cus_xxxxxxxxxxxxx',
       items: [
@@ -2658,7 +2637,7 @@ describe('Generated tests', function() {
     expect(subscription).not.to.be.null;
   });
 
-  it('test_subscriptions_post_2', async function() {
+  it('test_subscriptions_post_2', async function () {
     const subscription = await stripe.subscriptions.update(
       'sub_xxxxxxxxxxxxx',
       {
@@ -2670,21 +2649,21 @@ describe('Generated tests', function() {
     expect(subscription).not.to.be.null;
   });
 
-  it('test_subscriptions_search_get', async function() {
+  it('test_subscriptions_search_get', async function () {
     const subscriptions = await stripe.subscriptions.search({
       query: "status:'active' AND metadata['order_id']:'6735'",
     });
     expect(subscriptions).not.to.be.null;
   });
 
-  it('test_tax_calculations_line_items_get', async function() {
+  it('test_tax_calculations_line_items_get', async function () {
     const calculationLineItems = await stripe.tax.calculations.listLineItems(
       'xxx'
     );
     expect(calculationLineItems).not.to.be.null;
   });
 
-  it('test_tax_calculations_post', async function() {
+  it('test_tax_calculations_post', async function () {
     const calculation = await stripe.tax.calculations.create({
       currency: 'usd',
       line_items: [
@@ -2707,34 +2686,34 @@ describe('Generated tests', function() {
     expect(calculation).not.to.be.null;
   });
 
-  it('test_tax_codes_get', async function() {
+  it('test_tax_codes_get', async function () {
     const taxCodes = await stripe.taxCodes.list({
       limit: 3,
     });
     expect(taxCodes).not.to.be.null;
   });
 
-  it('test_tax_codes_get_2', async function() {
+  it('test_tax_codes_get_2', async function () {
     const taxCode = await stripe.taxCodes.retrieve('txcd_xxxxxxxxxxxxx');
     expect(taxCode).not.to.be.null;
   });
 
-  it('test_tax_ids_delete', async function() {
+  it('test_tax_ids_delete', async function () {
     const deleted = await stripe.taxIds.del('taxid_123');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_tax_ids_get', async function() {
+  it('test_tax_ids_get', async function () {
     const taxIds = await stripe.taxIds.list();
     expect(taxIds).not.to.be.null;
   });
 
-  it('test_tax_ids_get_2', async function() {
+  it('test_tax_ids_get_2', async function () {
     const taxId = await stripe.taxIds.retrieve('taxid_123');
     expect(taxId).not.to.be.null;
   });
 
-  it('test_tax_ids_post', async function() {
+  it('test_tax_ids_post', async function () {
     const taxId = await stripe.taxIds.create({
       type: 'eu_vat',
       value: '123',
@@ -2742,19 +2721,19 @@ describe('Generated tests', function() {
     expect(taxId).not.to.be.null;
   });
 
-  it('test_tax_rates_get', async function() {
+  it('test_tax_rates_get', async function () {
     const taxRates = await stripe.taxRates.list({
       limit: 3,
     });
     expect(taxRates).not.to.be.null;
   });
 
-  it('test_tax_rates_get_2', async function() {
+  it('test_tax_rates_get_2', async function () {
     const taxRate = await stripe.taxRates.retrieve('txr_xxxxxxxxxxxxx');
     expect(taxRate).not.to.be.null;
   });
 
-  it('test_tax_rates_post', async function() {
+  it('test_tax_rates_post', async function () {
     const taxRate = await stripe.taxRates.create({
       display_name: 'VAT',
       description: 'VAT Germany',
@@ -2765,21 +2744,21 @@ describe('Generated tests', function() {
     expect(taxRate).not.to.be.null;
   });
 
-  it('test_tax_rates_post_2', async function() {
+  it('test_tax_rates_post_2', async function () {
     const taxRate = await stripe.taxRates.update('txr_xxxxxxxxxxxxx', {
       active: false,
     });
     expect(taxRate).not.to.be.null;
   });
 
-  it('test_tax_registrations_get', async function() {
+  it('test_tax_registrations_get', async function () {
     const registrations = await stripe.tax.registrations.list({
       status: 'all',
     });
     expect(registrations).not.to.be.null;
   });
 
-  it('test_tax_registrations_post', async function() {
+  it('test_tax_registrations_post', async function () {
     const registration = await stripe.tax.registrations.create({
       country: 'IE',
       country_options: {
@@ -2792,7 +2771,7 @@ describe('Generated tests', function() {
     expect(registration).not.to.be.null;
   });
 
-  it('test_tax_registrations_post_2', async function() {
+  it('test_tax_registrations_post_2', async function () {
     const registration = await stripe.tax.registrations.update(
       'taxreg_xxxxxxxxxxxxx',
       {
@@ -2802,12 +2781,12 @@ describe('Generated tests', function() {
     expect(registration).not.to.be.null;
   });
 
-  it('test_tax_settings_get', async function() {
+  it('test_tax_settings_get', async function () {
     const settings = await stripe.tax.settings.retrieve();
     expect(settings).not.to.be.null;
   });
 
-  it('test_tax_settings_post', async function() {
+  it('test_tax_settings_post', async function () {
     const settings = await stripe.tax.settings.update({
       defaults: {
         tax_code: 'txcd_10000000',
@@ -2816,7 +2795,7 @@ describe('Generated tests', function() {
     expect(settings).not.to.be.null;
   });
 
-  it('test_tax_transactions_create_from_calculation_post', async function() {
+  it('test_tax_transactions_create_from_calculation_post', async function () {
     const transaction = await stripe.tax.transactions.createFromCalculation({
       calculation: 'xxx',
       reference: 'yyy',
@@ -2824,50 +2803,50 @@ describe('Generated tests', function() {
     expect(transaction).not.to.be.null;
   });
 
-  it('test_terminal_configurations_delete', async function() {
+  it('test_terminal_configurations_delete', async function () {
     const deleted = await stripe.terminal.configurations.del('uc_123');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_terminal_configurations_delete_2', async function() {
+  it('test_terminal_configurations_delete_2', async function () {
     const deleted = await stripe.terminal.configurations.del(
       'tmc_xxxxxxxxxxxxx'
     );
     expect(deleted).not.to.be.null;
   });
 
-  it('test_terminal_configurations_get', async function() {
+  it('test_terminal_configurations_get', async function () {
     const configurations = await stripe.terminal.configurations.list();
     expect(configurations).not.to.be.null;
   });
 
-  it('test_terminal_configurations_get_2', async function() {
+  it('test_terminal_configurations_get_2', async function () {
     const configuration = await stripe.terminal.configurations.retrieve(
       'uc_123'
     );
     expect(configuration).not.to.be.null;
   });
 
-  it('test_terminal_configurations_get_3', async function() {
+  it('test_terminal_configurations_get_3', async function () {
     const configurations = await stripe.terminal.configurations.list({
       limit: 3,
     });
     expect(configurations).not.to.be.null;
   });
 
-  it('test_terminal_configurations_get_4', async function() {
+  it('test_terminal_configurations_get_4', async function () {
     const configuration = await stripe.terminal.configurations.retrieve(
       'tmc_xxxxxxxxxxxxx'
     );
     expect(configuration).not.to.be.null;
   });
 
-  it('test_terminal_configurations_post', async function() {
+  it('test_terminal_configurations_post', async function () {
     const configuration = await stripe.terminal.configurations.create();
     expect(configuration).not.to.be.null;
   });
 
-  it('test_terminal_configurations_post_2', async function() {
+  it('test_terminal_configurations_post_2', async function () {
     const configuration = await stripe.terminal.configurations.update(
       'uc_123',
       {
@@ -2881,7 +2860,7 @@ describe('Generated tests', function() {
     expect(configuration).not.to.be.null;
   });
 
-  it('test_terminal_configurations_post_3', async function() {
+  it('test_terminal_configurations_post_3', async function () {
     const configuration = await stripe.terminal.configurations.create({
       bbpos_wisepos_e: {
         splashscreen: 'file_xxxxxxxxxxxxx',
@@ -2890,7 +2869,7 @@ describe('Generated tests', function() {
     expect(configuration).not.to.be.null;
   });
 
-  it('test_terminal_configurations_post_4', async function() {
+  it('test_terminal_configurations_post_4', async function () {
     const configuration = await stripe.terminal.configurations.update(
       'tmc_xxxxxxxxxxxxx',
       {
@@ -2902,31 +2881,31 @@ describe('Generated tests', function() {
     expect(configuration).not.to.be.null;
   });
 
-  it('test_terminal_connection_tokens_post', async function() {
+  it('test_terminal_connection_tokens_post', async function () {
     const connectionToken = await stripe.terminal.connectionTokens.create();
     expect(connectionToken).not.to.be.null;
   });
 
-  it('test_terminal_locations_delete', async function() {
+  it('test_terminal_locations_delete', async function () {
     const deleted = await stripe.terminal.locations.del('tml_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_terminal_locations_get', async function() {
+  it('test_terminal_locations_get', async function () {
     const locations = await stripe.terminal.locations.list({
       limit: 3,
     });
     expect(locations).not.to.be.null;
   });
 
-  it('test_terminal_locations_get_2', async function() {
+  it('test_terminal_locations_get_2', async function () {
     const location = await stripe.terminal.locations.retrieve(
       'tml_xxxxxxxxxxxxx'
     );
     expect(location).not.to.be.null;
   });
 
-  it('test_terminal_locations_post', async function() {
+  it('test_terminal_locations_post', async function () {
     const location = await stripe.terminal.locations.create({
       display_name: 'My First Store',
       address: {
@@ -2940,7 +2919,7 @@ describe('Generated tests', function() {
     expect(location).not.to.be.null;
   });
 
-  it('test_terminal_locations_post_2', async function() {
+  it('test_terminal_locations_post_2', async function () {
     const location = await stripe.terminal.locations.update(
       'tml_xxxxxxxxxxxxx',
       {
@@ -2950,31 +2929,31 @@ describe('Generated tests', function() {
     expect(location).not.to.be.null;
   });
 
-  it('test_terminal_readers_cancel_action_post', async function() {
+  it('test_terminal_readers_cancel_action_post', async function () {
     const reader = await stripe.terminal.readers.cancelAction(
       'tmr_xxxxxxxxxxxxx'
     );
     expect(reader).not.to.be.null;
   });
 
-  it('test_terminal_readers_delete', async function() {
+  it('test_terminal_readers_delete', async function () {
     const deleted = await stripe.terminal.readers.del('tmr_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_terminal_readers_get', async function() {
+  it('test_terminal_readers_get', async function () {
     const readers = await stripe.terminal.readers.list({
       limit: 3,
     });
     expect(readers).not.to.be.null;
   });
 
-  it('test_terminal_readers_get_2', async function() {
+  it('test_terminal_readers_get_2', async function () {
     const reader = await stripe.terminal.readers.retrieve('tmr_xxxxxxxxxxxxx');
     expect(reader).not.to.be.null;
   });
 
-  it('test_terminal_readers_post', async function() {
+  it('test_terminal_readers_post', async function () {
     const reader = await stripe.terminal.readers.create({
       registration_code: 'puppies-plug-could',
       label: 'Blue Rabbit',
@@ -2983,14 +2962,14 @@ describe('Generated tests', function() {
     expect(reader).not.to.be.null;
   });
 
-  it('test_terminal_readers_post_2', async function() {
+  it('test_terminal_readers_post_2', async function () {
     const reader = await stripe.terminal.readers.update('tmr_xxxxxxxxxxxxx', {
       label: 'Blue Rabbit',
     });
     expect(reader).not.to.be.null;
   });
 
-  it('test_terminal_readers_process_payment_intent_post', async function() {
+  it('test_terminal_readers_process_payment_intent_post', async function () {
     const reader = await stripe.terminal.readers.processPaymentIntent(
       'tmr_xxxxxxxxxxxxx',
       {
@@ -3000,7 +2979,7 @@ describe('Generated tests', function() {
     expect(reader).not.to.be.null;
   });
 
-  it('test_terminal_readers_process_setup_intent_post', async function() {
+  it('test_terminal_readers_process_setup_intent_post', async function () {
     const reader = await stripe.terminal.readers.processSetupIntent(
       'tmr_xxxxxxxxxxxxx',
       {
@@ -3011,86 +2990,87 @@ describe('Generated tests', function() {
     expect(reader).not.to.be.null;
   });
 
-  it('test_test_helpers_customers_fund_cash_balance_post', async function() {
-    const customerCashBalanceTransaction = await stripe.testHelpers.customers.fundCashBalance(
-      'cus_123',
-      {
+  it('test_test_helpers_customers_fund_cash_balance_post', async function () {
+    const customerCashBalanceTransaction =
+      await stripe.testHelpers.customers.fundCashBalance('cus_123', {
         amount: 30,
         currency: 'eur',
-      }
-    );
+      });
     expect(customerCashBalanceTransaction).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_authorizations_capture_post', async function() {
-    const authorization = await stripe.testHelpers.issuing.authorizations.capture(
-      'example_authorization',
-      {
-        capture_amount: 100,
-        close_authorization: true,
-        purchase_details: {
-          flight: {
-            departure_at: 1633651200,
-            passenger_name: 'John Doe',
-            refundable: true,
-            segments: [
+  it('test_test_helpers_issuing_authorizations_capture_post', async function () {
+    const authorization =
+      await stripe.testHelpers.issuing.authorizations.capture(
+        'example_authorization',
+        {
+          capture_amount: 100,
+          close_authorization: true,
+          purchase_details: {
+            flight: {
+              departure_at: 1633651200,
+              passenger_name: 'John Doe',
+              refundable: true,
+              segments: [
+                {
+                  arrival_airport_code: 'SFO',
+                  carrier: 'Delta',
+                  departure_airport_code: 'LAX',
+                  flight_number: 'DL100',
+                  service_class: 'Economy',
+                  stopover_allowed: true,
+                },
+              ],
+              travel_agency: 'Orbitz',
+            },
+            fuel: {
+              type: 'diesel',
+              unit: 'liter',
+              unit_cost_decimal: Decimal.from('3.5'),
+              quantity_decimal: Decimal.from('10'),
+            },
+            lodging: {
+              check_in_at: 1633651200,
+              nights: 2,
+            },
+            receipt: [
               {
-                arrival_airport_code: 'SFO',
-                carrier: 'Delta',
-                departure_airport_code: 'LAX',
-                flight_number: 'DL100',
-                service_class: 'Economy',
-                stopover_allowed: true,
+                description: 'Room charge',
+                quantity: Decimal.from('1'),
+                total: 200,
+                unit_cost: 200,
               },
             ],
-            travel_agency: 'Orbitz',
+            reference: 'foo',
           },
-          fuel: {
-            type: 'diesel',
-            unit: 'liter',
-            unit_cost_decimal: Decimal.from('3.5'),
-            quantity_decimal: Decimal.from('10'),
-          },
-          lodging: {
-            check_in_at: 1633651200,
-            nights: 2,
-          },
-          receipt: [
-            {
-              description: 'Room charge',
-              quantity: Decimal.from('1'),
-              total: 200,
-              unit_cost: 200,
-            },
-          ],
-          reference: 'foo',
-        },
-      }
-    );
+        }
+      );
     expect(authorization).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_authorizations_expire_post', async function() {
-    const authorization = await stripe.testHelpers.issuing.authorizations.expire(
-      'example_authorization'
-    );
+  it('test_test_helpers_issuing_authorizations_expire_post', async function () {
+    const authorization =
+      await stripe.testHelpers.issuing.authorizations.expire(
+        'example_authorization'
+      );
     expect(authorization).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_authorizations_increment_post', async function() {
-    const authorization = await stripe.testHelpers.issuing.authorizations.increment(
-      'example_authorization',
-      {
-        increment_amount: 50,
-        is_amount_controllable: true,
-      }
-    );
+  it('test_test_helpers_issuing_authorizations_increment_post', async function () {
+    const authorization =
+      await stripe.testHelpers.issuing.authorizations.increment(
+        'example_authorization',
+        {
+          increment_amount: 50,
+          is_amount_controllable: true,
+        }
+      );
     expect(authorization).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_authorizations_post', async function() {
-    const authorization = await stripe.testHelpers.issuing.authorizations.create(
-      {
+  it('test_test_helpers_issuing_authorizations_post', async function () {
+    const authorization =
+      await stripe.testHelpers.issuing.authorizations.create({
         amount: 100,
         amount_details: {
           atm_fee: 10,
@@ -3120,70 +3100,70 @@ describe('Generated tests', function() {
           expiry_check: 'mismatch',
         },
         wallet: 'apple_pay',
-      }
-    );
+      });
     expect(authorization).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_authorizations_reverse_post', async function() {
-    const authorization = await stripe.testHelpers.issuing.authorizations.reverse(
-      'example_authorization',
-      {
-        reverse_amount: 20,
-      }
-    );
+  it('test_test_helpers_issuing_authorizations_reverse_post', async function () {
+    const authorization =
+      await stripe.testHelpers.issuing.authorizations.reverse(
+        'example_authorization',
+        {
+          reverse_amount: 20,
+        }
+      );
     expect(authorization).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_cards_shipping_deliver_post', async function() {
+  it('test_test_helpers_issuing_cards_shipping_deliver_post', async function () {
     const card = await stripe.testHelpers.issuing.cards.deliverCard('card_123');
     expect(card).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_cards_shipping_fail_post', async function() {
+  it('test_test_helpers_issuing_cards_shipping_fail_post', async function () {
     const card = await stripe.testHelpers.issuing.cards.failCard('card_123');
     expect(card).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_cards_shipping_return_post', async function() {
+  it('test_test_helpers_issuing_cards_shipping_return_post', async function () {
     const card = await stripe.testHelpers.issuing.cards.returnCard('card_123');
     expect(card).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_cards_shipping_ship_post', async function() {
+  it('test_test_helpers_issuing_cards_shipping_ship_post', async function () {
     const card = await stripe.testHelpers.issuing.cards.shipCard('card_123');
     expect(card).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_personalization_designs_activate_post', async function() {
-    const personalizationDesign = await stripe.testHelpers.issuing.personalizationDesigns.activate(
-      'pd_xyz'
-    );
+  it('test_test_helpers_issuing_personalization_designs_activate_post', async function () {
+    const personalizationDesign =
+      await stripe.testHelpers.issuing.personalizationDesigns.activate(
+        'pd_xyz'
+      );
     expect(personalizationDesign).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_personalization_designs_deactivate_post', async function() {
-    const personalizationDesign = await stripe.testHelpers.issuing.personalizationDesigns.deactivate(
-      'pd_xyz'
-    );
+  it('test_test_helpers_issuing_personalization_designs_deactivate_post', async function () {
+    const personalizationDesign =
+      await stripe.testHelpers.issuing.personalizationDesigns.deactivate(
+        'pd_xyz'
+      );
     expect(personalizationDesign).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_personalization_designs_reject_post', async function() {
-    const personalizationDesign = await stripe.testHelpers.issuing.personalizationDesigns.reject(
-      'pd_xyz',
-      {
+  it('test_test_helpers_issuing_personalization_designs_reject_post', async function () {
+    const personalizationDesign =
+      await stripe.testHelpers.issuing.personalizationDesigns.reject('pd_xyz', {
         rejection_reasons: {
           card_logo: ['geographic_location'],
         },
-      }
-    );
+      });
     expect(personalizationDesign).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_transactions_create_force_capture_post', async function() {
-    const transaction = await stripe.testHelpers.issuing.transactions.createForceCapture(
-      {
+  it('test_test_helpers_issuing_transactions_create_force_capture_post', async function () {
+    const transaction =
+      await stripe.testHelpers.issuing.transactions.createForceCapture({
         amount: 100,
         card: 'foo',
         currency: 'usd',
@@ -3234,14 +3214,13 @@ describe('Generated tests', function() {
           ],
           reference: 'foo',
         },
-      }
-    );
+      });
     expect(transaction).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_transactions_create_unlinked_refund_post', async function() {
-    const transaction = await stripe.testHelpers.issuing.transactions.createUnlinkedRefund(
-      {
+  it('test_test_helpers_issuing_transactions_create_unlinked_refund_post', async function () {
+    const transaction =
+      await stripe.testHelpers.issuing.transactions.createUnlinkedRefund({
         amount: 100,
         card: 'foo',
         currency: 'usd',
@@ -3292,12 +3271,11 @@ describe('Generated tests', function() {
           ],
           reference: 'foo',
         },
-      }
-    );
+      });
     expect(transaction).not.to.be.null;
   });
 
-  it('test_test_helpers_issuing_transactions_refund_post', async function() {
+  it('test_test_helpers_issuing_transactions_refund_post', async function () {
     const transaction = await stripe.testHelpers.issuing.transactions.refund(
       'example_transaction',
       {
@@ -3307,19 +3285,19 @@ describe('Generated tests', function() {
     expect(transaction).not.to.be.null;
   });
 
-  it('test_test_helpers_refunds_expire_post', async function() {
+  it('test_test_helpers_refunds_expire_post', async function () {
     const refund = await stripe.testHelpers.refunds.expire('re_123');
     expect(refund).not.to.be.null;
   });
 
-  it('test_test_helpers_test_clocks_advance_post', async function() {
+  it('test_test_helpers_test_clocks_advance_post', async function () {
     const testClock = await stripe.testHelpers.testClocks.advance('clock_xyz', {
       frozen_time: 142,
     });
     expect(testClock).not.to.be.null;
   });
 
-  it('test_test_helpers_test_clocks_advance_post_2', async function() {
+  it('test_test_helpers_test_clocks_advance_post_2', async function () {
     const testClock = await stripe.testHelpers.testClocks.advance(
       'clock_xxxxxxxxxxxxx',
       {
@@ -3329,43 +3307,43 @@ describe('Generated tests', function() {
     expect(testClock).not.to.be.null;
   });
 
-  it('test_test_helpers_test_clocks_delete', async function() {
+  it('test_test_helpers_test_clocks_delete', async function () {
     const deleted = await stripe.testHelpers.testClocks.del('clock_xyz');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_test_helpers_test_clocks_delete_2', async function() {
+  it('test_test_helpers_test_clocks_delete_2', async function () {
     const deleted = await stripe.testHelpers.testClocks.del(
       'clock_xxxxxxxxxxxxx'
     );
     expect(deleted).not.to.be.null;
   });
 
-  it('test_test_helpers_test_clocks_get', async function() {
+  it('test_test_helpers_test_clocks_get', async function () {
     const testClocks = await stripe.testHelpers.testClocks.list();
     expect(testClocks).not.to.be.null;
   });
 
-  it('test_test_helpers_test_clocks_get_2', async function() {
+  it('test_test_helpers_test_clocks_get_2', async function () {
     const testClock = await stripe.testHelpers.testClocks.retrieve('clock_xyz');
     expect(testClock).not.to.be.null;
   });
 
-  it('test_test_helpers_test_clocks_get_3', async function() {
+  it('test_test_helpers_test_clocks_get_3', async function () {
     const testClocks = await stripe.testHelpers.testClocks.list({
       limit: 3,
     });
     expect(testClocks).not.to.be.null;
   });
 
-  it('test_test_helpers_test_clocks_get_4', async function() {
+  it('test_test_helpers_test_clocks_get_4', async function () {
     const testClock = await stripe.testHelpers.testClocks.retrieve(
       'clock_xxxxxxxxxxxxx'
     );
     expect(testClock).not.to.be.null;
   });
 
-  it('test_test_helpers_test_clocks_post', async function() {
+  it('test_test_helpers_test_clocks_post', async function () {
     const testClock = await stripe.testHelpers.testClocks.create({
       frozen_time: 123,
       name: 'cogsworth',
@@ -3373,95 +3351,90 @@ describe('Generated tests', function() {
     expect(testClock).not.to.be.null;
   });
 
-  it('test_test_helpers_test_clocks_post_2', async function() {
+  it('test_test_helpers_test_clocks_post_2', async function () {
     const testClock = await stripe.testHelpers.testClocks.create({
       frozen_time: 1577836800,
     });
     expect(testClock).not.to.be.null;
   });
 
-  it('test_test_helpers_treasury_inbound_transfers_fail_post', async function() {
-    const inboundTransfer = await stripe.testHelpers.treasury.inboundTransfers.fail(
-      'ibt_123',
-      {
+  it('test_test_helpers_treasury_inbound_transfers_fail_post', async function () {
+    const inboundTransfer =
+      await stripe.testHelpers.treasury.inboundTransfers.fail('ibt_123', {
         failure_details: {
           code: 'account_closed',
         },
-      }
-    );
+      });
     expect(inboundTransfer).not.to.be.null;
   });
 
-  it('test_test_helpers_treasury_inbound_transfers_return_post', async function() {
-    const inboundTransfer = await stripe.testHelpers.treasury.inboundTransfers.returnInboundTransfer(
-      'ibt_123'
-    );
+  it('test_test_helpers_treasury_inbound_transfers_return_post', async function () {
+    const inboundTransfer =
+      await stripe.testHelpers.treasury.inboundTransfers.returnInboundTransfer(
+        'ibt_123'
+      );
     expect(inboundTransfer).not.to.be.null;
   });
 
-  it('test_test_helpers_treasury_inbound_transfers_succeed_post', async function() {
-    const inboundTransfer = await stripe.testHelpers.treasury.inboundTransfers.succeed(
-      'ibt_123'
-    );
+  it('test_test_helpers_treasury_inbound_transfers_succeed_post', async function () {
+    const inboundTransfer =
+      await stripe.testHelpers.treasury.inboundTransfers.succeed('ibt_123');
     expect(inboundTransfer).not.to.be.null;
   });
 
-  it('test_test_helpers_treasury_outbound_transfers_fail_post', async function() {
-    const outboundTransfer = await stripe.testHelpers.treasury.outboundTransfers.fail(
-      'obt_123'
-    );
+  it('test_test_helpers_treasury_outbound_transfers_fail_post', async function () {
+    const outboundTransfer =
+      await stripe.testHelpers.treasury.outboundTransfers.fail('obt_123');
     expect(outboundTransfer).not.to.be.null;
   });
 
-  it('test_test_helpers_treasury_outbound_transfers_post_post', async function() {
-    const outboundTransfer = await stripe.testHelpers.treasury.outboundTransfers.post(
-      'obt_123'
-    );
+  it('test_test_helpers_treasury_outbound_transfers_post_post', async function () {
+    const outboundTransfer =
+      await stripe.testHelpers.treasury.outboundTransfers.post('obt_123');
     expect(outboundTransfer).not.to.be.null;
   });
 
-  it('test_test_helpers_treasury_outbound_transfers_return_post', async function() {
-    const outboundTransfer = await stripe.testHelpers.treasury.outboundTransfers.returnOutboundTransfer(
-      'obt_123',
-      {
-        returned_details: {
-          code: 'account_closed',
-        },
-      }
-    );
+  it('test_test_helpers_treasury_outbound_transfers_return_post', async function () {
+    const outboundTransfer =
+      await stripe.testHelpers.treasury.outboundTransfers.returnOutboundTransfer(
+        'obt_123',
+        {
+          returned_details: {
+            code: 'account_closed',
+          },
+        }
+      );
     expect(outboundTransfer).not.to.be.null;
   });
 
-  it('test_test_helpers_treasury_received_credits_post', async function() {
-    const receivedCredit = await stripe.testHelpers.treasury.receivedCredits.create(
-      {
+  it('test_test_helpers_treasury_received_credits_post', async function () {
+    const receivedCredit =
+      await stripe.testHelpers.treasury.receivedCredits.create({
         financial_account: 'fa_123',
         network: 'ach',
         amount: 1234,
         currency: 'usd',
-      }
-    );
+      });
     expect(receivedCredit).not.to.be.null;
   });
 
-  it('test_test_helpers_treasury_received_debits_post', async function() {
-    const receivedDebit = await stripe.testHelpers.treasury.receivedDebits.create(
-      {
+  it('test_test_helpers_treasury_received_debits_post', async function () {
+    const receivedDebit =
+      await stripe.testHelpers.treasury.receivedDebits.create({
         financial_account: 'fa_123',
         network: 'ach',
         amount: 1234,
         currency: 'usd',
-      }
-    );
+      });
     expect(receivedDebit).not.to.be.null;
   });
 
-  it('test_tokens_get', async function() {
+  it('test_tokens_get', async function () {
     const token = await stripe.tokens.retrieve('tok_xxxx');
     expect(token).not.to.be.null;
   });
 
-  it('test_tokens_post', async function() {
+  it('test_tokens_post', async function () {
     const token = await stripe.tokens.create({
       card: {
         number: '4242424242424242',
@@ -3473,7 +3446,7 @@ describe('Generated tests', function() {
     expect(token).not.to.be.null;
   });
 
-  it('test_tokens_post_2', async function() {
+  it('test_tokens_post_2', async function () {
     const token = await stripe.tokens.create({
       bank_account: {
         country: 'US',
@@ -3487,7 +3460,7 @@ describe('Generated tests', function() {
     expect(token).not.to.be.null;
   });
 
-  it('test_tokens_post_3', async function() {
+  it('test_tokens_post_3', async function () {
     const token = await stripe.tokens.create({
       pii: {
         id_number: '000000000',
@@ -3496,7 +3469,7 @@ describe('Generated tests', function() {
     expect(token).not.to.be.null;
   });
 
-  it('test_tokens_post_4', async function() {
+  it('test_tokens_post_4', async function () {
     const token = await stripe.tokens.create({
       account: {
         individual: {
@@ -3509,7 +3482,7 @@ describe('Generated tests', function() {
     expect(token).not.to.be.null;
   });
 
-  it('test_tokens_post_5', async function() {
+  it('test_tokens_post_5', async function () {
     const token = await stripe.tokens.create({
       person: {
         first_name: 'Jane',
@@ -3522,7 +3495,7 @@ describe('Generated tests', function() {
     expect(token).not.to.be.null;
   });
 
-  it('test_tokens_post_6', async function() {
+  it('test_tokens_post_6', async function () {
     const token = await stripe.tokens.create({
       cvc_update: {
         cvc: '123',
@@ -3531,24 +3504,24 @@ describe('Generated tests', function() {
     expect(token).not.to.be.null;
   });
 
-  it('test_topups_cancel_post', async function() {
+  it('test_topups_cancel_post', async function () {
     const topup = await stripe.topups.cancel('tu_xxxxxxxxxxxxx');
     expect(topup).not.to.be.null;
   });
 
-  it('test_topups_get', async function() {
+  it('test_topups_get', async function () {
     const topups = await stripe.topups.list({
       limit: 3,
     });
     expect(topups).not.to.be.null;
   });
 
-  it('test_topups_get_2', async function() {
+  it('test_topups_get_2', async function () {
     const topup = await stripe.topups.retrieve('tu_xxxxxxxxxxxxx');
     expect(topup).not.to.be.null;
   });
 
-  it('test_topups_post', async function() {
+  it('test_topups_post', async function () {
     const topup = await stripe.topups.create({
       amount: 2000,
       currency: 'usd',
@@ -3558,7 +3531,7 @@ describe('Generated tests', function() {
     expect(topup).not.to.be.null;
   });
 
-  it('test_topups_post_2', async function() {
+  it('test_topups_post_2', async function () {
     const topup = await stripe.topups.update('tu_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -3567,19 +3540,19 @@ describe('Generated tests', function() {
     expect(topup).not.to.be.null;
   });
 
-  it('test_transfers_get', async function() {
+  it('test_transfers_get', async function () {
     const transfers = await stripe.transfers.list({
       limit: 3,
     });
     expect(transfers).not.to.be.null;
   });
 
-  it('test_transfers_get_2', async function() {
+  it('test_transfers_get_2', async function () {
     const transfer = await stripe.transfers.retrieve('tr_xxxxxxxxxxxxx');
     expect(transfer).not.to.be.null;
   });
 
-  it('test_transfers_post', async function() {
+  it('test_transfers_post', async function () {
     const transfer = await stripe.transfers.create({
       amount: 400,
       currency: 'usd',
@@ -3589,7 +3562,7 @@ describe('Generated tests', function() {
     expect(transfer).not.to.be.null;
   });
 
-  it('test_transfers_post_2', async function() {
+  it('test_transfers_post_2', async function () {
     const transfer = await stripe.transfers.update('tr_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
@@ -3598,7 +3571,7 @@ describe('Generated tests', function() {
     expect(transfer).not.to.be.null;
   });
 
-  it('test_transfers_reversals_get', async function() {
+  it('test_transfers_reversals_get', async function () {
     const transferReversals = await stripe.transfers.listReversals(
       'tr_xxxxxxxxxxxxx',
       {
@@ -3608,7 +3581,7 @@ describe('Generated tests', function() {
     expect(transferReversals).not.to.be.null;
   });
 
-  it('test_transfers_reversals_get_2', async function() {
+  it('test_transfers_reversals_get_2', async function () {
     const transferReversal = await stripe.transfers.retrieveReversal(
       'tr_xxxxxxxxxxxxx',
       'trr_xxxxxxxxxxxxx'
@@ -3616,7 +3589,7 @@ describe('Generated tests', function() {
     expect(transferReversal).not.to.be.null;
   });
 
-  it('test_transfers_reversals_post', async function() {
+  it('test_transfers_reversals_post', async function () {
     const transferReversal = await stripe.transfers.createReversal(
       'tr_xxxxxxxxxxxxx',
       {
@@ -3626,7 +3599,7 @@ describe('Generated tests', function() {
     expect(transferReversal).not.to.be.null;
   });
 
-  it('test_transfers_reversals_post_2', async function() {
+  it('test_transfers_reversals_post_2', async function () {
     const transferReversal = await stripe.transfers.updateReversal(
       'tr_xxxxxxxxxxxxx',
       'trr_xxxxxxxxxxxxx',
@@ -3639,7 +3612,7 @@ describe('Generated tests', function() {
     expect(transferReversal).not.to.be.null;
   });
 
-  it('test_treasury_credit_reversals_get', async function() {
+  it('test_treasury_credit_reversals_get', async function () {
     const creditReversals = await stripe.treasury.creditReversals.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
@@ -3647,21 +3620,21 @@ describe('Generated tests', function() {
     expect(creditReversals).not.to.be.null;
   });
 
-  it('test_treasury_credit_reversals_get_2', async function() {
+  it('test_treasury_credit_reversals_get_2', async function () {
     const creditReversal = await stripe.treasury.creditReversals.retrieve(
       'credrev_xxxxxxxxxxxxx'
     );
     expect(creditReversal).not.to.be.null;
   });
 
-  it('test_treasury_credit_reversals_post', async function() {
+  it('test_treasury_credit_reversals_post', async function () {
     const creditReversal = await stripe.treasury.creditReversals.create({
       received_credit: 'rc_xxxxxxxxxxxxx',
     });
     expect(creditReversal).not.to.be.null;
   });
 
-  it('test_treasury_debit_reversals_get', async function() {
+  it('test_treasury_debit_reversals_get', async function () {
     const debitReversals = await stripe.treasury.debitReversals.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
@@ -3669,42 +3642,43 @@ describe('Generated tests', function() {
     expect(debitReversals).not.to.be.null;
   });
 
-  it('test_treasury_debit_reversals_get_2', async function() {
+  it('test_treasury_debit_reversals_get_2', async function () {
     const debitReversal = await stripe.treasury.debitReversals.retrieve(
       'debrev_xxxxxxxxxxxxx'
     );
     expect(debitReversal).not.to.be.null;
   });
 
-  it('test_treasury_debit_reversals_post', async function() {
+  it('test_treasury_debit_reversals_post', async function () {
     const debitReversal = await stripe.treasury.debitReversals.create({
       received_debit: 'rd_xxxxxxxxxxxxx',
     });
     expect(debitReversal).not.to.be.null;
   });
 
-  it('test_treasury_financial_accounts_features_get', async function() {
-    const financialAccountFeatures = await stripe.treasury.financialAccounts.retrieveFeatures(
-      'fa_xxxxxxxxxxxxx'
-    );
+  it('test_treasury_financial_accounts_features_get', async function () {
+    const financialAccountFeatures =
+      await stripe.treasury.financialAccounts.retrieveFeatures(
+        'fa_xxxxxxxxxxxxx'
+      );
     expect(financialAccountFeatures).not.to.be.null;
   });
 
-  it('test_treasury_financial_accounts_get', async function() {
+  it('test_treasury_financial_accounts_get', async function () {
     const financialAccounts = await stripe.treasury.financialAccounts.list({
       limit: 3,
     });
     expect(financialAccounts).not.to.be.null;
   });
 
-  it('test_treasury_financial_accounts_get_2', async function() {
+  it('test_treasury_financial_accounts_get_2', async function () {
     const financialAccount = await stripe.treasury.financialAccounts.retrieve(
       'fa_xxxxxxxxxxxxx'
     );
     expect(financialAccount).not.to.be.null;
   });
 
-  it('test_treasury_financial_accounts_post', async function() {
+  it('test_treasury_financial_accounts_post', async function () {
     const financialAccount = await stripe.treasury.financialAccounts.create({
       supported_currencies: ['usd'],
       features: {},
@@ -3712,7 +3686,7 @@ describe('Generated tests', function() {
     expect(financialAccount).not.to.be.null;
   });
 
-  it('test_treasury_financial_accounts_post_2', async function() {
+  it('test_treasury_financial_accounts_post_2', async function () {
     const financialAccount = await stripe.treasury.financialAccounts.update(
       'fa_xxxxxxxxxxxxx',
       {
@@ -3724,14 +3698,14 @@ describe('Generated tests', function() {
     expect(financialAccount).not.to.be.null;
   });
 
-  it('test_treasury_inbound_transfers_cancel_post', async function() {
+  it('test_treasury_inbound_transfers_cancel_post', async function () {
     const inboundTransfer = await stripe.treasury.inboundTransfers.cancel(
       'ibt_xxxxxxxxxxxxx'
     );
     expect(inboundTransfer).not.to.be.null;
   });
 
-  it('test_treasury_inbound_transfers_get', async function() {
+  it('test_treasury_inbound_transfers_get', async function () {
     const inboundTransfers = await stripe.treasury.inboundTransfers.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
@@ -3739,14 +3713,14 @@ describe('Generated tests', function() {
     expect(inboundTransfers).not.to.be.null;
   });
 
-  it('test_treasury_inbound_transfers_get_2', async function() {
+  it('test_treasury_inbound_transfers_get_2', async function () {
     const inboundTransfer = await stripe.treasury.inboundTransfers.retrieve(
       'ibt_xxxxxxxxxxxxx'
     );
     expect(inboundTransfer).not.to.be.null;
   });
 
-  it('test_treasury_inbound_transfers_post', async function() {
+  it('test_treasury_inbound_transfers_post', async function () {
     const inboundTransfer = await stripe.treasury.inboundTransfers.create({
       financial_account: 'fa_xxxxxxxxxxxxx',
       amount: 10000,
@@ -3757,14 +3731,14 @@ describe('Generated tests', function() {
     expect(inboundTransfer).not.to.be.null;
   });
 
-  it('test_treasury_outbound_payments_cancel_post', async function() {
+  it('test_treasury_outbound_payments_cancel_post', async function () {
     const outboundPayment = await stripe.treasury.outboundPayments.cancel(
       'bot_xxxxxxxxxxxxx'
     );
     expect(outboundPayment).not.to.be.null;
   });
 
-  it('test_treasury_outbound_payments_get', async function() {
+  it('test_treasury_outbound_payments_get', async function () {
     const outboundPayments = await stripe.treasury.outboundPayments.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
@@ -3772,14 +3746,14 @@ describe('Generated tests', function() {
     expect(outboundPayments).not.to.be.null;
   });
 
-  it('test_treasury_outbound_payments_get_2', async function() {
+  it('test_treasury_outbound_payments_get_2', async function () {
     const outboundPayment = await stripe.treasury.outboundPayments.retrieve(
       'bot_xxxxxxxxxxxxx'
     );
     expect(outboundPayment).not.to.be.null;
   });
 
-  it('test_treasury_outbound_payments_post', async function() {
+  it('test_treasury_outbound_payments_post', async function () {
     const outboundPayment = await stripe.treasury.outboundPayments.create({
       financial_account: 'fa_xxxxxxxxxxxxx',
       amount: 10000,
@@ -3791,14 +3765,14 @@ describe('Generated tests', function() {
     expect(outboundPayment).not.to.be.null;
   });
 
-  it('test_treasury_outbound_transfers_cancel_post', async function() {
+  it('test_treasury_outbound_transfers_cancel_post', async function () {
     const outboundTransfer = await stripe.treasury.outboundTransfers.cancel(
       'obt_xxxxxxxxxxxxx'
     );
     expect(outboundTransfer).not.to.be.null;
   });
 
-  it('test_treasury_outbound_transfers_get', async function() {
+  it('test_treasury_outbound_transfers_get', async function () {
     const outboundTransfers = await stripe.treasury.outboundTransfers.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
@@ -3806,14 +3780,14 @@ describe('Generated tests', function() {
     expect(outboundTransfers).not.to.be.null;
   });
 
-  it('test_treasury_outbound_transfers_get_2', async function() {
+  it('test_treasury_outbound_transfers_get_2', async function () {
     const outboundTransfer = await stripe.treasury.outboundTransfers.retrieve(
       'obt_xxxxxxxxxxxxx'
     );
     expect(outboundTransfer).not.to.be.null;
   });
 
-  it('test_treasury_outbound_transfers_post', async function() {
+  it('test_treasury_outbound_transfers_post', async function () {
     const outboundTransfer = await stripe.treasury.outboundTransfers.create({
       financial_account: 'fa_xxxxxxxxxxxxx',
       destination_payment_method: 'pm_xxxxxxxxxxxxx',
@@ -3824,7 +3798,7 @@ describe('Generated tests', function() {
     expect(outboundTransfer).not.to.be.null;
   });
 
-  it('test_treasury_received_credits_get', async function() {
+  it('test_treasury_received_credits_get', async function () {
     const receivedCredits = await stripe.treasury.receivedCredits.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
@@ -3832,14 +3806,14 @@ describe('Generated tests', function() {
     expect(receivedCredits).not.to.be.null;
   });
 
-  it('test_treasury_received_credits_get_2', async function() {
+  it('test_treasury_received_credits_get_2', async function () {
     const receivedCredit = await stripe.treasury.receivedCredits.retrieve(
       'rc_xxxxxxxxxxxxx'
     );
     expect(receivedCredit).not.to.be.null;
   });
 
-  it('test_treasury_received_debits_get', async function() {
+  it('test_treasury_received_debits_get', async function () {
     const receivedDebits = await stripe.treasury.receivedDebits.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
@@ -3847,14 +3821,14 @@ describe('Generated tests', function() {
     expect(receivedDebits).not.to.be.null;
   });
 
-  it('test_treasury_received_debits_get_2', async function() {
+  it('test_treasury_received_debits_get_2', async function () {
     const receivedDebit = await stripe.treasury.receivedDebits.retrieve(
       'rd_xxxxxxxxxxxxx'
     );
     expect(receivedDebit).not.to.be.null;
   });
 
-  it('test_treasury_transaction_entries_get', async function() {
+  it('test_treasury_transaction_entries_get', async function () {
     const transactionEntries = await stripe.treasury.transactionEntries.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
@@ -3862,14 +3836,14 @@ describe('Generated tests', function() {
     expect(transactionEntries).not.to.be.null;
   });
 
-  it('test_treasury_transaction_entries_get_2', async function() {
+  it('test_treasury_transaction_entries_get_2', async function () {
     const transactionEntry = await stripe.treasury.transactionEntries.retrieve(
       'trxne_xxxxxxxxxxxxx'
     );
     expect(transactionEntry).not.to.be.null;
   });
 
-  it('test_treasury_transactions_get', async function() {
+  it('test_treasury_transactions_get', async function () {
     const transactions = await stripe.treasury.transactions.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
@@ -3877,33 +3851,33 @@ describe('Generated tests', function() {
     expect(transactions).not.to.be.null;
   });
 
-  it('test_treasury_transactions_get_2', async function() {
+  it('test_treasury_transactions_get_2', async function () {
     const transaction = await stripe.treasury.transactions.retrieve(
       'trxn_xxxxxxxxxxxxx'
     );
     expect(transaction).not.to.be.null;
   });
 
-  it('test_webhook_endpoints_delete', async function() {
+  it('test_webhook_endpoints_delete', async function () {
     const deleted = await stripe.webhookEndpoints.del('we_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
-  it('test_webhook_endpoints_get', async function() {
+  it('test_webhook_endpoints_get', async function () {
     const webhookEndpoints = await stripe.webhookEndpoints.list({
       limit: 3,
     });
     expect(webhookEndpoints).not.to.be.null;
   });
 
-  it('test_webhook_endpoints_get_2', async function() {
+  it('test_webhook_endpoints_get_2', async function () {
     const webhookEndpoint = await stripe.webhookEndpoints.retrieve(
       'we_xxxxxxxxxxxxx'
     );
     expect(webhookEndpoint).not.to.be.null;
   });
 
-  it('test_webhook_endpoints_post', async function() {
+  it('test_webhook_endpoints_post', async function () {
     const webhookEndpoint = await stripe.webhookEndpoints.create({
       url: 'https://example.com/my/webhook/endpoint',
       enabled_events: ['charge.failed', 'charge.succeeded'],
@@ -3911,7 +3885,7 @@ describe('Generated tests', function() {
     expect(webhookEndpoint).not.to.be.null;
   });
 
-  it('test_webhook_endpoints_post_2', async function() {
+  it('test_webhook_endpoints_post_2', async function () {
     const webhookEndpoint = await stripe.webhookEndpoints.update(
       'we_xxxxxxxxxxxxx',
       {
@@ -3921,7 +3895,7 @@ describe('Generated tests', function() {
     expect(webhookEndpoint).not.to.be.null;
   });
 
-  it('test_v2_billing_meter_event_post', async function() {
+  it('test_v2_billing_meter_event_post', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -3939,7 +3913,7 @@ describe('Generated tests', function() {
     expect(meterEvent).not.to.be.null;
   });
 
-  it('test_v2_billing_meter_event_adjustment_post', async function() {
+  it('test_v2_billing_meter_event_adjustment_post', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -3948,19 +3922,18 @@ describe('Generated tests', function() {
           '{"object":"v2.billing.meter_event_adjustment","cancel":{"identifier":"identifier"},"created":"1970-01-12T21:42:34.472Z","event_name":"event_name","id":"obj_123","livemode":true,"status":"complete","type":"cancel"}',
       },
     ]);
-    const meterEventAdjustment = await stripe.v2.billing.meterEventAdjustments.create(
-      {
+    const meterEventAdjustment =
+      await stripe.v2.billing.meterEventAdjustments.create({
         cancel: {
           identifier: 'identifier',
         },
         event_name: 'event_name',
         type: 'cancel',
-      }
-    );
+      });
     expect(meterEventAdjustment).not.to.be.null;
   });
 
-  it('test_v2_billing_meter_event_session_post', async function() {
+  it('test_v2_billing_meter_event_session_post', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -3969,11 +3942,12 @@ describe('Generated tests', function() {
           '{"object":"v2.billing.meter_event_session","authentication_token":"authentication_token","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","id":"obj_123","livemode":true}',
       },
     ]);
-    const meterEventSession = await stripe.v2.billing.meterEventSession.create();
+    const meterEventSession =
+      await stripe.v2.billing.meterEventSession.create();
     expect(meterEventSession).not.to.be.null;
   });
 
-  it('test_v2_billing_meter_event_stream_post', async function() {
+  it('test_v2_billing_meter_event_stream_post', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -3996,7 +3970,7 @@ describe('Generated tests', function() {
     expect(emptyObject).to.eql({});
   });
 
-  it('test_v2_commerce_product_catalog_import_get', async function() {
+  it('test_v2_commerce_product_catalog_import_get', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -4005,11 +3979,12 @@ describe('Generated tests', function() {
           '{"data":[{"object":"v2.commerce.product_catalog_import","created":"1970-01-12T21:42:34.472Z","feed_type":"pricing","id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"mode":"upsert","status":"awaiting_upload"}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
-    const productCatalogImports = await stripe.v2.commerce.productCatalog.imports.list();
+    const productCatalogImports =
+      await stripe.v2.commerce.productCatalog.imports.list();
     expect(productCatalogImports).not.to.be.null;
   });
 
-  it('test_v2_commerce_product_catalog_import_post', async function() {
+  it('test_v2_commerce_product_catalog_import_post', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4018,19 +3993,18 @@ describe('Generated tests', function() {
           '{"object":"v2.commerce.product_catalog_import","created":"1970-01-12T21:42:34.472Z","feed_type":"pricing","id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"mode":"upsert","status":"awaiting_upload"}',
       },
     ]);
-    const productCatalogImport = await stripe.v2.commerce.productCatalog.imports.create(
-      {
+    const productCatalogImport =
+      await stripe.v2.commerce.productCatalog.imports.create({
         feed_type: 'pricing',
         metadata: {
           key: 'metadata',
         },
         mode: 'upsert',
-      }
-    );
+      });
     expect(productCatalogImport).not.to.be.null;
   });
 
-  it('test_v2_commerce_product_catalog_import_get_2', async function() {
+  it('test_v2_commerce_product_catalog_import_get_2', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -4039,13 +4013,12 @@ describe('Generated tests', function() {
           '{"object":"v2.commerce.product_catalog_import","created":"1970-01-12T21:42:34.472Z","feed_type":"pricing","id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"mode":"upsert","status":"awaiting_upload"}',
       },
     ]);
-    const productCatalogImport = await stripe.v2.commerce.productCatalog.imports.retrieve(
-      'id_123'
-    );
+    const productCatalogImport =
+      await stripe.v2.commerce.productCatalog.imports.retrieve('id_123');
     expect(productCatalogImport).not.to.be.null;
   });
 
-  it('test_v2_core_account_get', async function() {
+  it('test_v2_core_account_get', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -4058,7 +4031,7 @@ describe('Generated tests', function() {
     expect(accounts).not.to.be.null;
   });
 
-  it('test_v2_core_account_post', async function() {
+  it('test_v2_core_account_post', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4071,7 +4044,7 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
-  it('test_v2_core_account_get_2', async function() {
+  it('test_v2_core_account_get_2', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -4084,7 +4057,7 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
-  it('test_v2_core_account_post_2', async function() {
+  it('test_v2_core_account_post_2', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4097,7 +4070,7 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
-  it('test_v2_core_account_post_3', async function() {
+  it('test_v2_core_account_post_3', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4110,7 +4083,7 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
-  it('test_v2_core_accounts_person_get', async function() {
+  it('test_v2_core_accounts_person_get', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -4125,7 +4098,7 @@ describe('Generated tests', function() {
     expect(accountPersons).not.to.be.null;
   });
 
-  it('test_v2_core_accounts_person_post', async function() {
+  it('test_v2_core_accounts_person_post', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4140,7 +4113,7 @@ describe('Generated tests', function() {
     expect(accountPerson).not.to.be.null;
   });
 
-  it('test_v2_core_accounts_person_delete', async function() {
+  it('test_v2_core_accounts_person_delete', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'DELETE',
@@ -4155,7 +4128,7 @@ describe('Generated tests', function() {
     expect(deleted).not.to.be.null;
   });
 
-  it('test_v2_core_accounts_person_get_2', async function() {
+  it('test_v2_core_accounts_person_get_2', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -4171,7 +4144,7 @@ describe('Generated tests', function() {
     expect(accountPerson).not.to.be.null;
   });
 
-  it('test_v2_core_accounts_person_post_2', async function() {
+  it('test_v2_core_accounts_person_post_2', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4187,7 +4160,7 @@ describe('Generated tests', function() {
     expect(accountPerson).not.to.be.null;
   });
 
-  it('test_v2_core_accounts_person_token_post', async function() {
+  it('test_v2_core_accounts_person_token_post', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4196,13 +4169,12 @@ describe('Generated tests', function() {
           '{"object":"v2.core.account_person_token","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","id":"obj_123","livemode":true,"used":true}',
       },
     ]);
-    const accountPersonToken = await stripe.v2.core.accounts.personTokens.create(
-      'account_id_123'
-    );
+    const accountPersonToken =
+      await stripe.v2.core.accounts.personTokens.create('account_id_123');
     expect(accountPersonToken).not.to.be.null;
   });
 
-  it('test_v2_core_accounts_person_token_get', async function() {
+  it('test_v2_core_accounts_person_token_get', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -4211,14 +4183,15 @@ describe('Generated tests', function() {
           '{"object":"v2.core.account_person_token","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","id":"obj_123","livemode":true,"used":true}',
       },
     ]);
-    const accountPersonToken = await stripe.v2.core.accounts.personTokens.retrieve(
-      'account_id_123',
-      'id_123'
-    );
+    const accountPersonToken =
+      await stripe.v2.core.accounts.personTokens.retrieve(
+        'account_id_123',
+        'id_123'
+      );
     expect(accountPersonToken).not.to.be.null;
   });
 
-  it('test_v2_core_account_link_post', async function() {
+  it('test_v2_core_account_link_post', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4254,7 +4227,7 @@ describe('Generated tests', function() {
     expect(accountLink).not.to.be.null;
   });
 
-  it('test_v2_core_account_token_post', async function() {
+  it('test_v2_core_account_token_post', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4267,7 +4240,7 @@ describe('Generated tests', function() {
     expect(accountToken).not.to.be.null;
   });
 
-  it('test_v2_core_account_token_get', async function() {
+  it('test_v2_core_account_token_get', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -4280,7 +4253,7 @@ describe('Generated tests', function() {
     expect(accountToken).not.to.be.null;
   });
 
-  it('test_v2_core_event_get', async function() {
+  it('test_v2_core_event_get', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -4293,7 +4266,7 @@ describe('Generated tests', function() {
     expect(events).not.to.be.null;
   });
 
-  it('test_v2_core_event_get_2', async function() {
+  it('test_v2_core_event_get_2', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -4306,7 +4279,7 @@ describe('Generated tests', function() {
     expect(event).not.to.be.null;
   });
 
-  it('test_v2_core_event_destination_get', async function() {
+  it('test_v2_core_event_destination_get', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -4319,7 +4292,7 @@ describe('Generated tests', function() {
     expect(eventDestinations).not.to.be.null;
   });
 
-  it('test_v2_core_event_destination_post', async function() {
+  it('test_v2_core_event_destination_post', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4337,7 +4310,7 @@ describe('Generated tests', function() {
     expect(eventDestination).not.to.be.null;
   });
 
-  it('test_v2_core_event_destination_delete', async function() {
+  it('test_v2_core_event_destination_delete', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'DELETE',
@@ -4349,7 +4322,7 @@ describe('Generated tests', function() {
     expect(deleted).not.to.be.null;
   });
 
-  it('test_v2_core_event_destination_get_2', async function() {
+  it('test_v2_core_event_destination_get_2', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -4364,7 +4337,7 @@ describe('Generated tests', function() {
     expect(eventDestination).not.to.be.null;
   });
 
-  it('test_v2_core_event_destination_post_2', async function() {
+  it('test_v2_core_event_destination_post_2', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4379,7 +4352,7 @@ describe('Generated tests', function() {
     expect(eventDestination).not.to.be.null;
   });
 
-  it('test_v2_core_event_destination_post_3', async function() {
+  it('test_v2_core_event_destination_post_3', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4394,7 +4367,7 @@ describe('Generated tests', function() {
     expect(eventDestination).not.to.be.null;
   });
 
-  it('test_v2_core_event_destination_post_4', async function() {
+  it('test_v2_core_event_destination_post_4', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4409,7 +4382,7 @@ describe('Generated tests', function() {
     expect(eventDestination).not.to.be.null;
   });
 
-  it('test_v2_core_event_destination_post_5', async function() {
+  it('test_v2_core_event_destination_post_5', async function () {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -4422,7 +4395,7 @@ describe('Generated tests', function() {
     expect(event).not.to.be.null;
   });
 
-  it('test_rate_limit_error', async function() {
+  it('test_rate_limit_error', async function () {
     const {RateLimitError} = require('../../src/Error.js');
 
     nock('https://api.stripe.com')
@@ -4442,7 +4415,7 @@ describe('Generated tests', function() {
     }
   });
 
-  it('test_temporary_session_expired_error', async function() {
+  it('test_temporary_session_expired_error', async function () {
     const {TemporarySessionExpiredError} = require('../../src/Error.js');
 
     nock('https://meter-events.stripe.com')

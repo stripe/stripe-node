@@ -3,6 +3,8 @@
 import {StripeResource} from '../../StripeResource.js';
 import {TransactionLineItem} from './TransactionLineItems.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   MetadataParam,
   OtherString,
   PaginationParams,
@@ -15,11 +17,11 @@ export class TransactionResource extends StripeResource {
   /**
    * Retrieves a Tax Transaction object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Tax.TransactionRetrieveParams,
+    params?: Tax.TransactionRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transaction>> {
+  ): Promise<Response<ApplyExpand<Transaction, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/tax/transactions/${encodeURIComponent(id)}`,
@@ -30,10 +32,10 @@ export class TransactionResource extends StripeResource {
   /**
    * Creates a Tax Transaction from a calculation, if that calculation hasn't expired. Calculations expire after 90 days.
    */
-  createFromCalculation(
-    params: Tax.TransactionCreateFromCalculationParams,
+  createFromCalculation<E extends string = never>(
+    params: Tax.TransactionCreateFromCalculationParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transaction>> {
+  ): Promise<Response<ApplyExpand<Transaction, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/tax/transactions/create_from_calculation',
@@ -44,10 +46,10 @@ export class TransactionResource extends StripeResource {
   /**
    * Partially or fully reverses a previously created Transaction.
    */
-  createReversal(
-    params: Tax.TransactionCreateReversalParams,
+  createReversal<E extends string = never>(
+    params: Tax.TransactionCreateReversalParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transaction>> {
+  ): Promise<Response<ApplyExpand<Transaction, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/tax/transactions/create_reversal',
@@ -58,11 +60,11 @@ export class TransactionResource extends StripeResource {
   /**
    * Retrieves the line items of a committed standalone transaction as a collection.
    */
-  listLineItems(
+  listLineItems<E extends string = never>(
     id: string,
-    params?: Tax.TransactionListLineItemsParams,
+    params?: Tax.TransactionListLineItemsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<TransactionLineItem> {
+  ): ApiListPromise<ApplyExpandListItem<TransactionLineItem, E>> {
     return this._makeRequest(
       'GET',
       `/v1/tax/transactions/${encodeURIComponent(id)}/line_items`,
@@ -496,15 +498,17 @@ export namespace Transaction {
   }
 }
 export namespace Tax {
-  export interface TransactionRetrieveParams {
+  export interface TransactionRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Tax {
-  export interface TransactionCreateFromCalculationParams {
+  export interface TransactionCreateFromCalculationParams<
+    E extends string = string
+  > {
     /**
      * Tax Calculation ID to be used as input when creating the transaction.
      */
@@ -518,7 +522,7 @@ export namespace Tax {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -532,7 +536,7 @@ export namespace Tax {
   }
 }
 export namespace Tax {
-  export interface TransactionCreateReversalParams {
+  export interface TransactionCreateReversalParams<E extends string = string> {
     /**
      * If `partial`, the provided line item or shipping cost amounts are reversed. If `full`, the original transaction is fully reversed.
      */
@@ -551,7 +555,7 @@ export namespace Tax {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * A flat amount to reverse across the entire transaction, in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units) in negative. This value represents the total amount to refund from the transaction, including taxes.
@@ -623,10 +627,11 @@ export namespace Tax {
   }
 }
 export namespace Tax {
-  export interface TransactionListLineItemsParams extends PaginationParams {
+  export interface TransactionListLineItemsParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

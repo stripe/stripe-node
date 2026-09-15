@@ -4,6 +4,8 @@ import {StripeResource} from '../../StripeResource.js';
 import {Transaction} from './Transactions.js';
 import {Mandate} from './../Mandates.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   Emptyable,
   OtherString,
@@ -17,10 +19,10 @@ export class OutboundTransferResource extends StripeResource {
   /**
    * Returns a list of OutboundTransfers sent from the specified FinancialAccount.
    */
-  list(
-    params: Treasury.OutboundTransferListParams,
+  list<E extends string = never>(
+    params: Treasury.OutboundTransferListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<OutboundTransfer> {
+  ): ApiListPromise<ApplyExpandListItem<OutboundTransfer, E>> {
     return this._makeRequest(
       'GET',
       '/v1/treasury/outbound_transfers',
@@ -34,10 +36,10 @@ export class OutboundTransferResource extends StripeResource {
   /**
    * Creates an OutboundTransfer.
    */
-  create(
-    params: Treasury.OutboundTransferCreateParams,
+  create<E extends string = never>(
+    params: Treasury.OutboundTransferCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>> {
+  ): Promise<Response<ApplyExpand<OutboundTransfer, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/treasury/outbound_transfers',
@@ -48,11 +50,11 @@ export class OutboundTransferResource extends StripeResource {
   /**
    * Retrieves the details of an existing OutboundTransfer by passing the unique OutboundTransfer ID from either the OutboundTransfer creation request or OutboundTransfer list.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Treasury.OutboundTransferRetrieveParams,
+    params?: Treasury.OutboundTransferRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>> {
+  ): Promise<Response<ApplyExpand<OutboundTransfer, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/treasury/outbound_transfers/${encodeURIComponent(id)}`,
@@ -63,11 +65,11 @@ export class OutboundTransferResource extends StripeResource {
   /**
    * An OutboundTransfer can be canceled if the funds have not yet been paid out.
    */
-  cancel(
+  cancel<E extends string = never>(
     id: string,
-    params?: Treasury.OutboundTransferCancelParams,
+    params?: Treasury.OutboundTransferCancelParams<E>,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>> {
+  ): Promise<Response<ApplyExpand<OutboundTransfer, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/treasury/outbound_transfers/${encodeURIComponent(id)}/cancel`,
@@ -362,7 +364,7 @@ export namespace OutboundTransfer {
   }
 }
 export namespace Treasury {
-  export interface OutboundTransferCreateParams {
+  export interface OutboundTransferCreateParams<E extends string = string> {
     /**
      * Amount (in cents) to be transferred.
      */
@@ -401,7 +403,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -431,9 +433,7 @@ export namespace Treasury {
       /**
        * Optional fields for `us_bank_account`.
        */
-      us_bank_account?: Emptyable<
-        DestinationPaymentMethodOptions.UsBankAccount
-      >;
+      us_bank_account?: Emptyable<DestinationPaymentMethodOptions.UsBankAccount>;
     }
 
     export namespace DestinationPaymentMethodOptions {
@@ -451,15 +451,16 @@ export namespace Treasury {
   }
 }
 export namespace Treasury {
-  export interface OutboundTransferRetrieveParams {
+  export interface OutboundTransferRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Treasury {
-  export interface OutboundTransferListParams extends PaginationParams {
+  export interface OutboundTransferListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Returns objects associated with this FinancialAccount.
      */
@@ -468,7 +469,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return OutboundTransfers that have the given status: `processing`, `canceled`, `failed`, `posted`, or `returned`.
@@ -487,10 +488,10 @@ export namespace Treasury {
   }
 }
 export namespace Treasury {
-  export interface OutboundTransferCancelParams {
+  export interface OutboundTransferCancelParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

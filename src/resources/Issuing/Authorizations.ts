@@ -7,6 +7,8 @@ import {Cardholder} from './Cardholders.js';
 import {Token} from './Tokens.js';
 import {Transaction} from './Transactions.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   Emptyable,
   MetadataParam,
   PaginationParams,
@@ -21,10 +23,10 @@ export class AuthorizationResource extends StripeResource {
   /**
    * Returns a list of Issuing Authorization objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
-  list(
-    params?: Issuing.AuthorizationListParams,
+  list<E extends string = never>(
+    params?: Issuing.AuthorizationListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Authorization> {
+  ): ApiListPromise<ApplyExpandListItem<Authorization, E>> {
     return this._makeRequest(
       'GET',
       '/v1/issuing/authorizations',
@@ -216,11 +218,11 @@ export class AuthorizationResource extends StripeResource {
   /**
    * Retrieves an Issuing Authorization object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Issuing.AuthorizationRetrieveParams,
+    params?: Issuing.AuthorizationRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Authorization>> {
+  ): Promise<Response<ApplyExpand<Authorization, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/issuing/authorizations/${encodeURIComponent(id)}`,
@@ -395,11 +397,11 @@ export class AuthorizationResource extends StripeResource {
   /**
    * Updates the specified Issuing Authorization object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Issuing.AuthorizationUpdateParams,
+    params?: Issuing.AuthorizationUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Authorization>> {
+  ): Promise<Response<ApplyExpand<Authorization, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/issuing/authorizations/${encodeURIComponent(id)}`,
@@ -576,11 +578,11 @@ export class AuthorizationResource extends StripeResource {
    * This method is deprecated. Instead, [respond directly to the webhook request to approve an authorization](https://docs.stripe.com/docs/issuing/controls/real-time-authorizations#authorization-handling).
    * @deprecated
    */
-  approve(
+  approve<E extends string = never>(
     id: string,
-    params?: Issuing.AuthorizationApproveParams,
+    params?: Issuing.AuthorizationApproveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Authorization>> {
+  ): Promise<Response<ApplyExpand<Authorization, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/issuing/authorizations/${encodeURIComponent(id)}/approve`,
@@ -757,11 +759,11 @@ export class AuthorizationResource extends StripeResource {
    * This method is deprecated. Instead, [respond directly to the webhook request to decline an authorization](https://docs.stripe.com/docs/issuing/controls/real-time-authorizations#authorization-handling).
    * @deprecated
    */
-  decline(
+  decline<E extends string = never>(
     id: string,
-    params?: Issuing.AuthorizationDeclineParams,
+    params?: Issuing.AuthorizationDeclineParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Authorization>> {
+  ): Promise<Response<ApplyExpand<Authorization, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/issuing/authorizations/${encodeURIComponent(id)}/decline`,
@@ -1643,19 +1645,19 @@ export namespace Authorization {
   }
 }
 export namespace Issuing {
-  export interface AuthorizationRetrieveParams {
+  export interface AuthorizationRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Issuing {
-  export interface AuthorizationUpdateParams {
+  export interface AuthorizationUpdateParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1664,7 +1666,8 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface AuthorizationListParams extends PaginationParams {
+  export interface AuthorizationListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Only return authorizations that belong to the given card.
      */
@@ -1683,7 +1686,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return authorizations with the given status. One of `pending`, `closed`, or `reversed`.
@@ -1701,7 +1704,7 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface AuthorizationApproveParams {
+  export interface AuthorizationApproveParams<E extends string = string> {
     /**
      * If the authorization's `pending_request.is_amount_controllable` property is `true`, you may provide this value to control how much to hold for the authorization. Must be positive (use [`decline`](https://docs.stripe.com/api/issuing/authorizations/decline) to decline an authorization request).
      */
@@ -1710,7 +1713,7 @@ export namespace Issuing {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1719,11 +1722,11 @@ export namespace Issuing {
   }
 }
 export namespace Issuing {
-  export interface AuthorizationDeclineParams {
+  export interface AuthorizationDeclineParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

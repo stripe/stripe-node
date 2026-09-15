@@ -16,6 +16,8 @@ import {PromotionCode} from './../PromotionCodes.js';
 import {ShippingRate} from './../ShippingRates.js';
 import {TaxRate} from './../TaxRates.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   OtherString,
   Emptyable,
@@ -32,10 +34,10 @@ export class SessionResource extends StripeResource {
   /**
    * Returns a list of Checkout Sessions.
    */
-  list(
-    params?: Checkout.SessionListParams,
+  list<E extends string = never>(
+    params?: Checkout.SessionListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Session> {
+  ): ApiListPromise<ApplyExpandListItem<Session, E>> {
     return this._makeRequest('GET', '/v1/checkout/sessions', params, options, {
       methodType: 'list',
       responseSchema: {
@@ -132,10 +134,10 @@ export class SessionResource extends StripeResource {
   /**
    * Creates a Checkout Session object.
    */
-  create(
-    params?: Checkout.SessionCreateParams,
+  create<E extends string = never>(
+    params?: Checkout.SessionCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Session>> {
+  ): Promise<Response<ApplyExpand<Session, E>>> {
     return this._makeRequest('POST', '/v1/checkout/sessions', params, options, {
       requestSchema: {
         kind: 'object',
@@ -240,11 +242,11 @@ export class SessionResource extends StripeResource {
   /**
    * Retrieves a Checkout Session object.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Checkout.SessionRetrieveParams,
+    params?: Checkout.SessionRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Session>> {
+  ): Promise<Response<ApplyExpand<Session, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/checkout/sessions/${encodeURIComponent(id)}`,
@@ -340,11 +342,11 @@ export class SessionResource extends StripeResource {
    *
    * Related guide: [Dynamically update a Checkout Session](https://docs.stripe.com/payments/advanced/dynamic-updates)
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Checkout.SessionUpdateParams,
+    params?: Checkout.SessionUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Session>> {
+  ): Promise<Response<ApplyExpand<Session, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/checkout/sessions/${encodeURIComponent(id)}`,
@@ -457,11 +459,11 @@ export class SessionResource extends StripeResource {
    *
    * After it expires, a customer can't complete a Checkout Session and customers loading the Checkout Session see a message saying the Checkout Session is expired.
    */
-  expire(
+  expire<E extends string = never>(
     id: string,
-    params?: Checkout.SessionExpireParams,
+    params?: Checkout.SessionExpireParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Session>> {
+  ): Promise<Response<ApplyExpand<Session, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/checkout/sessions/${encodeURIComponent(id)}/expire`,
@@ -555,11 +557,11 @@ export class SessionResource extends StripeResource {
   /**
    * When retrieving a Checkout Session, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
    */
-  listLineItems(
+  listLineItems<E extends string = never>(
     id: string,
-    params?: Checkout.SessionListLineItemsParams,
+    params?: Checkout.SessionListLineItemsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<LineItem> {
+  ): ApiListPromise<ApplyExpandListItem<LineItem, E>> {
     return this._makeRequest(
       'GET',
       `/v1/checkout/sessions/${encodeURIComponent(id)}/line_items`,
@@ -1462,9 +1464,7 @@ export namespace Session {
     /**
      * Uses the `allow_redisplay` value of each saved payment method to filter the set presented to a returning customer. By default, only saved payment methods with 'allow_redisplay: ‘always' are shown in Checkout.
      */
-    allow_redisplay_filters: Array<
-      SavedPaymentMethodOptions.AllowRedisplayFilter
-    > | null;
+    allow_redisplay_filters: Array<SavedPaymentMethodOptions.AllowRedisplayFilter> | null;
 
     /**
      * Enable customers to choose if they wish to remove their saved payment methods. Disabled by default.
@@ -2169,7 +2169,7 @@ export namespace Session {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Alipay.SetupFutureUsage;
     }
 
     export interface Alma {
@@ -2883,7 +2883,7 @@ export namespace Session {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export namespace AcssDebit {
@@ -2939,6 +2939,10 @@ export namespace Session {
 
         export type TransactionType = 'business' | 'personal' | OtherString;
       }
+    }
+
+    export namespace Alipay {
+      export type SetupFutureUsage = 'none' | OtherString;
     }
 
     export namespace AmazonPay {
@@ -3360,6 +3364,8 @@ export namespace Session {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -3764,7 +3770,7 @@ export namespace Session {
   }
 }
 export namespace Checkout {
-  export interface SessionCreateParams {
+  export interface SessionCreateParams<E extends string = string> {
     /**
      * Settings for price localization with [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing).
      */
@@ -3882,14 +3888,12 @@ export namespace Checkout {
     /**
      * A list of the types of payment methods (e.g., `card`) that should be excluded from this Checkout Session. This should only be used when payment methods for this Checkout Session are managed through the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
      */
-    excluded_payment_method_types?: Array<
-      SessionCreateParams.ExcludedPaymentMethodType
-    >;
+    excluded_payment_method_types?: Array<SessionCreateParams.ExcludedPaymentMethodType>;
 
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The Epoch time in seconds at which the Checkout Session will expire. It can be anywhere from 30 minutes to 24 hours after Checkout Session creation. By default, this value is 24 hours from creation.
@@ -4237,9 +4241,7 @@ export namespace Checkout {
       /**
        * Custom text that should be displayed in place of the default terms of service agreement text.
        */
-      terms_of_service_acceptance?: Emptyable<
-        CustomText.TermsOfServiceAcceptance
-      >;
+      terms_of_service_acceptance?: Emptyable<CustomText.TermsOfServiceAcceptance>;
     }
 
     export type CustomerCreation = 'always' | 'if_required' | OtherString;
@@ -4882,9 +4884,7 @@ export namespace Checkout {
       /**
        * Uses the `allow_redisplay` value of each saved payment method to filter the set presented to a returning customer. By default, only saved payment methods with 'allow_redisplay: ‘always' are shown in Checkout.
        */
-      allow_redisplay_filters?: Array<
-        SavedPaymentMethodOptions.AllowRedisplayFilter
-      >;
+      allow_redisplay_filters?: Array<SavedPaymentMethodOptions.AllowRedisplayFilter>;
 
       /**
        * Enable customers to choose if they wish to remove their saved payment methods. Disabled by default.
@@ -5684,7 +5684,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: Alipay.SetupFutureUsage;
       }
 
       export interface Alma {
@@ -6461,7 +6461,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: WechatPay.SetupFutureUsage;
       }
 
       export namespace AcssDebit {
@@ -6519,6 +6519,10 @@ export namespace Checkout {
 
           export type TransactionType = 'business' | 'personal' | OtherString;
         }
+      }
+
+      export namespace Alipay {
+        export type SetupFutureUsage = 'none' | OtherString;
       }
 
       export namespace AmazonPay {
@@ -6995,6 +6999,8 @@ export namespace Checkout {
 
       export namespace WechatPay {
         export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+        export type SetupFutureUsage = 'none' | OtherString;
       }
     }
 
@@ -7566,15 +7572,15 @@ export namespace Checkout {
   }
 }
 export namespace Checkout {
-  export interface SessionRetrieveParams {
+  export interface SessionRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Checkout {
-  export interface SessionUpdateParams {
+  export interface SessionUpdateParams<E extends string = string> {
     /**
      * Information about the customer collected within the Checkout Session. Can only be set when updating `embedded` or `custom` sessions.
      */
@@ -7583,7 +7589,7 @@ export namespace Checkout {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * A list of items the customer is purchasing.
@@ -7983,7 +7989,8 @@ export namespace Checkout {
   }
 }
 export namespace Checkout {
-  export interface SessionListParams extends PaginationParams {
+  export interface SessionListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Only return Checkout Sessions that were created during the given date interval.
      */
@@ -8007,7 +8014,7 @@ export namespace Checkout {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return the Checkout Session for the PaymentIntent specified.
@@ -8042,18 +8049,19 @@ export namespace Checkout {
   }
 }
 export namespace Checkout {
-  export interface SessionExpireParams {
+  export interface SessionExpireParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Checkout {
-  export interface SessionListLineItemsParams extends PaginationParams {
+  export interface SessionListLineItemsParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

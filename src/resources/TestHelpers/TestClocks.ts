@@ -1,7 +1,12 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams, OtherString} from '../../shared.js';
+import {
+  ApplyExpand,
+  ApplyExpandListItem,
+  PaginationParams,
+  OtherString,
+} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 
 export class TestClockResource extends StripeResource {
@@ -23,11 +28,11 @@ export class TestClockResource extends StripeResource {
   /**
    * Retrieves a test clock.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: TestHelpers.TestClockRetrieveParams,
+    params?: TestHelpers.TestClockRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TestClock>> {
+  ): Promise<Response<ApplyExpand<TestClock, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/test_helpers/test_clocks/${encodeURIComponent(id)}`,
@@ -38,10 +43,10 @@ export class TestClockResource extends StripeResource {
   /**
    * Returns a list of your test clocks.
    */
-  list(
-    params?: TestHelpers.TestClockListParams,
+  list<E extends string = never>(
+    params?: TestHelpers.TestClockListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<TestClock> {
+  ): ApiListPromise<ApplyExpandListItem<TestClock, E>> {
     return this._makeRequest(
       'GET',
       '/v1/test_helpers/test_clocks',
@@ -55,10 +60,10 @@ export class TestClockResource extends StripeResource {
   /**
    * Creates a new test clock that can be attached to new customers and quotes.
    */
-  create(
-    params: TestHelpers.TestClockCreateParams,
+  create<E extends string = never>(
+    params: TestHelpers.TestClockCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TestClock>> {
+  ): Promise<Response<ApplyExpand<TestClock, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/test_helpers/test_clocks',
@@ -69,11 +74,11 @@ export class TestClockResource extends StripeResource {
   /**
    * Starts advancing a test clock to a specified time in the future. Advancement is done when status changes to Ready.
    */
-  advance(
+  advance<E extends string = never>(
     id: string,
-    params: TestHelpers.TestClockAdvanceParams,
+    params: TestHelpers.TestClockAdvanceParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TestClock>> {
+  ): Promise<Response<ApplyExpand<TestClock, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/test_clocks/${encodeURIComponent(id)}/advance`,
@@ -163,7 +168,7 @@ export namespace TestClock {
   }
 }
 export namespace TestHelpers {
-  export interface TestClockCreateParams {
+  export interface TestClockCreateParams<E extends string = string> {
     /**
      * The initial frozen time for this test clock.
      */
@@ -177,7 +182,7 @@ export namespace TestHelpers {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The name for this test clock.
@@ -186,26 +191,27 @@ export namespace TestHelpers {
   }
 }
 export namespace TestHelpers {
-  export interface TestClockRetrieveParams {
+  export interface TestClockRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace TestHelpers {
-  export interface TestClockListParams extends PaginationParams {
+  export interface TestClockListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace TestHelpers {
   export interface TestClockDeleteParams {}
 }
 export namespace TestHelpers {
-  export interface TestClockAdvanceParams {
+  export interface TestClockAdvanceParams<E extends string = string> {
     /**
      * The time to advance the test clock. Must be after the test clock's current frozen time. Cannot be more than two intervals in the future from the shortest subscription in this test clock. If there are no subscriptions in this test clock, it cannot be more than two years in the future.
      */
@@ -214,6 +220,6 @@ export namespace TestHelpers {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

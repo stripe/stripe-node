@@ -1,17 +1,23 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams, RangeQueryParam, OtherString} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  RangeQueryParam,
+  OtherString,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class TransactionResource extends StripeResource {
   /**
    * Returns a list of Financial Connections Transaction objects.
    */
-  list(
-    params: FinancialConnections.TransactionListParams,
+  list<E extends string = never>(
+    params: FinancialConnections.TransactionListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Transaction> {
+  ): ApiListPromise<ApplyExpandListItem<Transaction, E>> {
     return this._makeRequest(
       'GET',
       '/v1/financial_connections/transactions',
@@ -25,11 +31,11 @@ export class TransactionResource extends StripeResource {
   /**
    * Retrieves the details of a Financial Connections Transaction
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: FinancialConnections.TransactionRetrieveParams,
+    params?: FinancialConnections.TransactionRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transaction>> {
+  ): Promise<Response<ApplyExpand<Transaction, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/financial_connections/transactions/${encodeURIComponent(id)}`,
@@ -112,15 +118,16 @@ export namespace Transaction {
   }
 }
 export namespace FinancialConnections {
-  export interface TransactionRetrieveParams {
+  export interface TransactionRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace FinancialConnections {
-  export interface TransactionListParams extends PaginationParams {
+  export interface TransactionListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * The ID of the Financial Connections Account whose transactions will be retrieved.
      */
@@ -129,7 +136,7 @@ export namespace FinancialConnections {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * A filter on the list based on the object `transacted_at` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with the following options:

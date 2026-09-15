@@ -5,6 +5,8 @@ import {DeletedProductFeature, ProductFeature} from './ProductFeatures.js';
 import {Price} from './Prices.js';
 import {TaxCode} from './TaxCodes.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   MetadataParam,
   Decimal,
   OtherString,
@@ -39,11 +41,11 @@ export class ProductResource extends StripeResource {
   /**
    * Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: ProductRetrieveParams,
+    params?: ProductRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Product>> {
+  ): Promise<Response<ApplyExpand<Product, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/products/${encodeURIComponent(id)}`,
@@ -54,11 +56,11 @@ export class ProductResource extends StripeResource {
   /**
    * Updates the specific product by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: ProductUpdateParams,
+    params?: ProductUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Product>> {
+  ): Promise<Response<ApplyExpand<Product, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/products/${encodeURIComponent(id)}`,
@@ -69,10 +71,10 @@ export class ProductResource extends StripeResource {
   /**
    * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
    */
-  list(
-    params?: ProductListParams,
+  list<E extends string = never>(
+    params?: ProductListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Product> {
+  ): ApiListPromise<ApplyExpandListItem<Product, E>> {
     return this._makeRequest('GET', '/v1/products', params, options, {
       methodType: 'list',
     }) as any;
@@ -80,10 +82,10 @@ export class ProductResource extends StripeResource {
   /**
    * Creates a new product object.
    */
-  create(
-    params: ProductCreateParams,
+  create<E extends string = never>(
+    params: ProductCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Product>> {
+  ): Promise<Response<ApplyExpand<Product, E>>> {
     return this._makeRequest('POST', '/v1/products', params, options, {
       requestSchema: {
         kind: 'object',
@@ -123,10 +125,10 @@ export class ProductResource extends StripeResource {
    * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
    * to an hour behind during outages. Search functionality is not available to merchants in India.
    */
-  search(
-    params: ProductSearchParams,
+  search<E extends string = never>(
+    params: ProductSearchParams<E>,
     options?: RequestOptions
-  ): ApiSearchResultPromise<Product> {
+  ): ApiSearchResultPromise<ApplyExpandListItem<Product, E>> {
     return this._makeRequest('GET', '/v1/products/search', params, options, {
       methodType: 'search',
     }) as any;
@@ -152,12 +154,12 @@ export class ProductResource extends StripeResource {
   /**
    * Retrieves a product_feature, which represents a feature attachment to a product
    */
-  retrieveFeature(
+  retrieveFeature<E extends string = never>(
     productId: string,
     id: string,
-    params?: ProductRetrieveFeatureParams,
+    params?: ProductRetrieveFeatureParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ProductFeature>> {
+  ): Promise<Response<ApplyExpand<ProductFeature, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/products/${encodeURIComponent(
@@ -170,11 +172,11 @@ export class ProductResource extends StripeResource {
   /**
    * Retrieve a list of features for a product
    */
-  listFeatures(
+  listFeatures<E extends string = never>(
     id: string,
-    params?: ProductListFeaturesParams,
+    params?: ProductListFeaturesParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<ProductFeature> {
+  ): ApiListPromise<ApplyExpandListItem<ProductFeature, E>> {
     return this._makeRequest(
       'GET',
       `/v1/products/${encodeURIComponent(id)}/features`,
@@ -188,11 +190,11 @@ export class ProductResource extends StripeResource {
   /**
    * Creates a product_feature, which represents a feature attachment to a product
    */
-  createFeature(
+  createFeature<E extends string = never>(
     id: string,
-    params: ProductCreateFeatureParams,
+    params: ProductCreateFeatureParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ProductFeature>> {
+  ): Promise<Response<ApplyExpand<ProductFeature, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/products/${encodeURIComponent(id)}/features`,
@@ -350,7 +352,7 @@ export namespace Product {
 
   export type Type = 'good' | 'service' | OtherString;
 }
-export interface ProductCreateParams {
+export interface ProductCreateParams<E extends string = string> {
   /**
    * The product's name, meant to be displayable to the customer.
    */
@@ -374,7 +376,7 @@ export interface ProductCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * An identifier will be randomly generated by Stripe. You can optionally override this ID, but the ID must be unique across all products in your Stripe account.
@@ -640,13 +642,13 @@ export namespace ProductCreateParams {
     }
   }
 }
-export interface ProductRetrieveParams {
+export interface ProductRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ProductUpdateParams {
+export interface ProductUpdateParams<E extends string = string> {
   /**
    * Whether the product is available for purchase.
    */
@@ -665,7 +667,7 @@ export interface ProductUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
@@ -750,7 +752,8 @@ export namespace ProductUpdateParams {
     width: number;
   }
 }
-export interface ProductListParams extends PaginationParams {
+export interface ProductListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return products that are active or inactive (e.g., pass `false` to list all inactive products).
    */
@@ -764,7 +767,7 @@ export interface ProductListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return products with the given IDs. Cannot be used with [starting_after](https://api.stripe.com#list_products-starting_after) or [ending_before](https://api.stripe.com#list_products-ending_before).
@@ -790,7 +793,7 @@ export namespace ProductListParams {
   export type Type = 'good' | 'service' | OtherString;
 }
 export interface ProductDeleteParams {}
-export interface ProductCreateFeatureParams {
+export interface ProductCreateFeatureParams<E extends string = string> {
   /**
    * The ID of the [Feature](https://docs.stripe.com/api/entitlements/feature) object attached to this product.
    */
@@ -799,22 +802,23 @@ export interface ProductCreateFeatureParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export interface ProductDeleteFeatureParams {}
-export interface ProductListFeaturesParams extends PaginationParams {
+export interface ProductListFeaturesParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ProductRetrieveFeatureParams {
+export interface ProductRetrieveFeatureParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface ProductSearchParams {
+export interface ProductSearchParams<E extends string = string> {
   /**
    * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for products](https://docs.stripe.com/search#query-fields-for-products).
    */
@@ -823,7 +827,7 @@ export interface ProductSearchParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.

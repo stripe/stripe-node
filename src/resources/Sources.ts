@@ -3,6 +3,8 @@
 import {StripeResource} from '../StripeResource.js';
 import {SourceTransaction} from './SourceTransactions.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   MetadataParam,
   OtherString,
   Emptyable,
@@ -18,11 +20,11 @@ export class SourceResource extends StripeResource {
   /**
    * Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: SourceRetrieveParams,
+    params?: SourceRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Source>> {
+  ): Promise<Response<ApplyExpand<Source, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/sources/${encodeURIComponent(id)}`,
@@ -35,11 +37,11 @@ export class SourceResource extends StripeResource {
    *
    * This request accepts the metadata and owner as arguments. It is also possible to update type specific information for selected payment methods. Please refer to our [payment method guides](https://docs.stripe.com/docs/sources) for more detail.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: SourceUpdateParams,
+    params?: SourceUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Source>> {
+  ): Promise<Response<ApplyExpand<Source, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/sources/${encodeURIComponent(id)}`,
@@ -50,20 +52,20 @@ export class SourceResource extends StripeResource {
   /**
    * Creates a new source object.
    */
-  create(
-    params?: SourceCreateParams,
+  create<E extends string = never>(
+    params?: SourceCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Source>> {
+  ): Promise<Response<ApplyExpand<Source, E>>> {
     return this._makeRequest('POST', '/v1/sources', params, options) as any;
   }
   /**
    * Verify a given source.
    */
-  verify(
+  verify<E extends string = never>(
     id: string,
-    params: SourceVerifyParams,
+    params: SourceVerifyParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Source>> {
+  ): Promise<Response<ApplyExpand<Source, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/sources/${encodeURIComponent(id)}/verify`,
@@ -74,11 +76,11 @@ export class SourceResource extends StripeResource {
   /**
    * List source transactions for a given source.
    */
-  listSourceTransactions(
+  listSourceTransactions<E extends string = never>(
     id: string,
-    params?: SourceListSourceTransactionsParams,
+    params?: SourceListSourceTransactionsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<SourceTransaction> {
+  ): ApiListPromise<ApplyExpandListItem<SourceTransaction, E>> {
     return this._makeRequest(
       'GET',
       `/v1/sources/${encodeURIComponent(id)}/source_transactions`,
@@ -822,7 +824,7 @@ export namespace Source {
     }
   }
 }
-export interface SourceCreateParams {
+export interface SourceCreateParams<E extends string = string> {
   /**
    * Amount associated with the source. This is the amount for which the source will be chargeable once ready. Required for `single_use` sources. Not supported for `receiver` type sources, where charge amount may not be specified until funds land.
    */
@@ -841,7 +843,7 @@ export interface SourceCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The authentication `flow` of the source to create. `flow` is one of `redirect`, `receiver`, `code_verification`, `none`. It is generally inferred unless a type supports multiple flows.
@@ -1127,7 +1129,7 @@ export namespace SourceCreateParams {
     }
   }
 }
-export interface SourceRetrieveParams {
+export interface SourceRetrieveParams<E extends string = string> {
   /**
    * The client secret of the source. Required if a publishable key is used to retrieve the source.
    */
@@ -1136,9 +1138,9 @@ export interface SourceRetrieveParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface SourceUpdateParams {
+export interface SourceUpdateParams<E extends string = string> {
   /**
    * Amount associated with the source.
    */
@@ -1147,7 +1149,7 @@ export interface SourceUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
@@ -1368,13 +1370,14 @@ export namespace SourceUpdateParams {
     }
   }
 }
-export interface SourceListSourceTransactionsParams extends PaginationParams {
+export interface SourceListSourceTransactionsParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface SourceVerifyParams {
+export interface SourceVerifyParams<E extends string = string> {
   /**
    * The values needed to verify the source.
    */
@@ -1383,5 +1386,5 @@ export interface SourceVerifyParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

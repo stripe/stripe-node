@@ -3,6 +3,8 @@
 import {StripeResource} from '../StripeResource.js';
 import {Product, DeletedProduct} from './Products.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   Decimal,
   OtherString,
@@ -22,10 +24,10 @@ export class PriceResource extends StripeResource {
   /**
    * Returns a list of your active prices, excluding [inline prices](https://docs.stripe.com/docs/products-prices/pricing-models#inline-pricing). For the list of inactive prices, set active to false.
    */
-  list(
-    params?: PriceListParams,
+  list<E extends string = never>(
+    params?: PriceListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Price> {
+  ): ApiListPromise<ApplyExpandListItem<Price, E>> {
     return this._makeRequest('GET', '/v1/prices', params, options, {
       methodType: 'list',
       responseSchema: {
@@ -94,10 +96,10 @@ export class PriceResource extends StripeResource {
   /**
    * Creates a new [Price for an existing <a href="https://docs.stripe.com/api/products">Product](https://docs.stripe.com/api/prices). The Price can be recurring or one-time.
    */
-  create(
-    params: PriceCreateParams,
+  create<E extends string = never>(
+    params: PriceCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Price>> {
+  ): Promise<Response<ApplyExpand<Price, E>>> {
     return this._makeRequest('POST', '/v1/prices', params, options, {
       requestSchema: {
         kind: 'object',
@@ -192,11 +194,11 @@ export class PriceResource extends StripeResource {
   /**
    * Retrieves the price with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: PriceRetrieveParams,
+    params?: PriceRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Price>> {
+  ): Promise<Response<ApplyExpand<Price, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/prices/${encodeURIComponent(id)}`,
@@ -262,11 +264,11 @@ export class PriceResource extends StripeResource {
   /**
    * Updates the specified price by setting the values of the parameters passed. Any parameters not provided are left unchanged.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: PriceUpdateParams,
+    params?: PriceUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Price>> {
+  ): Promise<Response<ApplyExpand<Price, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/prices/${encodeURIComponent(id)}`,
@@ -335,10 +337,10 @@ export class PriceResource extends StripeResource {
    * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
    * to an hour behind during outages. Search functionality is not available to merchants in India.
    */
-  search(
-    params: PriceSearchParams,
+  search<E extends string = never>(
+    params: PriceSearchParams<E>,
     options?: RequestOptions
-  ): ApiSearchResultPromise<Price> {
+  ): ApiSearchResultPromise<ApplyExpandListItem<Price, E>> {
     return this._makeRequest('GET', '/v1/prices/search', params, options, {
       methodType: 'search',
       responseSchema: {
@@ -719,7 +721,7 @@ export namespace Price {
     export type Round = 'down' | 'up' | OtherString;
   }
 }
-export interface PriceCreateParams {
+export interface PriceCreateParams<E extends string = string> {
   /**
    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
    */
@@ -750,7 +752,7 @@ export interface PriceCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A lookup key used to retrieve prices dynamically from a static string. This may be up to 200 characters.
@@ -1049,13 +1051,13 @@ export namespace PriceCreateParams {
     export type Round = 'down' | 'up' | OtherString;
   }
 }
-export interface PriceRetrieveParams {
+export interface PriceRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PriceUpdateParams {
+export interface PriceUpdateParams<E extends string = string> {
   /**
    * Whether the price can be used for new purchases. Defaults to `true`.
    */
@@ -1071,7 +1073,7 @@ export interface PriceUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A lookup key used to retrieve prices dynamically from a static string. This may be up to 200 characters.
@@ -1189,7 +1191,8 @@ export namespace PriceUpdateParams {
     }
   }
 }
-export interface PriceListParams extends PaginationParams {
+export interface PriceListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return prices that are active or inactive (e.g., pass `false` to list all inactive prices).
    */
@@ -1208,7 +1211,7 @@ export interface PriceListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return the price with these lookup_keys, if any exist. You can specify up to 10 lookup_keys.
@@ -1256,7 +1259,7 @@ export namespace PriceListParams {
     export type UsageType = 'licensed' | 'metered' | OtherString;
   }
 }
-export interface PriceSearchParams {
+export interface PriceSearchParams<E extends string = string> {
   /**
    * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for prices](https://docs.stripe.com/search#query-fields-for-prices).
    */
@@ -1265,7 +1268,7 @@ export interface PriceSearchParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.

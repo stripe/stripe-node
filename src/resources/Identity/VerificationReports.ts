@@ -2,6 +2,8 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   PaginationParams,
   RangeQueryParam,
   OtherString,
@@ -13,10 +15,10 @@ export class VerificationReportResource extends StripeResource {
   /**
    * List all verification reports.
    */
-  list(
-    params?: Identity.VerificationReportListParams,
+  list<E extends string = never>(
+    params?: Identity.VerificationReportListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<VerificationReport> {
+  ): ApiListPromise<ApplyExpandListItem<VerificationReport, E>> {
     return this._makeRequest(
       'GET',
       '/v1/identity/verification_reports',
@@ -30,11 +32,11 @@ export class VerificationReportResource extends StripeResource {
   /**
    * Retrieves an existing VerificationReport
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Identity.VerificationReportRetrieveParams,
+    params?: Identity.VerificationReportRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<VerificationReport>> {
+  ): Promise<Response<ApplyExpand<VerificationReport, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/identity/verification_reports/${encodeURIComponent(id)}`,
@@ -527,15 +529,16 @@ export namespace VerificationReport {
   }
 }
 export namespace Identity {
-  export interface VerificationReportRetrieveParams {
+  export interface VerificationReportRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Identity {
-  export interface VerificationReportListParams extends PaginationParams {
+  export interface VerificationReportListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * A string to reference this user. This can be a customer ID, a session ID, or similar, and can be used to reconcile this verification with your internal systems.
      */
@@ -549,7 +552,7 @@ export namespace Identity {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Only return VerificationReports of this type

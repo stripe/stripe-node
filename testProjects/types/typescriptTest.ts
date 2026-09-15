@@ -65,26 +65,26 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
   let product = await stripe.products.retrieve('prod_123', undefined, opts);
   product = await stripe.products.retrieve('prod_123', {expand: []}, opts);
 
-  const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
+  // Passing `expand` narrows the return type: expanded fields lose their `string` half.
+  const charge = await stripe.charges.retrieve('ch_123', {
     expand: ['customer'],
   });
+
+  // An expanded response is still assignable to the plain resource type.
+  const plainCharge: Stripe.Charge = charge;
 
   // Ignore null case.
   if (!charge.customer) throw Error('guard');
 
-  // Check you can cast an expandable field to the object:
-  const cusEmail: string | null = (charge.customer as Stripe.Customer).email;
-  // Check you can cast an expandable field to a string:
+  // No cast needed to read an expanded field:
+  const cusEmail: string | null = charge.customer.deleted
+    ? null
+    : charge.customer.email;
+  // Fields that weren't expanded still include the id:
   const btId: string = charge.balance_transaction as string;
 
   // Check you can deal with deleted:
-  if (
-    typeof charge.customer !== 'string' &&
-    // Not sure why `!charge.customer.deleted` doesn't work, it seems to in a playground:
-    // https://www.typescriptlang.org/play/index.html#code/JYOwLgpgTgZghgYwgAgGIHt3IN4ChnJwBcyAzmFKAOYDc+yADpQgNYA2AnieZSLfXABGiFtwrVkAH2QgArmzZSZsgLaDodAmA4MIJAOQxM+zcgAmENhEhmA-CQBu6YGboBfXKEixEKACKW1hBmGFh4Wjp6yIbGphZWNiQUshDuuLjausgAsnAc6qHIALxomEoBCcGh6RYIbHBQKAjoIOTIAB4kufkQ1Z4wyAAUAITtAHTxQWYAlDj0za1ghGK8VMUdY3C4Hri19Y3IC21cpVjSFVOF0jwS0nIK6cADgxzIAGRvyJkQ6AOvw0USvobnx9O9PsMOBNAjZZuFDi02sQyOI+OsoVsPEA
-    // Might be a complexity limit with our resources: https://github.com/microsoft/TypeScript/pull/30779/files#diff-c3ed224e4daa84352f7f1abcd23e8ccaR13219
-    !('deleted' in charge.customer)
-  ) {
+  if (!charge.customer.deleted) {
     const created: number = charge.customer.created;
   }
   const r = Math.random() - 0.5;
@@ -106,14 +106,17 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
     }
   }
 
-  const cusList: Stripe.ApiList<Stripe.Customer> = await stripe.customers.list();
+  const cusList: Stripe.ApiList<Stripe.Customer> =
+    await stripe.customers.list();
 
   /**
    * TODO(DEVSDK-2534): remove this test when we fix V2List at next major.
    */
-  const v2EventsListBC: Stripe.ApiList<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
+  const v2EventsListBC: Stripe.ApiList<Stripe.V2.Core.Event> =
+    await stripe.v2.core.events.list();
 
-  const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
+  const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> =
+    await stripe.v2.core.events.list();
 
   const aThousandCustomers: Array<Stripe.Customer> = await stripe.customers
     .list()
@@ -353,7 +356,8 @@ const v2Event = {} as Stripe.Events.V1BillingMeterErrorReportTriggeredEvent;
 const v2Context: string | undefined = v2Event.context;
 
 // but event notification is a context object
-const v2EventNotif = {} as Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification;
+const v2EventNotif =
+  {} as Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification;
 const v2ContextObj: Stripe.StripeContextType | undefined = v2EventNotif.context;
 
 async (): Promise<void> => {
@@ -364,14 +368,17 @@ async (): Promise<void> => {
 
   if (eventNotification.type === 'v1.billing.meter.error_report_triggered') {
     eventNotification.related_object;
-    const m: Stripe.Billing.Meter = await eventNotification.fetchRelatedObject();
-    const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent = await eventNotification.fetchEvent();
+    const m: Stripe.Billing.Meter =
+      await eventNotification.fetchRelatedObject();
+    const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent =
+      await eventNotification.fetchEvent();
     const d: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent.Data =
       e.data;
   } else if (eventNotification.type === 'v1.billing.meter.no_meter_found') {
     // @ts-expect-error - shouldn't be available
     eventNotification.related_object;
-    const e: Stripe.Events.V1BillingMeterNoMeterFoundEvent = await eventNotification.fetchEvent();
+    const e: Stripe.Events.V1BillingMeterNoMeterFoundEvent =
+      await eventNotification.fetchEvent();
     // @ts-expect-error - isn't a known type
   } else if (eventNotification.type === 'some.unknown.event') {
     const e = eventNotification as Stripe.Events.UnknownEventNotification;
@@ -416,14 +423,18 @@ async (): Promise<void> => {
     })
     .on('v1.billing.meter.error_report_triggered', async (event) => {
       const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
-      const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification = event;
-      const evt: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent = await event.fetchEvent();
+      const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification =
+        event;
+      const evt: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent =
+        await event.fetchEvent();
     })
     .on('v1.billing.meter.no_meter_found', async (event) => {
-      const e: Stripe.Events.V1BillingMeterNoMeterFoundEventNotification = event;
+      const e: Stripe.Events.V1BillingMeterNoMeterFoundEventNotification =
+        event;
       // @ts-expect-error - shouldn't be available
       const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
-      const evt: Stripe.Events.V1BillingMeterNoMeterFoundEvent = await event.fetchEvent();
+      const evt: Stripe.Events.V1BillingMeterNoMeterFoundEvent =
+        await event.fetchEvent();
     });
 
   const res: void = await handler.handle('', '');
@@ -449,7 +460,8 @@ async (): Promise<void> => {
     'v1.billing.meter.error_report_triggered',
     async (event) => {
       const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
-      const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification = event;
+      const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification =
+        event;
     }
   );
 
@@ -525,9 +537,8 @@ event = stripe.webhooks.constructEventWithoutVerification('payload');
 event = stripe.constructEventWithoutVerification('payload');
 
 // parseEventNotificationWithoutVerification on client
-const _notificationWV: Stripe.V2.Core.EventNotification = stripe.parseEventNotificationWithoutVerification(
-  'payload'
-);
+const _notificationWV: Stripe.V2.Core.EventNotification =
+  stripe.parseEventNotificationWithoutVerification('payload');
 
 // Verify that nested types with names matching imported types resolve correctly.
 // e.g. Checkout.Session.TotalDetails.Breakdown.Discount.discount should be
@@ -555,9 +566,11 @@ const _notificationWV: Stripe.V2.Core.EventNotification = stripe.parseEventNotif
   }
 }
 
-const v2AccountCreateParamConfiguration: Stripe.V2.Core.AccountCreateParams.Configuration = {};
+const v2AccountCreateParamConfiguration: Stripe.V2.Core.AccountCreateParams.Configuration =
+  {};
 const checkoutSessionParam: Stripe.Checkout.SessionCreateParams = {};
-const checkoutSessionParamLineItem: Stripe.Checkout.SessionCreateParams.LineItem = {};
+const checkoutSessionParamLineItem: Stripe.Checkout.SessionCreateParams.LineItem =
+  {};
 const v2EventListParams: Stripe.V2.Core.EventListParams = {};
 const v2AccountCreateParams: Stripe.V2.Core.AccountCreateParams = {};
 const oAuthToken: Stripe.OAuthToken = {};
@@ -594,9 +607,8 @@ const customerResource: Stripe.CustomerResource = new Stripe.CustomerResource(
 );
 
 // Access nested resource
-const v2AccountResource: Stripe.V2.Billing.MeterEventResource = new Stripe.V2.Billing.MeterEventResource(
-  stripe
-);
+const v2AccountResource: Stripe.V2.Billing.MeterEventResource =
+  new Stripe.V2.Billing.MeterEventResource(stripe);
 
 // Namespace type exports that must remain accessible (v21 parity).
 const _stripeConfig: Stripe.StripeConfig = {maxNetworkRetries: 3};
@@ -617,4 +629,177 @@ const _signatureType: Stripe.Signature = null as any;
 
 // Factory function return types must be assignable to their interface types.
 const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
-const _nodeCryptoProvider: Stripe.CryptoProvider = Stripe.createNodeCryptoProvider();
+const _nodeCryptoProvider: Stripe.CryptoProvider =
+  Stripe.createNodeCryptoProvider();
+
+// --- `expand`-aware return types -------------------------------------------------
+// These use mutual assignability rather than annotated locals: an annotated local
+// only proves the result is a *subtype* of what we wrote, so it would still pass if
+// the expand machinery silently did nothing.
+type Eq<A, B> = [A] extends [B] ? ([B] extends [A] ? true : false) : false;
+
+// A single expandable field, including its deleted variant.
+const _expandOne: true = true as Eq<
+  Stripe.Expanded<Stripe.Charge, 'customer'>['customer'],
+  Stripe.Customer | Stripe.DeletedCustomer | null
+>;
+
+// Fields not named in the paths are untouched.
+const _expandSibling: true = true as Eq<
+  Stripe.Expanded<Stripe.Charge, 'customer'>['balance_transaction'],
+  string | Stripe.BalanceTransaction | null
+>;
+
+// A plain nullable string is not an expandable field and must survive intact.
+const _expandNullableString: true = true as Eq<
+  Stripe.Expanded<Stripe.Charge, 'description'>['description'],
+  string | null
+>;
+
+// Open enums keep their `OtherString` escape hatch.
+const _expandOpenEnum: true = true as Eq<
+  Stripe.Expanded<
+    Stripe.Subscription,
+    'collection_method'
+  >['collection_method'],
+  Stripe.Subscription.CollectionMethod
+>;
+
+// Arrays of expandables unwrap element-wise, including when nullable.
+const _expandArray: true = true as Eq<
+  Stripe.Expanded<Stripe.Invoice, 'discounts'>['discounts'],
+  Array<Stripe.Discount | Stripe.DeletedDiscount>
+>;
+const _expandNullableArray: true = true as Eq<
+  Stripe.Expanded<Stripe.InvoiceItem, 'discounts'>['discounts'],
+  Array<Stripe.Discount> | null
+>;
+
+// Optional fields stay optional.
+const _expandOptional: true = true as Eq<
+  Stripe.Expanded<Stripe.Charge, 'transfer'>['transfer'],
+  Stripe.Transfer | undefined
+>;
+
+// Index signatures are untouched.
+const _expandIndexSignature: true = true as Eq<
+  Stripe.Expanded<Stripe.Charge, 'metadata'>['metadata'],
+  Stripe.Metadata
+>;
+
+// A path that doesn't name an expandable field is a no-op.
+const _expandBogusPath: true = true as Eq<
+  Stripe.Expanded<Stripe.Charge, 'not_a_field'>['customer'],
+  string | Stripe.Customer | Stripe.DeletedCustomer | null
+>;
+
+// No paths at all is the identity.
+const _expandNone: true = true as Eq<
+  Stripe.Expanded<Stripe.Charge, never>,
+  Stripe.Charge
+>;
+
+// A nested path expands the intermediate segment implicitly, and walks `ApiList.data`.
+type ExpandedSession = Stripe.Expanded<
+  Stripe.Checkout.Session,
+  'subscription' | 'subscription.items.data.price.product'
+>;
+const _expandDeep: true = true as Eq<
+  NonNullable<
+    ExpandedSession['subscription']
+  >['items']['data'][number]['price']['product'],
+  Stripe.Product | Stripe.DeletedProduct
+>;
+
+(async (): Promise<void> => {
+  const client = new Stripe('sk_test_123');
+
+  // Omitting `expand` leaves the return type exactly as it was.
+  const noExpand = await client.charges.retrieve('ch_123');
+  const _noExpand: true = true as Eq<
+    typeof noExpand,
+    Stripe.Response<Stripe.Charge>
+  >;
+
+  // So does an empty array...
+  const emptyExpand = await client.charges.retrieve('ch_123', {expand: []});
+  const _emptyExpand: true = true as Eq<
+    typeof emptyExpand,
+    Stripe.Response<Stripe.Charge>
+  >;
+
+  // ...and a value that isn't a literal, which carries no path information.
+  const dynamicPaths: string[] = ['customer'];
+  const widened = await client.charges.retrieve('ch_123', {
+    expand: dynamicPaths,
+  });
+  const _widened: true = true as Eq<
+    typeof widened,
+    Stripe.Response<Stripe.Charge>
+  >;
+
+  // A params object annotated with the base type also falls back cleanly.
+  const baseParams: Stripe.ChargeRetrieveParams = {expand: ['customer']};
+  const viaBaseParams = await client.charges.retrieve('ch_123', baseParams);
+  const _viaBaseParams: true = true as Eq<
+    typeof viaBaseParams,
+    Stripe.Response<Stripe.Charge>
+  >;
+
+  // Excess property checking still applies through the generic.
+  // @ts-expect-error - `bogus` is not a ChargeRetrieveParams member
+  await client.charges.retrieve('ch_123', {expand: ['customer'], bogus: 1});
+
+  // On list endpoints the paths are prefixed `data.`, and all four surfaces narrow.
+  // Note the params must be an inline literal for the paths to be inferred as
+  // literals; a hoisted `as const` array is readonly and so isn't accepted at all
+  // (which is also true of `expand?: Array<string>` today).
+  const page = await client.charges.list({expand: ['data.customer']});
+  const _listData: true = true as Eq<
+    (typeof page.data)[number]['customer'],
+    Stripe.Customer | Stripe.DeletedCustomer | null
+  >;
+  const _listPlain: Stripe.ApiList<Stripe.Charge> = page;
+
+  const collected = await client.charges
+    .list({expand: ['data.customer']})
+    .autoPagingToArray({limit: 10});
+  const _listToArray: true = true as Eq<
+    (typeof collected)[number]['customer'],
+    Stripe.Customer | Stripe.DeletedCustomer | null
+  >;
+
+  await client.charges
+    .list({expand: ['data.customer']})
+    .autoPagingEach((item) => {
+      const _listEach: true = true as Eq<
+        typeof item.customer,
+        Stripe.Customer | Stripe.DeletedCustomer | null
+      >;
+    });
+
+  for await (const item of client.charges.list({expand: ['data.customer']})) {
+    const _listIterate: true = true as Eq<
+      typeof item.customer,
+      Stripe.Customer | Stripe.DeletedCustomer | null
+    >;
+    break;
+  }
+
+  // A list path without the `data.` prefix leaves the item type alone.
+  const totals = await client.charges.list({expand: ['total_count']});
+  const _listNoPrefix: true = true as Eq<
+    (typeof totals.data)[number]['customer'],
+    string | Stripe.Customer | Stripe.DeletedCustomer | null
+  >;
+
+  // Search behaves like list.
+  const results = await client.charges.search({
+    query: 'amount>100',
+    expand: ['data.customer'],
+  });
+  const _search: true = true as Eq<
+    (typeof results.data)[number]['customer'],
+    Stripe.Customer | Stripe.DeletedCustomer | null
+  >;
+})();

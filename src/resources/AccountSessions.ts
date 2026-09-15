@@ -1,16 +1,17 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
+import {ApplyExpand} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class AccountSessionResource extends StripeResource {
   /**
    * Creates a AccountSession object that includes a single-use token that the platform can use on their front-end to grant client-side API access.
    */
-  create(
-    params: AccountSessionCreateParams,
+  create<E extends string = never>(
+    params: AccountSessionCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<AccountSession>> {
+  ): Promise<Response<ApplyExpand<AccountSession, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/account_sessions',
@@ -651,7 +652,7 @@ export namespace AccountSession {
     }
   }
 }
-export interface AccountSessionCreateParams {
+export interface AccountSessionCreateParams<E extends string = string> {
   /**
    * The identifier of the account to create an Account Session for.
    */
@@ -665,7 +666,7 @@ export interface AccountSessionCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export namespace AccountSessionCreateParams {
   export interface Components {

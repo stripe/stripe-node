@@ -6,6 +6,8 @@ import {BalanceTransaction} from './BalanceTransactions.js';
 import {Account} from './Accounts.js';
 import {Charge} from './Charges.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   MetadataParam,
   OtherString,
   Emptyable,
@@ -19,10 +21,10 @@ export class TransferResource extends StripeResource {
   /**
    * Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
    */
-  list(
-    params?: TransferListParams,
+  list<E extends string = never>(
+    params?: TransferListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Transfer> {
+  ): ApiListPromise<ApplyExpandListItem<Transfer, E>> {
     return this._makeRequest('GET', '/v1/transfers', params, options, {
       methodType: 'list',
     }) as any;
@@ -30,20 +32,20 @@ export class TransferResource extends StripeResource {
   /**
    * To send funds from your Stripe account to a connected account, you create a new transfer object. Your [Stripe balance](https://docs.stripe.com/api#balance) must be able to cover the transfer amount, or you'll receive an “Insufficient Funds” error.
    */
-  create(
-    params: TransferCreateParams,
+  create<E extends string = never>(
+    params: TransferCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transfer>> {
+  ): Promise<Response<ApplyExpand<Transfer, E>>> {
     return this._makeRequest('POST', '/v1/transfers', params, options) as any;
   }
   /**
    * Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: TransferRetrieveParams,
+    params?: TransferRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transfer>> {
+  ): Promise<Response<ApplyExpand<Transfer, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/transfers/${encodeURIComponent(id)}`,
@@ -56,11 +58,11 @@ export class TransferResource extends StripeResource {
    *
    * This request accepts only metadata as an argument.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: TransferUpdateParams,
+    params?: TransferUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transfer>> {
+  ): Promise<Response<ApplyExpand<Transfer, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/transfers/${encodeURIComponent(id)}`,
@@ -71,11 +73,11 @@ export class TransferResource extends StripeResource {
   /**
    * You can see a list of the reversals belonging to a specific transfer. Note that the 10 most recent reversals are always available by default on the transfer object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional reversals.
    */
-  listReversals(
+  listReversals<E extends string = never>(
     id: string,
-    params?: TransferListReversalsParams,
+    params?: TransferListReversalsParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<TransferReversal> {
+  ): ApiListPromise<ApplyExpandListItem<TransferReversal, E>> {
     return this._makeRequest(
       'GET',
       `/v1/transfers/${encodeURIComponent(id)}/reversals`,
@@ -93,11 +95,11 @@ export class TransferResource extends StripeResource {
    *
    * Once entirely reversed, a transfer can't be reversed again. This method will return an error when called on an already-reversed transfer, or when trying to reverse more money than is left on a transfer.
    */
-  createReversal(
+  createReversal<E extends string = never>(
     id: string,
-    params?: TransferCreateReversalParams,
+    params?: TransferCreateReversalParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TransferReversal>> {
+  ): Promise<Response<ApplyExpand<TransferReversal, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/transfers/${encodeURIComponent(id)}/reversals`,
@@ -108,12 +110,12 @@ export class TransferResource extends StripeResource {
   /**
    * By default, you can see the 10 most recent reversals stored directly on the transfer object, but you can also retrieve details about a specific reversal stored on the transfer.
    */
-  retrieveReversal(
+  retrieveReversal<E extends string = never>(
     transferId: string,
     id: string,
-    params?: TransferRetrieveReversalParams,
+    params?: TransferRetrieveReversalParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TransferReversal>> {
+  ): Promise<Response<ApplyExpand<TransferReversal, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/transfers/${encodeURIComponent(
@@ -128,12 +130,12 @@ export class TransferResource extends StripeResource {
    *
    * This request only accepts metadata and description as arguments.
    */
-  updateReversal(
+  updateReversal<E extends string = never>(
     transferId: string,
     id: string,
-    params?: TransferUpdateReversalParams,
+    params?: TransferUpdateReversalParams<E>,
     options?: RequestOptions
-  ): Promise<Response<TransferReversal>> {
+  ): Promise<Response<ApplyExpand<TransferReversal, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/transfers/${encodeURIComponent(
@@ -230,7 +232,7 @@ export interface Transfer {
    */
   transfer_group: string | null;
 }
-export interface TransferCreateParams {
+export interface TransferCreateParams<E extends string = string> {
   /**
    * Three-letter [ISO code for currency](https://www.iso.org/iso-4217-currency-codes.html) in lowercase. Must be a [supported currency](https://docs.stripe.com/currencies).
    */
@@ -254,7 +256,7 @@ export interface TransferCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -279,13 +281,13 @@ export interface TransferCreateParams {
 export namespace TransferCreateParams {
   export type SourceType = 'bank_account' | 'card' | 'fpx' | OtherString;
 }
-export interface TransferRetrieveParams {
+export interface TransferRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface TransferUpdateParams {
+export interface TransferUpdateParams<E extends string = string> {
   /**
    * An arbitrary string attached to the object. Often useful for displaying to users.
    */
@@ -294,14 +296,15 @@ export interface TransferUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }
-export interface TransferListParams extends PaginationParams {
+export interface TransferListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return transfers that were created during the given date interval.
    */
@@ -315,14 +318,14 @@ export interface TransferListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Only return transfers with the specified transfer group.
    */
   transfer_group?: string;
 }
-export interface TransferCreateReversalParams {
+export interface TransferCreateReversalParams<E extends string = string> {
   /**
    * A positive integer in cents (or local equivalent) representing how much of this transfer to reverse. Can only reverse up to the unreversed amount remaining of the transfer. Partial transfer reversals are only allowed for transfers to Stripe Accounts. Defaults to the entire transfer amount.
    */
@@ -336,7 +339,7 @@ export interface TransferCreateReversalParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -348,23 +351,24 @@ export interface TransferCreateReversalParams {
    */
   refund_application_fee?: boolean;
 }
-export interface TransferListReversalsParams extends PaginationParams {
+export interface TransferListReversalsParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface TransferRetrieveReversalParams {
+export interface TransferRetrieveReversalParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface TransferUpdateReversalParams {
+export interface TransferUpdateReversalParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

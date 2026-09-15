@@ -57,9 +57,8 @@ describe('V2 Core Events Resource', () => {
           }`,
         },
       ]);
-      const resp: ApiList<Stripe.V2.Core.Event> = await mockStripe.v2.core.events.list(
-        {object_id: 'foo'}
-      );
+      const resp: ApiList<Stripe.V2.Core.Event> =
+        await mockStripe.v2.core.events.list({object_id: 'foo'});
       expect(resp.data.length).is.equal(1);
       /*
       expect(resp.next_page_url).is.equal(

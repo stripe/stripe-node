@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
+import {ApplyExpand} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class BalanceResource extends StripeResource {
@@ -8,10 +9,10 @@ export class BalanceResource extends StripeResource {
    * Retrieves the current account balance, based on the authentication that was used to make the request.
    *  For a sample request, see [Accounting for negative balances](https://docs.stripe.com/docs/connect/account-balances#accounting-for-negative-balances).
    */
-  retrieve(
-    params?: BalanceRetrieveParams,
+  retrieve<E extends string = never>(
+    params?: BalanceRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Balance>> {
+  ): Promise<Response<ApplyExpand<Balance, E>>> {
     return this._makeRequest('GET', '/v1/balance', params, options) as any;
   }
 }
@@ -343,9 +344,9 @@ export namespace Balance {
     }
   }
 }
-export interface BalanceRetrieveParams {
+export interface BalanceRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

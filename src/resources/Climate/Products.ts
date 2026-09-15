@@ -2,17 +2,22 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Supplier} from './Suppliers.js';
-import {PaginationParams, Decimal} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  Decimal,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class ProductResource extends StripeResource {
   /**
    * Lists all available Climate product objects.
    */
-  list(
-    params?: Climate.ProductListParams,
+  list<E extends string = never>(
+    params?: Climate.ProductListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Product> {
+  ): ApiListPromise<ApplyExpandListItem<Product, E>> {
     return this._makeRequest('GET', '/v1/climate/products', params, options, {
       methodType: 'list',
       responseSchema: {
@@ -32,11 +37,11 @@ export class ProductResource extends StripeResource {
   /**
    * Retrieves the details of a Climate product with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Climate.ProductRetrieveParams,
+    params?: Climate.ProductRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Product>> {
+  ): Promise<Response<ApplyExpand<Product, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/climate/products/${encodeURIComponent(id)}`,
@@ -120,18 +125,19 @@ export namespace Product {
   }
 }
 export namespace Climate {
-  export interface ProductRetrieveParams {
+  export interface ProductRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Climate {
-  export interface ProductListParams extends PaginationParams {
+  export interface ProductListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

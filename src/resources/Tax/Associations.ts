@@ -1,17 +1,17 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {OtherString} from '../../shared.js';
+import {ApplyExpand, OtherString} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class AssociationResource extends StripeResource {
   /**
    * Finds a tax association object by PaymentIntent id.
    */
-  find(
-    params: Tax.AssociationFindParams,
+  find<E extends string = never>(
+    params: Tax.AssociationFindParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Association>> {
+  ): Promise<Response<ApplyExpand<Association, E>>> {
     return this._makeRequest(
       'GET',
       '/v1/tax/associations/find',
@@ -90,7 +90,7 @@ export namespace Association {
   }
 }
 export namespace Tax {
-  export interface AssociationFindParams {
+  export interface AssociationFindParams<E extends string = string> {
     /**
      * Valid [PaymentIntent](https://docs.stripe.com/api/payment_intents/object) id
      */
@@ -99,6 +99,6 @@ export namespace Tax {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

@@ -2,18 +2,18 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {InboundTransfer} from './../../Treasury/InboundTransfers.js';
-import {OtherString} from '../../../shared.js';
+import {ApplyExpand, OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class InboundTransferResource extends StripeResource {
   /**
    * Transitions a test mode created InboundTransfer to the failed status. The InboundTransfer must already be in the processing state.
    */
-  fail(
+  fail<E extends string = never>(
     id: string,
-    params?: TestHelpers.Treasury.InboundTransferFailParams,
+    params?: TestHelpers.Treasury.InboundTransferFailParams<E>,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>> {
+  ): Promise<Response<ApplyExpand<InboundTransfer, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/treasury/inbound_transfers/${encodeURIComponent(
@@ -26,11 +26,11 @@ export class InboundTransferResource extends StripeResource {
   /**
    * Marks the test mode InboundTransfer object as returned and links the InboundTransfer to a ReceivedDebit. The InboundTransfer must already be in the succeeded state.
    */
-  returnInboundTransfer(
+  returnInboundTransfer<E extends string = never>(
     id: string,
-    params?: TestHelpers.Treasury.InboundTransferReturnInboundTransferParams,
+    params?: TestHelpers.Treasury.InboundTransferReturnInboundTransferParams<E>,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>> {
+  ): Promise<Response<ApplyExpand<InboundTransfer, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/treasury/inbound_transfers/${encodeURIComponent(
@@ -43,11 +43,11 @@ export class InboundTransferResource extends StripeResource {
   /**
    * Transitions a test mode created InboundTransfer to the succeeded status. The InboundTransfer must already be in the processing state.
    */
-  succeed(
+  succeed<E extends string = never>(
     id: string,
-    params?: TestHelpers.Treasury.InboundTransferSucceedParams,
+    params?: TestHelpers.Treasury.InboundTransferSucceedParams<E>,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>> {
+  ): Promise<Response<ApplyExpand<InboundTransfer, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/test_helpers/treasury/inbound_transfers/${encodeURIComponent(
@@ -60,11 +60,11 @@ export class InboundTransferResource extends StripeResource {
 }
 export namespace TestHelpers {
   export namespace Treasury {
-    export interface InboundTransferFailParams {
+    export interface InboundTransferFailParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * Details about a failed InboundTransfer.
@@ -102,21 +102,23 @@ export namespace TestHelpers {
 }
 export namespace TestHelpers {
   export namespace Treasury {
-    export interface InboundTransferReturnInboundTransferParams {
+    export interface InboundTransferReturnInboundTransferParams<
+      E extends string = string
+    > {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }
 export namespace TestHelpers {
   export namespace Treasury {
-    export interface InboundTransferSucceedParams {
+    export interface InboundTransferSucceedParams<E extends string = string> {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
     }
   }
 }

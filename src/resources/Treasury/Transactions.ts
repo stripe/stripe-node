@@ -10,17 +10,23 @@ import {OutboundTransfer} from './OutboundTransfers.js';
 import {ReceivedCredit} from './ReceivedCredits.js';
 import {ReceivedDebit} from './ReceivedDebits.js';
 import * as Issuing from './../Issuing/index.js';
-import {PaginationParams, RangeQueryParam, OtherString} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+  RangeQueryParam,
+  OtherString,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../../lib.js';
 
 export class TransactionResource extends StripeResource {
   /**
    * Retrieves a list of Transaction objects.
    */
-  list(
-    params: Treasury.TransactionListParams,
+  list<E extends string = never>(
+    params: Treasury.TransactionListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Transaction> {
+  ): ApiListPromise<ApplyExpandListItem<Transaction, E>> {
     return this._makeRequest(
       'GET',
       '/v1/treasury/transactions',
@@ -69,13 +75,13 @@ export class TransactionResource extends StripeResource {
                                                       inner: {
                                                         kind: 'object',
                                                         fields: {
-                                                          gross_amount_decimal: {
-                                                            kind: 'nullable',
-                                                            inner: {
-                                                              kind:
-                                                                'decimal_string',
+                                                          gross_amount_decimal:
+                                                            {
+                                                              kind: 'nullable',
+                                                              inner: {
+                                                                kind: 'decimal_string',
+                                                              },
                                                             },
-                                                          },
                                                         },
                                                       },
                                                     },
@@ -84,13 +90,13 @@ export class TransactionResource extends StripeResource {
                                                       inner: {
                                                         kind: 'object',
                                                         fields: {
-                                                          gross_amount_decimal: {
-                                                            kind: 'nullable',
-                                                            inner: {
-                                                              kind:
-                                                                'decimal_string',
+                                                          gross_amount_decimal:
+                                                            {
+                                                              kind: 'nullable',
+                                                              inner: {
+                                                                kind: 'decimal_string',
+                                                              },
                                                             },
-                                                          },
                                                         },
                                                       },
                                                     },
@@ -99,20 +105,20 @@ export class TransactionResource extends StripeResource {
                                                       inner: {
                                                         kind: 'object',
                                                         fields: {
-                                                          local_amount_decimal: {
-                                                            kind: 'nullable',
-                                                            inner: {
-                                                              kind:
-                                                                'decimal_string',
+                                                          local_amount_decimal:
+                                                            {
+                                                              kind: 'nullable',
+                                                              inner: {
+                                                                kind: 'decimal_string',
+                                                              },
                                                             },
-                                                          },
-                                                          national_amount_decimal: {
-                                                            kind: 'nullable',
-                                                            inner: {
-                                                              kind:
-                                                                'decimal_string',
+                                                          national_amount_decimal:
+                                                            {
+                                                              kind: 'nullable',
+                                                              inner: {
+                                                                kind: 'decimal_string',
+                                                              },
                                                             },
-                                                          },
                                                         },
                                                       },
                                                     },
@@ -159,64 +165,58 @@ export class TransactionResource extends StripeResource {
                                                               kind: 'object',
                                                               fields: {
                                                                 fuel: {
-                                                                  kind:
-                                                                    'nullable',
+                                                                  kind: 'nullable',
                                                                   inner: {
-                                                                    kind:
-                                                                      'object',
+                                                                    kind: 'object',
                                                                     fields: {
-                                                                      gross_amount_decimal: {
-                                                                        kind:
-                                                                          'nullable',
-                                                                        inner: {
-                                                                          kind:
-                                                                            'decimal_string',
+                                                                      gross_amount_decimal:
+                                                                        {
+                                                                          kind: 'nullable',
+                                                                          inner:
+                                                                            {
+                                                                              kind: 'decimal_string',
+                                                                            },
                                                                         },
-                                                                      },
                                                                     },
                                                                   },
                                                                 },
                                                                 non_fuel: {
-                                                                  kind:
-                                                                    'nullable',
+                                                                  kind: 'nullable',
                                                                   inner: {
-                                                                    kind:
-                                                                      'object',
+                                                                    kind: 'object',
                                                                     fields: {
-                                                                      gross_amount_decimal: {
-                                                                        kind:
-                                                                          'nullable',
-                                                                        inner: {
-                                                                          kind:
-                                                                            'decimal_string',
+                                                                      gross_amount_decimal:
+                                                                        {
+                                                                          kind: 'nullable',
+                                                                          inner:
+                                                                            {
+                                                                              kind: 'decimal_string',
+                                                                            },
                                                                         },
-                                                                      },
                                                                     },
                                                                   },
                                                                 },
                                                                 tax: {
-                                                                  kind:
-                                                                    'nullable',
+                                                                  kind: 'nullable',
                                                                   inner: {
-                                                                    kind:
-                                                                      'object',
+                                                                    kind: 'object',
                                                                     fields: {
-                                                                      local_amount_decimal: {
-                                                                        kind:
-                                                                          'nullable',
-                                                                        inner: {
-                                                                          kind:
-                                                                            'decimal_string',
+                                                                      local_amount_decimal:
+                                                                        {
+                                                                          kind: 'nullable',
+                                                                          inner:
+                                                                            {
+                                                                              kind: 'decimal_string',
+                                                                            },
                                                                         },
-                                                                      },
-                                                                      national_amount_decimal: {
-                                                                        kind:
-                                                                          'nullable',
-                                                                        inner: {
-                                                                          kind:
-                                                                            'decimal_string',
+                                                                      national_amount_decimal:
+                                                                        {
+                                                                          kind: 'nullable',
+                                                                          inner:
+                                                                            {
+                                                                              kind: 'decimal_string',
+                                                                            },
                                                                         },
-                                                                      },
                                                                     },
                                                                   },
                                                                 },
@@ -234,13 +234,11 @@ export class TransactionResource extends StripeResource {
                                                           quantity_decimal: {
                                                             kind: 'nullable',
                                                             inner: {
-                                                              kind:
-                                                                'decimal_string',
+                                                              kind: 'decimal_string',
                                                             },
                                                           },
                                                           unit_cost_decimal: {
-                                                            kind:
-                                                              'decimal_string',
+                                                            kind: 'decimal_string',
                                                           },
                                                         },
                                                       },
@@ -273,11 +271,11 @@ export class TransactionResource extends StripeResource {
   /**
    * Retrieves the details of an existing Transaction.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Treasury.TransactionRetrieveParams,
+    params?: Treasury.TransactionRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Transaction>> {
+  ): Promise<Response<ApplyExpand<Transaction, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/treasury/transactions/${encodeURIComponent(id)}`,
@@ -410,14 +408,13 @@ export class TransactionResource extends StripeResource {
                                                             inner: {
                                                               kind: 'object',
                                                               fields: {
-                                                                gross_amount_decimal: {
-                                                                  kind:
-                                                                    'nullable',
-                                                                  inner: {
-                                                                    kind:
-                                                                      'decimal_string',
+                                                                gross_amount_decimal:
+                                                                  {
+                                                                    kind: 'nullable',
+                                                                    inner: {
+                                                                      kind: 'decimal_string',
+                                                                    },
                                                                   },
-                                                                },
                                                               },
                                                             },
                                                           },
@@ -426,14 +423,13 @@ export class TransactionResource extends StripeResource {
                                                             inner: {
                                                               kind: 'object',
                                                               fields: {
-                                                                gross_amount_decimal: {
-                                                                  kind:
-                                                                    'nullable',
-                                                                  inner: {
-                                                                    kind:
-                                                                      'decimal_string',
+                                                                gross_amount_decimal:
+                                                                  {
+                                                                    kind: 'nullable',
+                                                                    inner: {
+                                                                      kind: 'decimal_string',
+                                                                    },
                                                                   },
-                                                                },
                                                               },
                                                             },
                                                           },
@@ -442,22 +438,20 @@ export class TransactionResource extends StripeResource {
                                                             inner: {
                                                               kind: 'object',
                                                               fields: {
-                                                                local_amount_decimal: {
-                                                                  kind:
-                                                                    'nullable',
-                                                                  inner: {
-                                                                    kind:
-                                                                      'decimal_string',
+                                                                local_amount_decimal:
+                                                                  {
+                                                                    kind: 'nullable',
+                                                                    inner: {
+                                                                      kind: 'decimal_string',
+                                                                    },
                                                                   },
-                                                                },
-                                                                national_amount_decimal: {
-                                                                  kind:
-                                                                    'nullable',
-                                                                  inner: {
-                                                                    kind:
-                                                                      'decimal_string',
+                                                                national_amount_decimal:
+                                                                  {
+                                                                    kind: 'nullable',
+                                                                    inner: {
+                                                                      kind: 'decimal_string',
+                                                                    },
                                                                   },
-                                                                },
                                                               },
                                                             },
                                                           },
@@ -700,15 +694,16 @@ export namespace Transaction {
   }
 }
 export namespace Treasury {
-  export interface TransactionRetrieveParams {
+  export interface TransactionRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Treasury {
-  export interface TransactionListParams extends PaginationParams {
+  export interface TransactionListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Returns objects associated with this FinancialAccount.
      */
@@ -722,7 +717,7 @@ export namespace Treasury {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The results are in reverse chronological order by `created` or `posted_at`. The default is `created`.

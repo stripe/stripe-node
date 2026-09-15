@@ -4,18 +4,18 @@ import {StripeResource} from '../../StripeResource.js';
 import {Account} from './Accounts.js';
 import {Token} from './../Tokens.js';
 import {Customer} from './../Customers.js';
-import {OtherString, Emptyable} from '../../shared.js';
+import {ApplyExpand, OtherString, Emptyable} from '../../shared.js';
 import {RequestOptions, Response, ApiList} from '../../lib.js';
 
 export class SessionResource extends StripeResource {
   /**
    * Retrieves the details of a Financial Connections Session
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: FinancialConnections.SessionRetrieveParams,
+    params?: FinancialConnections.SessionRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Session>> {
+  ): Promise<Response<ApplyExpand<Session, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/financial_connections/sessions/${encodeURIComponent(id)}`,
@@ -26,10 +26,10 @@ export class SessionResource extends StripeResource {
   /**
    * To launch the Financial Connections authorization flow, create a Session. The session's client_secret can be used to launch the flow using Stripe.js.
    */
-  create(
-    params: FinancialConnections.SessionCreateParams,
+  create<E extends string = never>(
+    params: FinancialConnections.SessionCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Session>> {
+  ): Promise<Response<ApplyExpand<Session, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/financial_connections/sessions',
@@ -204,7 +204,7 @@ export namespace Session {
   }
 }
 export namespace FinancialConnections {
-  export interface SessionCreateParams {
+  export interface SessionCreateParams<E extends string = string> {
     /**
      * The account holder to link accounts for.
      */
@@ -220,7 +220,7 @@ export namespace FinancialConnections {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Filters to restrict the kinds of accounts to collect.
@@ -337,10 +337,10 @@ export namespace FinancialConnections {
   }
 }
 export namespace FinancialConnections {
-  export interface SessionRetrieveParams {
+  export interface SessionRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

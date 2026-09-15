@@ -2,16 +2,17 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {ReceivedDebit} from './../../Treasury/ReceivedDebits.js';
+import {ApplyExpand} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class ReceivedDebitResource extends StripeResource {
   /**
    * Use this endpoint to simulate a test mode ReceivedDebit initiated by a third party. In live mode, you can't directly create ReceivedDebits initiated by third parties.
    */
-  create(
-    params: TestHelpers.Treasury.ReceivedDebitCreateParams,
+  create<E extends string = never>(
+    params: TestHelpers.Treasury.ReceivedDebitCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<ReceivedDebit>> {
+  ): Promise<Response<ApplyExpand<ReceivedDebit, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/test_helpers/treasury/received_debits',
@@ -22,7 +23,7 @@ export class ReceivedDebitResource extends StripeResource {
 }
 export namespace TestHelpers {
   export namespace Treasury {
-    export interface ReceivedDebitCreateParams {
+    export interface ReceivedDebitCreateParams<E extends string = string> {
       /**
        * Amount (in cents) to be transferred.
        */
@@ -51,7 +52,7 @@ export namespace TestHelpers {
       /**
        * Specifies which fields in the response should be expanded.
        */
-      expand?: Array<string>;
+      expand?: Array<E>;
 
       /**
        * Initiating payment method details for the object.

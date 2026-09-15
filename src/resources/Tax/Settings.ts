@@ -1,26 +1,26 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {OtherString, AddressParam, Address} from '../../shared.js';
+import {ApplyExpand, OtherString, AddressParam, Address} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
 export class SettingResource extends StripeResource {
   /**
    * Retrieves Tax Settings for a merchant.
    */
-  retrieve(
-    params?: Tax.SettingsRetrieveParams,
+  retrieve<E extends string = never>(
+    params?: Tax.SettingsRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Settings>> {
+  ): Promise<Response<ApplyExpand<Settings, E>>> {
     return this._makeRequest('GET', '/v1/tax/settings', params, options) as any;
   }
   /**
    * Updates Tax Settings parameters used in tax calculations. All parameters are editable but none can be removed once set.
    */
-  update(
-    params?: Tax.SettingsUpdateParams,
+  update<E extends string = never>(
+    params?: Tax.SettingsUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Settings>> {
+  ): Promise<Response<ApplyExpand<Settings, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/tax/settings',
@@ -111,15 +111,15 @@ export namespace Settings {
   }
 }
 export namespace Tax {
-  export interface SettingsRetrieveParams {
+  export interface SettingsRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Tax {
-  export interface SettingsUpdateParams {
+  export interface SettingsUpdateParams<E extends string = string> {
     /**
      * Default configuration to be used on Stripe Tax calculations.
      */
@@ -128,7 +128,7 @@ export namespace Tax {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * The place where your business is located.

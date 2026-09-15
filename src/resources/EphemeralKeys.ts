@@ -1,17 +1,18 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
+import {ApplyExpand} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class EphemeralKeyResource extends StripeResource {
   /**
    * Invalidates a short-lived API key for a given resource.
    */
-  del(
+  del<E extends string = never>(
     id: string,
-    params?: EphemeralKeyDeleteParams,
+    params?: EphemeralKeyDeleteParams<E>,
     options?: RequestOptions
-  ): Promise<Response<EphemeralKey>> {
+  ): Promise<Response<ApplyExpand<EphemeralKey, E>>> {
     return this._makeRequest(
       'DELETE',
       `/v1/ephemeral_keys/${encodeURIComponent(id)}`,
@@ -68,7 +69,7 @@ export interface EphemeralKey {
    */
   secret?: string;
 }
-export interface EphemeralKeyCreateParams {
+export interface EphemeralKeyCreateParams<E extends string = string> {
   /**
    * The ID of the Customer you'd like to modify using the resulting ephemeral key.
    */
@@ -77,7 +78,7 @@ export interface EphemeralKeyCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * The ID of the Issuing Card you'd like to access using the resulting ephemeral key.
@@ -94,9 +95,9 @@ export interface EphemeralKeyCreateParams {
    */
   verification_session?: string;
 }
-export interface EphemeralKeyDeleteParams {
+export interface EphemeralKeyDeleteParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }

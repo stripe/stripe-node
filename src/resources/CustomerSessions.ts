@@ -2,17 +2,17 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {Customer} from './Customers.js';
-import {OtherString} from '../shared.js';
+import {ApplyExpand, OtherString} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 
 export class CustomerSessionResource extends StripeResource {
   /**
    * Creates a Customer Session object that includes a single-use client secret that you can use on your front-end to grant client-side API access for certain customer resources.
    */
-  create(
-    params: CustomerSessionCreateParams,
+  create<E extends string = never>(
+    params: CustomerSessionCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<CustomerSession>> {
+  ): Promise<Response<ApplyExpand<CustomerSession, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/customer_sessions',
@@ -174,9 +174,7 @@ export namespace CustomerSession {
          *
          * If not specified, defaults to ["always"]. In order to display all saved payment methods, specify ["always", "limited", "unspecified"].
          */
-        payment_method_allow_redisplay_filters: Array<
-          Features.PaymentMethodAllowRedisplayFilter
-        > | null;
+        payment_method_allow_redisplay_filters: Array<Features.PaymentMethodAllowRedisplayFilter> | null;
 
         /**
          * Controls whether the customer sheet displays the option to remove a saved payment method."
@@ -204,9 +202,7 @@ export namespace CustomerSession {
          *
          * If not specified, defaults to ["always"]. In order to display all saved payment methods, specify ["always", "limited", "unspecified"].
          */
-        payment_method_allow_redisplay_filters: Array<
-          Features.PaymentMethodAllowRedisplayFilter
-        > | null;
+        payment_method_allow_redisplay_filters: Array<Features.PaymentMethodAllowRedisplayFilter> | null;
 
         /**
          * Controls whether or not the mobile payment element shows saved payment methods.
@@ -266,9 +262,7 @@ export namespace CustomerSession {
          *
          * If not specified, defaults to ["always"]. In order to display all saved payment methods, specify ["always", "limited", "unspecified"].
          */
-        payment_method_allow_redisplay_filters: Array<
-          Features.PaymentMethodAllowRedisplayFilter
-        >;
+        payment_method_allow_redisplay_filters: Array<Features.PaymentMethodAllowRedisplayFilter>;
 
         /**
          * Controls whether or not the Payment Element shows saved payment methods. This parameter defaults to `disabled`.
@@ -326,7 +320,7 @@ export namespace CustomerSession {
     }
   }
 }
-export interface CustomerSessionCreateParams {
+export interface CustomerSessionCreateParams<E extends string = string> {
   /**
    * Configuration for each component. At least 1 component must be enabled.
    */
@@ -345,7 +339,7 @@ export interface CustomerSessionCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export namespace CustomerSessionCreateParams {
   export interface Components {
@@ -457,9 +451,7 @@ export namespace CustomerSessionCreateParams {
          *
          * If not specified, defaults to ["always"]. In order to display all saved payment methods, specify ["always", "limited", "unspecified"].
          */
-        payment_method_allow_redisplay_filters?: Array<
-          Features.PaymentMethodAllowRedisplayFilter
-        >;
+        payment_method_allow_redisplay_filters?: Array<Features.PaymentMethodAllowRedisplayFilter>;
 
         /**
          * Controls whether the customer sheet displays the option to remove a saved payment method."
@@ -487,9 +479,7 @@ export namespace CustomerSessionCreateParams {
          *
          * If not specified, defaults to ["always"]. In order to display all saved payment methods, specify ["always", "limited", "unspecified"].
          */
-        payment_method_allow_redisplay_filters?: Array<
-          Features.PaymentMethodAllowRedisplayFilter
-        >;
+        payment_method_allow_redisplay_filters?: Array<Features.PaymentMethodAllowRedisplayFilter>;
 
         /**
          * Controls whether or not the mobile payment element shows saved payment methods.
@@ -549,9 +539,7 @@ export namespace CustomerSessionCreateParams {
          *
          * If not specified, defaults to ["always"]. In order to display all saved payment methods, specify ["always", "limited", "unspecified"].
          */
-        payment_method_allow_redisplay_filters?: Array<
-          Features.PaymentMethodAllowRedisplayFilter
-        >;
+        payment_method_allow_redisplay_filters?: Array<Features.PaymentMethodAllowRedisplayFilter>;
 
         /**
          * Controls whether or not the Payment Element shows saved payment methods. This parameter defaults to `disabled`.

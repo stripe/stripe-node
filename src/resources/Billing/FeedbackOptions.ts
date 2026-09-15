@@ -1,17 +1,21 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {PaginationParams} from '../../shared.js';
+import {
+  ApplyExpandListItem,
+  ApplyExpand,
+  PaginationParams,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class FeedbackOptionResource extends StripeResource {
   /**
    * An API method for listing the feedback options model
    */
-  list(
-    params?: Billing.FeedbackOptionListParams,
+  list<E extends string = never>(
+    params?: Billing.FeedbackOptionListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<FeedbackOption> {
+  ): ApiListPromise<ApplyExpandListItem<FeedbackOption, E>> {
     return this._makeRequest(
       'GET',
       '/v1/billing/feedback_options',
@@ -25,10 +29,10 @@ export class FeedbackOptionResource extends StripeResource {
   /**
    * Creates a new feedback option.
    */
-  create(
-    params: Billing.FeedbackOptionCreateParams,
+  create<E extends string = never>(
+    params: Billing.FeedbackOptionCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FeedbackOption>> {
+  ): Promise<Response<ApplyExpand<FeedbackOption, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/billing/feedback_options',
@@ -39,11 +43,11 @@ export class FeedbackOptionResource extends StripeResource {
   /**
    * Retrieves a feedback options object given an ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: Billing.FeedbackOptionRetrieveParams,
+    params?: Billing.FeedbackOptionRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FeedbackOption>> {
+  ): Promise<Response<ApplyExpand<FeedbackOption, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/billing/feedback_options/${encodeURIComponent(id)}`,
@@ -54,11 +58,11 @@ export class FeedbackOptionResource extends StripeResource {
   /**
    * Updates the description of an existing feedback option.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: Billing.FeedbackOptionUpdateParams,
+    params?: Billing.FeedbackOptionUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FeedbackOption>> {
+  ): Promise<Response<ApplyExpand<FeedbackOption, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/billing/feedback_options/${encodeURIComponent(id)}`,
@@ -69,11 +73,11 @@ export class FeedbackOptionResource extends StripeResource {
   /**
    * Deactivates a feedback option. Deactivated feedback options cannot be used in portal configurations.
    */
-  deactivate(
+  deactivate<E extends string = never>(
     id: string,
-    params?: Billing.FeedbackOptionDeactivateParams,
+    params?: Billing.FeedbackOptionDeactivateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<FeedbackOption>> {
+  ): Promise<Response<ApplyExpand<FeedbackOption, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/billing/feedback_options/${encodeURIComponent(id)}/deactivate`,
@@ -121,39 +125,40 @@ export namespace FeedbackOption {
   }
 }
 export namespace Billing {
-  export interface FeedbackOptionCreateParams {
+  export interface FeedbackOptionCreateParams<E extends string = string> {
     description: string;
 
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface FeedbackOptionRetrieveParams {
+  export interface FeedbackOptionRetrieveParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface FeedbackOptionUpdateParams {
+  export interface FeedbackOptionUpdateParams<E extends string = string> {
     description?: string;
 
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }
 export namespace Billing {
-  export interface FeedbackOptionListParams extends PaginationParams {
+  export interface FeedbackOptionListParams<E extends string = string>
+    extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
 
     /**
      * Filter results to only include feedback options with the given status.
@@ -166,10 +171,10 @@ export namespace Billing {
   }
 }
 export namespace Billing {
-  export interface FeedbackOptionDeactivateParams {
+  export interface FeedbackOptionDeactivateParams<E extends string = string> {
     /**
      * Specifies which fields in the response should be expanded.
      */
-    expand?: Array<string>;
+    expand?: Array<E>;
   }
 }

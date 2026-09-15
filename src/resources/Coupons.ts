@@ -2,6 +2,8 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {
+  ApplyExpand,
+  ApplyExpandListItem,
   Emptyable,
   MetadataParam,
   OtherString,
@@ -30,11 +32,11 @@ export class CouponResource extends StripeResource {
   /**
    * Retrieves the coupon with the given ID.
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: CouponRetrieveParams,
+    params?: CouponRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Coupon>> {
+  ): Promise<Response<ApplyExpand<Coupon, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/coupons/${encodeURIComponent(id)}`,
@@ -45,11 +47,11 @@ export class CouponResource extends StripeResource {
   /**
    * Updates the metadata of a coupon. Other coupon details (currency, duration, amount_off) are, by design, not editable.
    */
-  update(
+  update<E extends string = never>(
     id: string,
-    params?: CouponUpdateParams,
+    params?: CouponUpdateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Coupon>> {
+  ): Promise<Response<ApplyExpand<Coupon, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/coupons/${encodeURIComponent(id)}`,
@@ -60,10 +62,10 @@ export class CouponResource extends StripeResource {
   /**
    * Returns a list of your coupons.
    */
-  list(
-    params?: CouponListParams,
+  list<E extends string = never>(
+    params?: CouponListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<Coupon> {
+  ): ApiListPromise<ApplyExpandListItem<Coupon, E>> {
     return this._makeRequest('GET', '/v1/coupons', params, options, {
       methodType: 'list',
     }) as any;
@@ -73,10 +75,10 @@ export class CouponResource extends StripeResource {
    *
    * A coupon has either a percent_off or an amount_off and currency. If you set an amount_off, that amount will be subtracted from any invoice's subtotal. For example, an invoice with a subtotal of 100 will have a final total of 0 if a coupon with an amount_off of 200 is applied to it and an invoice with a subtotal of 300 will have a final total of 100 if a coupon with an amount_off of 200 is applied to it.
    */
-  create(
-    params?: CouponCreateParams,
+  create<E extends string = never>(
+    params?: CouponCreateParams<E>,
     options?: RequestOptions
-  ): Promise<Response<Coupon>> {
+  ): Promise<Response<ApplyExpand<Coupon, E>>> {
     return this._makeRequest('POST', '/v1/coupons', params, options) as any;
   }
 }
@@ -203,7 +205,7 @@ export namespace Coupon {
 
   export type Duration = 'forever' | 'once' | 'repeating' | OtherString;
 }
-export interface CouponCreateParams {
+export interface CouponCreateParams<E extends string = string> {
   /**
    * A positive integer representing the amount to subtract from an invoice total (required if `percent_off` is not passed).
    */
@@ -239,7 +241,7 @@ export interface CouponCreateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Unique string of your choice that will be used to identify this coupon when applying it to a customer. If you don't want to specify a particular code, you can leave the ID blank and we'll generate a random code for you.
@@ -288,13 +290,13 @@ export namespace CouponCreateParams {
 
   export type Duration = 'forever' | 'once' | 'repeating' | OtherString;
 }
-export interface CouponRetrieveParams {
+export interface CouponRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface CouponUpdateParams {
+export interface CouponUpdateParams<E extends string = string> {
   /**
    * Coupons defined in each available currency option (only supported if the coupon is amount-based). Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
    */
@@ -305,7 +307,7 @@ export interface CouponUpdateParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -325,7 +327,8 @@ export namespace CouponUpdateParams {
     amount_off: number;
   }
 }
-export interface CouponListParams extends PaginationParams {
+export interface CouponListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
    */
@@ -334,6 +337,6 @@ export interface CouponListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
 export interface CouponDeleteParams {}

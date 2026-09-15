@@ -4,6 +4,8 @@ import {StripeResource} from '../StripeResource.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {Mandate} from './Mandates.js';
 import {
+  ApplyExpandListItem,
+  ApplyExpand,
   PaginationParams,
   Emptyable,
   MetadataParam,
@@ -18,10 +20,10 @@ export class PaymentRecordResource extends StripeResource {
   /**
    * List all the Payment Records for a given merchant.
    */
-  list(
-    params?: PaymentRecordListParams,
+  list<E extends string = never>(
+    params?: PaymentRecordListParams<E>,
     options?: RequestOptions
-  ): ApiListPromise<PaymentRecord> {
+  ): ApiListPromise<ApplyExpandListItem<PaymentRecord, E>> {
     return this._makeRequest('GET', '/v1/payment_records', params, options, {
       methodType: 'list',
     }) as any;
@@ -29,11 +31,11 @@ export class PaymentRecordResource extends StripeResource {
   /**
    * Retrieves a Payment Record with the given ID
    */
-  retrieve(
+  retrieve<E extends string = never>(
     id: string,
-    params?: PaymentRecordRetrieveParams,
+    params?: PaymentRecordRetrieveParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentRecord>> {
+  ): Promise<Response<ApplyExpand<PaymentRecord, E>>> {
     return this._makeRequest(
       'GET',
       `/v1/payment_records/${encodeURIComponent(id)}`,
@@ -45,11 +47,11 @@ export class PaymentRecordResource extends StripeResource {
    * Report a new payment attempt on the specified Payment Record. A new payment
    *  attempt can only be specified if all other payment attempts are canceled or failed.
    */
-  reportPaymentAttempt(
+  reportPaymentAttempt<E extends string = never>(
     id: string,
-    params: PaymentRecordReportPaymentAttemptParams,
+    params: PaymentRecordReportPaymentAttemptParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentRecord>> {
+  ): Promise<Response<ApplyExpand<PaymentRecord, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_records/${encodeURIComponent(id)}/report_payment_attempt`,
@@ -61,11 +63,11 @@ export class PaymentRecordResource extends StripeResource {
    * Report that the most recent payment attempt on the specified Payment Record
    *  was canceled.
    */
-  reportPaymentAttemptCanceled(
+  reportPaymentAttemptCanceled<E extends string = never>(
     id: string,
-    params: PaymentRecordReportPaymentAttemptCanceledParams,
+    params: PaymentRecordReportPaymentAttemptCanceledParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentRecord>> {
+  ): Promise<Response<ApplyExpand<PaymentRecord, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_records/${encodeURIComponent(
@@ -79,11 +81,11 @@ export class PaymentRecordResource extends StripeResource {
    * Report that the most recent payment attempt on the specified Payment Record
    *  failed or errored.
    */
-  reportPaymentAttemptFailed(
+  reportPaymentAttemptFailed<E extends string = never>(
     id: string,
-    params: PaymentRecordReportPaymentAttemptFailedParams,
+    params: PaymentRecordReportPaymentAttemptFailedParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentRecord>> {
+  ): Promise<Response<ApplyExpand<PaymentRecord, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_records/${encodeURIComponent(
@@ -97,11 +99,11 @@ export class PaymentRecordResource extends StripeResource {
    * Report that the most recent payment attempt on the specified Payment Record
    *  was guaranteed.
    */
-  reportPaymentAttemptGuaranteed(
+  reportPaymentAttemptGuaranteed<E extends string = never>(
     id: string,
-    params: PaymentRecordReportPaymentAttemptGuaranteedParams,
+    params: PaymentRecordReportPaymentAttemptGuaranteedParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentRecord>> {
+  ): Promise<Response<ApplyExpand<PaymentRecord, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_records/${encodeURIComponent(
@@ -114,11 +116,11 @@ export class PaymentRecordResource extends StripeResource {
   /**
    * Report informational updates on the specified Payment Record.
    */
-  reportPaymentAttemptInformational(
+  reportPaymentAttemptInformational<E extends string = never>(
     id: string,
-    params?: PaymentRecordReportPaymentAttemptInformationalParams,
+    params?: PaymentRecordReportPaymentAttemptInformationalParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentRecord>> {
+  ): Promise<Response<ApplyExpand<PaymentRecord, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_records/${encodeURIComponent(
@@ -132,11 +134,11 @@ export class PaymentRecordResource extends StripeResource {
    * Report that the most recent payment attempt on the specified Payment Record
    *  was refunded.
    */
-  reportRefund(
+  reportRefund<E extends string = never>(
     id: string,
-    params: PaymentRecordReportRefundParams,
+    params: PaymentRecordReportRefundParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentRecord>> {
+  ): Promise<Response<ApplyExpand<PaymentRecord, E>>> {
     return this._makeRequest(
       'POST',
       `/v1/payment_records/${encodeURIComponent(id)}/report_refund`,
@@ -149,10 +151,10 @@ export class PaymentRecordResource extends StripeResource {
    *  initialized and later report updates through the other report_* methods, or report Payment
    *  Records in a terminal state directly, through this method.
    */
-  reportPayment(
-    params: PaymentRecordReportPaymentParams,
+  reportPayment<E extends string = never>(
+    params: PaymentRecordReportPaymentParams<E>,
     options?: RequestOptions
-  ): Promise<Response<PaymentRecord>> {
+  ): Promise<Response<ApplyExpand<PaymentRecord, E>>> {
     return this._makeRequest(
       'POST',
       '/v1/payment_records/report_payment',
@@ -1913,7 +1915,7 @@ export namespace PaymentRecord {
         /**
          * funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -1948,6 +1950,8 @@ export namespace PaymentRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
@@ -2630,7 +2634,7 @@ export namespace PaymentRecord {
         /**
          * Funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -2665,6 +2669,8 @@ export namespace PaymentRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
@@ -2696,13 +2702,14 @@ export namespace PaymentRecord {
     }
   }
 }
-export interface PaymentRecordRetrieveParams {
+export interface PaymentRecordRetrieveParams<E extends string = string> {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentRecordListParams extends PaginationParams {
+export interface PaymentRecordListParams<E extends string = string>
+  extends PaginationParams {
   /**
    * Only return Payment Records that were created after this unix timestamp.
    */
@@ -2716,9 +2723,9 @@ export interface PaymentRecordListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 }
-export interface PaymentRecordReportPaymentParams {
+export interface PaymentRecordReportPaymentParams<E extends string = string> {
   /**
    * The amount you initially requested for this payment.
    */
@@ -2752,7 +2759,7 @@ export interface PaymentRecordReportPaymentParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Information about the payment attempt failure.
@@ -2933,7 +2940,9 @@ export namespace PaymentRecordReportPaymentParams {
     }
   }
 }
-export interface PaymentRecordReportPaymentAttemptParams {
+export interface PaymentRecordReportPaymentAttemptParams<
+  E extends string = string
+> {
   /**
    * When the reported payment was initiated. Measured in seconds since the Unix epoch.
    */
@@ -2947,7 +2956,7 @@ export interface PaymentRecordReportPaymentAttemptParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Information about the payment attempt failure.
@@ -3071,7 +3080,9 @@ export namespace PaymentRecordReportPaymentAttemptParams {
     }
   }
 }
-export interface PaymentRecordReportPaymentAttemptCanceledParams {
+export interface PaymentRecordReportPaymentAttemptCanceledParams<
+  E extends string = string
+> {
   /**
    * When the reported payment was canceled. Measured in seconds since the Unix epoch.
    */
@@ -3080,14 +3091,16 @@ export interface PaymentRecordReportPaymentAttemptCanceledParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }
-export interface PaymentRecordReportPaymentAttemptFailedParams {
+export interface PaymentRecordReportPaymentAttemptFailedParams<
+  E extends string = string
+> {
   /**
    * When the reported payment failed. Measured in seconds since the Unix epoch.
    */
@@ -3096,14 +3109,16 @@ export interface PaymentRecordReportPaymentAttemptFailedParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }
-export interface PaymentRecordReportPaymentAttemptGuaranteedParams {
+export interface PaymentRecordReportPaymentAttemptGuaranteedParams<
+  E extends string = string
+> {
   /**
    * When the reported payment was guaranteed. Measured in seconds since the Unix epoch.
    */
@@ -3112,14 +3127,16 @@ export interface PaymentRecordReportPaymentAttemptGuaranteedParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }
-export interface PaymentRecordReportPaymentAttemptInformationalParams {
+export interface PaymentRecordReportPaymentAttemptInformationalParams<
+  E extends string = string
+> {
   /**
    * Customer information for this payment.
    */
@@ -3133,7 +3150,7 @@ export interface PaymentRecordReportPaymentAttemptInformationalParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -3143,9 +3160,7 @@ export interface PaymentRecordReportPaymentAttemptInformationalParams {
   /**
    * Shipping information for this payment.
    */
-  shipping_details?: Emptyable<
-    PaymentRecordReportPaymentAttemptInformationalParams.ShippingDetails
-  >;
+  shipping_details?: Emptyable<PaymentRecordReportPaymentAttemptInformationalParams.ShippingDetails>;
 }
 export namespace PaymentRecordReportPaymentAttemptInformationalParams {
   export interface CustomerDetails {
@@ -3187,7 +3202,7 @@ export namespace PaymentRecordReportPaymentAttemptInformationalParams {
     phone?: string;
   }
 }
-export interface PaymentRecordReportRefundParams {
+export interface PaymentRecordReportRefundParams<E extends string = string> {
   /**
    * The outcome of the reported refund.
    */
@@ -3206,7 +3221,7 @@ export interface PaymentRecordReportRefundParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
-  expand?: Array<string>;
+  expand?: Array<E>;
 
   /**
    * When the reported refund was initiated. Measured in seconds since the Unix epoch.
