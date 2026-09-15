@@ -2072,6 +2072,54 @@ describe('RequestSender', () => {
   });
 
   describe('Stripe-Notice header', () => {
+    const emitNotice = (
+      env: Record<string, string | undefined>,
+      aiAgent = ''
+    ): Array<string> => {
+      const warnings: Array<string> = [];
+      const noticeSender = new RequestSender(
+        {
+          _platformFunctions: {
+            emitWarning: (warning: string): void => warnings.push(warning),
+            getEnv: () => env,
+          },
+          getConstant: (name: string): string =>
+            name === 'AI_AGENT' ? aiAgent : '',
+        } as any,
+        0
+      );
+
+      noticeSender._emitStripeNotice({'stripe-notice': 'test notice'});
+      return warnings;
+    };
+
+    it('tells humans how to suppress stripe notices', () => {
+      expect(emitNotice({})).to.deep.equal([
+        'test notice\nTo suppress Stripe notices in test and sandbox environments, set the STRIPE_SUPPRESS_NOTICES environment variable to true.',
+      ]);
+    });
+
+    for (const suppressionValue of ['true', 'TRUE']) {
+      it(`suppresses stripe notices for humans when STRIPE_SUPPRESS_NOTICES=${suppressionValue}`, () => {
+        expect(emitNotice({STRIPE_SUPPRESS_NOTICES: suppressionValue})).to.be
+          .empty;
+      });
+    }
+
+    for (const suppressionValue of ['', 'false', '1', 'invalid']) {
+      it(`does not suppress stripe notices when STRIPE_SUPPRESS_NOTICES=${suppressionValue}`, () => {
+        expect(
+          emitNotice({STRIPE_SUPPRESS_NOTICES: suppressionValue})
+        ).to.have.length(1);
+      });
+    }
+
+    it('does not suppress stripe notices for AI agents', () => {
+      expect(
+        emitNotice({STRIPE_SUPPRESS_NOTICES: 'true'}, 'codex_cli')
+      ).to.deep.equal(['test notice']);
+    });
+
     it('emits a warning when stripe-notice header is present', (done) => {
       const warnings: Array<string> = [];
 
@@ -2099,7 +2147,8 @@ describe('RequestSender', () => {
           stripe.balance
             .retrieve()
             .then(() => {
-              expect(warnings).to.include('test notice');
+              expect(warnings).to.have.length(1);
+              expect(warnings[0]).to.include('test notice');
               closeServer();
               done();
             })
