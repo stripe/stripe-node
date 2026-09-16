@@ -55,9 +55,13 @@
   },
   "dependencies": {},
   "peerDependencies": {
+    "@aws-sdk/client-sts": "^3.1129.0",
     "@types/node": ">=18"
   },
   "peerDependenciesMeta": {
+    "@aws-sdk/client-sts": {
+      "optional": true
+    },
     "@types/node": {
       "optional": true
     }
@@ -77,12 +81,12 @@
       "require": "./cjs/stripe.cjs.worker.js"
     },
     "bun": {
-      "import": "./esm/stripe.esm.worker.js",
-      "require": "./cjs/stripe.cjs.worker.js"
+      "import": "./esm/stripe.esm.bun.js",
+      "require": "./cjs/stripe.cjs.bun.js"
     },
     "deno": {
-      "import": "./esm/stripe.esm.worker.js",
-      "require": "./cjs/stripe.cjs.worker.js"
+      "import": "./esm/stripe.esm.deno.js",
+      "require": "./cjs/stripe.cjs.deno.js"
     },
     "worker": {
       "import": "./esm/stripe.esm.worker.js",

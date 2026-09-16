@@ -39,6 +39,7 @@ import {
   getAPIMode,
   parseHttpHeaderAsString,
   processOptions,
+  isWorkloadIdentityAuthenticator,
 } from './utils.js';
 
 export type HttpClientResponseError = {code: string};
@@ -656,6 +657,7 @@ export class RequestSender {
     // sniffed from its prefix, and the path may have come from remote data.
     validatePath(path);
     const apiMode: ApiMode = getAPIMode(path);
+    let hasRetriedAfterAuthFailure = false;
     const retryRequest = (
       requestFn: typeof makeRequest,
       apiVersion: string,
@@ -739,6 +741,18 @@ export class RequestSender {
 
           req
             .then((res: HttpClientResponseInterface) => {
+              if (
+                isWorkloadIdentityAuthenticator(authenticator) &&
+                res.getStatusCode() === 401 &&
+                !hasRetriedAfterAuthFailure
+              ) {
+                hasRetriedAfterAuthFailure = true;
+                authenticator._invalidate();
+                // Not a network retry: reuses the same `headers` and doesn't touch
+                // numRetries, so it never counts against maxNetworkRetries or triggers backoff.
+                return makeRequest(apiVersion, headers, numRetries);
+              }
+
               if (RequestSender._shouldRetry(res, requestRetries, maxRetries)) {
                 return retryRequest(
                   makeRequest,

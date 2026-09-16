@@ -11,7 +11,14 @@ import {NodeHttpClient} from '../net/NodeHttpClient.js';
 import {PlatformFunctions} from './PlatformFunctions.js';
 import {StripeError} from '../Error.js';
 import {concat} from '../utils.js';
-import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
+import {
+  MultipartRequestData,
+  RequestData,
+  BufferedFile,
+  RequestAuthenticator,
+  WorkloadIdentityProvider,
+} from '../Types.js';
+import {createCloudCapableWorkloadIdentityAuthenticator} from '../WorkloadIdentity/CloudCapableWorkloadIdentity.js';
 
 class StreamProcessingError extends StripeError {}
 
@@ -190,5 +197,17 @@ export class NodePlatformFunctions extends PlatformFunctions {
   /** @override */
   createDefaultCryptoProvider(): CryptoProvider {
     return this.createNodeCryptoProvider();
+  }
+
+  /** @override */
+  createWorkloadIdentityAuthenticator(
+    clientId: string,
+    provider: WorkloadIdentityProvider
+  ): RequestAuthenticator {
+    return createCloudCapableWorkloadIdentityAuthenticator(
+      clientId,
+      provider,
+      () => super.createWorkloadIdentityAuthenticator(clientId, provider)
+    );
   }
 }
