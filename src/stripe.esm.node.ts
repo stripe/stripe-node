@@ -960,6 +960,11 @@ const ALLOWED_CONFIG_PROPERTIES = [
 
 type RequestSenderFactory = (stripe: Stripe) => RequestSender;
 
+type StripeConstructorOptions = {
+  emitter: any;
+  prevRequestMetrics: any;
+};
+
 const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
@@ -1132,13 +1137,19 @@ export class Stripe {
     };
   }
 
-  constructor(key: string, config: StripeConfig = {}) {
+  constructor(key: string, config?: StripeConfig);
+  constructor(
+    key: string,
+    config: StripeConfig = {},
+    constructorOptions?: StripeConstructorOptions
+  ) {
     const props = this._getPropsFromConfig(config);
 
     this._platformFunctions = Stripe._platformFunctions;
 
     Object.defineProperty(this, '_emitter', {
-      value: this._platformFunctions.createEmitter(),
+      value:
+        constructorOptions?.emitter ?? this._platformFunctions.createEmitter(),
       enumerable: false,
       configurable: false,
       writable: false,
@@ -1195,7 +1206,7 @@ export class Stripe {
 
     this.webhooks = Stripe.webhooks;
 
-    this._prevRequestMetrics = [];
+    this._prevRequestMetrics = constructorOptions?.prevRequestMetrics ?? [];
     this._enableTelemetry = props.telemetry !== false;
     this._emitEventBodies = props.emitEventBodies === true;
 
@@ -1761,6 +1772,50 @@ export class Stripe {
       );
     }
     return this._buildEventNotification(inner);
+  }
+
+  /**
+   * Creates a new Stripe client with the same configuration and a different
+   * Stripe context. The new client does not inherit this client's Stripe account.
+   */
+  withStripeContext(stripeContext: StripeContext | null | undefined): Stripe {
+    const StripeClient = this.constructor as typeof Stripe & {
+      new (
+        key: string,
+        config: StripeConfig,
+        constructorOptions: StripeConstructorOptions
+      ): Stripe;
+    };
+    const client = new StripeClient(
+      '',
+      {
+        apiVersion: this.getApiField('version'),
+        authenticator: this._authenticator ?? undefined,
+        typescript:
+          StripeClient.USER_AGENT.typescript === true ? true : undefined,
+        maxNetworkRetries: this.getApiField('maxNetworkRetries'),
+        httpClient: this.getApiField('httpClient'),
+        timeout: this.getApiField('timeout'),
+        host: this.getApiField('host'),
+        port: this.getApiField('port'),
+        protocol: this.getApiField('protocol'),
+        telemetry: this.getTelemetryEnabled(),
+        emitEventBodies: this.getEmitEventBodiesEnabled(),
+        appInfo: this._appInfo,
+        stripeContext: stripeContext ?? undefined,
+      },
+      {
+        emitter: this._emitter,
+        prevRequestMetrics: this._prevRequestMetrics,
+      }
+    );
+
+    const clientId = this.getClientId();
+    if (clientId) {
+      client.setClientId(clientId);
+    }
+
+    return client;
   }
 
   notificationHandler(
