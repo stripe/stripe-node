@@ -137,6 +137,7 @@ export class ContractResource extends StripeResource {
   }
   /**
    * Delete a draft contract.
+   * @throws Stripe.RateLimitError
    */
   del(
     id: string,
@@ -198,6 +199,7 @@ export class ContractResource extends StripeResource {
   }
   /**
    * Update a draft or active contract.
+   * @throws Stripe.RateLimitError
    * @throws Stripe.AlreadyExistsError
    * @throws Stripe.CannotProceedError
    */
@@ -303,6 +305,7 @@ export class ContractResource extends StripeResource {
   }
   /**
    * Activate a draft contract.
+   * @throws Stripe.RateLimitError
    */
   activate(
     id: string,
@@ -349,6 +352,7 @@ export class ContractResource extends StripeResource {
   }
   /**
    * Cancel an active contract.
+   * @throws Stripe.RateLimitError
    */
   cancel(
     id: string,
@@ -645,6 +649,11 @@ export namespace Contract {
        * The user-provided lookup key.
        */
       lookup_key?: string;
+
+      /**
+       * Set of key-value pairs.
+       */
+      metadata?: Metadata;
 
       /**
        * The id of the product for this fee.
@@ -1028,6 +1037,11 @@ export namespace V2 {
          * A user-provided lookup key.
          */
         lookup_key?: string;
+
+        /**
+         * Set of key-value pairs that you can attach to an object.
+         */
+        metadata?: MetadataParam;
 
         /**
          * The id of the product for this fee.
@@ -1634,6 +1648,11 @@ export namespace V2 {
           lookup_key?: string;
 
           /**
+           * Metadata for the one-time fee.
+           */
+          metadata?: MetadataParam;
+
+          /**
            * The id of the product for this fee.
            */
           product: string;
@@ -1673,6 +1692,11 @@ export namespace V2 {
            * The lookup key of the one-time fee to update.
            */
           lookup_key?: string;
+
+          /**
+           * Metadata mutations to apply to the one-time fee.
+           */
+          metadata?: MetadataParam;
         }
 
         export namespace Add {

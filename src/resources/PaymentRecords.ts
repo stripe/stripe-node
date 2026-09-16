@@ -505,6 +505,8 @@ export namespace PaymentRecord {
 
     mobilepay?: PaymentMethodDetails.Mobilepay;
 
+    momo?: PaymentMethodDetails.Momo;
+
     multibanco?: PaymentMethodDetails.Multibanco;
 
     naver_pay?: PaymentMethodDetails.NaverPay;
@@ -1626,6 +1628,11 @@ export namespace PaymentRecord {
        * Two-letter ISO code representing the funding source country beneath the Link payment. You could use this attribute to get a sense of international fees.
        */
       country: string | null;
+
+      /**
+       * The [funding source group code](https://docs.stripe.com/payments/link/link-payment-methods) applied to this Link payment at confirmation time.
+       */
+      funding_source_group?: string;
     }
 
     export interface MbWay {}
@@ -1635,6 +1642,18 @@ export namespace PaymentRecord {
        * Internal card details
        */
       card: Mobilepay.Card | null;
+    }
+
+    export interface Momo {
+      /**
+       * Uniquely identifies this particular MoMo account. You can use this attribute to check whether two MoMo accounts are the same.
+       */
+      fingerprint: string | null;
+
+      /**
+       * ID of the multi-use Mandate created by, or used to make, this MoMo payment.
+       */
+      mandate?: string;
     }
 
     export interface Multibanco {
@@ -2322,8 +2341,10 @@ export namespace PaymentRecord {
 
         google_pay?: Wallet.GooglePay;
 
+        link?: Wallet.Link;
+
         /**
-         * The type of the card wallet, one of `apple_pay` or `google_pay`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
+         * The type of the card wallet, one of `apple_pay`, `google_pay`, or `link`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
          */
         type: string;
       }
@@ -2416,7 +2437,13 @@ export namespace PaymentRecord {
           | 'rejected'
           | OtherString;
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | OtherString;
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
       }
 
       export namespace Wallet {
@@ -2428,6 +2455,8 @@ export namespace PaymentRecord {
         }
 
         export interface GooglePay {}
+
+        export interface Link {}
       }
     }
 

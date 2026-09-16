@@ -152,7 +152,9 @@ export namespace Customer {
     export type Tier = 'l0' | 'l1' | 'l2';
 
     export type VerificationError =
+      | 'address_validation_failed'
       | 'id_document_verification_failed'
+      | 'person_verification_failed'
       | 'phone_verification_failed'
       | 'user_has_reached_max_verification_attempts'
       | OtherString;
@@ -168,7 +170,9 @@ export namespace Customer {
 
   export namespace Verification {
     export type Error =
+      | 'address_validation_failed'
       | 'id_document_verification_failed'
+      | 'person_verification_failed'
       | 'phone_verification_failed'
       | 'user_has_reached_max_verification_attempts'
       | OtherString;

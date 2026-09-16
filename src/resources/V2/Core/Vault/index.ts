@@ -8,19 +8,27 @@ import {
 } from './GbBankAccounts.js';
 import {
   V2 as V2Namespace1,
+  NetworkToken,
+  NetworkTokenResource,
+} from './NetworkTokens.js';
+import {
+  V2 as V2Namespace2,
   UsBankAccount,
   UsBankAccountResource,
 } from './UsBankAccounts.js';
 
 export {GbBankAccount} from './GbBankAccounts.js';
+export {NetworkToken} from './NetworkTokens.js';
 export {UsBankAccount} from './UsBankAccounts.js';
 
 export class Vault {
   gbBankAccounts: GbBankAccountResource;
+  networkTokens: NetworkTokenResource;
   usBankAccounts: UsBankAccountResource;
 
   constructor(private readonly stripe: Stripe) {
     this.gbBankAccounts = new GbBankAccountResource(stripe);
+    this.networkTokens = new NetworkTokenResource(stripe);
     this.usBankAccounts = new UsBankAccountResource(stripe);
   }
 }
@@ -33,12 +41,17 @@ export declare namespace Vault {
   export import GbBankAccountArchiveParams = V2Namespace0.Core.Vault.GbBankAccountArchiveParams;
   export import GbBankAccountInitiateConfirmationOfPayeeParams = V2Namespace0.Core.Vault.GbBankAccountInitiateConfirmationOfPayeeParams;
   export {GbBankAccount, GbBankAccountResource};
-  export import UsBankAccountListParams = V2Namespace1.Core.Vault.UsBankAccountListParams;
-  export import UsBankAccountCreateParams = V2Namespace1.Core.Vault.UsBankAccountCreateParams;
-  export import UsBankAccountRetrieveParams = V2Namespace1.Core.Vault.UsBankAccountRetrieveParams;
-  export import UsBankAccountUpdateParams = V2Namespace1.Core.Vault.UsBankAccountUpdateParams;
-  export import UsBankAccountArchiveParams = V2Namespace1.Core.Vault.UsBankAccountArchiveParams;
-  export import UsBankAccountConfirmMicrodepositsParams = V2Namespace1.Core.Vault.UsBankAccountConfirmMicrodepositsParams;
-  export import UsBankAccountSendMicrodepositsParams = V2Namespace1.Core.Vault.UsBankAccountSendMicrodepositsParams;
+  export import NetworkTokenCreateParams = V2Namespace1.Core.Vault.NetworkTokenCreateParams;
+  export import NetworkTokenCreateFromCredentialParams = V2Namespace1.Core.Vault.NetworkTokenCreateFromCredentialParams;
+  export import NetworkTokenRetrieveParams = V2Namespace1.Core.Vault.NetworkTokenRetrieveParams;
+  export import NetworkTokenGenerateCryptogramParams = V2Namespace1.Core.Vault.NetworkTokenGenerateCryptogramParams;
+  export {NetworkToken, NetworkTokenResource};
+  export import UsBankAccountListParams = V2Namespace2.Core.Vault.UsBankAccountListParams;
+  export import UsBankAccountCreateParams = V2Namespace2.Core.Vault.UsBankAccountCreateParams;
+  export import UsBankAccountRetrieveParams = V2Namespace2.Core.Vault.UsBankAccountRetrieveParams;
+  export import UsBankAccountUpdateParams = V2Namespace2.Core.Vault.UsBankAccountUpdateParams;
+  export import UsBankAccountArchiveParams = V2Namespace2.Core.Vault.UsBankAccountArchiveParams;
+  export import UsBankAccountConfirmMicrodepositsParams = V2Namespace2.Core.Vault.UsBankAccountConfirmMicrodepositsParams;
+  export import UsBankAccountSendMicrodepositsParams = V2Namespace2.Core.Vault.UsBankAccountSendMicrodepositsParams;
   export {UsBankAccount, UsBankAccountResource};
 }

@@ -54,7 +54,7 @@ export interface PaymentRetrySignal {
   /**
    * The payment record this signal relates to.
    */
-  payment_record: string;
+  payment_record?: string;
 
   /**
    * The retry recommendation.

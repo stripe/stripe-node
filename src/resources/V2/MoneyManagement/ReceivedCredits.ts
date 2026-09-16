@@ -56,6 +56,11 @@ export interface ReceivedCredit {
   amount: V2Amount;
 
   /**
+   * The amount and currency of the ReceivedCredit that was received.
+   */
+  amount_received: V2Amount;
+
+  /**
    * This object stores details about the originating Stripe transaction that resulted in the ReceivedCredit. Present if `type` field value is `balance_transfer`.
    */
   balance_transfer?: ReceivedCredit.BalanceTransfer;
@@ -171,12 +176,12 @@ export namespace ReceivedCredit {
 
   export interface BankTransfer {
     /**
-     * Hash containing the transaction bank details. Present if `origin_type` field value is `ca_bank_account`.
+     * Deprecated. Use `originating_bank_account.cpa` instead.
      */
     ca_bank_account?: BankTransfer.CaBankAccount;
 
     /**
-     * Hash containing the transaction bank details. Present if `origin_type` field value is `eu_bank_account`.
+     * Deprecated. Use `originating_bank_account.iban` instead.
      */
     eu_bank_account?: BankTransfer.EuBankAccount;
 
@@ -186,22 +191,22 @@ export namespace ReceivedCredit {
     financial_address: string;
 
     /**
-     * Hash containing the transaction bank details. Present if `origin_type` field value is `gb_bank_account`.
+     * Deprecated. Use `originating_bank_account.sort_code` instead.
      */
     gb_bank_account?: BankTransfer.GbBankAccount;
 
     /**
-     * Hash containing the transaction bank details. Present if  `origin_type` field value is `mx_bank_account`.
+     * Deprecated. Use `originating_bank_account.clabe` instead.
      */
     mx_bank_account?: BankTransfer.MxBankAccount;
 
     /**
-     * Open Enum. Indicates the origin of source from which external funds originated from.
+     * Hash containing the originating bank account details and type for this bank transfer.
      */
-    origin_type: BankTransfer.OriginType;
+    originating_bank_account: BankTransfer.OriginatingBankAccount;
 
     /**
-     * Hash containing the transaction bank details. Present if `origin_type` field value is `sepa_bank_account`.
+     * Deprecated. Use `originating_bank_account.iban` instead.
      */
     sepa_bank_account?: BankTransfer.SepaBankAccount;
 
@@ -211,7 +216,7 @@ export namespace ReceivedCredit {
     statement_descriptor?: string;
 
     /**
-     * Hash containing the transaction bank details. Present if `origin_type` field value is `us_bank_account`.
+     * Deprecated. Use `originating_bank_account.aba` instead.
      */
     us_bank_account?: BankTransfer.UsBankAccount;
   }
@@ -245,14 +250,14 @@ export namespace ReceivedCredit {
     financial_address: string;
 
     /**
-     * Open Enum. Indicates the origin of source from which external funds originated from.
-     */
-    origin_type: CryptoWalletTransfer.OriginType;
-
-    /**
      * Freeform string set by originator of the external ReceivedCredit.
      */
     statement_descriptor?: string;
+
+    /**
+     * Open Enum. The type of crypto wallet transfer that originated this ReceivedCredit.
+     */
+    type: CryptoWalletTransfer.Type;
   }
 
   export type Status =
@@ -433,15 +438,37 @@ export namespace ReceivedCredit {
       network: MxBankAccount.Network;
     }
 
-    export type OriginType =
-      | 'ca_bank_account'
-      | 'crypto_wallet'
-      | 'eu_bank_account'
-      | 'gb_bank_account'
-      | 'mx_bank_account'
-      | 'sepa_bank_account'
-      | 'us_bank_account'
-      | OtherString;
+    export interface OriginatingBankAccount {
+      /**
+       * Hash containing the transaction bank details. Present if `type` field value is `aba`.
+       */
+      aba?: OriginatingBankAccount.Aba;
+
+      /**
+       * Hash containing the transaction bank details. Present if `type` field value is `clabe`.
+       */
+      clabe?: OriginatingBankAccount.Clabe;
+
+      /**
+       * Hash containing the transaction bank details. Present if `type` field value is `cpa`.
+       */
+      cpa?: OriginatingBankAccount.Cpa;
+
+      /**
+       * Hash containing the transaction bank details. Present if `type` field value is `iban`.
+       */
+      iban?: OriginatingBankAccount.Iban;
+
+      /**
+       * Hash containing the transaction bank details. Present if `type` field value is `sort_code`.
+       */
+      sort_code?: OriginatingBankAccount.SortCode;
+
+      /**
+       * Open Enum. The type of bank transfer that originated this ReceivedCredit.
+       */
+      type: OriginatingBankAccount.Type;
+    }
 
     export interface SepaBankAccount {
       /**
@@ -518,6 +545,176 @@ export namespace ReceivedCredit {
       export type Network = 'spei' | OtherString;
     }
 
+    export namespace OriginatingBankAccount {
+      export interface Aba {
+        /**
+         * The name of the account holder that sent the payment.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The bank name the transfer was received from.
+         */
+        bank_name?: string;
+
+        /**
+         * The last 4 digits of the account number that originated the transfer.
+         */
+        last4?: string;
+
+        /**
+         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+         */
+        network: Aba.Network;
+
+        /**
+         * The routing number of the account that originated the transfer.
+         */
+        routing_number?: string;
+      }
+
+      export interface Clabe {
+        /**
+         * The name of the account holder that sent the payment.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The bank name the transfer was received from.
+         */
+        bank_name?: string;
+
+        /**
+         * The BIC/SWIFT code of the account that originated the transfer.
+         */
+        bic?: string;
+
+        /**
+         * The last 4 digits of the account number that originated the transfer.
+         */
+        last4?: string;
+
+        /**
+         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+         */
+        network: Clabe.Network;
+      }
+
+      export interface Cpa {
+        /**
+         * The name of the account holder that sent the payment.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The bank name the transfer was received from.
+         */
+        bank_name?: string;
+
+        /**
+         * The BIC/SWIFT code of the account that originated the transfer.
+         */
+        bic?: string;
+
+        /**
+         * The last 4 digits of the account number that originated the transfer.
+         */
+        last4?: string;
+
+        /**
+         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+         */
+        network: Cpa.Network;
+      }
+
+      export interface Iban {
+        /**
+         * The account holder name of the bank account the transfer was received from.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The bank name the transfer was received from.
+         */
+        bank_name?: string;
+
+        /**
+         * The BIC/SWIFT code of the account that originated the transfer.
+         */
+        bic?: string;
+
+        /**
+         * The origination country of the bank transfer.
+         */
+        country?: string;
+
+        /**
+         * The IBAN that originated the transfer.
+         */
+        iban?: string;
+
+        /**
+         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+         */
+        network: Iban.Network;
+      }
+
+      export interface SortCode {
+        /**
+         * The account holder name of the bank account the transfer was received from.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The bank name the transfer was received from.
+         */
+        bank_name?: string;
+
+        /**
+         * The last 4 digits of the account number that originated the transfer.
+         */
+        last4?: string;
+
+        /**
+         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+         */
+        network: SortCode.Network;
+
+        /**
+         * The sort code of the account that originated the transfer.
+         */
+        sort_code?: string;
+      }
+
+      export type Type =
+        | 'aba'
+        | 'clabe'
+        | 'cpa'
+        | 'iban'
+        | 'sort_code'
+        | OtherString;
+
+      export namespace Aba {
+        export type Network = 'ach' | 'rtp' | 'us_domestic_wire' | OtherString;
+      }
+
+      export namespace Clabe {
+        export type Network = 'spei' | OtherString;
+      }
+
+      export namespace Cpa {
+        export type Network = 'acss' | OtherString;
+      }
+
+      export namespace Iban {
+        export type Network = 'sepa_credit_transfer' | OtherString;
+      }
+
+      export namespace SortCode {
+        export type Network = 'chaps' | 'fps' | OtherString;
+      }
+    }
+
     export namespace SepaBankAccount {
       export type Network = 'sepa_credit_transfer' | OtherString;
     }
@@ -561,15 +758,7 @@ export namespace ReceivedCredit {
       network: CryptoWallet.Network;
     }
 
-    export type OriginType =
-      | 'ca_bank_account'
-      | 'crypto_wallet'
-      | 'eu_bank_account'
-      | 'gb_bank_account'
-      | 'mx_bank_account'
-      | 'sepa_bank_account'
-      | 'us_bank_account'
-      | OtherString;
+    export type Type = 'crypto_wallet' | OtherString;
 
     export namespace CryptoWallet {
       export type Network =

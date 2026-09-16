@@ -104,6 +104,7 @@ import {MeteredItemResource as V2BillingMeteredItems} from './resources/V2/Billi
 import {MeterResource as BillingMeters} from './resources/Billing/Meters.js';
 import {MetricQueryResource as V2DataAnalyticsMetricQuery} from './resources/V2/Data/Analytics/MetricQuery.js';
 import {MoneyManagementResource as V2TestHelpersMoneyManagement} from './resources/V2/TestHelpers/MoneyManagement.js';
+import {NetworkTokenResource as V2CoreVaultNetworkTokens} from './resources/V2/Core/Vault/NetworkTokens.js';
 import {OffSessionPaymentResource as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {OnboardingLinkResource as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
 import {OneTimeItemResource as V2BillingOneTimeItems} from './resources/V2/Billing/OneTimeItems.js';
@@ -470,6 +471,7 @@ export const V2 = resourceNamespace('v2', {
     Health: resourceNamespace('health', {Alerts: V2CoreHealthAlerts}),
     Vault: resourceNamespace('vault', {
       GbBankAccounts: V2CoreVaultGbBankAccounts,
+      NetworkTokens: V2CoreVaultNetworkTokens,
       UsBankAccounts: V2CoreVaultUsBankAccounts,
     }),
   }),

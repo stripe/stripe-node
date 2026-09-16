@@ -132,27 +132,27 @@ export namespace InboundTransfer {
 
   export interface TransferHistory {
     /**
-     * The history entry for a failed InboundTransfer.
+     * The InboundTransfer failed. See `failure_reason` for more details.
      */
     bank_debit_failed?: TransferHistory.BankDebitFailed;
 
     /**
-     * The history entry for a processing InboundTransfer.
+     * The InboundTransfer was submitted to the scheme for processing. The debit is still in progress and can later succeed or fail.
      */
     bank_debit_processing?: TransferHistory.BankDebitProcessing;
 
     /**
-     * The history entry for a queued InboundTransfer.
+     * The InboundTransfer was created and is waiting to be submitted to the scheme for processing.
      */
     bank_debit_queued?: TransferHistory.BankDebitQueued;
 
     /**
-     * The history entry for a returned InboundTransfer.
+     * The InboundTransfer was returned. The original transaction has been reversed.
      */
     bank_debit_returned?: TransferHistory.BankDebitReturned;
 
     /**
-     * The history entry for a succeeded InboundTransfer.
+     * The InboundTransfer succeeded. Funds might not yet be available; check the associated Transaction for availability.
      */
     bank_debit_succeeded?: TransferHistory.BankDebitSucceeded;
 

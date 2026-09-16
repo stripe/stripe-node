@@ -1516,7 +1516,7 @@ export namespace Authorization {
     network_data?: RequestHistory.NetworkData | null;
 
     /**
-     * The network-specific response code associated with Stripe's decision for this authorization request. The value is a Visa or Mastercard response code depending on the network over which the authorization was routed.
+     * The network-specific response code associated with the authorization decision for this authorization request. The value is a Visa or Mastercard response code depending on the network over which the authorization was routed.
      */
     network_response_code?: string | null;
 

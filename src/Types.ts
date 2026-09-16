@@ -86,6 +86,7 @@ export type RawErrorType =
   | 'insufficient_funds'
   | 'invalid_payment_method'
   | 'invalid_payout_method'
+  | 'merchant_not_gated'
   | 'non_zero_balance'
   | 'not_cancelable'
   | 'quota_exceeded'

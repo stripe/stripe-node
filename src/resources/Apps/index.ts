@@ -2,8 +2,10 @@
 
 import {Stripe} from '../../stripe.core.js';
 import {Apps as AppsNamespace0, Secret, SecretResource} from './Secrets.js';
+import {Install} from './Installs.js';
 
 export {Secret} from './Secrets.js';
+export {Install} from './Installs.js';
 
 export class Apps {
   secrets: SecretResource;
@@ -19,4 +21,5 @@ export declare namespace Apps {
   export import SecretFindParams = AppsNamespace0.SecretFindParams;
   export import SecretDeleteWhereParams = AppsNamespace0.SecretDeleteWhereParams;
   export {Secret, SecretResource};
+  export {Install};
 }
