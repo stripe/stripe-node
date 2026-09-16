@@ -11,6 +11,11 @@ const app = new Koa();
 env.config();
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
+if (!webhookSecret) {
+  console.error('Please set the STRIPE_WEBHOOK_SECRET environment variable');
+  process.exit(1);
+}
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const handleWebhook = async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {

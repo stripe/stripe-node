@@ -162,7 +162,7 @@ export interface OutboundPayment {
   /**
    * The purpose of the OutboundPayment, if applicable.
    */
-  purpose?: 'payroll' | null;
+  purpose?: OutboundPayment.Purpose | null;
 
   /**
    * Details about a returned OutboundPayment. Only set when the status is `returned`.
@@ -216,6 +216,8 @@ export namespace OutboundPayment {
      */
     present: boolean;
   }
+
+  export type Purpose = 'payroll' | OtherString;
 
   export interface ReturnedDetails {
     /**
