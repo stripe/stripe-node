@@ -14,7 +14,12 @@ import {Stripe} from 'stripe';
 import express from 'express';
 
 const apiKey = process.env.STRIPE_API_KEY ?? '';
-const webhookSecret = process.env.WEBHOOK_SECRET ?? '';
+const webhookSecret = process.env.WEBHOOK_SECRET;
+
+if (!webhookSecret) {
+  console.error('Please set the WEBHOOK_SECRET environment variable');
+  process.exit(1);
+}
 
 const app = express();
 const client = new Stripe(apiKey);

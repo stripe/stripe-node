@@ -7,7 +7,13 @@ const handler = async (
 ): Promise<void> => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-  const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET;
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!webhookSecret) {
+    console.error('Please set the STRIPE_WEBHOOK_SECRET environment variable');
+    res.status(500).send('Webhook secret is not configured');
+    return;
+  }
 
   if (req.method === 'POST') {
     const sig = req.headers['stripe-signature'];

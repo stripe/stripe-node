@@ -6,7 +6,7 @@ import {RequestOptions, Response} from '../lib.js';
 
 export class AccountSessionResource extends StripeResource {
   /**
-   * Creates a AccountSession object that includes a single-use token that the platform can use on their front-end to grant client-side API access.
+   * Creates an AccountSession object that includes a single-use token that the platform can use on their front-end to grant client-side API access.
    */
   create(
     params: AccountSessionCreateParams,
@@ -116,11 +116,6 @@ export namespace AccountSession {
     issuing_card: Components.IssuingCard;
 
     issuing_cards_list: Components.IssuingCardsList;
-
-    /**
-     * Configuration for the [Nestingdemo](https://docs.stripe.com/connect/supported-embedded-components/nesting-demo/) embedded component.
-     */
-    nesting_demo?: Components.NestingDemo | null;
 
     /**
      * Configuration for the [network cost passthrough report](https://docs.stripe.com/connect/supported-embedded-components/network-cost-passthrough-report/) embedded component.
@@ -353,15 +348,6 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: IssuingCardsList.Features;
-    }
-
-    export interface NestingDemo {
-      /**
-       * Whether the embedded component is enabled.
-       */
-      enabled: boolean;
-
-      features: NestingDemo.Features;
     }
 
     export interface NetworkCostPassthroughReport {
@@ -806,10 +792,6 @@ export namespace AccountSession {
          */
         spend_control_management: boolean;
       }
-    }
-
-    export namespace NestingDemo {
-      export interface Features {}
     }
 
     export namespace NetworkCostPassthroughReport {
