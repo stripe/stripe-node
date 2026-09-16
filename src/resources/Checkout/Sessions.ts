@@ -2612,7 +2612,7 @@ export namespace Session {
 
     export interface Label {
       /**
-       * Custom text for the label, displayed to the customer. Up to 50 characters.
+       * Custom text for the label, displayed to the customer. Up to 100 characters.
        */
       custom: string | null;
 
@@ -3095,6 +3095,8 @@ export namespace Session {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+
+      verification_method?: BacsDebit.VerificationMethod;
     }
 
     export interface Bancontact {
@@ -3844,6 +3846,11 @@ export namespace Session {
         | 'none'
         | 'off_session'
         | 'on_session'
+        | OtherString;
+
+      export type VerificationMethod =
+        | 'automatic'
+        | 'payer_name_verification'
         | OtherString;
     }
 
@@ -5897,6 +5904,7 @@ export namespace Checkout {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'sunbit'
@@ -6340,7 +6348,7 @@ export namespace Checkout {
 
       export interface Label {
         /**
-         * Custom text for the label, displayed to the customer. Up to 50 characters.
+         * Custom text for the label, displayed to the customer. Up to 100 characters.
          */
         custom: string;
 
@@ -7256,6 +7264,8 @@ export namespace Checkout {
          * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
          */
         target_date?: string;
+
+        verification_method?: BacsDebit.VerificationMethod;
       }
 
       export interface Bancontact {
@@ -8077,6 +8087,11 @@ export namespace Checkout {
           | 'none'
           | 'off_session'
           | 'on_session'
+          | OtherString;
+
+        export type VerificationMethod =
+          | 'automatic'
+          | 'payer_name_verification'
           | OtherString;
       }
 

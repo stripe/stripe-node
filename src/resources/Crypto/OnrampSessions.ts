@@ -225,6 +225,7 @@ export namespace OnrampSession {
       | 'btc'
       | 'eth'
       | 'matic'
+      | 'ripusd'
       | 'sol'
       | 'usdc'
       | 'usdt'
@@ -261,7 +262,14 @@ export namespace OnrampSession {
 
     export type SettlementSpeed = 'instant' | 'standard' | OtherString;
 
-    export type SourceCurrency = 'eur' | 'gbp' | 'usd' | OtherString;
+    export type SourceCurrency =
+      | 'cad'
+      | 'cop'
+      | 'eur'
+      | 'gbp'
+      | 'php'
+      | 'usd'
+      | OtherString;
 
     export interface WalletAddresses {
       /**
@@ -454,6 +462,7 @@ export namespace Crypto {
       | 'btc'
       | 'eth'
       | 'matic'
+      | 'ripusd'
       | 'sol'
       | 'usdc'
       | 'usdt'
@@ -480,7 +489,14 @@ export namespace Crypto {
 
     export type SettlementSpeed = 'instant' | 'standard' | OtherString;
 
-    export type SourceCurrency = 'eur' | 'gbp' | 'usd' | OtherString;
+    export type SourceCurrency =
+      | 'cad'
+      | 'cop'
+      | 'eur'
+      | 'gbp'
+      | 'php'
+      | 'usd'
+      | OtherString;
 
     export interface WalletAddresses {
       /**
@@ -540,6 +556,7 @@ export namespace Crypto {
       | 'btc'
       | 'eth'
       | 'matic'
+      | 'ripusd'
       | 'sol'
       | 'usdc'
       | 'usdt'

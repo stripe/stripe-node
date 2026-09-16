@@ -1597,6 +1597,11 @@ export namespace PaymentAttemptRecord {
        * Two-letter ISO code representing the funding source country beneath the Link payment. You could use this attribute to get a sense of international fees.
        */
       country: string | null;
+
+      /**
+       * The [funding source group code](https://docs.stripe.com/payments/link/link-payment-methods) applied to this Link payment at confirmation time.
+       */
+      funding_source_group?: string;
     }
 
     export interface MbWay {}
@@ -2387,7 +2392,13 @@ export namespace PaymentAttemptRecord {
           | 'rejected'
           | OtherString;
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | OtherString;
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
       }
 
       export namespace Wallet {

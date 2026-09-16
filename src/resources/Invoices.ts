@@ -108,7 +108,8 @@ export class InvoiceResource extends StripeResource {
   }
   /**
    * Draft invoices are fully editable. Once an invoice is [finalized](https://docs.stripe.com/docs/billing/invoices/workflow#finalized),
-   * monetary values, as well as collection_method, become uneditable.
+   * you can no longer change most of its details, including monetary values and collection_method. For most invoices,
+   * this also includes description.
    *
    * If you would like to stop the Stripe Billing engine from automatically finalizing, reattempting payments on,
    * sending reminders for, or [automatically reconciling](https://docs.stripe.com/docs/billing/invoices/reconciliation) invoices, pass
@@ -2827,6 +2828,11 @@ export namespace Invoice {
       acss_debit: PaymentMethodOptions.AcssDebit | null;
 
       /**
+       * If paying by `bacs_debit`, this sub-hash contains details about the Bacs Direct Debit payment method options to pass to the invoice's PaymentIntent.
+       */
+      bacs_debit?: PaymentMethodOptions.BacsDebit | null;
+
+      /**
        * If paying by `bancontact`, this sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
        */
       bancontact: PaymentMethodOptions.Bancontact | null;
@@ -2974,6 +2980,15 @@ export namespace Invoice {
         verification_method?: AcssDebit.VerificationMethod;
       }
 
+      export interface BacsDebit {
+        /**
+         * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+         */
+        target_date?: string;
+
+        verification_method?: BacsDebit.VerificationMethod;
+      }
+
       export interface Bancontact {
         /**
          * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -3078,6 +3093,13 @@ export namespace Invoice {
         export namespace MandateOptions {
           export type TransactionType = 'business' | 'personal' | OtherString;
         }
+      }
+
+      export namespace BacsDebit {
+        export type VerificationMethod =
+          | 'automatic'
+          | 'payer_name_verification'
+          | OtherString;
       }
 
       export namespace Bancontact {
@@ -3859,6 +3881,11 @@ export namespace InvoiceCreateParams {
       acss_debit?: Emptyable<PaymentMethodOptions.AcssDebit>;
 
       /**
+       * If paying by `bacs_debit`, this sub-hash contains details about the Bacs Direct Debit payment method options to pass to the invoice's PaymentIntent.
+       */
+      bacs_debit?: Emptyable<PaymentMethodOptions.BacsDebit>;
+
+      /**
        * If paying by `bancontact`, this sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
        */
       bancontact?: Emptyable<PaymentMethodOptions.Bancontact>;
@@ -4009,6 +4036,15 @@ export namespace InvoiceCreateParams {
         verification_method?: AcssDebit.VerificationMethod;
       }
 
+      export interface BacsDebit {
+        /**
+         * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+         */
+        target_date?: string;
+
+        verification_method?: BacsDebit.VerificationMethod;
+      }
+
       export interface Bancontact {
         /**
          * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -4133,6 +4169,13 @@ export namespace InvoiceCreateParams {
         export namespace MandateOptions {
           export type TransactionType = 'business' | 'personal' | OtherString;
         }
+      }
+
+      export namespace BacsDebit {
+        export type VerificationMethod =
+          | 'automatic'
+          | 'payer_name_verification'
+          | OtherString;
       }
 
       export namespace Bancontact {
@@ -4945,6 +4988,11 @@ export namespace InvoiceUpdateParams {
       acss_debit?: Emptyable<PaymentMethodOptions.AcssDebit>;
 
       /**
+       * If paying by `bacs_debit`, this sub-hash contains details about the Bacs Direct Debit payment method options to pass to the invoice's PaymentIntent.
+       */
+      bacs_debit?: Emptyable<PaymentMethodOptions.BacsDebit>;
+
+      /**
        * If paying by `bancontact`, this sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
        */
       bancontact?: Emptyable<PaymentMethodOptions.Bancontact>;
@@ -5095,6 +5143,15 @@ export namespace InvoiceUpdateParams {
         verification_method?: AcssDebit.VerificationMethod;
       }
 
+      export interface BacsDebit {
+        /**
+         * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+         */
+        target_date?: string;
+
+        verification_method?: BacsDebit.VerificationMethod;
+      }
+
       export interface Bancontact {
         /**
          * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -5219,6 +5276,13 @@ export namespace InvoiceUpdateParams {
         export namespace MandateOptions {
           export type TransactionType = 'business' | 'personal' | OtherString;
         }
+      }
+
+      export namespace BacsDebit {
+        export type VerificationMethod =
+          | 'automatic'
+          | 'payer_name_verification'
+          | OtherString;
       }
 
       export namespace Bancontact {
@@ -6211,6 +6275,11 @@ export interface InvoiceCreatePreviewParams {
    * Customizes the types of values to include when calculating the invoice. Defaults to `next` if unspecified.
    */
   preview_mode?: InvoiceCreatePreviewParams.PreviewMode;
+
+  /**
+   * A pricing token whose presentment currency and exchange rate are used to convert the amounts on the previewed invoice into the customer-facing presentment currency. When omitted, amounts are returned in the settlement currency.
+   */
+  pricing_token?: string;
 
   /**
    * The identifier of the schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
@@ -9077,12 +9146,12 @@ export namespace InvoiceCreatePreviewParams {
       plan?: string;
 
       /**
-       * The ID of the price object. One of `price` or `price_data` is required. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+       * The ID of the price object. You can use either `price` or `price_data`, but not both, to set or change this item's price. If you're updating an existing item without changing its price, omit both. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
        */
       price?: string;
 
       /**
-       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
+       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. You can use either `price` or `price_data`, but not both, to set or change this item's price. If you're updating an existing item without changing its price, omit both.
        */
       price_data?: Item.PriceData;
 

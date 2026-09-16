@@ -301,6 +301,11 @@ export interface PayoutCreateParams {
   payout_method?: string;
 
   /**
+   * Additional options that complement the payout_method. The keys in this dictionary identify the type of payout method the options apply to.
+   */
+  payout_method_options?: PayoutCreateParams.PayoutMethodOptions;
+
+  /**
    * The balance type of your Stripe balance to draw this payout from. Balances for different payment sources are kept separately. You can find the amounts with the Balances API. One of `bank_account`, `card`, or `fpx`.
    */
   source_type?: PayoutCreateParams.SourceType;
@@ -313,7 +318,23 @@ export interface PayoutCreateParams {
 export namespace PayoutCreateParams {
   export type Method = 'instant' | 'standard' | OtherString;
 
+  export interface PayoutMethodOptions {
+    /**
+     * Additional options for a Financial Account payout method. Only valid when payout_method is a Financial Account ID.
+     */
+    financial_account?: PayoutMethodOptions.FinancialAccount;
+  }
+
   export type SourceType = 'bank_account' | 'card' | 'fpx' | OtherString;
+
+  export namespace PayoutMethodOptions {
+    export interface FinancialAccount {
+      /**
+       * Identifies the currency to credit in the destination Financial Account. Must be a currency supported by the target Financial Account. When omitted, the payout uses the currency parameter.
+       */
+      destination_currency?: string;
+    }
+  }
 }
 export interface PayoutRetrieveParams {
   /**

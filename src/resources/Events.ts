@@ -4806,7 +4806,7 @@ export namespace SetupIntentSetupFailedEvent {
 }
 
 /**
- * Occurs when an SetupIntent has successfully setup a payment method.
+ * Occurs when a SetupIntent has successfully setup a payment method.
  */
 export interface SetupIntentSucceededEvent extends EventBase {
   type: 'setup_intent.succeeded';
@@ -5399,7 +5399,7 @@ export namespace TransferUpdatedEvent {
 }
 
 /**
- * Occurs whenever an CreditReversal is submitted and created.
+ * Occurs whenever a CreditReversal is submitted and created.
  */
 export interface TreasuryCreditReversalCreatedEvent extends EventBase {
   type: 'treasury.credit_reversal.created';
@@ -5415,7 +5415,7 @@ export namespace TreasuryCreditReversalCreatedEvent {
 }
 
 /**
- * Occurs whenever an CreditReversal post is posted.
+ * Occurs whenever a CreditReversal post is posted.
  */
 export interface TreasuryCreditReversalPostedEvent extends EventBase {
   type: 'treasury.credit_reversal.posted';
