@@ -79,6 +79,12 @@ export interface AccountActivity {
   account_restricted?: AccountActivity.AccountRestricted;
 
   /**
+   * Details for the account review. Present only when type is account_reviewed. The activity
+   * requires an existing account_details.account or account_details.customer; inline data is unsupported.
+   */
+  account_reviewed?: AccountActivity.AccountReviewed;
+
+  /**
    * Details for the account suspension. Present only when type is account_suspended. The activity
    * requires an existing account_details.customer; account_details.account and inline data are unsupported.
    */
@@ -154,6 +160,13 @@ export namespace AccountActivity {
     reason: AccountRestricted.Reason;
   }
 
+  export interface AccountReviewed {
+    /**
+     * The outcome of the merchant review.
+     */
+    outcome: AccountReviewed.Outcome;
+  }
+
   export interface AccountSuspended {
     /**
      * The reason the customer was suspended.
@@ -191,6 +204,7 @@ export namespace AccountActivity {
 
   export type Type =
     | 'account_restricted'
+    | 'account_reviewed'
     | 'account_suspended'
     | 'login_attempt'
     | 'login_decision'
@@ -258,6 +272,10 @@ export namespace AccountActivity {
 
   export namespace AccountRestricted {
     export type Reason = 'abuse' | 'other' | OtherString;
+  }
+
+  export namespace AccountReviewed {
+    export type Outcome = 'trusted' | OtherString;
   }
 
   export namespace AccountSuspended {
@@ -363,6 +381,12 @@ export namespace V2 {
       account_restricted?: AccountActivityCreateParams.AccountRestricted;
 
       /**
+       * Details for the account review. Provide only when type is account_reviewed. The activity
+       * requires an existing account_details.account or account_details.customer; inline data is unsupported.
+       */
+      account_reviewed?: AccountActivityCreateParams.AccountReviewed;
+
+      /**
        * Details for the account suspension. Provide only when type is account_suspended. The activity
        * requires an existing account_details.customer; account_details.account and inline data are unsupported.
        */
@@ -402,6 +426,7 @@ export namespace V2 {
     export namespace AccountActivityCreateParams {
       export type Type =
         | 'account_restricted'
+        | 'account_reviewed'
         | 'account_suspended'
         | 'login_attempt'
         | 'login_decision'
@@ -431,6 +456,13 @@ export namespace V2 {
          * The reason the account or customer was restricted.
          */
         reason: AccountRestricted.Reason;
+      }
+
+      export interface AccountReviewed {
+        /**
+         * The outcome of the merchant review.
+         */
+        outcome: AccountReviewed.Outcome;
       }
 
       export interface AccountSuspended {
@@ -528,6 +560,10 @@ export namespace V2 {
 
       export namespace AccountRestricted {
         export type Reason = 'abuse' | 'other' | OtherString;
+      }
+
+      export namespace AccountReviewed {
+        export type Outcome = 'trusted' | OtherString;
       }
 
       export namespace AccountSuspended {

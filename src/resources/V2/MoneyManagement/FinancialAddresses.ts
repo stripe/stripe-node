@@ -6,7 +6,7 @@ import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FinancialAddressResource extends StripeResource {
   /**
-   * List all FinancialAddresses for a FinancialAccount.
+   * List all FinancialAddresses for a FinancialAccount (V2 shape).
    */
   list(
     params?: V2.MoneyManagement.FinancialAddressListParams,
@@ -23,7 +23,7 @@ export class FinancialAddressResource extends StripeResource {
     ) as any;
   }
   /**
-   * Create a new FinancialAddress for a FinancialAccount.
+   * Create a new FinancialAddress for a FinancialAccount (V2 shape).
    * @throws Stripe.FinancialAccountNotOpenError
    * @throws Stripe.FeatureNotEnabledError
    */
@@ -39,7 +39,7 @@ export class FinancialAddressResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieve a FinancialAddress. By default, the FinancialAddress will be returned in its unexpanded state, revealing only the last 4 digits of the account number.
+   * Retrieve a FinancialAddress (V2 shape).
    */
   retrieve(
     id: string,
@@ -56,7 +56,7 @@ export class FinancialAddressResource extends StripeResource {
 }
 export interface FinancialAddress {
   /**
-   * The ID of a FinancialAddress.
+   * The ID of the FinancialAddress.
    */
   id: string;
 
@@ -66,24 +66,19 @@ export interface FinancialAddress {
   object: 'v2.money_management.financial_address';
 
   /**
+   * Bank account details for this FinancialAddress.
+   */
+  bank_account?: FinancialAddress.BankAccount;
+
+  /**
    * The creation timestamp of the FinancialAddress.
    */
   created: string;
 
-  /**
-   * Object indicates the type of credentials that have been allocated and attached to the FinancialAddress.
-   * It contains all necessary banking details with which to perform money movements with the FinancialAddress.
-   * This field is only available for FinancialAddresses with an active status.
-   */
-  credentials?: FinancialAddress.Credentials;
+  crypto_wallet?: FinancialAddress.CryptoWallet;
 
   /**
-   * Open Enum. The currency the FinancialAddress supports.
-   */
-  currency: string;
-
-  /**
-   * A ID of the FinancialAccount this FinancialAddress corresponds to.
+   * The ID of the FinancialAccount this FinancialAddress corresponds to.
    */
   financial_account: string;
 
@@ -92,185 +87,69 @@ export interface FinancialAddress {
    */
   livemode: boolean;
 
-  /**
-   * Open Enum. The currency the FinancialAddress settles into the FinancialAccount.
-   */
   settlement_currency?: string;
 
   /**
-   * Closed Enum. An enum representing the status of the FinancialAddress. This indicates whether or not the FinancialAddress can be used for any money movement flows.
+   * Closed Enum. The status of the FinancialAddress.
    */
   status: FinancialAddress.Status;
+
+  /**
+   * Open Enum. The type of FinancialAddress.
+   */
+  type: FinancialAddress.Type;
 }
 export namespace FinancialAddress {
-  export interface Credentials {
+  export interface BankAccount {
     /**
-     * The credentials of the Canadian Bank Account for the FinancialAddress. This contains unique banking details such as the account number, institution number, etc. of a Canadian bank account.
+     * ABA bank account details (US).
      */
-    ca_bank_account?: Credentials.CaBankAccount;
+    aba?: BankAccount.Aba;
+
+    clabe?: BankAccount.Clabe;
 
     /**
-     * The credentials of the crypto wallet for the Financial Address. This contains unique details such as the blockchain network, wallet address, and memo of a crypto wallet.
+     * The country of the bank account.
      */
-    crypto_wallet?: Credentials.CryptoWallet;
+    country?: string;
+
+    cpa?: BankAccount.Cpa;
 
     /**
-     * The credentials of the UK Bank Account for the FinancialAddress. This contains unique banking details such as the sort code, account number, etc. of a UK bank account.
+     * Open Enum. The currency of the bank account.
      */
-    gb_bank_account?: Credentials.GbBankAccount;
+    currency: string;
 
     /**
-     * The credentials of the Mexican Bank Account for the FinancialAddress. This contains unique banking details such as the CLABE and account holder name of a Mexican bank account.
+     * IBAN bank account details.
      */
-    mx_bank_account?: Credentials.MxBankAccount;
+    iban?: BankAccount.Iban;
 
     /**
-     * The credentials of the SEPA Bank Account for the FinancialAddress. This contains unique banking details such as the IBAN, BIC, etc. of a SEPA bank account.
+     * Sort code bank account details (UK).
      */
-    sepa_bank_account?: Credentials.SepaBankAccount;
+    sort_code?: BankAccount.SortCode;
 
     /**
-     * Open Enum. The type of Credentials that are provisioned for the FinancialAddress.
+     * Open Enum. The type of bank account details.
      */
-    type: Credentials.Type;
+    type: BankAccount.Type;
+  }
 
-    /**
-     * The credentials of the US Bank Account for the FinancialAddress. This contains unique banking details such as the routing number, account number, etc. of a US bank account.
-     */
-    us_bank_account?: Credentials.UsBankAccount;
+  export interface CryptoWallet {
+    address: string;
+
+    memo?: string;
+
+    network: CryptoWallet.Network;
   }
 
   export type Status = 'active' | 'archived' | 'failed' | 'pending';
 
-  export namespace Credentials {
-    export interface CaBankAccount {
-      /**
-       * The account holder name to be used during bank transfers.
-       */
-      account_holder_name: string;
+  export type Type = 'bank_account' | 'crypto_wallet' | OtherString;
 
-      /**
-       * The account number of the Canadian Bank Account.
-       */
-      account_number?: string;
-
-      /**
-       * The name of the Bank.
-       */
-      bank_name: string;
-
-      /**
-       * The institution number of the Canadian Bank Account.
-       */
-      institution_number: string;
-
-      /**
-       * The last four digits of the Canadian Bank Account number. This will always be returned.
-       * To view the full account number when retrieving or listing FinancialAddresses, use the `include` request parameter.
-       */
-      last4: string;
-
-      /**
-       * The transit number of the Canadian Bank Account.
-       */
-      transit_number: string;
-    }
-
-    export interface CryptoWallet {
-      /**
-       * The blockchain address of the crypto wallet.
-       */
-      address: string;
-
-      /**
-       * Required if the network supports memos (e.g. Stellar).
-       */
-      memo?: string;
-
-      /**
-       * The blockchain network of the crypto wallet.
-       */
-      network: CryptoWallet.Network;
-    }
-
-    export interface GbBankAccount {
-      /**
-       * The account holder name to be used during bank transference.
-       */
-      account_holder_name: string;
-
-      /**
-       * The account number of the UK Bank Account.
-       */
-      account_number?: string;
-
-      /**
-       * The last four digits of the UK Bank Account number. This will always be returned.
-       * To view the full account number when retrieving or listing FinancialAddresses, use the `include` request parameter.
-       */
-      last4: string;
-
-      /**
-       * The sort code of the UK Bank Account.
-       */
-      sort_code: string;
-    }
-
-    export interface MxBankAccount {
-      /**
-       * The account holder name to be used during bank transfers.
-       */
-      account_holder_name: string;
-
-      /**
-       * The CLABE (Clave Bancaria Estandarizada) of the Mexican Bank Account.
-       */
-      clabe: string;
-    }
-
-    export interface SepaBankAccount {
-      /**
-       * The account holder name to be used during bank transfers.
-       */
-      account_holder_name: string;
-
-      /**
-       * The name of the Bank.
-       */
-      bank_name: string;
-
-      /**
-       * The BIC of the SEPA Bank Account.
-       */
-      bic: string;
-
-      /**
-       * The originating country of the SEPA Bank account.
-       */
-      country: string;
-
-      /**
-       * The IBAN of the SEPA Bank Account.
-       */
-      iban: string;
-
-      /**
-       * The last four digits of the SEPA Bank Account number. This will always be returned.
-       * To view the full account number when retrieving or listing FinancialAddresses, use the `include` request parameter.
-       */
-      last4: string;
-    }
-
-    export type Type =
-      | 'ca_bank_account'
-      | 'crypto_wallet'
-      | 'gb_bank_account'
-      | 'mx_bank_account'
-      | 'sepa_bank_account'
-      | 'us_bank_account'
-      | OtherString;
-
-    export interface UsBankAccount {
+  export namespace BankAccount {
+    export interface Aba {
       /**
        * The address of the account holder.
        */
@@ -282,45 +161,116 @@ export namespace FinancialAddress {
       account_holder_name?: string;
 
       /**
-       * The account number of the US Bank Account.
+       * The full account number.
        */
       account_number?: string;
 
       /**
-       * The name of the Bank.
+       * The name of the bank.
        */
       bank_name?: string;
 
       /**
-       * The BIC of the bank or financial institution.
-       */
-      bic?: string;
-
-      /**
-       * The last four digits of the US Bank Account number. This will always be returned.
-       * To view the full account number when retrieving or listing FinancialAddresses, use the `include` request parameter.
+       * The last four digits of the account number.
        */
       last4: string;
 
       /**
-       * The routing number of the US Bank Account.
+       * The ABA routing number.
        */
       routing_number: string;
     }
 
-    export namespace CryptoWallet {
-      export type Network =
-        | 'arbitrum'
-        | 'avalanche_c_chain'
-        | 'base'
-        | 'ethereum'
-        | 'optimism'
-        | 'polygon'
-        | 'solana'
-        | 'stellar'
-        | 'tempo'
-        | OtherString;
+    export interface Clabe {
+      account_holder_name: string;
+
+      clabe: string;
     }
+
+    export interface Cpa {
+      account_holder_name: string;
+
+      account_number?: string;
+
+      bank_name: string;
+
+      institution_number: string;
+
+      last4: string;
+
+      transit_number: string;
+    }
+
+    export interface Iban {
+      /**
+       * The name of the account holder.
+       */
+      account_holder_name: string;
+
+      /**
+       * The name of the bank.
+       */
+      bank_name: string;
+
+      /**
+       * The country of the bank account.
+       */
+      country: string;
+
+      /**
+       * The full IBAN.
+       */
+      iban?: string;
+
+      /**
+       * The last four digits of the IBAN.
+       */
+      last4: string;
+    }
+
+    export interface SortCode {
+      /**
+       * The name of the account holder.
+       */
+      account_holder_name: string;
+
+      /**
+       * The full account number.
+       */
+      account_number?: string;
+
+      /**
+       * The last four digits of the account number.
+       */
+      last4: string;
+
+      /**
+       * The sort code.
+       */
+      sort_code: string;
+    }
+
+    export type Type =
+      | 'aba'
+      | 'clabe'
+      | 'cpa'
+      | 'iban'
+      | 'sort_code'
+      | OtherString;
+  }
+
+  export namespace CryptoWallet {
+    export type Network =
+      | 'arbitrum'
+      | 'avalanche_c_chain'
+      | 'base'
+      | 'ethereum'
+      | 'optimism'
+      | 'polygon'
+      | 'solana'
+      | 'stellar'
+      | 'tempo'
+      | OtherString;
   }
 }
 export namespace V2 {
@@ -332,51 +282,53 @@ export namespace V2 {
       financial_account: string;
 
       /**
-       * The type of FinancialAddress details to provision.
+       * The type of FinancialAddress to create. Must agree with which branch of financial_address_type_properties is set.
        */
       type: FinancialAddressCreateParams.Type;
 
       /**
-       * Properties needed to create a FinancialAddress for an FA with USDC currency.
+       * Properties for creating a bank account FinancialAddress.
        */
-      crypto_properties?: FinancialAddressCreateParams.CryptoProperties;
+      bank_account?: FinancialAddressCreateParams.BankAccount;
 
-      /**
-       * Optional SEPA Bank account options, used to configure the type of SEPA Bank account to create, such as the originating country.
-       */
-      sepa_bank_account?: FinancialAddressCreateParams.SepaBankAccount;
+      crypto_wallet?: FinancialAddressCreateParams.CryptoWallet;
 
-      /**
-       * Open Enum. The currency the FinancialAddress settles into the FinancialAccount. Currently, only the `usd`, `gbp` and `usdc` values are supported.
-       */
       settlement_currency?: string;
     }
 
     export namespace FinancialAddressCreateParams {
-      export type Type =
-        | 'ca_bank_account'
-        | 'crypto_wallet'
-        | 'gb_bank_account'
-        | 'mx_bank_account'
-        | 'sepa_bank_account'
-        | 'us_bank_account'
-        | OtherString;
+      export type Type = 'bank_account' | 'crypto_wallet' | OtherString;
 
-      export interface CryptoProperties {
+      export interface BankAccount {
+        /**
+         * The country for the bank account. Used to select the appropriate rails (e.g. for SEPA).
+         */
+        country?: string;
+
+        /**
+         * The currency of the bank account to provision.
+         */
+        currency: BankAccount.Currency;
+      }
+
+      export interface CryptoWallet {
         /**
          * The blockchain network of the crypto wallet.
          */
-        network: CryptoProperties.Network;
+        network: CryptoWallet.Network;
       }
 
-      export interface SepaBankAccount {
-        /**
-         * The originating country of the SEPA Bank account.
-         */
-        country: string;
+      export namespace BankAccount {
+        export type Currency =
+          | 'cad'
+          | 'eur'
+          | 'gbp'
+          | 'mxn'
+          | 'usd'
+          | OtherString;
       }
 
-      export namespace CryptoProperties {
+      export namespace CryptoWallet {
         export type Network =
           | 'arbitrum'
           | 'avalanche_c_chain'
@@ -394,21 +346,7 @@ export namespace V2 {
 }
 export namespace V2 {
   export namespace MoneyManagement {
-    export interface FinancialAddressRetrieveParams {
-      /**
-       * Open Enum. A list of fields to reveal in the FinancialAddresses returned.
-       */
-      include?: Array<FinancialAddressRetrieveParams.Include>;
-    }
-
-    export namespace FinancialAddressRetrieveParams {
-      export type Include =
-        | 'credentials.ca_bank_account.account_number'
-        | 'credentials.gb_bank_account.account_number'
-        | 'credentials.sepa_bank_account.iban'
-        | 'credentials.us_bank_account.account_number'
-        | OtherString;
-    }
+    export interface FinancialAddressRetrieveParams {}
   }
 }
 export namespace V2 {
@@ -420,23 +358,9 @@ export namespace V2 {
       financial_account?: string;
 
       /**
-       * Open Enum. A list of fields to reveal in the FinancialAddresses returned.
-       */
-      include?: Array<FinancialAddressListParams.Include>;
-
-      /**
        * The page limit.
        */
       limit?: number;
-    }
-
-    export namespace FinancialAddressListParams {
-      export type Include =
-        | 'credentials.ca_bank_account.account_number'
-        | 'credentials.gb_bank_account.account_number'
-        | 'credentials.sepa_bank_account.iban'
-        | 'credentials.us_bank_account.account_number'
-        | OtherString;
     }
   }
 }

@@ -26,6 +26,7 @@ export class PayoutIntentResource extends StripeResource {
   /**
    * Creates a PayoutIntent.
    * @throws Stripe.FeatureNotEnabledError
+   * @throws Stripe.RecipientNotNotifiableError
    */
   create(
     params: V2.MoneyManagement.PayoutIntentCreateParams,
@@ -56,6 +57,7 @@ export class PayoutIntentResource extends StripeResource {
   /**
    * Updates a PayoutIntent. Only pending or requires_action PayoutIntents that are editable can be updated.
    * @throws Stripe.FeatureNotEnabledError
+   * @throws Stripe.RecipientNotNotifiableError
    */
   update(
     id: string,

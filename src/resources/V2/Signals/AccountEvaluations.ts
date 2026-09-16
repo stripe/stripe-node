@@ -423,6 +423,7 @@ export namespace V2 {
 
           export type Type =
             | 'account_restricted'
+            | 'account_reviewed'
             | 'account_suspended'
             | 'login_attempt'
             | 'login_decision'

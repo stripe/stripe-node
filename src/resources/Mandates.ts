@@ -257,7 +257,7 @@ export namespace Mandate {
       /**
        * Date at which the mandate expires.
        */
-      expires_after: number | null;
+      expires_at: number | null;
 
       /**
        * Type of the mandate.

@@ -101,6 +101,8 @@ export const generateV2Error = (
       return new InvalidPaymentMethodError(rawStripeError);
     case 'invalid_payout_method':
       return new InvalidPayoutMethodError(rawStripeError);
+    case 'merchant_not_gated':
+      return new MerchantNotGatedError(rawStripeError);
     case 'non_zero_balance':
       return new NonZeroBalanceError(rawStripeError);
     case 'not_cancelable':
@@ -500,6 +502,11 @@ export namespace InvalidPaymentMethodError {
 export class InvalidPayoutMethodError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'InvalidPayoutMethodError');
+  }
+}
+export class MerchantNotGatedError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'MerchantNotGatedError');
   }
 }
 export class NonZeroBalanceError extends StripeError {

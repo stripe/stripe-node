@@ -2612,7 +2612,7 @@ export namespace Session {
 
     export interface Label {
       /**
-       * Custom text for the label, displayed to the customer. Up to 50 characters.
+       * Custom text for the label, displayed to the customer. Up to 100 characters.
        */
       custom: string | null;
 
@@ -2852,6 +2852,11 @@ export namespace Session {
     export namespace Subscription {
       export interface Item {
         /**
+         * The trial offer applied to this subscription item.
+         */
+        current_trial: Item.CurrentTrial | null;
+
+        /**
          * The price for this subscription item.
          */
         price: string | Price;
@@ -2884,6 +2889,15 @@ export namespace Session {
          * Defines how a subscription behaves when a free trial ends.
          */
         end_behavior: TrialSettings.EndBehavior;
+      }
+
+      export namespace Item {
+        export interface CurrentTrial {
+          /**
+           * The ID of the trial offer applied to this subscription item.
+           */
+          trial_offer: string;
+        }
       }
 
       export namespace PendingInvoiceItemInterval {
@@ -3095,6 +3109,8 @@ export namespace Session {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+
+      verification_method?: BacsDebit.VerificationMethod;
     }
 
     export interface Bancontact {
@@ -3844,6 +3860,11 @@ export namespace Session {
         | 'none'
         | 'off_session'
         | 'on_session'
+        | OtherString;
+
+      export type VerificationMethod =
+        | 'automatic'
+        | 'payer_name_verification'
         | OtherString;
     }
 
@@ -5897,6 +5918,7 @@ export namespace Checkout {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'sunbit'
@@ -6340,7 +6362,7 @@ export namespace Checkout {
 
       export interface Label {
         /**
-         * Custom text for the label, displayed to the customer. Up to 50 characters.
+         * Custom text for the label, displayed to the customer. Up to 100 characters.
          */
         custom: string;
 
@@ -6664,6 +6686,11 @@ export namespace Checkout {
 
         export interface Item {
           /**
+           * The trial offer to apply to this subscription item.
+           */
+          current_trial?: Item.CurrentTrial;
+
+          /**
            * The ID of the [Price](https://docs.stripe.com/api/prices). One of `price` or `price_data` is required.
            */
           price?: string;
@@ -6722,6 +6749,13 @@ export namespace Checkout {
         }
 
         export namespace Item {
+          export interface CurrentTrial {
+            /**
+             * The ID of the trial offer to apply to the subscription item.
+             */
+            trial_offer: string;
+          }
+
           export interface PriceData {
             /**
              * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -7256,6 +7290,8 @@ export namespace Checkout {
          * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
          */
         target_date?: string;
+
+        verification_method?: BacsDebit.VerificationMethod;
       }
 
       export interface Bancontact {
@@ -8077,6 +8113,11 @@ export namespace Checkout {
           | 'none'
           | 'off_session'
           | 'on_session'
+          | OtherString;
+
+        export type VerificationMethod =
+          | 'automatic'
+          | 'payer_name_verification'
           | OtherString;
       }
 
@@ -9223,9 +9264,9 @@ export namespace Checkout {
     metadata?: Emptyable<MetadataParam>;
 
     /**
-     * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
+     * A subset of parameters to apply to the PaymentIntent for Checkout Sessions in `payment` mode.
      *
-     * You can only update these parameters when `ui_mode` is `elements` and while the session is active.
+     * You can only update these parameters when `ui_mode` is `elements` and while the session is active. If the PaymentIntent requires customer action or confirmation, updating these parameters abandons the current payment attempt and returns the PaymentIntent to `requires_payment_method`. You can't update these parameters after the PaymentIntent begins processing, requires capture, succeeds, or is canceled.
      */
     payment_intent_data?: SessionUpdateParams.PaymentIntentData;
 

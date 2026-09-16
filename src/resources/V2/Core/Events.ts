@@ -1244,6 +1244,23 @@ export namespace V2 {
   }
 }
 
+export namespace V2 {
+  export namespace Core {
+    export namespace Events {
+      /**
+       * A reference to an API resource that has no standalone identifier, so there is no `id` to retrieve it by.
+       */ export interface RelatedSingletonObject {
+        /**
+         * Type of the object relevant to the event.
+         */ type: string;
+        /**
+         * URL to retrieve the resource.
+         */ url: string;
+      }
+    }
+  }
+}
+
 /**
  * Represents the shape of an EventNotification that the SDK didn't know about when it was generated.
  */ export interface UnknownEventNotification extends EventNotificationBase {
@@ -5168,7 +5185,7 @@ export interface V1SetupIntentSetupFailedEventNotification
 }
 
 /**
- * Occurs when an SetupIntent has successfully setup a payment method.
+ * Occurs when a SetupIntent has successfully setup a payment method.
  */
 export interface V1SetupIntentSucceededEvent extends EventBase {
   type: 'v1.setup_intent.succeeded';
@@ -14351,4 +14368,6 @@ export declare namespace Events {
     V2SignalsAccountSignalPaymentDelinquencyExposureReadyEventNotification,
     V2SignalsPaymentRetryEvaluationsRetryRecommendedEventNotification,
   };
+  export type RelatedObject = V2.Core.Events.RelatedObject;
+  export type RelatedSingletonObject = V2.Core.Events.RelatedSingletonObject;
 }

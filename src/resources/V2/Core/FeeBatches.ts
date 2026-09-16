@@ -98,14 +98,12 @@ export namespace FeeBatch {
 
   export interface Amount {
     /**
-     * A lowercase alpha3 currency code like "usd"
-     * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+     * A lowercase alpha3 currency code like "usd".
      */
     currency: string;
 
     /**
-     * In major units like "1.23" for 1.23 USD
-     * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+     * In major units like "1.23" for 1.23 USD.
      */
     value: string;
   }
@@ -178,14 +176,12 @@ export namespace FeeBatch {
   export namespace Adjustments {
     export interface TaxAdjustment {
       /**
-       * A lowercase alpha3 currency code like "usd"
-       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       * A lowercase alpha3 currency code like "usd".
        */
       currency: string;
 
       /**
-       * In major units like "1.23" for 1.23 USD
-       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       * In major units like "1.23" for 1.23 USD.
        */
       value: string;
     }
@@ -198,14 +194,12 @@ export namespace FeeBatch {
   export namespace CollectionRecord {
     export interface Amount {
       /**
-       * A lowercase alpha3 currency code like "usd"
-       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       * A lowercase alpha3 currency code like "usd".
        */
       currency: string;
 
       /**
-       * In major units like "1.23" for 1.23 USD
-       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       * In major units like "1.23" for 1.23 USD.
        */
       value: string;
     }
@@ -228,14 +222,12 @@ export namespace FeeBatch {
     export namespace Tax {
       export interface Amount {
         /**
-         * A lowercase alpha3 currency code like "usd"
-         * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+         * A lowercase alpha3 currency code like "usd".
          */
         currency: string;
 
         /**
-         * In major units like "1.23" for 1.23 USD
-         * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+         * In major units like "1.23" for 1.23 USD.
          */
         value: string;
       }
@@ -245,14 +237,12 @@ export namespace FeeBatch {
   export namespace Tax {
     export interface Amount {
       /**
-       * A lowercase alpha3 currency code like "usd"
-       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       * A lowercase alpha3 currency code like "usd".
        */
       currency: string;
 
       /**
-       * In major units like "1.23" for 1.23 USD
-       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       * In major units like "1.23" for 1.23 USD.
        */
       value: string;
     }

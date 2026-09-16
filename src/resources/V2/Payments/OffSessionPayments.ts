@@ -140,7 +140,7 @@ export interface OffSessionPayment {
   amount_details?: OffSessionPayment.AmountDetails;
 
   /**
-   * The "presentment amount" to be collected from the customer.
+   * Amount intended to be collected by this payment.
    */
   amount_requested: V2Amount;
 
@@ -194,6 +194,11 @@ export interface OffSessionPayment {
    * Payment attempt record for the latest attempt, if one exists.
    */
   latest_payment_attempt_record?: string;
+
+  /**
+   * Details from the latest Payment Attempt Record, if one exists.
+   */
+  latest_payment_attempt_record_details?: OffSessionPayment.LatestPaymentAttemptRecordDetails;
 
   /**
    * Has the value true if the object exists in live mode or the value false if the object exists in test mode.
@@ -324,6 +329,23 @@ export namespace OffSessionPayment {
     | 'rejected_by_partner'
     | 'retries_exhausted'
     | OtherString;
+
+  export interface LatestPaymentAttemptRecordDetails {
+    /**
+     * Details about the failure for the latest payment attempt.
+     */
+    failure_details?: LatestPaymentAttemptRecordDetails.FailureDetails;
+
+    /**
+     * Details about the payment method for the latest payment attempt.
+     */
+    payment_method_details?: LatestPaymentAttemptRecordDetails.PaymentMethodDetails;
+
+    /**
+     * Details about the processor for the latest payment attempt.
+     */
+    processor_details?: LatestPaymentAttemptRecordDetails.ProcessorDetails;
+  }
 
   export interface PaymentDetails {
     /**
@@ -492,6 +514,67 @@ export namespace OffSessionPayment {
     export type CaptureMethod = 'automatic' | 'manual' | OtherString;
   }
 
+  export namespace LatestPaymentAttemptRecordDetails {
+    export interface FailureDetails {
+      /**
+       * Code for the failure.
+       */
+      code?: string;
+
+      /**
+       * Message describing the failure.
+       */
+      message?: string;
+    }
+
+    export interface PaymentMethodDetails {
+      /**
+       * Details about the card used for the latest payment attempt.
+       */
+      card?: PaymentMethodDetails.Card;
+    }
+
+    export interface ProcessorDetails {
+      /**
+       * Details about Stripe as the processor.
+       */
+      stripe?: ProcessorDetails.Stripe;
+    }
+
+    export namespace PaymentMethodDetails {
+      export interface Card {
+        /**
+         * Authorization code returned by the card network.
+         */
+        authorization_code?: string;
+
+        /**
+         * Stripe decline code for the latest payment attempt.
+         */
+        decline_code?: string;
+
+        /**
+         * Advice code returned by the card network.
+         */
+        network_advice_code?: string;
+
+        /**
+         * Decline code returned by the card network.
+         */
+        network_decline_code?: string;
+      }
+    }
+
+    export namespace ProcessorDetails {
+      export interface Stripe {
+        /**
+         * ID of the Charge created for the latest payment attempt.
+         */
+        charge?: string;
+      }
+    }
+  }
+
   export namespace RetryDetails {
     export type RetryStrategy =
       | 'heuristic'
@@ -505,7 +588,7 @@ export namespace V2 {
   export namespace Payments {
     export interface OffSessionPaymentCreateParams {
       /**
-       * The "presentment amount" to be collected from the customer.
+       * Amount intended to be collected by this payment.
        */
       amount: V2Amount;
 
@@ -539,6 +622,11 @@ export namespace V2 {
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description?: string;
+
+      /**
+       * Additional fields to include in the response.
+       */
+      include?: Array<'latest_payment_attempt_record_details'>;
 
       /**
        * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can

@@ -92,7 +92,7 @@ export namespace BillingEvaluation {
     customer_account: string | null;
 
     /**
-     * Attributes of the customer being evaluated. These are populated from the `customer` or `customer_account` object when one was supplied, and from the request otherwise.
+     * Attributes of the customer being evaluated, as supplied on the request. Null when the customer was identified by `customer` or `customer_account`.
      */
     data: CustomerDetails.Data | null;
   }
@@ -321,7 +321,7 @@ export namespace Radar {
       customer_account?: string;
 
       /**
-       * Attributes of the customer being evaluated. Supply these when the customer isn't represented by a Customer or an Account. If `customer` or `customer_account` is also supplied, the attributes on that object are used and these are ignored.
+       * Attributes of the customer being evaluated. Exactly one of `customer`, `customer_account`, and `data` must be supplied: use `data` when the customer isn't represented by a Customer or an Account.
        */
       data?: CustomerDetails.Data;
     }
