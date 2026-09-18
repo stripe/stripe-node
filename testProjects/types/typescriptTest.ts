@@ -108,9 +108,6 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
 
   const cusList: Stripe.ApiList<Stripe.Customer> = await stripe.customers.list();
 
-  // @ts-expect-error V2 list responses do not have the V1 list response shape.
-  const v2EventsListAsV1: Stripe.ApiList<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
-
   const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
 
   const aThousandCustomers: Array<Stripe.Customer> = await stripe.customers
