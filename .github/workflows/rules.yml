@@ -7,15 +7,15 @@ on:
     # expand this list as we add rules, but be careful that rules are properly guarded with necessary null checks or state checks
     types:
       - auto_merge_enabled
+      - edited
       - opened
       - reopened
-
-permissions: {}
+      - synchronize
 
 jobs:
   check_auto_merge_method_if_enabled:
     name: Check auto-merge method if enabled
-    if: ${{ github.event.pull_request.auto_merge }}
+    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.auto_merge }}
     runs-on: ubuntu-latest
     steps:
       - run: |
@@ -29,4 +29,50 @@ jobs:
             echo "Auto-merge method must be '$expected_merge_method' instead of '${{github.event.pull_request.auto_merge.merge_method}}'"
             exit 1
           fi
+
+  breaking_changefiles_target_next_major:
+    name: Breaking changes target the next-major branch
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find newly added Hark changefiles
+        id: changefiles
+        run: |
+          set -euo pipefail
+
+          files=$(gh api --paginate --slurp             "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/files?per_page=100")
+          paths=$(jq -c             '[.[][] | select(.status == "added") | .filename | select(test("^\.hark/changes/[^/]+\.change\.md$"))]'             <<< "$files")
+          echo "paths=$paths" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+
+      - uses: stripe/hark/actions/setup-hark@master
+        name: Setup Hark
+        if: steps.changefiles.outputs.paths != '[]'
+
+      - name: Check breaking changefile merge target
+        if: steps.changefiles.outputs.paths != '[]'
+        run: |
+          set -euo pipefail
+
+          mapfile -t changefiles < <(jq -r '.[]' <<< "$CHANGEFILE_PATHS")
+          inspection=$(hark inspect "${changefiles[@]}")
+          major_paths=$(jq -c             '[.[] | select(.semver_level == "major") | .path]'             <<< "$inspection")
+
+          if [[ "$major_paths" != "[]" && "$BASE_REF" != "sdk-release/next-major" ]]; then
+            affected_paths=$(jq -r 'join(", ")' <<< "$major_paths")
+            echo "::error::Major Hark changefiles must target sdk-release/next-major. Retarget this pull request from '$BASE_REF' to 'sdk-release/next-major'. Affected files: $affected_paths"
+            exit 1
+          fi
+
+          echo "Changefile merge target check passed"
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          CHANGEFILE_PATHS: ${{ steps.changefiles.outputs.paths }}
 
