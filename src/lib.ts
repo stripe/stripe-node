@@ -256,31 +256,6 @@ export interface V2List<T> {
    * The URL for the previous page of results, or `null` if this is the first page.
    */
   previous_page_url: string | null;
-
-  /**
-   * TODO(DEVSDK-2534): remove these properties in our next major release.
-   * these deprecated properties were copied from ApiList<T> to not break
-   * existing code.  these properties will continue to be not populated at
-   * runtime.
-   */
-
-  /**
-   * @deprecated This property is not populated at runtime for v2 lists
-   */
-  object: 'list';
-
-  /**
-   * True if this list has another page of items after this one that can be fetched.
-   *
-   * @deprecated This property is not populated at runtime for v2 lists
-   */
-  has_more: boolean;
-
-  /**
-   * The URL where this list can be accessed.
-   * @deprecated This property is not populated at runtime for v2 lists
-   */
-  url: string;
 }
 
 export interface V2ListPromise<T>
