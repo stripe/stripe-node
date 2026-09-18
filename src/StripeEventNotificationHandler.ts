@@ -129,16 +129,7 @@ class BaseEventNotificationHandler {
   protected async dispatchEvent(
     event: Stripe.V2.Core.EventNotification
   ): Promise<void> {
-    // Create a new client with the event's context instead of modifying the shared client
-    // This ensures thread-safety when processing webhooks in parallel
-    // We create a shallow copy and override _api with a new object containing the event context
-    // This reuses expensive resources like httpClient (Flyweight pattern)
-    const eventClient = Object.create(Object.getPrototypeOf(this.client));
-    Object.assign(eventClient, this.client);
-    eventClient._api = {
-      ...this.client._api,
-      stripeContext: event.context,
-    };
+    const eventClient = this.client.withStripeContext(event.context);
 
     if (
       this.preHandleCallback &&
