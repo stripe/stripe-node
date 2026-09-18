@@ -6,4 +6,4 @@ jira_tickets_closed:
   - DEVSDK-2534
 ---
 
-Remove the V1-only `object`, `has_more`, and `url` fields from `Stripe.V2List<T>`. Use `next_page_url` and `previous_page_url` to paginate V2 list responses.
+Remove the V1-only `object`, `has_more`, and `url` fields from `Stripe.V2List<T>`. These fields were never populated and were added only to maintain type compatibility when correcting the V2 list response type in a minor release.
