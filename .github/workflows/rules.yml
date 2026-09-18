@@ -38,21 +38,23 @@ jobs:
       contents: read
       pull-requests: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
 
       - name: Find newly added Hark changefiles
         id: changefiles
         run: |
           set -euo pipefail
 
-          files=$(gh api --paginate --slurp             "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/files?per_page=100")
-          paths=$(jq -c             '[.[][] | select(.status == "added") | .filename | select(test("^\.hark/changes/[^/]+\.change\.md$"))]'             <<< "$files")
+          files=$(gh api --paginate             "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/files?per_page=100"             --jq '.[]')
+          paths=$(jq -sc             '[.[] | select(.status == "added") | .filename | select(test("^\.hark/changes/[^/]+\.change\.md$"))]'             <<< "$files")
           echo "paths=$paths" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
 
-      - uses: stripe/hark/actions/setup-hark@master
+      - uses: stripe/hark/actions/setup-hark@master # zizmor: ignore[unpinned-uses]
         name: Setup Hark
         if: steps.changefiles.outputs.paths != '[]'
 
