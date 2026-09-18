@@ -636,3 +636,40 @@ const _signatureType: Stripe.Signature = null as any;
 // Factory function return types must be assignable to their interface types.
 const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
 const _nodeCryptoProvider: Stripe.CryptoProvider = Stripe.createNodeCryptoProvider();
+
+// Workload identity (private preview). The provider contract is structural, so
+// the core types must accept an adapter-shaped object without importing one.
+const workloadIdentityProvider: Stripe.WorkloadIdentityProvider = {
+  provider: 'aws',
+  getIdentityAssertion: () => Promise.resolve('fake.assertion'),
+};
+const _cloudProvider: Stripe.WorkloadIdentityCloudProvider = 'aws';
+const _authenticationMethod: Stripe.AuthenticationMethod = {
+  mode: 'api_key',
+  apiKey: 'sk_test_123',
+};
+
+const workloadIdentityClient: Stripe = Stripe.forWorkloadIdentity(
+  'oacli_test_123',
+  workloadIdentityProvider
+);
+const _withConfig: Stripe = Stripe.forWorkloadIdentity(
+  'oacli_live_123',
+  workloadIdentityProvider,
+  {apiVersion: Stripe.API_VERSION, maxNetworkRetries: 3}
+);
+
+// A workload identity client is an ordinary client.
+workloadIdentityClient.customers.list().then((customers) => customers.data);
+
+const _badProvider: Stripe.WorkloadIdentityProvider = {
+  // @ts-expect-error - only AWS is supported
+  provider: 'gcp',
+  getIdentityAssertion: () => Promise.resolve('fake.assertion'),
+};
+
+// NOTE: the Stripe.errors / Stripe.ErrorType *type* namespaces are generated, so
+// this error is named through the runtime class until codegen adds the aliases.
+const _workloadIdentityError: InstanceType<
+  typeof Stripe.errors.StripeWorkloadIdentityError
+> = new Stripe.errors.StripeWorkloadIdentityError();

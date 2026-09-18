@@ -1,0 +1,9 @@
+# A whitelist, mirroring the root package: ignore everything, then add back what
+# belongs in the published archive.
+*
+
+!/LICENSE
+!/README.md
+!/package.json
+!/cjs/**/*
+!/esm/**/*

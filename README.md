@@ -255,6 +255,27 @@ const stripe = Stripe('sk_test_...', {
 > **Note**
 > Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
 
+### Workload identity authentication (private preview)
+
+Applications running on AWS can authenticate without a long-lived secret API key,
+by proving where they are running instead of storing a Stripe credential:
+
+```js
+import Stripe from 'stripe';
+import {awsWorkloadIdentity} from '@stripe/stripe-aws-workload-identity';
+
+const stripe = Stripe.forWorkloadIdentity(
+  'oacli_live_...',
+  awsWorkloadIdentity()
+);
+
+const customers = await stripe.customers.list();
+```
+
+API keys remain the default, and workload identity is never selected implicitly.
+See [docs/workload-identity.md](docs/workload-identity.md) for requirements, local
+development guidance, and troubleshooting.
+
 ### Configuring Timeout
 
 Timeout can be set globally via the config object:

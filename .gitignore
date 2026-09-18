@@ -12,3 +12,5 @@ testProjects/**/dist
 testProjects/**/package-lock.json
 testProjects/**/_worker.*
 testProjects/**/bun.lock
+packages/**/package-lock.json
+packages/**/*.tgz

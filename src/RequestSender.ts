@@ -2,6 +2,7 @@ import {
   StripeAPIError,
   StripeConnectionError,
   StripeError,
+  StripeWorkloadIdentityError,
   generateOAuthError,
   generateV1Error,
   generateV2Error,
@@ -23,6 +24,10 @@ import {
   ApiMode,
 } from './Types.js';
 import {RawRequestOptions, RequestOptions} from './lib.js';
+import {
+  extractBearerToken,
+  getWorkloadIdentityCredentials,
+} from './WorkloadIdentity.js';
 import {
   HttpClient,
   HttpClientResponseBodyError,
@@ -652,6 +657,15 @@ export class RequestSender {
   ): void {
     let requestData: string | Uint8Array;
     authenticator = authenticator ?? this._stripe._authenticator;
+    // Present only when this request authenticates through workload identity.
+    // A per-request API key override swaps the authenticator, and such a
+    // request is left alone.
+    const workloadIdentityCredentials = getWorkloadIdentityCredentials(
+      authenticator
+    );
+    // Request-scoped, so an API operation may refresh and replay because of a
+    // 401 at most once no matter how many times the network retry logic runs.
+    let authReplayUsed = false;
     // Validate before anything derives meaning from the path -- apiMode is
     // sniffed from its prefix, and the path may have come from remote data.
     validatePath(path);
@@ -703,6 +717,12 @@ export class RequestSender {
 
       authenticator(request)
         .then(() => {
+          // Captured after the authenticator ran, so a refresh can tell whether
+          // the cache still holds the credential this request was signed with.
+          const tokenUsed = workloadIdentityCredentials
+            ? extractBearerToken(request.headers.Authorization)
+            : null;
+
           const req = this._stripe
             .getApiField('httpClient')
             .makeRequest(
@@ -739,6 +759,24 @@ export class RequestSender {
 
           req
             .then((res: HttpClientResponseInterface) => {
+              // A proactive refresh is a heuristic, so a cached restricted key
+              // can still be rejected. Replay the request once with a fresh
+              // key, reusing the same headers (and so the same idempotency
+              // key), body, and retry budget. This is independent of
+              // _shouldRetry: network retries cannot restore the allowance, and
+              // this replay does not restart the retry budget.
+              if (
+                workloadIdentityCredentials &&
+                !authReplayUsed &&
+                res.getStatusCode() === 401
+              ) {
+                authReplayUsed = true;
+                return workloadIdentityCredentials
+                  .refreshToken(tokenUsed)
+                  .then(() => makeRequest(apiVersion, headers, requestRetries))
+                  .catch((err: Error) => callback(err));
+              }
+
               if (RequestSender._shouldRetry(res, requestRetries, maxRetries)) {
                 return retryRequest(
                   makeRequest,
@@ -796,10 +834,18 @@ export class RequestSender {
             );
         })
         .catch((e: any) => {
-          throw new StripeError({
-            message: 'Unable to authenticate the request',
-            exception: e,
-          });
+          // Report the failure to the caller. Throwing here would only produce
+          // an unhandled rejection and leave the request hanging forever.
+          // Workload identity errors are already focused and actionable, so
+          // they pass through instead of being wrapped.
+          return callback(
+            e instanceof StripeWorkloadIdentityError
+              ? e
+              : new StripeError({
+                  message: 'Unable to authenticate the request',
+                  exception: e,
+                })
+          );
         });
     };
 

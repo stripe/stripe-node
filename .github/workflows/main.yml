@@ -11,6 +11,9 @@ on:
       - feature/**
     tags:
       - v[0-9]+.[0-9]+.[0-9]+*
+      # companion packages in packages/ are versioned and released independently
+      # of the core SDK, so they get their own tag namespace
+      - aws-wif-v[0-9]+.[0-9]+.[0-9]+*
   pull_request:
     branches:
       - master
@@ -104,6 +107,30 @@ jobs:
       - name: Test
         run: just ci-test
 
+  packages:
+    name: 'Companion Packages'
+    needs: [build]
+    runs-on: 'ubuntu-24.04'
+    permissions:
+      contents: read
+    steps:
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22'
+          # Disable automatic dependency caching to reduce cache poisoning risk
+          package-manager-cache: false
+
+      # builds, typechecks, tests, and verifies the contents of the archive each
+      # companion package would publish
+      - name: Validate packages
+        run: just packages-pack
+
   publish:
     name: Publish
     if: >-
@@ -149,3 +176,66 @@ jobs:
         if: always()
         with:
           bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+
+  publish-packages:
+    name: 'Publish Companion Packages'
+    # Disjoint from the core `publish` job: the core matches `refs/tags/v...`,
+    # which an `aws-wif-v...` tag does not, so neither job can fire on the
+    # other's tag.
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      startsWith(github.ref, 'refs/tags/aws-wif-v')
+    needs: [build, packages]
+    runs-on: 'ubuntu-24.04'
+    permissions:
+      contents: read
+      id-token: write # Required for OIDC
+    steps:
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          # Disable automatic dependency caching to reduce cache poisoning risk
+          package-manager-cache: false
+
+      # installs, typechecks, builds, and tests before anything is uploaded
+      - name: Build and test
+        run: just packages-test
+
+      - name: Publish to NPM
+        env:
+          # needed because setup-node writes a .npmrc file with `registry-url` and
+          # `_authToken=${NODE_AUTH_TOKEN}`. OIDC overwrites this with a real token
+          # before anything is uploaded, but we need to have a value for install
+          # to work.
+          NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+          NPM_CONFIG_LOGLEVEL: ${{ runner.debug && 'verbose' || 'notice' }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          cd packages/stripe-aws-workload-identity
+          NAME=$(jq -r .name package.json)
+          VERSION=$(jq -r .version package.json)
+
+          # The tag is the source of truth for intent; refuse to publish a
+          # version nobody asked for.
+          TAG_VERSION="${TAG_NAME#aws-wif-v}"
+          if [ "$TAG_VERSION" != "$VERSION" ]; then
+            echo "Tag $TAG_NAME implies version $TAG_VERSION, but package.json says $VERSION. Refusing to publish." >&2
+            exit 1
+          fi
+
+          # Makes the job idempotent, so a partial failure is safe to re-run.
+          if npm view "$NAME@$VERSION" version >/dev/null 2>&1; then
+            echo "$NAME@$VERSION is already published; nothing to do."
+            exit 0
+          fi
+
+          # use the tag correlating to this release channel
+          NPM_TAG=$(node -p "v=require('./package.json').version; v.includes('alpha') ? 'private-preview' : v.includes('beta') ? 'public-preview' : 'latest'")
+          echo "Publishing $NAME@$VERSION with $NPM_TAG tag."
+          npm publish --tag "$NPM_TAG"

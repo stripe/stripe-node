@@ -8,6 +8,8 @@ import {EventEmitter} from 'events';
 import {HttpClient, NodeHttpClientInterface} from '../net/HttpClient.js';
 import {NodeCryptoProvider} from '../crypto/NodeCryptoProvider.js';
 import {NodeHttpClient} from '../net/NodeHttpClient.js';
+import {NodeWorkloadIdentityTokenTransport} from '../net/NodeWorkloadIdentityTokenTransport.js';
+import {WorkloadIdentityTokenTransport} from '../net/WorkloadIdentityTokenTransport.js';
 import {PlatformFunctions} from './PlatformFunctions.js';
 import {StripeError} from '../Error.js';
 import {concat} from '../utils.js';
@@ -180,6 +182,11 @@ export class NodePlatformFunctions extends PlatformFunctions {
   /** @override */
   createDefaultHttpClient(): HttpClient {
     return new NodeHttpClient();
+  }
+
+  /** @override */
+  createWorkloadIdentityTokenTransport(): WorkloadIdentityTokenTransport {
+    return new NodeWorkloadIdentityTokenTransport();
   }
 
   /** @override */

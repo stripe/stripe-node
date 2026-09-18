@@ -1,0 +1,66 @@
+{
+  "name": "@stripe/stripe-aws-workload-identity",
+  "version": "0.1.0-alpha.1",
+  "description": "AWS workload identity adapter for the Stripe Node.js SDK",
+  "keywords": [
+    "stripe",
+    "workload identity",
+    "aws",
+    "authentication"
+  ],
+  "homepage": "https://github.com/stripe/stripe-node/tree/master/packages/stripe-aws-workload-identity",
+  "author": "Stripe <support@stripe.com> (https://stripe.com/)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stripe/stripe-node",
+    "directory": "packages/stripe-aws-workload-identity"
+  },
+  "bugs": "https://github.com/stripe/stripe-node/issues",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./esm/index.d.ts",
+        "default": "./esm/index.js"
+      },
+      "require": {
+        "types": "./cjs/index.d.ts",
+        "default": "./cjs/index.js"
+      }
+    }
+  },
+  "files": [
+    "cjs/**/*",
+    "esm/**/*",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "@aws-sdk/client-sts": "^3.952.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "~22",
+    "chai": "^4.3.6",
+    "chai-as-promised": "~7.1.1",
+    "mocha": "^8.4.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "clean": "node -e \"for (const d of ['cjs','esm']) require('fs').rmSync(d, {recursive: true, force: true})\"",
+    "build": "npm run clean && npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc -p tsconfig.cjs.json && node -e \"require('fs').writeFileSync('cjs/package.json', JSON.stringify({type:'commonjs'}))\"",
+    "build:esm": "tsc -p tsconfig.esm.json && node -e \"require('fs').writeFileSync('esm/package.json', JSON.stringify({type:'module'}))\"",
+    "typecheck": "tsc -p tsconfig.cjs.json --noEmit",
+    "test": "mocha",
+    "prepack": "npm run build"
+  }
+}

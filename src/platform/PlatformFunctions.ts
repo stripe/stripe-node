@@ -9,6 +9,7 @@ import {
   FetchHttpClientInterface,
 } from '../net/HttpClient.js';
 import {SubtleCryptoProvider} from '../crypto/SubtleCryptoProvider.js';
+import {WorkloadIdentityTokenTransport} from '../net/WorkloadIdentityTokenTransport.js';
 import {
   MultipartRequestData,
   RequestData,
@@ -163,6 +164,20 @@ export class PlatformFunctions {
    */
   createDefaultHttpClient(): HttpClient {
     throw new Error('createDefaultHttpClient not implemented.');
+  }
+
+  /**
+   * Creates the transport used for the workload identity token exchange.
+   *
+   * This is deliberately separate from `createDefaultHttpClient`: the exchange
+   * always targets a fixed Stripe endpoint over HTTPS and must not be routed
+   * through a configurable client, because an identity assertion sent anywhere
+   * else is a usable credential in someone else's hands.
+   */
+  createWorkloadIdentityTokenTransport(): WorkloadIdentityTokenTransport {
+    throw new Error(
+      'Stripe: workload identity authentication is not available in this runtime. Construct the client with an API key instead.'
+    );
   }
 
   /**
