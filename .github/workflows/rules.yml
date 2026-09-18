@@ -47,8 +47,14 @@ jobs:
         run: |
           set -euo pipefail
 
-          files=$(gh api --paginate             "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/files?per_page=100"             --jq '.[]')
-          paths=$(jq -sc             '[.[] | select(.status == "added") | .filename | select(test("^\.hark/changes/[^/]+\.change\.md$"))]'             <<< "$files")
+          if ! files=$(gh api --paginate             "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/files?per_page=100"             --jq '.[]' 2>&1); then
+            echo "::error::Failed to query pull request files: $files"
+            exit 1
+          fi
+          if ! paths=$(jq -sc             '[.[] | select(.status == "added") | .filename | select(test("^[.]hark/changes/[^/]+[.]change[.]md$"))]'             <<< "$files" 2>&1); then
+            echo "::error::Failed to select newly added Hark changefiles: $paths"
+            exit 1
+          fi
           echo "paths=$paths" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ github.token }}
