@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "outDir": "./cjs",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "lib": ["es2020"],
+    "alwaysStrict": true,
+    "declaration": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "types": ["node"],
+    "sourceMap": false,
+    "esModuleInterop": false,
+    // The AWS SDK ships a large declaration surface that this package barely
+    // touches; checking it couples our build to AWS's type hygiene rather than
+    // to our own code.
+    "skipLibCheck": true
+  },
+  "include": ["./src/**/*"]
+}

@@ -60,6 +60,17 @@ import {
   Decimal,
 } from './shared.js';
 import {UnknownEventNotification} from './resources/V2/Core/Events.js';
+import {
+  AuthenticationMethod,
+  WorkloadIdentityCredentials,
+  WorkloadIdentityProvider,
+  attachWorkloadIdentityConfig,
+  createWorkloadIdentityAuthenticator,
+  readWorkloadIdentityConfig,
+  validateApiKeyCredential,
+  validateWorkloadIdentityClientId,
+  validateWorkloadIdentityProvider,
+} from './WorkloadIdentity.js';
 
 // StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
 import {
@@ -1271,6 +1282,13 @@ export class Stripe {
   _requestSender: RequestSender;
   _platformFunctions: PlatformFunctions;
   _authenticator: RequestAuthenticator | null = null;
+  /**
+   * The one explicit authentication mode this client was constructed with.
+   * Always set by the constructor.
+   */
+  _authMethod!: AuthenticationMethod;
+  /** In-memory restricted key cache, only for workload identity clients. */
+  _workloadIdentityCredentials: WorkloadIdentityCredentials | null = null;
   _clientId?: string;
 
   // StripeInstanceVariables: The beginning of the section generated from our OpenAPI spec
@@ -1410,6 +1428,63 @@ export class Stripe {
     };
   }
 
+  /**
+   * Creates a client that authenticates with a workload identity assertion
+   * instead of a long-lived API key.
+   *
+   * The application proves where it is running: on the first request the
+   * provider is asked for a signed identity assertion, which is exchanged with
+   * Stripe for a short-lived restricted key. That key is cached in memory and
+   * used as the ordinary authentication credential from then on.
+   *
+   * Workload identity currently supports AWS only, and is never selected
+   * implicitly -- `new Stripe(...)` continues to require an API key.
+   *
+   * ```js
+   * import Stripe from 'stripe';
+   * import {awsWorkloadIdentity} from '@stripe/stripe-aws-workload-identity';
+   *
+   * const client = Stripe.forWorkloadIdentity('oacli_live_...', awsWorkloadIdentity());
+   * ```
+   *
+   * @param clientId - A Stripe OAuth client ID (`oacli_live_...` or `oacli_test_...`).
+   * @param identityProvider - A workload identity adapter, e.g. `awsWorkloadIdentity()`.
+   * @param config - The same configuration a normal client accepts, except `authenticator`.
+   */
+  static forWorkloadIdentity(
+    clientId: string,
+    identityProvider: WorkloadIdentityProvider,
+    config: StripeConfig = {}
+  ): Stripe {
+    validateWorkloadIdentityClientId(clientId);
+    validateWorkloadIdentityProvider(identityProvider);
+
+    if (config && typeof config !== 'object') {
+      throw new Error(
+        '`Stripe.forWorkloadIdentity` config must be an object. The API version string form is not supported.'
+      );
+    }
+
+    const credentials = new WorkloadIdentityCredentials(
+      clientId,
+      identityProvider,
+      Stripe._platformFunctions.createWorkloadIdentityTokenTransport()
+    );
+
+    const StripeClient = this as typeof Stripe & {
+      new (key: string, config: StripeConfig): Stripe;
+    };
+
+    return new StripeClient(
+      '',
+      attachWorkloadIdentityConfig(config || {}, {
+        clientId,
+        identityProvider,
+        credentials,
+      })
+    );
+  }
+
   constructor(key: string, config?: StripeConfig);
   constructor(
     key: string,
@@ -1472,7 +1547,7 @@ export class Stripe {
       this._setAppInfo(props.appInfo);
     }
 
-    this._setAuthenticator(key, props.authenticator || null);
+    this._setAuthenticationMethod(key, props, config);
 
     this.errors = _Error;
     this.Decimal = Decimal;
@@ -1610,6 +1685,57 @@ export class Stripe {
     options?: RawRequestOptions
   ): Promise<any> {
     return this._requestSender._rawRequest(method, path, params, options);
+  }
+
+  /**
+   * @private
+   *
+   * Resolves the client's single authentication mode. Workload identity is only
+   * reachable through `Stripe.forWorkloadIdentity`, which passes its state on a
+   * symbol-keyed config property; an absent or empty API key is never
+   * reinterpreted as workload identity.
+   */
+  _setAuthenticationMethod(
+    key: string,
+    props: UserProvidedConfig,
+    config: StripeConfig | Record<string, unknown>
+  ): void {
+    const workloadIdentity = readWorkloadIdentityConfig(config);
+
+    if (workloadIdentity) {
+      if (key) {
+        throw new Error("Can't specify both an apiKey and workload identity");
+      }
+      if (props.authenticator) {
+        throw new Error(
+          "Can't specify both config.authenticator and workload identity"
+        );
+      }
+
+      this._workloadIdentityCredentials = workloadIdentity.credentials;
+      this._authMethod = {
+        mode: 'workload_identity',
+        clientId: workloadIdentity.clientId,
+        identityProvider: workloadIdentity.identityProvider,
+      };
+      this._authenticator = createWorkloadIdentityAuthenticator(
+        workloadIdentity.credentials
+      );
+      return;
+    }
+
+    if (key) {
+      validateApiKeyCredential(key);
+    }
+
+    this._setAuthenticator(key, props.authenticator || null);
+
+    this._authMethod = key
+      ? {mode: 'api_key', apiKey: key}
+      : {
+          mode: 'custom_authenticator',
+          authenticator: this._authenticator as RequestAuthenticator,
+        };
   }
 
   /**
@@ -2072,29 +2198,42 @@ export class Stripe {
         constructorOptions: StripeConstructorOptions
       ): Stripe;
     };
-    const client = new StripeClient(
-      '',
-      {
-        apiVersion: this.getApiField('version'),
-        authenticator: this._authenticator ?? undefined,
-        typescript:
-          StripeClient.USER_AGENT.typescript === true ? true : undefined,
-        maxNetworkRetries: this.getApiField('maxNetworkRetries'),
-        httpClient: this.getApiField('httpClient'),
-        timeout: this.getApiField('timeout'),
-        host: this.getApiField('host'),
-        port: this.getApiField('port'),
-        protocol: this.getApiField('protocol'),
-        telemetry: this.getTelemetryEnabled(),
-        emitEventBodies: this.getEmitEventBodiesEnabled(),
-        appInfo: this._appInfo,
-        stripeContext: stripeContext ?? undefined,
-      },
-      {
-        emitter: this._emitter,
-        prevRequestMetrics: this._prevRequestMetrics,
-      }
-    );
+    let config: StripeConfig = {
+      apiVersion: this.getApiField('version'),
+      authenticator: this._authenticator ?? undefined,
+      typescript:
+        StripeClient.USER_AGENT.typescript === true ? true : undefined,
+      maxNetworkRetries: this.getApiField('maxNetworkRetries'),
+      httpClient: this.getApiField('httpClient'),
+      timeout: this.getApiField('timeout'),
+      host: this.getApiField('host'),
+      port: this.getApiField('port'),
+      protocol: this.getApiField('protocol'),
+      telemetry: this.getTelemetryEnabled(),
+      emitEventBodies: this.getEmitEventBodiesEnabled(),
+      appInfo: this._appInfo,
+      stripeContext: stripeContext ?? undefined,
+    };
+
+    if (
+      this._authMethod.mode === 'workload_identity' &&
+      this._workloadIdentityCredentials
+    ) {
+      // Carry the mode across rather than passing the authenticator as a custom
+      // one, so the derived client keeps workload identity semantics and shares
+      // this client's restricted key cache.
+      delete config.authenticator;
+      config = attachWorkloadIdentityConfig(config, {
+        clientId: this._authMethod.clientId,
+        identityProvider: this._authMethod.identityProvider,
+        credentials: this._workloadIdentityCredentials,
+      });
+    }
+
+    const client = new StripeClient('', config, {
+      emitter: this._emitter,
+      prevRequestMetrics: this._prevRequestMetrics,
+    });
 
     const clientId = this.getClientId();
     if (clientId) {
@@ -3244,6 +3383,9 @@ export declare namespace Stripe {
   export type Decimal = import('./shared.js').Decimal;
 
   export type StripeConfig = import('./lib.js').StripeConfig;
+  export type WorkloadIdentityProvider = import('./WorkloadIdentity.js').WorkloadIdentityProvider;
+  export type WorkloadIdentityCloudProvider = import('./WorkloadIdentity.js').WorkloadIdentityCloudProvider;
+  export type AuthenticationMethod = import('./WorkloadIdentity.js').AuthenticationMethod;
   export type LatestApiVersion = import('./lib.js').LatestApiVersion;
   export type HttpAgent = import('./lib.js').HttpAgent;
   export type HttpProtocol = import('./lib.js').HttpProtocol;

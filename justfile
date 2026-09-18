@@ -10,7 +10,7 @@ _default:
     just --list --unsorted
 
 # ⭐ run format, lint, and tests to prepare for CI
-prepare: format lint test types-test
+prepare: format lint test types-test packages-test
 
 # this uses positional-args so that mixed quoted and unquoted arguments
 # (like filtering for a certain test) work the way we expect
@@ -30,7 +30,45 @@ types-test: build
 integrations-test: build
     RUN_INTEGRATION_TESTS=1 mocha test/Integration.spec.ts
 
+# the separately published companion packages maintained in this repo
+PACKAGES := "stripe-aws-workload-identity"
+
+# ⭐ build, typecheck, and test the companion packages in packages/
+#
+# Run this at a single, modern Node version rather than across the core SDK's
+# support matrix. `@stripe/stripe-aws-workload-identity` depends on
+# `@aws-sdk/client-sts`, whose current releases require Node >= 20 even though
+# the core SDK supports Node >= 18.
+packages-test:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for pkg in {{ PACKAGES }}; do
+        cd "{{ justfile_directory() }}/packages/$pkg"
+        # each package carries its own dependencies so that the core `stripe`
+        # package never gains them, even transitively
+        if [ ! -d node_modules ]; then npm install --no-audit --no-fund; fi
+        npm run typecheck
+        npm run build
+        npm test
+    done
+
+# verify each companion package produces a publishable archive (does not publish)
+packages-pack: packages-test
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for pkg in {{ PACKAGES }}; do
+        cd "{{ justfile_directory() }}/packages/$pkg"
+        archive=$(npm pack --silent)
+        echo "--- $pkg: $archive"
+        tar -tzf "$archive" | sort
+        rm -f "$archive"
+    done
+
 # run the full test suite; you probably want `test`
+#
+# `packages-test` is deliberately absent: it runs on its own CI job at a single
+# Node version, because the companion packages' third-party dependencies do not
+# all support every Node version the core SDK supports (see packages-test).
 ci-test: install test types-test integrations-test
 
 _build mode packageType tscArgs: install
@@ -65,7 +103,7 @@ install:
 [private]
 prettier *args: install
     # all the project-relevant JS code
-    prettier "{src,examples,scripts,test,types}/**/*.{ts,js}" {{ args }}
+    prettier "{src,examples,scripts,test,types}/**/*.{ts,js}" "packages/*/{src,test}/**/*.{ts,js}" {{ args }}
 
 # ⭐ format all files
 format: (prettier "--write --loglevel error")

@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.cjs.json",
+  "compilerOptions": {
+    "outDir": "./esm",
+    "module": "es2022"
+  }
+}
