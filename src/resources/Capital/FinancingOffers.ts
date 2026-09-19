@@ -174,6 +174,11 @@ export namespace FinancingOffer {
     previous_financing_fee_discount_amount: number | null;
 
     /**
+     * Total amount due for the financing independent of what's already been paid, in minor units. For example, 100 USD is represented as 10000.
+     */
+    total_due_amount?: number;
+
+    /**
      * Per-transaction rate at which Stripe withholds funds to repay the financing.
      */
     withhold_rate: number;

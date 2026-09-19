@@ -794,10 +794,10 @@ import {SourceMandateNotification} from './resources/SourceMandateNotifications.
 import {SourceTransaction} from './resources/SourceTransactions.js';
 import {TaxDeductedAtSource} from './resources/TaxDeductedAtSources.js';
 import {TransitBalance} from './resources/TransitBalances.js';
-import {AccountSignals} from './resources/AccountSignals.js';
 import {Capability} from './resources/Capabilities.js';
 import {LoginLink} from './resources/LoginLinks.js';
 import {Person, DeletedPerson} from './resources/Persons.js';
+import {AccountSignals} from './resources/AccountSignals.js';
 import {FeeRefund} from './resources/FeeRefunds.js';
 import {CreditNoteLineItem} from './resources/CreditNoteLineItems.js';
 import {CustomerBalanceTransaction} from './resources/CustomerBalanceTransactions.js';
@@ -860,6 +860,9 @@ import {
   ApplicationFeeCreatedEvent,
   ApplicationFeeRefundUpdatedEvent,
   ApplicationFeeRefundedEvent,
+  AppsInstallCreatedEvent,
+  AppsInstallDeletedEvent,
+  AppsInstallUpdatedEvent,
   BalanceAvailableEvent,
   BalanceSettingsUpdatedEvent,
   BillingAlertRecoveredEvent,
@@ -2841,10 +2844,10 @@ export declare namespace Stripe {
   export {SourceTransaction};
   export {TaxDeductedAtSource};
   export {TransitBalance};
-  export {AccountSignals};
   export {Capability};
   export {LoginLink};
   export {Person, DeletedPerson};
+  export {AccountSignals};
   export {FeeRefund};
   export {CreditNoteLineItem};
   export {CustomerBalanceTransaction};
@@ -2898,6 +2901,9 @@ export declare namespace Stripe {
     ApplicationFeeCreatedEvent,
     ApplicationFeeRefundUpdatedEvent,
     ApplicationFeeRefundedEvent,
+    AppsInstallCreatedEvent,
+    AppsInstallDeletedEvent,
+    AppsInstallUpdatedEvent,
     BalanceAvailableEvent,
     BalanceSettingsUpdatedEvent,
     BillingAlertRecoveredEvent,
@@ -3364,6 +3370,9 @@ export declare namespace Stripe {
     export type RecipientNotNotifiableError = InstanceType<
       typeof _Error.RecipientNotNotifiableError
     >;
+    export type ServiceUnavailableError = InstanceType<
+      typeof _Error.ServiceUnavailableError
+    >;
     export type TemporarySessionExpiredError = InstanceType<
       typeof _Error.TemporarySessionExpiredError
     >;
@@ -3466,6 +3475,9 @@ export declare namespace Stripe {
     export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
     export type RecipientNotNotifiableError = InstanceType<
       typeof _Error.RecipientNotNotifiableError
+    >;
+    export type ServiceUnavailableError = InstanceType<
+      typeof _Error.ServiceUnavailableError
     >;
     export type TemporarySessionExpiredError = InstanceType<
       typeof _Error.TemporarySessionExpiredError

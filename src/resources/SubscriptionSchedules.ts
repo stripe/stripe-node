@@ -238,7 +238,7 @@ export class SubscriptionScheduleResource extends StripeResource {
     return JSON.stringify(entry);
   }
   serializeBatchUpdate(
-    schedule: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -251,14 +251,14 @@ export class SubscriptionScheduleResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {schedule: schedule};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchCancel(
-    schedule: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -271,14 +271,14 @@ export class SubscriptionScheduleResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {schedule: schedule};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchRelease(
-    schedule: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -291,7 +291,7 @@ export class SubscriptionScheduleResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {schedule: schedule};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }

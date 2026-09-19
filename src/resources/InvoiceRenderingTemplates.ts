@@ -68,7 +68,7 @@ export class InvoiceRenderingTemplateResource extends StripeResource {
     ) as any;
   }
   serializeBatchArchive(
-    template: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -81,14 +81,14 @@ export class InvoiceRenderingTemplateResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {template: template};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchUnarchive(
-    template: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -101,7 +101,7 @@ export class InvoiceRenderingTemplateResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {template: template};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }

@@ -1276,7 +1276,7 @@ export class SubscriptionResource extends StripeResource {
     ) as any;
   }
   serializeBatchCancel(
-    subscriptionExposedId: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -1289,14 +1289,14 @@ export class SubscriptionResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {subscription_exposed_id: subscriptionExposedId};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchUpdate(
-    subscriptionExposedId: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -1309,7 +1309,7 @@ export class SubscriptionResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {subscription_exposed_id: subscriptionExposedId};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
@@ -1334,7 +1334,7 @@ export class SubscriptionResource extends StripeResource {
     return JSON.stringify(entry);
   }
   serializeBatchMigrate(
-    subscription: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -1347,14 +1347,14 @@ export class SubscriptionResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {subscription: subscription};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchPause(
-    subscription: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -1367,14 +1367,14 @@ export class SubscriptionResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {subscription: subscription};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchResume(
-    subscription: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -1387,7 +1387,7 @@ export class SubscriptionResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {subscription: subscription};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
@@ -1870,6 +1870,11 @@ export namespace Subscription {
     billing_cycle_anchor: number | null;
 
     /**
+     * Indicates whether this subscription should cancel at the end of the current period if the update is applied.
+     */
+    cancel_at_period_end: boolean | null;
+
+    /**
      * The pending subscription-level discount that will be applied when the pending update is applied.
      */
     discount: Discount | null;
@@ -2279,6 +2284,7 @@ export namespace Subscription {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'touch_n_go'
       | 'truemoney'
       | 'twint'
       | 'upi'
@@ -4065,6 +4071,7 @@ export namespace SubscriptionCreateParams {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'touch_n_go'
       | 'truemoney'
       | 'twint'
       | 'upi'
@@ -5820,6 +5827,7 @@ export namespace SubscriptionUpdateParams {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'touch_n_go'
       | 'truemoney'
       | 'twint'
       | 'upi'
@@ -6071,7 +6079,7 @@ export namespace SubscriptionUpdateParams {
           /**
            * Date when the mandate expires and no further payments will be charged. If not provided, the mandate will be set to be indefinite.
            */
-          expires_after?: number;
+          expires_at?: number;
         }
       }
 
@@ -6326,7 +6334,7 @@ export namespace SubscriptionUpdateParams {
       /**
        * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
        */
-      missing_payment_method: EndBehavior.MissingPaymentMethod;
+      missing_payment_method?: EndBehavior.MissingPaymentMethod;
     }
 
     export namespace EndBehavior {

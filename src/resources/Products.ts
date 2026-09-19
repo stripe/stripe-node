@@ -259,7 +259,7 @@ export class ProductResource extends StripeResource {
     ) as any;
   }
   serializeBatchDeleteFeature(
-    product: string,
+    productId: string,
     id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
@@ -273,14 +273,14 @@ export class ProductResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {product: product, id: id};
+    entry.path_params = {product_id: productId, id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchCreateFeature(
-    product: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -293,7 +293,7 @@ export class ProductResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {product: product};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
@@ -507,7 +507,7 @@ export namespace Product {
 
   export interface TaxDetails {
     /**
-     * The performance location.
+     * The ID of a tax location with type `performance`, representing where the performance takes place.
      */
     performance_location: string | null;
 
@@ -1077,7 +1077,7 @@ export interface ProductListParams extends PaginationParams {
   expand?: Array<string>;
 
   /**
-   * Only return products with the given IDs. Cannot be used with [starting_after](https://api.stripe.com#list_products-starting_after) or [ending_before](https://api.stripe.com#list_products-ending_before).
+   * Only return products with the given IDs. Cannot be used with [starting_after](https://docs.stripe.com/api#list_products-starting_after) or [ending_before](https://docs.stripe.com/api#list_products-ending_before).
    */
   ids?: Array<string>;
 

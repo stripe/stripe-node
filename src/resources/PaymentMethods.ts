@@ -133,7 +133,7 @@ export class PaymentMethodResource extends StripeResource {
     ) as any;
   }
   serializeBatchAttach(
-    paymentMethod: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -146,7 +146,7 @@ export class PaymentMethodResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {payment_method: paymentMethod};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
@@ -3159,11 +3159,6 @@ export interface PaymentMethodUpdateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
-   * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
-   */
-  payto?: PaymentMethodUpdateParams.Payto;
-
-  /**
    * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
    */
   us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
@@ -3229,23 +3224,6 @@ export namespace PaymentMethodUpdateParams {
      * Indicates whether the payment method supports off-session payments.
      */
     usage?: 'off_session';
-  }
-
-  export interface Payto {
-    /**
-     * The account number for the bank account.
-     */
-    account_number?: string;
-
-    /**
-     * Bank-State-Branch number of the bank account.
-     */
-    bsb_number?: string;
-
-    /**
-     * The PayID alias for the bank account.
-     */
-    pay_id?: string;
   }
 
   export interface UsBankAccount {

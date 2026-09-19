@@ -116,7 +116,7 @@ export class RefundResource extends StripeResource {
     return JSON.stringify(entry);
   }
   serializeBatchCancel(
-    refund: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -129,7 +129,7 @@ export class RefundResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {refund: refund};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }

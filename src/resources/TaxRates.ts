@@ -81,7 +81,7 @@ export class TaxRateResource extends StripeResource {
     return JSON.stringify(entry);
   }
   serializeBatchUpdate(
-    taxRate: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -94,7 +94,7 @@ export class TaxRateResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {tax_rate: taxRate};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }

@@ -3431,6 +3431,7 @@ export namespace PaymentLinkUpdateParams {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'

@@ -129,6 +129,11 @@ export namespace BalanceSettings {
     export namespace Payouts {
       export interface AutomaticTransferRulesByCurrency {
         /**
+         * The currency of the FinancialAccount balance that receives the automatic transfer.
+         */
+        destination_currency?: string | null;
+
+        /**
          * The ID of the FinancialAccount that funds will be transferred to during automatic transfers.
          */
         payout_method: string;
@@ -295,6 +300,11 @@ export namespace BalanceSettingsUpdateParams {
 
     export namespace Payouts {
       export interface AutomaticTransferRulesByCurrency {
+        /**
+         * The currency of the FinancialAccount balance that receives the automatic transfer. If specified, funds are converted from the source currency before transfer.
+         */
+        destination_currency?: string;
+
         /**
          * The ID of the FinancialAccount that funds will be transferred to during automatic transfers.
          */

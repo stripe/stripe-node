@@ -193,7 +193,7 @@ export class InvoiceItemResource extends StripeResource {
     }) as any;
   }
   serializeBatchDelete(
-    invoiceitem: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -206,14 +206,14 @@ export class InvoiceItemResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {invoiceitem: invoiceitem};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchUpdate(
-    invoiceitem: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -226,7 +226,7 @@ export class InvoiceItemResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {invoiceitem: invoiceitem};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
@@ -924,6 +924,11 @@ export interface InvoiceItemUpdateParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * Pass an empty string to remove previously-defined invoicing rules. Setting invoicing rules is not supported.
+   */
+  invoicing_rules?: '';
 
   /**
    * The ids of the margins to apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.

@@ -423,7 +423,7 @@ export class PriceResource extends StripeResource {
     return JSON.stringify(entry);
   }
   serializeBatchUpdate(
-    price: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -436,7 +436,7 @@ export class PriceResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {price: price};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
