@@ -75,9 +75,9 @@ jobs:
           inspection=$(hark inspect "${changefiles[@]}")
           major_paths=$(jq -c             '[.[] | select(.semver_level == "major") | .path]'             <<< "$inspection")
 
-          if [[ "$major_paths" != "[]" && "$BASE_REF" != "sdk-release/next-major" ]]; then
+          if [[ "$major_paths" != "[]"             && "$BASE_REF" != "sdk-release/next-major"             && ! ("$HEAD_REF" == "sdk-release/next-major" && "$BASE_REF" == "master") ]]; then
             affected_paths=$(jq -r 'join(", ")' <<< "$major_paths")
-            echo "::error::Major Hark changefiles must target sdk-release/next-major. Retarget this pull request from '$BASE_REF' to 'sdk-release/next-major'. Affected files: $affected_paths"
+            echo "::error::Major Hark changefiles must target sdk-release/next-major unless this pull request merges sdk-release/next-major into master. Retarget this pull request from '$BASE_REF' to 'sdk-release/next-major'. Affected files: $affected_paths"
             exit 1
           fi
 
@@ -85,4 +85,5 @@ jobs:
         env:
           BASE_REF: ${{ github.base_ref }}
           CHANGEFILE_PATHS: ${{ steps.changefiles.outputs.paths }}
+          HEAD_REF: ${{ github.head_ref }}
 
