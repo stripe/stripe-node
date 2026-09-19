@@ -2345,7 +2345,7 @@ export namespace Session {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Alipay.SetupFutureUsage;
     }
 
     export interface Alma {
@@ -3069,7 +3069,7 @@ export namespace Session {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export namespace AcssDebit {
@@ -3125,6 +3125,10 @@ export namespace Session {
 
         export type TransactionType = 'business' | 'personal' | OtherString;
       }
+    }
+
+    export namespace Alipay {
+      export type SetupFutureUsage = 'none' | OtherString;
     }
 
     export namespace AmazonPay {
@@ -3570,6 +3574,8 @@ export namespace Session {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -6024,7 +6030,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: Alipay.SetupFutureUsage;
       }
 
       export interface Alma {
@@ -6825,7 +6831,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: WechatPay.SetupFutureUsage;
       }
 
       export namespace AcssDebit {
@@ -6883,6 +6889,10 @@ export namespace Checkout {
 
           export type TransactionType = 'business' | 'personal' | OtherString;
         }
+      }
+
+      export namespace Alipay {
+        export type SetupFutureUsage = 'none' | OtherString;
       }
 
       export namespace AmazonPay {
@@ -7380,6 +7390,8 @@ export namespace Checkout {
 
       export namespace WechatPay {
         export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+        export type SetupFutureUsage = 'none' | OtherString;
       }
     }
 

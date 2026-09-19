@@ -862,6 +862,50 @@ describe('utils', () => {
       expect(mergedBufToString).to.equal('foobar');
     });
   });
+
+  describe('assertOriginRelativePath', () => {
+    it('accepts origin-relative paths', () => {
+      const valid = [
+        '/v1/customers/cus_123',
+        '/v1/customers',
+        '/v2/core/accounts?page=page_123&limit=2',
+        // '@' is legal inside a path or query string -- it only opens an
+        // authority when it precedes the first '/'.
+        '/v1/customers?email=user%40example.com',
+        '/v1/invoices/in_123@456',
+        // A backslash does not open an authority: the '/' already closed it.
+        '/v1/\\evil.example',
+      ];
+      valid.forEach((path) => {
+        expect(() => utils.validatePath(path)).to.not.throw();
+      });
+    });
+
+    it('rejects paths that could move the request authority', () => {
+      const hostile = [
+        '@evil.example/v1/leak',
+        ':pw@evil.example/v1/leak',
+        ':80@evil.example/v1/leak',
+        // Extends the host into an attacker-owned subdomain
+        // (api.stripe.com.evil.example), which has a valid certificate.
+        '.evil.example/v1/leak',
+        '-evil.example/v1/leak',
+        'https://evil.example/v1/leak',
+        '//evil.example/v1/leak',
+        '',
+        'v1/customers',
+        null,
+        undefined,
+        42,
+      ];
+      hostile.forEach((path) => {
+        expect(
+          () => utils.validatePath(path),
+          `expected to reject ${JSON.stringify(path)}`
+        ).to.throw(/must be a string beginning with a single/);
+      });
+    });
+  });
 });
 
 function handleWarnings(doWithShimmedConsoleWarn, onWarn): void {
