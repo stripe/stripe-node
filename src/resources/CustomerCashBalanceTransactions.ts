@@ -172,6 +172,21 @@ export namespace CustomerCashBalanceTransaction {
         account_number_last4: string | null;
 
         /**
+         * The BIC of the bank of the sender of the funding.
+         */
+        bic?: string;
+
+        /**
+         * The last 4 digits of the IBAN of the sender of the funding.
+         */
+        iban_last4?: string;
+
+        /**
+         * The banking network used for this funding.
+         */
+        network?: GbBankTransfer.Network | null;
+
+        /**
          * The full name of the sender, as supplied by the sending bank.
          */
         sender_name: string | null;
@@ -217,6 +232,10 @@ export namespace CustomerCashBalanceTransaction {
          * The full name of the sender, as supplied by the sending bank.
          */
         sender_name: string | null;
+      }
+
+      export namespace GbBankTransfer {
+        export type Network = 'bacs' | 'chaps' | 'fps' | 'swift' | OtherString;
       }
 
       export namespace UsBankTransfer {

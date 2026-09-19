@@ -1060,9 +1060,9 @@ export namespace Charge {
       description?: string | null;
 
       /**
-       * The Electronic Commerce Indicator (ECI) returned by the card network in the authorization response. Indicates the level of authentication used. Only populated for Visa and Mastercard transactions. The response value is the source of truth; it may differ from the request value if the network downgraded the transaction.
+       * The Electronic Commerce Indicator (ECI) returned by the card network in the authorization response. Indicates the level of authentication used. Only populated for Visa and Mastercard transactions. This is the network's final ECI and can differ from the request value. An authenticated ECI alone doesn't determine liability shift.
        */
-      electronic_commerce_indicator?: string | null;
+      electronic_commerce_indicator: string | null;
 
       /**
        * Two-digit number representing the card's expiration month.
@@ -1157,6 +1157,16 @@ export namespace Charge {
        * Status of a card based on the card issuer.
        */
       regulated_status: Card.RegulatedStatus | null;
+
+      /**
+       * The payment_method_options.card.setup_credential_usage value that was passed when setup_future_usage was present at confirmation, one of `recurring`, `unscheduled`, or `installment`
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
+       * The payment_method_options.card.stored_credential_usage value that was passed for an off session, merchant-initiated transaction, one of `recurring`, `unscheduled`, `on_session`, or `installment`
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage;
 
       /**
        * Populated if this transaction used 3D Secure authentication.
@@ -2432,6 +2442,16 @@ export namespace Charge {
 
       export type RegulatedStatus = 'regulated' | 'unregulated' | OtherString;
 
+      export type SetupCredentialUsage =
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
+      export type StoredCredentialUsage =
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export interface ThreeDSecure {
         /**
          * For authenticated transactions: how the customer was authenticated by
@@ -3274,7 +3294,7 @@ export interface ChargeCreateParams {
   application_fee_amount?: number;
 
   /**
-   * Whether to immediately capture the charge. Defaults to `true`. When `false`, the charge issues an authorization (or pre-authorization), and will need to be [captured](https://api.stripe.com#capture_charge) later. Uncaptured charges expire after a set number of days (7 by default). For more information, see the [authorizing charges and settling later](https://docs.stripe.com/charges/placing-a-hold) documentation.
+   * Whether to immediately capture the charge. Defaults to `true`. When `false`, the charge issues an authorization (or pre-authorization), and will need to be [captured](https://docs.stripe.com/api#capture_charge) later. Uncaptured charges expire after a set number of days (7 by default). For more information, see the [authorizing charges and settling later](https://docs.stripe.com/charges/placing-a-hold) documentation.
    */
   capture?: boolean;
 

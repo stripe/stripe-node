@@ -113,6 +113,8 @@ export const generateV2Error = (
       return new RateLimitError(rawStripeError);
     case 'recipient_not_notifiable':
       return new RecipientNotNotifiableError(rawStripeError);
+    case 'service_unavailable':
+      return new ServiceUnavailableError(rawStripeError);
     case 'temporary_session_expired':
       return new TemporarySessionExpiredError(rawStripeError);
     // switchCases: The end of the section generated from our OpenAPI spec
@@ -532,6 +534,11 @@ export class RateLimitError extends StripeError {
 export class RecipientNotNotifiableError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'RecipientNotNotifiableError');
+  }
+}
+export class ServiceUnavailableError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'ServiceUnavailableError');
   }
 }
 export class TemporarySessionExpiredError extends StripeError {

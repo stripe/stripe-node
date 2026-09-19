@@ -87,7 +87,7 @@ export class PromotionCodeResource extends StripeResource {
     return JSON.stringify(entry);
   }
   serializeBatchUpdate(
-    promotionCode: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -100,7 +100,7 @@ export class PromotionCodeResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {promotion_code: promotionCode};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }

@@ -79,7 +79,7 @@ export class DisputeResource extends StripeResource {
     ) as any;
   }
   serializeBatchClose(
-    dispute: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -92,7 +92,7 @@ export class DisputeResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {dispute: dispute};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
@@ -435,7 +435,7 @@ export namespace Dispute {
         reason_for_filing?: string;
 
         /**
-         * One or more document IDs returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `dispute_evidence` to support the appeal.
+         * One or more document IDs returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `dispute_evidence` to support the appeal.
          */
         supporting_files?: Array<string>;
       }
@@ -767,6 +767,11 @@ export namespace DisputeUpdateParams {
     access_activity_log?: string;
 
     /**
+     * Evidence to submit when appealing a dispute.
+     */
+    appeal?: Emptyable<Evidence.Appeal>;
+
+    /**
      * The billing address provided by the customer.
      */
     billing_address?: string;
@@ -909,6 +914,13 @@ export namespace DisputeUpdateParams {
     | 'smart_disputes';
 
   export namespace Evidence {
+    export interface Appeal {
+      /**
+       * Evidence for a card dispute appeal.
+       */
+      card?: Emptyable<Appeal.Card>;
+    }
+
     export interface EnhancedEvidence {
       /**
        * Evidence provided for Mastercard compliance evidence submission.
@@ -924,6 +936,20 @@ export namespace DisputeUpdateParams {
        * Evidence provided for Visa compliance evidence submission.
        */
       visa_compliance?: EnhancedEvidence.VisaCompliance;
+    }
+
+    export namespace Appeal {
+      export interface Card {
+        /**
+         * An explanation of the reason for filing the appeal.
+         */
+        reason_for_filing?: Emptyable<string>;
+
+        /**
+         * One or more document IDs returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `dispute_evidence` to support the appeal.
+         */
+        supporting_files?: Emptyable<Array<string>>;
+      }
     }
 
     export namespace EnhancedEvidence {

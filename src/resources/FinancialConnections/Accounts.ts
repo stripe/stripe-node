@@ -494,7 +494,11 @@ export namespace Account {
       | 'tokenized_account_number'
       | OtherString;
 
-    export type Status = 'deactivated' | 'transactable' | OtherString;
+    export type Status =
+      | 'deactivated'
+      | 'expired'
+      | 'transactable'
+      | OtherString;
   }
 
   export namespace Balance {

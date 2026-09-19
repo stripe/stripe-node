@@ -112,6 +112,11 @@ export interface PayoutMethod {
   alternative_reference?: PayoutMethod.AlternativeReference;
 
   /**
+   * The PayoutMethodApplePay object details.
+   */
+  apple_pay?: PayoutMethod.ApplePay;
+
+  /**
    * A set of available payout speeds for this payout method.
    */
   available_payout_speeds: Array<PayoutMethod.AvailablePayoutSpeed>;
@@ -178,6 +183,39 @@ export namespace PayoutMethod {
      * The type of the alternative reference (e.g., external_account for V1 external accounts).
      */
     type: AlternativeReference.Type;
+  }
+
+  export interface ApplePay {
+    /**
+     * The last four digits of the device account number (DPAN).
+     */
+    dynamic_last4: string;
+
+    /**
+     * The month the card expires.
+     */
+    exp_month: string;
+
+    /**
+     * The year the card expires.
+     */
+    exp_year: string;
+
+    /**
+     * Uniquely identifies this particular Apple-Pay-registered DPAN (Device PAN). Refer to
+     * https://support.stripe.com/questions/how-do-card-numbers-work-with-apple-pay-and-google-pay-and-what-is-dynamic-last4 for more info on DPANs.
+     */
+    fingerprint: string;
+
+    /**
+     * The last 4 digits of the card number.
+     */
+    last4: string;
+
+    /**
+     * The list of currencies supported by this card.
+     */
+    supported_currencies: Array<string>;
   }
 
   export type AvailablePayoutSpeed = 'instant' | 'standard';
@@ -308,6 +346,7 @@ export namespace PayoutMethod {
   }
 
   export type Type =
+    | 'apple_pay'
     | 'bank_account'
     | 'card'
     | 'crypto_wallet'

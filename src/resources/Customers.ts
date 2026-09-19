@@ -599,7 +599,7 @@ export class CustomerResource extends StripeResource {
     }) as any;
   }
   serializeBatchDelete(
-    customer: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -612,14 +612,14 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchUpdate(
-    customer: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -632,14 +632,14 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchDeleteDiscount(
-    customer: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -652,7 +652,7 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
@@ -746,7 +746,7 @@ export class CustomerResource extends StripeResource {
     ) as any;
   }
   serializeBatchCreateBalanceTransaction(
-    customer: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -759,15 +759,15 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchUpdateBalanceTransaction(
-    customer: string,
-    transaction: string,
+    customerId: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -780,7 +780,7 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer, transaction: transaction};
+    entry.path_params = {customer_id: customerId, id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
@@ -817,7 +817,7 @@ export class CustomerResource extends StripeResource {
     ) as any;
   }
   serializeBatchUpdateCashBalance(
-    customer: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -830,7 +830,7 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
@@ -890,7 +890,7 @@ export class CustomerResource extends StripeResource {
     ) as any;
   }
   serializeBatchCreateFundingInstructionsFundingInstructions(
-    customer: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -903,7 +903,7 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
@@ -1055,7 +1055,7 @@ export class CustomerResource extends StripeResource {
     ) as any;
   }
   serializeBatchCreateSource(
-    customer: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -1068,14 +1068,14 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchUpdateSource(
-    customer: string,
+    customerId: string,
     id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
@@ -1089,14 +1089,14 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer, id: id};
+    entry.path_params = {customer_id: customerId, id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchDeleteSource(
-    customer: string,
+    customerId: string,
     id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
@@ -1110,14 +1110,14 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer, id: id};
+    entry.path_params = {customer_id: customerId, id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchVerifySource(
-    customer: string,
+    customerId: string,
     id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
@@ -1131,7 +1131,7 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer, id: id};
+    entry.path_params = {customer_id: customerId, id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
@@ -1276,7 +1276,7 @@ export class CustomerResource extends StripeResource {
     ) as any;
   }
   serializeBatchDeleteTaxId(
-    customer: string,
+    customerId: string,
     id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
@@ -1290,14 +1290,14 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer, id: id};
+    entry.path_params = {customer_id: customerId, id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
     return JSON.stringify(entry);
   }
   serializeBatchCreateForCustomerTaxId(
-    customer: string,
+    id: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
@@ -1310,7 +1310,7 @@ export class CustomerResource extends StripeResource {
       params: params,
       stripe_version: stripeVersion,
     };
-    entry.path_params = {customer: customer};
+    entry.path_params = {id: id};
     if (options.stripeContext) {
       entry.context = options.stripeContext;
     }
@@ -1329,7 +1329,7 @@ export interface Customer {
   object: 'customer';
 
   /**
-   * The customer's address.
+   * The customer's billing address.
    */
   address?: Address | null;
 

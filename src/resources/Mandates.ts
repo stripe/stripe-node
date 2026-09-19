@@ -262,7 +262,7 @@ export namespace Mandate {
       /**
        * Type of the mandate.
        */
-      type: Blik.Type;
+      type: 'off_session';
     }
 
     export interface Card {}
@@ -445,10 +445,6 @@ export namespace Mandate {
         | 'could_not_process'
         | 'debit_not_authorized'
         | OtherString;
-    }
-
-    export namespace Blik {
-      export type Type = 'off_session' | 'on_session' | OtherString;
     }
 
     export namespace Payto {

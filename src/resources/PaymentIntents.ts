@@ -490,7 +490,7 @@ export interface PaymentIntent {
    *
    * Payment methods attached to other Customers cannot be used with this PaymentIntent.
    *
-   * If [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Customer instead.
+   * If [setup_future_usage](https://docs.stripe.com/api#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Customer instead.
    */
   customer: string | Customer | DeletedCustomer | null;
 
@@ -499,7 +499,7 @@ export interface PaymentIntent {
    *
    * Payment methods attached to other Accounts cannot be used with this PaymentIntent.
    *
-   * If [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Account after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Account instead.
+   * If [setup_future_usage](https://docs.stripe.com/api#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Account after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Account instead.
    */
   customer_account: string | null;
 
@@ -1028,7 +1028,7 @@ export namespace PaymentIntent {
     /**
      * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
      * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
-     * Later, you can use [PaymentIntents](https://api.stripe.com#payment_intents) to drive the payment flow.
+     * Later, you can use [PaymentIntents](https://docs.stripe.com/api#payment_intents) to drive the payment flow.
      *
      * Create a SetupIntent when you're ready to collect your customer's payment credentials.
      * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
@@ -1039,9 +1039,9 @@ export namespace PaymentIntent {
      * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
      * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
      * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
-     * If you use the SetupIntent with a [Customer](https://api.stripe.com#setup_intent_object-customer),
+     * If you use the SetupIntent with a [Customer](https://docs.stripe.com/api#setup_intent_object-customer),
      * it automatically attaches the resulting payment method to that Customer after successful setup.
-     * We recommend using SetupIntents or [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) on
+     * We recommend using SetupIntents or [setup_future_usage](https://docs.stripe.com/api#payment_intent_object-setup_future_usage) on
      * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
      *
      * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
@@ -4555,6 +4555,8 @@ export namespace PaymentIntent {
     export interface Bizum {}
 
     export interface Blik {
+      mandate_options?: Blik.MandateOptions;
+
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
@@ -4564,7 +4566,7 @@ export namespace PaymentIntent {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Blik.SetupFutureUsage;
     }
 
     export interface Boleto {
@@ -4663,6 +4665,11 @@ export namespace PaymentIntent {
       require_cvc_recollection?: boolean;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -4684,6 +4691,11 @@ export namespace PaymentIntent {
       statement_descriptor_suffix_kanji?: string;
 
       statement_details?: Card.StatementDetails;
+
+      /**
+       * Selected usage to indicate the transaction type of the off-session payment.
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage;
     }
 
     export interface CardPresent {
@@ -5730,6 +5742,22 @@ export namespace PaymentIntent {
       }
     }
 
+    export namespace Blik {
+      export interface MandateOptions {
+        /**
+         * Date at which the mandate expires.
+         */
+        expires_at: number | null;
+
+        /**
+         * Type of the mandate.
+         */
+        type: 'off_session' | null;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Boleto {
       export type SetupFutureUsage =
         | 'none'
@@ -5878,6 +5906,11 @@ export namespace PaymentIntent {
         | 'challenge'
         | OtherString;
 
+      export type SetupCredentialUsage =
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export type SetupFutureUsage =
         | 'none'
         | 'off_session'
@@ -5892,6 +5925,11 @@ export namespace PaymentIntent {
          */
         phone?: string;
       }
+
+      export type StoredCredentialUsage =
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
 
       export namespace Installments {
         export interface AvailablePlan {
@@ -6753,7 +6791,7 @@ export interface PaymentIntentCreateParams {
    *
    * Payment methods attached to other Customers cannot be used with this PaymentIntent.
    *
-   * If [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Customer instead.
+   * If [setup_future_usage](https://docs.stripe.com/api#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Customer instead.
    */
   customer?: string;
 
@@ -6762,7 +6800,7 @@ export interface PaymentIntentCreateParams {
    *
    * Payment methods attached to other Accounts cannot be used with this PaymentIntent.
    *
-   * If [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Account after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Account instead.
+   * If [setup_future_usage](https://docs.stripe.com/api#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Account after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Account instead.
    */
   customer_account?: string;
 
@@ -6832,7 +6870,7 @@ export interface PaymentIntentCreateParams {
    * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://docs.stripe.com/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
    *
    * If you don't provide the `payment_method` parameter or the `source` parameter with `confirm=true`, `source` automatically populates with `customer.default_source` to improve migration for users of the Charges API. We recommend that you explicitly provide the `payment_method` moving forward.
-   * If the payment method is attached to a Customer, you must also provide the ID of that Customer as the [customer](https://api.stripe.com#create_payment_intent-customer) parameter of this PaymentIntent.
+   * If the payment method is attached to a Customer, you must also provide the ID of that Customer as the [customer](https://docs.stripe.com/api#create_payment_intent-customer) parameter of this PaymentIntent.
    * end
    */
   payment_method?: string;
@@ -8294,13 +8332,39 @@ export namespace PaymentIntentCreateParams {
 
           export namespace FleetData {
             export type ProductType =
+              | 'additive_dosage'
+              | 'additized_diesel_2'
+              | 'additized_diesel_3'
               | 'air_conditioning_service'
+              | 'air_filter'
               | 'alcohol'
+              | 'antifreeze'
+              | 'automotive_merchandise'
               | 'aviation_fuel_premium'
               | 'aviation_fuel_regular'
+              | 'batteries'
+              | 'biodiesel_b1'
+              | 'biodiesel_b10'
+              | 'biodiesel_b100'
+              | 'biodiesel_b11'
+              | 'biodiesel_b15'
+              | 'biodiesel_b2'
+              | 'biodiesel_b20'
+              | 'biodiesel_b5'
+              | 'biodiesel_b75'
+              | 'biodiesel_b99'
+              | 'blended_diesel_1_and_2'
+              | 'body_work'
+              | 'brake_fluid'
+              | 'brake_service'
               | 'car_care_detailing'
+              | 'car_wash'
               | 'compressed_natural_gas'
+              | 'def_at_pump'
               | 'deli'
+              | 'e85'
+              | 'engine_service'
+              | 'ethanol_e16_to_e84'
               | 'ev_battery_exchanges'
               | 'ev_charging_fee'
               | 'evc_level_1'
@@ -8308,40 +8372,135 @@ export namespace PaymentIntentCreateParams {
               | 'evc_level_3'
               | 'evc_level_4'
               | 'evc_level_5'
+              | 'exhaust_service'
+              | 'federal_tire_excise_tax'
               | 'food_service'
+              | 'fuel_additive_treatment'
+              | 'fuel_system'
               | 'green_gasoline_mid_plus'
               | 'green_gasoline_premium_super'
               | 'green_gasoline_regular'
               | 'grocery'
+              | 'heating_oil'
+              | 'hoses'
+              | 'hydrogen_h35'
+              | 'hydrogen_h70'
+              | 'inspection'
+              | 'kerosene_low_sulfur'
+              | 'kerosene_low_sulfur_non_taxable'
+              | 'kerosene_ultra_low_sulfur'
+              | 'kerosene_ultra_low_sulfur_non_taxable'
+              | 'labor'
+              | 'lamps'
               | 'liquid_natural_gas'
               | 'liquid_propane_gas'
               | 'lodging'
+              | 'low_octane_unleaded'
+              | 'lube'
               | 'marine_diesel'
               | 'marine_fuel'
+              | 'marine_fuel_1'
+              | 'marine_fuel_2'
+              | 'marine_fuel_3'
+              | 'marine_fuel_4'
+              | 'marine_fuel_5'
+              | 'marine_other'
               | 'merchandise'
               | 'mid_plus'
+              | 'mid_plus_2'
+              | 'mid_plus_2_10'
+              | 'mid_plus_2_e15'
+              | 'mid_plus_2_reformulated'
+              | 'mid_plus_e10'
+              | 'mid_plus_e15'
               | 'mid_plus_ethanol'
+              | 'mid_plus_reformulated'
               | 'miscellaneous_aviation_products_services'
               | 'miscellaneous_fuel'
               | 'miscellaneous_marine_products_services'
               | 'miscellaneous_vehicle_products_services'
+              | 'motor_oil'
+              | 'off_road_b1'
+              | 'off_road_b10'
+              | 'off_road_b100'
+              | 'off_road_b11'
+              | 'off_road_b15'
+              | 'off_road_b2'
+              | 'off_road_b20'
+              | 'off_road_b5'
+              | 'off_road_b75'
+              | 'off_road_b99'
+              | 'off_road_biodiesel'
+              | 'off_road_diesel_1'
+              | 'off_road_diesel_2'
+              | 'off_road_mid_plus'
+              | 'off_road_mid_plus_2'
+              | 'off_road_premium_diesel_1'
+              | 'off_road_premium_diesel_2'
+              | 'off_road_premium_super'
+              | 'off_road_premium_super_2'
+              | 'off_road_regular'
+              | 'off_road_renewable_diesel_b6_to_b20'
+              | 'off_road_renewable_diesel_r95'
+              | 'oil_change'
+              | 'oil_filter'
+              | 'other_lubricants'
               | 'packaged_beverage'
               | 'premium_diesel'
+              | 'premium_diesel_2'
+              | 'premium_diesel_b20_plus'
+              | 'premium_diesel_under_b20'
               | 'premium_super'
+              | 'premium_super_2'
+              | 'premium_super_2_10'
+              | 'premium_super_2_e15'
+              | 'premium_super_2_reformulated'
+              | 'premium_super_e10'
+              | 'premium_super_e15'
               | 'premium_super_ethanol'
+              | 'premium_super_reformulated'
               | 'preventative_maintenance'
+              | 'racing_fuel'
+              | 'recreational_fuel_90_octane'
               | 'regular'
               | 'regular_diesel'
+              | 'regular_diesel_2'
+              | 'regular_e10'
+              | 'regular_e15'
               | 'regular_ethanol'
+              | 'regular_reformulated'
+              | 'renewable_diesel_b6_to_b20'
+              | 'renewable_diesel_r95'
               | 'repairs'
+              | 'road_service'
+              | 'rv_dump_fee'
+              | 'scales'
               | 'self_service_car_wash'
+              | 'service_package'
               | 'shower'
               | 'store_service'
+              | 'synthetic_oil'
+              | 'tire_related'
+              | 'tire_repair'
+              | 'tire_rotation'
+              | 'tires'
               | 'tobacco'
+              | 'toll_payments'
+              | 'towing'
+              | 'trailer_wash'
+              | 'transmission_service'
+              | 'truck_tank_cleaning'
               | 'vehicle_accessories'
+              | 'vehicle_glass'
               | 'vehicle_parking'
               | 'vehicle_parts'
+              | 'vehicle_prep'
+              | 'vehicle_rental'
+              | 'vehicle_work_order'
               | 'wash_out'
+              | 'washer_fluid'
+              | 'white_gas'
+              | 'wipers'
               | OtherString;
 
             export type ServiceType =
@@ -15427,7 +15586,7 @@ export interface PaymentIntentUpdateParams {
    *
    * Payment methods attached to other Customers cannot be used with this PaymentIntent.
    *
-   * If [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Customer instead.
+   * If [setup_future_usage](https://docs.stripe.com/api#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Customer instead.
    */
   customer?: string;
 
@@ -15436,7 +15595,7 @@ export interface PaymentIntentUpdateParams {
    *
    * Payment methods attached to other Accounts cannot be used with this PaymentIntent.
    *
-   * If [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Account after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Account instead.
+   * If [setup_future_usage](https://docs.stripe.com/api#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Account after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Account instead.
    */
   customer_account?: string;
 
@@ -15571,6 +15730,7 @@ export namespace PaymentIntentUpdateParams {
     | 'boleto'
     | 'capchase_pay'
     | 'card'
+    | 'card_present'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -15591,6 +15751,7 @@ export namespace PaymentIntentUpdateParams {
     | 'grabpay'
     | 'id_bank_transfer'
     | 'ideal'
+    | 'interac_present'
     | 'kakao_pay'
     | 'klarna'
     | 'knet'
@@ -16142,6 +16303,11 @@ export namespace PaymentIntentUpdateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+     */
+    sequra?: PaymentMethodData.Sequra;
+
+    /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
      */
     shared_payment_granted_token?: string;
@@ -16482,6 +16648,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
      */
     sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
+
+    /**
+     * If this is a `sequra` PaymentMethod, this sub-hash contains details about the SeQura payment method options.
+     */
+    sequra?: Emptyable<PaymentMethodOptions.Sequra>;
 
     /**
      * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
@@ -16859,13 +17030,39 @@ export namespace PaymentIntentUpdateParams {
 
           export namespace FleetData {
             export type ProductType =
+              | 'additive_dosage'
+              | 'additized_diesel_2'
+              | 'additized_diesel_3'
               | 'air_conditioning_service'
+              | 'air_filter'
               | 'alcohol'
+              | 'antifreeze'
+              | 'automotive_merchandise'
               | 'aviation_fuel_premium'
               | 'aviation_fuel_regular'
+              | 'batteries'
+              | 'biodiesel_b1'
+              | 'biodiesel_b10'
+              | 'biodiesel_b100'
+              | 'biodiesel_b11'
+              | 'biodiesel_b15'
+              | 'biodiesel_b2'
+              | 'biodiesel_b20'
+              | 'biodiesel_b5'
+              | 'biodiesel_b75'
+              | 'biodiesel_b99'
+              | 'blended_diesel_1_and_2'
+              | 'body_work'
+              | 'brake_fluid'
+              | 'brake_service'
               | 'car_care_detailing'
+              | 'car_wash'
               | 'compressed_natural_gas'
+              | 'def_at_pump'
               | 'deli'
+              | 'e85'
+              | 'engine_service'
+              | 'ethanol_e16_to_e84'
               | 'ev_battery_exchanges'
               | 'ev_charging_fee'
               | 'evc_level_1'
@@ -16873,40 +17070,135 @@ export namespace PaymentIntentUpdateParams {
               | 'evc_level_3'
               | 'evc_level_4'
               | 'evc_level_5'
+              | 'exhaust_service'
+              | 'federal_tire_excise_tax'
               | 'food_service'
+              | 'fuel_additive_treatment'
+              | 'fuel_system'
               | 'green_gasoline_mid_plus'
               | 'green_gasoline_premium_super'
               | 'green_gasoline_regular'
               | 'grocery'
+              | 'heating_oil'
+              | 'hoses'
+              | 'hydrogen_h35'
+              | 'hydrogen_h70'
+              | 'inspection'
+              | 'kerosene_low_sulfur'
+              | 'kerosene_low_sulfur_non_taxable'
+              | 'kerosene_ultra_low_sulfur'
+              | 'kerosene_ultra_low_sulfur_non_taxable'
+              | 'labor'
+              | 'lamps'
               | 'liquid_natural_gas'
               | 'liquid_propane_gas'
               | 'lodging'
+              | 'low_octane_unleaded'
+              | 'lube'
               | 'marine_diesel'
               | 'marine_fuel'
+              | 'marine_fuel_1'
+              | 'marine_fuel_2'
+              | 'marine_fuel_3'
+              | 'marine_fuel_4'
+              | 'marine_fuel_5'
+              | 'marine_other'
               | 'merchandise'
               | 'mid_plus'
+              | 'mid_plus_2'
+              | 'mid_plus_2_10'
+              | 'mid_plus_2_e15'
+              | 'mid_plus_2_reformulated'
+              | 'mid_plus_e10'
+              | 'mid_plus_e15'
               | 'mid_plus_ethanol'
+              | 'mid_plus_reformulated'
               | 'miscellaneous_aviation_products_services'
               | 'miscellaneous_fuel'
               | 'miscellaneous_marine_products_services'
               | 'miscellaneous_vehicle_products_services'
+              | 'motor_oil'
+              | 'off_road_b1'
+              | 'off_road_b10'
+              | 'off_road_b100'
+              | 'off_road_b11'
+              | 'off_road_b15'
+              | 'off_road_b2'
+              | 'off_road_b20'
+              | 'off_road_b5'
+              | 'off_road_b75'
+              | 'off_road_b99'
+              | 'off_road_biodiesel'
+              | 'off_road_diesel_1'
+              | 'off_road_diesel_2'
+              | 'off_road_mid_plus'
+              | 'off_road_mid_plus_2'
+              | 'off_road_premium_diesel_1'
+              | 'off_road_premium_diesel_2'
+              | 'off_road_premium_super'
+              | 'off_road_premium_super_2'
+              | 'off_road_regular'
+              | 'off_road_renewable_diesel_b6_to_b20'
+              | 'off_road_renewable_diesel_r95'
+              | 'oil_change'
+              | 'oil_filter'
+              | 'other_lubricants'
               | 'packaged_beverage'
               | 'premium_diesel'
+              | 'premium_diesel_2'
+              | 'premium_diesel_b20_plus'
+              | 'premium_diesel_under_b20'
               | 'premium_super'
+              | 'premium_super_2'
+              | 'premium_super_2_10'
+              | 'premium_super_2_e15'
+              | 'premium_super_2_reformulated'
+              | 'premium_super_e10'
+              | 'premium_super_e15'
               | 'premium_super_ethanol'
+              | 'premium_super_reformulated'
               | 'preventative_maintenance'
+              | 'racing_fuel'
+              | 'recreational_fuel_90_octane'
               | 'regular'
               | 'regular_diesel'
+              | 'regular_diesel_2'
+              | 'regular_e10'
+              | 'regular_e15'
               | 'regular_ethanol'
+              | 'regular_reformulated'
+              | 'renewable_diesel_b6_to_b20'
+              | 'renewable_diesel_r95'
               | 'repairs'
+              | 'road_service'
+              | 'rv_dump_fee'
+              | 'scales'
               | 'self_service_car_wash'
+              | 'service_package'
               | 'shower'
               | 'store_service'
+              | 'synthetic_oil'
+              | 'tire_related'
+              | 'tire_repair'
+              | 'tire_rotation'
+              | 'tires'
               | 'tobacco'
+              | 'toll_payments'
+              | 'towing'
+              | 'trailer_wash'
+              | 'transmission_service'
+              | 'truck_tank_cleaning'
               | 'vehicle_accessories'
+              | 'vehicle_glass'
               | 'vehicle_parking'
               | 'vehicle_parts'
+              | 'vehicle_prep'
+              | 'vehicle_rental'
+              | 'vehicle_work_order'
               | 'wash_out'
+              | 'washer_fluid'
+              | 'white_gas'
+              | 'wipers'
               | OtherString;
 
             export type ServiceType =
@@ -19489,6 +19781,8 @@ export namespace PaymentIntentUpdateParams {
       iban: string;
     }
 
+    export interface Sequra {}
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -20074,6 +20368,11 @@ export namespace PaymentIntentUpdateParams {
       code?: string;
 
       /**
+       * Details of the BLIK mandate
+       */
+      mandate_options?: Blik.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -20084,7 +20383,7 @@ export namespace PaymentIntentUpdateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: Emptyable<'none'>;
+      setup_future_usage?: Emptyable<Blik.SetupFutureUsage>;
     }
 
     export interface Boleto {
@@ -20211,6 +20510,11 @@ export namespace PaymentIntentUpdateParams {
       require_cvc_recollection?: boolean;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -20237,6 +20541,17 @@ export namespace PaymentIntentUpdateParams {
        * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
        */
       statement_details?: Emptyable<Card.StatementDetails>;
+
+      /**
+       * Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
+       *
+       *  When making an off session payment with a previously saved card (that was saved with a SetupIntent or with a PaymentIntent with `setup_future_usage`), set this parameter to indicate the type of transaction.
+       *
+       *  You can set this parameter at any time before or during PaymentIntent confirmation, and confirm this PaymentIntent with `off_session=true`.
+       *
+       *  Note that this parameter is currently unsupported with the `setup_future_usage` parameter.
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -20903,15 +21218,6 @@ export namespace PaymentIntentUpdateParams {
 
     export interface Paypay {
       /**
-       * Controls when the funds are captured from the customer's account.
-       *
-       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
-       *
-       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
-       */
-      capture_method?: Emptyable<'manual'>;
-
-      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -21108,6 +21414,30 @@ export namespace PaymentIntentUpdateParams {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+    }
+
+    export interface Sequra {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface Shopeepay {
@@ -21488,6 +21818,17 @@ export namespace PaymentIntentUpdateParams {
       }
     }
 
+    export namespace Blik {
+      export interface MandateOptions {
+        /**
+         * Expiry date of the mandate.
+         */
+        expires_at?: number;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Boleto {
       export type SetupFutureUsage =
         | 'none'
@@ -21631,6 +21972,11 @@ export namespace PaymentIntentUpdateParams {
         | 'challenge'
         | OtherString;
 
+      export type SetupCredentialUsage =
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export type SetupFutureUsage =
         | 'none'
         | 'off_session'
@@ -21648,6 +21994,11 @@ export namespace PaymentIntentUpdateParams {
          */
         phone?: string;
       }
+
+      export type StoredCredentialUsage =
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
 
       export interface ThreeDSecure {
         /**
@@ -24427,13 +24778,39 @@ export namespace PaymentIntentCaptureParams {
 
           export namespace FleetData {
             export type ProductType =
+              | 'additive_dosage'
+              | 'additized_diesel_2'
+              | 'additized_diesel_3'
               | 'air_conditioning_service'
+              | 'air_filter'
               | 'alcohol'
+              | 'antifreeze'
+              | 'automotive_merchandise'
               | 'aviation_fuel_premium'
               | 'aviation_fuel_regular'
+              | 'batteries'
+              | 'biodiesel_b1'
+              | 'biodiesel_b10'
+              | 'biodiesel_b100'
+              | 'biodiesel_b11'
+              | 'biodiesel_b15'
+              | 'biodiesel_b2'
+              | 'biodiesel_b20'
+              | 'biodiesel_b5'
+              | 'biodiesel_b75'
+              | 'biodiesel_b99'
+              | 'blended_diesel_1_and_2'
+              | 'body_work'
+              | 'brake_fluid'
+              | 'brake_service'
               | 'car_care_detailing'
+              | 'car_wash'
               | 'compressed_natural_gas'
+              | 'def_at_pump'
               | 'deli'
+              | 'e85'
+              | 'engine_service'
+              | 'ethanol_e16_to_e84'
               | 'ev_battery_exchanges'
               | 'ev_charging_fee'
               | 'evc_level_1'
@@ -24441,40 +24818,135 @@ export namespace PaymentIntentCaptureParams {
               | 'evc_level_3'
               | 'evc_level_4'
               | 'evc_level_5'
+              | 'exhaust_service'
+              | 'federal_tire_excise_tax'
               | 'food_service'
+              | 'fuel_additive_treatment'
+              | 'fuel_system'
               | 'green_gasoline_mid_plus'
               | 'green_gasoline_premium_super'
               | 'green_gasoline_regular'
               | 'grocery'
+              | 'heating_oil'
+              | 'hoses'
+              | 'hydrogen_h35'
+              | 'hydrogen_h70'
+              | 'inspection'
+              | 'kerosene_low_sulfur'
+              | 'kerosene_low_sulfur_non_taxable'
+              | 'kerosene_ultra_low_sulfur'
+              | 'kerosene_ultra_low_sulfur_non_taxable'
+              | 'labor'
+              | 'lamps'
               | 'liquid_natural_gas'
               | 'liquid_propane_gas'
               | 'lodging'
+              | 'low_octane_unleaded'
+              | 'lube'
               | 'marine_diesel'
               | 'marine_fuel'
+              | 'marine_fuel_1'
+              | 'marine_fuel_2'
+              | 'marine_fuel_3'
+              | 'marine_fuel_4'
+              | 'marine_fuel_5'
+              | 'marine_other'
               | 'merchandise'
               | 'mid_plus'
+              | 'mid_plus_2'
+              | 'mid_plus_2_10'
+              | 'mid_plus_2_e15'
+              | 'mid_plus_2_reformulated'
+              | 'mid_plus_e10'
+              | 'mid_plus_e15'
               | 'mid_plus_ethanol'
+              | 'mid_plus_reformulated'
               | 'miscellaneous_aviation_products_services'
               | 'miscellaneous_fuel'
               | 'miscellaneous_marine_products_services'
               | 'miscellaneous_vehicle_products_services'
+              | 'motor_oil'
+              | 'off_road_b1'
+              | 'off_road_b10'
+              | 'off_road_b100'
+              | 'off_road_b11'
+              | 'off_road_b15'
+              | 'off_road_b2'
+              | 'off_road_b20'
+              | 'off_road_b5'
+              | 'off_road_b75'
+              | 'off_road_b99'
+              | 'off_road_biodiesel'
+              | 'off_road_diesel_1'
+              | 'off_road_diesel_2'
+              | 'off_road_mid_plus'
+              | 'off_road_mid_plus_2'
+              | 'off_road_premium_diesel_1'
+              | 'off_road_premium_diesel_2'
+              | 'off_road_premium_super'
+              | 'off_road_premium_super_2'
+              | 'off_road_regular'
+              | 'off_road_renewable_diesel_b6_to_b20'
+              | 'off_road_renewable_diesel_r95'
+              | 'oil_change'
+              | 'oil_filter'
+              | 'other_lubricants'
               | 'packaged_beverage'
               | 'premium_diesel'
+              | 'premium_diesel_2'
+              | 'premium_diesel_b20_plus'
+              | 'premium_diesel_under_b20'
               | 'premium_super'
+              | 'premium_super_2'
+              | 'premium_super_2_10'
+              | 'premium_super_2_e15'
+              | 'premium_super_2_reformulated'
+              | 'premium_super_e10'
+              | 'premium_super_e15'
               | 'premium_super_ethanol'
+              | 'premium_super_reformulated'
               | 'preventative_maintenance'
+              | 'racing_fuel'
+              | 'recreational_fuel_90_octane'
               | 'regular'
               | 'regular_diesel'
+              | 'regular_diesel_2'
+              | 'regular_e10'
+              | 'regular_e15'
               | 'regular_ethanol'
+              | 'regular_reformulated'
+              | 'renewable_diesel_b6_to_b20'
+              | 'renewable_diesel_r95'
               | 'repairs'
+              | 'road_service'
+              | 'rv_dump_fee'
+              | 'scales'
               | 'self_service_car_wash'
+              | 'service_package'
               | 'shower'
               | 'store_service'
+              | 'synthetic_oil'
+              | 'tire_related'
+              | 'tire_repair'
+              | 'tire_rotation'
+              | 'tires'
               | 'tobacco'
+              | 'toll_payments'
+              | 'towing'
+              | 'trailer_wash'
+              | 'transmission_service'
+              | 'truck_tank_cleaning'
               | 'vehicle_accessories'
+              | 'vehicle_glass'
               | 'vehicle_parking'
               | 'vehicle_parts'
+              | 'vehicle_prep'
+              | 'vehicle_rental'
+              | 'vehicle_work_order'
               | 'wash_out'
+              | 'washer_fluid'
+              | 'white_gas'
+              | 'wipers'
               | OtherString;
 
             export type ServiceType =
@@ -26665,7 +27137,7 @@ export interface PaymentIntentConfirmParams {
 
   /**
    * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://docs.stripe.com/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
-   * If the payment method is attached to a Customer, it must match the [customer](https://api.stripe.com#create_payment_intent-customer) that is set on this PaymentIntent.
+   * If the payment method is attached to a Customer, it must match the [customer](https://docs.stripe.com/api#create_payment_intent-customer) that is set on this PaymentIntent.
    */
   payment_method?: string;
 
@@ -26746,6 +27218,7 @@ export namespace PaymentIntentConfirmParams {
     | 'boleto'
     | 'capchase_pay'
     | 'card'
+    | 'card_present'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -26766,6 +27239,7 @@ export namespace PaymentIntentConfirmParams {
     | 'grabpay'
     | 'id_bank_transfer'
     | 'ideal'
+    | 'interac_present'
     | 'kakao_pay'
     | 'klarna'
     | 'knet'
@@ -27319,6 +27793,11 @@ export namespace PaymentIntentConfirmParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+     */
+    sequra?: PaymentMethodData.Sequra;
+
+    /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
      */
     shared_payment_granted_token?: string;
@@ -27659,6 +28138,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
      */
     sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
+
+    /**
+     * If this is a `sequra` PaymentMethod, this sub-hash contains details about the SeQura payment method options.
+     */
+    sequra?: Emptyable<PaymentMethodOptions.Sequra>;
 
     /**
      * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
@@ -28026,13 +28510,39 @@ export namespace PaymentIntentConfirmParams {
 
           export namespace FleetData {
             export type ProductType =
+              | 'additive_dosage'
+              | 'additized_diesel_2'
+              | 'additized_diesel_3'
               | 'air_conditioning_service'
+              | 'air_filter'
               | 'alcohol'
+              | 'antifreeze'
+              | 'automotive_merchandise'
               | 'aviation_fuel_premium'
               | 'aviation_fuel_regular'
+              | 'batteries'
+              | 'biodiesel_b1'
+              | 'biodiesel_b10'
+              | 'biodiesel_b100'
+              | 'biodiesel_b11'
+              | 'biodiesel_b15'
+              | 'biodiesel_b2'
+              | 'biodiesel_b20'
+              | 'biodiesel_b5'
+              | 'biodiesel_b75'
+              | 'biodiesel_b99'
+              | 'blended_diesel_1_and_2'
+              | 'body_work'
+              | 'brake_fluid'
+              | 'brake_service'
               | 'car_care_detailing'
+              | 'car_wash'
               | 'compressed_natural_gas'
+              | 'def_at_pump'
               | 'deli'
+              | 'e85'
+              | 'engine_service'
+              | 'ethanol_e16_to_e84'
               | 'ev_battery_exchanges'
               | 'ev_charging_fee'
               | 'evc_level_1'
@@ -28040,40 +28550,135 @@ export namespace PaymentIntentConfirmParams {
               | 'evc_level_3'
               | 'evc_level_4'
               | 'evc_level_5'
+              | 'exhaust_service'
+              | 'federal_tire_excise_tax'
               | 'food_service'
+              | 'fuel_additive_treatment'
+              | 'fuel_system'
               | 'green_gasoline_mid_plus'
               | 'green_gasoline_premium_super'
               | 'green_gasoline_regular'
               | 'grocery'
+              | 'heating_oil'
+              | 'hoses'
+              | 'hydrogen_h35'
+              | 'hydrogen_h70'
+              | 'inspection'
+              | 'kerosene_low_sulfur'
+              | 'kerosene_low_sulfur_non_taxable'
+              | 'kerosene_ultra_low_sulfur'
+              | 'kerosene_ultra_low_sulfur_non_taxable'
+              | 'labor'
+              | 'lamps'
               | 'liquid_natural_gas'
               | 'liquid_propane_gas'
               | 'lodging'
+              | 'low_octane_unleaded'
+              | 'lube'
               | 'marine_diesel'
               | 'marine_fuel'
+              | 'marine_fuel_1'
+              | 'marine_fuel_2'
+              | 'marine_fuel_3'
+              | 'marine_fuel_4'
+              | 'marine_fuel_5'
+              | 'marine_other'
               | 'merchandise'
               | 'mid_plus'
+              | 'mid_plus_2'
+              | 'mid_plus_2_10'
+              | 'mid_plus_2_e15'
+              | 'mid_plus_2_reformulated'
+              | 'mid_plus_e10'
+              | 'mid_plus_e15'
               | 'mid_plus_ethanol'
+              | 'mid_plus_reformulated'
               | 'miscellaneous_aviation_products_services'
               | 'miscellaneous_fuel'
               | 'miscellaneous_marine_products_services'
               | 'miscellaneous_vehicle_products_services'
+              | 'motor_oil'
+              | 'off_road_b1'
+              | 'off_road_b10'
+              | 'off_road_b100'
+              | 'off_road_b11'
+              | 'off_road_b15'
+              | 'off_road_b2'
+              | 'off_road_b20'
+              | 'off_road_b5'
+              | 'off_road_b75'
+              | 'off_road_b99'
+              | 'off_road_biodiesel'
+              | 'off_road_diesel_1'
+              | 'off_road_diesel_2'
+              | 'off_road_mid_plus'
+              | 'off_road_mid_plus_2'
+              | 'off_road_premium_diesel_1'
+              | 'off_road_premium_diesel_2'
+              | 'off_road_premium_super'
+              | 'off_road_premium_super_2'
+              | 'off_road_regular'
+              | 'off_road_renewable_diesel_b6_to_b20'
+              | 'off_road_renewable_diesel_r95'
+              | 'oil_change'
+              | 'oil_filter'
+              | 'other_lubricants'
               | 'packaged_beverage'
               | 'premium_diesel'
+              | 'premium_diesel_2'
+              | 'premium_diesel_b20_plus'
+              | 'premium_diesel_under_b20'
               | 'premium_super'
+              | 'premium_super_2'
+              | 'premium_super_2_10'
+              | 'premium_super_2_e15'
+              | 'premium_super_2_reformulated'
+              | 'premium_super_e10'
+              | 'premium_super_e15'
               | 'premium_super_ethanol'
+              | 'premium_super_reformulated'
               | 'preventative_maintenance'
+              | 'racing_fuel'
+              | 'recreational_fuel_90_octane'
               | 'regular'
               | 'regular_diesel'
+              | 'regular_diesel_2'
+              | 'regular_e10'
+              | 'regular_e15'
               | 'regular_ethanol'
+              | 'regular_reformulated'
+              | 'renewable_diesel_b6_to_b20'
+              | 'renewable_diesel_r95'
               | 'repairs'
+              | 'road_service'
+              | 'rv_dump_fee'
+              | 'scales'
               | 'self_service_car_wash'
+              | 'service_package'
               | 'shower'
               | 'store_service'
+              | 'synthetic_oil'
+              | 'tire_related'
+              | 'tire_repair'
+              | 'tire_rotation'
+              | 'tires'
               | 'tobacco'
+              | 'toll_payments'
+              | 'towing'
+              | 'trailer_wash'
+              | 'transmission_service'
+              | 'truck_tank_cleaning'
               | 'vehicle_accessories'
+              | 'vehicle_glass'
               | 'vehicle_parking'
               | 'vehicle_parts'
+              | 'vehicle_prep'
+              | 'vehicle_rental'
+              | 'vehicle_work_order'
               | 'wash_out'
+              | 'washer_fluid'
+              | 'white_gas'
+              | 'wipers'
               | OtherString;
 
             export type ServiceType =
@@ -30670,6 +31275,8 @@ export namespace PaymentIntentConfirmParams {
       iban: string;
     }
 
+    export interface Sequra {}
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -31255,6 +31862,11 @@ export namespace PaymentIntentConfirmParams {
       code?: string;
 
       /**
+       * Details of the BLIK mandate
+       */
+      mandate_options?: Blik.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -31265,7 +31877,7 @@ export namespace PaymentIntentConfirmParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: Emptyable<'none'>;
+      setup_future_usage?: Emptyable<Blik.SetupFutureUsage>;
     }
 
     export interface Boleto {
@@ -31392,6 +32004,11 @@ export namespace PaymentIntentConfirmParams {
       require_cvc_recollection?: boolean;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -31418,6 +32035,17 @@ export namespace PaymentIntentConfirmParams {
        * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
        */
       statement_details?: Emptyable<Card.StatementDetails>;
+
+      /**
+       * Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
+       *
+       *  When making an off session payment with a previously saved card (that was saved with a SetupIntent or with a PaymentIntent with `setup_future_usage`), set this parameter to indicate the type of transaction.
+       *
+       *  You can set this parameter at any time before or during PaymentIntent confirmation, and confirm this PaymentIntent with `off_session=true`.
+       *
+       *  Note that this parameter is currently unsupported with the `setup_future_usage` parameter.
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -32084,15 +32712,6 @@ export namespace PaymentIntentConfirmParams {
 
     export interface Paypay {
       /**
-       * Controls when the funds are captured from the customer's account.
-       *
-       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
-       *
-       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
-       */
-      capture_method?: Emptyable<'manual'>;
-
-      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -32289,6 +32908,30 @@ export namespace PaymentIntentConfirmParams {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+    }
+
+    export interface Sequra {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface Shopeepay {
@@ -32669,6 +33312,17 @@ export namespace PaymentIntentConfirmParams {
       }
     }
 
+    export namespace Blik {
+      export interface MandateOptions {
+        /**
+         * Expiry date of the mandate.
+         */
+        expires_at?: number;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Boleto {
       export type SetupFutureUsage =
         | 'none'
@@ -32812,6 +33466,11 @@ export namespace PaymentIntentConfirmParams {
         | 'challenge'
         | OtherString;
 
+      export type SetupCredentialUsage =
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export type SetupFutureUsage =
         | 'none'
         | 'off_session'
@@ -32829,6 +33488,11 @@ export namespace PaymentIntentConfirmParams {
          */
         phone?: string;
       }
+
+      export type StoredCredentialUsage =
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
 
       export interface ThreeDSecure {
         /**
@@ -35477,13 +36141,39 @@ export namespace PaymentIntentDecrementAuthorizationParams {
 
           export namespace FleetData {
             export type ProductType =
+              | 'additive_dosage'
+              | 'additized_diesel_2'
+              | 'additized_diesel_3'
               | 'air_conditioning_service'
+              | 'air_filter'
               | 'alcohol'
+              | 'antifreeze'
+              | 'automotive_merchandise'
               | 'aviation_fuel_premium'
               | 'aviation_fuel_regular'
+              | 'batteries'
+              | 'biodiesel_b1'
+              | 'biodiesel_b10'
+              | 'biodiesel_b100'
+              | 'biodiesel_b11'
+              | 'biodiesel_b15'
+              | 'biodiesel_b2'
+              | 'biodiesel_b20'
+              | 'biodiesel_b5'
+              | 'biodiesel_b75'
+              | 'biodiesel_b99'
+              | 'blended_diesel_1_and_2'
+              | 'body_work'
+              | 'brake_fluid'
+              | 'brake_service'
               | 'car_care_detailing'
+              | 'car_wash'
               | 'compressed_natural_gas'
+              | 'def_at_pump'
               | 'deli'
+              | 'e85'
+              | 'engine_service'
+              | 'ethanol_e16_to_e84'
               | 'ev_battery_exchanges'
               | 'ev_charging_fee'
               | 'evc_level_1'
@@ -35491,40 +36181,135 @@ export namespace PaymentIntentDecrementAuthorizationParams {
               | 'evc_level_3'
               | 'evc_level_4'
               | 'evc_level_5'
+              | 'exhaust_service'
+              | 'federal_tire_excise_tax'
               | 'food_service'
+              | 'fuel_additive_treatment'
+              | 'fuel_system'
               | 'green_gasoline_mid_plus'
               | 'green_gasoline_premium_super'
               | 'green_gasoline_regular'
               | 'grocery'
+              | 'heating_oil'
+              | 'hoses'
+              | 'hydrogen_h35'
+              | 'hydrogen_h70'
+              | 'inspection'
+              | 'kerosene_low_sulfur'
+              | 'kerosene_low_sulfur_non_taxable'
+              | 'kerosene_ultra_low_sulfur'
+              | 'kerosene_ultra_low_sulfur_non_taxable'
+              | 'labor'
+              | 'lamps'
               | 'liquid_natural_gas'
               | 'liquid_propane_gas'
               | 'lodging'
+              | 'low_octane_unleaded'
+              | 'lube'
               | 'marine_diesel'
               | 'marine_fuel'
+              | 'marine_fuel_1'
+              | 'marine_fuel_2'
+              | 'marine_fuel_3'
+              | 'marine_fuel_4'
+              | 'marine_fuel_5'
+              | 'marine_other'
               | 'merchandise'
               | 'mid_plus'
+              | 'mid_plus_2'
+              | 'mid_plus_2_10'
+              | 'mid_plus_2_e15'
+              | 'mid_plus_2_reformulated'
+              | 'mid_plus_e10'
+              | 'mid_plus_e15'
               | 'mid_plus_ethanol'
+              | 'mid_plus_reformulated'
               | 'miscellaneous_aviation_products_services'
               | 'miscellaneous_fuel'
               | 'miscellaneous_marine_products_services'
               | 'miscellaneous_vehicle_products_services'
+              | 'motor_oil'
+              | 'off_road_b1'
+              | 'off_road_b10'
+              | 'off_road_b100'
+              | 'off_road_b11'
+              | 'off_road_b15'
+              | 'off_road_b2'
+              | 'off_road_b20'
+              | 'off_road_b5'
+              | 'off_road_b75'
+              | 'off_road_b99'
+              | 'off_road_biodiesel'
+              | 'off_road_diesel_1'
+              | 'off_road_diesel_2'
+              | 'off_road_mid_plus'
+              | 'off_road_mid_plus_2'
+              | 'off_road_premium_diesel_1'
+              | 'off_road_premium_diesel_2'
+              | 'off_road_premium_super'
+              | 'off_road_premium_super_2'
+              | 'off_road_regular'
+              | 'off_road_renewable_diesel_b6_to_b20'
+              | 'off_road_renewable_diesel_r95'
+              | 'oil_change'
+              | 'oil_filter'
+              | 'other_lubricants'
               | 'packaged_beverage'
               | 'premium_diesel'
+              | 'premium_diesel_2'
+              | 'premium_diesel_b20_plus'
+              | 'premium_diesel_under_b20'
               | 'premium_super'
+              | 'premium_super_2'
+              | 'premium_super_2_10'
+              | 'premium_super_2_e15'
+              | 'premium_super_2_reformulated'
+              | 'premium_super_e10'
+              | 'premium_super_e15'
               | 'premium_super_ethanol'
+              | 'premium_super_reformulated'
               | 'preventative_maintenance'
+              | 'racing_fuel'
+              | 'recreational_fuel_90_octane'
               | 'regular'
               | 'regular_diesel'
+              | 'regular_diesel_2'
+              | 'regular_e10'
+              | 'regular_e15'
               | 'regular_ethanol'
+              | 'regular_reformulated'
+              | 'renewable_diesel_b6_to_b20'
+              | 'renewable_diesel_r95'
               | 'repairs'
+              | 'road_service'
+              | 'rv_dump_fee'
+              | 'scales'
               | 'self_service_car_wash'
+              | 'service_package'
               | 'shower'
               | 'store_service'
+              | 'synthetic_oil'
+              | 'tire_related'
+              | 'tire_repair'
+              | 'tire_rotation'
+              | 'tires'
               | 'tobacco'
+              | 'toll_payments'
+              | 'towing'
+              | 'trailer_wash'
+              | 'transmission_service'
+              | 'truck_tank_cleaning'
               | 'vehicle_accessories'
+              | 'vehicle_glass'
               | 'vehicle_parking'
               | 'vehicle_parts'
+              | 'vehicle_prep'
+              | 'vehicle_rental'
+              | 'vehicle_work_order'
               | 'wash_out'
+              | 'washer_fluid'
+              | 'white_gas'
+              | 'wipers'
               | OtherString;
 
             export type ServiceType =
@@ -35980,13 +36765,39 @@ export namespace PaymentIntentIncrementAuthorizationParams {
 
           export namespace FleetData {
             export type ProductType =
+              | 'additive_dosage'
+              | 'additized_diesel_2'
+              | 'additized_diesel_3'
               | 'air_conditioning_service'
+              | 'air_filter'
               | 'alcohol'
+              | 'antifreeze'
+              | 'automotive_merchandise'
               | 'aviation_fuel_premium'
               | 'aviation_fuel_regular'
+              | 'batteries'
+              | 'biodiesel_b1'
+              | 'biodiesel_b10'
+              | 'biodiesel_b100'
+              | 'biodiesel_b11'
+              | 'biodiesel_b15'
+              | 'biodiesel_b2'
+              | 'biodiesel_b20'
+              | 'biodiesel_b5'
+              | 'biodiesel_b75'
+              | 'biodiesel_b99'
+              | 'blended_diesel_1_and_2'
+              | 'body_work'
+              | 'brake_fluid'
+              | 'brake_service'
               | 'car_care_detailing'
+              | 'car_wash'
               | 'compressed_natural_gas'
+              | 'def_at_pump'
               | 'deli'
+              | 'e85'
+              | 'engine_service'
+              | 'ethanol_e16_to_e84'
               | 'ev_battery_exchanges'
               | 'ev_charging_fee'
               | 'evc_level_1'
@@ -35994,40 +36805,135 @@ export namespace PaymentIntentIncrementAuthorizationParams {
               | 'evc_level_3'
               | 'evc_level_4'
               | 'evc_level_5'
+              | 'exhaust_service'
+              | 'federal_tire_excise_tax'
               | 'food_service'
+              | 'fuel_additive_treatment'
+              | 'fuel_system'
               | 'green_gasoline_mid_plus'
               | 'green_gasoline_premium_super'
               | 'green_gasoline_regular'
               | 'grocery'
+              | 'heating_oil'
+              | 'hoses'
+              | 'hydrogen_h35'
+              | 'hydrogen_h70'
+              | 'inspection'
+              | 'kerosene_low_sulfur'
+              | 'kerosene_low_sulfur_non_taxable'
+              | 'kerosene_ultra_low_sulfur'
+              | 'kerosene_ultra_low_sulfur_non_taxable'
+              | 'labor'
+              | 'lamps'
               | 'liquid_natural_gas'
               | 'liquid_propane_gas'
               | 'lodging'
+              | 'low_octane_unleaded'
+              | 'lube'
               | 'marine_diesel'
               | 'marine_fuel'
+              | 'marine_fuel_1'
+              | 'marine_fuel_2'
+              | 'marine_fuel_3'
+              | 'marine_fuel_4'
+              | 'marine_fuel_5'
+              | 'marine_other'
               | 'merchandise'
               | 'mid_plus'
+              | 'mid_plus_2'
+              | 'mid_plus_2_10'
+              | 'mid_plus_2_e15'
+              | 'mid_plus_2_reformulated'
+              | 'mid_plus_e10'
+              | 'mid_plus_e15'
               | 'mid_plus_ethanol'
+              | 'mid_plus_reformulated'
               | 'miscellaneous_aviation_products_services'
               | 'miscellaneous_fuel'
               | 'miscellaneous_marine_products_services'
               | 'miscellaneous_vehicle_products_services'
+              | 'motor_oil'
+              | 'off_road_b1'
+              | 'off_road_b10'
+              | 'off_road_b100'
+              | 'off_road_b11'
+              | 'off_road_b15'
+              | 'off_road_b2'
+              | 'off_road_b20'
+              | 'off_road_b5'
+              | 'off_road_b75'
+              | 'off_road_b99'
+              | 'off_road_biodiesel'
+              | 'off_road_diesel_1'
+              | 'off_road_diesel_2'
+              | 'off_road_mid_plus'
+              | 'off_road_mid_plus_2'
+              | 'off_road_premium_diesel_1'
+              | 'off_road_premium_diesel_2'
+              | 'off_road_premium_super'
+              | 'off_road_premium_super_2'
+              | 'off_road_regular'
+              | 'off_road_renewable_diesel_b6_to_b20'
+              | 'off_road_renewable_diesel_r95'
+              | 'oil_change'
+              | 'oil_filter'
+              | 'other_lubricants'
               | 'packaged_beverage'
               | 'premium_diesel'
+              | 'premium_diesel_2'
+              | 'premium_diesel_b20_plus'
+              | 'premium_diesel_under_b20'
               | 'premium_super'
+              | 'premium_super_2'
+              | 'premium_super_2_10'
+              | 'premium_super_2_e15'
+              | 'premium_super_2_reformulated'
+              | 'premium_super_e10'
+              | 'premium_super_e15'
               | 'premium_super_ethanol'
+              | 'premium_super_reformulated'
               | 'preventative_maintenance'
+              | 'racing_fuel'
+              | 'recreational_fuel_90_octane'
               | 'regular'
               | 'regular_diesel'
+              | 'regular_diesel_2'
+              | 'regular_e10'
+              | 'regular_e15'
               | 'regular_ethanol'
+              | 'regular_reformulated'
+              | 'renewable_diesel_b6_to_b20'
+              | 'renewable_diesel_r95'
               | 'repairs'
+              | 'road_service'
+              | 'rv_dump_fee'
+              | 'scales'
               | 'self_service_car_wash'
+              | 'service_package'
               | 'shower'
               | 'store_service'
+              | 'synthetic_oil'
+              | 'tire_related'
+              | 'tire_repair'
+              | 'tire_rotation'
+              | 'tires'
               | 'tobacco'
+              | 'toll_payments'
+              | 'towing'
+              | 'trailer_wash'
+              | 'transmission_service'
+              | 'truck_tank_cleaning'
               | 'vehicle_accessories'
+              | 'vehicle_glass'
               | 'vehicle_parking'
               | 'vehicle_parts'
+              | 'vehicle_prep'
+              | 'vehicle_rental'
+              | 'vehicle_work_order'
               | 'wash_out'
+              | 'washer_fluid'
+              | 'white_gas'
+              | 'wipers'
               | OtherString;
 
             export type ServiceType =

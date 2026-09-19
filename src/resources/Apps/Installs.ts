@@ -112,15 +112,15 @@ export namespace Install {
   }
 
   export interface ContentSecurityPolicyGranted {
-    connect_src: Array<string> | null;
+    connect_src: Array<string>;
 
-    image_src: Array<string> | null;
+    image_src: Array<string>;
   }
 
   export interface ContentSecurityPolicyPending {
-    connect_src: Array<string> | null;
+    connect_src: Array<string>;
 
-    image_src: Array<string> | null;
+    image_src: Array<string>;
   }
 
   export type Status =
