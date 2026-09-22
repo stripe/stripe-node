@@ -11,8 +11,9 @@ on:
       - feature/**
     tags:
       - v[0-9]+.[0-9]+.[0-9]+*
-      # companion packages in packages/ are versioned and released independently
-      # of the core SDK, so they get their own tag namespace
+      # Companion packages in packages/ are versioned and released independently
+      # of the core SDK and of each other, so each gets its own release tag and
+      # its own publish job.
       - aws-wif-v[0-9]+.[0-9]+.[0-9]+*
   pull_request:
     branches:
@@ -107,7 +108,10 @@ jobs:
       - name: Test
         run: just ci-test
 
-  packages:
+  # Validates every companion package in packages/ on each push and PR. This is
+  # separate from the `test` job because the companion packages have their own
+  # dependencies, which do not all support every Node version the core SDK does.
+  companion-packages:
     name: 'Companion Packages'
     needs: [build]
     runs-on: 'ubuntu-24.04'
@@ -177,19 +181,22 @@ jobs:
         with:
           bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
 
-  publish-packages:
-    name: 'Publish Companion Packages'
-    # Disjoint from the core `publish` job: the core matches `refs/tags/v...`,
-    # which an `aws-wif-v...` tag does not, so neither job can fire on the
-    # other's tag.
+  publish-aws-workload-identity:
+    name: 'Publish @stripe/stripe-aws-workload-identity'
+    # Released independently of the core SDK, on its own tag: `aws-wif-v<version>`
+    # (e.g. `aws-wif-v0.1.0-alpha.1`). Disjoint from the core `publish` job, which
+    # matches `refs/tags/v...`, so neither job can fire on the other's tag.
     if: >-
       (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
       startsWith(github.ref, 'refs/tags/aws-wif-v')
-    needs: [build, packages]
+    needs: [build, companion-packages]
     runs-on: 'ubuntu-24.04'
     permissions:
       contents: read
       id-token: write # Required for OIDC
+    env:
+      PACKAGE_DIR: stripe-aws-workload-identity
+      TAG_PREFIX: aws-wif-v
     steps:
       - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -204,28 +211,37 @@ jobs:
 
       # installs, typechecks, builds, and tests before anything is uploaded
       - name: Build and test
-        run: just packages-test
+        env:
+          # setup-node wrote an .npmrc containing the literal text
+          # `_authToken=${NODE_AUTH_TOKEN}`, which npm expands every time it reads
+          # its config -- including on a read-only install. With the variable
+          # unset that read fails, so even this step needs *some* value. The real
+          # credential comes from OIDC at publish time; this one goes nowhere.
+          NODE_AUTH_TOKEN: unused-placeholder-see-comment
+        run: just packages-test "$PACKAGE_DIR"
 
       - name: Publish to NPM
         env:
-          # needed because setup-node writes a .npmrc file with `registry-url` and
-          # `_authToken=${NODE_AUTH_TOKEN}`. OIDC overwrites this with a real token
-          # before anything is uploaded, but we need to have a value for install
-          # to work.
-          NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+          # Same placeholder as above: `npm publish` re-reads the .npmrc, then
+          # replaces this with a real short-lived token obtained via OIDC
+          # (`id-token: write`) before it uploads anything.
+          NODE_AUTH_TOKEN: unused-placeholder-see-comment
+          # npm hides its HTTP exchange, and the OIDC token exchange with it, below
+          # `verbose`. `notice` is npm's own default, so an ordinary release logs
+          # exactly what it does today, and re-running this job with debug logging
+          # enabled shows where a failed publish gave up.
           NPM_CONFIG_LOGLEVEL: ${{ runner.debug && 'verbose' || 'notice' }}
           TAG_NAME: ${{ github.ref_name }}
         run: |
           set -euo pipefail
-          cd packages/stripe-aws-workload-identity
+          cd "packages/$PACKAGE_DIR"
           NAME=$(jq -r .name package.json)
           VERSION=$(jq -r .version package.json)
 
-          # The tag is the source of truth for intent; refuse to publish a
-          # version nobody asked for.
-          TAG_VERSION="${TAG_NAME#aws-wif-v}"
+          # The tag states the intent; refuse to publish a version nobody asked for.
+          TAG_VERSION="${TAG_NAME#"$TAG_PREFIX"}"
           if [ "$TAG_VERSION" != "$VERSION" ]; then
-            echo "Tag $TAG_NAME implies version $TAG_VERSION, but package.json says $VERSION. Refusing to publish." >&2
+            echo "Tag $TAG_NAME implies $NAME@$TAG_VERSION, but package.json says $VERSION. Refusing to publish." >&2
             exit 1
           fi
 

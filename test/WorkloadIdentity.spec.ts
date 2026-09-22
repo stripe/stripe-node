@@ -291,11 +291,17 @@ describe('workload identity', () => {
       ).to.throw(/Neither apiKey nor config.authenticator provided/);
     });
 
-    it('rejects a workload identity client ID passed as an API key', () => {
-      expect(() => new StripeConstructor(FAKE_LIVE_CLIENT_ID))
-        .to.throw(StripeWorkloadIdentityError)
-        .with.property('message')
-        .match(/Stripe\.forWorkloadIdentity/);
+    it('does not inspect the shape of a key it was given', () => {
+      // Credential shapes are deliberately not pre-validated: Stripe is the
+      // authority on whether a credential is usable, so anything non-empty is
+      // accepted here and sent as-is.
+      const client = new StripeConstructor(FAKE_LIVE_CLIENT_ID, {
+        httpClient: new FakeApiHttpClient(okHandler),
+      });
+      expect(client._authMethod).to.deep.equal({
+        mode: 'api_key',
+        apiKey: FAKE_LIVE_CLIENT_ID,
+      });
     });
 
     it('keeps a custom authenticator in its own mode', () => {
@@ -307,36 +313,38 @@ describe('workload identity', () => {
   });
 
   describe('forWorkloadIdentity validation', () => {
-    it('rejects an absent or empty client ID', () => {
-      for (const clientId of ['', '   ', null, undefined]) {
+    // The client ID is not pre-validated by shape. Stripe's token service is the
+    // authority on whether it is real, enabled, and trusted for this workload,
+    // so the SDK forwards whatever it was given and reports what Stripe says.
+    it('does not pre-validate the shape of the client ID', () => {
+      for (const clientId of ['ca_123', 'sk_test_123', 'rk_test_123', '']) {
         expect(() =>
-          StripeConstructor.forWorkloadIdentity(
-            (clientId as unknown) as string,
-            fakeProvider()
-          )
-        ).to.throw(
-          StripeWorkloadIdentityError,
-          /requires a Stripe OAuth client ID/
-        );
+          StripeConstructor.forWorkloadIdentity(clientId, fakeProvider(), {
+            httpClient: new FakeApiHttpClient(okHandler),
+          })
+        ).to.not.throw();
       }
     });
 
-    it('rejects a secret API key with a focused error', () => {
-      expect(() =>
-        StripeConstructor.forWorkloadIdentity('sk_test_123', fakeProvider())
-      ).to.throw(StripeWorkloadIdentityError, /A Stripe API key was passed/);
-      expect(() =>
-        StripeConstructor.forWorkloadIdentity('rk_test_123', fakeProvider())
-      ).to.throw(StripeWorkloadIdentityError, /A Stripe API key was passed/);
-    });
+    it('forwards an unrecognized client ID and surfaces Stripe’s rejection', async () => {
+      const {client, transport} = buildClient({
+        clientId: 'ca_123',
+        exchanges: [
+          {
+            statusCode: 400,
+            body: JSON.stringify({
+              error: 'invalid_client',
+              error_description: 'unknown client',
+            }),
+          },
+        ],
+      });
 
-    it('rejects a malformed client ID', () => {
-      expect(() =>
-        StripeConstructor.forWorkloadIdentity('ca_123', fakeProvider())
-      ).to.throw(
+      await expect(client.customers.list()).to.be.rejectedWith(
         StripeWorkloadIdentityError,
-        /must start with oacli_live_ or oacli_test_/
+        /invalid_client/
       );
+      expect(transport.bodies[0]).to.include('client_id=ca_123');
     });
 
     it('rejects an invalid provider object', () => {
@@ -556,7 +564,9 @@ describe('workload identity', () => {
       expect(err.message).to.include(
         'https://api.stripe.com/stripe-workload/oauth2/token'
       );
-      expect((err as {cause?: Error}).cause).to.have.property(
+      // The underlying failure is reachable the same way it is on any other
+      // Stripe error.
+      expect((err.raw as {exception?: Error}).exception).to.have.property(
         'message',
         'socket hang up'
       );
@@ -574,10 +584,10 @@ describe('workload identity', () => {
 
       expect(err).to.be.an.instanceOf(StripeWorkloadIdentityError);
       expect(err.message).to.include(
-        'Unable to obtain a aws workload identity assertion'
+        "Unable to obtain a workload identity assertion from 'aws'"
       );
       expect(err.message).to.include('test API key');
-      expect((err as {cause?: Error}).cause).to.have.property(
+      expect((err.raw as {exception?: Error}).exception).to.have.property(
         'message',
         'not running on EC2'
       );

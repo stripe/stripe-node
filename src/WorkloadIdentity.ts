@@ -9,12 +9,6 @@ import {queryStringifyRequestData} from './utils.js';
 export const WORKLOAD_IDENTITY_GRANT_TYPE =
   'urn:ietf:params:oauth:grant-type:jwt-bearer';
 
-/** Prefixes a Stripe OAuth client ID used for workload identity may have. */
-export const WORKLOAD_IDENTITY_CLIENT_ID_PREFIXES = [
-  'oacli_live_',
-  'oacli_test_',
-];
-
 /** Granted keys normally live for an hour. */
 const DEFAULT_TOKEN_LIFETIME_SEC = 3600;
 
@@ -103,67 +97,10 @@ export function attachWorkloadIdentityConfig<T>(
   }) as T;
 }
 
-const API_KEY_CONSTRUCTOR_HINT =
-  'Pass a secret or restricted API key to `new Stripe(...)` instead.';
-
-const WORKLOAD_IDENTITY_CONSTRUCTOR_HINT =
-  'Construct the client with `Stripe.forWorkloadIdentity(clientId, provider)` instead.';
-
 const EXCHANGE_GUIDANCE =
   'Common causes: the workload identity client ID is invalid or not enabled for workload identity, ' +
   'the client is not configured in the Stripe Dashboard to trust this workload, ' +
   'the process is not running on supported AWS infrastructure, or the Stripe token exchange is temporarily unavailable.';
-
-function isWorkloadIdentityClientId(value: string): boolean {
-  return WORKLOAD_IDENTITY_CLIENT_ID_PREFIXES.some((prefix) =>
-    value.startsWith(prefix)
-  );
-}
-
-/**
- * Rejects a workload identity client ID handed to the ordinary API key
- * constructor. Nothing else about API key construction changes: an absent key
- * still fails the way it always has, and is never read as workload identity.
- */
-export function validateApiKeyCredential(key: string): void {
-  if (typeof key === 'string' && isWorkloadIdentityClientId(key)) {
-    throw new StripeWorkloadIdentityError({
-      message:
-        'A workload identity client ID was passed as an API key. ' +
-        WORKLOAD_IDENTITY_CONSTRUCTOR_HINT,
-    });
-  }
-}
-
-export function validateWorkloadIdentityClientId(clientId: string): void {
-  if (typeof clientId !== 'string' || !clientId.trim()) {
-    throw new StripeWorkloadIdentityError({
-      message:
-        '`Stripe.forWorkloadIdentity` requires a Stripe OAuth client ID as its first argument, ' +
-        `but received ${
-          clientId === '' ? 'an empty string' : String(clientId)
-        }.`,
-    });
-  }
-
-  if (clientId.startsWith('sk_') || clientId.startsWith('rk_')) {
-    throw new StripeWorkloadIdentityError({
-      message:
-        'A Stripe API key was passed to `Stripe.forWorkloadIdentity`, which expects a workload identity client ID ' +
-        `(${WORKLOAD_IDENTITY_CLIENT_ID_PREFIXES.join(' or ')}...). ` +
-        API_KEY_CONSTRUCTOR_HINT,
-    });
-  }
-
-  if (!isWorkloadIdentityClientId(clientId)) {
-    throw new StripeWorkloadIdentityError({
-      message:
-        'The workload identity client ID is malformed: it must start with ' +
-        `${WORKLOAD_IDENTITY_CLIENT_ID_PREFIXES.join(' or ')}. ` +
-        'You can find it on the Stripe Dashboard workload identity settings page.',
-    });
-  }
-}
 
 export function validateWorkloadIdentityProvider(
   identityProvider: WorkloadIdentityProvider
@@ -419,7 +356,7 @@ export class WorkloadIdentityCredentials {
     } catch (err) {
       throw new StripeWorkloadIdentityError({
         message:
-          `Unable to obtain a ${this.identityProvider.provider} workload identity assertion. ` +
+          `Unable to obtain a workload identity assertion from '${this.identityProvider.provider}'. ` +
           'Check that the process is running on supported infrastructure and is allowed to request an identity token. ' +
           'For local development, tests, and CI, use a test API key with `new Stripe(...)` or a fully mocked client instead.',
         exception: err,
@@ -428,7 +365,7 @@ export class WorkloadIdentityCredentials {
 
     if (typeof assertion !== 'string' || !assertion) {
       throw new StripeWorkloadIdentityError({
-        message: `The ${this.identityProvider.provider} workload identity provider returned an empty assertion.`,
+        message: `The '${this.identityProvider.provider}' workload identity provider returned an empty assertion.`,
       });
     }
 

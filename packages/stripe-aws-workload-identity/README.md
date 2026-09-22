@@ -101,7 +101,12 @@ This package is versioned and released independently of the core `stripe` packag
 so core releases never republish it and a fix here does not require a core release.
 
 1. Bump `version` in this directory's `package.json` and merge that PR.
-2. Push a matching tag: `aws-wif-v<version>` (e.g. `aws-wif-v0.1.0-alpha.1`).
+2. Push a matching tag: `aws-wif-v<version>`, e.g.
+
+   ```sh
+   git tag aws-wif-v0.1.0-alpha.1
+   git push origin aws-wif-v0.1.0-alpha.1
+   ```
 
 CI then builds, typechecks, tests, and publishes. The job refuses to publish if the
 tag and `package.json` versions disagree, and is a no-op if that version is already

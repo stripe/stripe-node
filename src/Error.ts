@@ -430,19 +430,10 @@ export class StripeUnsupportedResponseTypeError extends StripeOAuthError {
  * could not be established: the client was configured incorrectly, the cloud
  * provider would not issue an identity assertion, or Stripe would not exchange
  * an assertion for a restricted key.
- *
- * It never carries an assertion, an access token, or the exchange request body.
  */
 export class StripeWorkloadIdentityError extends StripeError {
   constructor(raw: StripeRawError = {}) {
     super(raw, 'StripeWorkloadIdentityError');
-
-    if (raw.exception !== undefined) {
-      // `cause` is ES2022 and this package targets ES2020, so assign it rather
-      // than passing it to super(). Runtimes that render causes still show the
-      // underlying failure.
-      (this as {cause?: unknown}).cause = raw.exception;
-    }
   }
 }
 
