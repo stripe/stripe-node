@@ -4,14 +4,8 @@ import {
   STSClientConfig,
 } from '@aws-sdk/client-sts';
 
-/**
- * The audience Stripe requires in an AWS workload identity token. It is fixed:
- * a token minted for any other audience is not accepted by Stripe.
- */
 export const STRIPE_WORKLOAD_IDENTITY_AUDIENCE =
   'https://access.stripe.com/wif';
-
-/** The signing algorithm Stripe requires for the identity token. */
 export const STRIPE_WORKLOAD_IDENTITY_SIGNING_ALGORITHM = 'ES384';
 
 /**
@@ -34,14 +28,18 @@ export type AwsWorkloadIdentityOptions = {
 
 /** Raised when AWS would not produce a usable workload identity assertion. */
 export class AwsWorkloadIdentityError extends Error {
+  /**
+   * The underlying AWS SDK failure, when one caused this error.
+   *
+   * Declared explicitly because `Error.cause` is ES2022 and this package
+   * compiles against an older lib.
+   */
+  readonly cause?: unknown;
+
   constructor(message: string, cause?: unknown) {
     super(message);
     this.name = 'AwsWorkloadIdentityError';
-    if (cause !== undefined) {
-      // `cause` is ES2022; assign it so the original AWS failure survives on
-      // runtimes that render it, without requiring a newer compile target.
-      (this as {cause?: unknown}).cause = cause;
-    }
+    this.cause = cause;
   }
 }
 

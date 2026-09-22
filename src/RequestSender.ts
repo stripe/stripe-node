@@ -657,9 +657,6 @@ export class RequestSender {
   ): void {
     let requestData: string | Uint8Array;
     authenticator = authenticator ?? this._stripe._authenticator;
-    // Present only when this request authenticates through workload identity.
-    // A per-request API key override swaps the authenticator, and such a
-    // request is left alone.
     const workloadIdentityCredentials = getWorkloadIdentityCredentials(
       authenticator
     );
@@ -759,12 +756,6 @@ export class RequestSender {
 
           req
             .then((res: HttpClientResponseInterface) => {
-              // A proactive refresh is a heuristic, so a cached restricted key
-              // can still be rejected. Replay the request once with a fresh
-              // key, reusing the same headers (and so the same idempotency
-              // key), body, and retry budget. This is independent of
-              // _shouldRetry: network retries cannot restore the allowance, and
-              // this replay does not restart the retry budget.
               if (
                 workloadIdentityCredentials &&
                 !authReplayUsed &&

@@ -33,16 +33,16 @@ integrations-test: build
 # the separately published companion packages maintained in this repo
 PACKAGES := "stripe-aws-workload-identity"
 
-# ⭐ build, typecheck, and test the companion packages in packages/
+# ⭐ build, typecheck, and test the companion packages in packages/ (all, or just one)
 #
 # Run this at a single, modern Node version rather than across the core SDK's
 # support matrix. `@stripe/stripe-aws-workload-identity` depends on
 # `@aws-sdk/client-sts`, whose current releases require Node >= 20 even though
 # the core SDK supports Node >= 18.
-packages-test:
+packages-test package="":
     #!/usr/bin/env bash
     set -euo pipefail
-    for pkg in {{ PACKAGES }}; do
+    for pkg in {{ if package == "" { PACKAGES } else { package } }}; do
         cd "{{ justfile_directory() }}/packages/$pkg"
         # each package carries its own dependencies so that the core `stripe`
         # package never gains them, even transitively

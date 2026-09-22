@@ -68,8 +68,6 @@ import {
   attachWorkloadIdentityConfig,
   createWorkloadIdentityAuthenticator,
   readWorkloadIdentityConfig,
-  validateApiKeyCredential,
-  validateWorkloadIdentityClientId,
   validateWorkloadIdentityProvider,
 } from './WorkloadIdentity.js';
 
@@ -1183,7 +1181,6 @@ export class Stripe {
     identityProvider: WorkloadIdentityProvider,
     config: StripeConfig = {}
   ): Stripe {
-    validateWorkloadIdentityClientId(clientId);
     validateWorkloadIdentityProvider(identityProvider);
 
     if (config && typeof config !== 'object') {
@@ -1427,10 +1424,6 @@ export class Stripe {
         workloadIdentity.credentials
       );
       return;
-    }
-
-    if (key) {
-      validateApiKeyCredential(key);
     }
 
     this._setAuthenticator(key, props.authenticator || null);

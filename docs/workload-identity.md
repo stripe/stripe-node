@@ -44,15 +44,12 @@ the same configuration object as the normal constructor, except `authenticator`.
 | --- | --- |
 | Cloud providers | AWS only |
 | Client type | `StripeClient` (the default `Stripe` client) |
-| Client ID shape | `oacli_live_...` or `oacli_test_...` |
+| Client ID shape | `oacli_live_...` or `oacli_test_...` (not enforced by the SDK) |
 | Adapter | [`@stripe/stripe-aws-workload-identity`](../packages/stripe-aws-workload-identity) |
 | Assertion audience | `https://access.stripe.com/wif` (fixed) |
 | Signing algorithm | `ES384` |
-| Runtime | Node.js 20+ in practice (see below) |
+| Runtime | Node.js 20+ (see below) |
 
-The client ID is a Stripe OAuth client ID, found on the workload identity settings
-page in the Stripe Dashboard. It is not an API key, and passing a `sk_...` or
-`rk_...` key to `Stripe.forWorkloadIdentity` is rejected.
 
 The adapter obtains the assertion through AWS STS `GetWebIdentityToken`, using the
 AWS SDK's normal region and credential resolution. That operation is not available
@@ -111,12 +108,10 @@ try {
 
 | Message contains | What to check |
 | --- | --- |
-| `requires a Stripe OAuth client ID` | The first argument was empty or missing. |
-| `A Stripe API key was passed` | Use `new Stripe(apiKey)`, not `Stripe.forWorkloadIdentity`. |
-| `must start with oacli_live_ or oacli_test_` | The client ID is malformed. |
+| `Stripe rejected the workload identity token exchange: invalid_client` | The client ID is wrong, missing, or not enabled for workload identity. The SDK does not pre-validate its shape, so a typo surfaces here rather than at construction. |
 | `requires a workload identity provider` / `getIdentityAssertion()` | The second argument is not an adapter. Pass `awsWorkloadIdentity()`. |
 | `Unsupported workload identity cloud provider` | Only AWS is supported in this preview. |
-| `Unable to obtain a aws workload identity assertion` | The process is not on suitable AWS infrastructure, or lacks `sts:GetWebIdentityToken` permission. Use a test API key locally. |
+| `Unable to obtain a workload identity assertion from 'aws'` | The process is not on suitable AWS infrastructure, or lacks `sts:GetWebIdentityToken` permission. Use a test API key locally. |
 | `Unable to reach the Stripe workload identity token exchange` | Network or egress problem reaching `api.stripe.com`. |
 | `Stripe rejected the workload identity token exchange` | The client ID is invalid or not enabled for workload identity, the Dashboard configuration does not trust this workload, or the exchange is temporarily unavailable. |
 | `without a usable access_token` | The exchange answered unexpectedly. Retry; if it persists, contact Stripe support. |

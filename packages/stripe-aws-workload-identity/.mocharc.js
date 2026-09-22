@@ -1,7 +1,5 @@
 'use strict';
 
-// Configuration for the adapter's Mocha suite. Mirrors the root config, scoped
-// to this package.
 module.exports = {
   color: true,
   recursive: true,
