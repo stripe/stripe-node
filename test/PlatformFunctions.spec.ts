@@ -26,16 +26,15 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
   describe(`${platformFunctions.constructor.name}`, () => {
     describe('uuid', () => {
       describe('should use crypto.randomUUID if it exists', () => {
-        const crypto = require('crypto');
         let randomUUID$;
         let called;
         beforeEach(() => {
           // if it's available, mock it and ensure it's called
           // otherwise, skip this whole operation
-          if (isNodeEnvironment && crypto.randomUUID) {
+          if (typeof globalThis.crypto !== 'undefined') {
             called = false;
-            randomUUID$ = crypto.randomUUID;
-            crypto.randomUUID = (): string => {
+            randomUUID$ = globalThis.crypto.randomUUID;
+            globalThis.crypto.randomUUID = (): string => {
               called = true;
               return 'no, YOU you id';
             };
@@ -43,13 +42,13 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
         });
         afterEach(() => {
           if (randomUUID$) {
-            crypto.randomUUID = randomUUID$;
+            globalThis.crypto.randomUUID = randomUUID$;
           }
         });
         it('is called if available', () => {
           if (randomUUID$) {
             expect(platformFunctions.uuid4()).to.equal('no, YOU you id');
-            expect(called).to.equal(isNodeEnvironment);
+            expect(called).to.equal(true);
           }
         });
       });
