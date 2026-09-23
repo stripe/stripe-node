@@ -566,10 +566,10 @@ export interface SubscriptionItem {
   metadata: Metadata;
 
   /**
-   * You can now model subscriptions more flexibly using the [Prices API](https://api.stripe.com#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
+   * You can now model subscriptions more flexibly using the [Prices API](https://docs.stripe.com/api#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
    *
    * Plans define the base price, currency, and billing cycle for recurring purchases of products.
-   * [Products](https://api.stripe.com#products) help you track inventory or provisioning, and plans help you track pricing. Different physical goods or levels of service should be represented by products, and pricing options should be represented by plans. This approach lets you change prices without having to change your provisioning scheme.
+   * [Products](https://docs.stripe.com/api#products) help you track inventory or provisioning, and plans help you track pricing. Different physical goods or levels of service should be represented by products, and pricing options should be represented by plans. This approach lets you change prices without having to change your provisioning scheme.
    *
    * For example, you might have a single "gold" product that has plans for $10/month, $100/year, €9/month, and €90/year.
    *
@@ -579,7 +579,7 @@ export interface SubscriptionItem {
 
   /**
    * Prices define the unit cost, currency, and (optional) billing cycle for both recurring and one-time purchases of products.
-   * [Products](https://api.stripe.com#products) help you track inventory or provisioning, and prices help you track payment terms. Different physical goods or levels of service should be represented by products, and pricing options should be represented by prices. This approach lets you change prices without having to change your provisioning scheme.
+   * [Products](https://docs.stripe.com/api#products) help you track inventory or provisioning, and prices help you track payment terms. Different physical goods or levels of service should be represented by products, and pricing options should be represented by prices. This approach lets you change prices without having to change your provisioning scheme.
    *
    * For example, you might have a single "gold" product that has prices for $10/month, $100/year, and €9 once.
    *

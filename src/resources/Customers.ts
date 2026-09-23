@@ -1329,7 +1329,7 @@ export interface Customer {
   object: 'customer';
 
   /**
-   * The customer's address.
+   * The customer's billing address.
    */
   address?: Address | null;
 

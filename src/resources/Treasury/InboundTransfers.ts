@@ -112,7 +112,7 @@ export interface InboundTransfer {
   description: string | null;
 
   /**
-   * Details about this InboundTransfer's failure. Only set when status is `failed`.
+   * Details about this InboundTransfer's failure. Will be set when `status=failed` or `returned=true`.
    */
   failure_details: InboundTransfer.FailureDetails | null;
 
@@ -265,6 +265,11 @@ export namespace InboundTransfer {
       account_type: UsBankAccount.AccountType | null;
 
       /**
+       * Details about an ACH transaction.
+       */
+      ach?: UsBankAccount.Ach | null;
+
+      /**
        * Name of the bank associated with the bank account.
        */
       bank_name: string | null;
@@ -299,6 +304,13 @@ export namespace InboundTransfer {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface Ach {
+        /**
+         * Freeform payment-related information transmitted in the ACH addenda record.
+         */
+        addenda?: string | null;
+      }
     }
   }
 }
@@ -340,9 +352,41 @@ export namespace Treasury {
     metadata?: MetadataParam;
 
     /**
+     * Additional options about the origin PaymentMethod.
+     */
+    origin_payment_method_options?: InboundTransferCreateParams.OriginPaymentMethodOptions;
+
+    /**
      * The complete description that appears on your customers' statements. Maximum 10 characters. Can only include -#.$&*, spaces, and alphanumeric characters.
      */
     statement_descriptor?: string;
+  }
+
+  export namespace InboundTransferCreateParams {
+    export interface OriginPaymentMethodOptions {
+      /**
+       * Includes additional payment method options if the destination is a us_bank_account.
+       */
+      us_bank_account?: OriginPaymentMethodOptions.UsBankAccount;
+    }
+
+    export namespace OriginPaymentMethodOptions {
+      export interface UsBankAccount {
+        /**
+         * Specify details about the ACH transaction.
+         */
+        ach?: UsBankAccount.Ach;
+      }
+
+      export namespace UsBankAccount {
+        export interface Ach {
+          /**
+           * Freeform payment-related information to transmit in the ACH addenda record. Maximum 80 characters, ACH character set. Applied only when the payment routes over ACH. Immutable after creation.
+           */
+          addenda?: string;
+        }
+      }
+    }
   }
 }
 export namespace Treasury {

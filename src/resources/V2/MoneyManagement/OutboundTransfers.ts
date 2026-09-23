@@ -349,12 +349,24 @@ export namespace OutboundTransfer {
     export namespace PayoutMethodOptions {
       export interface BankAccount {
         /**
+         * Per-network configuration options.
+         */
+        preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+        /**
          * The preferred networks to use for this OutboundTransfer.
          */
         preferred_networks: Array<BankAccount.PreferredNetwork>;
       }
 
       export namespace BankAccount {
+        export interface PreferredNetworkOptions {
+          /**
+           * ACH-specific network options.
+           */
+          ach?: PreferredNetworkOptions.Ach;
+        }
+
         export type PreferredNetwork =
           | 'ach'
           | 'becs'
@@ -367,6 +379,15 @@ export namespace OutboundTransfer {
           | 'sepa_instant'
           | 'swift'
           | OtherString;
+
+        export namespace PreferredNetworkOptions {
+          export interface Ach {
+            /**
+             * Freeform ACH addenda (max 80 characters) included in the NACHA submission.
+             */
+            addenda?: string;
+          }
+        }
       }
     }
   }
@@ -477,12 +498,24 @@ export namespace V2 {
         export namespace PayoutMethodOptions {
           export interface BankAccount {
             /**
+             * Per-network configuration options.
+             */
+            preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+            /**
              * The preferred networks to use for this OutboundTransfer.
              */
             preferred_networks: Array<BankAccount.PreferredNetwork>;
           }
 
           export namespace BankAccount {
+            export interface PreferredNetworkOptions {
+              /**
+               * ACH-specific network options.
+               */
+              ach?: PreferredNetworkOptions.Ach;
+            }
+
             export type PreferredNetwork =
               | 'ach'
               | 'becs'
@@ -495,6 +528,15 @@ export namespace V2 {
               | 'sepa_instant'
               | 'swift'
               | OtherString;
+
+            export namespace PreferredNetworkOptions {
+              export interface Ach {
+                /**
+                 * Freeform ACH addenda (max 80 characters) included in the NACHA submission.
+                 */
+                addenda?: string;
+              }
+            }
           }
         }
       }

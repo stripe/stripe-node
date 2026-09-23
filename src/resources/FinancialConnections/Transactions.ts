@@ -108,7 +108,7 @@ export interface Transaction {
 }
 export namespace Transaction {
   export interface Classification {
-    credit?: Classification.Credit;
+    financial_activity?: Classification.FinancialActivity;
 
     money_movement?: Classification.MoneyMovement;
 
@@ -139,11 +139,11 @@ export namespace Transaction {
   }
 
   export namespace Classification {
-    export interface Credit {
+    export interface FinancialActivity {
       /**
        * Stripe's confidence in this classification.
        */
-      confidence_level: Credit.ConfidenceLevel | null;
+      confidence_level: FinancialActivity.ConfidenceLevel | null;
 
       /**
        * The detailed category label for this transaction.
@@ -190,7 +190,7 @@ export namespace Transaction {
       primary_label: string | null;
     }
 
-    export namespace Credit {
+    export namespace FinancialActivity {
       export type ConfidenceLevel = 'high' | 'low' | 'medium' | 'very_high';
     }
 
