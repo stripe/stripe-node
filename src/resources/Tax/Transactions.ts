@@ -505,6 +505,7 @@ export namespace Transaction {
           | 'amusement_tax'
           | 'attendance_tax'
           | 'communications_tax'
+          | 'digital_excise_tax'
           | 'entertainment_tax'
           | 'gross_receipts_tax'
           | 'gst'
@@ -518,12 +519,14 @@ export namespace Transaction {
           | 'parking_tax'
           | 'pst'
           | 'qst'
+          | 'recycling_fee'
           | 'resort_tax'
           | 'retail_delivery_fee'
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
           | 'tourism_tax'
+          | 'utility_users_tax'
           | 'vat'
           | OtherString;
       }

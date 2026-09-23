@@ -479,6 +479,11 @@ export namespace OutboundPayment {
         export namespace PreferredNetworkOptions {
           export interface Ach {
             /**
+             * Freeform ACH addenda (max 80 characters) included in the NACHA submission.
+             */
+            addenda?: string;
+
+            /**
              * Open Enum. ACH submission timing.
              */
             submission?: Ach.Submission;
@@ -795,6 +800,11 @@ export namespace V2 {
 
             export namespace PreferredNetworkOptions {
               export interface Ach {
+                /**
+                 * Freeform ACH addenda (max 80 characters) included in the NACHA submission.
+                 */
+                addenda?: string;
+
                 /**
                  * Open Enum. ACH submission timing.
                  */

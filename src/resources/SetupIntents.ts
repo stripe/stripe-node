@@ -590,7 +590,7 @@ export namespace SetupIntent {
     /**
      * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
      * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
-     * Later, you can use [PaymentIntents](https://api.stripe.com#payment_intents) to drive the payment flow.
+     * Later, you can use [PaymentIntents](https://docs.stripe.com/api#payment_intents) to drive the payment flow.
      *
      * Create a SetupIntent when you're ready to collect your customer's payment credentials.
      * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
@@ -601,9 +601,9 @@ export namespace SetupIntent {
      * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
      * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
      * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
-     * If you use the SetupIntent with a [Customer](https://api.stripe.com#setup_intent_object-customer),
+     * If you use the SetupIntent with a [Customer](https://docs.stripe.com/api#setup_intent_object-customer),
      * it automatically attaches the resulting payment method to that Customer after successful setup.
-     * We recommend using SetupIntents or [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) on
+     * We recommend using SetupIntents or [setup_future_usage](https://docs.stripe.com/api#payment_intent_object-setup_future_usage) on
      * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
      *
      * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
@@ -673,6 +673,8 @@ export namespace SetupIntent {
     bacs_debit?: PaymentMethodOptions.BacsDebit;
 
     bizum?: PaymentMethodOptions.Bizum;
+
+    blik?: PaymentMethodOptions.Blik;
 
     card?: PaymentMethodOptions.Card;
 
@@ -1108,6 +1110,10 @@ export namespace SetupIntent {
 
     export interface Bizum {}
 
+    export interface Blik {
+      mandate_options?: Blik.MandateOptions;
+    }
+
     export interface Card {
       /**
        * Configuration options for setting up an eMandate for cards issued in India.
@@ -1123,6 +1129,11 @@ export namespace SetupIntent {
        * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
        */
       request_three_d_secure: Card.RequestThreeDSecure | null;
+
+      /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
     }
 
     export interface CardPresent {}
@@ -1258,6 +1269,20 @@ export namespace SetupIntent {
         | OtherString;
     }
 
+    export namespace Blik {
+      export interface MandateOptions {
+        /**
+         * Date at which the mandate expires.
+         */
+        expires_at: number | null;
+
+        /**
+         * Type of the mandate.
+         */
+        type: 'off_session' | null;
+      }
+    }
+
     export namespace Card {
       export interface MandateOptions {
         /**
@@ -1331,6 +1356,12 @@ export namespace SetupIntent {
         | 'any'
         | 'automatic'
         | 'challenge'
+        | OtherString;
+
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
         | OtherString;
 
       export namespace MandateOptions {

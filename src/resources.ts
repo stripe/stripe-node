@@ -24,7 +24,6 @@ import {AuthorizationResource as IssuingAuthorizations} from './resources/Issuin
 import {AuthorizationResource as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {BatchJobResource as V2CoreBatchJobs} from './resources/V2/Core/BatchJobs.js';
 import {BillSettingResource as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
-import {BillingEvaluationResource as RadarBillingEvaluations} from './resources/Radar/BillingEvaluations.js';
 import {BlocklistEntryResource as IdentityBlocklistEntries} from './resources/Identity/BlocklistEntries.js';
 import {BusinessProfileResource as V2NetworkBusinessProfiles} from './resources/V2/Network/BusinessProfiles.js';
 import {CadenceResource as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
@@ -39,6 +38,7 @@ import {ConfigurationResource as TerminalConfigurations} from './resources/Termi
 import {ConfirmationTokenResource as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
 import {ConnectionSessionResource as V2CoreConnectionSessions} from './resources/V2/Core/ConnectionSessions.js';
 import {ConnectionTokenResource as TerminalConnectionTokens} from './resources/Terminal/ConnectionTokens.js';
+import {ConsentResource as FinancialConnectionsConsents} from './resources/FinancialConnections/Consents.js';
 import {ContractResource as V2BillingContracts} from './resources/V2/Billing/Contracts.js';
 import {CreditBalanceSummaryResource as BillingCreditBalanceSummary} from './resources/Billing/CreditBalanceSummary.js';
 import {CreditBalanceTransactionResource as BillingCreditBalanceTransactions} from './resources/Billing/CreditBalanceTransactions.js';
@@ -57,6 +57,7 @@ import {DisputeSettlementDetailResource as IssuingDisputeSettlementDetails} from
 import {DisputeResource as IssuingDisputes} from './resources/Issuing/Disputes.js';
 import {DisputeResource as TestHelpersIssuingDisputes} from './resources/TestHelpers/Issuing/Disputes.js';
 import {EarlyFraudWarningResource as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings.js';
+import {EligibilityResource as V2ProvisioningEligibility} from './resources/V2/Provisioning/Eligibility.js';
 import {EventDestinationResource as V2CoreEventDestinations} from './resources/V2/Core/EventDestinations.js';
 import {EventResource as V2CoreEvents} from './resources/V2/Core/Events.js';
 import {FeatureResource as EntitlementsFeatures} from './resources/Entitlements/Features.js';
@@ -124,6 +125,8 @@ import {OutboundTransferResource as V2MoneyManagementOutboundTransfers} from './
 import {PaymentAttemptResource as OrchestrationPaymentAttempts} from './resources/Orchestration/PaymentAttempts.js';
 import {PaymentEvaluationResource as RadarPaymentEvaluations} from './resources/Radar/PaymentEvaluations.js';
 import {PaymentIntentResource as TestHelpersPaymentIntents} from './resources/TestHelpers/PaymentIntents.js';
+import {PaymentMethodRequestResource as V2ProvisioningPaymentMethodRequests} from './resources/V2/Provisioning/PaymentMethodRequests.js';
+import {PaymentProfileResource as V2ProvisioningPaymentProfile} from './resources/V2/Provisioning/PaymentProfile.js';
 import {PaymentRetryEvaluationResource as V2SignalsPaymentRetryEvaluations} from './resources/V2/Signals/PaymentRetryEvaluations.js';
 import {PaymentRetrySignalResource as V2SignalsPaymentRetrySignals} from './resources/V2/Signals/PaymentRetrySignals.js';
 import {PayoutIntentResource as V2MoneyManagementPayoutIntents} from './resources/V2/MoneyManagement/PayoutIntents.js';
@@ -138,6 +141,10 @@ import {PricingPlanResource as V2BillingPricingPlans} from './resources/V2/Billi
 import {ProductResource as ClimateProducts} from './resources/Climate/Products.js';
 import {ProfileResource as V2BillingProfiles} from './resources/V2/Billing/Profiles.js';
 import {ProgramResource as IssuingPrograms} from './resources/Issuing/Programs.js';
+import {ProjectResource as V2ProvisioningProjects} from './resources/V2/Provisioning/Projects.js';
+import {ProviderConnectionRequestResource as V2ProvisioningProviderConnectionRequests} from './resources/V2/Provisioning/ProviderConnectionRequests.js';
+import {ProviderConnectionResource as V2ProvisioningProviderConnections} from './resources/V2/Provisioning/ProviderConnections.js';
+import {ProviderResource as V2ProvisioningCatalogProviders} from './resources/V2/Provisioning/Catalog/Providers.js';
 import {QueryRunResource as V2DataReportingQueryRuns} from './resources/V2/Data/Reporting/QueryRuns.js';
 import {RateCardSubscriptionResource as V2BillingRateCardSubscriptions} from './resources/V2/Billing/RateCardSubscriptions.js';
 import {RateCardResource as V2BillingRateCards} from './resources/V2/Billing/RateCards.js';
@@ -162,9 +169,11 @@ import {ReportTypeResource as ReportingReportTypes} from './resources/Reporting/
 import {ReportResource as V2ReportingReports} from './resources/V2/Reporting/Reports.js';
 import {RequestedSessionResource as DelegatedCheckoutRequestedSessions} from './resources/DelegatedCheckout/RequestedSessions.js';
 import {RequestResource as ForwardingRequests} from './resources/Forwarding/Requests.js';
+import {ResourceResource as V2ProvisioningResources} from './resources/V2/Provisioning/Resources.js';
 import {ScheduledQueryRunResource as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns.js';
 import {SecretResource as AppsSecrets} from './resources/Apps/Secrets.js';
 import {ServiceActionResource as V2BillingServiceActions} from './resources/V2/Billing/ServiceActions.js';
+import {ServiceResource as V2ProvisioningCatalogServices} from './resources/V2/Provisioning/Catalog/Services.js';
 import {SessionResource as BillingPortalSessions} from './resources/BillingPortal/Sessions.js';
 import {SessionResource as CheckoutSessions} from './resources/Checkout/Sessions.js';
 import {SessionResource as FinancialConnectionsSessions} from './resources/FinancialConnections/Sessions.js';
@@ -307,6 +316,7 @@ export const Entitlements = resourceNamespace('entitlements', {
 export const FinancialConnections = resourceNamespace('financialConnections', {
   Accounts: FinancialConnectionsAccounts,
   Authorizations: FinancialConnectionsAuthorizations,
+  Consents: FinancialConnectionsConsents,
   Institutions: FinancialConnectionsInstitutions,
   Sessions: FinancialConnectionsSessions,
   Transactions: FinancialConnectionsTransactions,
@@ -344,7 +354,6 @@ export const ProductCatalog = resourceNamespace('productCatalog', {
 });
 export const Radar = resourceNamespace('radar', {
   AccountEvaluations: RadarAccountEvaluations,
-  BillingEvaluations: RadarBillingEvaluations,
   CustomerEvaluations: RadarCustomerEvaluations,
   EarlyFraudWarnings: RadarEarlyFraudWarnings,
   IssuingAuthorizationEvaluations: RadarIssuingAuthorizationEvaluations,
@@ -524,6 +533,19 @@ export const V2 = resourceNamespace('v2', {
   Payments: resourceNamespace('payments', {
     OffSessionPayments: V2PaymentsOffSessionPayments,
     SettlementAllocationIntents: V2PaymentsSettlementAllocationIntents,
+  }),
+  Provisioning: resourceNamespace('provisioning', {
+    Eligibility: V2ProvisioningEligibility,
+    PaymentMethodRequests: V2ProvisioningPaymentMethodRequests,
+    PaymentProfile: V2ProvisioningPaymentProfile,
+    Projects: V2ProvisioningProjects,
+    ProviderConnectionRequests: V2ProvisioningProviderConnectionRequests,
+    ProviderConnections: V2ProvisioningProviderConnections,
+    Resources: V2ProvisioningResources,
+    Catalog: resourceNamespace('catalog', {
+      Providers: V2ProvisioningCatalogProviders,
+      Services: V2ProvisioningCatalogServices,
+    }),
   }),
   Reporting: resourceNamespace('reporting', {
     ReportRuns: V2ReportingReportRuns,

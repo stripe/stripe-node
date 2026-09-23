@@ -1870,6 +1870,11 @@ export namespace Subscription {
     billing_cycle_anchor: number | null;
 
     /**
+     * Indicates whether this subscription should cancel at the end of the current period if the update is applied.
+     */
+    cancel_at_period_end: boolean | null;
+
+    /**
      * The pending subscription-level discount that will be applied when the pending update is applied.
      */
     discount: Discount | null;
@@ -2279,6 +2284,7 @@ export namespace Subscription {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'touch_n_go'
       | 'truemoney'
       | 'twint'
       | 'upi'
@@ -4065,6 +4071,7 @@ export namespace SubscriptionCreateParams {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'touch_n_go'
       | 'truemoney'
       | 'twint'
       | 'upi'
@@ -5820,6 +5827,7 @@ export namespace SubscriptionUpdateParams {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'touch_n_go'
       | 'truemoney'
       | 'twint'
       | 'upi'

@@ -109,6 +109,8 @@ export interface Session {
    */
   permissions: Array<Session.Permission>;
 
+  pre_collected_consent?: Session.PreCollectedConsent;
+
   /**
    * Data features requested to be retrieved upon account creation.
    */
@@ -220,6 +222,13 @@ export namespace Session {
     | 'transactions'
     | OtherString;
 
+  export interface PreCollectedConsent {
+    /**
+     * The outcome of evaluating the pre-collected consent submitted for this Session.
+     */
+    outcome: PreCollectedConsent.Outcome;
+  }
+
   export type Prefetch =
     | 'balances'
     | 'inferred_balances'
@@ -291,6 +300,10 @@ export namespace Session {
 
   export namespace ManualEntry {
     export type Mode = 'automatic' | 'custom' | 'disabled' | OtherString;
+  }
+
+  export namespace PreCollectedConsent {
+    export type Outcome = 'consent_accepted' | 'consent_required' | OtherString;
   }
 
   export namespace RelinkResult {
@@ -411,7 +424,7 @@ export namespace FinancialConnections {
       account_subcategories?: Array<Filters.AccountSubcategory>;
 
       /**
-       * List of countries from which to collect accounts.
+       * List of countries from which to filter accounts.
        */
       countries?: Array<string>;
 

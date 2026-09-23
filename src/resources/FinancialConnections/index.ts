@@ -13,16 +13,21 @@ import {
 } from './Authorizations.js';
 import {
   FinancialConnections as FinancialConnectionsNamespace2,
+  Consent,
+  ConsentResource,
+} from './Consents.js';
+import {
+  FinancialConnections as FinancialConnectionsNamespace3,
   Institution,
   InstitutionResource,
 } from './Institutions.js';
 import {
-  FinancialConnections as FinancialConnectionsNamespace3,
+  FinancialConnections as FinancialConnectionsNamespace4,
   Session,
   SessionResource,
 } from './Sessions.js';
 import {
-  FinancialConnections as FinancialConnectionsNamespace4,
+  FinancialConnections as FinancialConnectionsNamespace5,
   Transaction,
   TransactionResource,
 } from './Transactions.js';
@@ -32,6 +37,7 @@ import {AccountInferredBalance} from './AccountInferredBalances.js';
 
 export {Account} from './Accounts.js';
 export {Authorization} from './Authorizations.js';
+export {Consent} from './Consents.js';
 export {Institution} from './Institutions.js';
 export {Session} from './Sessions.js';
 export {Transaction} from './Transactions.js';
@@ -42,6 +48,7 @@ export {AccountInferredBalance} from './AccountInferredBalances.js';
 export class FinancialConnections {
   accounts: AccountResource;
   authorizations: AuthorizationResource;
+  consents: ConsentResource;
   institutions: InstitutionResource;
   sessions: SessionResource;
   transactions: TransactionResource;
@@ -49,6 +56,7 @@ export class FinancialConnections {
   constructor(private readonly stripe: Stripe) {
     this.accounts = new AccountResource(stripe);
     this.authorizations = new AuthorizationResource(stripe);
+    this.consents = new ConsentResource(stripe);
     this.institutions = new InstitutionResource(stripe);
     this.sessions = new SessionResource(stripe);
     this.transactions = new TransactionResource(stripe);
@@ -67,14 +75,17 @@ export declare namespace FinancialConnections {
   export {Account, AccountResource};
   export import AuthorizationRetrieveParams = FinancialConnectionsNamespace1.AuthorizationRetrieveParams;
   export {Authorization, AuthorizationResource};
-  export import InstitutionListParams = FinancialConnectionsNamespace2.InstitutionListParams;
-  export import InstitutionRetrieveParams = FinancialConnectionsNamespace2.InstitutionRetrieveParams;
+  export import ConsentRetrieveParams = FinancialConnectionsNamespace2.ConsentRetrieveParams;
+  export import ConsentCreateParams = FinancialConnectionsNamespace2.ConsentCreateParams;
+  export {Consent, ConsentResource};
+  export import InstitutionListParams = FinancialConnectionsNamespace3.InstitutionListParams;
+  export import InstitutionRetrieveParams = FinancialConnectionsNamespace3.InstitutionRetrieveParams;
   export {Institution, InstitutionResource};
-  export import SessionRetrieveParams = FinancialConnectionsNamespace3.SessionRetrieveParams;
-  export import SessionCreateParams = FinancialConnectionsNamespace3.SessionCreateParams;
+  export import SessionRetrieveParams = FinancialConnectionsNamespace4.SessionRetrieveParams;
+  export import SessionCreateParams = FinancialConnectionsNamespace4.SessionCreateParams;
   export {Session, SessionResource};
-  export import TransactionListParams = FinancialConnectionsNamespace4.TransactionListParams;
-  export import TransactionRetrieveParams = FinancialConnectionsNamespace4.TransactionRetrieveParams;
+  export import TransactionListParams = FinancialConnectionsNamespace5.TransactionListParams;
+  export import TransactionRetrieveParams = FinancialConnectionsNamespace5.TransactionRetrieveParams;
   export {Transaction, TransactionResource};
   export {AccountOwner};
   export {AccountOwnership};

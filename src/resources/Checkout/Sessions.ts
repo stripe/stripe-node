@@ -1038,6 +1038,11 @@ export interface Session {
   payment_record?: string | PaymentRecord | null;
 
   /**
+   * The ID of the Payment Reservation for this Checkout Session.
+   */
+  payment_reservation?: string | null;
+
+  /**
    * The payment status of the Checkout Session, one of `paid`, `unpaid`, or `no_payment_required`.
    * You can use this value to decide when to fulfill your customer's order.
    */
@@ -1507,10 +1512,7 @@ export namespace Session {
      */
     key: string;
 
-    /**
-     * Details on the subscription for this item.
-     */
-    subscription?: Item.Subscription | null;
+    subscription?: Item.Subscription;
 
     /**
      * The type of the item.
@@ -1991,7 +1993,7 @@ export namespace Session {
     export namespace EnablementDetails {
       export interface IntegrationConfigurationDisabledReason {
         /**
-         * The parameter that prevented `automatic_tax` from being enabled (e.g. `line_items[][tax_rates]`).
+         * The parameter that prevented `automatic_tax` from being enabled (for example `line_items[][tax_rates]`).
          */
         conflicting_field: string;
       }
@@ -2294,6 +2296,8 @@ export namespace Session {
 
       card?: PaymentMethodDetails.Card;
 
+      custom?: PaymentMethodDetails.Custom;
+
       link?: PaymentMethodDetails.Link;
 
       pix?: PaymentMethodDetails.Pix;
@@ -2392,6 +2396,13 @@ export namespace Session {
          * If this Card is part of a card wallet, this contains the details of the card wallet.
          */
         wallet: Card.Wallet | null;
+      }
+
+      export interface Custom {
+        /**
+         * ID of the Dashboard-only CustomPaymentMethodType. Not expandable.
+         */
+        type: string;
       }
 
       export interface Link {
@@ -4670,7 +4681,7 @@ export namespace Session {
         amount: number;
 
         /**
-         * A discount represents the actual application of a [coupon](https://api.stripe.com#coupons) or [promotion code](https://api.stripe.com#promotion_codes).
+         * A discount represents the actual application of a [coupon](https://docs.stripe.com/api#coupons) or [promotion code](https://docs.stripe.com/api#promotion_codes).
          * It contains information about when the discount began, when it will end, and what it is applied to.
          *
          * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
@@ -9984,6 +9995,11 @@ export namespace Checkout {
     payment_intent_data?: SessionApproveParams.PaymentIntentData;
 
     /**
+     * Payment method-specific configuration to apply to the Checkout Session during approval. Currently only supports `card` payment method options.
+     */
+    payment_method_options?: SessionApproveParams.PaymentMethodOptions;
+
+    /**
      * The URL to redirect your customer back to after they authenticate or cancel their payment on the
      * payment method's app or site. This parameter is allowed and required if and only if you did not
      * set the return URL during Checkout Session creation or in `checkout.confirm()` in Stripe.js.
@@ -10004,11 +10020,41 @@ export namespace Checkout {
       application_fee_amount?: number;
     }
 
+    export interface PaymentMethodOptions {
+      /**
+       * Card-specific payment method options. Use this to control 3D Secure behavior during approval.
+       */
+      card?: PaymentMethodOptions.Card;
+    }
+
     export interface SubscriptionData {
       /**
        * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. To use an application fee percent, the request must be made on behalf of another account, using the `Stripe-Account` header or an OAuth key. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
        */
       application_fee_percent?: number;
+    }
+
+    export namespace PaymentMethodOptions {
+      export interface Card {
+        /**
+         * We recommend that you rely on our SCA Engine to automatically prompt your customers for
+         * authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication).
+         * However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this
+         * option. When supplied during approval, this value overrides the 3D Secure preference of the
+         * Checkout Session's underlying Intent. If omitted, Checkout does not modify the existing preference.
+         * Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds)
+         * for more information on how this configuration interacts with Radar and our SCA Engine.
+         */
+        request_three_d_secure?: Card.RequestThreeDSecure;
+      }
+
+      export namespace Card {
+        export type RequestThreeDSecure =
+          | 'any'
+          | 'automatic'
+          | 'challenge'
+          | OtherString;
+      }
     }
   }
 }

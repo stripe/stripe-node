@@ -501,8 +501,10 @@ export namespace Person {
         | 'external_request'
         | 'information_missing'
         | 'invalid_address_city_state_postal_code'
+        | 'invalid_address_cmra_address'
         | 'invalid_address_highway_contract_box'
         | 'invalid_address_private_mailbox'
+        | 'invalid_address_registered_agent_address'
         | 'invalid_business_profile_name'
         | 'invalid_business_profile_name_denylisted'
         | 'invalid_company_name_denylisted'
@@ -644,8 +646,10 @@ export namespace Person {
         | 'external_request'
         | 'information_missing'
         | 'invalid_address_city_state_postal_code'
+        | 'invalid_address_cmra_address'
         | 'invalid_address_highway_contract_box'
         | 'invalid_address_private_mailbox'
+        | 'invalid_address_registered_agent_address'
         | 'invalid_business_profile_name'
         | 'invalid_business_profile_name_denylisted'
         | 'invalid_company_name_denylisted'
@@ -820,7 +824,7 @@ export namespace Person {
   export namespace Verification {
     export interface AdditionalDocument {
       /**
-       * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
+       * The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`.
        */
       back: string | File | null;
 
@@ -835,14 +839,14 @@ export namespace Person {
       details_code: string | null;
 
       /**
-       * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
+       * The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`.
        */
       front: string | File | null;
     }
 
     export interface Document {
       /**
-       * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
+       * The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`.
        */
       back: string | File | null;
 
@@ -857,7 +861,7 @@ export namespace Person {
       details_code: string | null;
 
       /**
-       * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
+       * The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`.
        */
       front: string | File | null;
     }
