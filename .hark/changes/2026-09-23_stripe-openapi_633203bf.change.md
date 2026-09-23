@@ -3,6 +3,7 @@ title: Update generated code
 pr_url: https://github.com/stripe/stripe-node/pull/2854
 semver_level: major
 is_stripe_api_change: true
+released_in_version: 22.7.0-alpha.5
 ---
 
 * Add support for new resources `FinancialConnections.Consent`, `V2.MoneyManagement.FinancialAccountWalletExportCredentials`, `V2.MoneyManagement.FinancialAccountWalletExport`, `V2.Provisioning.Eligibility`, `V2.Provisioning.PaymentMethodRequest`, `V2.Provisioning.PaymentProfile`, `V2.Provisioning.Project`, `V2.Provisioning.ProviderConnectionRequest`, `V2.Provisioning.ProviderConnection`, `V2.Provisioning.ProviderServiceDetail`, `V2.Provisioning.Provider`, and `V2.Provisioning.Resource`
