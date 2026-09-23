@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {AccountPersonToken} from './../../../V2/Core/AccountPersonTokens.js';
 import {
-  JapanAddressParam,
+  V2AddressParam,
   MetadataParam,
   OtherString,
   Decimal,
@@ -81,7 +81,7 @@ export namespace V2 {
         /**
          * The person's residential address.
          */
-        address?: JapanAddressParam;
+        address?: V2AddressParam;
 
         /**
          * The person's date of birth.
@@ -332,12 +332,12 @@ export namespace V2 {
           /**
            * Kana Address.
            */
-          kana?: JapanAddressParam;
+          kana?: V2AddressParam;
 
           /**
            * Kanji Address.
            */
-          kanji?: JapanAddressParam;
+          kanji?: V2AddressParam;
         }
 
         export interface ScriptNames {

@@ -8,7 +8,7 @@ import {
   Address,
   OtherString,
   Decimal,
-  JapanAddressParam,
+  V2AddressParam,
   Metadata,
 } from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
@@ -9135,7 +9135,7 @@ export namespace V2 {
             /**
              * A publicly available mailing address for sending support issues to.
              */
-            address?: JapanAddressParam;
+            address?: V2AddressParam;
 
             /**
              * A publicly available email address for sending support issues to.
@@ -9737,7 +9737,7 @@ export namespace V2 {
           /**
            * The business registration address of the business entity.
            */
-          address?: JapanAddressParam;
+          address?: V2AddressParam;
 
           /**
            * The business gross annual revenue for its preceding fiscal year.
@@ -9816,7 +9816,7 @@ export namespace V2 {
           /**
            * The individual's residential address.
            */
-          address?: JapanAddressParam;
+          address?: V2AddressParam;
 
           /**
            * The individual's date of birth.
@@ -10192,12 +10192,12 @@ export namespace V2 {
             /**
              * Kana Address.
              */
-            kana?: JapanAddressParam;
+            kana?: V2AddressParam;
 
             /**
              * Kanji Address.
              */
-            kanji?: JapanAddressParam;
+            kanji?: V2AddressParam;
           }
 
           export interface ScriptNames {
@@ -10705,12 +10705,12 @@ export namespace V2 {
             /**
              * Kana Address.
              */
-            kana?: JapanAddressParam;
+            kana?: V2AddressParam;
 
             /**
              * Kanji Address.
              */
-            kanji?: JapanAddressParam;
+            kanji?: V2AddressParam;
           }
 
           export interface ScriptNames {

@@ -55,6 +55,15 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
 
   const address: Stripe.Address | null | undefined = customer.address;
 
+  const v2Address: Stripe.V2AddressParam = {
+    country: 'US',
+    line1: '123 Main Street',
+    town: 'Brooklyn',
+  };
+  await stripe.v2.core.accounts.persons.update('acct_123', 'person_123', {
+    address: v2Address,
+  });
+
   if (!address) return;
   const city: string | null = address.city;
 

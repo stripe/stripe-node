@@ -132,6 +132,13 @@ export interface JapanAddressParam extends AddressParam {
   town?: string;
 }
 
+export interface V2AddressParam extends AddressParam {
+  /**
+   * Town or cho-me.
+   */
+  town?: string;
+}
+
 export interface RangeQueryParam {
   /**
    * Minimum value to filter by (exclusive)
