@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {
-  V2AddressParam,
+  JapanAddressParam,
   OtherString,
   MetadataParam,
   Decimal,
@@ -183,7 +183,7 @@ export namespace V2 {
           /**
            * The business registration address of the business entity.
            */
-          address?: V2AddressParam;
+          address?: JapanAddressParam;
 
           /**
            * The business gross annual revenue for its preceding fiscal year.
@@ -262,7 +262,7 @@ export namespace V2 {
           /**
            * The individual's residential address.
            */
-          address?: V2AddressParam;
+          address?: JapanAddressParam;
 
           /**
            * The individual's date of birth.
@@ -554,12 +554,12 @@ export namespace V2 {
             /**
              * Kana Address.
              */
-            kana?: V2AddressParam;
+            kana?: JapanAddressParam;
 
             /**
              * Kanji Address.
              */
-            kanji?: V2AddressParam;
+            kanji?: JapanAddressParam;
           }
 
           export interface ScriptNames {
@@ -1067,12 +1067,12 @@ export namespace V2 {
             /**
              * Kana Address.
              */
-            kana?: V2AddressParam;
+            kana?: JapanAddressParam;
 
             /**
              * Kanji Address.
              */
-            kanji?: V2AddressParam;
+            kanji?: JapanAddressParam;
           }
 
           export interface ScriptNames {

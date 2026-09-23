@@ -7,7 +7,7 @@ import {
   MetadataParam,
   OtherString,
   Decimal,
-  V2AddressParam,
+  JapanAddressParam,
 } from '../../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
@@ -838,7 +838,7 @@ export namespace V2 {
         /**
          * The primary address associated with the person.
          */
-        address?: V2AddressParam;
+        address?: JapanAddressParam;
 
         /**
          * The person's date of birth.
@@ -1094,12 +1094,12 @@ export namespace V2 {
           /**
            * Kana Address.
            */
-          kana?: V2AddressParam;
+          kana?: JapanAddressParam;
 
           /**
            * Kanji Address.
            */
-          kanji?: V2AddressParam;
+          kanji?: JapanAddressParam;
         }
 
         export interface ScriptNames {

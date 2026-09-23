@@ -14741,7 +14741,6 @@ declare namespace StripeConstructor {
   export type AddressParam = Stripe_.AddressParam;
   export type ShippingAddressParam = Stripe_.ShippingAddressParam;
   export type JapanAddressParam = Stripe_.JapanAddressParam;
-  export type V2AddressParam = Stripe_.V2AddressParam;
   export type RangeQueryParam = Stripe_.RangeQueryParam;
   export type PaginationParams = Stripe_.PaginationParams;
   export type Emptyable<T> = Stripe_.Emptyable<T>;
