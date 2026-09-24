@@ -1738,20 +1738,6 @@ export class Stripe {
   }
 
   /**
-   * Constructs an Event from a payload string, with no signature verification.
-   * Accepts raw Stripe Event JSON as well as payloads wrapped in an
-   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
-   * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) envelope.
-   *
-   * @deprecated Use `stripe.webhooks.constructEventWithoutVerification(...)` instead.
-   * This will be removed in the next major version.
-   */
-  constructEventWithoutVerification(payload: string): Event {
-    // TODO(DEVSDK-3248) remove this
-    return this.webhooks.constructEventWithoutVerification(payload);
-  }
-
-  /**
    * Parses an EventNotification from a payload string, with no signature verification.
    * Accepts raw Stripe Event Notification JSON as well as payloads wrapped in an
    * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
@@ -1763,7 +1749,7 @@ export class Stripe {
     const inner = maybeExtractFromCloudProviderEnvelope(payload);
     if (inner.object === 'event') {
       throw new Error(
-        'It looks like this cloud event contains a webhook body instead of a thin event notification. Use constructEventWithoutVerification instead.'
+        'It looks like this cloud event contains a webhook body instead of a thin event notification. Use webhooks.constructEventWithoutVerification instead.'
       );
     }
     if (inner.object !== 'v2.core.event') {
