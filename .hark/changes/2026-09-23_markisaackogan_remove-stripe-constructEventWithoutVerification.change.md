@@ -6,4 +6,4 @@ jira_tickets_closed:
   - DEVSDK-3248
 ---
 
-Removed the function `Stripe.constructEventWithoutVerification()` that was mistakenly added in version 22.5.0 of this package . The same functionality can be achieved via stripe.webhooks.constructEventWithoutVerification(payload);
+Removed the function `Stripe.constructEventWithoutVerification()` that was mistakenly added in version 22.5.0 of this package. The same functionality can be achieved via stripe.webhooks.constructEventWithoutVerification(payload);
