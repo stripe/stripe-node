@@ -4,7 +4,6 @@ import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {
   MetadataParam,
-  AddressParam,
   Address,
   OtherString,
   Decimal,
@@ -6050,7 +6049,7 @@ export namespace V2 {
             /**
              * Customer shipping address.
              */
-            address?: AddressParam;
+            address?: Shipping.Address;
 
             /**
              * Customer name.
@@ -6134,6 +6133,40 @@ export namespace V2 {
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
+            }
+          }
+
+          export namespace Shipping {
+            export interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country?: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1?: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
             }
           }
         }
@@ -8745,7 +8778,7 @@ export namespace V2 {
             /**
              * Customer shipping address.
              */
-            address?: AddressParam;
+            address?: Shipping.Address;
 
             /**
              * Customer name.
@@ -8831,6 +8864,40 @@ export namespace V2 {
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
+            }
+          }
+
+          export namespace Shipping {
+            export interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country?: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1?: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
             }
           }
         }
