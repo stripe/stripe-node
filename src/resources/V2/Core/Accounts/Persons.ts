@@ -7,7 +7,6 @@ import {
   MetadataParam,
   OtherString,
   Decimal,
-  JapanAddressParam,
 } from '../../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
@@ -1131,12 +1130,12 @@ export namespace V2 {
           /**
            * Kana Address.
            */
-          kana?: JapanAddressParam;
+          kana?: ScriptAddresses.Kana;
 
           /**
            * Kanji Address.
            */
-          kanji?: JapanAddressParam;
+          kanji?: ScriptAddresses.Kanji;
         }
 
         export interface ScriptNames {
@@ -1344,6 +1343,82 @@ export namespace V2 {
             | 'uy_dni'
             | 'za_id'
             | OtherString;
+        }
+
+        export namespace ScriptAddresses {
+          export interface Kana {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
+
+          export interface Kanji {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
         }
 
         export namespace ScriptNames {
