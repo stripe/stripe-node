@@ -11,6 +11,10 @@ on:
       - feature/**
     tags:
       - v[0-9]+.[0-9]+.[0-9]+*
+      # Companion packages in packages/ are versioned and released independently
+      # of the core SDK and of each other, so each gets its own release tag and
+      # its own publish job.
+      - aws-wif-v[0-9]+.[0-9]+.[0-9]+*
   pull_request:
     branches:
       - master
@@ -104,6 +108,33 @@ jobs:
       - name: Test
         run: just ci-test
 
+  # Validates every companion package in packages/ on each push and PR. This is
+  # separate from the `test` job because the companion packages have their own
+  # dependencies, which do not all support every Node version the core SDK does.
+  companion-packages:
+    name: 'Companion Packages'
+    needs: [build]
+    runs-on: 'ubuntu-24.04'
+    permissions:
+      contents: read
+    steps:
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22'
+          # Disable automatic dependency caching to reduce cache poisoning risk
+          package-manager-cache: false
+
+      # builds, typechecks, tests, and verifies the contents of the archive each
+      # companion package would publish
+      - name: Validate packages
+        run: just packages-pack
+
   publish:
     name: Publish
     if: >-
@@ -149,3 +180,78 @@ jobs:
         if: always()
         with:
           bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+
+  publish-aws-workload-identity:
+    name: 'Publish @stripe/stripe-aws-workload-identity'
+    # Released independently of the core SDK, on its own tag: `aws-wif-v<version>`
+    # (e.g. `aws-wif-v0.1.0-alpha.1`). Disjoint from the core `publish` job, which
+    # matches `refs/tags/v...`, so neither job can fire on the other's tag.
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      startsWith(github.ref, 'refs/tags/aws-wif-v')
+    needs: [build, companion-packages]
+    runs-on: 'ubuntu-24.04'
+    permissions:
+      contents: read
+      id-token: write # Required for OIDC
+    env:
+      PACKAGE_DIR: stripe-aws-workload-identity
+      TAG_PREFIX: aws-wif-v
+    steps:
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          # Disable automatic dependency caching to reduce cache poisoning risk
+          package-manager-cache: false
+
+      # installs, typechecks, builds, and tests before anything is uploaded
+      - name: Build and test
+        env:
+          # setup-node wrote an .npmrc containing the literal text
+          # `_authToken=${NODE_AUTH_TOKEN}`, which npm expands every time it reads
+          # its config -- including on a read-only install. With the variable
+          # unset that read fails, so even this step needs *some* value. The real
+          # credential comes from OIDC at publish time; this one goes nowhere.
+          NODE_AUTH_TOKEN: unused-placeholder-see-comment
+        run: just packages-test "$PACKAGE_DIR"
+
+      - name: Publish to NPM
+        env:
+          # Same placeholder as above: `npm publish` re-reads the .npmrc, then
+          # replaces this with a real short-lived token obtained via OIDC
+          # (`id-token: write`) before it uploads anything.
+          NODE_AUTH_TOKEN: unused-placeholder-see-comment
+          # npm hides its HTTP exchange, and the OIDC token exchange with it, below
+          # `verbose`. `notice` is npm's own default, so an ordinary release logs
+          # exactly what it does today, and re-running this job with debug logging
+          # enabled shows where a failed publish gave up.
+          NPM_CONFIG_LOGLEVEL: ${{ runner.debug && 'verbose' || 'notice' }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          cd "packages/$PACKAGE_DIR"
+          NAME=$(jq -r .name package.json)
+          VERSION=$(jq -r .version package.json)
+
+          # The tag states the intent; refuse to publish a version nobody asked for.
+          TAG_VERSION="${TAG_NAME#"$TAG_PREFIX"}"
+          if [ "$TAG_VERSION" != "$VERSION" ]; then
+            echo "Tag $TAG_NAME implies $NAME@$TAG_VERSION, but package.json says $VERSION. Refusing to publish." >&2
+            exit 1
+          fi
+
+          # Makes the job idempotent, so a partial failure is safe to re-run.
+          if npm view "$NAME@$VERSION" version >/dev/null 2>&1; then
+            echo "$NAME@$VERSION is already published; nothing to do."
+            exit 0
+          fi
+
+          # use the tag correlating to this release channel
+          NPM_TAG=$(node -p "v=require('./package.json').version; v.includes('alpha') ? 'private-preview' : v.includes('beta') ? 'public-preview' : 'latest'")
+          echo "Publishing $NAME@$VERSION with $NPM_TAG tag."
+          npm publish --tag "$NPM_TAG"

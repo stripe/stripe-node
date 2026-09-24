@@ -136,3 +136,14 @@ let _relatedSingletonObject: Stripe.Events.RelatedSingletonObject;
 
 // @ts-expect-error - a singleton related object has no id
 ({} as Stripe.Events.RelatedSingletonObject).id;
+
+// Workload identity (private preview) must be reachable through the CJS types.
+const workloadIdentityProvider: Stripe.WorkloadIdentityProvider = {
+  provider: 'aws',
+  getIdentityAssertion: () => Promise.resolve('fake.assertion'),
+};
+const _workloadIdentityClient: Stripe = Stripe.forWorkloadIdentity(
+  'oacli_test_123',
+  workloadIdentityProvider
+);
+const _workloadIdentityError = new Stripe.errors.StripeWorkloadIdentityError();

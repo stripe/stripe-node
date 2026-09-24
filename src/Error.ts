@@ -427,6 +427,18 @@ export class StripeUnsupportedResponseTypeError extends StripeOAuthError {
   }
 }
 
+/**
+ * StripeWorkloadIdentityError is raised when a workload identity credential
+ * could not be established: the client was configured incorrectly, the cloud
+ * provider would not issue an identity assertion, or Stripe would not exchange
+ * an assertion for a restricted key.
+ */
+export class StripeWorkloadIdentityError extends StripeError {
+  constructor(raw: StripeRawError = {}) {
+    super(raw, 'StripeWorkloadIdentityError');
+  }
+}
+
 // classDefinitions: The beginning of the section generated from our OpenAPI spec
 export class AlreadyCanceledError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {

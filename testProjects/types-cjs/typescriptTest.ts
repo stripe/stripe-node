@@ -553,3 +553,14 @@ const _signatureType: Stripe.Signature = null as any;
 const _nodeHttpClient: Stripe.HttpClient = Stripe.createNodeHttpClient();
 const _nodeCryptoProvider: Stripe.CryptoProvider =
   Stripe.createNodeCryptoProvider();
+
+// Workload identity (private preview) must be reachable through the CJS types.
+const workloadIdentityProvider: Stripe.WorkloadIdentityProvider = {
+  provider: 'aws',
+  getIdentityAssertion: () => Promise.resolve('fake.assertion'),
+};
+const _workloadIdentityClient: Stripe = Stripe.forWorkloadIdentity(
+  'oacli_test_123',
+  workloadIdentityProvider
+);
+const _workloadIdentityError = new Stripe.errors.StripeWorkloadIdentityError();
