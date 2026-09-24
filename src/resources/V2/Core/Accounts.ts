@@ -9135,7 +9135,7 @@ export namespace V2 {
             /**
              * A publicly available mailing address for sending support issues to.
              */
-            address?: JapanAddressParam;
+            address?: Support.Address;
 
             /**
              * A publicly available email address for sending support issues to.
@@ -9542,6 +9542,45 @@ export namespace V2 {
               prefix?: string;
             }
           }
+
+          export namespace Support {
+            export interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country?: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1?: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+
+              /**
+               * Town or district.
+               */
+              town?: string;
+            }
+          }
         }
 
         export namespace Recipient {
@@ -9737,7 +9776,7 @@ export namespace V2 {
           /**
            * The business registration address of the business entity.
            */
-          address?: JapanAddressParam;
+          address?: BusinessDetails.Address;
 
           /**
            * The business gross annual revenue for its preceding fiscal year.
@@ -9816,7 +9855,7 @@ export namespace V2 {
           /**
            * The individual's residential address.
            */
-          address?: JapanAddressParam;
+          address?: Individual.Address;
 
           /**
            * The individual's date of birth.
@@ -10071,6 +10110,43 @@ export namespace V2 {
              * Purpose of additional address.
              */
             purpose: AdditionalAddress.Purpose;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
+
+          export interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
 
             /**
              * State, county, province, or region.
@@ -10612,6 +10688,43 @@ export namespace V2 {
              * The person's last or family name.
              */
             surname?: string;
+          }
+
+          export interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
           }
 
           export interface DateOfBirth {
