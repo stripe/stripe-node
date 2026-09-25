@@ -116,7 +116,6 @@ export class PlatformFunctions {
       `Stripe: Unsupported workload identity provider '${provider}'. Only 'aws' is currently supported.`
     );
   }
- 
 
   /**
    * Generates a v4 UUID. Must be cryptographically secure: this seeds both `Idempotency-Key` values and the multipart/form-data boundary.

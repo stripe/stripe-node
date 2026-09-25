@@ -27,17 +27,26 @@ export type AssertionFetcher = () => Promise<string>;
 // build over a missing optional dependency.
 const AWS_STS_PKG = '@aws-sdk/client-sts';
 
+type ErrorLike = {
+  code?: unknown;
+  message?: unknown;
+};
+
 async function loadStsSdk(): Promise<typeof import('@aws-sdk/client-sts')> {
   try {
     return await import(/* webpackIgnore: true */ AWS_STS_PKG);
   } catch (e) {
-    const err = e as NodeJS.ErrnoException;
+    const err = e as ErrorLike;
+
+    const code = typeof err.code === 'string' ? err.code : undefined;
+    const message =
+      typeof err.message === 'string' ? err.message : undefined;
 
     const isMissingModule =
-      err?.code === 'MODULE_NOT_FOUND' ||
-      err?.code === 'ERR_MODULE_NOT_FOUND' ||
-      err?.message?.includes?.('Cannot find module') ||
-      err?.message?.includes?.('Failed to resolve import');
+      code === 'MODULE_NOT_FOUND' ||
+      code === 'ERR_MODULE_NOT_FOUND' ||
+      message?.includes('Cannot find module') ||
+      message?.includes('Failed to resolve import');
 
     if (isMissingModule) {
       throw new StripeWorkloadIdentityError(
