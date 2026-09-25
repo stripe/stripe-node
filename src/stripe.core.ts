@@ -1734,22 +1734,6 @@ export class Stripe {
   }
 
   /**
-   * Constructs a [snapshot event](https://docs.stripe.com/event-destinations#snapshot-payload) from an
-   * incoming webhook without first verifying its authenticity. Should be used after calling
-   * `webhooks.verifySignatureHeader(...)` or with input from a trusted source (such as
-   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge), or
-   * [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload). Or, to verify &
-   * construct in a single call, use `webhooks.constructEvent(...)` instead.
-   *
-   * @deprecated Use `stripe.webhooks.constructEventWithoutVerification(...)` instead.
-   * This will be removed in the next major version.
-   */
-  constructEventWithoutVerification(payload: string): Event {
-    // TODO(DEVSDK-3248) remove this
-    return this.webhooks.constructEventWithoutVerification(payload);
-  }
-
-  /**
    * Constructs a [thin event notification](https://docs.stripe.com/event-destinations#thin-payload) from an
    * incoming webhook without first verifying its authenticity. Should be used after calling
    * `webhooks.verifySignatureHeader(...)` or with input from a trusted source (such as
@@ -2722,55 +2706,6 @@ export declare namespace Stripe {
   export type StripeEventNotificationHandler = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandler;
   export type StripeEventNotificationHandlerWithoutVerification = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandlerWithoutVerification;
   // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
-  export namespace ErrorType {
-    export type StripeError = InstanceType<typeof _Error.StripeError>;
-    export type StripeCardError = InstanceType<typeof _Error.StripeCardError>;
-    export type StripeInvalidRequestError = InstanceType<
-      typeof _Error.StripeInvalidRequestError
-    >;
-    export type StripeAPIError = InstanceType<typeof _Error.StripeAPIError>;
-    export type StripeAuthenticationError = InstanceType<
-      typeof _Error.StripeAuthenticationError
-    >;
-    export type StripePermissionError = InstanceType<
-      typeof _Error.StripePermissionError
-    >;
-    export type StripeRateLimitError = InstanceType<
-      typeof _Error.StripeRateLimitError
-    >;
-    export type StripeConnectionError = InstanceType<
-      typeof _Error.StripeConnectionError
-    >;
-    export type StripeSignatureVerificationError = InstanceType<
-      typeof _Error.StripeSignatureVerificationError
-    >;
-    export type StripeIdempotencyError = InstanceType<
-      typeof _Error.StripeIdempotencyError
-    >;
-    export type StripeOAuthError = InstanceType<typeof _Error.StripeOAuthError>;
-    export type StripeInvalidGrantError = InstanceType<
-      typeof _Error.StripeInvalidGrantError
-    >;
-    export type StripeInvalidClientError = InstanceType<
-      typeof _Error.StripeInvalidClientError
-    >;
-    export type StripeOAuthInvalidRequestError = InstanceType<
-      typeof _Error.StripeOAuthInvalidRequestError
-    >;
-    export type StripeInvalidScopeError = InstanceType<
-      typeof _Error.StripeInvalidScopeError
-    >;
-    export type StripeUnsupportedGrantTypeError = InstanceType<
-      typeof _Error.StripeUnsupportedGrantTypeError
-    >;
-    export type StripeUnsupportedResponseTypeError = InstanceType<
-      typeof _Error.StripeUnsupportedResponseTypeError
-    >;
-    export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
-    export type TemporarySessionExpiredError = InstanceType<
-      typeof _Error.TemporarySessionExpiredError
-    >;
-  }
   export namespace errors {
     export type StripeError = InstanceType<typeof _Error.StripeError>;
     export type StripeCardError = InstanceType<typeof _Error.StripeCardError>;
