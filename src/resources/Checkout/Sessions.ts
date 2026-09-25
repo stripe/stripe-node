@@ -667,6 +667,11 @@ export interface Session {
   allow_promotion_codes: boolean | null;
 
   /**
+   * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
+   */
+  allowed_payment_method_types: Array<string> | null;
+
+  /**
    * Total of all items before discounts or taxes are applied.
    */
   amount_subtotal: number | null;
@@ -1401,6 +1406,8 @@ export namespace Session {
 
     sepa_debit?: PaymentMethodOptions.SepaDebit;
 
+    sequra?: PaymentMethodOptions.Sequra;
+
     sofort?: PaymentMethodOptions.Sofort;
 
     sunbit?: PaymentMethodOptions.Sunbit;
@@ -1865,7 +1872,7 @@ export namespace Session {
 
     export interface Label {
       /**
-       * Custom text for the label, displayed to the customer. Up to 50 characters.
+       * Custom text for the label, displayed to the customer. Up to 100 characters.
        */
       custom: string | null;
 
@@ -2169,7 +2176,7 @@ export namespace Session {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Alipay.SetupFutureUsage;
     }
 
     export interface Alma {
@@ -2245,7 +2252,7 @@ export namespace Session {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Bancontact.SetupFutureUsage;
     }
 
     export interface Billie {
@@ -2772,6 +2779,13 @@ export namespace Session {
       target_date?: string;
     }
 
+    export interface Sequra {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+    }
+
     export interface Sofort {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -2883,7 +2897,7 @@ export namespace Session {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: WechatPay.SetupFutureUsage;
     }
 
     export namespace AcssDebit {
@@ -2941,6 +2955,10 @@ export namespace Session {
       }
     }
 
+    export namespace Alipay {
+      export type SetupFutureUsage = 'none' | OtherString;
+    }
+
     export namespace AmazonPay {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -2958,6 +2976,10 @@ export namespace Session {
         | 'off_session'
         | 'on_session'
         | OtherString;
+    }
+
+    export namespace Bancontact {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Boleto {
@@ -3360,6 +3382,8 @@ export namespace Session {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+      export type SetupFutureUsage = 'none' | OtherString;
     }
   }
 
@@ -3696,7 +3720,7 @@ export namespace Session {
         amount: number;
 
         /**
-         * A discount represents the actual application of a [coupon](https://api.stripe.com#coupons) or [promotion code](https://api.stripe.com#promotion_codes).
+         * A discount represents the actual application of a [coupon](https://docs.stripe.com/api#coupons) or [promotion code](https://docs.stripe.com/api#promotion_codes).
          * It contains information about when the discount began, when it will end, and what it is applied to.
          *
          * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
@@ -3779,6 +3803,17 @@ export namespace Checkout {
      * Enables user redeemable promotion codes.
      */
     allow_promotion_codes?: boolean;
+
+    /**
+     * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
+     *
+     * Unlike `payment_method_types`, this acts as a filter on the dynamically computed set of
+     * eligible payment methods rather than an explicit static list. Only payment methods that
+     * are both dynamically eligible and present in this list will be offered to the customer.
+     */
+    allowed_payment_method_types?: Array<
+      SessionCreateParams.AllowedPaymentMethodType
+    >;
 
     /**
      * Settings for automatic tax lookup for this session and resulting payments, invoices, and subscriptions.
@@ -3953,7 +3988,7 @@ export namespace Checkout {
      *
      * For `subscription` mode, there is a maximum of 20 line items and optional items with recurring Prices and 20 line items and optional items with one-time Prices.
      *
-     * You can't set this parameter if `ui_mode` is `custom`.
+     * You can't set this parameter if `ui_mode` is `elements` or `form`.
      */
     optional_items?: Array<SessionCreateParams.OptionalItem>;
 
@@ -3991,21 +4026,6 @@ export namespace Checkout {
      * Payment-method-specific configuration.
      */
     payment_method_options?: SessionCreateParams.PaymentMethodOptions;
-
-    /**
-     * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
-     *
-     * You can omit this attribute to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
-     * See [Dynamic Payment Methods](https://docs.stripe.com/payments/payment-methods/integration-options#using-dynamic-payment-methods) for more details.
-     *
-     * Read more about the supported payment methods and their requirements in our [payment
-     * method details guide](https://docs.stripe.com/docs/payments/checkout/payment-methods).
-     *
-     * If multiple payment methods are passed, Checkout will dynamically reorder them to
-     * prioritize the most relevant payment methods based on the customer's location and
-     * other characteristics.
-     */
-    payment_method_types?: Array<SessionCreateParams.PaymentMethodType>;
 
     /**
      * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object. Can only be set when creating `embedded` or `custom` sessions.
@@ -4107,6 +4127,65 @@ export namespace Checkout {
        */
       recovery?: AfterExpiration.Recovery;
     }
+
+    export type AllowedPaymentMethodType =
+      | 'acss_debit'
+      | 'affirm'
+      | 'afterpay_clearpay'
+      | 'alipay'
+      | 'alma'
+      | 'amazon_pay'
+      | 'au_becs_debit'
+      | 'bacs_debit'
+      | 'bancontact'
+      | 'billie'
+      | 'bizum'
+      | 'blik'
+      | 'boleto'
+      | 'card'
+      | 'cashapp'
+      | 'crypto'
+      | 'customer_balance'
+      | 'eps'
+      | 'fpx'
+      | 'giropay'
+      | 'grabpay'
+      | 'ideal'
+      | 'kakao_pay'
+      | 'klarna'
+      | 'konbini'
+      | 'kr_card'
+      | 'link'
+      | 'mb_way'
+      | 'mobilepay'
+      | 'multibanco'
+      | 'naver_pay'
+      | 'nz_bank_account'
+      | 'oxxo'
+      | 'p24'
+      | 'pay_by_bank'
+      | 'payco'
+      | 'paynow'
+      | 'paypal'
+      | 'paypay'
+      | 'payto'
+      | 'pix'
+      | 'promptpay'
+      | 'revolut_pay'
+      | 'samsung_pay'
+      | 'satispay'
+      | 'scalapay'
+      | 'sepa_debit'
+      | 'sequra'
+      | 'sofort'
+      | 'sunbit'
+      | 'swish'
+      | 'twint'
+      | 'upi'
+      | 'us_bank_account'
+      | 'wechat_pay'
+      | 'zip'
+      | OtherString;
 
     export interface AutomaticTax {
       /**
@@ -4313,6 +4392,7 @@ export namespace Checkout {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'paypay'
       | 'payto'
       | 'pix'
       | 'promptpay'
@@ -4321,6 +4401,7 @@ export namespace Checkout {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'sofort'
       | 'sunbit'
       | 'swish'
@@ -4600,6 +4681,11 @@ export namespace Checkout {
       billie?: PaymentMethodOptions.Billie;
 
       /**
+       * contains details about the BLIK payment method options.
+       */
+      blik?: PaymentMethodOptions.Blik;
+
+      /**
        * contains details about the Boleto payment method options.
        */
       boleto?: PaymentMethodOptions.Boleto;
@@ -4760,6 +4846,11 @@ export namespace Checkout {
       sepa_debit?: PaymentMethodOptions.SepaDebit;
 
       /**
+       * contains details about the SeQura payment method options.
+       */
+      sequra?: PaymentMethodOptions.Sequra;
+
+      /**
        * contains details about the Sofort payment method options.
        */
       sofort?: PaymentMethodOptions.Sofort;
@@ -4794,63 +4885,6 @@ export namespace Checkout {
        */
       wechat_pay?: PaymentMethodOptions.WechatPay;
     }
-
-    export type PaymentMethodType =
-      | 'acss_debit'
-      | 'affirm'
-      | 'afterpay_clearpay'
-      | 'alipay'
-      | 'alma'
-      | 'amazon_pay'
-      | 'au_becs_debit'
-      | 'bacs_debit'
-      | 'bancontact'
-      | 'billie'
-      | 'bizum'
-      | 'blik'
-      | 'boleto'
-      | 'card'
-      | 'cashapp'
-      | 'crypto'
-      | 'customer_balance'
-      | 'eps'
-      | 'fpx'
-      | 'giropay'
-      | 'grabpay'
-      | 'ideal'
-      | 'kakao_pay'
-      | 'klarna'
-      | 'konbini'
-      | 'kr_card'
-      | 'link'
-      | 'mb_way'
-      | 'mobilepay'
-      | 'multibanco'
-      | 'naver_pay'
-      | 'nz_bank_account'
-      | 'oxxo'
-      | 'p24'
-      | 'pay_by_bank'
-      | 'payco'
-      | 'paynow'
-      | 'paypal'
-      | 'payto'
-      | 'pix'
-      | 'promptpay'
-      | 'revolut_pay'
-      | 'samsung_pay'
-      | 'satispay'
-      | 'scalapay'
-      | 'sepa_debit'
-      | 'sofort'
-      | 'sunbit'
-      | 'swish'
-      | 'twint'
-      | 'upi'
-      | 'us_bank_account'
-      | 'wechat_pay'
-      | 'zip'
-      | OtherString;
 
     export interface Permissions {
       /**
@@ -5203,7 +5237,7 @@ export namespace Checkout {
 
       export interface Label {
         /**
-         * Custom text for the label, displayed to the customer. Up to 50 characters.
+         * Custom text for the label, displayed to the customer. Up to 100 characters.
          */
         custom: string;
 
@@ -5465,6 +5499,11 @@ export namespace Checkout {
           tax_code?: string;
 
           /**
+           * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+           */
+          tax_details?: ProductData.TaxDetails;
+
+          /**
            * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
            */
           unit_label?: string;
@@ -5487,6 +5526,20 @@ export namespace Checkout {
           | 'inclusive'
           | 'unspecified'
           | OtherString;
+
+        export namespace ProductData {
+          export interface TaxDetails {
+            /**
+             * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+             */
+            performance_location?: string;
+
+            /**
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+             */
+            tax_code?: Emptyable<string>;
+          }
+        }
 
         export namespace Recurring {
           export type Interval =
@@ -5684,7 +5737,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: Alipay.SetupFutureUsage;
       }
 
       export interface Alma {
@@ -5763,7 +5816,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: Bancontact.SetupFutureUsage;
       }
 
       export interface Billie {
@@ -5771,6 +5824,15 @@ export namespace Checkout {
          * Controls when the funds will be captured from the customer's account.
          */
         capture_method?: 'manual';
+      }
+
+      export interface Blik {
+        /**
+         * Additional fields for Mandate creation
+         */
+        mandate_options?: Blik.MandateOptions;
+
+        setup_future_usage?: Emptyable<Blik.SetupFutureUsage>;
       }
 
       export interface Boleto {
@@ -6353,6 +6415,13 @@ export namespace Checkout {
         target_date?: string;
       }
 
+      export interface Sequra {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        capture_method?: 'manual';
+      }
+
       export interface Sofort {
         /**
          * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -6461,7 +6530,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: WechatPay.SetupFutureUsage;
       }
 
       export namespace AcssDebit {
@@ -6521,6 +6590,10 @@ export namespace Checkout {
         }
       }
 
+      export namespace Alipay {
+        export type SetupFutureUsage = 'none' | OtherString;
+      }
+
       export namespace AmazonPay {
         export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
       }
@@ -6538,6 +6611,21 @@ export namespace Checkout {
           | 'off_session'
           | 'on_session'
           | OtherString;
+      }
+
+      export namespace Bancontact {
+        export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+      }
+
+      export namespace Blik {
+        export interface MandateOptions {
+          /**
+           * Date when the mandate expires and no further payments will be charged. If not provided, the mandate will be set to be indefinite.
+           */
+          expires_at?: number;
+        }
+
+        export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
       }
 
       export namespace Boleto {
@@ -6995,6 +7083,8 @@ export namespace Checkout {
 
       export namespace WechatPay {
         export type Client = 'android' | 'ios' | 'web' | OtherString;
+
+        export type SetupFutureUsage = 'none' | OtherString;
       }
     }
 
@@ -7801,6 +7891,11 @@ export namespace Checkout {
           tax_code?: string;
 
           /**
+           * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+           */
+          tax_details?: ProductData.TaxDetails;
+
+          /**
            * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
            */
           unit_label?: string;
@@ -7823,6 +7918,20 @@ export namespace Checkout {
           | 'inclusive'
           | 'unspecified'
           | OtherString;
+
+        export namespace ProductData {
+          export interface TaxDetails {
+            /**
+             * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+             */
+            performance_location?: string;
+
+            /**
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+             */
+            tax_code?: Emptyable<string>;
+          }
+        }
 
         export namespace Recurring {
           export type Interval =

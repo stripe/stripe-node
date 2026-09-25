@@ -458,6 +458,8 @@ export namespace PaymentRecord {
 
     mobilepay?: PaymentMethodDetails.Mobilepay;
 
+    momo?: PaymentMethodDetails.Momo;
+
     multibanco?: PaymentMethodDetails.Multibanco;
 
     naver_pay?: PaymentMethodDetails.NaverPay;
@@ -481,6 +483,8 @@ export namespace PaymentRecord {
 
     paypal?: PaymentMethodDetails.Paypal;
 
+    paypay?: PaymentMethodDetails.Paypay;
+
     payto?: PaymentMethodDetails.Payto;
 
     pix?: PaymentMethodDetails.Pix;
@@ -498,6 +502,8 @@ export namespace PaymentRecord {
     sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
+
+    sequra?: PaymentMethodDetails.Sequra;
 
     sofort?: PaymentMethodDetails.Sofort;
 
@@ -1442,6 +1448,11 @@ export namespace PaymentRecord {
        * Two-letter ISO code representing the funding source country beneath the Link payment. You could use this attribute to get a sense of international fees.
        */
       country: string | null;
+
+      /**
+       * The [funding source group code](https://docs.stripe.com/payments/link/link-payment-methods) applied to this Link payment at confirmation time.
+       */
+      funding_source_group?: string;
     }
 
     export interface MbWay {}
@@ -1451,6 +1462,18 @@ export namespace PaymentRecord {
        * Internal card details
        */
       card: Mobilepay.Card | null;
+    }
+
+    export interface Momo {
+      /**
+       * Uniquely identifies this particular MoMo account. You can use this attribute to check whether two MoMo accounts are the same.
+       */
+      fingerprint: string | null;
+
+      /**
+       * ID of the multi-use Mandate created by, or used to make, this MoMo payment.
+       */
+      mandate?: string;
     }
 
     export interface Multibanco {
@@ -1603,6 +1626,8 @@ export namespace PaymentRecord {
       transaction_id: string | null;
     }
 
+    export interface Paypay {}
+
     export interface Payto {
       /**
        * Bank-State-Branch number of the bank account.
@@ -1731,6 +1756,13 @@ export namespace PaymentRecord {
        * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://docs.stripe.com/api/mandates/retrieve).
        */
       mandate: string | null;
+    }
+
+    export interface Sequra {
+      /**
+       * The SeQura transaction ID associated with this payment.
+       */
+      transaction_id: string | null;
     }
 
     export interface Sofort {
@@ -1913,7 +1945,7 @@ export namespace PaymentRecord {
         /**
          * funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -1948,6 +1980,8 @@ export namespace PaymentRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
@@ -2071,8 +2105,10 @@ export namespace PaymentRecord {
 
         google_pay?: Wallet.GooglePay;
 
+        link?: Wallet.Link;
+
         /**
-         * The type of the card wallet, one of `apple_pay` or `google_pay`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
+         * The type of the card wallet, one of `apple_pay`, `google_pay`, or `link`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
          */
         type: string;
       }
@@ -2165,7 +2201,13 @@ export namespace PaymentRecord {
           | 'rejected'
           | OtherString;
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | OtherString;
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
       }
 
       export namespace Wallet {
@@ -2177,6 +2219,8 @@ export namespace PaymentRecord {
         }
 
         export interface GooglePay {}
+
+        export interface Link {}
       }
     }
 
@@ -2630,7 +2674,7 @@ export namespace PaymentRecord {
         /**
          * Funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -2665,6 +2709,8 @@ export namespace PaymentRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
@@ -2733,6 +2779,11 @@ export interface PaymentRecordReportPaymentParams {
    * Information about the Payment Method debited for this payment.
    */
   payment_method_details: PaymentRecordReportPaymentParams.PaymentMethodDetails;
+
+  /**
+   * Information about the payment attempt cancelation.
+   */
+  canceled?: PaymentRecordReportPaymentParams.Canceled;
 
   /**
    * Customer information for this payment.
@@ -2819,6 +2870,13 @@ export namespace PaymentRecordReportPaymentParams {
     type?: 'custom';
   }
 
+  export interface Canceled {
+    /**
+     * When the reported payment was canceled. Measured in seconds since the Unix epoch.
+     */
+    canceled_at: number;
+  }
+
   export interface CustomerDetails {
     /**
      * The customer who made the payment.
@@ -2857,7 +2915,7 @@ export namespace PaymentRecordReportPaymentParams {
     guaranteed_at: number;
   }
 
-  export type Outcome = 'failed' | 'guaranteed' | OtherString;
+  export type Outcome = 'canceled' | 'failed' | 'guaranteed' | OtherString;
 
   export interface ProcessorDetails {
     /**
@@ -2940,6 +2998,11 @@ export interface PaymentRecordReportPaymentAttemptParams {
   initiated_at: number;
 
   /**
+   * Information about the payment attempt cancelation.
+   */
+  canceled?: PaymentRecordReportPaymentAttemptParams.Canceled;
+
+  /**
    * An arbitrary string attached to the object. Often useful for displaying to users.
    */
   description?: string;
@@ -2980,6 +3043,13 @@ export interface PaymentRecordReportPaymentAttemptParams {
   shipping_details?: PaymentRecordReportPaymentAttemptParams.ShippingDetails;
 }
 export namespace PaymentRecordReportPaymentAttemptParams {
+  export interface Canceled {
+    /**
+     * When the reported payment was canceled. Measured in seconds since the Unix epoch.
+     */
+    canceled_at: number;
+  }
+
   export interface Failed {
     /**
      * When the reported payment failed. Measured in seconds since the Unix epoch.
@@ -2994,7 +3064,7 @@ export namespace PaymentRecordReportPaymentAttemptParams {
     guaranteed_at: number;
   }
 
-  export type Outcome = 'failed' | 'guaranteed' | OtherString;
+  export type Outcome = 'canceled' | 'failed' | 'guaranteed' | OtherString;
 
   export interface PaymentMethodDetails {
     /**

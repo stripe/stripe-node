@@ -273,6 +273,11 @@ export interface SubscriptionSchedule {
   metadata: Metadata | null;
 
   /**
+   * The pause schedules for this subscription schedule.
+   */
+  pause_schedules?: Array<SubscriptionSchedule.PauseSchedule>;
+
+  /**
    * Configuration for the subscription schedule's phases.
    */
   phases: Array<SubscriptionSchedule.Phase>;
@@ -384,6 +389,20 @@ export namespace SubscriptionSchedule {
     | 'release'
     | 'renew'
     | OtherString;
+
+  export interface PauseSchedule {
+    /**
+     * A unique identifier for this pause schedule.
+     */
+    key: string;
+
+    pause: PauseSchedule.Pause;
+
+    /**
+     * Details about when and how the subscription resumes.
+     */
+    resume: PauseSchedule.Resume | null;
+  }
 
   export interface Phase {
     /**
@@ -635,6 +654,185 @@ export namespace SubscriptionSchedule {
 
       export namespace Issuer {
         export type Type = 'account' | 'self' | OtherString;
+      }
+    }
+  }
+
+  export namespace PauseSchedule {
+    export interface Pause {
+      /**
+       * Time at which the subscription pauses.
+       */
+      pause_at: number;
+
+      /**
+       * Settings controlling billing behavior during the pause.
+       */
+      settings: Pause.Settings | null;
+
+      status: Pause.Status;
+    }
+
+    export interface Resume {
+      /**
+       * Time at which the subscription resumes.
+       */
+      resume_at: number;
+
+      settings: Resume.Settings;
+
+      status: Resume.Status;
+    }
+
+    export namespace Pause {
+      export interface Settings {
+        bill_for: Settings.BillFor;
+
+        /**
+         * Determines how to handle debits and credits when pausing.
+         */
+        invoicing_behavior: Settings.InvoicingBehavior;
+
+        /**
+         * The type of pause settings.
+         */
+        type: Settings.Type;
+      }
+
+      export interface Status {
+        error?: Status.Error;
+
+        /**
+         * The lifecycle state of the pause operation.
+         */
+        type: Status.Type;
+      }
+
+      export namespace Settings {
+        export interface BillFor {
+          outstanding_usage_through: BillFor.OutstandingUsageThrough;
+
+          unused_time_from: BillFor.UnusedTimeFrom;
+        }
+
+        export type InvoicingBehavior =
+          | 'invoice'
+          | 'pending_invoice_item'
+          | OtherString;
+
+        export type Type = 'subscription' | OtherString;
+
+        export namespace BillFor {
+          export interface OutstandingUsageThrough {
+            /**
+             * The type of outstanding usage billing behavior.
+             */
+            type: OutstandingUsageThrough.Type;
+          }
+
+          export interface UnusedTimeFrom {
+            /**
+             * The type of unused time credit behavior.
+             */
+            type: UnusedTimeFrom.Type;
+          }
+
+          export namespace OutstandingUsageThrough {
+            export type Type = 'none' | 'pause_at' | OtherString;
+          }
+
+          export namespace UnusedTimeFrom {
+            export type Type =
+              | 'item_current_period_start'
+              | 'none'
+              | 'pause_at'
+              | OtherString;
+          }
+        }
+      }
+
+      export namespace Status {
+        export interface Error {
+          /**
+           * A machine-readable error code.
+           */
+          code?: string;
+
+          /**
+           * A description of the error.
+           */
+          message: string;
+        }
+
+        export type Type = 'error' | 'scheduled' | 'succeeded' | OtherString;
+      }
+    }
+
+    export namespace Resume {
+      export interface Settings {
+        /**
+         * The billing cycle anchor that applies when the subscription is resumed.
+         */
+        billing_cycle_anchor: Settings.BillingCycleAnchor;
+
+        /**
+         * Controls whether Stripe attempts payment on the resumption invoice and how that affects the subscription's status.
+         */
+        payment_behavior: Settings.PaymentBehavior;
+
+        /**
+         * Determines how to handle prorations resulting from the billing_cycle_anchor change on resume.
+         */
+        proration_behavior: Settings.ProrationBehavior;
+      }
+
+      export interface Status {
+        error?: Status.Error;
+
+        /**
+         * The lifecycle state of the resume operation.
+         */
+        type: Status.Type;
+      }
+
+      export namespace Settings {
+        export type BillingCycleAnchor =
+          | 'resume_at'
+          | 'unchanged'
+          | OtherString;
+
+        export type PaymentBehavior =
+          | 'resume_on_payment_attempt'
+          | 'resume_on_payment_success'
+          | OtherString;
+
+        export type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none'
+          | OtherString;
+      }
+
+      export namespace Status {
+        export interface Error {
+          /**
+           * A machine-readable error code.
+           */
+          code?: string;
+
+          /**
+           * A description of the error.
+           */
+          message: string;
+        }
+
+        export type Type =
+          | 'error'
+          | 'pending'
+          | 'requires_action'
+          | 'scheduled'
+          | 'succeeded'
+          | OtherString;
       }
     }
   }
@@ -998,6 +1196,11 @@ export interface SubscriptionScheduleCreateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
+   * Configures the subscription's pause behavior and, optionally, its resume behavior. Only one entry is supported.
+   */
+  pause_schedules?: Array<SubscriptionScheduleCreateParams.PauseSchedule>;
+
+  /**
    * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
    */
   phases?: Array<SubscriptionScheduleCreateParams.Phase>;
@@ -1078,6 +1281,23 @@ export namespace SubscriptionScheduleCreateParams {
     | 'release'
     | 'renew'
     | OtherString;
+
+  export interface PauseSchedule {
+    /**
+     * A unique identifier for this pause schedule entry.
+     */
+    key?: string;
+
+    /**
+     * Configuration for when and how the subscription pauses.
+     */
+    pause?: PauseSchedule.Pause;
+
+    /**
+     * Configuration for when and how the subscription resumes.
+     */
+    resume?: PauseSchedule.Resume;
+  }
 
   export interface Phase {
     /**
@@ -1313,6 +1533,195 @@ export namespace SubscriptionScheduleCreateParams {
 
       export namespace Issuer {
         export type Type = 'account' | 'self' | OtherString;
+      }
+    }
+  }
+
+  export namespace PauseSchedule {
+    export interface Pause {
+      /**
+       * When to pause the subscription.
+       */
+      pause_at: Pause.PauseAt;
+
+      /**
+       * Settings controlling billing behavior during the pause.
+       */
+      settings?: Pause.Settings;
+    }
+
+    export interface Resume {
+      /**
+       * When to resume the subscription.
+       */
+      resume_at: Resume.ResumeAt;
+
+      /**
+       * Settings controlling how the subscription resumes.
+       */
+      settings?: Resume.Settings;
+    }
+
+    export namespace Pause {
+      export interface PauseAt {
+        /**
+         * The Unix timestamp at which to pause the subscription. Required when `type` is `timestamp`.
+         */
+        timestamp?: number;
+
+        /**
+         * When to pause the subscription. Use `now` to pause immediately or `timestamp` to pause at a specific time.
+         */
+        type: PauseAt.Type;
+      }
+
+      export interface Settings {
+        /**
+         * Controls what to bill for when pausing the subscription.
+         */
+        bill_for?: Settings.BillFor;
+
+        /**
+         * Determines whether to generate an invoice for outstanding amounts when pausing.
+         */
+        invoicing_behavior?: Settings.InvoicingBehavior;
+
+        /**
+         * The pause type. Currently only `subscription` is supported.
+         */
+        type?: Settings.Type;
+      }
+
+      export namespace PauseAt {
+        export type Type = 'now' | 'timestamp' | OtherString;
+      }
+
+      export namespace Settings {
+        export interface BillFor {
+          /**
+           * Controls whether to collect metered usage accrued up to the pause date.
+           */
+          outstanding_usage_through?: BillFor.OutstandingUsageThrough;
+
+          /**
+           * Controls how unused time on subscription items is credited when pausing.
+           */
+          unused_time_from?: BillFor.UnusedTimeFrom;
+        }
+
+        export type InvoicingBehavior =
+          | 'invoice'
+          | 'pending_invoice_item'
+          | OtherString;
+
+        export type Type = 'subscription' | OtherString;
+
+        export namespace BillFor {
+          export interface OutstandingUsageThrough {
+            /**
+             * Determines whether to collect metered usage accrued up to the pause date.
+             */
+            type?: OutstandingUsageThrough.Type;
+          }
+
+          export interface UnusedTimeFrom {
+            /**
+             * Determines which point in the billing period unused time is credited from.
+             */
+            type?: UnusedTimeFrom.Type;
+          }
+
+          export namespace OutstandingUsageThrough {
+            export type Type = 'none' | 'pause_at' | OtherString;
+          }
+
+          export namespace UnusedTimeFrom {
+            export type Type =
+              | 'item_current_period_start'
+              | 'none'
+              | 'pause_at'
+              | OtherString;
+          }
+        }
+      }
+    }
+
+    export namespace Resume {
+      export interface ResumeAt {
+        /**
+         * The duration after which to resume the subscription. Required when `type` is `duration`.
+         */
+        duration?: ResumeAt.Duration;
+
+        /**
+         * The Unix timestamp at which to resume the subscription. Required when `type` is `timestamp`.
+         */
+        timestamp?: number;
+
+        /**
+         * When to resume the subscription. Use `now` to resume immediately, `duration` to resume after a set duration, or `timestamp` to resume at a specific time.
+         */
+        type: ResumeAt.Type;
+      }
+
+      export interface Settings {
+        /**
+         * Controls the billing cycle anchor when the subscription resumes.
+         */
+        billing_cycle_anchor?: Settings.BillingCycleAnchor;
+
+        /**
+         * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. The default is `resume_on_payment_success`.
+         */
+        payment_behavior?: Settings.PaymentBehavior;
+
+        /**
+         * Determines how to handle prorations when the subscription resumes. The default is `create_prorations`.
+         */
+        proration_behavior?: Settings.ProrationBehavior;
+      }
+
+      export namespace ResumeAt {
+        export interface Duration {
+          /**
+           * The time unit for the resume duration. One of `day`, `week`, `month`, or `year`.
+           */
+          interval: Duration.Interval;
+
+          /**
+           * The number of intervals after which the subscription resumes.
+           */
+          interval_count?: number;
+        }
+
+        export type Type = 'duration' | 'now' | 'timestamp' | OtherString;
+
+        export namespace Duration {
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
+        }
+      }
+
+      export namespace Settings {
+        export type BillingCycleAnchor =
+          | 'resume_at'
+          | 'unchanged'
+          | OtherString;
+
+        export type PaymentBehavior =
+          | 'resume_on_payment_attempt'
+          | 'resume_on_payment_success'
+          | OtherString;
+
+        export type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none'
+          | OtherString;
       }
     }
   }
@@ -1788,6 +2197,13 @@ export interface SubscriptionScheduleUpdateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
+   * Configures the subscription's pause behavior and, optionally, its resume behavior. Only one entry is supported. Include a key to update an existing entry. Omit to leave an existing pause schedule unchanged, or pass "" to clear it.
+   */
+  pause_schedules?: Emptyable<
+    Array<SubscriptionScheduleUpdateParams.PauseSchedule>
+  >;
+
+  /**
    * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase. Note that past phases can be omitted.
    */
   phases?: Array<SubscriptionScheduleUpdateParams.Phase>;
@@ -1856,6 +2272,23 @@ export namespace SubscriptionScheduleUpdateParams {
     | 'release'
     | 'renew'
     | OtherString;
+
+  export interface PauseSchedule {
+    /**
+     * A unique identifier for this pause schedule entry.
+     */
+    key?: string;
+
+    /**
+     * Configuration for when and how the subscription pauses.
+     */
+    pause?: PauseSchedule.Pause;
+
+    /**
+     * Configuration for when and how the subscription resumes.
+     */
+    resume?: Emptyable<PauseSchedule.Resume>;
+  }
 
   export interface Phase {
     /**
@@ -2087,6 +2520,195 @@ export namespace SubscriptionScheduleUpdateParams {
 
       export namespace Issuer {
         export type Type = 'account' | 'self' | OtherString;
+      }
+    }
+  }
+
+  export namespace PauseSchedule {
+    export interface Pause {
+      /**
+       * When to pause the subscription.
+       */
+      pause_at?: Pause.PauseAt;
+
+      /**
+       * Settings controlling billing behavior during the pause.
+       */
+      settings?: Pause.Settings;
+    }
+
+    export interface Resume {
+      /**
+       * When to resume the subscription.
+       */
+      resume_at?: Resume.ResumeAt;
+
+      /**
+       * Settings controlling how the subscription resumes.
+       */
+      settings?: Resume.Settings;
+    }
+
+    export namespace Pause {
+      export interface PauseAt {
+        /**
+         * The Unix timestamp at which to pause the subscription. Required when `type` is `timestamp`.
+         */
+        timestamp?: number;
+
+        /**
+         * When to pause the subscription. Use `now` to pause immediately or `timestamp` to pause at a specific time.
+         */
+        type: PauseAt.Type;
+      }
+
+      export interface Settings {
+        /**
+         * Controls what to bill for when pausing the subscription.
+         */
+        bill_for?: Settings.BillFor;
+
+        /**
+         * Determines whether to generate an invoice for outstanding amounts when pausing.
+         */
+        invoicing_behavior?: Settings.InvoicingBehavior;
+
+        /**
+         * The pause type. Currently only `subscription` is supported.
+         */
+        type?: Settings.Type;
+      }
+
+      export namespace PauseAt {
+        export type Type = 'now' | 'timestamp' | OtherString;
+      }
+
+      export namespace Settings {
+        export interface BillFor {
+          /**
+           * Controls whether to collect metered usage accrued up to the pause date.
+           */
+          outstanding_usage_through?: BillFor.OutstandingUsageThrough;
+
+          /**
+           * Controls how unused time on subscription items is credited when pausing.
+           */
+          unused_time_from?: BillFor.UnusedTimeFrom;
+        }
+
+        export type InvoicingBehavior =
+          | 'invoice'
+          | 'pending_invoice_item'
+          | OtherString;
+
+        export type Type = 'subscription' | OtherString;
+
+        export namespace BillFor {
+          export interface OutstandingUsageThrough {
+            /**
+             * Determines whether to collect metered usage accrued up to the pause date.
+             */
+            type?: OutstandingUsageThrough.Type;
+          }
+
+          export interface UnusedTimeFrom {
+            /**
+             * Determines which point in the billing period unused time is credited from.
+             */
+            type?: UnusedTimeFrom.Type;
+          }
+
+          export namespace OutstandingUsageThrough {
+            export type Type = 'none' | 'pause_at' | OtherString;
+          }
+
+          export namespace UnusedTimeFrom {
+            export type Type =
+              | 'item_current_period_start'
+              | 'none'
+              | 'pause_at'
+              | OtherString;
+          }
+        }
+      }
+    }
+
+    export namespace Resume {
+      export interface ResumeAt {
+        /**
+         * The duration after which to resume the subscription. Required when `type` is `duration`.
+         */
+        duration?: ResumeAt.Duration;
+
+        /**
+         * The Unix timestamp at which to resume the subscription. Required when `type` is `timestamp`.
+         */
+        timestamp?: number;
+
+        /**
+         * When to resume the subscription. Use `now` to resume immediately, `duration` to resume after a set duration, or `timestamp` to resume at a specific time.
+         */
+        type: ResumeAt.Type;
+      }
+
+      export interface Settings {
+        /**
+         * Controls the billing cycle anchor when the subscription resumes.
+         */
+        billing_cycle_anchor?: Settings.BillingCycleAnchor;
+
+        /**
+         * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. The default is `resume_on_payment_success`.
+         */
+        payment_behavior?: Settings.PaymentBehavior;
+
+        /**
+         * Determines how to handle prorations when the subscription resumes. The default is `create_prorations`.
+         */
+        proration_behavior?: Settings.ProrationBehavior;
+      }
+
+      export namespace ResumeAt {
+        export interface Duration {
+          /**
+           * The time unit for the resume duration. One of `day`, `week`, `month`, or `year`.
+           */
+          interval: Duration.Interval;
+
+          /**
+           * The number of intervals after which the subscription resumes.
+           */
+          interval_count?: number;
+        }
+
+        export type Type = 'duration' | 'now' | 'timestamp' | OtherString;
+
+        export namespace Duration {
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
+        }
+      }
+
+      export namespace Settings {
+        export type BillingCycleAnchor =
+          | 'resume_at'
+          | 'unchanged'
+          | OtherString;
+
+        export type PaymentBehavior =
+          | 'resume_on_payment_attempt'
+          | 'resume_on_payment_success'
+          | OtherString;
+
+        export type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none'
+          | OtherString;
       }
     }
   }

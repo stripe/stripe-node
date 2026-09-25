@@ -183,6 +183,7 @@ export namespace TaxRate {
   export type TaxType =
     | 'amusement_tax'
     | 'communications_tax'
+    | 'digital_excise_tax'
     | 'gst'
     | 'hst'
     | 'igst'
@@ -196,6 +197,7 @@ export namespace TaxRate {
     | 'rst'
     | 'sales_tax'
     | 'service_tax'
+    | 'utility_users_tax'
     | 'vat'
     | OtherString;
 }
@@ -259,6 +261,7 @@ export namespace TaxRateCreateParams {
   export type TaxType =
     | 'amusement_tax'
     | 'communications_tax'
+    | 'digital_excise_tax'
     | 'gst'
     | 'hst'
     | 'igst'
@@ -272,6 +275,7 @@ export namespace TaxRateCreateParams {
     | 'rst'
     | 'sales_tax'
     | 'service_tax'
+    | 'utility_users_tax'
     | 'vat'
     | OtherString;
 }
@@ -331,6 +335,7 @@ export namespace TaxRateUpdateParams {
   export type TaxType =
     | 'amusement_tax'
     | 'communications_tax'
+    | 'digital_excise_tax'
     | 'gst'
     | 'hst'
     | 'igst'
@@ -344,6 +349,7 @@ export namespace TaxRateUpdateParams {
     | 'rst'
     | 'sales_tax'
     | 'service_tax'
+    | 'utility_users_tax'
     | 'vat'
     | OtherString;
 }

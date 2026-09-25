@@ -8,6 +8,7 @@ import {AccountResource as V2CoreAccounts} from './resources/V2/Core/Accounts.js
 import {ActiveEntitlementResource as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
 import {AlertResource as BillingAlerts} from './resources/Billing/Alerts.js';
 import {AssociationResource as TaxAssociations} from './resources/Tax/Associations.js';
+import {AuthenticationResource as ThreeDSecureAuthentications} from './resources/ThreeDSecure/Authentications.js';
 import {AuthorizationResource as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {AuthorizationResource as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {CalculationResource as TaxCalculations} from './resources/Tax/Calculations.js';
@@ -34,6 +35,8 @@ import {FinancialAccountResource as TreasuryFinancialAccounts} from './resources
 import {ImportResource as V2CommerceProductCatalogImports} from './resources/V2/Commerce/ProductCatalog/Imports.js';
 import {InboundTransferResource as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransferResource as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
+import {InstallResource as AppsInstalls} from './resources/Apps/Installs.js';
+import {LocationResource as TaxLocations} from './resources/Tax/Locations.js';
 import {LocationResource as TerminalLocations} from './resources/Terminal/Locations.js';
 import {MeterEventAdjustmentResource as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
 import {MeterEventAdjustmentResource as V2BillingMeterEventAdjustments} from './resources/V2/Billing/MeterEventAdjustments.js';
@@ -79,6 +82,7 @@ import {TransactionResource as IssuingTransactions} from './resources/Issuing/Tr
 import {TransactionResource as TaxTransactions} from './resources/Tax/Transactions.js';
 import {TransactionResource as TestHelpersIssuingTransactions} from './resources/TestHelpers/Issuing/Transactions.js';
 import {TransactionResource as TreasuryTransactions} from './resources/Treasury/Transactions.js';
+import {TrialOfferResource as ProductCatalogTrialOffers} from './resources/ProductCatalog/TrialOffers.js';
 import {ValueListItemResource as RadarValueListItems} from './resources/Radar/ValueListItems.js';
 import {ValueListResource as RadarValueLists} from './resources/Radar/ValueLists.js';
 import {VerificationReportResource as IdentityVerificationReports} from './resources/Identity/VerificationReports.js';
@@ -141,7 +145,10 @@ export {TokenResource as Tokens} from './resources/Tokens.js';
 export {TopupResource as Topups} from './resources/Topups.js';
 export {TransferResource as Transfers} from './resources/Transfers.js';
 export {WebhookEndpointResource as WebhookEndpoints} from './resources/WebhookEndpoints.js';
-export const Apps = resourceNamespace('apps', {Secrets: AppsSecrets});
+export const Apps = resourceNamespace('apps', {
+  Installs: AppsInstalls,
+  Secrets: AppsSecrets,
+});
 export const Billing = resourceNamespace('billing', {
   Alerts: BillingAlerts,
   CreditBalanceSummary: BillingCreditBalanceSummary,
@@ -190,6 +197,9 @@ export const Issuing = resourceNamespace('issuing', {
   Tokens: IssuingTokens,
   Transactions: IssuingTransactions,
 });
+export const ProductCatalog = resourceNamespace('productCatalog', {
+  TrialOffers: ProductCatalogTrialOffers,
+});
 export const Radar = resourceNamespace('radar', {
   EarlyFraudWarnings: RadarEarlyFraudWarnings,
   PaymentEvaluations: RadarPaymentEvaluations,
@@ -206,6 +216,7 @@ export const Sigma = resourceNamespace('sigma', {
 export const Tax = resourceNamespace('tax', {
   Associations: TaxAssociations,
   Calculations: TaxCalculations,
+  Locations: TaxLocations,
   Registrations: TaxRegistrations,
   Settings: TaxSettings,
   Transactions: TaxTransactions,
@@ -238,6 +249,9 @@ export const TestHelpers = resourceNamespace('testHelpers', {
     ReceivedCredits: TestHelpersTreasuryReceivedCredits,
     ReceivedDebits: TestHelpersTreasuryReceivedDebits,
   }),
+});
+export const ThreeDSecure = resourceNamespace('threeDSecure', {
+  Authentications: ThreeDSecureAuthentications,
 });
 export const Treasury = resourceNamespace('treasury', {
   CreditReversals: TreasuryCreditReversals,

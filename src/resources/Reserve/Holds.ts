@@ -41,6 +41,11 @@ export interface Hold {
   currency: string;
 
   /**
+   * The balance destination to which the reserved funds are sent.
+   */
+  destination: Hold.Destination;
+
+  /**
    * Whether there are any funds available to release on this ReserveHold. Note that if the ReserveHold is in the process of being released, this could be false, even though the funds haven't been fully released yet.
    */
   is_releasable?: boolean;
@@ -84,6 +89,8 @@ export interface Hold {
 }
 export namespace Hold {
   export type CreatedBy = 'application' | 'stripe' | OtherString;
+
+  export type Destination = 'other' | 'risk_reserved' | 'settlement_reserved';
 
   export type Reason = 'charge' | 'standalone' | OtherString;
 

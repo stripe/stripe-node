@@ -259,6 +259,11 @@ export interface InvoiceItem {
   invoice: string | Invoice | null;
 
   /**
+   * The rules that control when this invoice item is eligible for invoicing. All rules must be satisfied for the item to be invoiced.
+   */
+  invoicing_rules?: Array<InvoiceItem.InvoicingRule>;
+
+  /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
@@ -331,6 +336,13 @@ export interface DeletedInvoiceItem {
 export namespace InvoiceItem {
   export type FrozenField = 'discounts' | 'pricing' | 'quantity' | OtherString;
 
+  export interface InvoicingRule {
+    /**
+     * The type of invoicing rule.
+     */
+    type: InvoicingRule.Type;
+  }
+
   export interface Parent {
     /**
      * Details about the subscription that generated this invoice item
@@ -376,9 +388,13 @@ export namespace InvoiceItem {
     credited_items: ProrationDetails.CreditedItems | null;
 
     /**
-     * Discount amounts applied when the proration was created.
+     * Discount amounts applied when the proration was created. This field is only populated for prorations created from subscriptions with `billing_mode=flexible`.
      */
     discount_amounts: Array<ProrationDetails.DiscountAmount>;
+  }
+
+  export namespace InvoicingRule {
+    export type Type = 'defer_until_credited_items_resolved' | OtherString;
   }
 
   export namespace Parent {
@@ -663,6 +679,11 @@ export interface InvoiceItemUpdateParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * Pass an empty string to remove previously-defined invoicing rules. Setting invoicing rules is not supported.
+   */
+  invoicing_rules?: '';
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

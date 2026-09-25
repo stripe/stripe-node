@@ -338,7 +338,11 @@ export namespace FinancialAccount {
       routing_number: string;
     }
 
-    export type SupportedNetwork = 'ach' | 'us_domestic_wire' | OtherString;
+    export type SupportedNetwork =
+      | 'ach'
+      | 'rtp'
+      | 'us_domestic_wire'
+      | OtherString;
   }
 
   export namespace PlatformRestrictions {

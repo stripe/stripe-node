@@ -61,7 +61,7 @@ export namespace TestHelpers {
     }
 
     export namespace ReceivedCreditCreateParams {
-      export type Network = 'ach' | 'us_domestic_wire' | OtherString;
+      export type Network = 'ach' | 'rtp' | 'us_domestic_wire' | OtherString;
 
       export interface InitiatingPaymentMethodDetails {
         /**

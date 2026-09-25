@@ -500,6 +500,7 @@ import {
   SubscriptionCancelParams,
   SubscriptionDeleteDiscountParams,
   SubscriptionMigrateParams,
+  SubscriptionPauseParams,
   SubscriptionResumeParams,
   SubscriptionSearchParams,
   SubscriptionResource,
@@ -629,12 +630,14 @@ import {FinancialConnections} from './resources/FinancialConnections/index.js';
 import {Forwarding} from './resources/Forwarding/index.js';
 import {Identity} from './resources/Identity/index.js';
 import {Issuing} from './resources/Issuing/index.js';
+import {ProductCatalog} from './resources/ProductCatalog/index.js';
 import {Radar} from './resources/Radar/index.js';
 import {Reporting} from './resources/Reporting/index.js';
 import {Sigma} from './resources/Sigma/index.js';
 import {Tax} from './resources/Tax/index.js';
 import {Terminal} from './resources/Terminal/index.js';
 import {TestHelpers} from './resources/TestHelpers/index.js';
+import {ThreeDSecure} from './resources/ThreeDSecure/index.js';
 import {Treasury} from './resources/Treasury/index.js';
 import {V2} from './resources/V2/index.js';
 import {Reserve} from './resources/Reserve/index.js';
@@ -650,6 +653,9 @@ import {
   ApplicationFeeCreatedEvent,
   ApplicationFeeRefundUpdatedEvent,
   ApplicationFeeRefundedEvent,
+  AppsInstallCreatedEvent,
+  AppsInstallDeletedEvent,
+  AppsInstallUpdatedEvent,
   BalanceAvailableEvent,
   BalanceSettingsUpdatedEvent,
   BillingAlertTriggeredEvent,
@@ -1086,12 +1092,14 @@ export class Stripe {
   forwarding: Forwarding;
   identity: Identity;
   issuing: Issuing;
+  productCatalog: ProductCatalog;
   radar: Radar;
   reporting: Reporting;
   sigma: Sigma;
   tax: Tax;
   terminal: Terminal;
   testHelpers: TestHelpers;
+  threeDSecure: ThreeDSecure;
   treasury: Treasury;
   v2: V2;
   // StripeInstanceVariables: The end of the section generated from our OpenAPI spec
@@ -1280,12 +1288,14 @@ export class Stripe {
     this.forwarding = new Forwarding(this);
     this.identity = new Identity(this);
     this.issuing = new Issuing(this);
+    this.productCatalog = new ProductCatalog(this);
     this.radar = new Radar(this);
     this.reporting = new Reporting(this);
     this.sigma = new Sigma(this);
     this.tax = new Tax(this);
     this.terminal = new Terminal(this);
     this.testHelpers = new TestHelpers(this);
+    this.threeDSecure = new ThreeDSecure(this);
     this.treasury = new Treasury(this);
     this.v2 = new V2(this);
     // StripeInitInstanceVariables: The end of the section generated from our OpenAPI spec
@@ -2267,6 +2277,7 @@ export declare namespace Stripe {
     SubscriptionCancelParams,
     SubscriptionDeleteDiscountParams,
     SubscriptionMigrateParams,
+    SubscriptionPauseParams,
     SubscriptionResumeParams,
     SubscriptionSearchParams,
     SubscriptionResource,
@@ -2377,12 +2388,14 @@ export declare namespace Stripe {
   export {Forwarding};
   export {Identity};
   export {Issuing};
+  export {ProductCatalog};
   export {Radar};
   export {Reporting};
   export {Sigma};
   export {Tax};
   export {Terminal};
   export {TestHelpers};
+  export {ThreeDSecure};
   export {Treasury};
   export {V2};
   export {Reserve};
@@ -2398,6 +2411,9 @@ export declare namespace Stripe {
     ApplicationFeeCreatedEvent,
     ApplicationFeeRefundUpdatedEvent,
     ApplicationFeeRefundedEvent,
+    AppsInstallCreatedEvent,
+    AppsInstallDeletedEvent,
+    AppsInstallUpdatedEvent,
     BalanceAvailableEvent,
     BalanceSettingsUpdatedEvent,
     BillingAlertTriggeredEvent,
