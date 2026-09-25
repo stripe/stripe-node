@@ -42,11 +42,11 @@ describe('Account Resource', () => {
 
   describe('reject', () => {
     it('rejects an account successfully', () => {
-      stripe.account.reject('acct_16Tzq6DBahdM4C8s', {reason: 'fraud'});
+      stripe.account.reject('acct_16Tzq6DBahdM4C8s', {reason: 'other'});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/accounts/acct_16Tzq6DBahdM4C8s/reject',
-        data: {reason: 'fraud'},
+        data: {reason: 'other'},
         headers: {},
         settings: {},
       });

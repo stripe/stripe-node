@@ -265,7 +265,7 @@ describe('Generated tests', function() {
 
   it('test_accounts_reject_post', async function() {
     const account = await stripe.accounts.reject('acct_xxxxxxxxxxxxx', {
-      reason: 'fraud',
+      reason: 'other',
     });
     expect(account).not.to.be.null;
   });
