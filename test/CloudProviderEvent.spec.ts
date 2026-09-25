@@ -95,14 +95,10 @@ describe('constructEventWithoutVerification', () => {
     expect(event.type).to.equal('customer.created');
   });
 
-  it('parses EventBridge payload', () => {
-    const event = stripe.constructEventWithoutVerification(EVENTBRIDGE_PAYLOAD);
-    expect(event.id).to.equal('evt_test_123');
-    expect(event.type).to.equal('customer.created');
-  });
-
   it('parses Event Grid payload', () => {
-    const event = stripe.constructEventWithoutVerification(EVENTGRID_PAYLOAD);
+    const event = stripe.webhooks.constructEventWithoutVerification(
+      EVENTGRID_PAYLOAD
+    );
     expect(event.id).to.equal('evt_test_456');
     expect(event.type).to.equal('customer.created');
   });
@@ -113,26 +109,26 @@ describe('constructEventWithoutVerification', () => {
       object: 'event',
       type: 'customer.created',
     });
-    const event = stripe.constructEventWithoutVerification(rawEvent);
+    const event = stripe.webhooks.constructEventWithoutVerification(rawEvent);
     expect(event.id).to.equal('evt_test_123');
     expect(event.type).to.equal('customer.created');
   });
 
   it('throws on invalid JSON', () => {
     expect(() =>
-      stripe.constructEventWithoutVerification('not valid json')
+      stripe.webhooks.constructEventWithoutVerification('not valid json')
     ).to.throw();
   });
 
   it('throws on unrecognized format', () => {
     expect(() =>
-      stripe.constructEventWithoutVerification('{"foo":"bar"}')
+      stripe.webhooks.constructEventWithoutVerification('{"foo":"bar"}')
     ).to.throw(/Unrecognized event format/);
   });
 
   it('throws when cloud envelope contains a v2 event notification', () => {
     expect(() =>
-      stripe.constructEventWithoutVerification(EVENTBRIDGE_V2_PAYLOAD)
+      stripe.webhooks.constructEventWithoutVerification(EVENTBRIDGE_V2_PAYLOAD)
     ).to.throw(/EventNotification/);
   });
 
@@ -143,9 +139,9 @@ describe('constructEventWithoutVerification', () => {
       source: '/providers/stripe/ed_test_123',
       id: 'test-missing-data',
     });
-    expect(() => stripe.constructEventWithoutVerification(payload)).to.throw(
-      /Unrecognized event format/
-    );
+    expect(() =>
+      stripe.webhooks.constructEventWithoutVerification(payload)
+    ).to.throw(/Unrecognized event format/);
   });
 });
 

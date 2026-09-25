@@ -2,12 +2,7 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {AccountPersonToken} from './../../../V2/Core/AccountPersonTokens.js';
-import {
-  JapanAddressParam,
-  MetadataParam,
-  OtherString,
-  Decimal,
-} from '../../../../shared.js';
+import {MetadataParam, OtherString, Decimal} from '../../../../shared.js';
 import {RequestOptions, Response} from '../../../../lib.js';
 
 export class PersonTokenResource extends StripeResource {
@@ -81,7 +76,7 @@ export namespace V2 {
         /**
          * The person's residential address.
          */
-        address?: JapanAddressParam;
+        address?: PersonTokenCreateParams.Address;
 
         /**
          * The person's date of birth.
@@ -226,6 +221,43 @@ export namespace V2 {
           account?: AdditionalTermsOfService.Account;
         }
 
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1?: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+
+          /**
+           * Town or district.
+           */
+          town?: string;
+        }
+
         export interface DateOfBirth {
           /**
            * The day of the birth.
@@ -332,12 +364,12 @@ export namespace V2 {
           /**
            * Kana Address.
            */
-          kana?: JapanAddressParam;
+          kana?: ScriptAddresses.Kana;
 
           /**
            * Kanji Address.
            */
-          kanji?: JapanAddressParam;
+          kanji?: ScriptAddresses.Kanji;
         }
 
         export interface ScriptNames {
@@ -535,6 +567,82 @@ export namespace V2 {
             | 'uy_dni'
             | 'za_id'
             | OtherString;
+        }
+
+        export namespace ScriptAddresses {
+          export interface Kana {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
+
+          export interface Kanji {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
         }
 
         export namespace ScriptNames {
