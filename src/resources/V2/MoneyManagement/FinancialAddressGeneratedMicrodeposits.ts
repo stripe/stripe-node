@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec
 
-import {V2Amount} from './V2Amounts.js';
-import {RequestOptions} from '../../lib.js';
+import {V2Amount} from './../V2Amounts.js';
+import {RequestOptions} from '../../../lib.js';
 export interface FinancialAddressGeneratedMicrodeposits {
   /**
    * String representing the object's type. Objects of the same type share the same value of the object field.
    */
-  object: 'financial_address_generated_microdeposits';
+  object: 'v2.money_management.financial_address_generated_microdeposits';
 
   /**
    * The amounts of the microdeposits that were generated.

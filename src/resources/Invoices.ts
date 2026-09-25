@@ -1731,6 +1731,8 @@ export interface Invoice {
    */
   status: Invoice.Status | null;
 
+  status_details?: Invoice.StatusDetails;
+
   status_transitions: Invoice.StatusTransitions;
 
   /**
@@ -1854,6 +1856,11 @@ export namespace Invoice {
      * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://docs.stripe.com/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
      */
     enabled: boolean;
+
+    /**
+     * How `automatic_tax` was set (`explicit`, `managed_payments`, or `tax_integration_configuration`) and why it may have been disabled.
+     */
+    enablement_details?: AutomaticTax.EnablementDetails | null;
 
     /**
      * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
@@ -2242,6 +2249,10 @@ export namespace Invoice {
     | 'void'
     | OtherString;
 
+  export interface StatusDetails {
+    uncollectible?: StatusDetails.Uncollectible;
+  }
+
   export interface StatusTransitions {
     /**
      * The time that the invoice draft was finalized.
@@ -2372,6 +2383,18 @@ export namespace Invoice {
       | 'finalization_system_error'
       | OtherString;
 
+    export interface EnablementDetails {
+      /**
+       * Present when `source=tax_integration_configuration`, `automatic_tax[enabled]=false`, and a conflicting parameter is recorded.
+       */
+      integration_configuration_disabled_reason: EnablementDetails.IntegrationConfigurationDisabledReason | null;
+
+      /**
+       * How `automatic_tax` was set: `explicit`, `managed_payments`, or `tax_integration_configuration`.
+       */
+      source: EnablementDetails.Source;
+    }
+
     export interface Liability {
       /**
        * The connected account being referenced when `type` is `account`.
@@ -2389,6 +2412,20 @@ export namespace Invoice {
       | 'failed'
       | 'requires_location_inputs'
       | OtherString;
+
+    export namespace EnablementDetails {
+      export interface IntegrationConfigurationDisabledReason {
+        /**
+         * The parameter that prevented `automatic_tax` from being enabled (for example `default_tax_rates`).
+         */
+        conflicting_field: string;
+      }
+
+      export type Source =
+        | 'explicit'
+        | 'managed_payments'
+        | 'tax_integration_configuration';
+    }
 
     export namespace Liability {
       export type Type = 'account' | 'application' | 'self' | OtherString;
@@ -2576,6 +2613,7 @@ export namespace Invoice {
       | 'customer_session_expired'
       | 'customer_tax_location_invalid'
       | 'debit_not_authorized'
+      | 'dispute_evidence_page_limit_exceeded'
       | 'email_invalid'
       | 'expired_card'
       | 'expired_payment_method'
@@ -2586,6 +2624,8 @@ export namespace Invoice {
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
+      | 'financial_connections_consent_locale_invalid'
+      | 'financial_connections_consent_locale_unsupported'
       | 'financial_connections_institution_unavailable'
       | 'financial_connections_no_successful_transaction_refresh'
       | 'forwarding_api_inactive'
@@ -2640,6 +2680,7 @@ export namespace Invoice {
       | 'parameter_missing'
       | 'parameter_unknown'
       | 'parameters_exclusive'
+      | 'payment_evaluation_on_api_version_not_supported'
       | 'payment_intent_action_required'
       | 'payment_intent_authentication_failure'
       | 'payment_intent_incompatible_payment_method'
@@ -3389,6 +3430,25 @@ export namespace Invoice {
         | 'standard_rated'
         | 'taxable_basis_reduced'
         | 'zero_rated'
+        | OtherString;
+    }
+  }
+
+  export namespace StatusDetails {
+    export interface Uncollectible {
+      /**
+       * The reason why the invoice is uncollectible.
+       */
+      reason: Uncollectible.Reason | null;
+    }
+
+    export namespace Uncollectible {
+      export type Reason =
+        | 'max_payment_attempts'
+        | 'payment_not_received'
+        | 'subscription_canceled'
+        | 'subscription_paused'
+        | 'user_forgiven'
         | OtherString;
     }
   }
@@ -6140,6 +6200,7 @@ export namespace InvoiceAddLinesParams {
         export type TaxType =
           | 'amusement_tax'
           | 'communications_tax'
+          | 'digital_excise_tax'
           | 'gst'
           | 'hst'
           | 'igst'
@@ -6153,6 +6214,7 @@ export namespace InvoiceAddLinesParams {
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
+          | 'utility_users_tax'
           | 'vat'
           | OtherString;
       }
@@ -6523,7 +6585,7 @@ export namespace InvoiceCreatePreviewParams {
     /**
      * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://docs.stripe.com/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
      */
-    billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
+    billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor;
 
     /**
      * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
@@ -9070,7 +9132,17 @@ export namespace InvoiceCreatePreviewParams {
   }
 
   export namespace SubscriptionDetails {
-    export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+    export interface BillingCycleAnchor {
+      /**
+       * A timestamp to use as the subscription's billing cycle anchor. Only valid when `type` is `timestamp`.
+       */
+      timestamp?: number;
+
+      /**
+       * Determines how the subscription's billing cycle anchor behaves for the invoice preview.
+       */
+      type: BillingCycleAnchor.Type;
+    }
 
     export interface BillingMode {
       /**
@@ -9198,6 +9270,10 @@ export namespace InvoiceCreatePreviewParams {
       | 'create_prorations'
       | 'none'
       | OtherString;
+
+    export namespace BillingCycleAnchor {
+      export type Type = 'now' | 'timestamp' | 'unchanged' | OtherString;
+    }
 
     export namespace BillingMode {
       export interface Flexible {
@@ -10057,6 +10133,7 @@ export namespace InvoiceUpdateLinesParams {
         export type TaxType =
           | 'amusement_tax'
           | 'communications_tax'
+          | 'digital_excise_tax'
           | 'gst'
           | 'hst'
           | 'igst'
@@ -10070,6 +10147,7 @@ export namespace InvoiceUpdateLinesParams {
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
+          | 'utility_users_tax'
           | 'vat'
           | OtherString;
       }
@@ -10422,6 +10500,7 @@ export namespace InvoiceUpdateLineItemParams {
       export type TaxType =
         | 'amusement_tax'
         | 'communications_tax'
+        | 'digital_excise_tax'
         | 'gst'
         | 'hst'
         | 'igst'
@@ -10435,6 +10514,7 @@ export namespace InvoiceUpdateLineItemParams {
         | 'rst'
         | 'sales_tax'
         | 'service_tax'
+        | 'utility_users_tax'
         | 'vat'
         | OtherString;
     }

@@ -417,6 +417,11 @@ export namespace FinancialAccount {
     crypto?: Storage.Crypto;
 
     /**
+     * Array of eligibility objects, segmented by bank name and deposit insurance scheme.
+     */
+    deposit_insurance_eligibility?: Array<Storage.DepositInsuranceEligibility>;
+
+    /**
      * The usage type for funds in this FinancialAccount. Can be used to specify that the funds are for Consumer activity.
      */
     funds_usage_type?: Storage.FundsUsageType;
@@ -618,12 +623,35 @@ export namespace FinancialAccount {
       custody_model: Crypto.CustodyModel;
     }
 
+    export interface DepositInsuranceEligibility {
+      /**
+       * The bank where funds are stored.
+       */
+      bank_name: DepositInsuranceEligibility.BankName;
+
+      /**
+       * Currencies eligible for deposit insurance at this bank under this scheme.
+       */
+      currencies: Array<string>;
+
+      /**
+       * The deposit insurance scheme.
+       */
+      type: DepositInsuranceEligibility.Type;
+    }
+
     export type FundsUsageType = 'business' | 'consumer' | OtherString;
 
     export namespace Crypto {
       export type CurrencyNetworks = 'tempo' | OtherString;
 
       export type CustodyModel = 'self' | 'stripe';
+    }
+
+    export namespace DepositInsuranceEligibility {
+      export type BankName = 'fifth_third' | OtherString;
+
+      export type Type = 'fdic' | 'fdic_passthrough' | OtherString;
     }
   }
 }
@@ -673,6 +701,13 @@ export namespace V2 {
         crypto?: Storage.Crypto;
 
         /**
+         * Array of eligibility objects, segmented by bank name and deposit insurance scheme.
+         */
+        deposit_insurance_eligibility?: Array<
+          Storage.DepositInsuranceEligibility
+        >;
+
+        /**
          * The usage type for funds in this FinancialAccount. Can be used to specify that the funds are for Consumer activity.
          */
         funds_usage_type?: Storage.FundsUsageType;
@@ -698,12 +733,35 @@ export namespace V2 {
           custody_model: Crypto.CustodyModel;
         }
 
+        export interface DepositInsuranceEligibility {
+          /**
+           * The bank where funds are stored.
+           */
+          bank_name: DepositInsuranceEligibility.BankName;
+
+          /**
+           * Currencies eligible for deposit insurance at this bank under this scheme.
+           */
+          currencies: Array<string>;
+
+          /**
+           * The deposit insurance scheme.
+           */
+          type: DepositInsuranceEligibility.Type;
+        }
+
         export type FundsUsageType = 'business' | 'consumer' | OtherString;
 
         export namespace Crypto {
           export type CurrencyNetworks = 'tempo' | OtherString;
 
           export type CustodyModel = 'self' | 'stripe';
+        }
+
+        export namespace DepositInsuranceEligibility {
+          export type BankName = 'fifth_third' | OtherString;
+
+          export type Type = 'fdic' | 'fdic_passthrough' | OtherString;
         }
       }
     }
@@ -719,7 +777,10 @@ export namespace V2 {
     }
 
     export namespace FinancialAccountRetrieveParams {
-      export type Include = 'payments.balance_by_funds_type' | 'storage.crypto';
+      export type Include =
+        | 'payments.balance_by_funds_type'
+        | 'storage.crypto'
+        | 'storage.deposit_insurance_eligibility';
     }
   }
 }
@@ -829,7 +890,10 @@ export namespace V2 {
     }
 
     export namespace FinancialAccountListParams {
-      export type Include = 'payments.balance_by_funds_type' | 'storage.crypto';
+      export type Include =
+        | 'payments.balance_by_funds_type'
+        | 'storage.crypto'
+        | 'storage.deposit_insurance_eligibility';
 
       export type Status = 'closed' | 'open' | 'pending';
 

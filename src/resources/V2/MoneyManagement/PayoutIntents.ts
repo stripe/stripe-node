@@ -226,6 +226,11 @@ export namespace PayoutIntent {
     amount: V2Amount;
 
     /**
+     * Details about the network and options associated with this fee. Present when type is network_fee.
+     */
+    network_fee_details?: EstimatedFee.NetworkFeeDetails;
+
+    /**
      * Tax charged for this fee, if applicable. Value expressed as a decimal string in major units.
      */
     tax_amount?: EstimatedFee.TaxAmount;
@@ -393,6 +398,18 @@ export namespace PayoutIntent {
   }
 
   export namespace EstimatedFee {
+    export interface NetworkFeeDetails {
+      /**
+       * The network associated with the fee.
+       */
+      network: NetworkFeeDetails.Network;
+
+      /**
+       * Per-network options that affect the fee.
+       */
+      network_options: NetworkFeeDetails.NetworkOptions;
+    }
+
     export interface TaxAmount {
       /**
        * Currency code.
@@ -409,6 +426,7 @@ export namespace PayoutIntent {
       | 'cross_border_fee'
       | 'foreign_exchange_fee'
       | 'instant_card_payout_fee'
+      | 'network_fee'
       | 'next_day_payout_fee'
       | 'real_time_payout_fee'
       | 'stablecoin_payout_fee'
@@ -416,6 +434,42 @@ export namespace PayoutIntent {
       | 'standard_payout_fee'
       | 'wire_payout_fee'
       | OtherString;
+
+    export namespace NetworkFeeDetails {
+      export type Network =
+        | 'ach'
+        | 'becs'
+        | 'eft'
+        | 'fedwire'
+        | 'fps'
+        | 'local'
+        | 'npp'
+        | 'rtp'
+        | 'sepa'
+        | 'sepa_instant'
+        | 'swift'
+        | OtherString;
+
+      export interface NetworkOptions {
+        /**
+         * ACH-specific network fee options.
+         */
+        ach?: NetworkOptions.Ach;
+      }
+
+      export namespace NetworkOptions {
+        export interface Ach {
+          /**
+           * Open Enum. ACH submission timing.
+           */
+          submission?: Ach.Submission;
+        }
+
+        export namespace Ach {
+          export type Submission = 'next_day' | 'same_day' | OtherString;
+        }
+      }
+    }
   }
 
   export namespace FxQuote {

@@ -393,6 +393,7 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.money_management.debit_dispute.failed',
   'v2.money_management.debit_dispute.submitted',
   'v2.money_management.debit_dispute.succeeded',
+  'v2.money_management.earned_credit.succeeded',
   'v2.money_management.financial_account.created',
   'v2.money_management.financial_account.updated',
   'v2.money_management.financial_account.wallet_export.completed',

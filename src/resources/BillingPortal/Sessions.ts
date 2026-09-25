@@ -33,6 +33,11 @@ export interface Session {
   object: 'billing_portal.session';
 
   /**
+   * Behavior after the portal session expires.
+   */
+  after_expiration?: Session.AfterExpiration | null;
+
+  /**
    * The configuration used by this session, describing the features available.
    */
   configuration: string | Configuration;
@@ -83,6 +88,18 @@ export interface Session {
   url: string;
 }
 export namespace Session {
+  export interface AfterExpiration {
+    /**
+     * Configuration for authenticating the customer after the session expires.
+     */
+    customer_login: AfterExpiration.CustomerLogin | null;
+
+    /**
+     * The behavior to apply when the session expires.
+     */
+    type: AfterExpiration.Type;
+  }
+
   export interface Flow {
     after_completion: Flow.AfterCompletion;
 
@@ -166,6 +183,17 @@ export namespace Session {
     | 'zh-HK'
     | 'zh-TW'
     | OtherString;
+
+  export namespace AfterExpiration {
+    export interface CustomerLogin {
+      /**
+       * The time after which the customer can no longer recover this session.
+       */
+      expires_at: number | null;
+    }
+
+    export type Type = 'customer_login' | OtherString;
+  }
 
   export namespace Flow {
     export interface AfterCompletion {
@@ -319,6 +347,11 @@ export namespace Session {
 export namespace BillingPortal {
   export interface SessionCreateParams {
     /**
+     * Behavior after the portal session expires.
+     */
+    after_expiration?: SessionCreateParams.AfterExpiration;
+
+    /**
      * The ID of an existing [configuration](https://docs.stripe.com/api/customer_portal/configurations) to use for this session, describing its functionality and features. If not specified, the session uses the default configuration.
      */
     configuration?: string;
@@ -360,6 +393,18 @@ export namespace BillingPortal {
   }
 
   export namespace SessionCreateParams {
+    export interface AfterExpiration {
+      /**
+       * Configuration for authenticating the customer after the session expires.
+       */
+      customer_login?: AfterExpiration.CustomerLogin;
+
+      /**
+       * The behavior to apply when the session expires.
+       */
+      type: AfterExpiration.Type;
+    }
+
     export interface FlowData {
       /**
        * Behavior after the flow is completed.
@@ -441,6 +486,17 @@ export namespace BillingPortal {
       | 'zh-HK'
       | 'zh-TW'
       | OtherString;
+
+    export namespace AfterExpiration {
+      export interface CustomerLogin {
+        /**
+         * The Unix timestamp after which the customer can no longer recover this session. Leave unset to allow recovery without a deadline.
+         */
+        expires_at?: number;
+      }
+
+      export type Type = 'customer_login' | OtherString;
+    }
 
     export namespace FlowData {
       export interface AfterCompletion {

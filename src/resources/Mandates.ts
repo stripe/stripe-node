@@ -265,7 +265,9 @@ export namespace Mandate {
       type: 'off_session';
     }
 
-    export interface Card {}
+    export interface Card {
+      india?: Card.India;
+    }
 
     export interface Cashapp {}
 
@@ -445,6 +447,27 @@ export namespace Mandate {
         | 'could_not_process'
         | 'debit_not_authorized'
         | OtherString;
+    }
+
+    export namespace Card {
+      export interface India {
+        /**
+         * The reason why the mandate has an `inactive` status. This field is only populated if the mandate is inactive.
+         */
+        inactive_reason: India.InactiveReason | null;
+      }
+
+      export namespace India {
+        export type InactiveReason =
+          | 'canceled'
+          | 'card_not_supported'
+          | 'currency_not_supported'
+          | 'expired'
+          | 'issuer_not_supported'
+          | 'processing_error'
+          | 'undetermined'
+          | OtherString;
+      }
     }
 
     export namespace Payto {

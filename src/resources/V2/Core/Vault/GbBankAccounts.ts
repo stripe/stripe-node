@@ -24,6 +24,10 @@ export class GbBankAccountResource extends StripeResource {
   }
   /**
    * Create a GB bank account.
+   * @throws Stripe.BlockedByStripeError
+   * @throws Stripe.CannotProceedError
+   * @throws Stripe.InvalidVaultedCredentialError
+   * @throws Stripe.QuotaExceededError
    */
   create(
     params: V2.Core.Vault.GbBankAccountCreateParams,
@@ -74,6 +78,8 @@ export class GbBankAccountResource extends StripeResource {
   /**
    * Archive a GBBankAccount object. Archived GBBankAccount objects cannot be used as outbound destinations
    * and will not appear in the outbound destination list.
+   * @throws Stripe.CannotProceedError
+   * @throws Stripe.ControlledByAlternateResourceError
    */
   archive(
     id: string,

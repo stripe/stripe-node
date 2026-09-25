@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, Metadata, OtherString} from '../../../shared.js';
+import {
+  MetadataParam,
+  RangeQueryParam,
+  Metadata,
+  OtherString,
+} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class TransactionResource extends StripeResource {
@@ -170,6 +175,7 @@ export namespace Transaction {
     | 'debit_dispute'
     | 'dispute'
     | 'dispute_reversal'
+    | 'earned_credit'
     | 'financing_paydown'
     | 'financing_paydown_reversal'
     | 'inbound_payment'
@@ -261,6 +267,11 @@ export namespace Transaction {
      * If applicable, the ID of the Dispute that created this Transaction.
      */
     dispute?: string;
+
+    /**
+     * If applicable, the ID of the EarnedCredit that created this Transaction.
+     */
+    earned_credit?: string;
 
     /**
      * If applicable, the ID of the FeeTransaction that created this Transaction.
@@ -416,6 +427,7 @@ export namespace Transaction {
       | 'currency_conversion'
       | 'debit_dispute'
       | 'dispute'
+      | 'earned_credit'
       | 'fee_transaction'
       | 'inbound_transfer'
       | 'issuing_authorization'
@@ -470,29 +482,9 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface TransactionListParams {
       /**
-       * Filter for Transactions created at an exact time.
+       * Set of filters to query Transactions within a range of `created` timestamps.
        */
-      created?: string;
-
-      /**
-       * Filter for Transactions created after the specified timestamp.
-       */
-      created_gt?: string;
-
-      /**
-       * Filter for Transactions created at or after the specified timestamp.
-       */
-      created_gte?: string;
-
-      /**
-       * Filter for Transactions created before the specified timestamp.
-       */
-      created_lt?: string;
-
-      /**
-       * Filter for Transactions created at or before the specified timestamp.
-       */
-      created_lte?: string;
+      created?: RangeQueryParam;
 
       /**
        * Filter for Transactions belonging to a FinancialAccount.

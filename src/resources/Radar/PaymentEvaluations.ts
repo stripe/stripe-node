@@ -698,7 +698,7 @@ export namespace PaymentEvaluation {
       /**
        * Numeric score for this signal, returned with two decimal places. Possible values for evaluated payments are between 0 and 100, where higher scores indicate a higher likelihood of the signal being true.
        */
-      score: number;
+      score: number | null;
     }
 
     export interface FraudulentDispute {
@@ -715,7 +715,7 @@ export namespace PaymentEvaluation {
       /**
        * Numeric score for this signal, returned with two decimal places. Possible values for evaluated payments are between 0 and 100, where higher scores indicate a higher likelihood of the signal being true.
        */
-      score: number;
+      score: number | null;
     }
 
     export interface FraudulentPayment {
@@ -732,7 +732,7 @@ export namespace PaymentEvaluation {
       /**
        * Numeric score for this signal, returned with two decimal places. Possible values for evaluated payments are between 0 and 100, where higher scores indicate a higher likelihood of the signal being true.
        */
-      score: number;
+      score: number | null;
     }
 
     export namespace EarlyFraudWarning {

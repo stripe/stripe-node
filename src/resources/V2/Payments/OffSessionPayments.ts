@@ -382,11 +382,6 @@ export namespace OffSessionPayment {
      * Indicates the strategy for how you want Stripe to retry the payment.
      */
     retry_strategy: RetryDetails.RetryStrategy;
-
-    /**
-     * The timestamp when this payment is no longer eligible to be retried. When this timestamp is reached, the payment will be marked as failed.
-     */
-    retry_until?: string;
   }
 
   export type Status =
@@ -917,11 +912,6 @@ export namespace V2 {
         }
 
         export interface Card {
-          /**
-           * The card CVC.
-           */
-          cvc?: string;
-
           /**
            * The card expiration month.
            */

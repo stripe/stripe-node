@@ -189,6 +189,7 @@ export namespace ReceivedCredit {
   export type Network =
     | 'ach'
     | 'card'
+    | 'rtp'
     | 'stripe'
     | 'us_domestic_wire'
     | OtherString;

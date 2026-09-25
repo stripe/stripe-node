@@ -845,6 +845,7 @@ import {Sigma} from './resources/Sigma/index.js';
 import {Tax} from './resources/Tax/index.js';
 import {Terminal} from './resources/Terminal/index.js';
 import {TestHelpers} from './resources/TestHelpers/index.js';
+import {ThreeDSecure} from './resources/ThreeDSecure/index.js';
 import {Treasury} from './resources/Treasury/index.js';
 import {V2} from './resources/V2/index.js';
 // StripeInstanceImports: The end of the section generated from our OpenAPI spec
@@ -1369,6 +1370,7 @@ export class Stripe {
   tax: Tax;
   terminal: Terminal;
   testHelpers: TestHelpers;
+  threeDSecure: ThreeDSecure;
   treasury: Treasury;
   v2: V2;
   // StripeInstanceVariables: The end of the section generated from our OpenAPI spec
@@ -1585,6 +1587,7 @@ export class Stripe {
     this.tax = new Tax(this);
     this.terminal = new Terminal(this);
     this.testHelpers = new TestHelpers(this);
+    this.threeDSecure = new ThreeDSecure(this);
     this.treasury = new Treasury(this);
     this.v2 = new V2(this);
     // StripeInitInstanceVariables: The end of the section generated from our OpenAPI spec
@@ -2895,6 +2898,7 @@ export declare namespace Stripe {
   export {Tax};
   export {Terminal};
   export {TestHelpers};
+  export {ThreeDSecure};
   export {Treasury};
   export {V2};
   // StripeInterfaceExports: The end of the section generated from our OpenAPI spec
@@ -3340,9 +3344,6 @@ export declare namespace Stripe {
     export type ControlledByAlternateResourceError = InstanceType<
       typeof _Error.ControlledByAlternateResourceError
     >;
-    export type ControlledByDashboardError = InstanceType<
-      typeof _Error.ControlledByDashboardError
-    >;
     export type FeatureNotEnabledError = InstanceType<
       typeof _Error.FeatureNotEnabledError
     >;
@@ -3363,6 +3364,9 @@ export declare namespace Stripe {
     >;
     export type InvalidPayoutMethodError = InstanceType<
       typeof _Error.InvalidPayoutMethodError
+    >;
+    export type InvalidVaultedCredentialError = InstanceType<
+      typeof _Error.InvalidVaultedCredentialError
     >;
     export type MerchantNotGatedError = InstanceType<
       typeof _Error.MerchantNotGatedError
@@ -3385,6 +3389,15 @@ export declare namespace Stripe {
     >;
     export type TemporarySessionExpiredError = InstanceType<
       typeof _Error.TemporarySessionExpiredError
+    >;
+    export type VerificationAttemptFailedError = InstanceType<
+      typeof _Error.VerificationAttemptFailedError
+    >;
+    export type VerificationExpiredError = InstanceType<
+      typeof _Error.VerificationExpiredError
+    >;
+    export type VerificationNotInitiatedError = InstanceType<
+      typeof _Error.VerificationNotInitiatedError
     >;
   }
   export namespace errors {
@@ -3446,9 +3459,6 @@ export declare namespace Stripe {
     export type ControlledByAlternateResourceError = InstanceType<
       typeof _Error.ControlledByAlternateResourceError
     >;
-    export type ControlledByDashboardError = InstanceType<
-      typeof _Error.ControlledByDashboardError
-    >;
     export type FeatureNotEnabledError = InstanceType<
       typeof _Error.FeatureNotEnabledError
     >;
@@ -3469,6 +3479,9 @@ export declare namespace Stripe {
     >;
     export type InvalidPayoutMethodError = InstanceType<
       typeof _Error.InvalidPayoutMethodError
+    >;
+    export type InvalidVaultedCredentialError = InstanceType<
+      typeof _Error.InvalidVaultedCredentialError
     >;
     export type MerchantNotGatedError = InstanceType<
       typeof _Error.MerchantNotGatedError
@@ -3491,6 +3504,15 @@ export declare namespace Stripe {
     >;
     export type TemporarySessionExpiredError = InstanceType<
       typeof _Error.TemporarySessionExpiredError
+    >;
+    export type VerificationAttemptFailedError = InstanceType<
+      typeof _Error.VerificationAttemptFailedError
+    >;
+    export type VerificationExpiredError = InstanceType<
+      typeof _Error.VerificationExpiredError
+    >;
+    export type VerificationNotInitiatedError = InstanceType<
+      typeof _Error.VerificationNotInitiatedError
     >;
   }
   // ErrorTypeNamespaces: The end of the section generated from our OpenAPI spec

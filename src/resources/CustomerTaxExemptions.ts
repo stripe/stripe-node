@@ -39,6 +39,8 @@ export interface CustomerTaxExemption {
    */
   effective_date: string;
 
+  es?: CustomerTaxExemption.Es;
+
   /**
    * ISO 8601 date (YYYY-MM-DD) when the exemption expires.
    */
@@ -75,6 +77,13 @@ export namespace CustomerTaxExemption {
      * The type of Canadian tax (gst_hst, PST, QST, RST).
      */
     tax_type: string;
+  }
+
+  export interface Es {
+    /**
+     * Two-letter Spanish subdivision code (ISO 3166-2). Absent for country-wide Spain exemptions.
+     */
+    state?: string;
   }
 
   export interface Us {

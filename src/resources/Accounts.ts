@@ -1251,7 +1251,7 @@ export namespace Account {
     currently_due: Array<string> | null;
 
     /**
-     * If the account is disabled, this string describes why the account can't create charges or receive payouts. Can be `rejected.fraud`, `rejected.terms_of_service`, `rejected.listed`, `rejected.other`, `fields_needed`, `listed`, `under_review`, or `other`.
+     * This is typed as an enum for consistency with `requirements.disabled_reason`.
      */
     disabled_reason: FutureRequirements.DisabledReason | null;
 
@@ -1300,7 +1300,7 @@ export namespace Account {
     currently_due: Array<string> | null;
 
     /**
-     * If the account is disabled, this string describes why the account can't create charges or receive payouts. Can be `rejected.fraud`, `rejected.terms_of_service`, `rejected.listed`, `rejected.other`, `fields_needed`, `listed`, `under_review`, or `other`.
+     * If the account is disabled, this enum describes why. [Learn more about handling verification issues](https://docs.stripe.com/connect/handling-api-verification).
      */
     disabled_reason: Requirements.DisabledReason | null;
 
@@ -3068,6 +3068,11 @@ export namespace AccountCreateParams {
     blik_payments?: Capabilities.BlikPayments;
 
     /**
+     * The blik_recurring_payments capability.
+     */
+    blik_recurring_payments?: Capabilities.BlikRecurringPayments;
+
+    /**
      * The boleto_payments capability.
      */
     boleto_payments?: Capabilities.BoletoPayments;
@@ -3306,6 +3311,11 @@ export namespace AccountCreateParams {
      * The sepa_debit_payments capability.
      */
     sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+    /**
+     * The sequra_payments capability.
+     */
+    sequra_payments?: Capabilities.SequraPayments;
 
     /**
      * The shopeepay_payments capability.
@@ -3833,6 +3843,11 @@ export namespace AccountCreateParams {
     paypay_payments?: Settings.PaypayPayments;
 
     /**
+     * Settings specific to SEPA Direct Debit payments.
+     */
+    sepa_debit_payments?: Settings.SepaDebitPayments;
+
+    /**
      * Settings specific to the account's use of Smart Disputes.
      */
     smart_disputes?: Settings.SmartDisputes;
@@ -4009,6 +4024,13 @@ export namespace AccountCreateParams {
     }
 
     export interface BlikPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface BlikRecurringPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -4350,6 +4372,13 @@ export namespace AccountCreateParams {
     }
 
     export interface SepaDebitPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface SequraPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -5031,6 +5060,13 @@ export namespace AccountCreateParams {
       site?: PaypayPayments.Site;
     }
 
+    export interface SepaDebitPayments {
+      /**
+       * The business creditor id for european payments.
+       */
+      creditor_id?: string;
+    }
+
     export interface SmartDisputes {
       /**
        * Smart Disputes auto-respond settings for the account.
@@ -5495,6 +5531,11 @@ export namespace AccountUpdateParams {
     blik_payments?: Capabilities.BlikPayments;
 
     /**
+     * The blik_recurring_payments capability.
+     */
+    blik_recurring_payments?: Capabilities.BlikRecurringPayments;
+
+    /**
      * The boleto_payments capability.
      */
     boleto_payments?: Capabilities.BoletoPayments;
@@ -5733,6 +5774,11 @@ export namespace AccountUpdateParams {
      * The sepa_debit_payments capability.
      */
     sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+    /**
+     * The sequra_payments capability.
+     */
+    sequra_payments?: Capabilities.SequraPayments;
 
     /**
      * The shopeepay_payments capability.
@@ -6459,6 +6505,13 @@ export namespace AccountUpdateParams {
       requested?: boolean;
     }
 
+    export interface BlikRecurringPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface BoletoPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -6794,6 +6847,13 @@ export namespace AccountUpdateParams {
     }
 
     export interface SepaDebitPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface SequraPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -8289,9 +8349,9 @@ export namespace AccountListPersonsParams {
 }
 export interface AccountRejectParams {
   /**
-   * The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.
+   * The reason for rejecting the account. Can be `fraud_payment_method_casher`, `fraud_payment_method_tester`, `fraud_no_intent_to_fulfill`, `fraud_other`, `credit`, `terms_of_service`, or `other`.
    */
-  reason: string;
+  reason: AccountRejectParams.Reason;
 
   /**
    * Specifies which fields in the response should be expanded.
@@ -8304,6 +8364,16 @@ export interface AccountRejectParams {
   payouts_action?: AccountRejectParams.PayoutsAction;
 }
 export namespace AccountRejectParams {
+  export type Reason =
+    | 'credit'
+    | 'fraud_no_intent_to_fulfill'
+    | 'fraud_other'
+    | 'fraud_payment_method_casher'
+    | 'fraud_payment_method_tester'
+    | 'other'
+    | 'terms_of_service'
+    | OtherString;
+
   export type PayoutsAction = 'none' | 'pause';
 }
 export interface AccountRetrieveCurrentParams {

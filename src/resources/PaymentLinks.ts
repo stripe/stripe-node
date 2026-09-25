@@ -883,6 +883,7 @@ export namespace PaymentLink {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'
@@ -1611,12 +1612,19 @@ export namespace PaymentLink {
     export namespace TrialSettings {
       export interface EndBehavior {
         /**
+         * Indicates how the subscription's billing cycle anchor is reset when a trial ends. If not set, the default is `now`.
+         */
+        billing_cycle_anchor?: EndBehavior.BillingCycleAnchor | null;
+
+        /**
          * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
          */
         missing_payment_method: EndBehavior.MissingPaymentMethod;
       }
 
       export namespace EndBehavior {
+        export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+
         export type MissingPaymentMethod =
           | 'cancel'
           | 'create_invoice'
@@ -2105,6 +2113,7 @@ export namespace PaymentLinkCreateParams {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'
@@ -2969,12 +2978,19 @@ export namespace PaymentLinkCreateParams {
     export namespace TrialSettings {
       export interface EndBehavior {
         /**
+         * Indicates how the subscription's billing cycle anchor is reset when a trial ends. Defaults to `now`.
+         */
+        billing_cycle_anchor?: EndBehavior.BillingCycleAnchor;
+
+        /**
          * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
          */
         missing_payment_method: EndBehavior.MissingPaymentMethod;
       }
 
       export namespace EndBehavior {
+        export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+
         export type MissingPaymentMethod =
           | 'cancel'
           | 'create_invoice'
@@ -3431,6 +3447,7 @@ export namespace PaymentLinkUpdateParams {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'
@@ -4159,12 +4176,19 @@ export namespace PaymentLinkUpdateParams {
     export namespace TrialSettings {
       export interface EndBehavior {
         /**
+         * Indicates how the subscription's billing cycle anchor is reset when a trial ends. Defaults to `now`.
+         */
+        billing_cycle_anchor?: EndBehavior.BillingCycleAnchor;
+
+        /**
          * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
          */
         missing_payment_method: EndBehavior.MissingPaymentMethod;
       }
 
       export namespace EndBehavior {
+        export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+
         export type MissingPaymentMethod =
           | 'cancel'
           | 'create_invoice'

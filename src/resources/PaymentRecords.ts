@@ -2130,6 +2130,11 @@ export namespace PaymentRecord {
       payment_reference: string | null;
 
       /**
+       * NACHA ACH return code for a failed US bank account payment.
+       */
+      return_code?: string | null;
+
+      /**
        * The routing number for the bank account.
        */
       routing_number: string | null;
@@ -3414,7 +3419,7 @@ export namespace PaymentRecordReportPaymentParams {
     processor_details?: Guaranteed.ProcessorDetails;
   }
 
-  export type Outcome = 'failed' | 'guaranteed' | OtherString;
+  export type Outcome = 'canceled' | 'failed' | 'guaranteed' | OtherString;
 
   export interface ProcessorDetails {
     /**
@@ -3449,6 +3454,7 @@ export namespace PaymentRecordReportPaymentParams {
     export type Reason =
       | 'blocked_for_fraud'
       | 'merchant_canceled'
+      | 'rerouted'
       | OtherString;
   }
 
@@ -3715,7 +3721,7 @@ export namespace PaymentRecordReportPaymentAttemptParams {
     processor_details?: Guaranteed.ProcessorDetails;
   }
 
-  export type Outcome = 'failed' | 'guaranteed' | OtherString;
+  export type Outcome = 'canceled' | 'failed' | 'guaranteed' | OtherString;
 
   export interface PaymentMethodDetails {
     /**
@@ -3765,6 +3771,7 @@ export namespace PaymentRecordReportPaymentAttemptParams {
     export type Reason =
       | 'blocked_for_fraud'
       | 'merchant_canceled'
+      | 'rerouted'
       | OtherString;
   }
 
@@ -3941,7 +3948,11 @@ export interface PaymentRecordReportPaymentAttemptCanceledParams {
   reason?: PaymentRecordReportPaymentAttemptCanceledParams.Reason;
 }
 export namespace PaymentRecordReportPaymentAttemptCanceledParams {
-  export type Reason = 'blocked_for_fraud' | 'merchant_canceled' | OtherString;
+  export type Reason =
+    | 'blocked_for_fraud'
+    | 'merchant_canceled'
+    | 'rerouted'
+    | OtherString;
 }
 export interface PaymentRecordReportPaymentAttemptFailedParams {
   /**

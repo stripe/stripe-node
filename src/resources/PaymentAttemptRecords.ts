@@ -2101,6 +2101,11 @@ export namespace PaymentAttemptRecord {
       payment_reference: string | null;
 
       /**
+       * NACHA ACH return code for a failed US bank account payment.
+       */
+      return_code?: string | null;
+
+      /**
        * The routing number for the bank account.
        */
       routing_number: string | null;
@@ -3227,7 +3232,11 @@ export interface PaymentAttemptRecordReportCanceledParams {
   reason?: PaymentAttemptRecordReportCanceledParams.Reason;
 }
 export namespace PaymentAttemptRecordReportCanceledParams {
-  export type Reason = 'blocked_for_fraud' | 'merchant_canceled' | OtherString;
+  export type Reason =
+    | 'blocked_for_fraud'
+    | 'merchant_canceled'
+    | 'rerouted'
+    | OtherString;
 }
 export interface PaymentAttemptRecordReportEarlyFraudWarningParams {
   /**

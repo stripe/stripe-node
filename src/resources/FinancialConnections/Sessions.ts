@@ -169,11 +169,6 @@ export namespace Session {
     account_subcategories: Array<Filters.AccountSubcategory> | null;
 
     /**
-     * List of countries from which to filter accounts.
-     */
-    countries: Array<string> | null;
-
-    /**
      * Country from which to filter accounts.
      */
     country: string | null;
@@ -424,9 +419,9 @@ export namespace FinancialConnections {
       account_subcategories?: Array<Filters.AccountSubcategory>;
 
       /**
-       * List of countries from which to filter accounts.
+       * Country from which to collect accounts.
        */
-      countries?: Array<string>;
+      country?: string;
 
       /**
        * Stripe ID of the institution with which the customer should be directed to log in.
