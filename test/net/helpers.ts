@@ -1,5 +1,6 @@
 // @ts-nocheck
 
+const http = require('http');
 const {Readable} = require('stream');
 
 const nock = require('nock');
@@ -53,7 +54,7 @@ export const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
         '/test',
         options.method || 'GET',
         options.headers || {},
-        options.requestData,
+        options.requestData || '',
         'http',
         options.timeout || 1000
       );
@@ -65,15 +66,29 @@ export const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
 
     describe('makeRequest', () => {
       it('rejects with a timeout error', async () => {
-        setupNock()
-          .delayConnection(31)
-          .reply(200, 'hello, world!');
+        const server = http.createServer((_request, response) => {
+          setTimeout(() => response.end('hello, world!'), 100);
+        });
+        await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+        const {port} = server.address();
 
         try {
-          await sendRequest({timeout: 30});
+          const client = createHttpClientFn();
+          await client.makeRequest(
+            '127.0.0.1',
+            port,
+            '/test',
+            'GET',
+            {},
+            '',
+            'http',
+            30
+          );
           fail();
         } catch (e) {
           expect(e.code).to.be.equal('ETIMEDOUT');
+        } finally {
+          await new Promise((resolve) => server.close(resolve));
         }
       });
 
