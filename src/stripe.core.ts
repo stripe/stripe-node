@@ -1734,22 +1734,6 @@ export class Stripe {
   }
 
   /**
-   * Constructs a [snapshot event](https://docs.stripe.com/event-destinations#snapshot-payload) from an
-   * incoming webhook without first verifying its authenticity. Should be used after calling
-   * `webhooks.verifySignatureHeader(...)` or with input from a trusted source (such as
-   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge), or
-   * [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload). Or, to verify &
-   * construct in a single call, use `webhooks.constructEvent(...)` instead.
-   *
-   * @deprecated Use `stripe.webhooks.constructEventWithoutVerification(...)` instead.
-   * This will be removed in the next major version.
-   */
-  constructEventWithoutVerification(payload: string): Event {
-    // TODO(DEVSDK-3248) remove this
-    return this.webhooks.constructEventWithoutVerification(payload);
-  }
-
-  /**
    * Constructs a [thin event notification](https://docs.stripe.com/event-destinations#thin-payload) from an
    * incoming webhook without first verifying its authenticity. Should be used after calling
    * `webhooks.verifySignatureHeader(...)` or with input from a trusted source (such as
