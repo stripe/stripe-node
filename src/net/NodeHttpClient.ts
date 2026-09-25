@@ -4,6 +4,7 @@ import {RequestHeaders, RequestData} from '../Types.js';
 import {
   HttpClient,
   HttpClientResponse,
+  HttpClientResponseBodyError,
   NodeHttpClientInterface,
   NodeHttpClientResponseInterface,
 } from './HttpClient.js';
@@ -68,36 +69,15 @@ export class NodeHttpClient extends HttpClient
           ciphers: 'DEFAULT:!aNULL:!eNULL:!LOW:!EXPORT:!SSLv2:!MD5',
         });
 
-        let res: http_.IncomingMessage | null = null;
+        let requestTimedOut = false;
 
         req.setTimeout(timeout, () => {
-          const timeoutError = HttpClient.makeTimeoutError();
-          // The socket timeout stays armed while the body is being read, but
-          // tearing down the request alone surfaces on the response as a
-          // generic ECONNRESET. Destroying the response with the timeout error
-          // first lets a stalled body be reported as the timeout it is.
-          //
-          // The cost is that this is the same error a toStream() caller sees, so
-          // a stalled download now emits an ETIMEDOUT TypeError where it used to
-          // emit an ECONNRESET Error with the message "aborted". The timing is
-          // unchanged and 'aborted' still fires either way.
-          // TODO(DEVSDK-3247): decouple the two by dropping this destroy() and
-          // instead recording that the timeout fired (e.g. a getter handed to
-          // NodeHttpClientResponse), so only toJSON() translates the teardown
-          // into a timeout and the stream keeps its original error. Dropping
-          // this destroy() on its own is not enough: the request teardown does
-          // still reach toJSON's listeners at the same time, but as a generic
-          // failure, which the response body error then reports as a
-          // StripeAPIError instead of a timeout.
-          if (res && !res.complete) {
-            res.destroy(timeoutError);
-          }
-          req.destroy(timeoutError);
+          requestTimedOut = true;
+          req.destroy(HttpClient.makeTimeoutError());
         });
 
         req.on('response', (response) => {
-          res = response;
-          resolve(new NodeHttpClientResponse(response));
+          resolve(new NodeHttpClientResponse(response, () => requestTimedOut));
         });
 
         req.on('error', (error) => {
@@ -130,17 +110,23 @@ export class NodeHttpClient extends HttpClient
 export class NodeHttpClientResponse extends HttpClientResponse
   implements NodeHttpClientResponseInterface {
   _res: http_.IncomingMessage;
+  _isRequestTimedOut: () => boolean;
 
-  constructor(res: http_.IncomingMessage) {
+  constructor(
+    res: http_.IncomingMessage,
+    isRequestTimedOut: () => boolean = (): boolean => false
+  ) {
     // @ts-ignore
     super(res.statusCode, res.headers || {});
     this._res = res;
+    this._isRequestTimedOut = isRequestTimedOut;
   }
 
   getRawResponse(): http_.IncomingMessage {
     return this._res;
   }
 
+  /** Returns the raw Node response stream; stream errors are emitted unchanged. */
   toStream(streamCompleteCallback: () => void): http_.IncomingMessage {
     // The raw response is itself the stream, so we just return that. To be
     // backwards compatible, we should invoke the streamCompleteCallback only
@@ -149,9 +135,14 @@ export class NodeHttpClientResponse extends HttpClientResponse
     return this._res;
   }
 
+  /** Buffers and parses the body; body-read failures are normalized for SDK handling. */
   toJSON(): any {
     return new Promise((resolve, reject) => {
       let response = '';
+      const makeBodyError = (error: unknown): HttpClientResponseBodyError =>
+        HttpClient.makeResponseBodyError(
+          this._isRequestTimedOut() ? HttpClient.makeTimeoutError() : error
+        );
 
       this._res.setEncoding('utf8');
       this._res.on('data', (chunk) => {
@@ -162,13 +153,13 @@ export class NodeHttpClientResponse extends HttpClientResponse
       // headers arrive never emits 'end' either, and this promise would hang
       // forever. See https://github.com/stripe/stripe-node/issues/2814.
       this._res.once('error', (error) => {
-        reject(HttpClient.makeResponseBodyError(error));
+        reject(makeBodyError(error));
       });
       // Not every truncated response emits an 'error', so treat closing before
       // the body is complete as a failure too.
       this._res.once('close', () => {
         if (!this._res.complete) {
-          reject(HttpClient.makeResponseBodyError(null));
+          reject(makeBodyError(null));
         }
       });
       this._res.once('end', () => {
