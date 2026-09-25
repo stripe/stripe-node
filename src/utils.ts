@@ -407,7 +407,7 @@ export function createApiKeyAuthenticator(
 
 /**
  * Type guard for the authenticator produced by
- * `createWorkloadIdentityAuthenticator` (see `src/platform/AwsWorkloadIdentity.ts`).
+ * `createWorkloadIdentityAuthenticator` (see `src/AwsWorkloadIdentity.ts`).
  * Used by RequestSender to recognize workload-identity clients so it can
  * invalidate the cached token and replay a request exactly once on a 401,
  * a behavior that must never apply to plain API-key authenticators.

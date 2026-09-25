@@ -2231,7 +2231,10 @@ describe('RequestSender', () => {
     });
 
     it('invalidates and replays exactly once after a single 401', (done) => {
-      const {authenticator, getInvalidateCalls} = makeFakeWorkloadAuthenticator();
+      const {
+        authenticator,
+        getInvalidateCalls,
+      } = makeFakeWorkloadAuthenticator();
       const realStripe = require('../src/stripe.cjs.node.js')('', {
         authenticator,
       });
@@ -2240,12 +2243,12 @@ describe('RequestSender', () => {
       const authHeaders: Array<string | undefined> = [];
       nock(host)
         .get('/v1/balance')
-        .reply(function () {
+        .reply(function() {
           authHeaders.push(this.req.headers.authorization);
           return [401, {error: {message: 'expired token'}}];
         })
         .get('/v1/balance')
-        .reply(function () {
+        .reply(function() {
           authHeaders.push(this.req.headers.authorization);
           return [200, '{}'];
         });
@@ -2264,7 +2267,10 @@ describe('RequestSender', () => {
     });
 
     it('does not attempt a third try after a second consecutive 401', (done) => {
-      const {authenticator, getInvalidateCalls} = makeFakeWorkloadAuthenticator();
+      const {
+        authenticator,
+        getInvalidateCalls,
+      } = makeFakeWorkloadAuthenticator();
       const realStripe = require('../src/stripe.cjs.node.js')('', {
         authenticator,
       });
@@ -2298,12 +2304,12 @@ describe('RequestSender', () => {
       const idempotencyKeys: Array<string | undefined> = [];
       nock(host)
         .post('/v1/charges')
-        .reply(function () {
+        .reply(function() {
           idempotencyKeys.push(this.req.headers['idempotency-key']);
           return [401, {error: {message: 'expired token'}}];
         })
         .post('/v1/charges')
-        .reply(function () {
+        .reply(function() {
           idempotencyKeys.push(this.req.headers['idempotency-key']);
           return [200, '{}'];
         });

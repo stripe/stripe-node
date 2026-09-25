@@ -1,6 +1,10 @@
 // TODO(DEVSDK-3114): Remove http import from shared base class in next major version.
 // eslint-disable-next-line wintertc-compat
 import * as http from 'http';
+import {
+  createAwsAssertionFetcher,
+  createWorkloadIdentityAuthenticator,
+} from '../WorkloadIdentities/AwsWorkloadIdentity.js';
 import {CryptoProvider} from '../crypto/CryptoProvider.js';
 import {FetchHttpClient} from '../net/FetchHttpClient.js';
 import {
@@ -95,17 +99,24 @@ export class PlatformFunctions {
 
   /**
    * Creates a `RequestAuthenticator` backed by workload identity federation
-   * for the given cloud provider. Only supported in Node.js: other
-   * platforms don't have access to cloud-provider SDKs/credential chains.
+   * for the given cloud provider.
    */
   createWorkloadIdentityAuthenticator(
-    _clientId: string,
-    _provider: WorkloadIdentityProvider
+    clientId: string,
+    provider: WorkloadIdentityProvider
   ): RequestAuthenticator {
+    if (provider === 'aws') {
+      return createWorkloadIdentityAuthenticator(
+        clientId,
+        createAwsAssertionFetcher(),
+        this.createDefaultHttpClient()
+      );
+    }
     throw new Error(
-      'Stripe: Workload identity authentication (Stripe.forWorkloadIdentity) is only supported in Node.js environments.'
+      `Stripe: Unsupported workload identity provider '${provider}'. Only 'aws' is currently supported.`
     );
   }
+ 
 
   /**
    * Generates a v4 UUID. Must be cryptographically secure: this seeds both `Idempotency-Key` values and the multipart/form-data boundary.

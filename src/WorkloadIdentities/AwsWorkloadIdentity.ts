@@ -1,7 +1,4 @@
-// This file is only ever imported by NodePlatformFunctions.ts, so the AWS SDK
-// dependency it pulls in is never bundled into browser/worker/Deno/Bun builds.
 import {generateOAuthError, StripeWorkloadIdentityError} from '../Error.js';
-import {NodeHttpClient} from '../net/NodeHttpClient.js';
 import {HttpClientInterface} from '../net/HttpClient.js';
 import {RequestAuthenticator, StripeRequest} from '../Types.js';
 
@@ -21,19 +18,39 @@ const REFRESH_WINDOW_MS = 5 * 60 * 1000;
 export type AssertionFetcher = () => Promise<string>;
 
 /**
- * Loads `@aws-sdk/client-sts` on first use. It's a peer dependency, so it may
- * not be installed until a caller actually needs AWS workload identity.
+ * Loads `@aws-sdk/client-sts` on first use. It's an optional peer dependency,
+ * so it may not be installed until a caller actually needs AWS workload
+ * identity.
  */
+// Referenced through a variable, rather than a string literal in the
+// `import()` call, so bundlers that don't honor `webpackIgnore` don't fail a
+// build over a missing optional dependency.
+const AWS_STS_PKG = '@aws-sdk/client-sts';
+
 async function loadStsSdk(): Promise<typeof import('@aws-sdk/client-sts')> {
   try {
-    return await import('@aws-sdk/client-sts');
+    return await import(/* webpackIgnore: true */ AWS_STS_PKG);
   } catch (e) {
-    throw new StripeWorkloadIdentityError(
-      "Stripe: AWS workload identity authentication requires the '@aws-sdk/client-sts' package, " +
-        "which isn't installed. Run `npm install @aws-sdk/client-sts` (or your package manager's " +
-        'equivalent) to use Stripe.forWorkloadIdentity with the \'aws\' provider.',
-      e
-    );
+    const err = e as NodeJS.ErrnoException;
+
+    const isMissingModule =
+      err?.code === 'MODULE_NOT_FOUND' ||
+      err?.code === 'ERR_MODULE_NOT_FOUND' ||
+      err?.message?.includes?.('Cannot find module') ||
+      err?.message?.includes?.('Failed to resolve import');
+
+    if (isMissingModule) {
+      throw new StripeWorkloadIdentityError(
+        "Stripe: AWS workload identity authentication requires the '@aws-sdk/client-sts' package, " +
+          "which isn't installed. Run `npm install @aws-sdk/client-sts` (or your package manager's " +
+          "equivalent) to use Stripe.forWorkloadIdentity with the 'aws' provider.",
+        e
+      );
+    }
+
+    // The package is present but failed to load or initialize; that error is
+    // more useful to the caller than the generic "missing module" message.
+    throw e;
   }
 }
 
@@ -87,7 +104,7 @@ type CachedToken = {accessToken: string; expiresAt: number};
 export function createWorkloadIdentityAuthenticator(
   clientId: string,
   fetchAssertion: AssertionFetcher,
-  httpClient: HttpClientInterface = new NodeHttpClient()
+  httpClient: HttpClientInterface
 ): RequestAuthenticator & {_isWorkloadIdentity: true; _invalidate: () => void} {
   let cache: CachedToken | null = null;
   let inFlightRefresh: Promise<void> | null = null;

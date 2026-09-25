@@ -11,17 +11,7 @@ import {NodeHttpClient} from '../net/NodeHttpClient.js';
 import {PlatformFunctions} from './PlatformFunctions.js';
 import {StripeError} from '../Error.js';
 import {concat} from '../utils.js';
-import {
-  MultipartRequestData,
-  RequestData,
-  BufferedFile,
-  RequestAuthenticator,
-  WorkloadIdentityProvider,
-} from '../Types.js';
-import {
-  createAwsAssertionFetcher,
-  createWorkloadIdentityAuthenticator,
-} from './AwsWorkloadIdentity.js';
+import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
 
 class StreamProcessingError extends StripeError {}
 
@@ -200,21 +190,5 @@ export class NodePlatformFunctions extends PlatformFunctions {
   /** @override */
   createDefaultCryptoProvider(): CryptoProvider {
     return this.createNodeCryptoProvider();
-  }
-
-  /** @override */
-  createWorkloadIdentityAuthenticator(
-    clientId: string,
-    provider: WorkloadIdentityProvider
-  ): RequestAuthenticator {
-    if (provider !== 'aws') {
-      throw new Error(
-        `Stripe: Unsupported workload identity provider '${provider}'. Only 'aws' is currently supported.`
-      );
-    }
-    return createWorkloadIdentityAuthenticator(
-      clientId,
-      createAwsAssertionFetcher()
-    );
   }
 }

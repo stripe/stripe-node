@@ -1417,7 +1417,7 @@ export class Stripe {
 
   /**
    * Creates a Stripe client authenticated via workload identity federation
-   * instead of an API key. Workload identity is additive: it's never used as 
+   * instead of an API key. Workload identity is additive: it's never used as
    * a fallback for a missing or invalid API key, and API-key clients never attempt it.
    */
   static forWorkloadIdentity(
