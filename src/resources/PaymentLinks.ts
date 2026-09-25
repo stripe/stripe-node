@@ -9,8 +9,8 @@ import {ShippingRate} from './ShippingRates.js';
 import {
   MetadataParam,
   Decimal,
-  OtherString,
   Emptyable,
+  OtherString,
   PaginationParams,
   Metadata,
 } from '../shared.js';
@@ -850,11 +850,13 @@ export namespace PaymentLink {
     | 'pay_by_bank'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'sofort'
     | 'sunbit'
     | 'swish'
@@ -1018,7 +1020,7 @@ export namespace PaymentLink {
 
     export interface Label {
       /**
-       * Custom text for the label, displayed to the customer. Up to 50 characters.
+       * Custom text for the label, displayed to the customer. Up to 100 characters.
        */
       custom: string | null;
 
@@ -2025,11 +2027,13 @@ export namespace PaymentLinkCreateParams {
     | 'pay_by_bank'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'sofort'
     | 'sunbit'
     | 'swish'
@@ -2200,7 +2204,7 @@ export namespace PaymentLinkCreateParams {
 
     export interface Label {
       /**
-       * Custom text for the label, displayed to the customer. Up to 50 characters.
+       * Custom text for the label, displayed to the customer. Up to 100 characters.
        */
       custom: string;
 
@@ -2462,6 +2466,11 @@ export namespace PaymentLinkCreateParams {
         tax_code?: string;
 
         /**
+         * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+         */
+        tax_details?: ProductData.TaxDetails;
+
+        /**
          * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
          */
         unit_label?: string;
@@ -2484,6 +2493,20 @@ export namespace PaymentLinkCreateParams {
         | 'inclusive'
         | 'unspecified'
         | OtherString;
+
+      export namespace ProductData {
+        export interface TaxDetails {
+          /**
+           * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+           */
+          performance_location?: string;
+
+          /**
+           * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+           */
+          tax_code?: Emptyable<string>;
+        }
+      }
 
       export namespace Recurring {
         export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
@@ -3314,11 +3337,13 @@ export namespace PaymentLinkUpdateParams {
     | 'pay_by_bank'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'sofort'
     | 'sunbit'
     | 'swish'
@@ -3484,7 +3509,7 @@ export namespace PaymentLinkUpdateParams {
 
     export interface Label {
       /**
-       * Custom text for the label, displayed to the customer. Up to 50 characters.
+       * Custom text for the label, displayed to the customer. Up to 100 characters.
        */
       custom: string;
 

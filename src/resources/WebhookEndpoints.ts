@@ -93,7 +93,7 @@ export interface WebhookEndpoint {
   object: 'webhook_endpoint';
 
   /**
-   * The API version events are rendered as for this webhook endpoint.
+   * The API version that events are rendered as for this webhook endpoint. You can't change this value after you create the endpoint.
    */
   api_version: string | null;
 
@@ -211,6 +211,9 @@ export namespace WebhookEndpointCreateParams {
     | 'application_fee.created'
     | 'application_fee.refund.updated'
     | 'application_fee.refunded'
+    | 'apps.install.created'
+    | 'apps.install.deleted'
+    | 'apps.install.updated'
     | 'balance.available'
     | 'balance_settings.updated'
     | 'billing.alert.triggered'
@@ -595,7 +598,8 @@ export namespace WebhookEndpointCreateParams {
     | '2026-05-27.dahlia'
     | '2026-06-24.dahlia'
     | '2026-07-29.dahlia'
-    | '2026-08-26.dahlia';
+    | '2026-08-26.dahlia'
+    | '2026-09-30.endive';
 }
 export interface WebhookEndpointRetrieveParams {
   /**
@@ -646,6 +650,9 @@ export namespace WebhookEndpointUpdateParams {
     | 'application_fee.created'
     | 'application_fee.refund.updated'
     | 'application_fee.refunded'
+    | 'apps.install.created'
+    | 'apps.install.deleted'
+    | 'apps.install.updated'
     | 'balance.available'
     | 'balance_settings.updated'
     | 'billing.alert.triggered'

@@ -29,6 +29,11 @@ export interface Plan {
   currency: string | null;
 
   /**
+   * The balance destination to which the reserved funds are sent.
+   */
+  destination: Plan.Destination;
+
+  /**
    * Time at which the ReservePlan was disabled.
    */
   disabled_at: number | null;
@@ -39,6 +44,8 @@ export interface Plan {
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
+
+  manual_release?: Plan.ManualRelease;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -65,6 +72,8 @@ export interface Plan {
 export namespace Plan {
   export type CreatedBy = 'application' | 'stripe' | OtherString;
 
+  export type Destination = 'other' | 'risk_reserved' | 'settlement_reserved';
+
   export interface FixedRelease {
     /**
      * The time after which all reserved funds are requested for release.
@@ -76,6 +85,8 @@ export namespace Plan {
      */
     scheduled_release: number;
   }
+
+  export interface ManualRelease {}
 
   export interface RollingRelease {
     /**
@@ -89,7 +100,11 @@ export namespace Plan {
     expires_on: number | null;
   }
 
-  export type Status = 'active' | 'disabled' | 'expired' | OtherString;
+  export type Status = 'active' | 'disabled' | 'expired' | 'other';
 
-  export type Type = 'fixed_release' | 'rolling_release' | OtherString;
+  export type Type =
+    | 'fixed_release'
+    | 'manual_release'
+    | 'other'
+    | 'rolling_release';
 }

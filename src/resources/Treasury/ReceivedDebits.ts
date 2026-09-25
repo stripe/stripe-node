@@ -134,7 +134,7 @@ export namespace ReceivedDebit {
     financial_account?: InitiatingPaymentMethodDetails.FinancialAccount;
 
     /**
-     * Set when `type` is `issuing_card`. This is an [Issuing Card](https://api.stripe.com#issuing_cards) ID.
+     * Set when `type` is `issuing_card`. This is an [Issuing Card](https://docs.stripe.com/api#issuing_cards) ID.
      */
     issuing_card?: string;
 
@@ -158,22 +158,22 @@ export namespace ReceivedDebit {
     inbound_transfer: string | null;
 
     /**
-     * Set if the ReceivedDebit was created due to an [Issuing Authorization](https://api.stripe.com#issuing_authorizations) object.
+     * Set if the ReceivedDebit was created due to an [Issuing Authorization](https://docs.stripe.com/api#issuing_authorizations) object.
      */
     issuing_authorization: string | null;
 
     /**
-     * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://api.stripe.com#issuing_disputes) object.
+     * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://docs.stripe.com/api#issuing_disputes) object.
      */
     issuing_transaction: string | null;
 
     /**
-     * Set if the ReceivedDebit was created due to a [Payout](https://api.stripe.com#payouts) object.
+     * Set if the ReceivedDebit was created due to a [Payout](https://docs.stripe.com/api#payouts) object.
      */
     payout: string | null;
 
     /**
-     * Set if the ReceivedDebit was created due to a [Topup](https://api.stripe.com#topups) object.
+     * Set if the ReceivedDebit was created due to a [Topup](https://docs.stripe.com/api#topups) object.
      */
     topup: string | null;
   }

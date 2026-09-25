@@ -94,12 +94,12 @@ export namespace TestHelpers {
       allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
       /**
-       * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+       * If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
        */
       alma?: PaymentMethodData.Alma;
 
       /**
-       * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+       * If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
        */
       amazon_pay?: PaymentMethodData.AmazonPay;
 
@@ -274,6 +274,11 @@ export namespace TestHelpers {
       paypal?: PaymentMethodData.Paypal;
 
       /**
+       * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+       */
+      paypay?: PaymentMethodData.Paypay;
+
+      /**
        * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
        */
       payto?: PaymentMethodData.Payto;
@@ -317,6 +322,11 @@ export namespace TestHelpers {
        * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
        */
       sepa_debit?: PaymentMethodData.SepaDebit;
+
+      /**
+       * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+       */
+      sequra?: PaymentMethodData.Sequra;
 
       /**
        * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
@@ -602,6 +612,8 @@ export namespace TestHelpers {
 
       export interface Paypal {}
 
+      export interface Paypay {}
+
       export interface Payto {
         /**
          * The account number for the bank account.
@@ -644,6 +656,8 @@ export namespace TestHelpers {
          */
         iban: string;
       }
+
+      export interface Sequra {}
 
       export interface Sofort {
         /**
@@ -696,6 +710,7 @@ export namespace TestHelpers {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'payto'
         | 'pix'
         | 'promptpay'
@@ -704,6 +719,7 @@ export namespace TestHelpers {
         | 'satispay'
         | 'scalapay'
         | 'sepa_debit'
+        | 'sequra'
         | 'sofort'
         | 'sunbit'
         | 'swish'

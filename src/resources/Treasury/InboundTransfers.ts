@@ -112,7 +112,7 @@ export interface InboundTransfer {
   description: string | null;
 
   /**
-   * Details about this InboundTransfer's failure. Only set when status is `failed`.
+   * Details about this InboundTransfer's failure. Will be set when `status=failed` or `returned=true`.
    */
   failure_details: InboundTransfer.FailureDetails | null;
 

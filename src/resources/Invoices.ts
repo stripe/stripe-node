@@ -105,7 +105,8 @@ export class InvoiceResource extends StripeResource {
   }
   /**
    * Draft invoices are fully editable. Once an invoice is [finalized](https://docs.stripe.com/docs/billing/invoices/workflow#finalized),
-   * monetary values, as well as collection_method, become uneditable.
+   * you can no longer change most of its details, including monetary values and collection_method. For most invoices,
+   * this also includes description.
    *
    * If you would like to stop the Stripe Billing engine from automatically finalizing, reattempting payments on,
    * sending reminders for, or [automatically reconciling](https://docs.stripe.com/docs/billing/invoices/reconciliation) invoices, pass
@@ -1368,7 +1369,7 @@ export interface Invoice {
   receipt_number: string | null;
 
   /**
-   * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
+   * The rendering-related settings that control how invoices render in customer-facing interfaces such as the PDF or hosted invoice page.
    */
   rendering: Invoice.Rendering | null;
 
@@ -1396,6 +1397,8 @@ export interface Invoice {
    * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://docs.stripe.com/billing/invoices/workflow#workflow-overview)
    */
   status: Invoice.Status | null;
+
+  status_details?: Invoice.StatusDetails;
 
   status_transitions: Invoice.StatusTransitions;
 
@@ -1676,7 +1679,7 @@ export namespace Invoice {
     /**
      * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
      * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
-     * Later, you can use [PaymentIntents](https://api.stripe.com#payment_intents) to drive the payment flow.
+     * Later, you can use [PaymentIntents](https://docs.stripe.com/api#payment_intents) to drive the payment flow.
      *
      * Create a SetupIntent when you're ready to collect your customer's payment credentials.
      * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
@@ -1687,9 +1690,9 @@ export namespace Invoice {
      * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
      * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
      * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
-     * If you use the SetupIntent with a [Customer](https://api.stripe.com#setup_intent_object-customer),
+     * If you use the SetupIntent with a [Customer](https://docs.stripe.com/api#setup_intent_object-customer),
      * it automatically attaches the resulting payment method to that Customer after successful setup.
-     * We recommend using SetupIntents or [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) on
+     * We recommend using SetupIntents or [setup_future_usage](https://docs.stripe.com/api#payment_intent_object-setup_future_usage) on
      * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
      *
      * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
@@ -1820,6 +1823,10 @@ export namespace Invoice {
     | 'uncollectible'
     | 'void'
     | OtherString;
+
+  export interface StatusDetails {
+    uncollectible?: StatusDetails.Uncollectible;
+  }
 
   export interface StatusTransitions {
     /**
@@ -2134,6 +2141,7 @@ export namespace Invoice {
       | 'customer_session_expired'
       | 'customer_tax_location_invalid'
       | 'debit_not_authorized'
+      | 'dispute_evidence_page_limit_exceeded'
       | 'email_invalid'
       | 'expired_card'
       | 'expired_payment_method'
@@ -2144,6 +2152,8 @@ export namespace Invoice {
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
+      | 'financial_connections_consent_locale_invalid'
+      | 'financial_connections_consent_locale_unsupported'
       | 'financial_connections_no_successful_transaction_refresh'
       | 'forwarding_api_inactive'
       | 'forwarding_api_invalid_parameter'
@@ -2197,6 +2207,7 @@ export namespace Invoice {
       | 'parameter_missing'
       | 'parameter_unknown'
       | 'parameters_exclusive'
+      | 'payment_evaluation_on_api_version_not_supported'
       | 'payment_intent_action_required'
       | 'payment_intent_authentication_failure'
       | 'payment_intent_incompatible_payment_method'
@@ -2340,6 +2351,11 @@ export namespace Invoice {
       billie?: PaymentMethodOptions.Billie | null;
 
       /**
+       * If paying by `blik`, this sub-hash contains details about the Blik payment method options to pass to the invoice's PaymentIntent.
+       */
+      blik?: PaymentMethodOptions.Blik | null;
+
+      /**
        * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
        */
       card: PaymentMethodOptions.Card | null;
@@ -2391,6 +2407,7 @@ export namespace Invoice {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'blik'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -2449,7 +2466,16 @@ export namespace Invoice {
         preferred_language: Bancontact.PreferredLanguage;
       }
 
-      export interface Billie {}
+      export interface Billie {
+        company_details?: Billie.CompanyDetails;
+
+        /**
+         * An identifier or reference that this payment corresponds to.
+         */
+        reference?: string | null;
+      }
+
+      export interface Blik {}
 
       export interface Card {
         installments?: Card.Installments;
@@ -2523,6 +2549,50 @@ export namespace Invoice {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
+      }
+
+      export namespace Billie {
+        export interface CompanyDetails {
+          registered_address?: Address;
+
+          /**
+           * Company or entity name.
+           */
+          registered_name: string | null;
+
+          /**
+           * The official registration number for the given registration type.
+           */
+          registration_number: string | null;
+
+          /**
+           * Type of registration the company or entity holds in their registered country.
+           */
+          registration_type?: CompanyDetails.RegistrationType;
+
+          /**
+           * VAT ID number.
+           */
+          vat: string | null;
+        }
+
+        export namespace CompanyDetails {
+          export type RegistrationType =
+            | 'ch_ein'
+            | 'de_hrb'
+            | 'dk_cvr'
+            | 'es_cif'
+            | 'fi_tunnus'
+            | 'fr_siren'
+            | 'fr_siret'
+            | 'it_rea'
+            | 'nl_kvk'
+            | 'no_org_number'
+            | 'no_pno'
+            | 'se_org_number'
+            | 'se_pno'
+            | 'uk_crn';
+        }
       }
 
       export namespace Card {
@@ -2752,6 +2822,25 @@ export namespace Invoice {
     }
   }
 
+  export namespace StatusDetails {
+    export interface Uncollectible {
+      /**
+       * The reason why the invoice is uncollectible.
+       */
+      reason: Uncollectible.Reason | null;
+    }
+
+    export namespace Uncollectible {
+      export type Reason =
+        | 'max_payment_attempts'
+        | 'payment_not_received'
+        | 'subscription_canceled'
+        | 'subscription_paused'
+        | 'user_forgiven'
+        | OtherString;
+    }
+  }
+
   export namespace ThresholdReason {
     export interface ItemReason {
       /**
@@ -2937,7 +3026,7 @@ export interface InvoiceCreateParams {
   pending_invoice_items_behavior?: InvoiceCreateParams.PendingInvoiceItemsBehavior;
 
   /**
-   * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
+   * The rendering-related settings that control how invoices render in customer-facing interfaces such as the PDF or hosted invoice page.
    */
   rendering?: InvoiceCreateParams.Rendering;
 
@@ -3159,6 +3248,11 @@ export namespace InvoiceCreateParams {
       billie?: Emptyable<PaymentMethodOptions.Billie>;
 
       /**
+       * If paying by `blik`, this sub-hash contains details about the Blik payment method options to pass to the invoice's PaymentIntent.
+       */
+      blik?: Emptyable<PaymentMethodOptions.Blik>;
+
+      /**
        * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
        */
       card?: Emptyable<PaymentMethodOptions.Card>;
@@ -3210,6 +3304,7 @@ export namespace InvoiceCreateParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'blik'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -3271,7 +3366,19 @@ export namespace InvoiceCreateParams {
         preferred_language?: Bancontact.PreferredLanguage;
       }
 
-      export interface Billie {}
+      export interface Billie {
+        /**
+         * Registration details about the buyer's organization.
+         */
+        company_details?: Emptyable<Billie.CompanyDetails>;
+
+        /**
+         * An identifier or reference that this payment corresponds to.
+         */
+        reference?: string;
+      }
+
+      export interface Blik {}
 
       export interface Card {
         /**
@@ -3362,6 +3469,54 @@ export namespace InvoiceCreateParams {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
+      }
+
+      export namespace Billie {
+        export interface CompanyDetails {
+          /**
+           * The address the company or entity is registered with.
+           */
+          registered_address?: Emptyable<AddressParam>;
+
+          /**
+           * Company or entity name.
+           */
+          registered_name?: string;
+
+          /**
+           * The official registration number for the given registration type.
+           */
+          registration_number?: string;
+
+          /**
+           * Type of registration the company or entity holds in their registered country.
+           */
+          registration_type?: Emptyable<CompanyDetails.RegistrationType>;
+
+          /**
+           * VAT ID number.
+           */
+          vat?: string;
+        }
+
+        export namespace CompanyDetails {
+          export type RegistrationType =
+            | 'ch_ein'
+            | 'de_hrb'
+            | 'dk_cvr'
+            | 'es_cif'
+            | 'fi_tunnus'
+            | 'fr_siren'
+            | 'fr_siret'
+            | 'it_rea'
+            | 'nl_kvk'
+            | 'no_org_number'
+            | 'no_pno'
+            | 'se_org_number'
+            | 'se_pno'
+            | 'uk_crn'
+            | OtherString;
+        }
       }
 
       export namespace Card {
@@ -3838,7 +3993,7 @@ export interface InvoiceUpdateParams {
   payment_settings?: InvoiceUpdateParams.PaymentSettings;
 
   /**
-   * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
+   * The rendering-related settings that control how invoices render in customer-facing interfaces such as the PDF or hosted invoice page.
    */
   rendering?: InvoiceUpdateParams.Rendering;
 
@@ -4041,6 +4196,11 @@ export namespace InvoiceUpdateParams {
       billie?: Emptyable<PaymentMethodOptions.Billie>;
 
       /**
+       * If paying by `blik`, this sub-hash contains details about the Blik payment method options to pass to the invoice's PaymentIntent.
+       */
+      blik?: Emptyable<PaymentMethodOptions.Blik>;
+
+      /**
        * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
        */
       card?: Emptyable<PaymentMethodOptions.Card>;
@@ -4092,6 +4252,7 @@ export namespace InvoiceUpdateParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'blik'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -4153,7 +4314,19 @@ export namespace InvoiceUpdateParams {
         preferred_language?: Bancontact.PreferredLanguage;
       }
 
-      export interface Billie {}
+      export interface Billie {
+        /**
+         * Registration details about the buyer's organization.
+         */
+        company_details?: Emptyable<Billie.CompanyDetails>;
+
+        /**
+         * An identifier or reference that this payment corresponds to.
+         */
+        reference?: string;
+      }
+
+      export interface Blik {}
 
       export interface Card {
         /**
@@ -4244,6 +4417,54 @@ export namespace InvoiceUpdateParams {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl' | OtherString;
+      }
+
+      export namespace Billie {
+        export interface CompanyDetails {
+          /**
+           * The address the company or entity is registered with.
+           */
+          registered_address?: Emptyable<AddressParam>;
+
+          /**
+           * Company or entity name.
+           */
+          registered_name?: string;
+
+          /**
+           * The official registration number for the given registration type.
+           */
+          registration_number?: string;
+
+          /**
+           * Type of registration the company or entity holds in their registered country.
+           */
+          registration_type?: Emptyable<CompanyDetails.RegistrationType>;
+
+          /**
+           * VAT ID number.
+           */
+          vat?: string;
+        }
+
+        export namespace CompanyDetails {
+          export type RegistrationType =
+            | 'ch_ein'
+            | 'de_hrb'
+            | 'dk_cvr'
+            | 'es_cif'
+            | 'fi_tunnus'
+            | 'fr_siren'
+            | 'fr_siret'
+            | 'it_rea'
+            | 'nl_kvk'
+            | 'no_org_number'
+            | 'no_pno'
+            | 'se_org_number'
+            | 'se_pno'
+            | 'uk_crn'
+            | OtherString;
+        }
       }
 
       export namespace Card {
@@ -4862,6 +5083,11 @@ export namespace InvoiceAddLinesParams {
         tax_code?: string;
 
         /**
+         * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+         */
+        tax_details?: ProductData.TaxDetails;
+
+        /**
          * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
          */
         unit_label?: string;
@@ -4872,6 +5098,20 @@ export namespace InvoiceAddLinesParams {
         | 'inclusive'
         | 'unspecified'
         | OtherString;
+
+      export namespace ProductData {
+        export interface TaxDetails {
+          /**
+           * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+           */
+          performance_location?: string;
+
+          /**
+           * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+           */
+          tax_code?: Emptyable<string>;
+        }
+      }
     }
 
     export namespace TaxAmount {
@@ -4953,6 +5193,7 @@ export namespace InvoiceAddLinesParams {
         export type TaxType =
           | 'amusement_tax'
           | 'communications_tax'
+          | 'digital_excise_tax'
           | 'gst'
           | 'hst'
           | 'igst'
@@ -4966,6 +5207,7 @@ export namespace InvoiceAddLinesParams {
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
+          | 'utility_users_tax'
           | 'vat'
           | OtherString;
       }
@@ -5248,7 +5490,7 @@ export namespace InvoiceCreatePreviewParams {
     /**
      * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://docs.stripe.com/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
      */
-    billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
+    billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor;
 
     /**
      * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
@@ -5289,6 +5531,15 @@ export namespace InvoiceCreatePreviewParams {
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
+
+    /**
+     * Previews the invoice that would be generated when pausing the subscription. Passing an empty hash won't preview pausing and instead returns the next invoice.
+     *
+     * To receive a preview invoice, set `invoicing_behavior` to `invoice`. A preview isn't available if the `bill_for` options produce no billable amounts.
+     *
+     * `pending_invoice_item` never has a preview available because pausing wouldn't generate an invoice, and paused subscriptions don't generate invoices either.
+     */
+    pause?: SubscriptionDetails.Pause;
 
     /**
      * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
@@ -6141,7 +6392,17 @@ export namespace InvoiceCreatePreviewParams {
   }
 
   export namespace SubscriptionDetails {
-    export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+    export interface BillingCycleAnchor {
+      /**
+       * A timestamp to use as the subscription's billing cycle anchor. Only valid when `type` is `timestamp`.
+       */
+      timestamp?: number;
+
+      /**
+       * Determines how the subscription's billing cycle anchor behaves for the invoice preview.
+       */
+      type: BillingCycleAnchor.Type;
+    }
 
     export interface BillingMode {
       /**
@@ -6190,6 +6451,11 @@ export namespace InvoiceCreatePreviewParams {
       clear_usage?: boolean;
 
       /**
+       * The trial offer to apply to this subscription item.
+       */
+      current_trial?: Item.CurrentTrial;
+
+      /**
        * A flag that, if set to `true`, will delete the specified item.
        */
       deleted?: boolean;
@@ -6215,12 +6481,12 @@ export namespace InvoiceCreatePreviewParams {
       plan?: string;
 
       /**
-       * The ID of the price object. One of `price` or `price_data` is required. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+       * The ID of the price object. You can use either `price` or `price_data`, but not both, to set or change this item's price. If you're updating an existing item without changing its price, omit both. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
        */
       price?: string;
 
       /**
-       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
+       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. You can use either `price` or `price_data`, but not both, to set or change this item's price. If you're updating an existing item without changing its price, omit both.
        */
       price_data?: Item.PriceData;
 
@@ -6235,11 +6501,32 @@ export namespace InvoiceCreatePreviewParams {
       tax_rates?: Emptyable<Array<string>>;
     }
 
+    export interface Pause {
+      /**
+       * Controls what to bill for when pausing the subscription.
+       */
+      bill_for?: Pause.BillFor;
+
+      /**
+       * Determines how to handle debits and credits when pausing. Defaults to `pending_invoice_item`.
+       */
+      invoicing_behavior?: Pause.InvoicingBehavior;
+
+      /**
+       * The type of pause to apply. Defaults to `subscription`.
+       */
+      type?: Pause.Type;
+    }
+
     export type ProrationBehavior =
       | 'always_invoice'
       | 'create_prorations'
       | 'none'
       | OtherString;
+
+    export namespace BillingCycleAnchor {
+      export type Type = 'now' | 'timestamp' | 'unchanged' | OtherString;
+    }
 
     export namespace BillingMode {
       export interface Flexible {
@@ -6320,6 +6607,13 @@ export namespace InvoiceCreatePreviewParams {
         usage_gte: number;
       }
 
+      export interface CurrentTrial {
+        /**
+         * The ID of the trial offer to apply to the subscription item.
+         */
+        trial_offer: string;
+      }
+
       export interface Discount {
         /**
          * ID of the coupon to create a new discount for.
@@ -6394,6 +6688,55 @@ export namespace InvoiceCreatePreviewParams {
             | 'month'
             | 'week'
             | 'year'
+            | OtherString;
+        }
+      }
+    }
+
+    export namespace Pause {
+      export interface BillFor {
+        /**
+         * Controls when to bill for metered usage in the current period. Defaults to `{ type: "now" }`.
+         */
+        outstanding_usage_through?: BillFor.OutstandingUsageThrough;
+
+        /**
+         * Controls when to credit for unused time on licensed items. Defaults to `{ type: "now" }`.
+         */
+        unused_time_from?: BillFor.UnusedTimeFrom;
+      }
+
+      export type InvoicingBehavior =
+        | 'invoice'
+        | 'pending_invoice_item'
+        | OtherString;
+
+      export type Type = 'subscription' | OtherString;
+
+      export namespace BillFor {
+        export interface OutstandingUsageThrough {
+          /**
+           * When to bill metered usage in the current period.
+           */
+          type: OutstandingUsageThrough.Type;
+        }
+
+        export interface UnusedTimeFrom {
+          /**
+           * When to credit for unused time.
+           */
+          type: UnusedTimeFrom.Type;
+        }
+
+        export namespace OutstandingUsageThrough {
+          export type Type = 'none' | 'now' | OtherString;
+        }
+
+        export namespace UnusedTimeFrom {
+          export type Type =
+            | 'item_current_period_start'
+            | 'none'
+            | 'now'
             | OtherString;
         }
       }
@@ -6730,6 +7073,11 @@ export namespace InvoiceUpdateLinesParams {
         tax_code?: string;
 
         /**
+         * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+         */
+        tax_details?: ProductData.TaxDetails;
+
+        /**
          * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
          */
         unit_label?: string;
@@ -6740,6 +7088,20 @@ export namespace InvoiceUpdateLinesParams {
         | 'inclusive'
         | 'unspecified'
         | OtherString;
+
+      export namespace ProductData {
+        export interface TaxDetails {
+          /**
+           * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+           */
+          performance_location?: string;
+
+          /**
+           * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+           */
+          tax_code?: Emptyable<string>;
+        }
+      }
     }
 
     export namespace TaxAmount {
@@ -6821,6 +7183,7 @@ export namespace InvoiceUpdateLinesParams {
         export type TaxType =
           | 'amusement_tax'
           | 'communications_tax'
+          | 'digital_excise_tax'
           | 'gst'
           | 'hst'
           | 'igst'
@@ -6834,6 +7197,7 @@ export namespace InvoiceUpdateLinesParams {
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
+          | 'utility_users_tax'
           | 'vat'
           | OtherString;
       }
@@ -7027,6 +7391,11 @@ export namespace InvoiceUpdateLineItemParams {
       tax_code?: string;
 
       /**
+       * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+       */
+      tax_details?: ProductData.TaxDetails;
+
+      /**
        * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
        */
       unit_label?: string;
@@ -7037,6 +7406,20 @@ export namespace InvoiceUpdateLineItemParams {
       | 'inclusive'
       | 'unspecified'
       | OtherString;
+
+    export namespace ProductData {
+      export interface TaxDetails {
+        /**
+         * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+         */
+        performance_location?: string;
+
+        /**
+         * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+         */
+        tax_code?: Emptyable<string>;
+      }
+    }
   }
 
   export namespace TaxAmount {
@@ -7118,6 +7501,7 @@ export namespace InvoiceUpdateLineItemParams {
       export type TaxType =
         | 'amusement_tax'
         | 'communications_tax'
+        | 'digital_excise_tax'
         | 'gst'
         | 'hst'
         | 'igst'
@@ -7131,6 +7515,7 @@ export namespace InvoiceUpdateLineItemParams {
         | 'rst'
         | 'sales_tax'
         | 'service_tax'
+        | 'utility_users_tax'
         | 'vat'
         | OtherString;
     }

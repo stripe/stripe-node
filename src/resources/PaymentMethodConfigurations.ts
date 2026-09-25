@@ -192,6 +192,8 @@ export interface PaymentMethodConfiguration {
 
   paypal?: PaymentMethodConfiguration.Paypal;
 
+  paypay?: PaymentMethodConfiguration.Paypay;
+
   payto?: PaymentMethodConfiguration.Payto;
 
   pix?: PaymentMethodConfiguration.Pix;
@@ -207,6 +209,8 @@ export interface PaymentMethodConfiguration {
   scalapay?: PaymentMethodConfiguration.Scalapay;
 
   sepa_debit?: PaymentMethodConfiguration.SepaDebit;
+
+  sequra?: PaymentMethodConfiguration.Sequra;
 
   sofort?: PaymentMethodConfiguration.Sofort;
 
@@ -603,6 +607,15 @@ export namespace PaymentMethodConfiguration {
     display_preference: Paypal.DisplayPreference;
   }
 
+  export interface Paypay {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Paypay.DisplayPreference;
+  }
+
   export interface Payto {
     /**
      * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
@@ -673,6 +686,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: SepaDebit.DisplayPreference;
+  }
+
+  export interface Sequra {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Sequra.DisplayPreference;
   }
 
   export interface Sofort {
@@ -1797,6 +1819,31 @@ export namespace PaymentMethodConfiguration {
     }
   }
 
+  export namespace Paypay {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace Payto {
     export interface DisplayPreference {
       /**
@@ -1973,6 +2020,31 @@ export namespace PaymentMethodConfiguration {
   }
 
   export namespace SepaDebit {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Sequra {
     export interface DisplayPreference {
       /**
        * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
@@ -2434,6 +2506,11 @@ export interface PaymentMethodConfigurationCreateParams {
   paypal?: PaymentMethodConfigurationCreateParams.Paypal;
 
   /**
+   * Customers can pay with PayPay online or using the PayPay app.
+   */
+  paypay?: PaymentMethodConfigurationCreateParams.Paypay;
+
+  /**
    * PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables customers in Australia to pay by providing their bank account details. Customers must accept a mandate authorizing you to debit their account. Check this [page](https://docs.stripe.com/payments/payto) for more details.
    */
   payto?: PaymentMethodConfigurationCreateParams.Payto;
@@ -2472,6 +2549,11 @@ export interface PaymentMethodConfigurationCreateParams {
    * The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is an initiative of the European Union to simplify payments within and across member countries. SEPA established and enforced banking standards to allow for the direct debiting of every EUR-denominated bank account within the SEPA region, check this [page](https://docs.stripe.com/payments/sepa-debit) for more details.
    */
   sepa_debit?: PaymentMethodConfigurationCreateParams.SepaDebit;
+
+  /**
+   * SeQura is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that offers customers payment terms ranging from 7-120 days. Customers are redirected from your website or app, authorize the payment with SeQura, then return to your website or app. You get [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+   */
+  sequra?: PaymentMethodConfigurationCreateParams.Sequra;
 
   /**
    * Stripe users in Europe and the United States can use the [Payment Intents API](https://stripe.com/docs/payments/payment-intents)—a single integration path for creating payments using any supported method—to accept [Sofort](https://www.sofort.com/) payments from customers. Check this [page](https://docs.stripe.com/payments/sofort) for more details.
@@ -2822,6 +2904,13 @@ export namespace PaymentMethodConfigurationCreateParams {
     display_preference?: Paypal.DisplayPreference;
   }
 
+  export interface Paypay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Paypay.DisplayPreference;
+  }
+
   export interface Payto {
     /**
      * Whether or not the payment method should be displayed.
@@ -2876,6 +2965,13 @@ export namespace PaymentMethodConfigurationCreateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: SepaDebit.DisplayPreference;
+  }
+
+  export interface Sequra {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Sequra.DisplayPreference;
   }
 
   export interface Sofort {
@@ -3506,6 +3602,19 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
   }
 
+  export namespace Paypay {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace Payto {
     export interface DisplayPreference {
       /**
@@ -3598,6 +3707,19 @@ export namespace PaymentMethodConfigurationCreateParams {
   }
 
   export namespace SepaDebit {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Sequra {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
@@ -3957,6 +4079,11 @@ export interface PaymentMethodConfigurationUpdateParams {
   paypal?: PaymentMethodConfigurationUpdateParams.Paypal;
 
   /**
+   * Customers can pay with PayPay online or using the PayPay app.
+   */
+  paypay?: PaymentMethodConfigurationUpdateParams.Paypay;
+
+  /**
    * PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables customers in Australia to pay by providing their bank account details. Customers must accept a mandate authorizing you to debit their account. Check this [page](https://docs.stripe.com/payments/payto) for more details.
    */
   payto?: PaymentMethodConfigurationUpdateParams.Payto;
@@ -3995,6 +4122,11 @@ export interface PaymentMethodConfigurationUpdateParams {
    * The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is an initiative of the European Union to simplify payments within and across member countries. SEPA established and enforced banking standards to allow for the direct debiting of every EUR-denominated bank account within the SEPA region, check this [page](https://docs.stripe.com/payments/sepa-debit) for more details.
    */
   sepa_debit?: PaymentMethodConfigurationUpdateParams.SepaDebit;
+
+  /**
+   * SeQura is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that offers customers payment terms ranging from 7-120 days. Customers are redirected from your website or app, authorize the payment with SeQura, then return to your website or app. You get [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+   */
+  sequra?: PaymentMethodConfigurationUpdateParams.Sequra;
 
   /**
    * Stripe users in Europe and the United States can use the [Payment Intents API](https://stripe.com/docs/payments/payment-intents)—a single integration path for creating payments using any supported method—to accept [Sofort](https://www.sofort.com/) payments from customers. Check this [page](https://docs.stripe.com/payments/sofort) for more details.
@@ -4345,6 +4477,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
     display_preference?: Paypal.DisplayPreference;
   }
 
+  export interface Paypay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Paypay.DisplayPreference;
+  }
+
   export interface Payto {
     /**
      * Whether or not the payment method should be displayed.
@@ -4399,6 +4538,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: SepaDebit.DisplayPreference;
+  }
+
+  export interface Sequra {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Sequra.DisplayPreference;
   }
 
   export interface Sofort {
@@ -5029,6 +5175,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
   }
 
+  export namespace Paypay {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace Payto {
     export interface DisplayPreference {
       /**
@@ -5121,6 +5280,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 
   export namespace SepaDebit {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Sequra {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
