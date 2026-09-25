@@ -690,6 +690,7 @@ export type Event =
   | V2MoneyManagementDebitDisputeFailedEvent
   | V2MoneyManagementDebitDisputeSubmittedEvent
   | V2MoneyManagementDebitDisputeSucceededEvent
+  | V2MoneyManagementEarnedCreditSucceededEvent
   | V2MoneyManagementFinancialAccountCreatedEvent
   | V2MoneyManagementFinancialAccountUpdatedEvent
   | V2MoneyManagementFinancialAccountWalletExportCompletedEvent
@@ -1153,6 +1154,7 @@ export type EventNotification =
   | V2MoneyManagementDebitDisputeFailedEventNotification
   | V2MoneyManagementDebitDisputeSubmittedEventNotification
   | V2MoneyManagementDebitDisputeSucceededEventNotification
+  | V2MoneyManagementEarnedCreditSucceededEventNotification
   | V2MoneyManagementFinancialAccountCreatedEventNotification
   | V2MoneyManagementFinancialAccountUpdatedEventNotification
   | V2MoneyManagementFinancialAccountWalletExportCompletedEventNotification
@@ -7307,8 +7309,10 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'promptpay_payments'
       | 'revolut_pay_payments'
       | 'samsung_pay_payments'
+      | 'satispay_payments'
       | 'sepa_bank_transfer_payments'
       | 'sepa_debit_payments'
+      | 'sequra_payments'
       | 'sunbit_payments'
       | 'swish_payments'
       | 'twint_payments'
@@ -7379,11 +7383,13 @@ export namespace V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatus
       | 'business_storage.inbound.cad'
       | 'business_storage.inbound.eur'
       | 'business_storage.inbound.gbp'
+      | 'business_storage.inbound.ousd'
       | 'business_storage.inbound.usd'
       | 'business_storage.inbound.usdc'
       | 'business_storage.outbound.cad'
       | 'business_storage.outbound.eur'
       | 'business_storage.outbound.gbp'
+      | 'business_storage.outbound.ousd'
       | 'business_storage.outbound.usd'
       | 'business_storage.outbound.usdc'
       | 'consumer_storage.inbound.usd'
@@ -11356,6 +11362,26 @@ export interface V2MoneyManagementDebitDisputeSucceededEventNotification
 }
 
 /**
+ * Occurs when an EarnedCredit succeeds.
+ */
+export interface V2MoneyManagementEarnedCreditSucceededEvent extends EventBase {
+  type: 'v2.money_management.earned_credit.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.EarnedCredit>;
+}
+export interface V2MoneyManagementEarnedCreditSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.earned_credit.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.EarnedCredit>;
+  fetchEvent(): Promise<V2MoneyManagementEarnedCreditSucceededEvent>;
+}
+
+/**
  * Occurs when a FinancialAccount is created.
  */
 export interface V2MoneyManagementFinancialAccountCreatedEvent
@@ -12584,6 +12610,8 @@ export namespace V2MoneyManagementTransactionCreatedEvent {
  */
 export interface V2MoneyManagementTransactionUpdatedEvent extends EventBase {
   type: 'v2.money_management.transaction.updated';
+  // Retrieves data specific to this event.
+  data: V2MoneyManagementTransactionUpdatedEvent.Data;
   // Object containing the reference to API resource relevant to the event.
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
@@ -12597,6 +12625,15 @@ export interface V2MoneyManagementTransactionUpdatedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<MoneyManagement.Transaction>;
   fetchEvent(): Promise<V2MoneyManagementTransactionUpdatedEvent>;
+}
+
+export namespace V2MoneyManagementTransactionUpdatedEvent {
+  export interface Data {
+    /**
+     * Id of the v1 Treasury Transaction corresponding to this Transaction.
+     */
+    treasury_transaction?: string;
+  }
 }
 
 /**
@@ -13529,8 +13566,6 @@ export interface V2SignalsAccountEvaluationCompleteEventNotification
 export interface V2SignalsAccountSignalFraudulentMerchantReadyEvent
   extends EventBase {
   type: 'v2.signals.account_signal.fraudulent_merchant_ready';
-  // Retrieves data specific to this event.
-  data: V2SignalsAccountSignalFraudulentMerchantReadyEvent.Data;
   // Object containing the reference to API resource relevant to the event.
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
@@ -13544,101 +13579,6 @@ export interface V2SignalsAccountSignalFraudulentMerchantReadyEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Signals.AccountSignal>;
   fetchEvent(): Promise<V2SignalsAccountSignalFraudulentMerchantReadyEvent>;
-}
-
-export namespace V2SignalsAccountSignalFraudulentMerchantReadyEvent {
-  export interface Data {
-    /**
-     * Account ID that this signal is associated with.
-     */
-    account: string;
-
-    /**
-     * Timestamp when the signal was evaluated.
-     */
-    evaluated_at: string;
-
-    /**
-     * Fraudulent merchant signal data. Present when type is fraudulent_merchant.
-     */
-    fraudulent_merchant?: Data.FraudulentMerchant;
-
-    /**
-     * The type of account signal. Currently only fraudulent_merchant is supported.
-     */
-    type: Data.Type;
-  }
-
-  export namespace Data {
-    export interface FraudulentMerchant {
-      /**
-       * Array of objects representing individual factors that contributed to the calculated probability. Maximum of 3.
-       */
-      indicators: Array<FraudulentMerchant.Indicator>;
-
-      /**
-       * The probability of the merchant being fraudulent. Can be between 0.00 and 100.00. May be empty if the risk_level is UNKNOWN or NOT_ASSESSED.
-       */
-      probability?: Decimal;
-
-      /**
-       * Categorical assessment of the fraudulent merchant risk based on probability.
-       */
-      risk_level: FraudulentMerchant.RiskLevel;
-    }
-
-    export type Type = 'fraudulent_merchant' | OtherString;
-
-    export namespace FraudulentMerchant {
-      export interface Indicator {
-        /**
-         * A brief explanation of how this indicator contributed to the fraudulent merchant probability.
-         */
-        description: string;
-
-        /**
-         * The effect this indicator had on the overall risk level.
-         */
-        impact: Indicator.Impact;
-
-        /**
-         * The name of the specific indicator used in the risk assessment.
-         */
-        indicator: Indicator.Indicator;
-      }
-
-      export type RiskLevel =
-        | 'elevated'
-        | 'highest'
-        | 'low'
-        | 'normal'
-        | 'not_assessed'
-        | 'unknown'
-        | OtherString;
-
-      export namespace Indicator {
-        export type Impact =
-          | 'decrease'
-          | 'neutral'
-          | 'slight_increase'
-          | 'strong_increase'
-          | OtherString;
-
-        export type Indicator =
-          | 'bank_account'
-          | 'business_information_and_account_activity'
-          | 'disputes'
-          | 'failures'
-          | 'geolocation'
-          | 'other'
-          | 'other_related_accounts'
-          | 'other_transaction_activity'
-          | 'owner_email'
-          | 'web_presence'
-          | OtherString;
-      }
-    }
-  }
 }
 
 /**
@@ -14118,6 +14058,7 @@ export declare namespace Events {
     V2MoneyManagementDebitDisputeFailedEvent,
     V2MoneyManagementDebitDisputeSubmittedEvent,
     V2MoneyManagementDebitDisputeSucceededEvent,
+    V2MoneyManagementEarnedCreditSucceededEvent,
     V2MoneyManagementFinancialAccountCreatedEvent,
     V2MoneyManagementFinancialAccountUpdatedEvent,
     V2MoneyManagementFinancialAccountWalletExportCompletedEvent,
@@ -14579,6 +14520,7 @@ export declare namespace Events {
     V2MoneyManagementDebitDisputeFailedEventNotification,
     V2MoneyManagementDebitDisputeSubmittedEventNotification,
     V2MoneyManagementDebitDisputeSucceededEventNotification,
+    V2MoneyManagementEarnedCreditSucceededEventNotification,
     V2MoneyManagementFinancialAccountCreatedEventNotification,
     V2MoneyManagementFinancialAccountUpdatedEventNotification,
     V2MoneyManagementFinancialAccountWalletExportCompletedEventNotification,

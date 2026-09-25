@@ -15,7 +15,7 @@ export class AccountActivityResource extends StripeResource {
   ): Promise<Response<AccountActivity>> {
     return this._makeRequest(
       'POST',
-      '/v2/signals/account_activity',
+      '/v2/signals/account_activities',
       params,
       options
     ) as any;
@@ -30,7 +30,7 @@ export class AccountActivityResource extends StripeResource {
   ): Promise<Response<DeletedObject>> {
     return this._makeRequest(
       'DELETE',
-      `/v2/signals/account_activity/${encodeURIComponent(id)}`,
+      `/v2/signals/account_activities/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -45,7 +45,7 @@ export class AccountActivityResource extends StripeResource {
   ): Promise<Response<AccountActivity>> {
     return this._makeRequest(
       'GET',
-      `/v2/signals/account_activity/${encodeURIComponent(id)}`,
+      `/v2/signals/account_activities/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

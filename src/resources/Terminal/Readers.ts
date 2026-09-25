@@ -925,6 +925,7 @@ export namespace Reader {
         | 'customer_session_expired'
         | 'customer_tax_location_invalid'
         | 'debit_not_authorized'
+        | 'dispute_evidence_page_limit_exceeded'
         | 'email_invalid'
         | 'expired_card'
         | 'expired_payment_method'
@@ -935,6 +936,8 @@ export namespace Reader {
         | 'financial_connections_account_inactive'
         | 'financial_connections_account_pending_account_numbers'
         | 'financial_connections_account_unavailable_account_numbers'
+        | 'financial_connections_consent_locale_invalid'
+        | 'financial_connections_consent_locale_unsupported'
         | 'financial_connections_institution_unavailable'
         | 'financial_connections_no_successful_transaction_refresh'
         | 'forwarding_api_inactive'
@@ -989,6 +992,7 @@ export namespace Reader {
         | 'parameter_missing'
         | 'parameter_unknown'
         | 'parameters_exclusive'
+        | 'payment_evaluation_on_api_version_not_supported'
         | 'payment_intent_action_required'
         | 'payment_intent_authentication_failure'
         | 'payment_intent_incompatible_payment_method'
@@ -1526,11 +1530,6 @@ export namespace Terminal {
      * A status filter to filter readers to only offline or online readers
      */
     status?: ReaderListParams.Status;
-
-    /**
-     * Filters readers by tamper state.
-     */
-    tamper_state?: ReaderListParams.TamperState;
   }
 
   export namespace ReaderListParams {
@@ -1557,8 +1556,6 @@ export namespace Terminal {
       | OtherString;
 
     export type Status = 'offline' | 'online' | OtherString;
-
-    export type TamperState = 'secure' | 'tampered' | OtherString;
   }
 }
 export namespace Terminal {

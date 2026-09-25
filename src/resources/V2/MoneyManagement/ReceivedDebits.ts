@@ -169,6 +169,11 @@ export namespace ReceivedDebit {
     gb_bank_account?: BankTransfer.GbBankAccount;
 
     /**
+     * Network-specific details about the bank transfer.
+     */
+    network_details?: BankTransfer.NetworkDetails;
+
+    /**
      * Open Enum. Indicates the origin type through which this debit was initiated.
      */
     origin_type: BankTransfer.OriginType;
@@ -325,6 +330,13 @@ export namespace ReceivedDebit {
       sort_code?: string;
     }
 
+    export interface NetworkDetails {
+      /**
+       * ACH-specific network details.
+       */
+      ach?: NetworkDetails.Ach;
+    }
+
     export type OriginType =
       | 'gb_bank_account'
       | 'us_bank_account'
@@ -354,6 +366,63 @@ export namespace ReceivedDebit {
 
     export namespace GbBankAccount {
       export type Network = 'bacs' | OtherString;
+    }
+
+    export namespace NetworkDetails {
+      export interface Ach {
+        /**
+         * Additional information included with the ACH debit.
+         */
+        addenda?: string;
+
+        /**
+         * The entry description supplied by the company that originated the ACH debit.
+         */
+        originator_company_entry_description?: string;
+
+        /**
+         * The identifier of the company that originated the ACH debit.
+         */
+        originator_company_id?: string;
+
+        /**
+         * The name of the company that originated the ACH debit.
+         */
+        originator_company_name?: string;
+
+        /**
+         * The identifier assigned to the receiver of the ACH debit.
+         */
+        receiver_id_number?: string;
+
+        /**
+         * The name of the receiver of the ACH debit.
+         */
+        receiver_name?: string;
+
+        /**
+         * Open Enum. The standard entry class code for the ACH debit.
+         */
+        standard_entry_class_code?: Ach.StandardEntryClassCode;
+
+        /**
+         * The trace identifier for the ACH debit.
+         */
+        trace_id?: string;
+      }
+
+      export namespace Ach {
+        export type StandardEntryClassCode =
+          | 'ccd'
+          | 'cie'
+          | 'ctx'
+          | 'iat'
+          | 'pos'
+          | 'ppd'
+          | 'tel'
+          | 'web'
+          | OtherString;
+      }
     }
 
     export namespace UsBankAccount {

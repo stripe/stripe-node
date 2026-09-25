@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec
 
-import {RequestOptions} from '../../lib.js';
+import {RequestOptions} from '../../../lib.js';
 export interface FinancialAddressCreditSimulation {
   /**
    * String representing the object's type. Objects of the same type share the same value of the object field.
    */
-  object: 'financial_address_credit_simulation';
+  object: 'v2.money_management.financial_address_credit_simulation';
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

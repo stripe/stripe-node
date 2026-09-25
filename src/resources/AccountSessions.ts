@@ -1039,6 +1039,11 @@ export namespace AccountSessionCreateParams {
     capital_financing_application?: Components.CapitalFinancingApplication;
 
     /**
+     * Configuration for the [Capital financing manual payment](https://docs.stripe.com/connect/supported-embedded-components/capital-financing-manual-payment/) embedded component.
+     */
+    capital_financing_manual_payment?: Components.CapitalFinancingManualPayment;
+
+    /**
      * Configuration for the [Capital financing promotion](https://docs.stripe.com/connect/supported-embedded-components/capital-financing-promotion/) embedded component.
      */
     capital_financing_promotion?: Components.CapitalFinancingPromotion;
@@ -1286,6 +1291,18 @@ export namespace AccountSessionCreateParams {
        * An empty list, because this embedded component has no features.
        */
       features?: CapitalFinancingApplication.Features;
+    }
+
+    export interface CapitalFinancingManualPayment {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: CapitalFinancingManualPayment.Features;
     }
 
     export interface CapitalFinancingPromotion {
@@ -1709,6 +1726,10 @@ export namespace AccountSessionCreateParams {
     }
 
     export namespace CapitalFinancingApplication {
+      export interface Features {}
+    }
+
+    export namespace CapitalFinancingManualPayment {
       export interface Features {}
     }
 

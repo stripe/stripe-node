@@ -208,7 +208,8 @@ export namespace V2 {
       environment?: ResourceCreateParams.Environment;
 
       /**
-       * Whether the resource should use Stripe live-mode objects. When omitted, this resolves to true.
+       * Whether the resource should use Stripe live-mode objects. When omitted, this resolves to false
+       * for a sandbox target and true otherwise. Sandbox targets cannot create live-mode resources.
        */
       livemode?: boolean;
 
@@ -292,7 +293,8 @@ export namespace V2 {
       environment?: ResourceLinkParams.Environment;
 
       /**
-       * Whether the resource should use Stripe live-mode objects. When omitted, this resolves to true.
+       * Whether the resource should use Stripe live-mode objects. When omitted, this resolves to false
+       * for a sandbox target and true otherwise. Sandbox targets cannot link live-mode resources.
        */
       livemode?: boolean;
 

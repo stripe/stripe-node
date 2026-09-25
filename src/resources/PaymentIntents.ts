@@ -724,6 +724,7 @@ export namespace PaymentIntent {
     | 'boleto'
     | 'capchase_pay'
     | 'card'
+    | 'card_present'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -744,6 +745,7 @@ export namespace PaymentIntent {
     | 'grabpay'
     | 'id_bank_transfer'
     | 'ideal'
+    | 'interac_present'
     | 'kakao_pay'
     | 'klarna'
     | 'knet'
@@ -1649,6 +1651,7 @@ export namespace PaymentIntent {
       | 'customer_session_expired'
       | 'customer_tax_location_invalid'
       | 'debit_not_authorized'
+      | 'dispute_evidence_page_limit_exceeded'
       | 'email_invalid'
       | 'expired_card'
       | 'expired_payment_method'
@@ -1659,6 +1662,8 @@ export namespace PaymentIntent {
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
+      | 'financial_connections_consent_locale_invalid'
+      | 'financial_connections_consent_locale_unsupported'
       | 'financial_connections_institution_unavailable'
       | 'financial_connections_no_successful_transaction_refresh'
       | 'forwarding_api_inactive'
@@ -1713,6 +1718,7 @@ export namespace PaymentIntent {
       | 'parameter_missing'
       | 'parameter_unknown'
       | 'parameters_exclusive'
+      | 'payment_evaluation_on_api_version_not_supported'
       | 'payment_intent_action_required'
       | 'payment_intent_authentication_failure'
       | 'payment_intent_incompatible_payment_method'
@@ -4620,6 +4626,11 @@ export namespace PaymentIntent {
       network: Card.Network | null;
 
       /**
+       * Indicates whether Stripe may synchronously request a real-time card account update for this confirmation. `if_available` allows the update; `never` opts out. Defaults to `if_available` and is omitted from the response unless explicitly set on this confirmation. This does not affect batch Card Account Updater.
+       */
+      request_card_account_update?: Card.RequestCardAccountUpdate;
+
+      /**
        * Request ability to [decrement the authorization](https://docs.stripe.com/payments/decremental-authorization) for this PaymentIntent.
        */
       request_decremental_authorization?: Card.RequestDecrementalAuthorization;
@@ -5871,6 +5882,8 @@ export namespace PaymentIntent {
         | 'visa'
         | OtherString;
 
+      export type RequestCardAccountUpdate = 'if_available' | 'never';
+
       export type RequestDecrementalAuthorization =
         | 'if_available'
         | 'never'
@@ -6988,6 +7001,7 @@ export namespace PaymentIntentCreateParams {
     | 'boleto'
     | 'capchase_pay'
     | 'card'
+    | 'card_present'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -7008,6 +7022,7 @@ export namespace PaymentIntentCreateParams {
     | 'grabpay'
     | 'id_bank_transfer'
     | 'ideal'
+    | 'interac_present'
     | 'kakao_pay'
     | 'klarna'
     | 'knet'
@@ -7577,6 +7592,11 @@ export namespace PaymentIntentCreateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+     */
+    sequra?: PaymentMethodData.Sequra;
+
+    /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
      */
     shared_payment_granted_token?: string;
@@ -7917,6 +7937,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
      */
     sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
+
+    /**
+     * If this is a `sequra` PaymentMethod, this sub-hash contains details about the SeQura payment method options.
+     */
+    sequra?: Emptyable<PaymentMethodOptions.Sequra>;
 
     /**
      * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
@@ -11103,6 +11128,8 @@ export namespace PaymentIntentCreateParams {
       iban: string;
     }
 
+    export interface Sequra {}
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -11688,6 +11715,11 @@ export namespace PaymentIntentCreateParams {
       code?: string;
 
       /**
+       * Details of the BLIK mandate
+       */
+      mandate_options?: Blik.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -11698,7 +11730,7 @@ export namespace PaymentIntentCreateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: Emptyable<'none'>;
+      setup_future_usage?: Emptyable<Blik.SetupFutureUsage>;
     }
 
     export interface Boleto {
@@ -11780,6 +11812,11 @@ export namespace PaymentIntentCreateParams {
       payment_details?: Card.PaymentDetails;
 
       /**
+       * Controls whether Stripe may synchronously request a real-time card account update on this confirmation. Use `if_available` to allow the update and `never` to opt out. Defaults to `if_available` when omitted. Only valid on confirmation; does not affect batch Card Account Updater.
+       */
+      request_card_account_update?: Card.RequestCardAccountUpdate;
+
+      /**
        * Request ability to [decrement the authorization](https://docs.stripe.com/payments/decremental-authorization) for this PaymentIntent.
        */
       request_decremental_authorization?: Card.RequestDecrementalAuthorization;
@@ -11825,6 +11862,11 @@ export namespace PaymentIntentCreateParams {
       require_cvc_recollection?: boolean;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -11851,6 +11893,17 @@ export namespace PaymentIntentCreateParams {
        * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
        */
       statement_details?: Emptyable<Card.StatementDetails>;
+
+      /**
+       * Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
+       *
+       *  When making an off session payment with a previously saved card (that was saved with a SetupIntent or with a PaymentIntent with `setup_future_usage`), set this parameter to indicate the type of transaction.
+       *
+       *  You can set this parameter at any time before or during PaymentIntent confirmation, and confirm this PaymentIntent with `off_session=true`.
+       *
+       *  Note that this parameter is currently unsupported with the `setup_future_usage` parameter.
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -12517,15 +12570,6 @@ export namespace PaymentIntentCreateParams {
 
     export interface Paypay {
       /**
-       * Controls when the funds are captured from the customer's account.
-       *
-       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
-       *
-       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
-       */
-      capture_method?: Emptyable<'manual'>;
-
-      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -12722,6 +12766,30 @@ export namespace PaymentIntentCreateParams {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+    }
+
+    export interface Sequra {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface Shopeepay {
@@ -13102,6 +13170,17 @@ export namespace PaymentIntentCreateParams {
       }
     }
 
+    export namespace Blik {
+      export interface MandateOptions {
+        /**
+         * Expiry date of the mandate.
+         */
+        expires_at?: number;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Boleto {
       export type SetupFutureUsage =
         | 'none'
@@ -13210,6 +13289,8 @@ export namespace PaymentIntentCreateParams {
         money_services?: PaymentDetails.MoneyServices;
       }
 
+      export type RequestCardAccountUpdate = 'if_available' | 'never';
+
       export type RequestDecrementalAuthorization =
         | 'if_available'
         | 'never'
@@ -13245,6 +13326,12 @@ export namespace PaymentIntentCreateParams {
         | 'challenge'
         | OtherString;
 
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export type SetupFutureUsage =
         | 'none'
         | 'off_session'
@@ -13262,6 +13349,12 @@ export namespace PaymentIntentCreateParams {
          */
         phone?: string;
       }
+
+      export type StoredCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
 
       export interface ThreeDSecure {
         /**
@@ -15732,6 +15825,7 @@ export namespace PaymentIntentUpdateParams {
     | 'boleto'
     | 'capchase_pay'
     | 'card'
+    | 'card_present'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -15752,6 +15846,7 @@ export namespace PaymentIntentUpdateParams {
     | 'grabpay'
     | 'id_bank_transfer'
     | 'ideal'
+    | 'interac_present'
     | 'kakao_pay'
     | 'klarna'
     | 'knet'
@@ -16303,6 +16398,11 @@ export namespace PaymentIntentUpdateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+     */
+    sequra?: PaymentMethodData.Sequra;
+
+    /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
      */
     shared_payment_granted_token?: string;
@@ -16643,6 +16743,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
      */
     sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
+
+    /**
+     * If this is a `sequra` PaymentMethod, this sub-hash contains details about the SeQura payment method options.
+     */
+    sequra?: Emptyable<PaymentMethodOptions.Sequra>;
 
     /**
      * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
@@ -19771,6 +19876,8 @@ export namespace PaymentIntentUpdateParams {
       iban: string;
     }
 
+    export interface Sequra {}
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -20356,6 +20463,11 @@ export namespace PaymentIntentUpdateParams {
       code?: string;
 
       /**
+       * Details of the BLIK mandate
+       */
+      mandate_options?: Blik.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -20366,7 +20478,7 @@ export namespace PaymentIntentUpdateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: Emptyable<'none'>;
+      setup_future_usage?: Emptyable<Blik.SetupFutureUsage>;
     }
 
     export interface Boleto {
@@ -20448,6 +20560,11 @@ export namespace PaymentIntentUpdateParams {
       payment_details?: Card.PaymentDetails;
 
       /**
+       * Controls whether Stripe may synchronously request a real-time card account update on this confirmation. Use `if_available` to allow the update and `never` to opt out. Defaults to `if_available` when omitted. Only valid on confirmation; does not affect batch Card Account Updater.
+       */
+      request_card_account_update?: Card.RequestCardAccountUpdate;
+
+      /**
        * Request ability to [decrement the authorization](https://docs.stripe.com/payments/decremental-authorization) for this PaymentIntent.
        */
       request_decremental_authorization?: Card.RequestDecrementalAuthorization;
@@ -20493,6 +20610,11 @@ export namespace PaymentIntentUpdateParams {
       require_cvc_recollection?: boolean;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -20519,6 +20641,17 @@ export namespace PaymentIntentUpdateParams {
        * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
        */
       statement_details?: Emptyable<Card.StatementDetails>;
+
+      /**
+       * Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
+       *
+       *  When making an off session payment with a previously saved card (that was saved with a SetupIntent or with a PaymentIntent with `setup_future_usage`), set this parameter to indicate the type of transaction.
+       *
+       *  You can set this parameter at any time before or during PaymentIntent confirmation, and confirm this PaymentIntent with `off_session=true`.
+       *
+       *  Note that this parameter is currently unsupported with the `setup_future_usage` parameter.
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -21185,15 +21318,6 @@ export namespace PaymentIntentUpdateParams {
 
     export interface Paypay {
       /**
-       * Controls when the funds are captured from the customer's account.
-       *
-       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
-       *
-       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
-       */
-      capture_method?: Emptyable<'manual'>;
-
-      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -21390,6 +21514,30 @@ export namespace PaymentIntentUpdateParams {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+    }
+
+    export interface Sequra {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface Shopeepay {
@@ -21770,6 +21918,17 @@ export namespace PaymentIntentUpdateParams {
       }
     }
 
+    export namespace Blik {
+      export interface MandateOptions {
+        /**
+         * Expiry date of the mandate.
+         */
+        expires_at?: number;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Boleto {
       export type SetupFutureUsage =
         | 'none'
@@ -21878,6 +22037,8 @@ export namespace PaymentIntentUpdateParams {
         money_services?: PaymentDetails.MoneyServices;
       }
 
+      export type RequestCardAccountUpdate = 'if_available' | 'never';
+
       export type RequestDecrementalAuthorization =
         | 'if_available'
         | 'never'
@@ -21913,6 +22074,12 @@ export namespace PaymentIntentUpdateParams {
         | 'challenge'
         | OtherString;
 
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export type SetupFutureUsage =
         | 'none'
         | 'off_session'
@@ -21930,6 +22097,12 @@ export namespace PaymentIntentUpdateParams {
          */
         phone?: string;
       }
+
+      export type StoredCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
 
       export interface ThreeDSecure {
         /**
@@ -27149,6 +27322,7 @@ export namespace PaymentIntentConfirmParams {
     | 'boleto'
     | 'capchase_pay'
     | 'card'
+    | 'card_present'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -27169,6 +27343,7 @@ export namespace PaymentIntentConfirmParams {
     | 'grabpay'
     | 'id_bank_transfer'
     | 'ideal'
+    | 'interac_present'
     | 'kakao_pay'
     | 'klarna'
     | 'knet'
@@ -27722,6 +27897,11 @@ export namespace PaymentIntentConfirmParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+     */
+    sequra?: PaymentMethodData.Sequra;
+
+    /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
      */
     shared_payment_granted_token?: string;
@@ -28062,6 +28242,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
      */
     sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
+
+    /**
+     * If this is a `sequra` PaymentMethod, this sub-hash contains details about the SeQura payment method options.
+     */
+    sequra?: Emptyable<PaymentMethodOptions.Sequra>;
 
     /**
      * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
@@ -31194,6 +31379,8 @@ export namespace PaymentIntentConfirmParams {
       iban: string;
     }
 
+    export interface Sequra {}
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -31779,6 +31966,11 @@ export namespace PaymentIntentConfirmParams {
       code?: string;
 
       /**
+       * Details of the BLIK mandate
+       */
+      mandate_options?: Blik.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -31789,7 +31981,7 @@ export namespace PaymentIntentConfirmParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: Emptyable<'none'>;
+      setup_future_usage?: Emptyable<Blik.SetupFutureUsage>;
     }
 
     export interface Boleto {
@@ -31871,6 +32063,11 @@ export namespace PaymentIntentConfirmParams {
       payment_details?: Card.PaymentDetails;
 
       /**
+       * Controls whether Stripe may synchronously request a real-time card account update on this confirmation. Use `if_available` to allow the update and `never` to opt out. Defaults to `if_available` when omitted. Only valid on confirmation; does not affect batch Card Account Updater.
+       */
+      request_card_account_update?: Card.RequestCardAccountUpdate;
+
+      /**
        * Request ability to [decrement the authorization](https://docs.stripe.com/payments/decremental-authorization) for this PaymentIntent.
        */
       request_decremental_authorization?: Card.RequestDecrementalAuthorization;
@@ -31916,6 +32113,11 @@ export namespace PaymentIntentConfirmParams {
       require_cvc_recollection?: boolean;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -31942,6 +32144,17 @@ export namespace PaymentIntentConfirmParams {
        * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
        */
       statement_details?: Emptyable<Card.StatementDetails>;
+
+      /**
+       * Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
+       *
+       *  When making an off session payment with a previously saved card (that was saved with a SetupIntent or with a PaymentIntent with `setup_future_usage`), set this parameter to indicate the type of transaction.
+       *
+       *  You can set this parameter at any time before or during PaymentIntent confirmation, and confirm this PaymentIntent with `off_session=true`.
+       *
+       *  Note that this parameter is currently unsupported with the `setup_future_usage` parameter.
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -32608,15 +32821,6 @@ export namespace PaymentIntentConfirmParams {
 
     export interface Paypay {
       /**
-       * Controls when the funds are captured from the customer's account.
-       *
-       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
-       *
-       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
-       */
-      capture_method?: Emptyable<'manual'>;
-
-      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -32813,6 +33017,30 @@ export namespace PaymentIntentConfirmParams {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+    }
+
+    export interface Sequra {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface Shopeepay {
@@ -33193,6 +33421,17 @@ export namespace PaymentIntentConfirmParams {
       }
     }
 
+    export namespace Blik {
+      export interface MandateOptions {
+        /**
+         * Expiry date of the mandate.
+         */
+        expires_at?: number;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Boleto {
       export type SetupFutureUsage =
         | 'none'
@@ -33301,6 +33540,8 @@ export namespace PaymentIntentConfirmParams {
         money_services?: PaymentDetails.MoneyServices;
       }
 
+      export type RequestCardAccountUpdate = 'if_available' | 'never';
+
       export type RequestDecrementalAuthorization =
         | 'if_available'
         | 'never'
@@ -33336,6 +33577,12 @@ export namespace PaymentIntentConfirmParams {
         | 'challenge'
         | OtherString;
 
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export type SetupFutureUsage =
         | 'none'
         | 'off_session'
@@ -33353,6 +33600,12 @@ export namespace PaymentIntentConfirmParams {
          */
         phone?: string;
       }
+
+      export type StoredCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
 
       export interface ThreeDSecure {
         /**

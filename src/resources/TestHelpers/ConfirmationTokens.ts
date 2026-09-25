@@ -349,6 +349,11 @@ export namespace TestHelpers {
       sepa_debit?: PaymentMethodData.SepaDebit;
 
       /**
+       * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+       */
+      sequra?: PaymentMethodData.Sequra;
+
+      /**
        * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
        */
       shared_payment_granted_token?: string;
@@ -726,6 +731,8 @@ export namespace TestHelpers {
          */
         iban: string;
       }
+
+      export interface Sequra {}
 
       export interface Shopeepay {}
 

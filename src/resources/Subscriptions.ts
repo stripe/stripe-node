@@ -1618,7 +1618,7 @@ export interface Subscription {
    *
    * A subscription that is currently in a trial period is `trialing` and moves to `active` when the trial period is over.
    *
-   * A subscription can only enter a `paused` status [when a trial ends without a payment method](https://docs.stripe.com/billing/subscriptions/trials#create-free-trials-without-payment). A `paused` subscription doesn't generate invoices and can be resumed after your customer adds their payment method. The `paused` status is different from [pausing collection](https://docs.stripe.com/billing/subscriptions/pause-payment), which still generates invoices and leaves the subscription's status unchanged.
+   * A subscription can only enter a `paused` status [when a trial ends without a payment method](https://docs.stripe.com/billing/subscriptions/trials/free-trials#create-free-trials-without-payment). A `paused` subscription doesn't generate invoices and can be resumed after your customer adds their payment method. The `paused` status is different from [pausing collection](https://docs.stripe.com/billing/subscriptions/pause-payment), which still generates invoices and leaves the subscription's status unchanged.
    *
    * If subscription `collection_method=charge_automatically`, it becomes `past_due` when payment is required but cannot be paid (due to failed payment or awaiting additional user actions). Once Stripe has exhausted all payment retry attempts, the subscription will become `canceled` or `unpaid` (depending on your subscriptions settings).
    *
@@ -1910,7 +1910,7 @@ export namespace Subscription {
     trial_end: number | null;
 
     /**
-     * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials) to learn more.
+     * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials/free-trials) to learn more.
      */
     trial_from_plan: boolean | null;
   }
@@ -2995,17 +2995,17 @@ export interface SubscriptionCreateParams {
   transfer_data?: SubscriptionCreateParams.TransferData;
 
   /**
-   * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials) to learn more.
+   * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials/free-trials) to learn more.
    */
   trial_end?: 'now' | number;
 
   /**
-   * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials) to learn more.
+   * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials/free-trials) to learn more.
    */
   trial_from_plan?: boolean;
 
   /**
-   * Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials) to learn more.
+   * Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials/free-trials) to learn more.
    */
   trial_period_days?: number;
 
@@ -4323,7 +4323,7 @@ export namespace SubscriptionCreateParams {
           /**
            * Date when the mandate expires and no further payments will be charged. If not provided, the mandate will be set to be indefinite.
            */
-          expires_after?: number;
+          expires_at?: number;
         }
       }
 
@@ -4578,7 +4578,7 @@ export namespace SubscriptionCreateParams {
       /**
        * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
        */
-      missing_payment_method: EndBehavior.MissingPaymentMethod;
+      missing_payment_method?: EndBehavior.MissingPaymentMethod;
     }
 
     export namespace EndBehavior {
@@ -4620,7 +4620,7 @@ export interface SubscriptionUpdateParams {
   billing_cadence?: string;
 
   /**
-   * Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
+   * Controls how the subscription's billing cycle anchor changes. Set `type` to `now` to reset the billing cycle anchor to the current time (in UTC), or `unchanged` to preserve it. For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
    */
   billing_cycle_anchor?: SubscriptionUpdateParams.BillingCycleAnchor;
 
@@ -4769,7 +4769,7 @@ export interface SubscriptionUpdateParams {
   trial_end?: 'now' | number;
 
   /**
-   * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials) to learn more.
+   * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials/free-trials) to learn more.
    */
   trial_from_plan?: boolean;
 
@@ -4833,7 +4833,17 @@ export namespace SubscriptionUpdateParams {
     liability?: AutomaticTax.Liability;
   }
 
-  export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+  export interface BillingCycleAnchor {
+    /**
+     * A Unix timestamp within the inclusive bounds of the subscription's current billing period. For subscriptions with multiple items, it must fall within the intersection of their current billing periods. Only valid when `type` is `timestamp`.
+     */
+    timestamp?: number;
+
+    /**
+     * Determines how the billing cycle anchor changes when the subscription is updated.
+     */
+    type: BillingCycleAnchor.Type;
+  }
 
   export interface BillingSchedule {
     /**
@@ -5262,6 +5272,10 @@ export namespace SubscriptionUpdateParams {
     export namespace Liability {
       export type Type = 'account' | 'application' | 'self' | OtherString;
     }
+  }
+
+  export namespace BillingCycleAnchor {
+    export type Type = 'now' | 'timestamp' | 'unchanged' | OtherString;
   }
 
   export namespace BillingSchedule {
@@ -6079,7 +6093,7 @@ export namespace SubscriptionUpdateParams {
           /**
            * Date when the mandate expires and no further payments will be charged. If not provided, the mandate will be set to be indefinite.
            */
-          expires_after?: number;
+          expires_at?: number;
         }
       }
 
@@ -6334,7 +6348,7 @@ export namespace SubscriptionUpdateParams {
       /**
        * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
        */
-      missing_payment_method: EndBehavior.MissingPaymentMethod;
+      missing_payment_method?: EndBehavior.MissingPaymentMethod;
     }
 
     export namespace EndBehavior {
@@ -6637,7 +6651,17 @@ export interface SubscriptionResumeParams {
   proration_date?: number;
 }
 export namespace SubscriptionResumeParams {
-  export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+  export interface BillingCycleAnchor {
+    /**
+     * A Unix timestamp within the inclusive bounds of the subscription's current billing period. For subscriptions with multiple items, it must fall within the intersection of their current billing periods. Only valid when `type` is `timestamp`.
+     */
+    timestamp?: number;
+
+    /**
+     * Determines how the billing cycle anchor changes when the subscription resumes.
+     */
+    type: BillingCycleAnchor.Type;
+  }
 
   export type PaymentBehavior =
     | 'resume_on_payment_attempt'
@@ -6649,6 +6673,10 @@ export namespace SubscriptionResumeParams {
     | 'create_prorations'
     | 'none'
     | OtherString;
+
+  export namespace BillingCycleAnchor {
+    export type Type = 'now' | 'timestamp' | 'unchanged' | OtherString;
+  }
 }
 export interface SubscriptionSearchParams {
   /**

@@ -794,6 +794,11 @@ export interface Session {
   allow_promotion_codes: boolean | null;
 
   /**
+   * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
+   */
+  allowed_payment_method_types: Array<string> | null;
+
+  /**
    * Total of all items before discounts or taxes are applied.
    */
   amount_subtotal: number | null;
@@ -1771,6 +1776,11 @@ export namespace Session {
     allow_redisplay_filters: Array<
       SavedPaymentMethodOptions.AllowRedisplayFilter
     > | null;
+
+    /**
+     * The ID of a saved payment method to select when the Payment Element renders, for example `pm_1MqLiJLkdIwHu7ixUEgbFdYF`. Takes precedence over the customer's default payment method. If the ID doesn't match one of the payment methods the Element is displaying, the Element selects a payment method as it normally would and no error is returned. Preselecting a payment method never changes which payment methods the Element displays, and never modifies the payment method, the customer, or this session. The preselection is fixed once set. To preselect a different payment method, create a new session. An Element that's already on the page keeps its current selection.
+     */
+    payment_method_preselect?: string | null;
 
     /**
      * Enable customers to choose if they wish to remove their saved payment methods. Disabled by default.
@@ -2918,12 +2928,19 @@ export namespace Session {
       export namespace TrialSettings {
         export interface EndBehavior {
           /**
+           * Indicates how the subscription's billing cycle anchor is reset when a trial ends. If not set, the default is `now`.
+           */
+          billing_cycle_anchor?: EndBehavior.BillingCycleAnchor | null;
+
+          /**
            * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
            */
           missing_payment_method: EndBehavior.MissingPaymentMethod;
         }
 
         export namespace EndBehavior {
+          export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+
           export type MissingPaymentMethod =
             | 'cancel'
             | 'create_invoice'
@@ -4766,6 +4783,17 @@ export namespace Checkout {
     allow_promotion_codes?: boolean;
 
     /**
+     * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
+     *
+     * Unlike `payment_method_types`, this acts as a filter on the dynamically computed set of
+     * eligible payment methods rather than an explicit static list. Only payment methods that
+     * are both dynamically eligible and present in this list will be offered to the customer.
+     */
+    allowed_payment_method_types?: Array<
+      SessionCreateParams.AllowedPaymentMethodType
+    >;
+
+    /**
      * Determines whether the customer's attempt to pay must be manually approved.
      *
      * Default is `auto`, when the customer's attempt to pay is approved automatically with no action required on your server.
@@ -5008,21 +5036,6 @@ export namespace Checkout {
     payment_method_options?: SessionCreateParams.PaymentMethodOptions;
 
     /**
-     * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
-     *
-     * You can omit this attribute to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
-     * See [Dynamic Payment Methods](https://docs.stripe.com/payments/payment-methods/integration-options#using-dynamic-payment-methods) for more details.
-     *
-     * Read more about the supported payment methods and their requirements in our [payment
-     * method details guide](https://docs.stripe.com/docs/payments/checkout/payment-methods).
-     *
-     * If multiple payment methods are passed, Checkout will dynamically reorder them to
-     * prioritize the most relevant payment methods based on the customer's location and
-     * other characteristics.
-     */
-    payment_method_types?: Array<SessionCreateParams.PaymentMethodType>;
-
-    /**
      * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object. Can only be set when creating `embedded` or `custom` sessions.
      *
      * For specific permissions, please refer to their dedicated subsections, such as `permissions.update_shipping_details`.
@@ -5122,6 +5135,69 @@ export namespace Checkout {
        */
       recovery?: AfterExpiration.Recovery;
     }
+
+    export type AllowedPaymentMethodType =
+      | 'acss_debit'
+      | 'affirm'
+      | 'afterpay_clearpay'
+      | 'alipay'
+      | 'alma'
+      | 'amazon_pay'
+      | 'au_becs_debit'
+      | 'bacs_debit'
+      | 'bancontact'
+      | 'billie'
+      | 'bizum'
+      | 'blik'
+      | 'boleto'
+      | 'card'
+      | 'cashapp'
+      | 'crypto'
+      | 'customer_balance'
+      | 'eps'
+      | 'fpx'
+      | 'giropay'
+      | 'gopay'
+      | 'grabpay'
+      | 'ideal'
+      | 'kakao_pay'
+      | 'klarna'
+      | 'konbini'
+      | 'kr_card'
+      | 'link'
+      | 'mb_way'
+      | 'mobilepay'
+      | 'multibanco'
+      | 'naver_pay'
+      | 'nz_bank_account'
+      | 'oxxo'
+      | 'p24'
+      | 'pay_by_bank'
+      | 'payco'
+      | 'paynow'
+      | 'paypal'
+      | 'paypay'
+      | 'payto'
+      | 'pix'
+      | 'promptpay'
+      | 'qris'
+      | 'rechnung'
+      | 'revolut_pay'
+      | 'samsung_pay'
+      | 'satispay'
+      | 'scalapay'
+      | 'sepa_debit'
+      | 'sequra'
+      | 'shopeepay'
+      | 'sofort'
+      | 'sunbit'
+      | 'swish'
+      | 'twint'
+      | 'upi'
+      | 'us_bank_account'
+      | 'wechat_pay'
+      | 'zip'
+      | OtherString;
 
     export type ApprovalMethod = 'auto' | 'manual' | OtherString;
 
@@ -5381,6 +5457,7 @@ export namespace Checkout {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'sunbit'
@@ -5843,6 +5920,11 @@ export namespace Checkout {
       sepa_debit?: PaymentMethodOptions.SepaDebit;
 
       /**
+       * contains details about the SeQura payment method options.
+       */
+      sequra?: PaymentMethodOptions.Sequra;
+
+      /**
        * contains details about the Sofort payment method options.
        */
       sofort?: PaymentMethodOptions.Sofort;
@@ -5877,69 +5959,6 @@ export namespace Checkout {
        */
       wechat_pay?: PaymentMethodOptions.WechatPay;
     }
-
-    export type PaymentMethodType =
-      | 'acss_debit'
-      | 'affirm'
-      | 'afterpay_clearpay'
-      | 'alipay'
-      | 'alma'
-      | 'amazon_pay'
-      | 'au_becs_debit'
-      | 'bacs_debit'
-      | 'bancontact'
-      | 'billie'
-      | 'bizum'
-      | 'blik'
-      | 'boleto'
-      | 'card'
-      | 'cashapp'
-      | 'crypto'
-      | 'customer_balance'
-      | 'eps'
-      | 'fpx'
-      | 'giropay'
-      | 'gopay'
-      | 'grabpay'
-      | 'ideal'
-      | 'kakao_pay'
-      | 'klarna'
-      | 'konbini'
-      | 'kr_card'
-      | 'link'
-      | 'mb_way'
-      | 'mobilepay'
-      | 'multibanco'
-      | 'naver_pay'
-      | 'nz_bank_account'
-      | 'oxxo'
-      | 'p24'
-      | 'pay_by_bank'
-      | 'payco'
-      | 'paynow'
-      | 'paypal'
-      | 'paypay'
-      | 'payto'
-      | 'pix'
-      | 'promptpay'
-      | 'qris'
-      | 'rechnung'
-      | 'revolut_pay'
-      | 'samsung_pay'
-      | 'satispay'
-      | 'scalapay'
-      | 'sepa_debit'
-      | 'sequra'
-      | 'shopeepay'
-      | 'sofort'
-      | 'sunbit'
-      | 'swish'
-      | 'twint'
-      | 'upi'
-      | 'us_bank_account'
-      | 'wechat_pay'
-      | 'zip'
-      | OtherString;
 
     export interface Permissions {
       /**
@@ -5995,6 +6014,11 @@ export namespace Checkout {
       allow_redisplay_filters?: Array<
         SavedPaymentMethodOptions.AllowRedisplayFilter
       >;
+
+      /**
+       * The ID of a saved payment method to select when the Payment Element renders, for example `pm_1MqLiJLkdIwHu7ixUEgbFdYF`. Takes precedence over the customer's default payment method. If the ID doesn't match one of the payment methods the Element is displaying, the Element selects a payment method as it normally would and no error is returned. Preselecting a payment method never changes which payment methods the Element displays, and never modifies the payment method, the customer, or this session. The preselection is fixed once set. To preselect a different payment method, create a new session. An Element that's already on the page keeps its current selection.
+       */
+      payment_method_preselect?: string;
 
       /**
        * Enable customers to choose if they wish to remove their saved payment methods. Disabled by default.
@@ -6897,12 +6921,19 @@ export namespace Checkout {
         export namespace TrialSettings {
           export interface EndBehavior {
             /**
+             * Indicates how the subscription's billing cycle anchor is reset when a trial ends. Defaults to `now`.
+             */
+            billing_cycle_anchor?: EndBehavior.BillingCycleAnchor;
+
+            /**
              * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
              */
             missing_payment_method: EndBehavior.MissingPaymentMethod;
           }
 
           export namespace EndBehavior {
+            export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+
             export type MissingPaymentMethod =
               | 'cancel'
               | 'create_invoice'
@@ -7315,7 +7346,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: Bancontact.SetupFutureUsage;
       }
 
       export interface Billie {
@@ -7936,6 +7967,13 @@ export namespace Checkout {
         target_date?: string;
       }
 
+      export interface Sequra {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        capture_method?: 'manual';
+      }
+
       export interface Sofort {
         /**
          * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -8132,6 +8170,10 @@ export namespace Checkout {
           | OtherString;
       }
 
+      export namespace Bancontact {
+        export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+      }
+
       export namespace Bizum {
         export interface MandateOptions {}
       }
@@ -8141,14 +8183,10 @@ export namespace Checkout {
           /**
            * Date when the mandate expires and no further payments will be charged. If not provided, the mandate will be set to be indefinite.
            */
-          expires_after?: number;
+          expires_at?: number;
         }
 
-        export type SetupFutureUsage =
-          | 'none'
-          | 'off_session'
-          | 'on_session'
-          | OtherString;
+        export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
       }
 
       export namespace Boleto {
@@ -9184,12 +9222,19 @@ export namespace Checkout {
       export namespace TrialSettings {
         export interface EndBehavior {
           /**
+           * Indicates how the subscription's billing cycle anchor is reset when a trial ends. Defaults to `now`.
+           */
+          billing_cycle_anchor?: EndBehavior.BillingCycleAnchor;
+
+          /**
            * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
            */
           missing_payment_method: EndBehavior.MissingPaymentMethod;
         }
 
         export namespace EndBehavior {
+          export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+
           export type MissingPaymentMethod =
             | 'cancel'
             | 'create_invoice'

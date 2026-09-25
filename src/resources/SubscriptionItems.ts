@@ -548,7 +548,7 @@ export interface SubscriptionItem {
   /**
    * The current trial that is applied to this subscription item.
    */
-  current_trial?: SubscriptionItem.CurrentTrial | null;
+  current_trial: SubscriptionItem.CurrentTrial | null;
 
   /**
    * Always true for a deleted object

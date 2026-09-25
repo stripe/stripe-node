@@ -101,6 +101,11 @@ export interface Form {
   payee: Form.Payee;
 
   /**
+   * Whether the tax form is a mutable draft or a finalized form.
+   */
+  status?: Form.Status;
+
+  /**
    * The type of the tax form. An additional hash is included on the tax form with a name matching this value. It contains additional information specific to the tax form type.
    */
   type: Form.Type;
@@ -203,6 +208,8 @@ export namespace Form {
     type: Payee.Type;
   }
 
+  export type Status = 'draft' | 'finalized';
+
   export type Type =
     | 'au_serr'
     | 'ca_mrdp'
@@ -215,24 +222,125 @@ export namespace Form {
     | OtherString;
 
   export interface Us1099K {
+    card_not_present_transactions?: Us1099K.CardNotPresentTransactions;
+
+    cash_tips?: Us1099K.CashTips;
+
+    /**
+     * The currency of the amounts on the form. Always `usd`.
+     */
+    currency?: string;
+
+    federal_income_tax_withheld?: Us1099K.FederalIncomeTaxWithheld;
+
+    /**
+     * The gross amount of payment transactions, as a decimal string in USD.
+     */
+    gross_amount_of_transactions_decimal?: string;
+
+    /**
+     * The gross amounts for each month, ordered from January through December.
+     */
+    monthly_volumes?: Array<Us1099K.MonthlyVolume>;
+
+    payment_transactions_count?: Us1099K.PaymentTransactionsCount;
+
     /**
      * Year represented by the information reported on the tax form.
      */
     reporting_year: number;
+
+    state_income_tax_withheld?: Us1099K.StateIncomeTaxWithheld;
   }
 
   export interface Us1099Misc {
+    cash_tips?: Us1099Misc.CashTips;
+
+    crop_insurance_proceeds?: Us1099Misc.CropInsuranceProceeds;
+
+    /**
+     * The currency of the amounts on the form. Always `usd`.
+     */
+    currency?: string;
+
+    /**
+     * Whether direct sales of at least $5,000 of consumer products were made for resale.
+     */
+    direct_sales_for_resale?: boolean;
+
+    excess_golden_parachute_payments?: Us1099Misc.ExcessGoldenParachutePayments;
+
+    /**
+     * Whether the FATCA filing requirement applies.
+     */
+    fatca_filing_required?: boolean;
+
+    federal_income_tax_withheld?: Us1099Misc.FederalIncomeTaxWithheld;
+
+    fish_purchased_for_resale?: Us1099Misc.FishPurchasedForResale;
+
+    fishing_boat_proceeds?: Us1099Misc.FishingBoatProceeds;
+
+    gross_proceeds_paid_to_an_attorney?: Us1099Misc.GrossProceedsPaidToAnAttorney;
+
+    medical_and_health_care_payments?: Us1099Misc.MedicalAndHealthCarePayments;
+
+    nonqualified_deferred_compensation?: Us1099Misc.NonqualifiedDeferredCompensation;
+
+    other_income?: Us1099Misc.OtherIncome;
+
+    overtime_compensation?: Us1099Misc.OvertimeCompensation;
+
+    rents?: Us1099Misc.Rents;
+
     /**
      * Year represented by the information reported on the tax form.
      */
     reporting_year: number;
+
+    royalties?: Us1099Misc.Royalties;
+
+    section_409a_deferrals?: Us1099Misc.Section409aDeferrals;
+
+    state_income?: Us1099Misc.StateIncome;
+
+    state_tax_withheld?: Us1099Misc.StateTaxWithheld;
+
+    substitute_payments?: Us1099Misc.SubstitutePayments;
   }
 
   export interface Us1099Nec {
+    cash_tips?: Us1099Nec.CashTips;
+
+    /**
+     * The currency of the amounts on the form. Always `usd`.
+     */
+    currency?: string;
+
+    /**
+     * Whether direct sales of at least $5,000 of consumer products were made for resale.
+     */
+    direct_sales_indicator?: boolean;
+
+    /**
+     * Whether the FATCA filing requirement applies.
+     */
+    fatca_filing_requirement?: boolean;
+
+    federal_income_tax_withheld?: Us1099Nec.FederalIncomeTaxWithheld;
+
+    nonemployee_compensation?: Us1099Nec.NonemployeeCompensation;
+
+    overtime_compensation?: Us1099Nec.OvertimeCompensation;
+
     /**
      * Year represented by the information reported on the tax form.
      */
     reporting_year: number;
+
+    state_income?: Us1099Nec.StateIncome;
+
+    state_tax_withheld?: Us1099Nec.StateTaxWithheld;
   }
 
   export namespace FilingStatus {
@@ -263,6 +371,360 @@ export namespace Form {
   export namespace Payee {
     export type Type = 'account' | 'external_reference' | OtherString;
   }
+
+  export namespace Us1099K {
+    export interface CardNotPresentTransactions {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface CashTips {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface FederalIncomeTaxWithheld {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface MonthlyVolume {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface PaymentTransactionsCount {
+      /**
+       * The effective number of transactions.
+       */
+      count?: number;
+
+      /**
+       * The signed adjustment included in the effective count. Only present for drafts.
+       */
+      delta?: number;
+    }
+
+    export interface StateIncomeTaxWithheld {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+  }
+
+  export namespace Us1099Misc {
+    export interface CashTips {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface CropInsuranceProceeds {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface ExcessGoldenParachutePayments {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface FederalIncomeTaxWithheld {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface FishPurchasedForResale {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface FishingBoatProceeds {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface GrossProceedsPaidToAnAttorney {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface MedicalAndHealthCarePayments {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface NonqualifiedDeferredCompensation {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface OtherIncome {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface OvertimeCompensation {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface Rents {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface Royalties {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface Section409aDeferrals {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface StateIncome {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface StateTaxWithheld {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface SubstitutePayments {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+  }
+
+  export namespace Us1099Nec {
+    export interface CashTips {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface FederalIncomeTaxWithheld {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface NonemployeeCompensation {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface OvertimeCompensation {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface StateIncome {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+
+    export interface StateTaxWithheld {
+      /**
+       * The signed adjustment included in the effective amount, as a decimal string. Only present for drafts.
+       */
+      delta_decimal?: string;
+
+      /**
+       * The effective amount in the form's currency, as a decimal string.
+       */
+      volume_decimal?: string;
+    }
+  }
 }
 export namespace Tax {
   export interface FormRetrieveParams {
@@ -283,6 +745,11 @@ export namespace Tax {
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+
+    /**
+     * Filter forms by draft or finalized status.
+     */
+    status?: FormListParams.Status;
 
     /**
      * An optional filter on the list, based on the object `type` field. Without the filter, the list includes all current and future tax form types. If your integration expects only one type of tax form in the response, make sure to provide a type value in the request.
@@ -307,6 +774,8 @@ export namespace Tax {
        */
       type?: Payee.Type;
     }
+
+    export type Status = 'draft' | 'finalized' | OtherString;
 
     export type Type =
       | 'au_serr'

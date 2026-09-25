@@ -26,6 +26,7 @@ export class OutboundSetupIntentResource extends StripeResource {
   /**
    * Create an OutboundSetupIntent object.
    * @throws Stripe.BlockedByStripeError
+   * @throws Stripe.CannotProceedError
    * @throws Stripe.InvalidPayoutMethodError
    * @throws Stripe.QuotaExceededError
    * @throws Stripe.ControlledByAlternateResourceError
@@ -180,6 +181,11 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface OutboundSetupIntentCreateParams {
       /**
+       * An existing resource to use as the source for setting up outbound credentials.
+       */
+      from_resource?: OutboundSetupIntentCreateParams.FromResource;
+
+      /**
        * If provided, the existing payout method resource to link to this setup intent.
        * Any payout_method_data provided is used to update information on this linked payout method resource.
        */
@@ -199,6 +205,18 @@ export namespace V2 {
     }
 
     export namespace OutboundSetupIntentCreateParams {
+      export interface FromResource {
+        /**
+         * The identifier of the source resource.
+         */
+        id: string;
+
+        /**
+         * The type of the source resource.
+         */
+        type: FromResource.Type;
+      }
+
       export interface PayoutMethodData {
         /**
          * The type specific details of the Apple Pay payout method.
@@ -227,6 +245,10 @@ export namespace V2 {
       }
 
       export type UsageIntent = 'payment' | 'transfer';
+
+      export namespace FromResource {
+        export type Type = 'payment_method' | OtherString;
+      }
 
       export namespace PayoutMethodData {
         export interface ApplePay {

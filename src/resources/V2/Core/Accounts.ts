@@ -1122,6 +1122,23 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            satispay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                             sepa_bank_transfer_payments: {
                               kind: 'object',
                               fields: {
@@ -1140,6 +1157,23 @@ export class AccountResource extends StripeResource {
                               },
                             },
                             sepa_debit_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            sequra_payments: {
                               kind: 'object',
                               fields: {
                                 protections: {
@@ -1365,6 +1399,27 @@ export class AccountResource extends StripeResource {
                                         },
                                       },
                                     },
+                                    ousd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
                                     usd: {
                                       kind: 'object',
                                       fields: {
@@ -1476,6 +1531,27 @@ export class AccountResource extends StripeResource {
                                       },
                                     },
                                     gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    ousd: {
                                       kind: 'object',
                                       fields: {
                                         protections: {
@@ -3332,6 +3408,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                       },
+                      satispay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
                       sepa_bank_transfer_payments: {
                         kind: 'object',
                         fields: {
@@ -3350,6 +3443,23 @@ export class AccountResource extends StripeResource {
                         },
                       },
                       sepa_debit_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      sequra_payments: {
                         kind: 'object',
                         fields: {
                           protections: {
@@ -3557,6 +3667,23 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                               },
+                              ousd: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
                               usd: {
                                 kind: 'object',
                                 fields: {
@@ -3648,6 +3775,23 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                               gbp: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              ousd: {
                                 kind: 'object',
                                 fields: {
                                   protections: {
@@ -5434,6 +5578,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        satispay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         sepa_bank_transfer_payments: {
                           kind: 'object',
                           fields: {
@@ -5452,6 +5613,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         sepa_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        sequra_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -5667,6 +5845,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ousd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 usd: {
                                   kind: 'object',
                                   fields: {
@@ -5768,6 +5965,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                ousd: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -7588,6 +7804,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        satispay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         sepa_bank_transfer_payments: {
                           kind: 'object',
                           fields: {
@@ -7606,6 +7839,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         sepa_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        sequra_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -7821,6 +8071,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ousd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 usd: {
                                   kind: 'object',
                                   fields: {
@@ -7922,6 +8191,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                ousd: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -9723,6 +10011,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        satispay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         sepa_bank_transfer_payments: {
                           kind: 'object',
                           fields: {
@@ -9741,6 +10046,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         sepa_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        sequra_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -9956,6 +10278,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ousd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 usd: {
                                   kind: 'object',
                                   fields: {
@@ -10057,6 +10398,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                ousd: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -11003,7 +11363,7 @@ export namespace Account {
     network_business_profile?: string;
 
     /**
-     * Closed Enum. The type of related network object.
+     * Open Enum. The type of related network object.
      */
     type: RelatedNetworkObject.Type;
   }
@@ -11388,6 +11748,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -11433,6 +11794,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -11458,6 +11827,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -11503,6 +11873,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -11581,6 +11959,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -11626,6 +12005,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -11651,6 +12038,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -11696,6 +12084,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -11721,6 +12117,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -11766,6 +12163,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -11810,6 +12215,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -11855,6 +12261,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -11899,6 +12313,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -11944,6 +12359,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -12022,6 +12445,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -12067,6 +12491,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -12092,6 +12524,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -12137,6 +12570,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -12162,6 +12603,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -12207,6 +12649,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -12279,6 +12729,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -12324,6 +12775,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -12368,6 +12827,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -12413,6 +12873,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -12474,6 +12942,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -12519,6 +12988,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -12544,6 +13021,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -12589,6 +13067,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -12778,6 +13264,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -12823,6 +13310,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -12910,6 +13405,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -12955,6 +13451,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -13203,6 +13707,11 @@ export namespace Account {
         samsung_pay_payments?: Capabilities.SamsungPayPayments;
 
         /**
+         * Allow the merchant to process Satispay payments.
+         */
+        satispay_payments?: Capabilities.SatispayPayments;
+
+        /**
          * Allow the merchant to process SEPA bank transfer payments.
          */
         sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -13211,6 +13720,11 @@ export namespace Account {
          * Allow the merchant to process SEPA Direct Debit payments.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+        /**
+         * Allow the merchant to process SeQura payments.
+         */
+        sequra_payments?: Capabilities.SequraPayments;
 
         /**
          * Capabilities that enable the merchant to manage their Stripe Balance (/v1/balance).
@@ -13988,6 +14502,23 @@ export namespace Account {
           status_details: Array<SamsungPayPayments.StatusDetail>;
         }
 
+        export interface SatispayPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: SatispayPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: SatispayPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<SatispayPayments.StatusDetail>;
+        }
+
         export interface SepaBankTransferPayments {
           /**
            * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
@@ -14020,6 +14551,23 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<SepaDebitPayments.StatusDetail>;
+        }
+
+        export interface SequraPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: SequraPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: SequraPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<SequraPayments.StatusDetail>;
         }
 
         export interface StripeBalance {
@@ -14125,6 +14673,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -14170,6 +14719,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -14195,6 +14752,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -14240,6 +14798,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -14265,6 +14831,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -14310,6 +14877,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -14335,6 +14910,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -14380,6 +14956,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -14405,6 +14989,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -14450,6 +15035,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -14475,6 +15068,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -14520,6 +15114,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -14545,6 +15147,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -14590,6 +15193,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -14615,6 +15226,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -14660,6 +15272,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -14685,6 +15305,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -14730,6 +15351,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -14755,6 +15384,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -14800,6 +15430,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -14825,6 +15463,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -14870,6 +15509,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -14895,6 +15542,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -14940,6 +15588,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -14965,6 +15621,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15010,6 +15667,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15035,6 +15700,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15080,6 +15746,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15105,6 +15779,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15150,6 +15825,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15175,6 +15858,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15220,6 +15904,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15245,6 +15937,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15290,6 +15983,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15315,6 +16016,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15360,6 +16062,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15385,6 +16095,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15430,6 +16141,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15455,6 +16174,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15500,6 +16220,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15525,6 +16253,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15570,6 +16299,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15595,6 +16332,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15640,6 +16378,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15665,6 +16411,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15710,6 +16457,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15735,6 +16490,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15780,6 +16536,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15805,6 +16569,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15850,6 +16615,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15875,6 +16648,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15920,6 +16694,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -15945,6 +16727,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -15990,6 +16773,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16015,6 +16806,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16060,6 +16852,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16085,6 +16885,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16130,6 +16931,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16155,6 +16964,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16200,6 +17010,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16225,6 +17043,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16270,6 +17089,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16295,6 +17122,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16340,6 +17168,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16365,6 +17201,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16410,6 +17247,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16435,6 +17280,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16480,6 +17326,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16505,6 +17359,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16550,6 +17405,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16575,6 +17438,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16620,6 +17484,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16645,6 +17517,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16690,6 +17563,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16715,6 +17596,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16760,6 +17642,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16785,6 +17675,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16830,6 +17721,93 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace SatispayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16855,6 +17833,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16900,6 +17879,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -16925,6 +17912,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -16970,6 +17958,93 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace SequraPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -17013,6 +18088,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -17058,6 +18134,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -17084,6 +18168,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -17129,6 +18214,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -17154,6 +18247,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -17199,6 +18293,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -17224,6 +18326,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -17269,6 +18372,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -17294,6 +18405,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -17339,6 +18451,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -17364,6 +18484,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -17409,6 +18530,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -17784,6 +18913,11 @@ export namespace Account {
             gbp?: Inbound.Gbp;
 
             /**
+             * Can receive business storage-type funds on Stripe in OUSD.
+             */
+            ousd?: Inbound.Ousd;
+
+            /**
              * Can receive business storage-type funds on Stripe in USD.
              */
             usd?: Inbound.Usd;
@@ -17814,6 +18948,11 @@ export namespace Account {
              * Can send business storage-type funds on Stripe in GBP.
              */
             gbp?: Outbound.Gbp;
+
+            /**
+             * Can send business storage-type funds on Stripe in OUSD.
+             */
+            ousd?: Outbound.Ousd;
 
             /**
              * Can send business storage-type funds on Stripe in USD.
@@ -17895,6 +19034,23 @@ export namespace Account {
               status_details: Array<Gbp.StatusDetail>;
             }
 
+            export interface Ousd {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Ousd.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Ousd.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Ousd.StatusDetail>;
+            }
+
             export interface Usd {
               /**
                * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
@@ -17940,6 +19096,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -17985,6 +19142,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -18010,6 +19175,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -18055,6 +19221,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -18080,6 +19254,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -18125,6 +19300,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -18150,6 +19333,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -18195,6 +19379,93 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Ousd {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -18220,6 +19491,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -18265,6 +19537,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -18290,6 +19570,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -18335,6 +19616,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -18419,6 +19708,23 @@ export namespace Account {
               status_details: Array<Gbp.StatusDetail>;
             }
 
+            export interface Ousd {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Ousd.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Ousd.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Ousd.StatusDetail>;
+            }
+
             export interface Usd {
               /**
                * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
@@ -18464,6 +19770,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -18509,6 +19816,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -18534,6 +19849,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -18579,6 +19895,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -18604,6 +19928,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -18649,6 +19974,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -18674,6 +20007,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -18719,6 +20053,93 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Ousd {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -18744,6 +20165,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -18789,6 +20211,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -18814,6 +20244,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -18859,6 +20290,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -18946,6 +20385,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -18991,6 +20431,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -19016,6 +20464,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -19061,6 +20510,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -19122,6 +20579,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -19167,6 +20625,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -19192,6 +20658,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -19237,6 +20704,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -19282,6 +20757,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -19327,6 +20803,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -19439,6 +20923,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -19484,6 +20969,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -19509,6 +21002,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -19554,6 +21048,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -19579,6 +21081,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -19624,6 +21127,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -19649,6 +21160,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -19694,6 +21206,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -19719,6 +21239,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -19764,6 +21285,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -19842,6 +21371,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -19887,6 +21417,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -19912,6 +21450,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -19957,6 +21496,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -19982,6 +21529,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -20027,6 +21575,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -20088,6 +21644,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -20133,6 +21690,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -20158,6 +21723,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -20203,6 +21769,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -20247,6 +21821,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -20292,6 +21867,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -20713,6 +22296,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -20758,6 +22342,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -20783,6 +22375,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -20828,6 +22421,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -20853,6 +22454,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -20898,6 +22500,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -20923,6 +22533,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -20968,6 +22579,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -20993,6 +22612,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -21038,6 +22658,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -21063,6 +22691,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -21108,6 +22737,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -21133,6 +22770,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -21178,6 +22816,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -21203,6 +22849,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -21248,6 +22895,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -21273,6 +22928,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -21318,6 +22974,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -21343,6 +23007,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -21388,6 +23053,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -21413,6 +23086,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -21458,6 +23132,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -21483,6 +23165,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -21528,6 +23211,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -21553,6 +23244,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -21598,6 +23290,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -21624,6 +23324,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -21669,6 +23370,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -21694,6 +23403,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -21739,6 +23449,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -21764,6 +23482,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -21809,6 +23528,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -21869,6 +23596,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -21914,6 +23642,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -21939,6 +23675,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -21984,6 +23721,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -22371,8 +24116,10 @@ export namespace Account {
       export namespace Error {
         export type Code =
           | 'invalid_address_city_state_postal_code'
+          | 'invalid_address_cmra_address'
           | 'invalid_address_highway_contract_box'
           | 'invalid_address_private_mailbox'
+          | 'invalid_address_registered_agent_address'
           | 'invalid_business_profile_name'
           | 'invalid_business_profile_name_denylisted'
           | 'invalid_company_name_denylisted'
@@ -22582,6 +24329,7 @@ export namespace Account {
             | 'received_debits.bank_accounts'
             | 'revolut_pay_payments'
             | 'samsung_pay_payments'
+            | 'satispay_payments'
             | 'sepa_bank_transfer_payments'
             | 'sepa_debit_payments'
             | 'stripe_balance.payouts'
@@ -25597,8 +27345,10 @@ export namespace Account {
       export namespace Error {
         export type Code =
           | 'invalid_address_city_state_postal_code'
+          | 'invalid_address_cmra_address'
           | 'invalid_address_highway_contract_box'
           | 'invalid_address_private_mailbox'
+          | 'invalid_address_registered_agent_address'
           | 'invalid_business_profile_name'
           | 'invalid_business_profile_name_denylisted'
           | 'invalid_company_name_denylisted'
@@ -25808,6 +27558,7 @@ export namespace Account {
             | 'received_debits.bank_accounts'
             | 'revolut_pay_payments'
             | 'samsung_pay_payments'
+            | 'satispay_payments'
             | 'sepa_bank_transfer_payments'
             | 'sepa_debit_payments'
             | 'stripe_balance.payouts'
@@ -26117,6 +27868,11 @@ export namespace V2 {
            * Settings for the default text that appears on statements for language variations.
            */
           script_statement_descriptor?: Merchant.ScriptStatementDescriptor;
+
+          /**
+           * Settings used for SEPA Direct Debit payments.
+           */
+          sepa_debit_payments?: Merchant.SepaDebitPayments;
 
           /**
            * Settings used for Smart Disputes.
@@ -27205,6 +28961,11 @@ export namespace V2 {
             samsung_pay_payments?: Capabilities.SamsungPayPayments;
 
             /**
+             * Allow the merchant to process Satispay payments.
+             */
+            satispay_payments?: Capabilities.SatispayPayments;
+
+            /**
              * Allow the merchant to process SEPA bank transfer payments.
              */
             sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -27213,6 +28974,11 @@ export namespace V2 {
              * Allow the merchant to process SEPA Direct Debit payments.
              */
             sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+            /**
+             * Allow the merchant to process SeQura payments.
+             */
+            sequra_payments?: Capabilities.SequraPayments;
 
             /**
              * Allow the merchant to process Sunbit payments.
@@ -27271,6 +29037,13 @@ export namespace V2 {
              * The Kanji variation of statement_descriptor used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
              */
             kanji?: ScriptStatementDescriptor.Kanji;
+          }
+
+          export interface SepaDebitPayments {
+            /**
+             * Creditor ID for SEPA Direct Debit payments.
+             */
+            creditor_id?: string;
           }
 
           export interface SmartDisputes {
@@ -27783,6 +29556,18 @@ export namespace V2 {
               requested: boolean;
             }
 
+            export interface SatispayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: SatispayPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
             export interface SepaBankTransferPayments {
               /**
                * Protection types to request for this capability (e.g. "psp_migration").
@@ -27800,6 +29585,18 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: SepaDebitPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface SequraPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: SequraPayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -28569,6 +30366,24 @@ export namespace V2 {
               }
             }
 
+            export namespace SatispayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
             export namespace SepaBankTransferPayments {
               export interface Protections {
                 /**
@@ -28588,6 +30403,24 @@ export namespace V2 {
             }
 
             export namespace SepaDebitPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace SequraPayments {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -29049,6 +30882,11 @@ export namespace V2 {
                 gbp?: Inbound.Gbp;
 
                 /**
+                 * Can receive business storage-type funds on Stripe in OUSD.
+                 */
+                ousd?: Inbound.Ousd;
+
+                /**
                  * Can receive business storage-type funds on Stripe in USD.
                  */
                 usd?: Inbound.Usd;
@@ -29079,6 +30917,11 @@ export namespace V2 {
                  * Can send business storage-type funds on Stripe in GBP.
                  */
                 gbp?: Outbound.Gbp;
+
+                /**
+                 * Can send business storage-type funds on Stripe in OUSD.
+                 */
+                ousd?: Outbound.Ousd;
 
                 /**
                  * Can send business storage-type funds on Stripe in USD.
@@ -29133,6 +30976,18 @@ export namespace V2 {
                    * Protection types to request for this capability (e.g. "psp_migration").
                    */
                   protections?: Gbp.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Ousd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Ousd.Protections;
 
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -29219,6 +31074,24 @@ export namespace V2 {
                 }
 
                 export namespace Gbp {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Ousd {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -29322,6 +31195,18 @@ export namespace V2 {
                   requested: boolean;
                 }
 
+                export interface Ousd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Ousd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
                 export interface Usd {
                   /**
                    * Protection types to request for this capability (e.g. "psp_migration").
@@ -29401,6 +31286,24 @@ export namespace V2 {
                 }
 
                 export namespace Gbp {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Ousd {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -33649,6 +35552,11 @@ export namespace V2 {
           script_statement_descriptor?: Merchant.ScriptStatementDescriptor;
 
           /**
+           * Settings for SEPA Direct Debit payments.
+           */
+          sepa_debit_payments?: Merchant.SepaDebitPayments;
+
+          /**
            * Settings for Smart Disputes automatic response feature.
            */
           smart_disputes?: Merchant.SmartDisputes;
@@ -34762,6 +36670,11 @@ export namespace V2 {
             samsung_pay_payments?: Capabilities.SamsungPayPayments;
 
             /**
+             * Allow the merchant to process Satispay payments.
+             */
+            satispay_payments?: Capabilities.SatispayPayments;
+
+            /**
              * Allow the merchant to process SEPA bank transfer payments.
              */
             sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -34770,6 +36683,11 @@ export namespace V2 {
              * Allow the merchant to process SEPA Direct Debit payments.
              */
             sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+            /**
+             * Allow the merchant to process SeQura payments.
+             */
+            sequra_payments?: Capabilities.SequraPayments;
 
             /**
              * Allow the merchant to process Sunbit payments.
@@ -34828,6 +36746,13 @@ export namespace V2 {
              * The Kanji variation of statement_descriptor used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
              */
             kanji?: ScriptStatementDescriptor.Kanji;
+          }
+
+          export interface SepaDebitPayments {
+            /**
+             * Creditor ID for SEPA Direct Debit payments.
+             */
+            creditor_id?: string;
           }
 
           export interface SmartDisputes {
@@ -35340,6 +37265,18 @@ export namespace V2 {
               requested?: boolean;
             }
 
+            export interface SatispayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: SatispayPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
             export interface SepaBankTransferPayments {
               /**
                * Protection types to request for this capability (e.g. "psp_migration").
@@ -35357,6 +37294,18 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: SepaDebitPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface SequraPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: SequraPayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -36126,6 +38075,24 @@ export namespace V2 {
               }
             }
 
+            export namespace SatispayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
             export namespace SepaBankTransferPayments {
               export interface Protections {
                 /**
@@ -36145,6 +38112,24 @@ export namespace V2 {
             }
 
             export namespace SepaDebitPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace SequraPayments {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -36567,6 +38552,11 @@ export namespace V2 {
                 gbp?: Inbound.Gbp;
 
                 /**
+                 * Can receive business storage-type funds on Stripe in OUSD.
+                 */
+                ousd?: Inbound.Ousd;
+
+                /**
                  * Can receive business storage-type funds on Stripe in USD.
                  */
                 usd?: Inbound.Usd;
@@ -36597,6 +38587,11 @@ export namespace V2 {
                  * Can send business storage-type funds on Stripe in GBP.
                  */
                 gbp?: Outbound.Gbp;
+
+                /**
+                 * Can send business storage-type funds on Stripe in OUSD.
+                 */
+                ousd?: Outbound.Ousd;
 
                 /**
                  * Can send business storage-type funds on Stripe in USD.
@@ -36651,6 +38646,18 @@ export namespace V2 {
                    * Protection types to request for this capability (e.g. "psp_migration").
                    */
                   protections?: Gbp.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Ousd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Ousd.Protections;
 
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -36737,6 +38744,24 @@ export namespace V2 {
                 }
 
                 export namespace Gbp {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Ousd {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -36840,6 +38865,18 @@ export namespace V2 {
                   requested?: boolean;
                 }
 
+                export interface Ousd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Ousd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
                 export interface Usd {
                   /**
                    * Protection types to request for this capability (e.g. "psp_migration").
@@ -36919,6 +38956,24 @@ export namespace V2 {
                 }
 
                 export namespace Gbp {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Ousd {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.

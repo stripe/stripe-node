@@ -329,6 +329,7 @@ export namespace SetupIntent {
     | 'boleto'
     | 'capchase_pay'
     | 'card'
+    | 'card_present'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -349,6 +350,7 @@ export namespace SetupIntent {
     | 'grabpay'
     | 'id_bank_transfer'
     | 'ideal'
+    | 'interac_present'
     | 'kakao_pay'
     | 'klarna'
     | 'knet'
@@ -782,6 +784,7 @@ export namespace SetupIntent {
       | 'customer_session_expired'
       | 'customer_tax_location_invalid'
       | 'debit_not_authorized'
+      | 'dispute_evidence_page_limit_exceeded'
       | 'email_invalid'
       | 'expired_card'
       | 'expired_payment_method'
@@ -792,6 +795,8 @@ export namespace SetupIntent {
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
+      | 'financial_connections_consent_locale_invalid'
+      | 'financial_connections_consent_locale_unsupported'
       | 'financial_connections_institution_unavailable'
       | 'financial_connections_no_successful_transaction_refresh'
       | 'forwarding_api_inactive'
@@ -846,6 +851,7 @@ export namespace SetupIntent {
       | 'parameter_missing'
       | 'parameter_unknown'
       | 'parameters_exclusive'
+      | 'payment_evaluation_on_api_version_not_supported'
       | 'payment_intent_action_required'
       | 'payment_intent_authentication_failure'
       | 'payment_intent_incompatible_payment_method'
@@ -1811,6 +1817,7 @@ export namespace SetupIntentCreateParams {
     | 'boleto'
     | 'capchase_pay'
     | 'card'
+    | 'card_present'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -1831,6 +1838,7 @@ export namespace SetupIntentCreateParams {
     | 'grabpay'
     | 'id_bank_transfer'
     | 'ideal'
+    | 'interac_present'
     | 'kakao_pay'
     | 'klarna'
     | 'knet'
@@ -2266,6 +2274,11 @@ export namespace SetupIntentCreateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+     */
+    sequra?: PaymentMethodData.Sequra;
+
+    /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
      */
     shared_payment_granted_token?: string;
@@ -2356,6 +2369,11 @@ export namespace SetupIntentCreateParams {
      * If this is a `bizum` SetupIntent, this sub-hash contains details about the Bizum payment method options.
      */
     bizum?: PaymentMethodOptions.Bizum;
+
+    /**
+     * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+     */
+    blik?: PaymentMethodOptions.Blik;
 
     /**
      * Configuration for any card setup attempted on this SetupIntent.
@@ -2767,6 +2785,8 @@ export namespace SetupIntentCreateParams {
       iban: string;
     }
 
+    export interface Sequra {}
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -3148,6 +3168,18 @@ export namespace SetupIntentCreateParams {
 
     export interface Bizum {}
 
+    export interface Blik {
+      /**
+       * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
+       */
+      code?: string;
+
+      /**
+       * Details of the BLIK mandate
+       */
+      mandate_options?: Blik.MandateOptions;
+    }
+
     export interface Card {
       /**
        * Configuration options for setting up an eMandate for cards issued in India.
@@ -3170,6 +3202,11 @@ export namespace SetupIntentCreateParams {
        * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
        */
       request_three_d_secure?: Card.RequestThreeDSecure;
+
+      /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -3348,6 +3385,15 @@ export namespace SetupIntentCreateParams {
         | OtherString;
     }
 
+    export namespace Blik {
+      export interface MandateOptions {
+        /**
+         * Expiry date of the mandate.
+         */
+        expires_at?: number;
+      }
+    }
+
     export namespace Card {
       export interface MandateOptions {
         /**
@@ -3421,6 +3467,12 @@ export namespace SetupIntentCreateParams {
         | 'any'
         | 'automatic'
         | 'challenge'
+        | OtherString;
+
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
         | OtherString;
 
       export interface ThreeDSecure {
@@ -4100,6 +4152,7 @@ export namespace SetupIntentUpdateParams {
     | 'boleto'
     | 'capchase_pay'
     | 'card'
+    | 'card_present'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -4120,6 +4173,7 @@ export namespace SetupIntentUpdateParams {
     | 'grabpay'
     | 'id_bank_transfer'
     | 'ideal'
+    | 'interac_present'
     | 'kakao_pay'
     | 'klarna'
     | 'knet'
@@ -4534,6 +4588,11 @@ export namespace SetupIntentUpdateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+     */
+    sequra?: PaymentMethodData.Sequra;
+
+    /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
      */
     shared_payment_granted_token?: string;
@@ -4624,6 +4683,11 @@ export namespace SetupIntentUpdateParams {
      * If this is a `bizum` SetupIntent, this sub-hash contains details about the Bizum payment method options.
      */
     bizum?: PaymentMethodOptions.Bizum;
+
+    /**
+     * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+     */
+    blik?: PaymentMethodOptions.Blik;
 
     /**
      * Configuration for any card setup attempted on this SetupIntent.
@@ -4974,6 +5038,8 @@ export namespace SetupIntentUpdateParams {
        */
       iban: string;
     }
+
+    export interface Sequra {}
 
     export interface Shopeepay {}
 
@@ -5356,6 +5422,18 @@ export namespace SetupIntentUpdateParams {
 
     export interface Bizum {}
 
+    export interface Blik {
+      /**
+       * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
+       */
+      code?: string;
+
+      /**
+       * Details of the BLIK mandate
+       */
+      mandate_options?: Blik.MandateOptions;
+    }
+
     export interface Card {
       /**
        * Configuration options for setting up an eMandate for cards issued in India.
@@ -5378,6 +5456,11 @@ export namespace SetupIntentUpdateParams {
        * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
        */
       request_three_d_secure?: Card.RequestThreeDSecure;
+
+      /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -5556,6 +5639,15 @@ export namespace SetupIntentUpdateParams {
         | OtherString;
     }
 
+    export namespace Blik {
+      export interface MandateOptions {
+        /**
+         * Expiry date of the mandate.
+         */
+        expires_at?: number;
+      }
+    }
+
     export namespace Card {
       export interface MandateOptions {
         /**
@@ -5629,6 +5721,12 @@ export namespace SetupIntentUpdateParams {
         | 'any'
         | 'automatic'
         | 'challenge'
+        | OtherString;
+
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
         | OtherString;
 
       export interface ThreeDSecure {
@@ -6319,6 +6417,7 @@ export namespace SetupIntentConfirmParams {
     | 'boleto'
     | 'capchase_pay'
     | 'card'
+    | 'card_present'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -6339,6 +6438,7 @@ export namespace SetupIntentConfirmParams {
     | 'grabpay'
     | 'id_bank_transfer'
     | 'ideal'
+    | 'interac_present'
     | 'kakao_pay'
     | 'klarna'
     | 'knet'
@@ -6691,6 +6791,11 @@ export namespace SetupIntentConfirmParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+     */
+    sequra?: PaymentMethodData.Sequra;
+
+    /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
      */
     shared_payment_granted_token?: string;
@@ -6781,6 +6886,11 @@ export namespace SetupIntentConfirmParams {
      * If this is a `bizum` SetupIntent, this sub-hash contains details about the Bizum payment method options.
      */
     bizum?: PaymentMethodOptions.Bizum;
+
+    /**
+     * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+     */
+    blik?: PaymentMethodOptions.Blik;
 
     /**
      * Configuration for any card setup attempted on this SetupIntent.
@@ -7174,6 +7284,8 @@ export namespace SetupIntentConfirmParams {
       iban: string;
     }
 
+    export interface Sequra {}
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -7555,6 +7667,18 @@ export namespace SetupIntentConfirmParams {
 
     export interface Bizum {}
 
+    export interface Blik {
+      /**
+       * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
+       */
+      code?: string;
+
+      /**
+       * Details of the BLIK mandate
+       */
+      mandate_options?: Blik.MandateOptions;
+    }
+
     export interface Card {
       /**
        * Configuration options for setting up an eMandate for cards issued in India.
@@ -7577,6 +7701,11 @@ export namespace SetupIntentConfirmParams {
        * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
        */
       request_three_d_secure?: Card.RequestThreeDSecure;
+
+      /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -7755,6 +7884,15 @@ export namespace SetupIntentConfirmParams {
         | OtherString;
     }
 
+    export namespace Blik {
+      export interface MandateOptions {
+        /**
+         * Expiry date of the mandate.
+         */
+        expires_at?: number;
+      }
+    }
+
     export namespace Card {
       export interface MandateOptions {
         /**
@@ -7828,6 +7966,12 @@ export namespace SetupIntentConfirmParams {
         | 'any'
         | 'automatic'
         | 'challenge'
+        | OtherString;
+
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
         | OtherString;
 
       export interface ThreeDSecure {

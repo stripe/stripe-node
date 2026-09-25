@@ -354,6 +354,8 @@ export interface QuotePreviewInvoice {
    */
   status: QuotePreviewInvoice.Status | null;
 
+  status_details?: QuotePreviewInvoice.StatusDetails;
+
   status_transitions: QuotePreviewInvoice.StatusTransitions;
 
   subscription: string | Subscription | null;
@@ -482,6 +484,11 @@ export namespace QuotePreviewInvoice {
      * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://docs.stripe.com/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
      */
     enabled: boolean;
+
+    /**
+     * How `automatic_tax` was set (`explicit`, `managed_payments`, or `tax_integration_configuration`) and why it may have been disabled.
+     */
+    enablement_details?: AutomaticTax.EnablementDetails | null;
 
     /**
      * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
@@ -870,6 +877,10 @@ export namespace QuotePreviewInvoice {
     | 'void'
     | OtherString;
 
+  export interface StatusDetails {
+    uncollectible?: StatusDetails.Uncollectible;
+  }
+
   export interface StatusTransitions {
     /**
      * The time that the invoice draft was finalized.
@@ -1004,6 +1015,18 @@ export namespace QuotePreviewInvoice {
       | 'finalization_system_error'
       | OtherString;
 
+    export interface EnablementDetails {
+      /**
+       * Present when `source=tax_integration_configuration`, `automatic_tax[enabled]=false`, and a conflicting parameter is recorded.
+       */
+      integration_configuration_disabled_reason: EnablementDetails.IntegrationConfigurationDisabledReason | null;
+
+      /**
+       * How `automatic_tax` was set: `explicit`, `managed_payments`, or `tax_integration_configuration`.
+       */
+      source: EnablementDetails.Source;
+    }
+
     export interface Liability {
       /**
        * The connected account being referenced when `type` is `account`.
@@ -1021,6 +1044,20 @@ export namespace QuotePreviewInvoice {
       | 'failed'
       | 'requires_location_inputs'
       | OtherString;
+
+    export namespace EnablementDetails {
+      export interface IntegrationConfigurationDisabledReason {
+        /**
+         * The parameter that prevented `automatic_tax` from being enabled (for example `default_tax_rates`).
+         */
+        conflicting_field: string;
+      }
+
+      export type Source =
+        | 'explicit'
+        | 'managed_payments'
+        | 'tax_integration_configuration';
+    }
 
     export namespace Liability {
       export type Type = 'account' | 'application' | 'self' | OtherString;
@@ -1208,6 +1245,7 @@ export namespace QuotePreviewInvoice {
       | 'customer_session_expired'
       | 'customer_tax_location_invalid'
       | 'debit_not_authorized'
+      | 'dispute_evidence_page_limit_exceeded'
       | 'email_invalid'
       | 'expired_card'
       | 'expired_payment_method'
@@ -1218,6 +1256,8 @@ export namespace QuotePreviewInvoice {
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
+      | 'financial_connections_consent_locale_invalid'
+      | 'financial_connections_consent_locale_unsupported'
       | 'financial_connections_institution_unavailable'
       | 'financial_connections_no_successful_transaction_refresh'
       | 'forwarding_api_inactive'
@@ -1272,6 +1312,7 @@ export namespace QuotePreviewInvoice {
       | 'parameter_missing'
       | 'parameter_unknown'
       | 'parameters_exclusive'
+      | 'payment_evaluation_on_api_version_not_supported'
       | 'payment_intent_action_required'
       | 'payment_intent_authentication_failure'
       | 'payment_intent_incompatible_payment_method'
@@ -2021,6 +2062,25 @@ export namespace QuotePreviewInvoice {
         | 'standard_rated'
         | 'taxable_basis_reduced'
         | 'zero_rated'
+        | OtherString;
+    }
+  }
+
+  export namespace StatusDetails {
+    export interface Uncollectible {
+      /**
+       * The reason why the invoice is uncollectible.
+       */
+      reason: Uncollectible.Reason | null;
+    }
+
+    export namespace Uncollectible {
+      export type Reason =
+        | 'max_payment_attempts'
+        | 'payment_not_received'
+        | 'subscription_canceled'
+        | 'subscription_paused'
+        | 'user_forgiven'
         | OtherString;
     }
   }
