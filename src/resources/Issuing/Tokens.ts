@@ -172,7 +172,7 @@ export namespace Token {
 
     export interface Mastercard {
       /**
-       * A unique reference ID from MasterCard to represent the card account number.
+       * A unique reference ID from Mastercard to represent the card account number.
        */
       card_reference_id?: string;
 
@@ -182,12 +182,12 @@ export namespace Token {
       token_reference_id: string;
 
       /**
-       * The ID of the entity requesting tokenization, specific to MasterCard.
+       * The ID of the entity requesting tokenization, specific to Mastercard.
        */
       token_requestor_id: string;
 
       /**
-       * The name of the entity requesting tokenization, if known. This is directly provided from MasterCard.
+       * The name of the entity requesting tokenization, if known. This is directly provided from Mastercard.
        */
       token_requestor_name?: string;
     }

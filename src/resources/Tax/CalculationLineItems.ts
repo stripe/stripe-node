@@ -36,7 +36,7 @@ export interface CalculationLineItem {
   /**
    * Indicates the line item represents a performance where the venue location might determine the tax, not the customer address. Leave empty if the tax code doesn't require a tax location. If you provide this value for tax codes with an `optional` location requirement, it overrides the customer address.
    */
-  performance_location?: string | null;
+  performance_location: string | null;
 
   /**
    * The ID of an existing [Product](https://docs.stripe.com/api/products/object).
@@ -180,6 +180,7 @@ export namespace CalculationLineItem {
         | 'amusement_tax'
         | 'attendance_tax'
         | 'communications_tax'
+        | 'digital_excise_tax'
         | 'entertainment_tax'
         | 'gross_receipts_tax'
         | 'gst'
@@ -193,12 +194,14 @@ export namespace CalculationLineItem {
         | 'parking_tax'
         | 'pst'
         | 'qst'
+        | 'recycling_fee'
         | 'resort_tax'
         | 'retail_delivery_fee'
         | 'rst'
         | 'sales_tax'
         | 'service_tax'
         | 'tourism_tax'
+        | 'utility_users_tax'
         | 'vat'
         | OtherString;
     }

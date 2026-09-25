@@ -164,6 +164,16 @@ The TypeScript types in stripe-node always reflect the latest shape of the Strip
 
 Please feel welcome to share your thoughts about the versioning policy in a Github issue. For now, we judge it to be better than the two alternatives: outdated, inaccurate types, or vastly more frequent major releases, which would distract from any future breaking changes with potentially more disruptive runtime implications.
 
+### Open and Closed Enum
+
+Many of Stripe API enums are open, meaning Stripe may add new values even on older API versions.
+To reflect this, open enum fields in TypeScript include a string type (via `OtherString`) in addition to the known literal values.
+This ensures the field has the correct type for both values known at SDK release time and other values that may be added later.
+
+A small number of enums are closed, meaning Stripe guarantees no new values will be added without an API version change.
+
+Refer to the [API Reference](https://docs.stripe.com) for the latest set of allowed values.
+
 ### Using Promises
 
 Every method returns a chainable promise which can be used instead of a regular
@@ -212,6 +222,10 @@ import Stripe from 'npm:stripe';
 Please see https://github.com/stripe-samples/stripe-node-deno-samples for more detailed examples and instructions on how to use stripe-node in Deno.
 
 ## Configuration
+
+### Suppressing Stripe notices
+
+The SDK may print notices from Stripe that it receives in the `Stripe-Notice` header. These notices are always printed when the SDK runs in an agent environment. For API calls to test accounts or sandboxes, notices are also printed when the SDK runs outside an agent environment. To suppress notices when the SDK runs outside an agent environment, set the `STRIPE_SUPPRESS_NOTICES` environment variable to `true` before running your integration.
 
 ### Initialize with config object
 

@@ -701,6 +701,7 @@ import {Sigma} from './resources/Sigma/index.js';
 import {Tax} from './resources/Tax/index.js';
 import {Terminal} from './resources/Terminal/index.js';
 import {TestHelpers} from './resources/TestHelpers/index.js';
+import {ThreeDSecure} from './resources/ThreeDSecure/index.js';
 import {Treasury} from './resources/Treasury/index.js';
 import {V2} from './resources/V2/index.js';
 // StripeInstanceImports: The end of the section generated from our OpenAPI spec
@@ -718,6 +719,9 @@ import {
   ApplicationFeeCreatedEvent,
   ApplicationFeeRefundUpdatedEvent,
   ApplicationFeeRefundedEvent,
+  AppsInstallCreatedEvent,
+  AppsInstallDeletedEvent,
+  AppsInstallUpdatedEvent,
   BalanceAvailableEvent,
   BalanceSettingsUpdatedEvent,
   BillingAlertTriggeredEvent,
@@ -1063,6 +1067,11 @@ const ALLOWED_CONFIG_PROPERTIES = [
 
 type RequestSenderFactory = (stripe: Stripe) => RequestSender;
 
+type StripeConstructorOptions = {
+  emitter: any;
+  prevRequestMetrics: any;
+};
+
 const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
@@ -1200,6 +1209,7 @@ export class Stripe {
   tax: Tax;
   terminal: Terminal;
   testHelpers: TestHelpers;
+  threeDSecure: ThreeDSecure;
   treasury: Treasury;
   v2: V2;
   // StripeInstanceVariables: The end of the section generated from our OpenAPI spec
@@ -1245,13 +1255,19 @@ export class Stripe {
     };
   }
 
-  constructor(key: string, config: StripeConfig = {}) {
+  constructor(key: string, config?: StripeConfig);
+  constructor(
+    key: string,
+    config: StripeConfig = {},
+    constructorOptions?: StripeConstructorOptions
+  ) {
     const props = this._getPropsFromConfig(config);
 
     this._platformFunctions = Stripe._platformFunctions;
 
     Object.defineProperty(this, '_emitter', {
-      value: this._platformFunctions.createEmitter(),
+      value:
+        constructorOptions?.emitter ?? this._platformFunctions.createEmitter(),
       enumerable: false,
       configurable: false,
       writable: false,
@@ -1308,7 +1324,7 @@ export class Stripe {
 
     this.webhooks = Stripe.webhooks;
 
-    this._prevRequestMetrics = [];
+    this._prevRequestMetrics = constructorOptions?.prevRequestMetrics ?? [];
     this._enableTelemetry = props.telemetry !== false;
     this._emitEventBodies = props.emitEventBodies === true;
 
@@ -1398,6 +1414,7 @@ export class Stripe {
     this.tax = new Tax(this);
     this.terminal = new Terminal(this);
     this.testHelpers = new TestHelpers(this);
+    this.threeDSecure = new ThreeDSecure(this);
     this.treasury = new Treasury(this);
     this.v2 = new V2(this);
     // StripeInitInstanceVariables: The end of the section generated from our OpenAPI spec
@@ -1727,7 +1744,9 @@ export class Stripe {
     parsed.fetchEvent = (): Promise<unknown> => {
       return this._requestSender._rawRequest(
         'GET',
-        `/v2/core/events/${parsed.id}`,
+        // `id` comes from the notification body, so encode it the way the
+        // generated resources do -- otherwise it can inject path or query segments.
+        `/v2/core/events/${encodeURIComponent(parsed.id as string)}`,
         undefined,
         {
           stripeContext: parsed.context as any,
@@ -1882,6 +1901,50 @@ export class Stripe {
       );
     }
     return this._buildEventNotification(inner);
+  }
+
+  /**
+   * Creates a new Stripe client with the same configuration and a different
+   * Stripe context. The new client does not inherit this client's Stripe account.
+   */
+  withStripeContext(stripeContext: StripeContext | null | undefined): Stripe {
+    const StripeClient = this.constructor as typeof Stripe & {
+      new (
+        key: string,
+        config: StripeConfig,
+        constructorOptions: StripeConstructorOptions
+      ): Stripe;
+    };
+    const client = new StripeClient(
+      '',
+      {
+        apiVersion: this.getApiField('version'),
+        authenticator: this._authenticator ?? undefined,
+        typescript:
+          StripeClient.USER_AGENT.typescript === true ? true : undefined,
+        maxNetworkRetries: this.getApiField('maxNetworkRetries'),
+        httpClient: this.getApiField('httpClient'),
+        timeout: this.getApiField('timeout'),
+        host: this.getApiField('host'),
+        port: this.getApiField('port'),
+        protocol: this.getApiField('protocol'),
+        telemetry: this.getTelemetryEnabled(),
+        emitEventBodies: this.getEmitEventBodiesEnabled(),
+        appInfo: this._appInfo,
+        stripeContext: stripeContext ?? undefined,
+      },
+      {
+        emitter: this._emitter,
+        prevRequestMetrics: this._prevRequestMetrics,
+      }
+    );
+
+    const clientId = this.getClientId();
+    if (clientId) {
+      client.setClientId(clientId);
+    }
+
+    return client;
   }
 
   notificationHandler(
@@ -2526,6 +2589,7 @@ export declare namespace Stripe {
   export {Tax};
   export {Terminal};
   export {TestHelpers};
+  export {ThreeDSecure};
   export {Treasury};
   export {V2};
   // StripeInterfaceExports: The end of the section generated from our OpenAPI spec
@@ -2542,6 +2606,9 @@ export declare namespace Stripe {
     ApplicationFeeCreatedEvent,
     ApplicationFeeRefundUpdatedEvent,
     ApplicationFeeRefundedEvent,
+    AppsInstallCreatedEvent,
+    AppsInstallDeletedEvent,
+    AppsInstallUpdatedEvent,
     BalanceAvailableEvent,
     BalanceSettingsUpdatedEvent,
     BillingAlertTriggeredEvent,

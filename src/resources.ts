@@ -15,11 +15,13 @@ import {AgreementResource as V2OrchestratedCommerceAgreements} from './resources
 import {AlertResource as BillingAlerts} from './resources/Billing/Alerts.js';
 import {ApprovalRequestResource as V2CoreApprovalRequests} from './resources/V2/Core/ApprovalRequests.js';
 import {AssociationResource as TaxAssociations} from './resources/Tax/Associations.js';
+import {AuthenticationResource as ThreeDSecureAuthentications} from './resources/ThreeDSecure/Authentications.js';
 import {AuthorizationResource as FinancialConnectionsAuthorizations} from './resources/FinancialConnections/Authorizations.js';
 import {AuthorizationResource as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {AuthorizationResource as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {BatchJobResource as V2CoreBatchJobs} from './resources/V2/Core/BatchJobs.js';
 import {BillSettingResource as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
+import {BillingEvaluationResource as RadarBillingEvaluations} from './resources/Radar/BillingEvaluations.js';
 import {BusinessProfileResource as V2NetworkBusinessProfiles} from './resources/V2/Network/BusinessProfiles.js';
 import {CadenceResource as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
 import {CalculationResource as TaxCalculations} from './resources/Tax/Calculations.js';
@@ -62,6 +64,7 @@ import {ImportResource as V2CommerceProductCatalogImports} from './resources/V2/
 import {InboundTransferResource as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransferResource as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {InboundTransferResource as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
+import {InstallResource as AppsInstalls} from './resources/Apps/Installs.js';
 import {InstitutionResource as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
 import {IssuedTokenResource as SharedPaymentIssuedTokens} from './resources/SharedPayment/IssuedTokens.js';
 import {LocationResource as TaxLocations} from './resources/Tax/Locations.js';
@@ -198,7 +201,10 @@ export {TokenResource as Tokens} from './resources/Tokens.js';
 export {TopupResource as Topups} from './resources/Topups.js';
 export {TransferResource as Transfers} from './resources/Transfers.js';
 export {WebhookEndpointResource as WebhookEndpoints} from './resources/WebhookEndpoints.js';
-export const Apps = resourceNamespace('apps', {Secrets: AppsSecrets});
+export const Apps = resourceNamespace('apps', {
+  Installs: AppsInstalls,
+  Secrets: AppsSecrets,
+});
 export const Billing = resourceNamespace('billing', {
   Alerts: BillingAlerts,
   CreditBalanceSummary: BillingCreditBalanceSummary,
@@ -267,6 +273,7 @@ export const ProductCatalog = resourceNamespace('productCatalog', {
   TrialOffers: ProductCatalogTrialOffers,
 });
 export const Radar = resourceNamespace('radar', {
+  BillingEvaluations: RadarBillingEvaluations,
   EarlyFraudWarnings: RadarEarlyFraudWarnings,
   PaymentEvaluations: RadarPaymentEvaluations,
   ValueListItems: RadarValueListItems,
@@ -329,6 +336,9 @@ export const TestHelpers = resourceNamespace('testHelpers', {
     ReceivedCredits: TestHelpersTreasuryReceivedCredits,
     ReceivedDebits: TestHelpersTreasuryReceivedDebits,
   }),
+});
+export const ThreeDSecure = resourceNamespace('threeDSecure', {
+  Authentications: ThreeDSecureAuthentications,
 });
 export const Treasury = resourceNamespace('treasury', {
   CreditReversals: TreasuryCreditReversals,

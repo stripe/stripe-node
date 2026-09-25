@@ -1,7 +1,11 @@
 /* eslint-disable require-await */
 
 import {expect} from 'chai';
-import {getSpyableStripe, FAKE_API_KEY} from './testUtils.js';
+import {
+  getSpyableStripe,
+  getTestServerStripe,
+  FAKE_API_KEY,
+} from './testUtils.js';
 
 const DUMMY_WEBHOOK_SECRET = 'whsec_test_secret';
 
@@ -347,6 +351,77 @@ describe('StripeEventNotificationHandler', () => {
   });
 
   describe('stripe context management', () => {
+    it('should use event stripe context and drop stripe account for resource requests', (done) => {
+      let requestContext: string | string[] | undefined;
+      let requestAccount: string | string[] | undefined;
+
+      getTestServerStripe(
+        {
+          stripeAccount: 'acct_original_123',
+          stripeContext: 'original_context_123',
+        },
+        (req, res) => {
+          requestContext = req.headers['stripe-context'];
+          requestAccount = req.headers['stripe-account'];
+          res.write(JSON.stringify({id: 'cus_123', object: 'customer'}));
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+
+          const handler = stripe.notificationHandler(
+            DUMMY_WEBHOOK_SECRET,
+            async () => {}
+          );
+
+          handler.on(
+            'v1.billing.meter.error_report_triggered',
+            async (_event: any, client: any) => {
+              await client.customers.create({
+                description: 'Created while handling an event notification',
+              });
+            }
+          );
+
+          try {
+            const sigHeader = generateHeader(v1BillingMeterPayload);
+            await handler.handle(v1BillingMeterPayload, sigHeader);
+            expect(requestContext).to.equal('event_context_456');
+            expect(requestAccount).to.be.undefined;
+            closeServer();
+            done();
+          } catch (error) {
+            closeServer();
+            done(error);
+          }
+        }
+      );
+    });
+
+    it('should share the original client emitter with the callback client', async () => {
+      const stripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY);
+      const handler = stripe.notificationHandler(
+        DUMMY_WEBHOOK_SECRET,
+        async () => {}
+      );
+
+      let callbackClient: any = null;
+      handler.on(
+        'v1.billing.meter.error_report_triggered',
+        async (_event: any, client: any) => {
+          callbackClient = client;
+        }
+      );
+
+      const sigHeader = generateHeader(v1BillingMeterPayload);
+      await handler.handle(v1BillingMeterPayload, sigHeader);
+
+      expect(callbackClient._emitter).to.equal(stripe._emitter);
+      expect(callbackClient._prevRequestMetrics).to.equal(
+        stripe._prevRequestMetrics
+      );
+    });
+
     it('should use event stripe context in handler', async () => {
       let receivedContext: any = null;
       let normalizedContext: any = null;

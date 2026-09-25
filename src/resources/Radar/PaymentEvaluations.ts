@@ -228,6 +228,16 @@ export namespace PaymentEvaluation {
 
   export interface Signals {
     /**
+     * The likelihood that this `PaymentEvaluation` results in an early fraud warning.
+     */
+    early_fraud_warning: Signals.EarlyFraudWarning | null;
+
+    /**
+     * The likelihood that this `PaymentEvaluation` results in a dispute with reason code `fraudulent`.
+     */
+    fraudulent_dispute: Signals.FraudulentDispute | null;
+
+    /**
      * A payment evaluation signal with evaluated_at, risk_level, and score fields.
      */
     fraudulent_payment: Signals.FraudulentPayment;
@@ -388,6 +398,7 @@ export namespace PaymentEvaluation {
       | 'failed'
       | 'merchant_blocked'
       | 'rejected'
+      | 'rerouted'
       | 'succeeded'
       | OtherString;
 
@@ -509,12 +520,12 @@ export namespace PaymentEvaluation {
   export namespace PaymentDetails {
     export interface MoneyMovementDetails {
       /**
-       * Describes card money movement details for the payment evaluation.
+       * Describes card money movement details.
        */
       card: MoneyMovementDetails.Card | null;
 
       /**
-       * Describes the type of money movement. Currently only `card` is supported.
+       * Describes the type of money movement.
        */
       money_movement_type: 'card';
     }
@@ -602,6 +613,40 @@ export namespace PaymentEvaluation {
   }
 
   export namespace Signals {
+    export interface EarlyFraudWarning {
+      /**
+       * The time when this signal was evaluated.
+       */
+      evaluated_at: number;
+
+      /**
+       * Risk level of this signal, based on the score.
+       */
+      risk_level: EarlyFraudWarning.RiskLevel;
+
+      /**
+       * Numeric score for this signal, returned with two decimal places. Possible values for evaluated payments are between 0 and 100, where higher scores indicate a higher likelihood of the signal being true.
+       */
+      score: number | null;
+    }
+
+    export interface FraudulentDispute {
+      /**
+       * The time when this signal was evaluated.
+       */
+      evaluated_at: number;
+
+      /**
+       * Risk level of this signal, based on the score.
+       */
+      risk_level: FraudulentDispute.RiskLevel;
+
+      /**
+       * Numeric score for this signal, returned with two decimal places. Possible values for evaluated payments are between 0 and 100, where higher scores indicate a higher likelihood of the signal being true.
+       */
+      score: number | null;
+    }
+
     export interface FraudulentPayment {
       /**
        * The time when this signal was evaluated.
@@ -614,9 +659,31 @@ export namespace PaymentEvaluation {
       risk_level: FraudulentPayment.RiskLevel;
 
       /**
-       * Score for this signal. Possible values for evaluated payments are between 0 and 100. The value is returned with two decimal places and higher scores indicate a higher likelihood of the signal being true. A score of -1 is returned when a model evaluation was not performed, such as requests from incomplete integrations.
+       * Numeric score for this signal, returned with two decimal places. Possible values for evaluated payments are between 0 and 100, where higher scores indicate a higher likelihood of the signal being true.
        */
-      score: number;
+      score: number | null;
+    }
+
+    export namespace EarlyFraudWarning {
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'not_assessed'
+        | 'unknown'
+        | OtherString;
+    }
+
+    export namespace FraudulentDispute {
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'not_assessed'
+        | 'unknown'
+        | OtherString;
     }
 
     export namespace FraudulentPayment {
@@ -734,12 +801,12 @@ export namespace Radar {
     export namespace PaymentDetails {
       export interface MoneyMovementDetails {
         /**
-         * Describes card money movement details for the payment evaluation.
+         * Describes card money movement details.
          */
         card?: MoneyMovementDetails.Card;
 
         /**
-         * Describes the type of money movement. Currently only `card` is supported.
+         * Describes the type of money movement.
          */
         money_movement_type: 'card';
       }
