@@ -2,7 +2,7 @@ import {generateOAuthError, StripeWorkloadIdentityError} from '../Error.js';
 import {HttpClientInterface} from '../net/HttpClient.js';
 import {RequestAuthenticator, StripeRequest} from '../Types.js';
 
-const WORKLOAD_IDENTITY_AUDIENCE = 'https://access.stripe.com/wif';
+const WORKLOAD_IDENTITY_AUDIENCE = 'https://stripe.com/wif/v1';
 const ASSERTION_DURATION_SECONDS = 3600;
 const ASSERTION_SIGNING_ALGORITHM = 'ES384';
 const TOKEN_EXCHANGE_HOST = 'api.stripe.com';
