@@ -625,6 +625,24 @@ const _stripeResource: Stripe.StripeResource = null as any;
 const _cryptoProvider: Stripe.CryptoProvider = null as any;
 const _httpClient: Stripe.HttpClient = null as any;
 const _httpClientResponse: Stripe.HttpClientResponse = null as any;
+
+// Workload identity authentication.
+const _workloadIdentityProvider: Stripe.WorkloadIdentityProvider = 'aws';
+const _workloadIdentityConfig: Stripe.WorkloadIdentityConfig = {
+  maxNetworkRetries: 3,
+};
+const workloadIdentityStripe: Stripe = Stripe.forWorkloadIdentity(
+  'oacli_123',
+  'aws',
+  {maxNetworkRetries: 1}
+);
+const _workloadIdentityStripeNoConfig: Stripe = Stripe.forWorkloadIdentity(
+  'oacli_123',
+  'aws'
+);
+// @ts-expect-error - only 'aws' is currently a supported provider
+Stripe.forWorkloadIdentity('oacli_123', 'gcp');
+void workloadIdentityStripe.balance.retrieve();
 const _rawErrorType: Stripe.RawErrorType = 'card_error';
 const _webhooksType: Stripe.Webhooks = null as any;
 const _webhookTestHeaderOptions: Stripe.WebhookTestHeaderOptions = {

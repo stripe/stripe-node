@@ -151,6 +151,37 @@ describe('Stripe Module', function() {
     });
   });
 
+  describe('forWorkloadIdentity', () => {
+    it('throws if the client ID is empty', () => {
+      expect(() => Stripe.forWorkloadIdentity('', 'aws')).to.throw(
+        /non-empty workload identity client ID/
+      );
+    });
+
+    it('throws if the client ID is not a string', () => {
+      expect(() => Stripe.forWorkloadIdentity(123, 'aws')).to.throw(
+        /non-empty workload identity client ID/
+      );
+    });
+
+    it('throws for an unsupported provider', () => {
+      expect(() => Stripe.forWorkloadIdentity('oacli_123', 'gcp')).to.throw(
+        /Unsupported workload identity provider 'gcp'/
+      );
+    });
+
+    it('none of the validation errors require AWS/network access', () => {
+      // These all throw synchronously before any AWS SDK or HTTP call is made.
+      expect(() => Stripe.forWorkloadIdentity('', 'aws')).to.throw();
+      expect(() =>
+        Stripe.forWorkloadIdentity(FAKE_API_KEY, 'unsupported')
+      ).to.throw();
+      expect(() =>
+        Stripe.forWorkloadIdentity('oacli_123', 'unsupported')
+      ).to.throw();
+    });
+  });
+
   describe('GetClientUserAgent', () => {
     it('Should return a user-agent serialized JSON object', () =>
       expect(

@@ -328,6 +328,25 @@ export class StripeConnectionError extends StripeError {
 }
 
 /**
+ * Raised when local environment setup fails before reaching Stripe servers.
+ *
+ * Distinguishes local cloud failures (e.g., missing credentials, denied permissions)
+ * from remote Stripe OAuth errors (e.g., `invalid_grant`), which are returned directly by
+ * Stripe's servers and handled by `generateOAuthError`.
+ */
+export class StripeWorkloadIdentityError extends StripeError {
+  constructor(message: string, cause?: unknown) {
+    super(
+      {
+        message,
+        detail: cause instanceof Error ? cause : undefined,
+      },
+      'StripeWorkloadIdentityError'
+    );
+  }
+}
+
+/**
  * SignatureVerificationError is raised when the signature verification for a
  * webhook fails
  */

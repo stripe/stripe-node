@@ -1,6 +1,10 @@
 // TODO(DEVSDK-3114): Remove http import from shared base class in next major version.
 // eslint-disable-next-line wintertc-compat
 import * as http from 'http';
+import {
+  createAwsAssertionFetcher,
+  createWorkloadIdentityAuthenticator,
+} from '../WorkloadIdentities/AwsWorkloadIdentity.js';
 import {CryptoProvider} from '../crypto/CryptoProvider.js';
 import {FetchHttpClient} from '../net/FetchHttpClient.js';
 import {
@@ -16,6 +20,7 @@ import {
   RequestEvent,
   ResponseEvent,
   RequestAuthenticator,
+  WorkloadIdentityProvider,
 } from '../Types.js';
 
 export interface StripeEmitterInterface {
@@ -90,6 +95,26 @@ export class PlatformFunctions {
    */
   createDefaultAuthenticator(): RequestAuthenticator | null {
     return null;
+  }
+
+  /**
+   * Creates a `RequestAuthenticator` backed by workload identity federation
+   * for the given cloud provider.
+   */
+  createWorkloadIdentityAuthenticator(
+    clientId: string,
+    provider: WorkloadIdentityProvider
+  ): RequestAuthenticator {
+    if (provider === 'aws') {
+      return createWorkloadIdentityAuthenticator(
+        clientId,
+        createAwsAssertionFetcher(),
+        this.createDefaultHttpClient()
+      );
+    }
+    throw new Error(
+      `Stripe: Unsupported workload identity provider '${provider}'. Only 'aws' is currently supported.`
+    );
   }
 
   /**

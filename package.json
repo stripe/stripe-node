@@ -26,6 +26,7 @@
   },
   "main": "cjs/stripe.cjs.node.js",
   "devDependencies": {
+    "@aws-sdk/client-sts": "^3.1129.0",
     "@types/chai": "^4.3.4",
     "@types/chai-as-promised": "^7.1.5",
     "@types/mocha": "^10.0.1",
@@ -55,9 +56,13 @@
   },
   "dependencies": {},
   "peerDependencies": {
+    "@aws-sdk/client-sts": "^3.1129.0",
     "@types/node": ">=18"
   },
   "peerDependenciesMeta": {
+    "@aws-sdk/client-sts": {
+      "optional": true
+    },
     "@types/node": {
       "optional": true
     }
