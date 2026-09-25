@@ -104,22 +104,8 @@ export class NodeHttpClient extends HttpClient
           reject(error);
         });
 
-        req.once('socket', (socket) => {
-          if (socket.connecting) {
-            socket.once(
-              isInsecureConnection ? 'connect' : 'secureConnect',
-              () => {
-                // Send payload; we're safe:
-                req.write(requestData);
-                req.end();
-              }
-            );
-          } else {
-            // we're already connected
-            req.write(requestData);
-            req.end();
-          }
-        });
+        req.write(requestData);
+        req.end();
       }
     );
 
