@@ -128,3 +128,11 @@ async (): Promise<void> => {
 // both handler types must be nameable off the namespace
 let _verifyingHandler: Stripe.StripeEventNotificationHandler;
 let _unverifiedHandler: Stripe.StripeEventNotificationHandlerWithoutVerification;
+
+// both related-object shapes must be nameable off the namespace. "Singleton"
+// events use the second one, whose related object has no standalone id.
+let _relatedObject: Stripe.Events.RelatedObject;
+let _relatedSingletonObject: Stripe.Events.RelatedSingletonObject;
+
+// @ts-expect-error - a singleton related object has no id
+({} as Stripe.Events.RelatedSingletonObject).id;

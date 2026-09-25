@@ -58,6 +58,11 @@ export interface FxQuote {
   created: number;
 
   /**
+   * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
+   */
+  livemode: boolean;
+
+  /**
    * The duration that the quote is locked for, from creation time. The quote will be usable for the duration specified.
    */
   lock_duration: FxQuote.LockDuration;

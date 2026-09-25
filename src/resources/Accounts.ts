@@ -595,7 +595,7 @@ export namespace Account {
     /**
      * A link to the business's publicly available terms related to the Specified Commercial Transaction Act. Only used for accounts in Japan.
      */
-    specified_commercial_transactions_act_url?: string | null;
+    specified_commercial_transactions_act_url: string | null;
 
     /**
      * A publicly available mailing address for sending support issues to.
@@ -700,6 +700,11 @@ export namespace Account {
      * The status of the blik payments capability of the account, or whether the account can directly process blik charges.
      */
     blik_payments?: Capabilities.BlikPayments;
+
+    /**
+     * The status of the BLIK recurring payments capability of the account, or whether the account can accept recurring and subscription BLIK payments.
+     */
+    blik_recurring_payments?: Capabilities.BlikRecurringPayments;
 
     /**
      * The status of the boleto payments capability of the account, or whether the account can directly process boleto charges.
@@ -940,6 +945,11 @@ export namespace Account {
      * The status of the SEPA Direct Debits payments capability of the account, or whether the account can directly process SEPA Direct Debits charges.
      */
     sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+    /**
+     * The status of the SeQura capability of the account, or whether the account can directly process SeQura payments.
+     */
+    sequra_payments?: Capabilities.SequraPayments;
 
     /**
      * The status of the ShopeePay capability of the account, or whether the account can directly process ShopeePay payments.
@@ -1432,6 +1442,12 @@ export namespace Account {
 
     export type BlikPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
+    export type BlikRecurringPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
+
     export type BoletoPayments =
       | 'active'
       | 'inactive'
@@ -1655,6 +1671,12 @@ export namespace Account {
       | OtherString;
 
     export type SepaDebitPayments =
+      | 'active'
+      | 'inactive'
+      | 'pending'
+      | OtherString;
+
+    export type SequraPayments =
       | 'active'
       | 'inactive'
       | 'pending'
@@ -1920,7 +1942,7 @@ export namespace Account {
     export namespace Verification {
       export interface Document {
         /**
-         * The back of a document returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `additional_verification`. Note that `additional_verification` files are [not downloadable](https://docs.stripe.com/file-upload#uploading-a-file).
+         * The back of a document returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `additional_verification`. Note that `additional_verification` files are [not downloadable](https://docs.stripe.com/file-upload#uploading-a-file).
          */
         back: string | File | null;
 
@@ -1935,7 +1957,7 @@ export namespace Account {
         details_code: string | null;
 
         /**
-         * The front of a document returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `additional_verification`. Note that `additional_verification` files are [not downloadable](https://docs.stripe.com/file-upload#uploading-a-file).
+         * The front of a document returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `additional_verification`. Note that `additional_verification` files are [not downloadable](https://docs.stripe.com/file-upload#uploading-a-file).
          */
         front: string | File | null;
       }
@@ -2067,8 +2089,10 @@ export namespace Account {
         | 'external_request'
         | 'information_missing'
         | 'invalid_address_city_state_postal_code'
+        | 'invalid_address_cmra_address'
         | 'invalid_address_highway_contract_box'
         | 'invalid_address_private_mailbox'
+        | 'invalid_address_registered_agent_address'
         | 'invalid_business_profile_name'
         | 'invalid_business_profile_name_denylisted'
         | 'invalid_company_name_denylisted'
@@ -2217,8 +2241,10 @@ export namespace Account {
         | 'external_request'
         | 'information_missing'
         | 'invalid_address_city_state_postal_code'
+        | 'invalid_address_cmra_address'
         | 'invalid_address_highway_contract_box'
         | 'invalid_address_private_mailbox'
+        | 'invalid_address_registered_agent_address'
         | 'invalid_business_profile_name'
         | 'invalid_business_profile_name_denylisted'
         | 'invalid_company_name_denylisted'
@@ -2687,7 +2713,7 @@ export namespace Account {
 }
 export interface AccountCreateParams {
   /**
-   * An [account token](https://api.stripe.com#create_account_token), used to securely provide details to the account.
+   * An [account token](https://docs.stripe.com/api#create_account_token), used to securely provide details to the account.
    */
   account_token?: string;
 
@@ -2939,6 +2965,11 @@ export namespace AccountCreateParams {
     blik_payments?: Capabilities.BlikPayments;
 
     /**
+     * The blik_recurring_payments capability.
+     */
+    blik_recurring_payments?: Capabilities.BlikRecurringPayments;
+
+    /**
      * The boleto_payments capability.
      */
     boleto_payments?: Capabilities.BoletoPayments;
@@ -3177,6 +3208,11 @@ export namespace AccountCreateParams {
      * The sepa_debit_payments capability.
      */
     sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+    /**
+     * The sequra_payments capability.
+     */
+    sequra_payments?: Capabilities.SequraPayments;
 
     /**
      * The shopeepay_payments capability.
@@ -3692,6 +3728,11 @@ export namespace AccountCreateParams {
     paypay_payments?: Settings.PaypayPayments;
 
     /**
+     * Settings specific to SEPA Direct Debit payments.
+     */
+    sepa_debit_payments?: Settings.SepaDebitPayments;
+
+    /**
      * Settings specific to the account's use of Smart Disputes.
      */
     smart_disputes?: Settings.SmartDisputes;
@@ -3863,6 +3904,13 @@ export namespace AccountCreateParams {
     }
 
     export interface BlikPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface BlikRecurringPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -4205,6 +4253,13 @@ export namespace AccountCreateParams {
       requested?: boolean;
     }
 
+    export interface SequraPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface ShopeepayPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -4435,12 +4490,12 @@ export namespace AccountCreateParams {
     export namespace Verification {
       export interface Document {
         /**
-         * The back of a document returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+         * The back of a document returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
         back?: string;
 
         /**
-         * The front of a document returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+         * The front of a document returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
         front?: string;
       }
@@ -4515,56 +4570,56 @@ export namespace AccountCreateParams {
   export namespace Documents {
     export interface BankAccountOwnershipVerification {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface CompanyLicense {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface CompanyMemorandumOfAssociation {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface CompanyMinisterialDecree {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface CompanyRegistrationVerification {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface CompanyTaxIdVerification {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface ProofOfAddress {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface ProofOfUltimateBeneficialOwnership {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
 
@@ -4646,24 +4701,24 @@ export namespace AccountCreateParams {
     export namespace Verification {
       export interface AdditionalDocument {
         /**
-         * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+         * The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
         back?: string;
 
         /**
-         * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+         * The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
         front?: string;
       }
 
       export interface Document {
         /**
-         * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+         * The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
         back?: string;
 
         /**
-         * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+         * The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
         front?: string;
       }
@@ -4836,6 +4891,13 @@ export namespace AccountCreateParams {
        * Details regarding your business's website.
        */
       site?: PaypayPayments.Site;
+    }
+
+    export interface SepaDebitPayments {
+      /**
+       * The business creditor id for european payments.
+       */
+      creditor_id?: string;
     }
 
     export interface SmartDisputes {
@@ -5053,7 +5115,7 @@ export interface AccountRetrieveParams {
 }
 export interface AccountUpdateParams {
   /**
-   * An [account token](https://api.stripe.com#create_account_token), used to securely provide details to the account.
+   * An [account token](https://docs.stripe.com/api#create_account_token), used to securely provide details to the account.
    */
   account_token?: string;
 
@@ -5295,6 +5357,11 @@ export namespace AccountUpdateParams {
     blik_payments?: Capabilities.BlikPayments;
 
     /**
+     * The blik_recurring_payments capability.
+     */
+    blik_recurring_payments?: Capabilities.BlikRecurringPayments;
+
+    /**
      * The boleto_payments capability.
      */
     boleto_payments?: Capabilities.BoletoPayments;
@@ -5533,6 +5600,11 @@ export namespace AccountUpdateParams {
      * The sepa_debit_payments capability.
      */
     sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+    /**
+     * The sequra_payments capability.
+     */
+    sequra_payments?: Capabilities.SequraPayments;
 
     /**
      * The shopeepay_payments capability.
@@ -6242,6 +6314,13 @@ export namespace AccountUpdateParams {
       requested?: boolean;
     }
 
+    export interface BlikRecurringPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface BoletoPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -6578,6 +6657,13 @@ export namespace AccountUpdateParams {
       requested?: boolean;
     }
 
+    export interface SequraPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface ShopeepayPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -6808,12 +6894,12 @@ export namespace AccountUpdateParams {
     export namespace Verification {
       export interface Document {
         /**
-         * The back of a document returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+         * The back of a document returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
         back?: string;
 
         /**
-         * The front of a document returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+         * The front of a document returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
         front?: string;
       }
@@ -6823,56 +6909,56 @@ export namespace AccountUpdateParams {
   export namespace Documents {
     export interface BankAccountOwnershipVerification {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface CompanyLicense {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface CompanyMemorandumOfAssociation {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface CompanyMinisterialDecree {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface CompanyRegistrationVerification {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface CompanyTaxIdVerification {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface ProofOfAddress {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface ProofOfRegistration {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
 
@@ -6884,7 +6970,7 @@ export namespace AccountUpdateParams {
 
     export interface ProofOfUltimateBeneficialOwnership {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
 
@@ -6975,24 +7061,24 @@ export namespace AccountUpdateParams {
     export namespace Verification {
       export interface AdditionalDocument {
         /**
-         * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+         * The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
         back?: string;
 
         /**
-         * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+         * The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
         front?: string;
       }
 
       export interface Document {
         /**
-         * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+         * The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
         back?: string;
 
         /**
-         * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+         * The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
          */
         front?: string;
       }
@@ -7798,21 +7884,21 @@ export namespace AccountCreatePersonParams {
   export namespace Documents {
     export interface CompanyAuthorization {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface Passport {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface Visa {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
@@ -7888,24 +7974,24 @@ export namespace AccountCreatePersonParams {
   export namespace Verification {
     export interface AdditionalDocument {
       /**
-       * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+       * The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
        */
       back?: string;
 
       /**
-       * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+       * The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
        */
       front?: string;
     }
 
     export interface Document {
       /**
-       * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+       * The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
        */
       back?: string;
 
       /**
-       * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+       * The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
        */
       front?: string;
     }
@@ -7979,9 +8065,9 @@ export namespace AccountListPersonsParams {
 }
 export interface AccountRejectParams {
   /**
-   * The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.
+   * The reason for rejecting the account. Can be `fraud_payment_method_casher`, `fraud_payment_method_tester`, `fraud_no_intent_to_fulfill`, `fraud_other`, `credit`, `terms_of_service`, or `other`.
    */
-  reason: string;
+  reason: AccountRejectParams.Reason;
 
   /**
    * Specifies which fields in the response should be expanded.
@@ -7994,6 +8080,16 @@ export interface AccountRejectParams {
   payouts_action?: AccountRejectParams.PayoutsAction;
 }
 export namespace AccountRejectParams {
+  export type Reason =
+    | 'credit'
+    | 'fraud_no_intent_to_fulfill'
+    | 'fraud_other'
+    | 'fraud_payment_method_casher'
+    | 'fraud_payment_method_tester'
+    | 'other'
+    | 'terms_of_service'
+    | OtherString;
+
   export type PayoutsAction = 'none' | 'pause';
 }
 export interface AccountRetrieveCurrentParams {
@@ -8143,7 +8239,7 @@ export namespace AccountUpdateExternalAccountParams {
   export namespace Documents {
     export interface BankAccountOwnershipVerification {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
@@ -8438,21 +8534,21 @@ export namespace AccountUpdatePersonParams {
   export namespace Documents {
     export interface CompanyAuthorization {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface Passport {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
 
     export interface Visa {
       /**
-       * One or more document ids returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `account_requirement`.
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
       files?: Array<string>;
     }
@@ -8528,24 +8624,24 @@ export namespace AccountUpdatePersonParams {
   export namespace Verification {
     export interface AdditionalDocument {
       /**
-       * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+       * The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
        */
       back?: string;
 
       /**
-       * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+       * The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
        */
       front?: string;
     }
 
     export interface Document {
       /**
-       * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+       * The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
        */
       back?: string;
 
       /**
-       * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+       * The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
        */
       front?: string;
     }

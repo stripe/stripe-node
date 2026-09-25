@@ -29,6 +29,7 @@ export declare namespace Reserve {
   export import HoldListParams = ReserveNamespace0.HoldListParams;
   export import HoldRetrieveParams = ReserveNamespace0.HoldRetrieveParams;
   export {Hold, HoldResource};
+  export import PlanListParams = ReserveNamespace1.PlanListParams;
   export import PlanRetrieveParams = ReserveNamespace1.PlanRetrieveParams;
   export {Plan, PlanResource};
   export import ReleaseListParams = ReserveNamespace2.ReleaseListParams;

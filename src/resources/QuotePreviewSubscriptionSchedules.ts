@@ -97,6 +97,11 @@ export interface QuotePreviewSubscriptionSchedule {
   metadata: Metadata | null;
 
   /**
+   * The pause schedules for this subscription schedule.
+   */
+  pause_schedules?: Array<QuotePreviewSubscriptionSchedule.PauseSchedule>;
+
+  /**
    * Configuration for the subscription schedule's phases.
    */
   phases: Array<QuotePreviewSubscriptionSchedule.Phase>;
@@ -251,6 +256,20 @@ export namespace QuotePreviewSubscriptionSchedule {
      * The type of error encountered by the price migration.
      */
     type: 'price_uniqueness_violation';
+  }
+
+  export interface PauseSchedule {
+    /**
+     * A unique identifier for this pause schedule.
+     */
+    key: string;
+
+    pause: PauseSchedule.Pause;
+
+    /**
+     * Details about when and how the subscription resumes.
+     */
+    resume: PauseSchedule.Resume | null;
   }
 
   export interface Phase {
@@ -559,6 +578,185 @@ export namespace QuotePreviewSubscriptionSchedule {
        * The intended resulting price of the migration.
        */
       target_price: string;
+    }
+  }
+
+  export namespace PauseSchedule {
+    export interface Pause {
+      /**
+       * Time at which the subscription pauses.
+       */
+      pause_at: number;
+
+      /**
+       * Settings controlling billing behavior during the pause.
+       */
+      settings: Pause.Settings | null;
+
+      status: Pause.Status;
+    }
+
+    export interface Resume {
+      /**
+       * Time at which the subscription resumes.
+       */
+      resume_at: number;
+
+      settings: Resume.Settings;
+
+      status: Resume.Status;
+    }
+
+    export namespace Pause {
+      export interface Settings {
+        bill_for: Settings.BillFor;
+
+        /**
+         * Determines how to handle debits and credits when pausing.
+         */
+        invoicing_behavior: Settings.InvoicingBehavior;
+
+        /**
+         * The type of pause settings.
+         */
+        type: Settings.Type;
+      }
+
+      export interface Status {
+        error?: Status.Error;
+
+        /**
+         * The lifecycle state of the pause operation.
+         */
+        type: Status.Type;
+      }
+
+      export namespace Settings {
+        export interface BillFor {
+          outstanding_usage_through: BillFor.OutstandingUsageThrough;
+
+          unused_time_from: BillFor.UnusedTimeFrom;
+        }
+
+        export type InvoicingBehavior =
+          | 'invoice'
+          | 'pending_invoice_item'
+          | OtherString;
+
+        export type Type = 'subscription' | OtherString;
+
+        export namespace BillFor {
+          export interface OutstandingUsageThrough {
+            /**
+             * The type of outstanding usage billing behavior.
+             */
+            type: OutstandingUsageThrough.Type;
+          }
+
+          export interface UnusedTimeFrom {
+            /**
+             * The type of unused time credit behavior.
+             */
+            type: UnusedTimeFrom.Type;
+          }
+
+          export namespace OutstandingUsageThrough {
+            export type Type = 'none' | 'pause_at' | OtherString;
+          }
+
+          export namespace UnusedTimeFrom {
+            export type Type =
+              | 'item_current_period_start'
+              | 'none'
+              | 'pause_at'
+              | OtherString;
+          }
+        }
+      }
+
+      export namespace Status {
+        export interface Error {
+          /**
+           * A machine-readable error code.
+           */
+          code?: string;
+
+          /**
+           * A description of the error.
+           */
+          message: string;
+        }
+
+        export type Type = 'error' | 'scheduled' | 'succeeded' | OtherString;
+      }
+    }
+
+    export namespace Resume {
+      export interface Settings {
+        /**
+         * The billing cycle anchor that applies when the subscription is resumed.
+         */
+        billing_cycle_anchor: Settings.BillingCycleAnchor;
+
+        /**
+         * Controls whether Stripe attempts payment on the resumption invoice and how that affects the subscription's status.
+         */
+        payment_behavior: Settings.PaymentBehavior;
+
+        /**
+         * Determines how to handle prorations resulting from the billing_cycle_anchor change on resume.
+         */
+        proration_behavior: Settings.ProrationBehavior;
+      }
+
+      export interface Status {
+        error?: Status.Error;
+
+        /**
+         * The lifecycle state of the resume operation.
+         */
+        type: Status.Type;
+      }
+
+      export namespace Settings {
+        export type BillingCycleAnchor =
+          | 'resume_at'
+          | 'unchanged'
+          | OtherString;
+
+        export type PaymentBehavior =
+          | 'resume_on_payment_attempt'
+          | 'resume_on_payment_success'
+          | OtherString;
+
+        export type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none'
+          | OtherString;
+      }
+
+      export namespace Status {
+        export interface Error {
+          /**
+           * A machine-readable error code.
+           */
+          code?: string;
+
+          /**
+           * A description of the error.
+           */
+          message: string;
+        }
+
+        export type Type =
+          | 'error'
+          | 'pending'
+          | 'requires_action'
+          | 'scheduled'
+          | 'succeeded'
+          | OtherString;
+      }
     }
   }
 

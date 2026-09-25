@@ -859,6 +859,7 @@ export namespace PaymentLink {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'
@@ -1023,7 +1024,7 @@ export namespace PaymentLink {
 
     export interface Label {
       /**
-       * Custom text for the label, displayed to the customer. Up to 50 characters.
+       * Custom text for the label, displayed to the customer. Up to 100 characters.
        */
       custom: string | null;
 
@@ -2039,6 +2040,7 @@ export namespace PaymentLinkCreateParams {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'
@@ -2210,7 +2212,7 @@ export namespace PaymentLinkCreateParams {
 
     export interface Label {
       /**
-       * Custom text for the label, displayed to the customer. Up to 50 characters.
+       * Custom text for the label, displayed to the customer. Up to 100 characters.
        */
       custom: string;
 
@@ -3352,6 +3354,7 @@ export namespace PaymentLinkUpdateParams {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'
@@ -3518,7 +3521,7 @@ export namespace PaymentLinkUpdateParams {
 
     export interface Label {
       /**
-       * Custom text for the label, displayed to the customer. Up to 50 characters.
+       * Custom text for the label, displayed to the customer. Up to 100 characters.
        */
       custom: string;
 

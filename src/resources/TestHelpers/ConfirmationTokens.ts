@@ -94,12 +94,12 @@ export namespace TestHelpers {
       allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
       /**
-       * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+       * If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
        */
       alma?: PaymentMethodData.Alma;
 
       /**
-       * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+       * If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
        */
       amazon_pay?: PaymentMethodData.AmazonPay;
 
@@ -342,6 +342,11 @@ export namespace TestHelpers {
        * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
        */
       sepa_debit?: PaymentMethodData.SepaDebit;
+
+      /**
+       * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+       */
+      sequra?: PaymentMethodData.Sequra;
 
       /**
        * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
@@ -705,6 +710,8 @@ export namespace TestHelpers {
         iban: string;
       }
 
+      export interface Sequra {}
+
       export interface Shopeepay {}
 
       export interface Sofort {
@@ -778,6 +785,7 @@ export namespace TestHelpers {
         | 'satispay'
         | 'scalapay'
         | 'sepa_debit'
+        | 'sequra'
         | 'shopeepay'
         | 'sofort'
         | 'stripe_balance'

@@ -261,7 +261,7 @@ export namespace Payout {
 }
 export interface PayoutCreateParams {
   /**
-   * A positive integer in cents representing how much to payout.
+   * A positive integer in cents representing how much to pay out.
    */
   amount: number;
 

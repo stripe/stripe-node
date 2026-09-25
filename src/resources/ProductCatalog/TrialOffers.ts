@@ -52,6 +52,21 @@ export class TrialOfferResource extends StripeResource {
       options
     ) as any;
   }
+  /**
+   * Updates the specified trial offer by setting the values of the parameters passed. Any parameters not provided are left unchanged.
+   */
+  update(
+    id: string,
+    params?: ProductCatalog.TrialOfferUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<TrialOffer>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/product_catalog/trial_offers/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
 }
 export interface TrialOffer {
   /**
@@ -64,6 +79,11 @@ export interface TrialOffer {
    */
   object: 'product_catalog.trial_offer';
 
+  /**
+   * Whether the trial offer is active. Set to false to archive the trial offer.
+   */
+  active: boolean;
+
   duration: TrialOffer.Duration;
 
   end_behavior: TrialOffer.EndBehavior;
@@ -74,9 +94,9 @@ export interface TrialOffer {
   livemode: boolean;
 
   /**
-   * A brief, user-friendly name for the trial offer-for identification purposes.
+   * A brief description of the trial offer, hidden from customers.
    */
-  name: string | null;
+  nickname: string | null;
 
   /**
    * The price during the trial offer.
@@ -94,12 +114,12 @@ export namespace TrialOffer {
   }
 
   export interface EndBehavior {
-    transition: EndBehavior.Transition;
+    transition?: EndBehavior.Transition;
 
     /**
      * The type of behavior when the trial offer ends.
      */
-    type: 'transition';
+    type: EndBehavior.Type;
   }
 
   export namespace Duration {
@@ -120,6 +140,8 @@ export namespace TrialOffer {
        */
       price: string | Price | DeletedPrice;
     }
+
+    export type Type = 'transition' | OtherString;
   }
 }
 export namespace ProductCatalog {
@@ -140,14 +162,19 @@ export namespace ProductCatalog {
     price: string;
 
     /**
+     * Whether the trial offer can be used for new subscriptions. Defaults to true.
+     */
+    active?: boolean;
+
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
 
     /**
-     * A brief, user-friendly name for the trial offer-for identification purposes.
+     * A brief description of the trial offer, hidden from customers.
      */
-    name?: string;
+    nickname?: string;
   }
 
   export namespace TrialOfferCreateParams {
@@ -200,7 +227,25 @@ export namespace ProductCatalog {
   }
 }
 export namespace ProductCatalog {
+  export interface TrialOfferUpdateParams {
+    /**
+     * Whether the trial offer can be used for new purchases.
+     */
+    active?: boolean;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+}
+export namespace ProductCatalog {
   export interface TrialOfferListParams extends PaginationParams {
+    /**
+     * Only return trial offers that are active (`true`) or archived (`false`). If omitted, both active and archived trial offers are returned.
+     */
+    active?: boolean;
+
     /**
      * Only return trial offers that were created during the given date interval.
      */
