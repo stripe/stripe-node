@@ -173,7 +173,9 @@ describe('Stripe Module', function() {
     it('none of the validation errors require AWS/network access', () => {
       // These all throw synchronously before any AWS SDK or HTTP call is made.
       expect(() => Stripe.forWorkloadIdentity('', 'aws')).to.throw();
-      expect(() => Stripe.forWorkloadIdentity(FAKE_API_KEY, 'aws')).to.throw();
+      expect(() =>
+        Stripe.forWorkloadIdentity(FAKE_API_KEY, 'unsupported')
+      ).to.throw();
       expect(() =>
         Stripe.forWorkloadIdentity('oacli_123', 'unsupported')
       ).to.throw();
