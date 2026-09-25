@@ -1738,20 +1738,6 @@ export class Stripe {
   }
 
   /**
-   * Constructs an Event from a payload string, with no signature verification.
-   * Accepts raw Stripe Event JSON as well as payloads wrapped in an
-   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
-   * or [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) envelope.
-   *
-   * @deprecated Use `stripe.webhooks.constructEventWithoutVerification(...)` instead.
-   * This will be removed in the next major version.
-   */
-  constructEventWithoutVerification(payload: string): Event {
-    // TODO(DEVSDK-3248) remove this
-    return this.webhooks.constructEventWithoutVerification(payload);
-  }
-
-  /**
    * Parses an EventNotification from a payload string, with no signature verification.
    * Accepts raw Stripe Event Notification JSON as well as payloads wrapped in an
    * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge)
@@ -1763,7 +1749,7 @@ export class Stripe {
     const inner = maybeExtractFromCloudProviderEnvelope(payload);
     if (inner.object === 'event') {
       throw new Error(
-        'It looks like this cloud event contains a webhook body instead of a thin event notification. Use constructEventWithoutVerification instead.'
+        'It looks like this cloud event contains a webhook body instead of a thin event notification. Use webhooks.constructEventWithoutVerification instead.'
       );
     }
     if (inner.object !== 'v2.core.event') {
@@ -2731,55 +2717,6 @@ export declare namespace Stripe {
   export type StripeEventNotificationHandler = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandler;
   export type StripeEventNotificationHandlerWithoutVerification = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandlerWithoutVerification;
   // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
-  export namespace ErrorType {
-    export type StripeError = InstanceType<typeof _Error.StripeError>;
-    export type StripeCardError = InstanceType<typeof _Error.StripeCardError>;
-    export type StripeInvalidRequestError = InstanceType<
-      typeof _Error.StripeInvalidRequestError
-    >;
-    export type StripeAPIError = InstanceType<typeof _Error.StripeAPIError>;
-    export type StripeAuthenticationError = InstanceType<
-      typeof _Error.StripeAuthenticationError
-    >;
-    export type StripePermissionError = InstanceType<
-      typeof _Error.StripePermissionError
-    >;
-    export type StripeRateLimitError = InstanceType<
-      typeof _Error.StripeRateLimitError
-    >;
-    export type StripeConnectionError = InstanceType<
-      typeof _Error.StripeConnectionError
-    >;
-    export type StripeSignatureVerificationError = InstanceType<
-      typeof _Error.StripeSignatureVerificationError
-    >;
-    export type StripeIdempotencyError = InstanceType<
-      typeof _Error.StripeIdempotencyError
-    >;
-    export type StripeOAuthError = InstanceType<typeof _Error.StripeOAuthError>;
-    export type StripeInvalidGrantError = InstanceType<
-      typeof _Error.StripeInvalidGrantError
-    >;
-    export type StripeInvalidClientError = InstanceType<
-      typeof _Error.StripeInvalidClientError
-    >;
-    export type StripeOAuthInvalidRequestError = InstanceType<
-      typeof _Error.StripeOAuthInvalidRequestError
-    >;
-    export type StripeInvalidScopeError = InstanceType<
-      typeof _Error.StripeInvalidScopeError
-    >;
-    export type StripeUnsupportedGrantTypeError = InstanceType<
-      typeof _Error.StripeUnsupportedGrantTypeError
-    >;
-    export type StripeUnsupportedResponseTypeError = InstanceType<
-      typeof _Error.StripeUnsupportedResponseTypeError
-    >;
-    export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
-    export type TemporarySessionExpiredError = InstanceType<
-      typeof _Error.TemporarySessionExpiredError
-    >;
-  }
   export namespace errors {
     export type StripeError = InstanceType<typeof _Error.StripeError>;
     export type StripeCardError = InstanceType<typeof _Error.StripeCardError>;
