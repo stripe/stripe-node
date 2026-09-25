@@ -39,8 +39,7 @@ async function loadStsSdk(): Promise<typeof import('@aws-sdk/client-sts')> {
     const err = e as ErrorLike;
 
     const code = typeof err.code === 'string' ? err.code : undefined;
-    const message =
-      typeof err.message === 'string' ? err.message : undefined;
+    const message = typeof err.message === 'string' ? err.message : undefined;
 
     const isMissingModule =
       code === 'MODULE_NOT_FOUND' ||
