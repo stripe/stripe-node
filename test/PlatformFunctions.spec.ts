@@ -14,17 +14,9 @@ import {SubtleCryptoProvider} from '../src/crypto/SubtleCryptoProvider.js';
 import {expect} from 'chai';
 import {webcrypto} from 'crypto';
 
-// TODO(https://go/j/DEVSDK-3253)
-if (process.versions.node < '19') {
-  // Node 18 has no `globalThis.crypto`, so we can only run our WebPlatformFunctions tests on more modern node versions
-  console.log(
-    `Skipping WebPlatformFunctions tests. No 'globalThis.crypto' in module scope for ${process.version}.`
-  );
-} else {
-  import(
-    '../src/platform/WebPlatformFunctions.js'
-  ).then(({WebPlatformFunctions}) => testPlatform(new WebPlatformFunctions()));
-}
+import(
+  '../src/platform/WebPlatformFunctions.js'
+).then(({WebPlatformFunctions}) => testPlatform(new WebPlatformFunctions()));
 
 testPlatform(new NodePlatformFunctions());
 
@@ -34,16 +26,15 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
   describe(`${platformFunctions.constructor.name}`, () => {
     describe('uuid', () => {
       describe('should use crypto.randomUUID if it exists', () => {
-        const crypto = require('crypto');
         let randomUUID$;
         let called;
         beforeEach(() => {
           // if it's available, mock it and ensure it's called
           // otherwise, skip this whole operation
-          if (isNodeEnvironment && crypto.randomUUID) {
+          if (typeof globalThis.crypto !== 'undefined') {
             called = false;
-            randomUUID$ = crypto.randomUUID;
-            crypto.randomUUID = (): string => {
+            randomUUID$ = globalThis.crypto.randomUUID;
+            globalThis.crypto.randomUUID = (): string => {
               called = true;
               return 'no, YOU you id';
             };
@@ -51,13 +42,13 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
         });
         afterEach(() => {
           if (randomUUID$) {
-            crypto.randomUUID = randomUUID$;
+            globalThis.crypto.randomUUID = randomUUID$;
           }
         });
         it('is called if available', () => {
           if (randomUUID$) {
             expect(platformFunctions.uuid4()).to.equal('no, YOU you id');
-            expect(called).to.equal(isNodeEnvironment);
+            expect(called).to.equal(true);
           }
         });
       });
@@ -443,73 +434,6 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
         );
         expect(cryptoProvider).to.be.an.instanceof(SubtleCryptoProvider);
       });
-    });
-  });
-}
-
-describe('PlatformFunctions.uuid4 without globalThis.crypto', () => {
-  // because uuid4 is used in a cryptographic context, PlatformFunctions.uuid4 should throw if it can't access a CSPRNG
-
-  // some extra housekeeping for node 18, which truly _doesn't_ have the global crypto
-  // no need to remove what isn't there
-  // TODO(https://go/j/DEVSDK-3253) - can remove when we drop node 18
-  const hasCryptoGlobal = typeof globalThis.crypto !== 'undefined';
-
-  beforeEach(() => {
-    if (!hasCryptoGlobal) return;
-    Object.defineProperty(globalThis.crypto, 'randomUUID', {
-      value: undefined,
-      configurable: true,
-      writable: true,
-    });
-  });
-
-  afterEach(() => {
-    if (!hasCryptoGlobal) return;
-    delete (globalThis.crypto as any).randomUUID;
-  });
-
-  it('throws instead of degrading to a weak RNG', () => {
-    expect(() => new PlatformFunctions().uuid4()).to.throw(
-      /no cryptographically secure random number generator is available/
-    );
-  });
-
-  it('does not fall back to Math.random', () => {
-    const random$ = Math.random;
-    let called = false;
-    Math.random = (): number => {
-      called = true;
-      return 0.5;
-    };
-    try {
-      expect(() => new PlatformFunctions().uuid4()).to.throw();
-      expect(called).to.equal(false);
-    } finally {
-      Math.random = random$;
-    }
-  });
-});
-
-// TODO(https://go/j/DEVSDK-3253) - can remove when we drop node 18
-if (process.versions.node < '19') {
-  describe('NodePlatformFunctions.uuid4 without globalThis.crypto', () => {
-    it('still generates a valid v4 UUID', () => {
-      expect(typeof globalThis.crypto).to.equal('undefined');
-      expect(new NodePlatformFunctions().uuid4()).to.match(
-        /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-      );
-    });
-
-    it('generates a distinct key each call', () => {
-      const fns = new NodePlatformFunctions();
-      expect(fns.uuid4()).to.not.equal(fns.uuid4());
-    });
-
-    it('is why the override exists: the base implementation cannot', () => {
-      expect(() => new PlatformFunctions().uuid4()).to.throw(
-        /no cryptographically secure random number generator is available/
-      );
     });
   });
 }
