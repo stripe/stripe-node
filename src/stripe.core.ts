@@ -1431,12 +1431,6 @@ export class Stripe {
           'If you meant to authenticate with an API key, use `new Stripe(apiKey)` instead.'
       );
     }
-    if (/^(sk|rk)_/.test(clientId)) {
-      throw new Error(
-        'Stripe: It looks like you passed a Stripe API key to Stripe.forWorkloadIdentity. ' +
-          'Use `new Stripe(apiKey)` for API-key authentication instead.'
-      );
-    }
     if (provider !== 'aws') {
       throw new Error(
         `Stripe: Unsupported workload identity provider '${provider}'. Only 'aws' is currently supported.`

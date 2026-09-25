@@ -164,16 +164,6 @@ describe('Stripe Module', function() {
       );
     });
 
-    it('throws if given a Stripe API key instead of a client ID', () => {
-      expect(() => Stripe.forWorkloadIdentity(FAKE_API_KEY, 'aws')).to.throw(
-        /passed a Stripe API key to Stripe\.forWorkloadIdentity/
-      );
-
-      expect(() => Stripe.forWorkloadIdentity('rk_test_123', 'aws')).to.throw(
-        /passed a Stripe API key to Stripe\.forWorkloadIdentity/
-      );
-    });
-
     it('throws for an unsupported provider', () => {
       expect(() => Stripe.forWorkloadIdentity('oacli_123', 'gcp')).to.throw(
         /Unsupported workload identity provider 'gcp'/
