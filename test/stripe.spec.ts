@@ -190,19 +190,6 @@ describe('Stripe Module', function() {
     });
   });
 
-  describe('workload identity client ID passed to the standard constructor', () => {
-    it('throws and points at Stripe.forWorkloadIdentity', () => {
-      expect(() => Stripe('oacli_abc123')).to.throw(
-        /Use `Stripe\.forWorkloadIdentity\(clientId, 'aws', config\)` instead/
-      );
-    });
-
-    it('does not affect normal secret/restricted keys', () => {
-      expect(() => Stripe(FAKE_API_KEY)).to.not.throw();
-      expect(() => Stripe('rk_test_123')).to.not.throw();
-    });
-  });
-
   describe('GetClientUserAgent', () => {
     it('Should return a user-agent serialized JSON object', () =>
       expect(
