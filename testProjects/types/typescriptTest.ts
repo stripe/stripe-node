@@ -269,9 +269,9 @@ const instanceofCheck5 = {} instanceof stripe.errors.StripeError;
 const instanceofCheck6 = {} instanceof stripe.errors.StripeAPIError;
 
 // errors namespace provides type-level access
-let errorTypeCheck1: Stripe.errors.StripeError;
-let errorTypeCheck2: Stripe.errors.StripeCardError;
-let errorTypeCheck3: Stripe.errors.StripeInvalidRequestError;
+let errorsCheck1: Stripe.errors.StripeError;
+let errorsCheck2: Stripe.errors.StripeCardError;
+let errorsCheck3: Stripe.errors.StripeInvalidRequestError;
 
 
 // instanceof narrows to the correct type
