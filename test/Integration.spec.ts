@@ -97,7 +97,9 @@ describe('Integration test', function() {
 
   it('Webhook sample koa', () => runWebhookTest('koa'));
 
-  it('Webhook sample nextjs', () => runWebhookTest('nextjs'));
+  it('Webhook sample nextjs', function() {
+    runWebhookTest('nextjs');
+  });
 
   it('Webhook sample deno', () => runWebhookTest('deno'));
 
