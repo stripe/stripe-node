@@ -468,31 +468,49 @@ describe('RequestSender', () => {
       // });
 
       it('handles . as a query param', (done) => {
-        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
-          .get('/v1/customers/.', '')
-          .reply(200, '{}');
-
-        realStripe.customers
-          .retrieve('.')
-          .then((response) => {
-            scope.done();
-            done();
-          })
-          .catch(done);
+        let requestUrl;
+        return getTestServerStripe(
+          {},
+          (req, res) => {
+            requestUrl = req.url;
+            res.end('{}');
+          },
+          (err, stripe) => {
+            if (err) {
+              return done(err);
+            }
+            stripe.customers
+              .retrieve('.')
+              .then(() => {
+                expect(requestUrl).to.equal('/v1/customers/.');
+                done();
+              })
+              .catch(done);
+          }
+        );
       });
 
       it('handles .. as a query param', (done) => {
-        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
-          .get('/v1/customers/..', '')
-          .reply(200, '{}');
-
-        realStripe.customers
-          .retrieve('..')
-          .then((response) => {
-            scope.done();
-            done();
-          })
-          .catch(done);
+        let requestUrl;
+        return getTestServerStripe(
+          {},
+          (req, res) => {
+            requestUrl = req.url;
+            res.end('{}');
+          },
+          (err, stripe) => {
+            if (err) {
+              return done(err);
+            }
+            stripe.customers
+              .retrieve('..')
+              .then(() => {
+                expect(requestUrl).to.equal('/v1/customers/..');
+                done();
+              })
+              .catch(done);
+          }
+        );
       });
 
       it('handles empty string as a query param', (done) => {
@@ -1336,10 +1354,12 @@ describe('RequestSender', () => {
       it('retries closed connection errors once', (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)
-          .replyWithError({
-            code: 'ECONNRESET',
-            errno: 'ECONNRESET',
-          })
+          .replyWithError(
+            Object.assign(new Error('Connection reset'), {
+              code: 'ECONNRESET',
+              errno: 'ECONNRESET',
+            })
+          )
           .post(options.path, options.params)
           .reply(200, {
             id: 'ch_123',
@@ -1359,9 +1379,13 @@ describe('RequestSender', () => {
       it('throws on multiple closed connection errors', (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)
-          .replyWithError({code: 'ECONNRESET'})
+          .replyWithError(
+            Object.assign(new Error('Connection reset'), {code: 'ECONNRESET'})
+          )
           .post(options.path, options.params)
-          .replyWithError({code: 'ECONNRESET'});
+          .replyWithError(
+            Object.assign(new Error('Connection reset'), {code: 'ECONNRESET'})
+          );
 
         realStripe.charges
           .create(options.data)
@@ -1381,7 +1405,12 @@ describe('RequestSender', () => {
 
         const scope = nock(`https://${options.host}`)
           .post(options.path, options.params)
-          .replyWithError({code: 'ECONNRESET', errno: 'ECONNRESET'})
+          .replyWithError(
+            Object.assign(new Error('Connection reset'), {
+              code: 'ECONNRESET',
+              errno: 'ECONNRESET',
+            })
+          )
           .post(options.path, options.params)
           .reply(200, {id: 'ch_123', object: 'charge', amount: 1000});
 

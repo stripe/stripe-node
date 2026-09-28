@@ -224,6 +224,10 @@ Please see https://github.com/stripe-samples/stripe-node-deno-samples for more d
 
 ## Configuration
 
+### Suppressing Stripe notices
+
+The SDK may print notices from Stripe that it receives in the `Stripe-Notice` header. These notices are always printed when the SDK runs in an agent environment. For API calls to test accounts or sandboxes, notices are also printed when the SDK runs outside an agent environment. To suppress notices when the SDK runs outside an agent environment, set the `STRIPE_SUPPRESS_NOTICES` environment variable to `true` before running your integration.
+
 ### Initialize with config object
 
 The package can be initialized with several options:
