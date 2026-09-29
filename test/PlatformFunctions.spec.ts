@@ -26,13 +26,12 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
   describe(`${platformFunctions.constructor.name}`, () => {
     describe('uuid', () => {
       describe('should use crypto.randomUUID if it exists', () => {
-        const crypto = require('crypto');
         let randomUUID$;
         let called;
         beforeEach(() => {
           // if it's available, mock it and ensure it's called
           // otherwise, skip this whole operation
-          if (isNodeEnvironment && crypto.randomUUID) {
+          if (typeof crypto !== 'undefined') {
             called = false;
             randomUUID$ = crypto.randomUUID;
             crypto.randomUUID = (): string => {
@@ -49,7 +48,7 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
         it('is called if available', () => {
           if (randomUUID$) {
             expect(platformFunctions.uuid4()).to.equal('no, YOU you id');
-            expect(called).to.equal(isNodeEnvironment);
+            expect(called).to.equal(true);
           }
         });
       });
@@ -422,11 +421,11 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
   });
 }
 
-describe('PlatformFunctions.uuid4 without globalThis.crypto', () => {
+describe('PlatformFunctions.uuid4 without crypto', () => {
   // because uuid4 is used in a cryptographic context, PlatformFunctions.uuid4 should throw if it can't access a CSPRNG
 
   beforeEach(() => {
-    Object.defineProperty(globalThis.crypto, 'randomUUID', {
+    Object.defineProperty(crypto, 'randomUUID', {
       value: undefined,
       configurable: true,
       writable: true,
@@ -434,7 +433,7 @@ describe('PlatformFunctions.uuid4 without globalThis.crypto', () => {
   });
 
   afterEach(() => {
-    delete (globalThis.crypto as any).randomUUID;
+    delete (crypto as any).randomUUID;
   });
 
   it('throws instead of degrading to a weak RNG', () => {
