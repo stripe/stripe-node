@@ -446,7 +446,7 @@ export function createWebhooks(
     header: string,
     details: WebhookParsedHeader,
     expectedSignature: string,
-    tolerance = Webhook.DEFAULT_TOLERANCE,
+    tolerance: number,
     suspectPayloadType: boolean,
     secretContainsWhitespace: boolean,
     receivedAt?: number
