@@ -24,7 +24,7 @@ export interface Install {
   app: string;
 
   /**
-   * Whether the installer must authorize pending permissions, content security policy entries, or endpoints.
+   * Whether the installer must authorize pending permissions, content security policy entries, or endpoints. For private apps, `approval_required` stays `false`. Install a new version from the Dashboard to grant its permissions.
    */
   approval_required: boolean;
 
@@ -112,15 +112,27 @@ export namespace Install {
   }
 
   export interface ContentSecurityPolicyGranted {
-    connect_src: Array<string> | null;
+    /**
+     * The URLs that the app can make network requests to.
+     */
+    connect_src: Array<string>;
 
-    image_src: Array<string> | null;
+    /**
+     * The URLs that the app can load images from.
+     */
+    image_src: Array<string>;
   }
 
   export interface ContentSecurityPolicyPending {
-    connect_src: Array<string> | null;
+    /**
+     * The URLs that the app can make network requests to.
+     */
+    connect_src: Array<string>;
 
-    image_src: Array<string> | null;
+    /**
+     * The URLs that the app can load images from.
+     */
+    image_src: Array<string>;
   }
 
   export type Status =

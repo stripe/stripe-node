@@ -203,6 +203,8 @@ export interface Payout {
    */
   payout_method: string | null;
 
+  payout_method_options?: Payout.PayoutMethodOptions;
+
   /**
    * If `completed`, you can use the [Balance Transactions API](https://docs.stripe.com/api/balance_transactions/list#balance_transaction_list-payout) to list all balance transactions that are paid out in this payout.
    */
@@ -239,6 +241,10 @@ export interface Payout {
   type: Payout.Type;
 }
 export namespace Payout {
+  export interface PayoutMethodOptions {
+    financial_account?: PayoutMethodOptions.FinancialAccount;
+  }
+
   export type ReconciliationStatus =
     | 'completed'
     | 'in_progress'
@@ -258,6 +264,15 @@ export namespace Payout {
   }
 
   export type Type = 'bank_account' | 'card' | OtherString;
+
+  export namespace PayoutMethodOptions {
+    export interface FinancialAccount {
+      /**
+       * The currency credited to the destination Financial Account.
+       */
+      destination_currency?: string;
+    }
+  }
 }
 export interface PayoutCreateParams {
   /**

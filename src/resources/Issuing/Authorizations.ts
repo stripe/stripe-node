@@ -113,6 +113,25 @@ export class AuthorizationResource extends StripeResource {
                       },
                     },
                   },
+                  fuels: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          quantity_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                          unit_cost_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                        },
+                      },
+                    },
+                  },
                   transactions: {
                     kind: 'array',
                     element: {
@@ -303,6 +322,25 @@ export class AuthorizationResource extends StripeResource {
                 },
               },
             },
+            fuels: {
+              kind: 'nullable',
+              inner: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    quantity_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                    unit_cost_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+            },
             transactions: {
               kind: 'array',
               element: {
@@ -478,6 +516,25 @@ export class AuthorizationResource extends StripeResource {
                   unit_cost_decimal: {
                     kind: 'nullable',
                     inner: {kind: 'decimal_string'},
+                  },
+                },
+              },
+            },
+            fuels: {
+              kind: 'nullable',
+              inner: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    quantity_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                    unit_cost_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
                   },
                 },
               },
@@ -663,6 +720,25 @@ export class AuthorizationResource extends StripeResource {
                 },
               },
             },
+            fuels: {
+              kind: 'nullable',
+              inner: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    quantity_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                    unit_cost_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+            },
             transactions: {
               kind: 'array',
               element: {
@@ -840,6 +916,25 @@ export class AuthorizationResource extends StripeResource {
                   unit_cost_decimal: {
                     kind: 'nullable',
                     inner: {kind: 'decimal_string'},
+                  },
+                },
+              },
+            },
+            fuels: {
+              kind: 'nullable',
+              inner: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    quantity_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                    unit_cost_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
                   },
                 },
               },
@@ -1022,6 +1117,11 @@ export interface Authorization {
    * Information about fuel that was purchased with this transaction. Typically this information is received from the merchant after the authorization has been approved and the fuel dispensed.
    */
   fuel: Authorization.Fuel | null;
+
+  /**
+   * Information about the list of fuel items that were purchased with this transaction. Typically this information is received from the merchant after the authorization has been approved and the fuel dispensed.
+   */
+  fuels?: Array<Authorization.Fuels> | null;
 
   /**
    * Details about the IIAS FSA/HSA healthcare amounts on this authorization.
@@ -1252,6 +1352,33 @@ export namespace Authorization {
      * The units for `quantity_decimal`.
      */
     unit: Fuel.Unit | null;
+
+    /**
+     * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
+     */
+    unit_cost_decimal: Decimal | null;
+  }
+
+  export interface Fuels {
+    /**
+     * [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
+     */
+    industry_product_code: string | null;
+
+    /**
+     * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
+     */
+    quantity_decimal: Decimal | null;
+
+    /**
+     * The type of fuel that was purchased.
+     */
+    type: Fuels.Type | null;
+
+    /**
+     * The units for `quantity_decimal`.
+     */
+    unit: Fuels.Unit | null;
 
     /**
      * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
@@ -2317,6 +2444,27 @@ export namespace Authorization {
   }
 
   export namespace Fuel {
+    export type Type =
+      | 'diesel'
+      | 'other'
+      | 'unleaded_plus'
+      | 'unleaded_regular'
+      | 'unleaded_super'
+      | OtherString;
+
+    export type Unit =
+      | 'charging_minute'
+      | 'imperial_gallon'
+      | 'kilogram'
+      | 'kilowatt_hour'
+      | 'liter'
+      | 'other'
+      | 'pound'
+      | 'us_gallon'
+      | OtherString;
+  }
+
+  export namespace Fuels {
     export type Type =
       | 'diesel'
       | 'other'

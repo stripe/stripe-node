@@ -92,6 +92,7 @@ export type RawErrorType =
   | 'quota_exceeded'
   | 'rate_limit'
   | 'recipient_not_notifiable'
+  | 'service_unavailable'
   | 'temporary_session_expired';
 // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 export type RequestArgs = Array<any>;

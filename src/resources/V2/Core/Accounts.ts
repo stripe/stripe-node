@@ -426,6 +426,33 @@ export class AccountResource extends StripeResource {
                         },
                       },
                     },
+                    developer: {
+                      kind: 'object',
+                      fields: {
+                        capabilities: {
+                          kind: 'object',
+                          fields: {
+                            projects: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
                     merchant: {
                       kind: 'object',
                       fields: {
@@ -2609,6 +2636,33 @@ export class AccountResource extends StripeResource {
                   },
                 },
               },
+              developer: {
+                kind: 'object',
+                fields: {
+                  capabilities: {
+                    kind: 'object',
+                    fields: {
+                      projects: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
               merchant: {
                 kind: 'object',
                 fields: {
@@ -4664,6 +4718,33 @@ export class AccountResource extends StripeResource {
                       kind: 'object',
                       fields: {
                         automatic_indirect_tax: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                developer: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        projects: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -6811,6 +6892,33 @@ export class AccountResource extends StripeResource {
                     },
                   },
                 },
+                developer: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        projects: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
                 merchant: {
                   kind: 'object',
                   fields: {
@@ -8919,6 +9027,33 @@ export class AccountResource extends StripeResource {
                     },
                   },
                 },
+                developer: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        projects: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
                 merchant: {
                   kind: 'object',
                   fields: {
@@ -10744,6 +10879,7 @@ export namespace Account {
   export type AppliedConfiguration =
     | 'card_creator'
     | 'customer'
+    | 'developer'
     | 'merchant'
     | 'recipient'
     | 'money_manager';
@@ -10758,6 +10894,11 @@ export namespace Account {
      * The Customer Configuration allows the Account to be used in inbound payment flows (i.e. customer-facing payment and billing flows).
      */
     customer?: Configuration.Customer;
+
+    /**
+     * The Developer Configuration allows the Account to use developer tooling.
+     */
+    developer?: Configuration.Developer;
 
     /**
      * Enables the Account to act as a connected account and collect payments facilitated by a Connect platform. You must onboard your platform to Connect before you can add this configuration to your connected accounts. Utilize this configuration when the Account will be the Merchant of Record, like with Direct charges or Destination Charges with on_behalf_of set.
@@ -10922,6 +11063,18 @@ export namespace Account {
        * ID of the test clock to attach to the customer. Can only be set on testmode Accounts, and when the Customer Configuration is first set on an Account.
        */
       test_clock?: string;
+    }
+
+    export interface Developer {
+      /**
+       * Indicates whether the Developer Configuration is active.
+       */
+      applied: boolean;
+
+      /**
+       * Capabilities that have been requested on the Developer Configuration.
+       */
+      capabilities?: Developer.Capabilities;
     }
 
     export interface Merchant {
@@ -12716,6 +12869,104 @@ export namespace Account {
            * State, county, province, or region.
            */
           state?: string;
+        }
+      }
+    }
+
+    export namespace Developer {
+      export interface Capabilities {
+        /**
+         * Enables the Account to use Stripe developer tooling.
+         */
+        projects?: Capabilities.Projects;
+      }
+
+      export namespace Capabilities {
+        export interface Projects {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: Projects.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: Projects.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<Projects.StatusDetail>;
+        }
+
+        export namespace Projects {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
         }
       }
     }
@@ -21756,6 +22007,7 @@ export namespace Account {
           | 'al_bank_account'
           | 'am_bank_account'
           | 'ao_bank_account'
+          | 'apple_pay'
           | 'ar_bank_account'
           | 'at_bank_account'
           | 'au_bank_account'
@@ -22324,6 +22576,7 @@ export namespace Account {
             | 'payco_payments'
             | 'paynow_payments'
             | 'pay_by_bank_payments'
+            | 'projects'
             | 'promptpay_payments'
             | 'received_credits.bank_accounts'
             | 'received_debits.bank_accounts'
@@ -22342,6 +22595,7 @@ export namespace Account {
           export type Configuration =
             | 'card_creator'
             | 'customer'
+            | 'developer'
             | 'merchant'
             | 'money_manager'
             | 'recipient'
@@ -25548,6 +25802,7 @@ export namespace Account {
             | 'payco_payments'
             | 'paynow_payments'
             | 'pay_by_bank_payments'
+            | 'projects'
             | 'promptpay_payments'
             | 'received_credits.bank_accounts'
             | 'received_debits.bank_accounts'
@@ -25566,6 +25821,7 @@ export namespace Account {
           export type Configuration =
             | 'card_creator'
             | 'customer'
+            | 'developer'
             | 'merchant'
             | 'money_manager'
             | 'recipient'
@@ -25691,6 +25947,11 @@ export namespace V2 {
         customer?: Configuration.Customer;
 
         /**
+         * The Developer Configuration allows the Account to use developer tooling.
+         */
+        developer?: Configuration.Developer;
+
+        /**
          * Enables the Account to act as a connected account and collect payments facilitated by a Connect platform. You must onboard your platform to Connect before you can add this configuration to your connected accounts. Utilize this configuration when the Account will be the Merchant of Record, like with Direct charges or Destination Charges with on_behalf_of set.
          */
         merchant?: Configuration.Merchant;
@@ -25765,6 +26026,7 @@ export namespace V2 {
       export type Include =
         | 'configuration.card_creator'
         | 'configuration.customer'
+        | 'configuration.developer'
         | 'configuration.merchant'
         | 'configuration.recipient'
         | 'configuration.money_manager'
@@ -25806,6 +26068,13 @@ export namespace V2 {
            * ID of the test clock to attach to the customer. Can only be set on testmode Accounts, and when the Customer Configuration is first set on an Account.
            */
           test_clock?: string;
+        }
+
+        export interface Developer {
+          /**
+           * Capabilities to request on the Developer Configuration.
+           */
+          capabilities?: Developer.Capabilities;
         }
 
         export interface Merchant {
@@ -26649,6 +26918,47 @@ export namespace V2 {
             }
 
             export namespace AutomaticIndirectTax {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+          }
+        }
+
+        export namespace Developer {
+          export interface Capabilities {
+            /**
+             * Requests access to Stripe developer tooling.
+             */
+            projects?: Capabilities.Projects;
+          }
+
+          export namespace Capabilities {
+            export interface Projects {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: Projects.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export namespace Projects {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -33062,6 +33372,7 @@ export namespace V2 {
       export type Include =
         | 'configuration.card_creator'
         | 'configuration.customer'
+        | 'configuration.developer'
         | 'configuration.merchant'
         | 'configuration.recipient'
         | 'configuration.money_manager'
@@ -33137,6 +33448,11 @@ export namespace V2 {
          * The Customer Configuration allows the Account to be charged.
          */
         customer?: Configuration.Customer;
+
+        /**
+         * The Developer Configuration allows the Account to use developer tooling.
+         */
+        developer?: Configuration.Developer;
 
         /**
          * Enables the Account to act as a connected account and collect payments facilitated by a Connect platform. You must onboard your platform to Connect before you can add this configuration to your connected accounts. Utilize this configuration when the Account will be the Merchant of Record, like with Direct charges or Destination Charges with on_behalf_of set.
@@ -33220,6 +33536,7 @@ export namespace V2 {
       export type Include =
         | 'configuration.card_creator'
         | 'configuration.customer'
+        | 'configuration.developer'
         | 'configuration.merchant'
         | 'configuration.recipient'
         | 'configuration.money_manager'
@@ -33271,6 +33588,18 @@ export namespace V2 {
            * ID of the test clock to attach to the customer. Can only be set on testmode Accounts, and when the Customer Configuration is first set on an Account.
            */
           test_clock?: string;
+        }
+
+        export interface Developer {
+          /**
+           * Represents the state of the configuration and can be updated to deactivate or reapply it.
+           */
+          applied?: boolean;
+
+          /**
+           * Capabilities to request on the Developer Configuration.
+           */
+          capabilities?: Developer.Capabilities;
         }
 
         export interface Merchant {
@@ -34146,6 +34475,47 @@ export namespace V2 {
             }
 
             export namespace AutomaticIndirectTax {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+          }
+        }
+
+        export namespace Developer {
+          export interface Capabilities {
+            /**
+             * Updates access to Stripe developer tooling.
+             */
+            projects?: Capabilities.Projects;
+          }
+
+          export namespace Capabilities {
+            export interface Projects {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: Projects.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export namespace Projects {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -40309,6 +40679,7 @@ export namespace V2 {
       export type AppliedConfiguration =
         | 'card_creator'
         | 'customer'
+        | 'developer'
         | 'merchant'
         | 'recipient'
         | 'money_manager';
@@ -40328,6 +40699,7 @@ export namespace V2 {
       export type AppliedConfiguration =
         | 'card_creator'
         | 'customer'
+        | 'developer'
         | 'merchant'
         | 'recipient'
         | 'money_manager';

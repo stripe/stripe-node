@@ -10,13 +10,16 @@ import {
 } from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {StatementResource} from './FinancialAccounts/Statements.js';
+import {WalletExportResource} from './FinancialAccounts/WalletExport.js';
 import {Stripe} from '../../../stripe.core.js';
 export class FinancialAccountResource extends StripeResource {
   statements: StatementResource;
+  walletExport: WalletExportResource;
 
   constructor(private readonly stripe: Stripe) {
     super(stripe);
     this.statements = new StatementResource(stripe);
+    this.walletExport = new WalletExportResource(stripe);
   }
   /**
    * Lists FinancialAccounts in this compartment.
@@ -409,6 +412,11 @@ export namespace FinancialAccount {
 
   export interface Storage {
     /**
+     * Crypto-specific storage configuration. Only populated when `storage.crypto` is passed in the `include` parameter and the FinancialAccount stores crypto assets. Fiat currencies remain configured only through `holds_currencies`.
+     */
+    crypto?: Storage.Crypto;
+
+    /**
      * The usage type for funds in this FinancialAccount. Can be used to specify that the funds are for Consumer activity.
      */
     funds_usage_type?: Storage.FundsUsageType;
@@ -584,6 +592,11 @@ export namespace FinancialAccount {
          * The address to send forwarded payouts to.
          */
         payout_method?: string;
+
+        /**
+         * Whether to skip forwarding exportable self-custodied wallet balances. Defaults to false. This does not skip non-exportable or fiat balances, inbound-pending checks, or negative-balance requirements.
+         */
+        skip_exportable_balances?: boolean;
       }
 
       export type Reason = 'account_closed' | 'closed_by_platform' | 'other';
@@ -591,7 +604,27 @@ export namespace FinancialAccount {
   }
 
   export namespace Storage {
+    export interface Crypto {
+      /**
+       * The blockchain network configured for each crypto currency. Keys are lowercase currency codes and must identify crypto currencies also present in `holds_currencies`.
+       */
+      currency_networks: {
+        [key: string]: Crypto.CurrencyNetworks;
+      };
+
+      /**
+       * Describes who controls the private keys for the crypto storage.
+       */
+      custody_model: Crypto.CustodyModel;
+    }
+
     export type FundsUsageType = 'business' | 'consumer' | OtherString;
+
+    export namespace Crypto {
+      export type CurrencyNetworks = 'tempo' | OtherString;
+
+      export type CustodyModel = 'self' | 'stripe';
+    }
   }
 }
 export namespace V2 {
@@ -635,6 +668,11 @@ export namespace V2 {
 
       export interface Storage {
         /**
+         * Crypto-specific storage configuration. Only populated when `storage.crypto` is passed in the `include` parameter and the FinancialAccount stores crypto assets. Fiat currencies remain configured only through `holds_currencies`.
+         */
+        crypto?: Storage.Crypto;
+
+        /**
          * The usage type for funds in this FinancialAccount. Can be used to specify that the funds are for Consumer activity.
          */
         funds_usage_type?: Storage.FundsUsageType;
@@ -646,7 +684,27 @@ export namespace V2 {
       }
 
       export namespace Storage {
+        export interface Crypto {
+          /**
+           * The blockchain network configured for each crypto currency. Keys are lowercase currency codes and must identify crypto currencies also present in `holds_currencies`.
+           */
+          currency_networks: {
+            [key: string]: Crypto.CurrencyNetworks;
+          };
+
+          /**
+           * Describes who controls the private keys for the crypto storage.
+           */
+          custody_model: Crypto.CustodyModel;
+        }
+
         export type FundsUsageType = 'business' | 'consumer' | OtherString;
+
+        export namespace Crypto {
+          export type CurrencyNetworks = 'tempo' | OtherString;
+
+          export type CustodyModel = 'self' | 'stripe';
+        }
       }
     }
   }
@@ -657,7 +715,11 @@ export namespace V2 {
       /**
        * Additional fields to include in the response.
        */
-      include?: Array<'payments.balance_by_funds_type'>;
+      include?: Array<FinancialAccountRetrieveParams.Include>;
+    }
+
+    export namespace FinancialAccountRetrieveParams {
+      export type Include = 'payments.balance_by_funds_type' | 'storage.crypto';
     }
   }
 }
@@ -668,6 +730,11 @@ export namespace V2 {
        * A descriptive name for the FinancialAccount, up to 50 characters long. This name will be used in the Stripe Dashboard and embedded components.
        */
       display_name?: string;
+
+      /**
+       * Forwarding settings for a closed FinancialAccount. Post-close forwarding updates are not yet implemented.
+       */
+      forwarding_settings?: FinancialAccountUpdateParams.ForwardingSettings;
 
       /**
        * Metadata associated with the FinancialAccount.
@@ -681,13 +748,58 @@ export namespace V2 {
     }
 
     export namespace FinancialAccountUpdateParams {
+      export interface ForwardingSettings {
+        /**
+         * The address to send forwarded payments to.
+         */
+        payment_method?: string;
+
+        /**
+         * The address to send forwarded payouts to.
+         */
+        payout_method?: string;
+
+        /**
+         * Whether to skip forwarding exportable self-custodied wallet balances. Defaults to false. This does not skip non-exportable or fiat balances, inbound-pending checks, or negative-balance requirements.
+         */
+        skip_exportable_balances?: boolean;
+      }
+
       export interface Storage {
+        /**
+         * Crypto-specific storage configuration used when adding crypto to a fiat-only FinancialAccount.
+         * `custody_model` is required for the initial crypto update and cannot be changed afterward.
+         */
+        crypto?: Storage.Crypto;
+
         /**
          * The currencies that this storage FinancialAccount can hold a balance in. Three-letter ISO currency code, in lowercase.
          * Adding currencies requires the corresponding holds_currencies storer capabilities to be enabled.
          * Removing currencies is not supported as of March 2026.
          */
         holds_currencies?: Array<string>;
+      }
+
+      export namespace Storage {
+        export interface Crypto {
+          /**
+           * The blockchain network configured for each crypto currency. Keys are lowercase currency codes and must identify crypto currencies also present in `holds_currencies`.
+           */
+          currency_networks: {
+            [key: string]: Crypto.CurrencyNetworks;
+          };
+
+          /**
+           * Describes who controls the private keys for the crypto storage.
+           */
+          custody_model: Crypto.CustodyModel;
+        }
+
+        export namespace Crypto {
+          export type CurrencyNetworks = 'tempo' | OtherString;
+
+          export type CustodyModel = 'self' | 'stripe';
+        }
       }
     }
   }
@@ -698,7 +810,7 @@ export namespace V2 {
       /**
        * Additional fields to include in the response.
        */
-      include?: Array<'payments.balance_by_funds_type'>;
+      include?: Array<FinancialAccountListParams.Include>;
 
       /**
        * The page limit.
@@ -717,6 +829,8 @@ export namespace V2 {
     }
 
     export namespace FinancialAccountListParams {
+      export type Include = 'payments.balance_by_funds_type' | 'storage.crypto';
+
       export type Status = 'closed' | 'open' | 'pending';
 
       export type Type =
@@ -750,6 +864,11 @@ export namespace V2 {
          * The address to send forwarded payouts to.
          */
         payout_method?: string;
+
+        /**
+         * Whether to skip forwarding exportable self-custodied wallet balances. Defaults to false. This does not skip non-exportable or fiat balances, inbound-pending checks, or negative-balance requirements.
+         */
+        skip_exportable_balances?: boolean;
       }
     }
   }

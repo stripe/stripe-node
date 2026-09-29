@@ -75,6 +75,9 @@ export interface FinancialAddress {
    */
   created: string;
 
+  /**
+   * Crypto wallet details for this FinancialAddress.
+   */
   crypto_wallet?: FinancialAddress.CryptoWallet;
 
   /**
@@ -87,6 +90,9 @@ export interface FinancialAddress {
    */
   livemode: boolean;
 
+  /**
+   * Open Enum. The currency the FinancialAddress settles into the FinancialAccount.
+   */
   settlement_currency?: string;
 
   /**
@@ -106,6 +112,9 @@ export namespace FinancialAddress {
      */
     aba?: BankAccount.Aba;
 
+    /**
+     * CLABE bank account details (Mexico).
+     */
     clabe?: BankAccount.Clabe;
 
     /**
@@ -113,6 +122,9 @@ export namespace FinancialAddress {
      */
     country?: string;
 
+    /**
+     * CPA bank account details (Canada).
+     */
     cpa?: BankAccount.Cpa;
 
     /**
@@ -137,10 +149,19 @@ export namespace FinancialAddress {
   }
 
   export interface CryptoWallet {
+    /**
+     * The blockchain wallet address.
+     */
     address: string;
 
+    /**
+     * An optional memo or tag required by some networks to identify the recipient.
+     */
     memo?: string;
 
+    /**
+     * Open Enum. The blockchain network of the crypto wallet.
+     */
     network: CryptoWallet.Network;
   }
 
@@ -182,22 +203,46 @@ export namespace FinancialAddress {
     }
 
     export interface Clabe {
+      /**
+       * The name of the account holder.
+       */
       account_holder_name: string;
 
+      /**
+       * The CLABE interbank code.
+       */
       clabe: string;
     }
 
     export interface Cpa {
+      /**
+       * The name of the account holder.
+       */
       account_holder_name: string;
 
+      /**
+       * The full account number.
+       */
       account_number?: string;
 
+      /**
+       * The name of the bank.
+       */
       bank_name: string;
 
+      /**
+       * The institution number.
+       */
       institution_number: string;
 
+      /**
+       * The last four digits of the account number.
+       */
       last4: string;
 
+      /**
+       * The transit number.
+       */
       transit_number: string;
     }
 
@@ -291,8 +336,14 @@ export namespace V2 {
        */
       bank_account?: FinancialAddressCreateParams.BankAccount;
 
+      /**
+       * Properties for creating a crypto wallet FinancialAddress.
+       */
       crypto_wallet?: FinancialAddressCreateParams.CryptoWallet;
 
+      /**
+       * Open Enum. The currency the FinancialAddress settles into the FinancialAccount.
+       */
       settlement_currency?: string;
     }
 

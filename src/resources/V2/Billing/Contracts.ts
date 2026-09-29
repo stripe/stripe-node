@@ -420,6 +420,16 @@ export interface Contract {
   billing_settings?: Contract.BillingSettings;
 
   /**
+   * The collection status of the contract that indicates whether there are any outstanding invoices for the contract.
+   */
+  collection_status: Contract.CollectionStatus;
+
+  /**
+   * Historical timestamps of when the contract's collection status transitioned into each status.
+   */
+  collection_status_transitions: Contract.CollectionStatusTransitions;
+
+  /**
    * A unique user-provided contract number e.g. C-2026-0001.
    */
   contract_number: string;
@@ -497,6 +507,35 @@ export namespace Contract {
      * The collection settings details configures how payments are collected on the contract.
      */
     collection_settings_details: BillingSettings.CollectionSettingsDetails;
+  }
+
+  export type CollectionStatus =
+    | 'blocked'
+    | 'current'
+    | 'past_due'
+    | 'unpaid'
+    | OtherString;
+
+  export interface CollectionStatusTransitions {
+    /**
+     * The timestamp when the contract's collection status transitioned to blocked.
+     */
+    blocked_at?: string;
+
+    /**
+     * The timestamp when the contract's collection status transitioned to current.
+     */
+    current_at?: string;
+
+    /**
+     * The timestamp when the contract's collection status transitioned to past due.
+     */
+    past_due_at?: string;
+
+    /**
+     * The timestamp when the contract's collection status transitioned to unpaid.
+     */
+    unpaid_at?: string;
   }
 
   export interface OneTimeFees {
@@ -676,7 +715,7 @@ export namespace Contract {
       /**
        * Timestamp when the pricing line ends.
        */
-      ends_at: Data.EndsAt;
+      ends_at?: Data.EndsAt;
 
       /**
        * The id of the pricing line.
@@ -764,7 +803,7 @@ export namespace Contract {
               /**
                * Timestamp when this override ends.
                */
-              ends_at: Data.EndsAt;
+              ends_at?: Data.EndsAt;
 
               /**
                * The ID of the pricing override.
@@ -837,7 +876,7 @@ export namespace Contract {
       /**
        * Resolved timestamp when the pricing override ends.
        */
-      ends_at: Data.EndsAt;
+      ends_at?: Data.EndsAt;
 
       /**
        * The ID of the pricing override.
@@ -1053,7 +1092,7 @@ export namespace V2 {
         /**
          * When the pricing line ends.
          */
-        ends_at: PricingLine.EndsAt;
+        ends_at?: PricingLine.EndsAt;
 
         /**
          * A user-provided lookup key to reference this pricing line.
@@ -1080,7 +1119,7 @@ export namespace V2 {
         /**
          * When the pricing override ends.
          */
-        ends_at: PricingOverride.EndsAt;
+        ends_at?: PricingOverride.EndsAt;
 
         /**
          * A user-provided lookup key to reference this pricing override.
@@ -1291,7 +1330,7 @@ export namespace V2 {
         }
 
         export namespace EndsAt {
-          export type Type = 'timestamp' | OtherString;
+          export type Type = 'never' | 'timestamp' | OtherString;
         }
 
         export namespace Pricing {
@@ -1400,7 +1439,7 @@ export namespace V2 {
               export type Type = 'overwrite_price' | OtherString;
 
               export namespace EndsAt {
-                export type Type = 'timestamp' | OtherString;
+                export type Type = 'never' | 'timestamp' | OtherString;
               }
 
               export namespace StartsAt {
@@ -1473,7 +1512,7 @@ export namespace V2 {
         export type Type = 'multiply_pricing' | OtherString;
 
         export namespace EndsAt {
-          export type Type = 'timestamp' | OtherString;
+          export type Type = 'never' | 'timestamp' | OtherString;
         }
 
         export namespace MultiplyPricing {
@@ -1741,7 +1780,7 @@ export namespace V2 {
           /**
            * The end time for the pricing line.
            */
-          ends_at: Add.EndsAt;
+          ends_at?: Add.EndsAt;
 
           /**
            * A lookup key for the pricing line.
@@ -1838,7 +1877,7 @@ export namespace V2 {
           }
 
           export namespace EndsAt {
-            export type Type = 'timestamp' | OtherString;
+            export type Type = 'never' | 'now' | 'timestamp' | OtherString;
           }
 
           export namespace Pricing {
@@ -1947,7 +1986,7 @@ export namespace V2 {
                 export type Type = 'overwrite_price' | OtherString;
 
                 export namespace EndsAt {
-                  export type Type = 'timestamp' | OtherString;
+                  export type Type = 'never' | 'timestamp' | OtherString;
                 }
 
                 export namespace StartsAt {
@@ -2013,7 +2052,7 @@ export namespace V2 {
           }
 
           export namespace EndsAt {
-            export type Type = 'timestamp' | OtherString;
+            export type Type = 'never' | 'now' | 'timestamp' | OtherString;
           }
 
           export namespace Pricing {
@@ -2071,7 +2110,7 @@ export namespace V2 {
                   /**
                    * The end time for the override.
                    */
-                  ends_at: Add.EndsAt;
+                  ends_at?: Add.EndsAt;
 
                   /**
                    * A lookup key for the override.
@@ -2180,7 +2219,11 @@ export namespace V2 {
                   export type Type = 'overwrite_price' | OtherString;
 
                   export namespace EndsAt {
-                    export type Type = 'timestamp' | OtherString;
+                    export type Type =
+                      | 'never'
+                      | 'now'
+                      | 'timestamp'
+                      | OtherString;
                   }
 
                   export namespace StartsAt {
@@ -2214,7 +2257,11 @@ export namespace V2 {
                   }
 
                   export namespace EndsAt {
-                    export type Type = 'timestamp' | OtherString;
+                    export type Type =
+                      | 'never'
+                      | 'now'
+                      | 'timestamp'
+                      | OtherString;
                   }
 
                   export namespace StartsAt {
@@ -2254,7 +2301,7 @@ export namespace V2 {
           /**
            * The end time for the pricing override.
            */
-          ends_at: Add.EndsAt;
+          ends_at?: Add.EndsAt;
 
           /**
            * A lookup key for the pricing override.
@@ -2370,7 +2417,7 @@ export namespace V2 {
           export type Type = 'multiply_pricing' | OtherString;
 
           export namespace EndsAt {
-            export type Type = 'timestamp' | OtherString;
+            export type Type = 'never' | 'now' | 'timestamp' | OtherString;
           }
 
           export namespace MultiplyPricing {
@@ -2427,7 +2474,7 @@ export namespace V2 {
           }
 
           export namespace EndsAt {
-            export type Type = 'timestamp' | OtherString;
+            export type Type = 'never' | 'now' | 'timestamp' | OtherString;
           }
 
           export namespace StartsAt {

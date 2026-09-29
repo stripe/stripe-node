@@ -869,6 +869,9 @@ import {
   ApplicationFeeCreatedEvent,
   ApplicationFeeRefundUpdatedEvent,
   ApplicationFeeRefundedEvent,
+  AppsInstallCreatedEvent,
+  AppsInstallDeletedEvent,
+  AppsInstallUpdatedEvent,
   BalanceAvailableEvent,
   BalanceSettingsUpdatedEvent,
   BillingAlertRecoveredEvent,
@@ -1230,7 +1233,7 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 export class Stripe {
-  static PACKAGE_VERSION = '22.7.0-alpha.4';
+  static PACKAGE_VERSION = '22.7.0-alpha.5';
   static API_VERSION: typeof ApiVersion = ApiVersion;
   /**
    * The major API version that this SDK uses. Objects retrieved using the same
@@ -3030,6 +3033,9 @@ export declare namespace Stripe {
     ApplicationFeeCreatedEvent,
     ApplicationFeeRefundUpdatedEvent,
     ApplicationFeeRefundedEvent,
+    AppsInstallCreatedEvent,
+    AppsInstallDeletedEvent,
+    AppsInstallUpdatedEvent,
     BalanceAvailableEvent,
     BalanceSettingsUpdatedEvent,
     BillingAlertRecoveredEvent,
@@ -3499,6 +3505,9 @@ export declare namespace Stripe {
     export type RecipientNotNotifiableError = InstanceType<
       typeof _Error.RecipientNotNotifiableError
     >;
+    export type ServiceUnavailableError = InstanceType<
+      typeof _Error.ServiceUnavailableError
+    >;
     export type TemporarySessionExpiredError = InstanceType<
       typeof _Error.TemporarySessionExpiredError
     >;
@@ -3601,6 +3610,9 @@ export declare namespace Stripe {
     export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
     export type RecipientNotNotifiableError = InstanceType<
       typeof _Error.RecipientNotNotifiableError
+    >;
+    export type ServiceUnavailableError = InstanceType<
+      typeof _Error.ServiceUnavailableError
     >;
     export type TemporarySessionExpiredError = InstanceType<
       typeof _Error.TemporarySessionExpiredError

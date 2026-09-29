@@ -96,8 +96,10 @@ import {
   TransactionEntry,
   TransactionEntryResource,
 } from './TransactionEntries.js';
+import {FinancialAccountWalletExportCredentials} from './FinancialAccountWalletExportCredentials.js';
 import {FinancialAddressDebitSimulation} from './FinancialAddressDebitSimulations.js';
 import {FinancialAccountStatement} from './FinancialAccountStatements.js';
+import {FinancialAccountWalletExport} from './FinancialAccountWalletExports.js';
 import {TestHelpers} from './TestHelpers/index.js';
 
 export {Adjustment} from './Adjustments.js';
@@ -119,8 +121,10 @@ export {ReceivedDebitMandate} from './ReceivedDebitMandates.js';
 export {RecipientVerification} from './RecipientVerifications.js';
 export {Transaction} from './Transactions.js';
 export {TransactionEntry} from './TransactionEntries.js';
+export {FinancialAccountWalletExportCredentials} from './FinancialAccountWalletExportCredentials.js';
 export {FinancialAddressDebitSimulation} from './FinancialAddressDebitSimulations.js';
 export {FinancialAccountStatement} from './FinancialAccountStatements.js';
+export {FinancialAccountWalletExport} from './FinancialAccountWalletExports.js';
 
 export class MoneyManagement {
   adjustments: AdjustmentResource;
@@ -252,7 +256,9 @@ export declare namespace MoneyManagement {
   export import TransactionEntryListParams = V2Namespace18.MoneyManagement.TransactionEntryListParams;
   export import TransactionEntryRetrieveParams = V2Namespace18.MoneyManagement.TransactionEntryRetrieveParams;
   export {TransactionEntry, TransactionEntryResource};
+  export {FinancialAccountWalletExportCredentials};
   export {FinancialAddressDebitSimulation};
   export {FinancialAccountStatement};
+  export {FinancialAccountWalletExport};
   export {TestHelpers};
 }

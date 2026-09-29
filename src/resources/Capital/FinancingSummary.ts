@@ -93,6 +93,11 @@ export namespace FinancingSummary {
     repayments_begin_at: number | null;
 
     /**
+     * Total amount to be paid, independent of what's already been paid, in minor units. For example, 100 USD is represented as 10000.
+     */
+    total_due_amount?: number;
+
+    /**
      * Per-transaction rate at which Stripe withholds funds to repay the financing.
      */
     withhold_rate: number;
@@ -109,6 +114,11 @@ export namespace FinancingSummary {
       due_at: number;
 
       /**
+       * The balance for the current repayment interval, in minor units. This does not account for any amount paid down during the interval.
+       */
+      incremental_interval_target_amount?: number;
+
+      /**
        * The amount that has already been paid in the current repayment interval, in minor units. For example, 100 USD is represented as 10000.
        */
       paid_amount: number | null;
@@ -117,6 +127,11 @@ export namespace FinancingSummary {
        * The amount that is yet to be paid in the current repayment interval, in minor units. For example, 100 USD is represented as 10000.
        */
       remaining_amount: number;
+
+      /**
+       * The time at which the current repayment interval started. Given in seconds since unix epoch.
+       */
+      starts_at?: number;
     }
 
     export type DisclaimerVariant =

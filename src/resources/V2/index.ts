@@ -14,6 +14,7 @@ import {MoneyManagement} from './MoneyManagement/index.js';
 import {Network} from './Network/index.js';
 import {OrchestratedCommerce} from './OrchestratedCommerce/index.js';
 import {Payments} from './Payments/index.js';
+import {Provisioning} from './Provisioning/index.js';
 import {Reporting} from './Reporting/index.js';
 import {Risk} from './Risk/index.js';
 import {Signals} from './Signals/index.js';
@@ -35,6 +36,7 @@ export class V2 {
   network: Network;
   orchestratedCommerce: OrchestratedCommerce;
   payments: Payments;
+  provisioning: Provisioning;
   reporting: Reporting;
   risk: Risk;
   signals: Signals;
@@ -52,6 +54,7 @@ export class V2 {
     this.network = new Network(stripe);
     this.orchestratedCommerce = new OrchestratedCommerce(stripe);
     this.payments = new Payments(stripe);
+    this.provisioning = new Provisioning(stripe);
     this.reporting = new Reporting(stripe);
     this.risk = new Risk(stripe);
     this.signals = new Signals(stripe);
@@ -74,6 +77,7 @@ export declare namespace V2 {
   export {Network};
   export {OrchestratedCommerce};
   export {Payments};
+  export {Provisioning};
   export {Reporting};
   export {Risk};
   export {Signals};

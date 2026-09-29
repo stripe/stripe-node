@@ -201,6 +201,11 @@ export namespace V2 {
     export namespace OutboundSetupIntentCreateParams {
       export interface PayoutMethodData {
         /**
+         * The type specific details of the Apple Pay payout method.
+         */
+        apple_pay?: PayoutMethodData.ApplePay;
+
+        /**
          * The type specific details of the bank account payout method.
          */
         bank_account?: PayoutMethodData.BankAccount;
@@ -224,6 +229,18 @@ export namespace V2 {
       export type UsageIntent = 'payment' | 'transfer';
 
       export namespace PayoutMethodData {
+        export interface ApplePay {
+          /**
+           * The paymentData property of the Apple-provided PKPaymentToken (or ApplePayPaymentToken, for Apple Pay on the Web) as a UTF-8 encoded serialization of a JSON dictionary.
+           */
+          pk_token?: string;
+
+          /**
+           * The paymentMethod.displayName property of the Apple-provided PKPaymentToken (or ApplePayPaymentToken, for Apple Pay on the Web), e.g. "Visa 1234".
+           */
+          pk_token_display_name: string;
+        }
+
         export interface BankAccount {
           /**
            * The account number or IBAN of the bank account.
@@ -301,6 +318,7 @@ export namespace V2 {
         }
 
         export type Type =
+          | 'apple_pay'
           | 'bank_account'
           | 'card'
           | 'crypto_wallet'
@@ -432,6 +450,7 @@ export namespace V2 {
         }
 
         export type Type =
+          | 'apple_pay'
           | 'bank_account'
           | 'card'
           | 'crypto_wallet'

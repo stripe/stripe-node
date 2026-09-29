@@ -5,7 +5,7 @@ import {RequestOptions, Response} from '../../../../lib.js';
 
 export class NetworkTokenResource extends StripeResource {
   /**
-   * Creates or returns a NetworkToken from raw card data for POST /v2/core/vault/network_tokens.
+   * Create or Return a Network Token Using Raw Card Data.
    * @throws Stripe.CannotProceedError
    * @throws Stripe.BlockedByStripeError
    * @throws Stripe.MerchantNotGatedError
@@ -22,7 +22,7 @@ export class NetworkTokenResource extends StripeResource {
     ) as any;
   }
   /**
-   * Creates or returns a NetworkToken from an existing card reference for POST /v2/core/vault/network_tokens/create_from_credential.
+   * Creates or returns a Network Token from an existing card reference.
    * @throws Stripe.CannotProceedError
    * @throws Stripe.BlockedByStripeError
    */
@@ -38,7 +38,7 @@ export class NetworkTokenResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieves the persisted NetworkToken projection for GET /v2/core/vault/network_tokens/:id.
+   * Retrieves an existing network token.
    */
   retrieve(
     id: string,
@@ -53,7 +53,6 @@ export class NetworkTokenResource extends StripeResource {
     ) as any;
   }
   /**
-   * Generates a single-use cryptogram for POST /v2/core/vault/network_tokens/:id/generate_cryptogram.
    * Every successful call generates a new cryptogram, and retrying can generate another cryptogram.
    * The cryptogram is returned only in this response and is never persisted.
    * @throws Stripe.RateLimitError

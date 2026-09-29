@@ -542,6 +542,10 @@ export type Event =
   | V2BillingCadenceCreatedEvent
   | V2BillingContractActivatedEvent
   | V2BillingContractCanceledEvent
+  | V2BillingContractCollectionBlockedEvent
+  | V2BillingContractCollectionCurrentEvent
+  | V2BillingContractCollectionPastDueEvent
+  | V2BillingContractCollectionUnpaidEvent
   | V2BillingContractCreatedEvent
   | V2BillingContractEndedEvent
   | V2BillingContractUpdatedEvent
@@ -657,6 +661,11 @@ export type Event =
   | V2CoreHealthTrafficVolumeDropResolvedEvent
   | V2CoreHealthWebhookLatencyFiringEvent
   | V2CoreHealthWebhookLatencyResolvedEvent
+  | V2CoreVaultNetworkTokenActivatedEvent
+  | V2CoreVaultNetworkTokenAuthorizationRequirementsChangedEvent
+  | V2CoreVaultNetworkTokenDeactivatedEvent
+  | V2CoreVaultNetworkTokenDetailsUpdatedEvent
+  | V2CoreVaultNetworkTokenSuspendedEvent
   | V2DataReportingQueryRunCreatedEvent
   | V2DataReportingQueryRunFailedEvent
   | V2DataReportingQueryRunSucceededEvent
@@ -683,6 +692,9 @@ export type Event =
   | V2MoneyManagementDebitDisputeSucceededEvent
   | V2MoneyManagementFinancialAccountCreatedEvent
   | V2MoneyManagementFinancialAccountUpdatedEvent
+  | V2MoneyManagementFinancialAccountWalletExportCompletedEvent
+  | V2MoneyManagementFinancialAccountWalletExportPendingEvent
+  | V2MoneyManagementFinancialAccountWalletExportReadyEvent
   | V2MoneyManagementFinancialAccountStatementCreatedEvent
   | V2MoneyManagementFinancialAccountStatementRestatedEvent
   | V2MoneyManagementFinancialAddressActivatedEvent
@@ -993,6 +1005,10 @@ export type EventNotification =
   | V2BillingCadenceCreatedEventNotification
   | V2BillingContractActivatedEventNotification
   | V2BillingContractCanceledEventNotification
+  | V2BillingContractCollectionBlockedEventNotification
+  | V2BillingContractCollectionCurrentEventNotification
+  | V2BillingContractCollectionPastDueEventNotification
+  | V2BillingContractCollectionUnpaidEventNotification
   | V2BillingContractCreatedEventNotification
   | V2BillingContractEndedEventNotification
   | V2BillingContractUpdatedEventNotification
@@ -1108,6 +1124,11 @@ export type EventNotification =
   | V2CoreHealthTrafficVolumeDropResolvedEventNotification
   | V2CoreHealthWebhookLatencyFiringEventNotification
   | V2CoreHealthWebhookLatencyResolvedEventNotification
+  | V2CoreVaultNetworkTokenActivatedEventNotification
+  | V2CoreVaultNetworkTokenAuthorizationRequirementsChangedEventNotification
+  | V2CoreVaultNetworkTokenDeactivatedEventNotification
+  | V2CoreVaultNetworkTokenDetailsUpdatedEventNotification
+  | V2CoreVaultNetworkTokenSuspendedEventNotification
   | V2DataReportingQueryRunCreatedEventNotification
   | V2DataReportingQueryRunFailedEventNotification
   | V2DataReportingQueryRunSucceededEventNotification
@@ -1134,6 +1155,9 @@ export type EventNotification =
   | V2MoneyManagementDebitDisputeSucceededEventNotification
   | V2MoneyManagementFinancialAccountCreatedEventNotification
   | V2MoneyManagementFinancialAccountUpdatedEventNotification
+  | V2MoneyManagementFinancialAccountWalletExportCompletedEventNotification
+  | V2MoneyManagementFinancialAccountWalletExportPendingEventNotification
+  | V2MoneyManagementFinancialAccountWalletExportReadyEventNotification
   | V2MoneyManagementFinancialAccountStatementCreatedEventNotification
   | V2MoneyManagementFinancialAccountStatementRestatedEventNotification
   | V2MoneyManagementFinancialAddressActivatedEventNotification
@@ -1529,7 +1553,7 @@ export interface V1ApplicationFeeRefundedEventNotification
 export interface V1BalanceAvailableEvent extends EventBase {
   type: 'v1.balance.available';
   // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
+  related_object: V2.Core.Events.RelatedSingletonObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1Balance>;
 }
@@ -1537,7 +1561,7 @@ export interface V1BalanceAvailableEventNotification
   extends EventNotificationBase {
   type: 'v1.balance.available';
   // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
+  related_object: V2.Core.Events.RelatedSingletonObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1Balance>;
   fetchEvent(): Promise<V1BalanceAvailableEvent>;
@@ -1549,7 +1573,7 @@ export interface V1BalanceAvailableEventNotification
 export interface V1BalanceSettingsUpdatedEvent extends EventBase {
   type: 'v1.balance_settings.updated';
   // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
+  related_object: V2.Core.Events.RelatedSingletonObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1BalanceSettings>;
 }
@@ -1557,7 +1581,7 @@ export interface V1BalanceSettingsUpdatedEventNotification
   extends EventNotificationBase {
   type: 'v1.balance_settings.updated';
   // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
+  related_object: V2.Core.Events.RelatedSingletonObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1BalanceSettings>;
   fetchEvent(): Promise<V1BalanceSettingsUpdatedEvent>;
@@ -2024,7 +2048,7 @@ export interface V1CapabilityUpdatedEventNotification
 export interface V1CashBalanceFundsAvailableEvent extends EventBase {
   type: 'v1.cash_balance.funds_available';
   // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
+  related_object: V2.Core.Events.RelatedSingletonObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1CashBalance>;
 }
@@ -2032,7 +2056,7 @@ export interface V1CashBalanceFundsAvailableEventNotification
   extends EventNotificationBase {
   type: 'v1.cash_balance.funds_available';
   // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
+  related_object: V2.Core.Events.RelatedSingletonObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1CashBalance>;
   fetchEvent(): Promise<V1CashBalanceFundsAvailableEvent>;
@@ -5449,7 +5473,7 @@ export interface V1SubscriptionScheduleUpdatedEventNotification
 export interface V1TaxSettingsUpdatedEvent extends EventBase {
   type: 'v1.tax.settings.updated';
   // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
+  related_object: V2.Core.Events.RelatedSingletonObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1Tax.Settings>;
 }
@@ -5457,7 +5481,7 @@ export interface V1TaxSettingsUpdatedEventNotification
   extends EventNotificationBase {
   type: 'v1.tax.settings.updated';
   // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
+  related_object: V2.Core.Events.RelatedSingletonObject;
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1Tax.Settings>;
   fetchEvent(): Promise<V1TaxSettingsUpdatedEvent>;
@@ -5941,6 +5965,86 @@ export interface V2BillingContractCanceledEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Billing.Contract>;
   fetchEvent(): Promise<V2BillingContractCanceledEvent>;
+}
+
+/**
+ * Occurs when a Contract's collection status transitions to blocked.
+ */
+export interface V2BillingContractCollectionBlockedEvent extends EventBase {
+  type: 'v2.billing.contract.collection_blocked';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+}
+export interface V2BillingContractCollectionBlockedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract.collection_blocked';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+  fetchEvent(): Promise<V2BillingContractCollectionBlockedEvent>;
+}
+
+/**
+ * Occurs when a Contract's collection status transitions to current.
+ */
+export interface V2BillingContractCollectionCurrentEvent extends EventBase {
+  type: 'v2.billing.contract.collection_current';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+}
+export interface V2BillingContractCollectionCurrentEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract.collection_current';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+  fetchEvent(): Promise<V2BillingContractCollectionCurrentEvent>;
+}
+
+/**
+ * Occurs when a Contract's collection status transitions to past due.
+ */
+export interface V2BillingContractCollectionPastDueEvent extends EventBase {
+  type: 'v2.billing.contract.collection_past_due';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+}
+export interface V2BillingContractCollectionPastDueEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract.collection_past_due';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+  fetchEvent(): Promise<V2BillingContractCollectionPastDueEvent>;
+}
+
+/**
+ * Occurs when a Contract's collection status transitions to unpaid.
+ */
+export interface V2BillingContractCollectionUnpaidEvent extends EventBase {
+  type: 'v2.billing.contract.collection_unpaid';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+}
+export interface V2BillingContractCollectionUnpaidEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract.collection_unpaid';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.Contract>;
+  fetchEvent(): Promise<V2BillingContractCollectionUnpaidEvent>;
 }
 
 /**
@@ -7523,6 +7627,7 @@ export namespace V2CoreAccountLinkReturnedEvent {
   export namespace Data {
     export type Configuration =
       | 'customer'
+      | 'developer'
       | 'merchant'
       | 'money_manager'
       | 'recipient'
@@ -10550,6 +10655,112 @@ export namespace V2CoreHealthWebhookLatencyResolvedEvent {
 }
 
 /**
+ * Occurs when a token is re-activated after being suspended.
+ */
+export interface V2CoreVaultNetworkTokenActivatedEvent extends EventBase {
+  type: 'v2.core.vault.network_token.activated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Vault.NetworkToken>;
+}
+export interface V2CoreVaultNetworkTokenActivatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.vault.network_token.activated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Vault.NetworkToken>;
+  fetchEvent(): Promise<V2CoreVaultNetworkTokenActivatedEvent>;
+}
+
+/**
+ * Occurs when a network token's authorization requirements change.
+ * Specifically for Mastercard: Restart any external payment series involving this token
+ * with a customer-initiated transaction, in conjunction with a fresh cryptogram.
+ */
+export interface V2CoreVaultNetworkTokenAuthorizationRequirementsChangedEvent
+  extends EventBase {
+  type: 'v2.core.vault.network_token.authorization_requirements_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Vault.NetworkToken>;
+}
+export interface V2CoreVaultNetworkTokenAuthorizationRequirementsChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.vault.network_token.authorization_requirements_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Vault.NetworkToken>;
+  fetchEvent(): Promise<
+    V2CoreVaultNetworkTokenAuthorizationRequirementsChangedEvent
+  >;
+}
+
+/**
+ * Occurs when a network token is deactivated.
+ * This is a terminal state.
+ */
+export interface V2CoreVaultNetworkTokenDeactivatedEvent extends EventBase {
+  type: 'v2.core.vault.network_token.deactivated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Vault.NetworkToken>;
+}
+export interface V2CoreVaultNetworkTokenDeactivatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.vault.network_token.deactivated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Vault.NetworkToken>;
+  fetchEvent(): Promise<V2CoreVaultNetworkTokenDeactivatedEvent>;
+}
+
+/**
+ * Occurs when a network token's details, such as its number or expiration date, are updated.
+ */
+export interface V2CoreVaultNetworkTokenDetailsUpdatedEvent extends EventBase {
+  type: 'v2.core.vault.network_token.details_updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Vault.NetworkToken>;
+}
+export interface V2CoreVaultNetworkTokenDetailsUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.vault.network_token.details_updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Vault.NetworkToken>;
+  fetchEvent(): Promise<V2CoreVaultNetworkTokenDetailsUpdatedEvent>;
+}
+
+/**
+ * Occurs when a network token is suspended.
+ */
+export interface V2CoreVaultNetworkTokenSuspendedEvent extends EventBase {
+  type: 'v2.core.vault.network_token.suspended';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Vault.NetworkToken>;
+}
+export interface V2CoreVaultNetworkTokenSuspendedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.vault.network_token.suspended';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Vault.NetworkToken>;
+  fetchEvent(): Promise<V2CoreVaultNetworkTokenSuspendedEvent>;
+}
+
+/**
  * Occurs when a QueryRun is created.
  */
 export interface V2DataReportingQueryRunCreatedEvent extends EventBase {
@@ -11184,6 +11395,75 @@ export interface V2MoneyManagementFinancialAccountUpdatedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<MoneyManagement.FinancialAccount>;
   fetchEvent(): Promise<V2MoneyManagementFinancialAccountUpdatedEvent>;
+}
+
+/**
+ * Occurs when FinancialAccount wallet credentials are first exported.
+ */
+export interface V2MoneyManagementFinancialAccountWalletExportCompletedEvent
+  extends EventBase {
+  type: 'v2.money_management.financial_account.wallet_export.completed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FinancialAccount>;
+}
+export interface V2MoneyManagementFinancialAccountWalletExportCompletedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.financial_account.wallet_export.completed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FinancialAccount>;
+  fetchEvent(): Promise<
+    V2MoneyManagementFinancialAccountWalletExportCompletedEvent
+  >;
+}
+
+/**
+ * Occurs when a FinancialAccount wallet export starts being prepared.
+ */
+export interface V2MoneyManagementFinancialAccountWalletExportPendingEvent
+  extends EventBase {
+  type: 'v2.money_management.financial_account.wallet_export.pending';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FinancialAccount>;
+}
+export interface V2MoneyManagementFinancialAccountWalletExportPendingEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.financial_account.wallet_export.pending';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FinancialAccount>;
+  fetchEvent(): Promise<
+    V2MoneyManagementFinancialAccountWalletExportPendingEvent
+  >;
+}
+
+/**
+ * Occurs when a FinancialAccount wallet export is ready for credentials retrieval.
+ */
+export interface V2MoneyManagementFinancialAccountWalletExportReadyEvent
+  extends EventBase {
+  type: 'v2.money_management.financial_account.wallet_export.ready';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FinancialAccount>;
+}
+export interface V2MoneyManagementFinancialAccountWalletExportReadyEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.financial_account.wallet_export.ready';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FinancialAccount>;
+  fetchEvent(): Promise<
+    V2MoneyManagementFinancialAccountWalletExportReadyEvent
+  >;
 }
 
 /**
@@ -13690,6 +13970,10 @@ export declare namespace Events {
     V2BillingCadenceCreatedEvent,
     V2BillingContractActivatedEvent,
     V2BillingContractCanceledEvent,
+    V2BillingContractCollectionBlockedEvent,
+    V2BillingContractCollectionCurrentEvent,
+    V2BillingContractCollectionPastDueEvent,
+    V2BillingContractCollectionUnpaidEvent,
     V2BillingContractCreatedEvent,
     V2BillingContractEndedEvent,
     V2BillingContractUpdatedEvent,
@@ -13805,6 +14089,11 @@ export declare namespace Events {
     V2CoreHealthTrafficVolumeDropResolvedEvent,
     V2CoreHealthWebhookLatencyFiringEvent,
     V2CoreHealthWebhookLatencyResolvedEvent,
+    V2CoreVaultNetworkTokenActivatedEvent,
+    V2CoreVaultNetworkTokenAuthorizationRequirementsChangedEvent,
+    V2CoreVaultNetworkTokenDeactivatedEvent,
+    V2CoreVaultNetworkTokenDetailsUpdatedEvent,
+    V2CoreVaultNetworkTokenSuspendedEvent,
     V2DataReportingQueryRunCreatedEvent,
     V2DataReportingQueryRunFailedEvent,
     V2DataReportingQueryRunSucceededEvent,
@@ -13831,6 +14120,9 @@ export declare namespace Events {
     V2MoneyManagementDebitDisputeSucceededEvent,
     V2MoneyManagementFinancialAccountCreatedEvent,
     V2MoneyManagementFinancialAccountUpdatedEvent,
+    V2MoneyManagementFinancialAccountWalletExportCompletedEvent,
+    V2MoneyManagementFinancialAccountWalletExportPendingEvent,
+    V2MoneyManagementFinancialAccountWalletExportReadyEvent,
     V2MoneyManagementFinancialAccountStatementCreatedEvent,
     V2MoneyManagementFinancialAccountStatementRestatedEvent,
     V2MoneyManagementFinancialAddressActivatedEvent,
@@ -14139,6 +14431,10 @@ export declare namespace Events {
     V2BillingCadenceCreatedEventNotification,
     V2BillingContractActivatedEventNotification,
     V2BillingContractCanceledEventNotification,
+    V2BillingContractCollectionBlockedEventNotification,
+    V2BillingContractCollectionCurrentEventNotification,
+    V2BillingContractCollectionPastDueEventNotification,
+    V2BillingContractCollectionUnpaidEventNotification,
     V2BillingContractCreatedEventNotification,
     V2BillingContractEndedEventNotification,
     V2BillingContractUpdatedEventNotification,
@@ -14254,6 +14550,11 @@ export declare namespace Events {
     V2CoreHealthTrafficVolumeDropResolvedEventNotification,
     V2CoreHealthWebhookLatencyFiringEventNotification,
     V2CoreHealthWebhookLatencyResolvedEventNotification,
+    V2CoreVaultNetworkTokenActivatedEventNotification,
+    V2CoreVaultNetworkTokenAuthorizationRequirementsChangedEventNotification,
+    V2CoreVaultNetworkTokenDeactivatedEventNotification,
+    V2CoreVaultNetworkTokenDetailsUpdatedEventNotification,
+    V2CoreVaultNetworkTokenSuspendedEventNotification,
     V2DataReportingQueryRunCreatedEventNotification,
     V2DataReportingQueryRunFailedEventNotification,
     V2DataReportingQueryRunSucceededEventNotification,
@@ -14280,6 +14581,9 @@ export declare namespace Events {
     V2MoneyManagementDebitDisputeSucceededEventNotification,
     V2MoneyManagementFinancialAccountCreatedEventNotification,
     V2MoneyManagementFinancialAccountUpdatedEventNotification,
+    V2MoneyManagementFinancialAccountWalletExportCompletedEventNotification,
+    V2MoneyManagementFinancialAccountWalletExportPendingEventNotification,
+    V2MoneyManagementFinancialAccountWalletExportReadyEventNotification,
     V2MoneyManagementFinancialAccountStatementCreatedEventNotification,
     V2MoneyManagementFinancialAccountStatementRestatedEventNotification,
     V2MoneyManagementFinancialAddressActivatedEventNotification,

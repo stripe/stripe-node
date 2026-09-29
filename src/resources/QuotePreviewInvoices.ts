@@ -708,7 +708,7 @@ export namespace QuotePreviewInvoice {
     /**
      * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
      * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
-     * Later, you can use [PaymentIntents](https://api.stripe.com#payment_intents) to drive the payment flow.
+     * Later, you can use [PaymentIntents](https://docs.stripe.com/api#payment_intents) to drive the payment flow.
      *
      * Create a SetupIntent when you're ready to collect your customer's payment credentials.
      * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
@@ -719,9 +719,9 @@ export namespace QuotePreviewInvoice {
      * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
      * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
      * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
-     * If you use the SetupIntent with a [Customer](https://api.stripe.com#setup_intent_object-customer),
+     * If you use the SetupIntent with a [Customer](https://docs.stripe.com/api#setup_intent_object-customer),
      * it automatically attaches the resulting payment method to that Customer after successful setup.
-     * We recommend using SetupIntents or [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) on
+     * We recommend using SetupIntents or [setup_future_usage](https://docs.stripe.com/api#payment_intent_object-setup_future_usage) on
      * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
      *
      * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
@@ -1594,6 +1594,7 @@ export namespace QuotePreviewInvoice {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'touch_n_go'
       | 'truemoney'
       | 'twint'
       | 'upi'

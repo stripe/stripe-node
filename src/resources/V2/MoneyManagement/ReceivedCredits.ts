@@ -201,6 +201,11 @@ export namespace ReceivedCredit {
     mx_bank_account?: BankTransfer.MxBankAccount;
 
     /**
+     * Network-level detail for the transfer that created this ReceivedCredit. Present only for ACH.
+     */
+    network_details?: BankTransfer.NetworkDetails;
+
+    /**
      * Hash containing the originating bank account details and type for this bank transfer.
      */
     originating_bank_account: BankTransfer.OriginatingBankAccount;
@@ -438,6 +443,13 @@ export namespace ReceivedCredit {
       network: MxBankAccount.Network;
     }
 
+    export interface NetworkDetails {
+      /**
+       * NACHA details for the ACH entry that created this ReceivedCredit.
+       */
+      ach: NetworkDetails.Ach;
+    }
+
     export interface OriginatingBankAccount {
       /**
        * Hash containing the transaction bank details. Present if `type` field value is `aba`.
@@ -543,6 +555,63 @@ export namespace ReceivedCredit {
 
     export namespace MxBankAccount {
       export type Network = 'spei' | OtherString;
+    }
+
+    export namespace NetworkDetails {
+      export interface Ach {
+        /**
+         * Payment-related information from the ACH addenda record, up to 80 characters.
+         */
+        addenda?: string;
+
+        /**
+         * Company Entry Description from the ACH batch header, e.g. "HCCLAIMPMT".
+         */
+        originator_company_entry_description?: string;
+
+        /**
+         * Company Identification from the ACH batch header.
+         */
+        originator_company_id?: string;
+
+        /**
+         * Company Name from the ACH batch header -- the business that sent the funds.
+         */
+        originator_company_name?: string;
+
+        /**
+         * Identification Number from the ACH entry detail record.
+         */
+        receiver_id_number?: string;
+
+        /**
+         * Individual Name from the ACH entry detail record.
+         */
+        receiver_name?: string;
+
+        /**
+         * Open Enum. Standard Entry Class code of the ACH entry.
+         */
+        standard_entry_class_code?: Ach.StandardEntryClassCode;
+
+        /**
+         * Trace Number from the ACH entry detail record.
+         */
+        trace_id?: string;
+      }
+
+      export namespace Ach {
+        export type StandardEntryClassCode =
+          | 'ccd'
+          | 'cie'
+          | 'ctx'
+          | 'iat'
+          | 'pos'
+          | 'ppd'
+          | 'tel'
+          | 'web'
+          | OtherString;
+      }
     }
 
     export namespace OriginatingBankAccount {

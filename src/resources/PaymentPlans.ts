@@ -294,7 +294,7 @@ export namespace PaymentPlanCreateParams {
 
   export interface Schedule {
     /**
-     * Required when type is 'amounts_due'.
+     * Required when type is 'amounts_due'. Must contain at least 2 installment entries.
      */
     amounts_due: Schedule.AmountsDue;
 
@@ -316,7 +316,7 @@ export namespace PaymentPlanCreateParams {
   export namespace Schedule {
     export interface AmountsDue {
       /**
-       * The list of installment entries.
+       * The list of installment entries. Must contain at least 2 entries.
        */
       amounts: Array<AmountsDue.Amount>;
     }
@@ -439,7 +439,7 @@ export interface PaymentPlanUpdateParams {
 export namespace PaymentPlanUpdateParams {
   export interface Schedule {
     /**
-     * Required when type is 'amounts_due'.
+     * Required when type is 'amounts_due'. Must contain at least 2 installment entries.
      */
     amounts_due: Schedule.AmountsDue;
 
@@ -452,7 +452,7 @@ export namespace PaymentPlanUpdateParams {
   export namespace Schedule {
     export interface AmountsDue {
       /**
-       * The list of installment entries.
+       * The list of installment entries. Must contain at least 2 entries.
        */
       amounts: Array<AmountsDue.Amount>;
     }

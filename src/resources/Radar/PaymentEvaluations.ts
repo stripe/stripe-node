@@ -442,6 +442,7 @@ export namespace PaymentEvaluation {
       | 'failed'
       | 'merchant_blocked'
       | 'rejected'
+      | 'rerouted'
       | 'succeeded'
       | OtherString;
 
@@ -568,7 +569,7 @@ export namespace PaymentEvaluation {
       card: MoneyMovementDetails.Card | null;
 
       /**
-       * Describes the type of money movement. Currently only `card` is supported.
+       * Describes the type of money movement.
        */
       money_movement_type: 'card';
     }
@@ -914,7 +915,7 @@ export namespace Radar {
         card?: MoneyMovementDetails.Card;
 
         /**
-         * Describes the type of money movement. Currently only `card` is supported.
+         * Describes the type of money movement.
          */
         money_movement_type: 'card';
       }

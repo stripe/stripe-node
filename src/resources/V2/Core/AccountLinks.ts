@@ -196,6 +196,7 @@ export namespace AccountLink {
 
       export type Configuration =
         | 'customer'
+        | 'developer'
         | 'merchant'
         | 'money_manager'
         | 'recipient'
@@ -224,6 +225,7 @@ export namespace AccountLink {
 
       export type Configuration =
         | 'customer'
+        | 'developer'
         | 'merchant'
         | 'money_manager'
         | 'recipient'
@@ -435,6 +437,7 @@ export namespace V2 {
 
           export type Configuration =
             | 'customer'
+            | 'developer'
             | 'merchant'
             | 'money_manager'
             | 'recipient'
@@ -466,6 +469,7 @@ export namespace V2 {
 
           export type Configuration =
             | 'customer'
+            | 'developer'
             | 'merchant'
             | 'money_manager'
             | 'recipient'
