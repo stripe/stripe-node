@@ -14,17 +14,9 @@ import {SubtleCryptoProvider} from '../src/crypto/SubtleCryptoProvider.js';
 import {expect} from 'chai';
 import {webcrypto} from 'crypto';
 
-// TODO(https://go/j/DEVSDK-3253)
-if (process.versions.node < '19') {
-  // Node 18 has no `globalThis.crypto`, so we can only run our WebPlatformFunctions tests on more modern node versions
-  console.log(
-    `Skipping WebPlatformFunctions tests. No 'globalThis.crypto' in module scope for ${process.version}.`
-  );
-} else {
-  import(
-    '../src/platform/WebPlatformFunctions.js'
-  ).then(({WebPlatformFunctions}) => testPlatform(new WebPlatformFunctions()));
-}
+import(
+  '../src/platform/WebPlatformFunctions.js'
+).then(({WebPlatformFunctions}) => testPlatform(new WebPlatformFunctions()));
 
 testPlatform(new NodePlatformFunctions());
 
@@ -34,13 +26,12 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
   describe(`${platformFunctions.constructor.name}`, () => {
     describe('uuid', () => {
       describe('should use crypto.randomUUID if it exists', () => {
-        const crypto = require('crypto');
         let randomUUID$;
         let called;
         beforeEach(() => {
           // if it's available, mock it and ensure it's called
           // otherwise, skip this whole operation
-          if (isNodeEnvironment && crypto.randomUUID) {
+          if (typeof crypto !== 'undefined') {
             called = false;
             randomUUID$ = crypto.randomUUID;
             crypto.randomUUID = (): string => {
@@ -57,7 +48,7 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
         it('is called if available', () => {
           if (randomUUID$) {
             expect(platformFunctions.uuid4()).to.equal('no, YOU you id');
-            expect(called).to.equal(isNodeEnvironment);
+            expect(called).to.equal(true);
           }
         });
       });
@@ -314,13 +305,6 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
       if (!isNodeEnvironment) {
         // WebPlatformFunctions
         it('should throw an error in web environments if streaming data is provided', () => {
-          if (process.versions.node < '18') {
-            console.log(
-              `'ReadableStream' is not available in the global scope for ${process.version}, skipping test.`
-            );
-            return;
-          }
-
           const f = new ReadableStream();
           const data = {
             file: {
@@ -397,20 +381,10 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
     });
 
     describe('createFetchHttpClient', () => {
-      if (process.versions.node < '18.0.0') {
-        // Until Node.js 18.0.0 global fetch was either behind the behind --experimental-global-fetch CLI flag
-        // or not defined at all and this test will therefore throw
-        it('should throw without fetch implementation on Node 12', () => {
-          expect(() => {
-            platformFunctions.createFetchHttpClient();
-          }).to.throw();
-        });
-      } else {
-        it('should create an instance of FetchHttpClient using global fetch', () => {
-          const fetchClient = platformFunctions.createFetchHttpClient();
-          expect(fetchClient).to.be.an.instanceof(FetchHttpClient);
-        });
-      }
+      it('should create an instance of FetchHttpClient using global fetch', () => {
+        const fetchClient = platformFunctions.createFetchHttpClient();
+        expect(fetchClient).to.be.an.instanceof(FetchHttpClient);
+      });
     });
 
     describe('createNodeCryptoProvider', () => {
@@ -447,17 +421,11 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
   });
 }
 
-describe('PlatformFunctions.uuid4 without globalThis.crypto', () => {
+describe('PlatformFunctions.uuid4 without crypto', () => {
   // because uuid4 is used in a cryptographic context, PlatformFunctions.uuid4 should throw if it can't access a CSPRNG
 
-  // some extra housekeeping for node 18, which truly _doesn't_ have the global crypto
-  // no need to remove what isn't there
-  // TODO(https://go/j/DEVSDK-3253) - can remove when we drop node 18
-  const hasCryptoGlobal = typeof globalThis.crypto !== 'undefined';
-
   beforeEach(() => {
-    if (!hasCryptoGlobal) return;
-    Object.defineProperty(globalThis.crypto, 'randomUUID', {
+    Object.defineProperty(crypto, 'randomUUID', {
       value: undefined,
       configurable: true,
       writable: true,
@@ -465,8 +433,7 @@ describe('PlatformFunctions.uuid4 without globalThis.crypto', () => {
   });
 
   afterEach(() => {
-    if (!hasCryptoGlobal) return;
-    delete (globalThis.crypto as any).randomUUID;
+    delete (crypto as any).randomUUID;
   });
 
   it('throws instead of degrading to a weak RNG', () => {
@@ -490,26 +457,3 @@ describe('PlatformFunctions.uuid4 without globalThis.crypto', () => {
     }
   });
 });
-
-// TODO(https://go/j/DEVSDK-3253) - can remove when we drop node 18
-if (process.versions.node < '19') {
-  describe('NodePlatformFunctions.uuid4 without globalThis.crypto', () => {
-    it('still generates a valid v4 UUID', () => {
-      expect(typeof globalThis.crypto).to.equal('undefined');
-      expect(new NodePlatformFunctions().uuid4()).to.match(
-        /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-      );
-    });
-
-    it('generates a distinct key each call', () => {
-      const fns = new NodePlatformFunctions();
-      expect(fns.uuid4()).to.not.equal(fns.uuid4());
-    });
-
-    it('is why the override exists: the base implementation cannot', () => {
-      expect(() => new PlatformFunctions().uuid4()).to.throw(
-        /no cryptographically secure random number generator is available/
-      );
-    });
-  });
-}
