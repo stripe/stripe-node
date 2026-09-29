@@ -31,10 +31,10 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
         beforeEach(() => {
           // if it's available, mock it and ensure it's called
           // otherwise, skip this whole operation
-          if (typeof globalThis.crypto !== 'undefined') {
+          if (typeof crypto !== 'undefined') {
             called = false;
-            randomUUID$ = globalThis.crypto.randomUUID;
-            globalThis.crypto.randomUUID = (): string => {
+            randomUUID$ = crypto.randomUUID;
+            crypto.randomUUID = (): string => {
               called = true;
               return 'no, YOU you id';
             };
@@ -42,7 +42,7 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
         });
         afterEach(() => {
           if (randomUUID$) {
-            globalThis.crypto.randomUUID = randomUUID$;
+            crypto.randomUUID = randomUUID$;
           }
         });
         it('is called if available', () => {
@@ -421,11 +421,11 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
   });
 }
 
-describe('PlatformFunctions.uuid4 without globalThis.crypto', () => {
+describe('PlatformFunctions.uuid4 without crypto', () => {
   // because uuid4 is used in a cryptographic context, PlatformFunctions.uuid4 should throw if it can't access a CSPRNG
 
   beforeEach(() => {
-    Object.defineProperty(globalThis.crypto, 'randomUUID', {
+    Object.defineProperty(crypto, 'randomUUID', {
       value: undefined,
       configurable: true,
       writable: true,
@@ -433,7 +433,7 @@ describe('PlatformFunctions.uuid4 without globalThis.crypto', () => {
   });
 
   afterEach(() => {
-    delete (globalThis.crypto as any).randomUUID;
+    delete (crypto as any).randomUUID;
   });
 
   it('throws instead of degrading to a weak RNG', () => {
