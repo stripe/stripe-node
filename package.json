@@ -41,7 +41,7 @@
     "eslint-plugin-prettier": "^3.4.1",
     "mocha": "^8.4.0",
     "mocha-junit-reporter": "^2.1.0",
-    "nock": "^13.2.9",
+    "nock": "^14.0.17",
     "node-fetch": "^2.6.7",
     "nyc": "^15.1.0",
     "prettier": "^1.16.4",
