@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {Stripe} from '../src/stripe.core';
 import {createMockClient, getSpyableStripe} from './testUtils.js';
-import {ApiList} from '../src/lib.js';
+import {V2List} from '../src/lib.js';
 
 const v2EventPayloadWithoutRelatedObject = `
   {
@@ -40,12 +40,7 @@ describe('V2 Core Events Resource', () => {
       });
     });
 
-    /**
-     * TODO(DEVSDK-2534): remove this at next major when we fix
-     * the V2List type.  this is here to ensure our releases until then
-     * do not break existing users.
-     */
-    it('ensures V2List is backwards compatible with ApiList type', async () => {
+    it('returns the V2 list response shape', async () => {
       const mockStripe = createMockClient([
         {
           method: 'GET',
@@ -57,11 +52,10 @@ describe('V2 Core Events Resource', () => {
           }`,
         },
       ]);
-      const resp: ApiList<Stripe.V2.Core.Event> = await mockStripe.v2.core.events.list(
+      const resp: V2List<Stripe.V2.Core.Event> = await mockStripe.v2.core.events.list(
         {object_id: 'foo'}
       );
       expect(resp.data.length).is.equal(1);
-      /*
       expect(resp.next_page_url).is.equal(
         '/v2/core/events?object_id=foo&page=next'
       );
@@ -71,7 +65,6 @@ describe('V2 Core Events Resource', () => {
       expect(resp).not.to.have.property('has_more');
       expect(resp).not.to.have.property('url');
       expect(resp).not.to.have.property('object');
-      */
     });
   });
 });

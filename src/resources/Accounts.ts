@@ -6896,7 +6896,7 @@ export namespace AccountListPersonsParams {
 }
 export interface AccountRejectParams {
   /**
-   * The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.
+   * The reason for rejecting the account. Can be `terms_of_service` or `other`.
    */
   reason: string;
 
