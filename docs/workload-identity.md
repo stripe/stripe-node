@@ -17,12 +17,12 @@ workload identity is never selected implicitly.
 ## Usage
 
 ```sh
-npm install stripe @stripe/stripe-aws-workload-identity
+npm install stripe @stripe/aws-workload-identity
 ```
 
 ```js
 import Stripe from 'stripe';
-import {awsWorkloadIdentity} from '@stripe/stripe-aws-workload-identity';
+import {awsWorkloadIdentity} from '@stripe/aws-workload-identity';
 
 const client = Stripe.forWorkloadIdentity(
   'oacli_live_...',
@@ -45,7 +45,7 @@ the same configuration object as the normal constructor, except `authenticator`.
 | Cloud providers | AWS only |
 | Client type | `StripeClient` (the default `Stripe` client) |
 | Client ID shape | `oacli_live_...` or `oacli_test_...` (not enforced by the SDK) |
-| Adapter | [`@stripe/stripe-aws-workload-identity`](../packages/stripe-aws-workload-identity) |
+| Adapter | [`@stripe/aws-workload-identity`](../packages/aws-workload-identity) |
 | Assertion audience | `https://access.stripe.com/wif` (fixed) |
 | Signing algorithm | `ES384` |
 | Runtime | Node.js 20+ (see below) |
@@ -130,7 +130,7 @@ import Stripe from 'stripe';
 const client = new Stripe('sk_test_...');
 ```
 
-You can remove the `@stripe/stripe-aws-workload-identity` dependency; the core
+You can remove the `@stripe/aws-workload-identity` dependency; the core
 `stripe` package never depends on it or on the AWS SDK.
 
 ## Security notes

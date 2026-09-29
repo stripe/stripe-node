@@ -31,12 +31,12 @@ integrations-test: build
     RUN_INTEGRATION_TESTS=1 mocha test/Integration.spec.ts
 
 # the separately published companion packages maintained in this repo
-PACKAGES := "stripe-aws-workload-identity"
+PACKAGES := "aws-workload-identity"
 
 # ⭐ build, typecheck, and test the companion packages in packages/ (all, or just one)
 #
 # Run this at a single, modern Node version rather than across the core SDK's
-# support matrix. `@stripe/stripe-aws-workload-identity` depends on
+# support matrix. `@stripe/aws-workload-identity` depends on
 # `@aws-sdk/client-sts`, whose current releases require Node >= 20 even though
 # the core SDK supports Node >= 18.
 packages-test package="":

@@ -261,7 +261,7 @@ by proving where they are running instead of storing a Stripe credential:
 
 ```js
 import Stripe from 'stripe';
-import {awsWorkloadIdentity} from '@stripe/stripe-aws-workload-identity';
+import {awsWorkloadIdentity} from '@stripe/aws-workload-identity';
 
 const stripe = Stripe.forWorkloadIdentity(
   'oacli_live_...',

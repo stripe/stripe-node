@@ -182,7 +182,7 @@ jobs:
           bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
 
   publish-aws-workload-identity:
-    name: 'Publish @stripe/stripe-aws-workload-identity'
+    name: 'Publish @stripe/aws-workload-identity'
     # Released independently of the core SDK, on its own tag: `aws-wif-v<version>`
     # (e.g. `aws-wif-v0.1.0-alpha.1`). Disjoint from the core `publish` job, which
     # matches `refs/tags/v...`, so neither job can fire on the other's tag.
@@ -195,7 +195,7 @@ jobs:
       contents: read
       id-token: write # Required for OIDC
     env:
-      PACKAGE_DIR: stripe-aws-workload-identity
+      PACKAGE_DIR: aws-workload-identity
       TAG_PREFIX: aws-wif-v
     steps:
       - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0

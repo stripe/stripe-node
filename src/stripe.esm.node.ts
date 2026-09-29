@@ -1441,7 +1441,7 @@ export class Stripe {
    *
    * ```js
    * import Stripe from 'stripe';
-   * import {awsWorkloadIdentity} from '@stripe/stripe-aws-workload-identity';
+   * import {awsWorkloadIdentity} from '@stripe/aws-workload-identity';
    *
    * const client = Stripe.forWorkloadIdentity('oacli_live_...', awsWorkloadIdentity());
    * ```

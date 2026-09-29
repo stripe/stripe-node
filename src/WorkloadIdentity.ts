@@ -27,7 +27,7 @@ export const SUPPORTED_WORKLOAD_IDENTITY_PROVIDERS: ReadonlyArray<string> = [
 
 /**
  * The contract the core SDK expects from a workload identity adapter, such as
- * `@stripe/stripe-aws-workload-identity`.
+ * `@stripe/aws-workload-identity`.
  *
  * This is structural on purpose: the core `stripe` package never imports an
  * adapter or a cloud provider SDK, it only consumes the object handed to
@@ -109,7 +109,7 @@ export function validateWorkloadIdentityProvider(
     throw new StripeWorkloadIdentityError({
       message:
         '`Stripe.forWorkloadIdentity` requires a workload identity provider as its second argument, ' +
-        'e.g. `awsWorkloadIdentity()` from `@stripe/stripe-aws-workload-identity`.',
+        'e.g. `awsWorkloadIdentity()` from `@stripe/aws-workload-identity`.',
     });
   }
 
@@ -117,7 +117,7 @@ export function validateWorkloadIdentityProvider(
     throw new StripeWorkloadIdentityError({
       message:
         'The workload identity provider is invalid: it must expose a `getIdentityAssertion()` method. ' +
-        'Use `awsWorkloadIdentity()` from `@stripe/stripe-aws-workload-identity`.',
+        'Use `awsWorkloadIdentity()` from `@stripe/aws-workload-identity`.',
     });
   }
 
@@ -128,7 +128,7 @@ export function validateWorkloadIdentityProvider(
     throw new StripeWorkloadIdentityError({
       message:
         'The workload identity provider is invalid: it must expose a `provider` identifier. ' +
-        'Use `awsWorkloadIdentity()` from `@stripe/stripe-aws-workload-identity`.',
+        'Use `awsWorkloadIdentity()` from `@stripe/aws-workload-identity`.',
     });
   }
 

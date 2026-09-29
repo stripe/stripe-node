@@ -1,4 +1,4 @@
-# @stripe/stripe-aws-workload-identity
+# @stripe/aws-workload-identity
 
 > **Private preview.** This package and the Stripe workload identity API it
 > depends on are in private preview and may change.
@@ -12,7 +12,7 @@ of storing a credential.
 ## Installation
 
 ```sh
-npm install stripe @stripe/stripe-aws-workload-identity
+npm install stripe @stripe/aws-workload-identity
 ```
 
 ### Node.js version
@@ -36,7 +36,7 @@ Pinning is verified to work: this package is built and tested against both
 
 ```js
 import Stripe from 'stripe';
-import {awsWorkloadIdentity} from '@stripe/stripe-aws-workload-identity';
+import {awsWorkloadIdentity} from '@stripe/aws-workload-identity';
 
 const client = Stripe.forWorkloadIdentity(
   'oacli_live_...',

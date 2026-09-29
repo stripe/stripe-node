@@ -1,5 +1,5 @@
 {
-  "name": "@stripe/stripe-aws-workload-identity",
+  "name": "@stripe/aws-workload-identity",
   "version": "0.1.0-alpha.1",
   "description": "AWS workload identity adapter for the Stripe Node.js SDK",
   "keywords": [
@@ -8,12 +8,12 @@
     "aws",
     "authentication"
   ],
-  "homepage": "https://github.com/stripe/stripe-node/tree/master/packages/stripe-aws-workload-identity",
+  "homepage": "https://github.com/stripe/stripe-node/tree/master/packages/aws-workload-identity",
   "author": "Stripe <support@stripe.com> (https://stripe.com/)",
   "repository": {
     "type": "git",
     "url": "https://github.com/stripe/stripe-node",
-    "directory": "packages/stripe-aws-workload-identity"
+    "directory": "packages/aws-workload-identity"
   },
   "bugs": "https://github.com/stripe/stripe-node/issues",
   "license": "MIT",
