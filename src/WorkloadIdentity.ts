@@ -2,12 +2,17 @@ import {StripeWorkloadIdentityError} from './Error.js';
 import {RequestAuthenticator, StripeRequest} from './Types.js';
 import {
   WORKLOAD_IDENTITY_TOKEN_URL,
-  WorkloadIdentityTokenTransport,
+  WorkloadIdentityTokenResponse,
 } from './net/WorkloadIdentityTokenTransport.js';
 import {queryStringifyRequestData} from './utils.js';
 
 export const WORKLOAD_IDENTITY_GRANT_TYPE =
   'urn:ietf:params:oauth:grant-type:jwt-bearer';
+
+/** POSTs a form-encoded body to the fixed-endpoint token exchange. */
+export type WorkloadIdentityTokenExchange = (
+  body: string
+) => Promise<WorkloadIdentityTokenResponse>;
 
 /** Granted keys normally live for an hour. */
 const DEFAULT_TOKEN_LIFETIME_SEC = 3600;
@@ -187,10 +192,10 @@ export class WorkloadIdentityCredentials {
 
   /**
    * @private
-   * Test seam for the fixed-endpoint exchange transport. This is not a public
+   * Test seam for the fixed-endpoint token exchange. This is not a public
    * option: exposing one would let an assertion be redirected off Stripe.
    */
-  _transport: WorkloadIdentityTokenTransport;
+  _transport: WorkloadIdentityTokenExchange;
 
   /**
    * @private
@@ -204,7 +209,7 @@ export class WorkloadIdentityCredentials {
   constructor(
     clientId: string,
     identityProvider: WorkloadIdentityProvider,
-    transport: WorkloadIdentityTokenTransport
+    transport: WorkloadIdentityTokenExchange
   ) {
     this.clientId = clientId;
     this.identityProvider = identityProvider;
@@ -291,7 +296,7 @@ export class WorkloadIdentityCredentials {
 
     let response;
     try {
-      response = await this._transport.post(body);
+      response = await this._transport(body);
     } catch (err) {
       // The request body carries the assertion, so only the transport failure
       // itself is surfaced -- never the request that produced it.

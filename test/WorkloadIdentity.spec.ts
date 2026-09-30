@@ -11,11 +11,10 @@ import {
   HttpClientResponseInterface,
 } from '../src/net/HttpClient.js';
 import {
-  FetchWorkloadIdentityTokenTransport,
+  postWorkloadIdentityToken,
   WORKLOAD_IDENTITY_TOKEN_HOST,
   WORKLOAD_IDENTITY_TOKEN_PATH,
   WorkloadIdentityTokenResponse,
-  WorkloadIdentityTokenTransport,
 } from '../src/net/WorkloadIdentityTokenTransport.js';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const nodeFetch = require('node-fetch');
@@ -131,8 +130,8 @@ class FakeApiHttpClient extends HttpClient {
   }
 }
 
-/** Stands in for the fixed-endpoint token exchange transport. */
-class FakeTokenTransport implements WorkloadIdentityTokenTransport {
+/** Stands in for the fixed-endpoint token exchange. */
+class FakeTokenTransport {
   readonly bodies: string[] = [];
   /** Responses are consumed in order; the last one is reused once exhausted. */
   queue: Array<WorkloadIdentityTokenResponse | Error>;
@@ -257,7 +256,7 @@ const buildClient = (
 
   const credentials = client._workloadIdentityCredentials!;
   // Private test seam: the exchange destination is never configurable.
-  credentials._transport = transport;
+  credentials._transport = transport.post.bind(transport);
 
   return {client, http, transport, provider, credentials};
 };
@@ -435,8 +434,10 @@ describe('workload identity', () => {
     });
 
     it('POSTs to the fixed https://api.stripe.com endpoint, ignoring client host config', async () => {
-      // The real transport is used here: only the network is faked, so this
-      // asserts the destination an assertion is actually sent to.
+      // The real exchange function is used here, with `node-fetch` swapped in
+      // only so `nock` (which can't intercept the global `fetch`/undici the
+      // default uses) can see the request: this asserts the destination an
+      // assertion is actually sent to.
       let exchangedBody: Record<string, string> | null = null;
       const scope = nock('https://api.stripe.com', {
         reqheaders: {
@@ -468,6 +469,8 @@ describe('workload identity', () => {
           port: '1234',
         }
       );
+      client._workloadIdentityCredentials!._transport = (body) =>
+        postWorkloadIdentityToken(body, nodeFetch);
 
       await client.customers.list();
 
@@ -1032,7 +1035,7 @@ describe('workload identity', () => {
     });
   });
 
-  describe('FetchWorkloadIdentityTokenTransport', () => {
+  describe('postWorkloadIdentityToken', () => {
     afterEach(() => {
       nock.cleanAll();
     });
@@ -1044,9 +1047,7 @@ describe('workload identity', () => {
         .matchHeader('accept', 'application/json')
         .reply(201, '{"ok":true}');
 
-      const response = await new FetchWorkloadIdentityTokenTransport(
-        nodeFetch
-      ).post('a=b');
+      const response = await postWorkloadIdentityToken('a=b', nodeFetch);
 
       expect(response).to.deep.equal({statusCode: 201, body: '{"ok":true}'});
       expect(scope.isDone()).to.equal(true);
@@ -1057,9 +1058,7 @@ describe('workload identity', () => {
         .post(WORKLOAD_IDENTITY_TOKEN_PATH)
         .reply(307, '', {location: 'https://workload-identity.example.com/'});
 
-      await expect(
-        new FetchWorkloadIdentityTokenTransport(nodeFetch).post('a=b')
-      ).to.be.rejected;
+      await expect(postWorkloadIdentityToken('a=b', nodeFetch)).to.be.rejected;
     });
 
     it('rejects on a transport error', async () => {
@@ -1067,9 +1066,7 @@ describe('workload identity', () => {
         .post(WORKLOAD_IDENTITY_TOKEN_PATH)
         .replyWithError({code: 'ECONNREFUSED', message: 'refused'});
 
-      await expect(
-        new FetchWorkloadIdentityTokenTransport(nodeFetch).post('a=b')
-      ).to.be.rejected;
+      await expect(postWorkloadIdentityToken('a=b', nodeFetch)).to.be.rejected;
     });
   });
 
