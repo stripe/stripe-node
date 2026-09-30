@@ -70,6 +70,7 @@ import {
   readWorkloadIdentityConfig,
   validateWorkloadIdentityProvider,
 } from './WorkloadIdentity.js';
+import {FetchWorkloadIdentityTokenTransport} from './net/WorkloadIdentityTokenTransport.js';
 
 // StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
 import {
@@ -1469,7 +1470,7 @@ export class Stripe {
     const credentials = new WorkloadIdentityCredentials(
       clientId,
       identityProvider,
-      Stripe._platformFunctions.createWorkloadIdentityTokenTransport()
+      new FetchWorkloadIdentityTokenTransport()
     );
 
     const StripeClient = this as typeof Stripe & {

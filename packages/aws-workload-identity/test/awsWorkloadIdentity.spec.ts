@@ -12,7 +12,6 @@ import {
   awsWorkloadIdentity,
 } from '../src/index.js';
 
-// Obviously fake: this is not a real signed token.
 const FAKE_TOKEN = 'fake.aws.web.identity.token';
 
 type SendResult = Partial<GetWebIdentityTokenCommandOutput> | Error;
@@ -90,9 +89,7 @@ describe('awsWorkloadIdentity', () => {
   it('passes through STS client configuration', async () => {
     mockSts({WebIdentityToken: FAKE_TOKEN});
 
-    const provider = awsWorkloadIdentity({
-      stsClientConfig: {region: 'us-west-2'},
-    });
+    const provider = awsWorkloadIdentity({region: 'us-west-2'});
 
     expect(await provider.getIdentityAssertion()).to.equal(FAKE_TOKEN);
   });

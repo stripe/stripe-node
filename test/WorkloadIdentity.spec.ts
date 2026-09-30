@@ -10,13 +10,15 @@ import {
   HttpClientResponse,
   HttpClientResponseInterface,
 } from '../src/net/HttpClient.js';
-import {NodeWorkloadIdentityTokenTransport} from '../src/net/NodeWorkloadIdentityTokenTransport.js';
 import {
+  FetchWorkloadIdentityTokenTransport,
   WORKLOAD_IDENTITY_TOKEN_HOST,
   WORKLOAD_IDENTITY_TOKEN_PATH,
   WorkloadIdentityTokenResponse,
   WorkloadIdentityTokenTransport,
 } from '../src/net/WorkloadIdentityTokenTransport.js';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const nodeFetch = require('node-fetch');
 import {
   WorkloadIdentityCredentials,
   WorkloadIdentityProvider,
@@ -1030,7 +1032,7 @@ describe('workload identity', () => {
     });
   });
 
-  describe('NodeWorkloadIdentityTokenTransport', () => {
+  describe('FetchWorkloadIdentityTokenTransport', () => {
     afterEach(() => {
       nock.cleanAll();
     });
@@ -1042,24 +1044,22 @@ describe('workload identity', () => {
         .matchHeader('accept', 'application/json')
         .reply(201, '{"ok":true}');
 
-      const response = await new NodeWorkloadIdentityTokenTransport().post(
-        'a=b'
-      );
+      const response = await new FetchWorkloadIdentityTokenTransport(
+        nodeFetch
+      ).post('a=b');
 
       expect(response).to.deep.equal({statusCode: 201, body: '{"ok":true}'});
       expect(scope.isDone()).to.equal(true);
     });
 
-    it('returns a redirect instead of following it', async () => {
+    it('rejects instead of following a redirect', async () => {
       nock(`https://${WORKLOAD_IDENTITY_TOKEN_HOST}`)
         .post(WORKLOAD_IDENTITY_TOKEN_PATH)
         .reply(307, '', {location: 'https://workload-identity.example.com/'});
 
-      const response = await new NodeWorkloadIdentityTokenTransport().post(
-        'a=b'
-      );
-
-      expect(response.statusCode).to.equal(307);
+      await expect(
+        new FetchWorkloadIdentityTokenTransport(nodeFetch).post('a=b')
+      ).to.be.rejected;
     });
 
     it('rejects on a transport error', async () => {
@@ -1067,21 +1067,9 @@ describe('workload identity', () => {
         .post(WORKLOAD_IDENTITY_TOKEN_PATH)
         .replyWithError({code: 'ECONNREFUSED', message: 'refused'});
 
-      await expect(new NodeWorkloadIdentityTokenTransport().post('a=b')).to.be
-        .rejected;
-    });
-  });
-
-  describe('unsupported runtimes', () => {
-    it('explains that workload identity needs a supporting runtime', () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const {
-        WebPlatformFunctions,
-      } = require('../src/platform/WebPlatformFunctions.js');
-
-      expect(() =>
-        new WebPlatformFunctions().createWorkloadIdentityTokenTransport()
-      ).to.throw(/not available in this runtime/);
+      await expect(
+        new FetchWorkloadIdentityTokenTransport(nodeFetch).post('a=b')
+      ).to.be.rejected;
     });
   });
 
