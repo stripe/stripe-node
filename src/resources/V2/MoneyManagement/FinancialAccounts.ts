@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, Metadata} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FinancialAccountResource extends StripeResource {
@@ -195,6 +195,11 @@ export namespace FinancialAccount {
 
   export interface Storage {
     /**
+     * Array of eligibility objects, segmented by bank name and deposit insurance scheme.
+     */
+    deposit_insurance_eligibility?: Array<Storage.DepositInsuranceEligibility>;
+
+    /**
      * The currencies that this FinancialAccount can hold.
      */
     holds_currencies: Array<string>;
@@ -231,6 +236,31 @@ export namespace FinancialAccount {
       export type Reason = 'account_closed' | 'closed_by_platform' | 'other';
     }
   }
+
+  export namespace Storage {
+    export interface DepositInsuranceEligibility {
+      /**
+       * The bank where funds are stored.
+       */
+      bank_name: DepositInsuranceEligibility.BankName;
+
+      /**
+       * Currencies eligible for deposit insurance at this bank under this scheme.
+       */
+      currencies: Array<string>;
+
+      /**
+       * The deposit insurance scheme.
+       */
+      type: DepositInsuranceEligibility.Type;
+    }
+
+    export namespace DepositInsuranceEligibility {
+      export type BankName = 'fifth_third' | OtherString;
+
+      export type Type = 'fdic' | 'fdic_passthrough' | OtherString;
+    }
+  }
 }
 export namespace V2 {
   export namespace MoneyManagement {
@@ -259,16 +289,53 @@ export namespace V2 {
     export namespace FinancialAccountCreateParams {
       export interface Storage {
         /**
+         * Array of eligibility objects, segmented by bank name and deposit insurance scheme.
+         */
+        deposit_insurance_eligibility?: Array<
+          Storage.DepositInsuranceEligibility
+        >;
+
+        /**
          * The currencies that this FinancialAccount can hold.
          */
         holds_currencies: Array<string>;
+      }
+
+      export namespace Storage {
+        export interface DepositInsuranceEligibility {
+          /**
+           * The bank where funds are stored.
+           */
+          bank_name: DepositInsuranceEligibility.BankName;
+
+          /**
+           * Currencies eligible for deposit insurance at this bank under this scheme.
+           */
+          currencies: Array<string>;
+
+          /**
+           * The deposit insurance scheme.
+           */
+          type: DepositInsuranceEligibility.Type;
+        }
+
+        export namespace DepositInsuranceEligibility {
+          export type BankName = 'fifth_third' | OtherString;
+
+          export type Type = 'fdic' | 'fdic_passthrough' | OtherString;
+        }
       }
     }
   }
 }
 export namespace V2 {
   export namespace MoneyManagement {
-    export interface FinancialAccountRetrieveParams {}
+    export interface FinancialAccountRetrieveParams {
+      /**
+       * Additional fields to include in the response.
+       */
+      include?: Array<'storage.deposit_insurance_eligibility'>;
+    }
   }
 }
 export namespace V2 {
@@ -289,6 +356,11 @@ export namespace V2 {
 export namespace V2 {
   export namespace MoneyManagement {
     export interface FinancialAccountListParams {
+      /**
+       * Additional fields to include in the response.
+       */
+      include?: Array<'storage.deposit_insurance_eligibility'>;
+
       /**
        * The page limit.
        */

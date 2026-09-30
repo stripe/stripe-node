@@ -27,6 +27,10 @@ export class AccountSignalResource extends StripeResource {
               element: {
                 kind: 'object',
                 fields: {
+                  fraudulent_merchant: {
+                    kind: 'object',
+                    fields: {probability: {kind: 'decimal_string'}},
+                  },
                   user_account_sharing: {
                     kind: 'object',
                     fields: {score: {kind: 'decimal_string'}},
@@ -60,6 +64,10 @@ export class AccountSignalResource extends StripeResource {
         responseSchema: {
           kind: 'object',
           fields: {
+            fraudulent_merchant: {
+              kind: 'object',
+              fields: {probability: {kind: 'decimal_string'}},
+            },
             user_account_sharing: {
               kind: 'object',
               fields: {score: {kind: 'decimal_string'}},
@@ -101,6 +109,16 @@ export interface AccountSignal {
   created: string;
 
   /**
+   * Data for the fraudulent merchant signal. Present only when type is fraudulent_merchant.
+   */
+  fraudulent_merchant?: AccountSignal.FraudulentMerchant;
+
+  /**
+   * Data for the fraudulent website signal. Present only when type is fraudulent_website.
+   */
+  fraudulent_website?: AccountSignal.FraudulentWebsite;
+
+  /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
    */
   livemode: boolean;
@@ -133,7 +151,39 @@ export namespace AccountSignal {
     customer?: string;
   }
 
+  export interface FraudulentMerchant {
+    /**
+     * Supplementary contextual data for the signal, including indicators.
+     */
+    additional_details?: FraudulentMerchant.AdditionalDetails;
+
+    /**
+     * The probability of the merchant being fraudulent. Can be between 0.00 and 100.00. Absent when risk level is unknown,
+     * or when the user is not on a product tier that includes numeric scores.
+     */
+    probability?: Decimal;
+
+    /**
+     * Categorical assessment of the fraudulent merchant risk based on probability.
+     */
+    risk_level: FraudulentMerchant.RiskLevel;
+  }
+
+  export interface FraudulentWebsite {
+    /**
+     * Human-readable details about the fraudulent website evaluation.
+     */
+    details?: string;
+
+    /**
+     * Categorical assessment of the fraudulent website risk.
+     */
+    risk_level: FraudulentWebsite.RiskLevel;
+  }
+
   export type Type =
+    | 'fraudulent_merchant'
+    | 'fraudulent_website'
     | 'user_account_sharing'
     | 'user_multi_accounting'
     | OtherString;
@@ -162,6 +212,70 @@ export namespace AccountSignal {
      * not_assessed or unknown, or when the user is not on a product tier that includes numeric scores.
      */
     score?: Decimal;
+  }
+
+  export namespace FraudulentMerchant {
+    export interface AdditionalDetails {
+      /**
+       * Array of objects representing individual factors that contributed to the calculated probability. Absent when risk level is unknown,
+       * or when the user is not on a product tier that includes indicators.
+       */
+      indicators: Array<AdditionalDetails.Indicator>;
+    }
+
+    export type RiskLevel =
+      | 'elevated'
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'unknown';
+
+    export namespace AdditionalDetails {
+      export interface Indicator {
+        /**
+         * A brief explanation of how this indicator contributed to the fraudulent merchant probability.
+         */
+        explanation: string;
+
+        /**
+         * The effect this indicator had on the overall risk level.
+         */
+        impact: Indicator.Impact;
+
+        /**
+         * The name of the specific indicator used in the risk assessment.
+         */
+        indicator: Indicator.Indicator;
+      }
+
+      export namespace Indicator {
+        export type Impact =
+          | 'decrease'
+          | 'neutral'
+          | 'slight_increase'
+          | 'strong_increase';
+
+        export type Indicator =
+          | 'bank_account'
+          | 'business_information_and_account_activity'
+          | 'disputes'
+          | 'failures'
+          | 'geolocation'
+          | 'other'
+          | 'other_related_accounts'
+          | 'other_transaction_activity'
+          | 'owner_email';
+      }
+    }
+  }
+
+  export namespace FraudulentWebsite {
+    export type RiskLevel =
+      | 'elevated'
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'unknown';
   }
 
   export namespace UserAccountSharing {
@@ -209,6 +323,8 @@ export namespace V2 {
 
     export namespace AccountSignalListParams {
       export type Type =
+        | 'fraudulent_merchant'
+        | 'fraudulent_website'
         | 'user_account_sharing'
         | 'user_multi_accounting'
         | OtherString;

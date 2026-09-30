@@ -71,6 +71,9 @@ import {
   TransactionEntry,
   TransactionEntryResource,
 } from './TransactionEntries.js';
+import {FinancialAddressCreditSimulation} from './FinancialAddressCreditSimulations.js';
+import {FinancialAddressGeneratedMicrodeposits} from './FinancialAddressGeneratedMicrodeposits.js';
+import {TestHelpers} from './TestHelpers/index.js';
 
 export {Adjustment} from './Adjustments.js';
 export {FinancialAccount} from './FinancialAccounts.js';
@@ -86,6 +89,8 @@ export {ReceivedCredit} from './ReceivedCredits.js';
 export {ReceivedDebit} from './ReceivedDebits.js';
 export {Transaction} from './Transactions.js';
 export {TransactionEntry} from './TransactionEntries.js';
+export {FinancialAddressCreditSimulation} from './FinancialAddressCreditSimulations.js';
+export {FinancialAddressGeneratedMicrodeposits} from './FinancialAddressGeneratedMicrodeposits.js';
 
 export class MoneyManagement {
   adjustments: AdjustmentResource;
@@ -102,6 +107,7 @@ export class MoneyManagement {
   receivedDebits: ReceivedDebitResource;
   transactions: TransactionResource;
   transactionEntries: TransactionEntryResource;
+  testHelpers: TestHelpers;
 
   constructor(private readonly stripe: Stripe) {
     this.adjustments = new AdjustmentResource(stripe);
@@ -120,6 +126,7 @@ export class MoneyManagement {
     this.receivedDebits = new ReceivedDebitResource(stripe);
     this.transactions = new TransactionResource(stripe);
     this.transactionEntries = new TransactionEntryResource(stripe);
+    this.testHelpers = new TestHelpers(stripe);
   }
 }
 
@@ -180,4 +187,7 @@ export declare namespace MoneyManagement {
   export import TransactionEntryListParams = V2Namespace13.MoneyManagement.TransactionEntryListParams;
   export import TransactionEntryRetrieveParams = V2Namespace13.MoneyManagement.TransactionEntryRetrieveParams;
   export {TransactionEntry, TransactionEntryResource};
+  export {FinancialAddressCreditSimulation};
+  export {FinancialAddressGeneratedMicrodeposits};
+  export {TestHelpers};
 }

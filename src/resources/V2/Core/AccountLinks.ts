@@ -53,7 +53,7 @@ export interface AccountLink {
   url: string;
 
   /**
-   * Hash containing usage options.
+   * Describes the Stripe-hosted flow for this Account Link, including its type and flow-specific configuration.
    */
   use_case: AccountLink.UseCase;
 }
@@ -83,11 +83,6 @@ export namespace AccountLink {
       collection_options?: AccountOnboarding.CollectionOptions;
 
       /**
-       * Open Enum. A v2/core/account can be configured to enable certain functionality. The configuration param targets the v2/core/account_link to collect information for the specified v2/core/account configuration/s.
-       */
-      configurations: Array<AccountOnboarding.Configuration>;
-
-      /**
        * The URL the user will be redirected to if the AccountLink is expired, has been used, or is otherwise invalid. The URL you specify should attempt to generate a new AccountLink with the same parameters used to create the original AccountLink, then redirect the user to the new AccountLink's URL so they can continue the flow. If a new AccountLink cannot be generated or the redirect fails you should display a useful error to the user. Please make sure to implement authentication before redirecting the user in case this URL is leaked to a third party.
        */
       refresh_url: string;
@@ -103,11 +98,6 @@ export namespace AccountLink {
        * Specifies the requirements that Stripe collects from v2/core/accounts in the Onboarding flow.
        */
       collection_options?: AccountUpdate.CollectionOptions;
-
-      /**
-       * Open Enum. A v2/account can be configured to enable certain functionality. The configuration param targets the v2/account_link to collect information for the specified v2/account configuration/s.
-       */
-      configurations: Array<AccountUpdate.Configuration>;
 
       /**
        * The URL the user will be redirected to if the Account Link is expired, has been used, or is otherwise invalid. The URL you specify should attempt to generate a new Account Link with the same parameters used to create the original Account Link, then redirect the user to the new Account Link URL so they can continue the flow. Make sure to authenticate the user before redirecting to the new Account Link, in case the URL leaks to a third party. If a new Account Link can't be generated, or if the redirect fails, you should display a useful error to the user.
@@ -135,14 +125,6 @@ export namespace AccountLink {
         future_requirements?: CollectionOptions.FutureRequirements;
       }
 
-      export type Configuration =
-        | 'customer'
-        | 'merchant'
-        | 'money_manager'
-        | 'recipient'
-        | 'storer'
-        | OtherString;
-
       export namespace CollectionOptions {
         export type Fields = 'currently_due' | 'eventually_due' | OtherString;
 
@@ -163,14 +145,6 @@ export namespace AccountLink {
         future_requirements?: CollectionOptions.FutureRequirements;
       }
 
-      export type Configuration =
-        | 'customer'
-        | 'merchant'
-        | 'money_manager'
-        | 'recipient'
-        | 'storer'
-        | OtherString;
-
       export namespace CollectionOptions {
         export type Fields = 'currently_due' | 'eventually_due' | OtherString;
 
@@ -188,7 +162,9 @@ export namespace V2 {
       account: string;
 
       /**
-       * The use case of the AccountLink.
+       * Specifies the Stripe-hosted flow for this Account Link. Set `type` and the matching options hash—for example,
+       * `account_onboarding`—to configure the flow, including which Account configurations to collect information for and
+       * any flow-specific collection or redirect options.
        */
       use_case: AccountLinkCreateParams.UseCase;
     }
@@ -219,11 +195,6 @@ export namespace V2 {
           collection_options?: AccountOnboarding.CollectionOptions;
 
           /**
-           * Open Enum. A v2/core/account can be configured to enable certain functionality. The configuration param targets the v2/core/account_link to collect information for the specified v2/core/account configuration/s.
-           */
-          configurations: Array<AccountOnboarding.Configuration>;
-
-          /**
            * The URL the user will be redirected to if the AccountLink is expired, has been used, or is otherwise invalid. The URL you specify should attempt to generate a new AccountLink with the same parameters used to create the original AccountLink, then redirect the user to the new AccountLink's URL so they can continue the flow. If a new AccountLink cannot be generated or the redirect fails you should display a useful error to the user. Please make sure to implement authentication before redirecting the user in case this URL is leaked to a third party.
            */
           refresh_url: string;
@@ -239,11 +210,6 @@ export namespace V2 {
            * Specifies the requirements that Stripe collects from v2/core/accounts in the Onboarding flow.
            */
           collection_options?: AccountUpdate.CollectionOptions;
-
-          /**
-           * Open Enum. A v2/account can be configured to enable certain functionality. The configuration param targets the v2/account_link to collect information for the specified v2/account configuration/s.
-           */
-          configurations: Array<AccountUpdate.Configuration>;
 
           /**
            * The URL the user will be redirected to if the Account Link is expired, has been used, or is otherwise invalid. The URL you specify should attempt to generate a new Account Link with the same parameters used to create the original Account Link, then redirect the user to the new Account Link URL so they can continue the flow. Make sure to authenticate the user before redirecting to the new Account Link, in case the URL leaks to a third party. If a new Account Link can't be generated, or if the redirect fails, you should display a useful error to the user.
@@ -274,14 +240,6 @@ export namespace V2 {
             future_requirements?: CollectionOptions.FutureRequirements;
           }
 
-          export type Configuration =
-            | 'customer'
-            | 'merchant'
-            | 'money_manager'
-            | 'recipient'
-            | 'storer'
-            | OtherString;
-
           export namespace CollectionOptions {
             export type Fields =
               | 'currently_due'
@@ -304,14 +262,6 @@ export namespace V2 {
              */
             future_requirements?: CollectionOptions.FutureRequirements;
           }
-
-          export type Configuration =
-            | 'customer'
-            | 'merchant'
-            | 'money_manager'
-            | 'recipient'
-            | 'storer'
-            | OtherString;
 
           export namespace CollectionOptions {
             export type Fields =

@@ -68,6 +68,11 @@ export interface Release {
   currency: string;
 
   /**
+   * The balance destination to which the released funds are sent.
+   */
+  destination: Release.Destination;
+
+  /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
@@ -102,8 +107,10 @@ export interface Release {
 export namespace Release {
   export type CreatedBy = 'application' | 'stripe' | OtherString;
 
+  export type Destination = 'other' | 'payments';
+
   export type Reason =
-    | 'bulk_hold_expiry'
+    | 'hold_expired'
     | 'hold_released_early'
     | 'hold_reversed'
     | 'plan_disabled'

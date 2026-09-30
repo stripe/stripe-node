@@ -104,6 +104,11 @@ export namespace OutboundPaymentQuote {
     amount: V2Amount;
 
     /**
+     * Details about the network and options associated with this fee. Present when type is network_fee.
+     */
+    network_fee_details?: EstimatedFee.NetworkFeeDetails;
+
+    /**
      * The fee type.
      */
     type: EstimatedFee.Type;
@@ -172,13 +177,62 @@ export namespace OutboundPaymentQuote {
   }
 
   export namespace EstimatedFee {
+    export interface NetworkFeeDetails {
+      /**
+       * The network associated with the fee.
+       */
+      network: NetworkFeeDetails.Network;
+
+      /**
+       * Per-network options that affect the fee.
+       */
+      network_options: NetworkFeeDetails.NetworkOptions;
+    }
+
     export type Type =
       | 'cross_border_payout_fee'
       | 'foreign_exchange_fee'
       | 'instant_payout_fee'
+      | 'network_fee'
       | 'standard_payout_fee'
       | 'wire_payout_fee'
       | OtherString;
+
+    export namespace NetworkFeeDetails {
+      export type Network =
+        | 'ach'
+        | 'becs'
+        | 'eft'
+        | 'fedwire'
+        | 'fps'
+        | 'local'
+        | 'npp'
+        | 'rtp'
+        | 'sepa'
+        | 'sepa_instant'
+        | 'swift'
+        | OtherString;
+
+      export interface NetworkOptions {
+        /**
+         * ACH-specific network fee options.
+         */
+        ach?: NetworkOptions.Ach;
+      }
+
+      export namespace NetworkOptions {
+        export interface Ach {
+          /**
+           * Open Enum. ACH submission timing.
+           */
+          submission?: Ach.Submission;
+        }
+
+        export namespace Ach {
+          export type Submission = 'next_day' | 'same_day' | OtherString;
+        }
+      }
+    }
   }
 
   export namespace FxQuote {

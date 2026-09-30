@@ -15,7 +15,7 @@ export class AccountActivityResource extends StripeResource {
   ): Promise<Response<AccountActivity>> {
     return this._makeRequest(
       'POST',
-      '/v2/signals/account_activity',
+      '/v2/signals/account_activities',
       params,
       options
     ) as any;
@@ -30,7 +30,7 @@ export class AccountActivityResource extends StripeResource {
   ): Promise<Response<DeletedObject>> {
     return this._makeRequest(
       'DELETE',
-      `/v2/signals/account_activity/${encodeURIComponent(id)}`,
+      `/v2/signals/account_activities/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -45,7 +45,7 @@ export class AccountActivityResource extends StripeResource {
   ): Promise<Response<AccountActivity>> {
     return this._makeRequest(
       'GET',
-      `/v2/signals/account_activity/${encodeURIComponent(id)}`,
+      `/v2/signals/account_activities/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -171,6 +171,11 @@ export namespace AccountActivity {
        * Default account settings.
        */
       defaults?: Data.Defaults;
+
+      /**
+       * Identity data.
+       */
+      identity?: Data.Identity;
     }
 
     export namespace Data {
@@ -179,6 +184,13 @@ export namespace AccountActivity {
          * Account profile data.
          */
         profile: Defaults.Profile;
+      }
+
+      export interface Identity {
+        /**
+         * Business details for identity data.
+         */
+        business_details: Identity.BusinessDetails;
       }
 
       export namespace Defaults {
@@ -197,6 +209,15 @@ export namespace AccountActivity {
            * Description of the account's product or service.
            */
           product_description?: string;
+        }
+      }
+
+      export namespace Identity {
+        export interface BusinessDetails {
+          /**
+           * Registered business name.
+           */
+          registered_name?: string;
         }
       }
     }
@@ -379,6 +400,11 @@ export namespace V2 {
            * Default account settings.
            */
           defaults?: Data.Defaults;
+
+          /**
+           * Identity data.
+           */
+          identity?: Data.Identity;
         }
 
         export namespace Data {
@@ -387,6 +413,13 @@ export namespace V2 {
              * Account profile data.
              */
             profile: Defaults.Profile;
+          }
+
+          export interface Identity {
+            /**
+             * Business details for identity data.
+             */
+            business_details: Identity.BusinessDetails;
           }
 
           export namespace Defaults {
@@ -405,6 +438,15 @@ export namespace V2 {
                * Description of the account's product or service.
                */
               product_description?: string;
+            }
+          }
+
+          export namespace Identity {
+            export interface BusinessDetails {
+              /**
+               * Registered business name.
+               */
+              registered_name?: string;
             }
           }
         }

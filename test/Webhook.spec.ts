@@ -402,8 +402,27 @@ function createWebhooksTestSuite(stripe) {
       });
 
       it(
+        'should raise a SignatureVerificationError when the timestamp is ' +
+          'off and no tolerance is provided, since DEFAULT_TOLERANCE is used',
+        async () => {
+          const header = stripe.webhooks.generateTestHeaderString({
+            timestamp: 12345,
+            payload: EVENT_PAYLOAD_STRING,
+            secret: SECRET,
+          });
+
+          await expect(
+            verifyHeaderFn(EVENT_PAYLOAD_STRING, header, SECRET)
+          ).to.be.rejectedWith(
+            StripeSignatureVerificationError,
+            /Timestamp outside the tolerance zone/
+          );
+        }
+      );
+
+      it(
         'should return true when the header contains a valid signature ' +
-          'and the timestamp is off but no tolerance is provided',
+          'and the timestamp is off but tolerance is explicitly set to 0',
         async () => {
           const header = stripe.webhooks.generateTestHeaderString({
             timestamp: 12345,
@@ -412,7 +431,7 @@ function createWebhooksTestSuite(stripe) {
           });
 
           expect(
-            await verifyHeaderFn(EVENT_PAYLOAD_STRING, header, SECRET)
+            await verifyHeaderFn(EVENT_PAYLOAD_STRING, header, SECRET, 0)
           ).to.equal(true);
         }
       );
@@ -464,6 +483,27 @@ function createWebhooksTestSuite(stripe) {
           StripeSignatureVerificationError,
           /The provided signing secret contains whitespace/
         );
+      });
+
+      it('should raise a SignatureVerificationError when the signing secret is empty or nullish', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        const expectedMessage = /No webhook secret value was provided\. It should start with `whsec_`/;
+
+        await expect(
+          verifyHeaderFn(EVENT_PAYLOAD_STRING, header, '')
+        ).to.be.rejectedWith(StripeSignatureVerificationError, expectedMessage);
+
+        await expect(
+          verifyHeaderFn(EVENT_PAYLOAD_STRING, header, null)
+        ).to.be.rejectedWith(StripeSignatureVerificationError, expectedMessage);
+
+        await expect(
+          verifyHeaderFn(EVENT_PAYLOAD_STRING, header, undefined)
+        ).to.be.rejectedWith(StripeSignatureVerificationError, expectedMessage);
       });
 
       describe('custom CryptoProvider', () => {
@@ -573,7 +613,7 @@ function createWebhooksTestSuite(stripe) {
     });
 
     describe('verifyHeader with optional tolerance and cryptoProvider', () => {
-      it('should use 0 and accept recent timestamps when tolerance is omitted', async () => {
+      it('should use DEFAULT_TOLERANCE and accept recent timestamps when tolerance is omitted', async () => {
         const header = stripe.webhooks.generateTestHeaderString({
           timestamp: Date.now() / 1000 - 100,
           payload: EVENT_PAYLOAD_STRING,

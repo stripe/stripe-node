@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {OtherString} from '../../../shared.js';
+import {RangeQueryParam, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class TransactionEntryResource extends StripeResource {
@@ -203,29 +203,9 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface TransactionEntryListParams {
       /**
-       * Filter for Transactions created at an exact time.
+       * Set of filters to query TransactionEntries within a range of `created` timestamps.
        */
-      created?: string;
-
-      /**
-       * Filter for Transactions created after the specified timestamp.
-       */
-      created_gt?: string;
-
-      /**
-       * Filter for Transactions created at or after the specified timestamp.
-       */
-      created_gte?: string;
-
-      /**
-       * Filter for Transactions created before the specified timestamp.
-       */
-      created_lt?: string;
-
-      /**
-       * Filter for Transactions created at or before the specified timestamp.
-       */
-      created_lte?: string;
+      created?: RangeQueryParam;
 
       /**
        * The page limit.

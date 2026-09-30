@@ -15,14 +15,11 @@ type MultipartCallback = (
 // Mostly taken from Fermata.js
 // https://github.com/natevw/fermata/blob/5d9732a33d776ce925013a265935facd1626cc88/fermata.js#L315-L343
 const multipartDataGenerator = (
-  method: string,
   data: MultipartRequestData,
-  headers: RequestHeaders
+  headers: RequestHeaders,
+  segmentBoundary: string
 ): Uint8Array => {
-  const segno = (
-    Math.round(Math.random() * 1e16) + Math.round(Math.random() * 1e16)
-  ).toString();
-  headers['Content-Type'] = `multipart/form-data; boundary=${segno}`;
+  headers['Content-Type'] = `multipart/form-data; boundary=${segmentBoundary}`;
   const textEncoder = new TextEncoder();
 
   let buffer = new Uint8Array(0);
@@ -39,8 +36,14 @@ const multipartDataGenerator = (
     buffer.set(endBuffer, buffer.length - 2);
   }
 
-  function q(s: string): string {
-    return `"${s.replace(/"|"/g, '%22').replace(/\r\n|\r|\n/g, ' ')}"`;
+  // CR/LF would end the header line, letting a caller-supplied value introduce
+  // additional part headers.
+  function stripCrLf(s: string): string {
+    return s.replace(/\r\n|\r|\n/g, ' ');
+  }
+
+  function quote(s: string): string {
+    return `"${stripCrLf(s.replace(/"/g, '%22'))}"`;
   }
 
   const flattenedData = flattenAndStringify(data);
@@ -51,7 +54,7 @@ const multipartDataGenerator = (
     }
 
     const v = flattenedData[k];
-    push(`--${segno}`);
+    push(`--${segmentBoundary}`);
     if (Object.prototype.hasOwnProperty.call(v, 'data')) {
       const typedEntry: {
         name: string;
@@ -59,20 +62,24 @@ const multipartDataGenerator = (
         type: string;
       } = v as any;
       push(
-        `Content-Disposition: form-data; name=${q(k)}; filename=${q(
+        `Content-Disposition: form-data; name=${quote(k)}; filename=${quote(
           typedEntry.name || 'blob'
         )}`
       );
-      push(`Content-Type: ${typedEntry.type || 'application/octet-stream'}`);
+      push(
+        `Content-Type: ${stripCrLf(
+          typedEntry.type || 'application/octet-stream'
+        )}`
+      );
       push('');
       push(typedEntry.data);
     } else {
-      push(`Content-Disposition: form-data; name=${q(k)}`);
+      push(`Content-Disposition: form-data; name=${quote(k)}`);
       push('');
       push(v);
     }
   }
-  push(`--${segno}--`);
+  push(`--${segmentBoundary}--`);
 
   return buffer;
 };
@@ -93,7 +100,13 @@ export function multipartRequestDataProcessor(
   this._stripe._platformFunctions
     .tryBufferData(data)
     .then((bufferedData: MultipartRequestData) => {
-      const buffer = multipartDataGenerator(method, bufferedData, headers);
+      const buffer = multipartDataGenerator(
+        bufferedData,
+        headers,
+        // segment boundaries must be generated from a cryptographically secure method
+        // see: https://go/j/RUN_DEVSDK-2807
+        this._stripe._platformFunctions.uuid4()
+      );
       return callback(null, buffer);
     })
     .catch((err: Error) => callback(err, null));

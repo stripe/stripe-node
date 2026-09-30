@@ -68,7 +68,6 @@ const bad = new Stripe('sk_test_123', {unknownProperty: true});
 
 // Webhook methods: constructEventWithoutVerification and parseEventNotificationWithoutVerification
 event = stripe.webhooks.constructEventWithoutVerification('payload');
-event = stripe.constructEventWithoutVerification('payload');
 const _notificationWV: Stripe.V2.Core.EventNotification = stripe.parseEventNotificationWithoutVerification(
   'payload'
 );
@@ -128,3 +127,11 @@ async (): Promise<void> => {
 // both handler types must be nameable off the namespace
 let _verifyingHandler: Stripe.StripeEventNotificationHandler;
 let _unverifiedHandler: Stripe.StripeEventNotificationHandlerWithoutVerification;
+
+// both related-object shapes must be nameable off the namespace. "Singleton"
+// events use the second one, whose related object has no standalone id.
+let _relatedObject: Stripe.Events.RelatedObject;
+let _relatedSingletonObject: Stripe.Events.RelatedSingletonObject;
+
+// @ts-expect-error - a singleton related object has no id
+({} as Stripe.Events.RelatedSingletonObject).id;

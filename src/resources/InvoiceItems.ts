@@ -260,6 +260,11 @@ export interface InvoiceItem {
   invoice: string | Invoice | null;
 
   /**
+   * The rules that control when this invoice item is eligible for invoicing. All rules must be satisfied for the item to be invoiced.
+   */
+  invoicing_rules?: Array<InvoiceItem.InvoicingRule>;
+
+  /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
@@ -337,6 +342,13 @@ export interface DeletedInvoiceItem {
 export namespace InvoiceItem {
   export type FrozenField = 'discounts' | 'pricing' | 'quantity' | OtherString;
 
+  export interface InvoicingRule {
+    /**
+     * The type of invoicing rule.
+     */
+    type: InvoicingRule.Type;
+  }
+
   export interface Parent {
     /**
      * Details about the subscription that generated this invoice item
@@ -382,9 +394,13 @@ export namespace InvoiceItem {
     credited_items: ProrationDetails.CreditedItems | null;
 
     /**
-     * Discount amounts applied when the proration was created.
+     * Discount amounts applied when the proration was created. This field is only populated for prorations created from subscriptions with `billing_mode=flexible`.
      */
     discount_amounts: Array<ProrationDetails.DiscountAmount>;
+  }
+
+  export namespace InvoicingRule {
+    export type Type = 'defer_until_credited_items_resolved' | OtherString;
   }
 
   export namespace Parent {
@@ -718,6 +734,11 @@ export interface InvoiceItemUpdateParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * Pass an empty string to remove previously-defined invoicing rules. Setting invoicing rules is not supported.
+   */
+  invoicing_rules?: '';
 
   /**
    * The ids of the margins to apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.

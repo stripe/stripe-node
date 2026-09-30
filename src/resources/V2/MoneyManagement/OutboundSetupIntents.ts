@@ -26,6 +26,7 @@ export class OutboundSetupIntentResource extends StripeResource {
   /**
    * Create an OutboundSetupIntent object.
    * @throws Stripe.BlockedByStripeError
+   * @throws Stripe.CannotProceedError
    * @throws Stripe.InvalidPayoutMethodError
    * @throws Stripe.QuotaExceededError
    * @throws Stripe.ControlledByAlternateResourceError

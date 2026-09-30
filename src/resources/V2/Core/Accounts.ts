@@ -4,11 +4,9 @@ import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {
   MetadataParam,
-  AddressParam,
   Address,
   OtherString,
   Decimal,
-  JapanAddressParam,
   Metadata,
 } from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
@@ -728,6 +726,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -746,6 +745,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -881,6 +888,11 @@ export namespace Account {
          * Allow the merchant to process BLIK payments.
          */
         blik_payments?: Capabilities.BlikPayments;
+
+        /**
+         * Allow the merchant to process recurring BLIK payments.
+         */
+        blik_recurring_payments?: Capabilities.BlikRecurringPayments;
 
         /**
          * Allow the merchant to process Boleto payments.
@@ -1023,6 +1035,11 @@ export namespace Account {
         samsung_pay_payments?: Capabilities.SamsungPayPayments;
 
         /**
+         * Allow the merchant to process Satispay payments.
+         */
+        satispay_payments?: Capabilities.SatispayPayments;
+
+        /**
          * Allow the merchant to process SEPA bank transfer payments.
          */
         sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -1031,6 +1048,11 @@ export namespace Account {
          * Allow the merchant to process SEPA Direct Debit payments.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+        /**
+         * Allow the merchant to process SeQura payments.
+         */
+        sequra_payments?: Capabilities.SequraPayments;
 
         /**
          * Capabilities that enable the merchant to manage their Stripe Balance (/v1/balance).
@@ -1256,6 +1278,18 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<BlikPayments.StatusDetail>;
+        }
+
+        export interface BlikRecurringPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: BlikRecurringPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<BlikRecurringPayments.StatusDetail>;
         }
 
         export interface BoletoPayments {
@@ -1594,6 +1628,18 @@ export namespace Account {
           status_details: Array<SamsungPayPayments.StatusDetail>;
         }
 
+        export interface SatispayPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: SatispayPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<SatispayPayments.StatusDetail>;
+        }
+
         export interface SepaBankTransferPayments {
           /**
            * The status of the Capability.
@@ -1616,6 +1662,18 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<SepaDebitPayments.StatusDetail>;
+        }
+
+        export interface SequraPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: SequraPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<SequraPayments.StatusDetail>;
         }
 
         export interface StripeBalance {
@@ -1689,6 +1747,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -1707,6 +1766,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -1725,6 +1792,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -1743,6 +1811,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -1761,6 +1837,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -1779,6 +1856,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -1797,6 +1882,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -1815,6 +1901,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -1833,6 +1927,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -1851,6 +1946,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -1869,6 +1972,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -1887,6 +1991,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -1905,6 +2017,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -1923,6 +2036,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -1941,6 +2062,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -1959,6 +2081,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -1977,6 +2107,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -1995,6 +2126,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2013,6 +2152,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2031,6 +2171,59 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace BlikRecurringPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2049,6 +2242,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2067,6 +2261,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2085,6 +2287,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2103,6 +2306,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2121,6 +2332,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2139,6 +2351,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2157,6 +2377,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2175,6 +2396,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2193,6 +2422,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2211,6 +2441,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2229,6 +2467,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2247,6 +2486,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2265,6 +2512,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2283,6 +2531,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2301,6 +2557,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2319,6 +2576,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2337,6 +2602,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2355,6 +2621,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2373,6 +2647,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2391,6 +2666,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2409,6 +2692,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2427,6 +2711,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2445,6 +2737,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2463,6 +2756,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2481,6 +2782,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2499,6 +2801,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2517,6 +2827,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2535,6 +2846,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2553,6 +2872,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2571,6 +2891,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2589,6 +2917,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2607,6 +2936,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2625,6 +2962,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2643,6 +2981,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2661,6 +3007,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2679,6 +3026,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2697,6 +3052,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2715,6 +3071,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2733,6 +3097,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2751,6 +3116,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2769,6 +3142,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2787,6 +3161,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2805,6 +3187,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2823,6 +3206,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2841,6 +3232,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2859,6 +3251,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2877,6 +3277,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2895,6 +3296,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2913,6 +3322,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2931,6 +3341,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2949,6 +3367,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -2967,6 +3386,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -2985,6 +3412,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -3003,6 +3431,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -3021,6 +3457,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -3039,6 +3476,59 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace SatispayPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -3057,6 +3547,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -3075,6 +3566,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -3093,6 +3592,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -3111,6 +3611,59 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace SequraPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -3142,6 +3695,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -3160,6 +3714,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -3179,6 +3741,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -3197,6 +3760,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -3215,6 +3786,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -3233,6 +3805,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -3251,6 +3831,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -3269,6 +3850,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -3287,6 +3876,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -3305,6 +3895,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -3323,6 +3921,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -3341,6 +3940,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -3705,6 +4312,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -3723,6 +4331,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -3741,6 +4357,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -3759,6 +4376,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -3777,6 +4402,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -3795,6 +4421,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -3813,6 +4447,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -3831,6 +4466,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -3849,6 +4492,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -3867,6 +4511,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -3947,6 +4599,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -3965,6 +4618,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -3983,6 +4644,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -4001,6 +4663,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -4019,6 +4689,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -4037,6 +4708,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -4055,6 +4734,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -4073,6 +4753,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -4091,6 +4779,7 @@ export namespace Account {
               export type Status =
                 | 'active'
                 | 'pending'
+                | 'rejected'
                 | 'restricted'
                 | 'unsupported';
 
@@ -4109,6 +4798,14 @@ export namespace Account {
               export namespace StatusDetail {
                 export type Code =
                   | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
                   | 'requirements_past_due'
                   | 'requirements_pending_verification'
                   | 'restricted_other'
@@ -4142,6 +4839,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -4160,6 +4858,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -4216,6 +4922,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -4234,6 +4941,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -4252,6 +4967,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -4270,6 +4986,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -4288,6 +5012,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -4306,6 +5031,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -4350,6 +5083,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -4368,6 +5102,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -4386,6 +5128,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -4404,6 +5147,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -4436,6 +5187,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -4454,6 +5206,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -4486,6 +5246,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -4504,6 +5265,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -4617,6 +5386,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -4635,6 +5405,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -4653,6 +5431,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -4671,6 +5450,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -4690,6 +5477,7 @@ export namespace Account {
           export type Status =
             | 'active'
             | 'pending'
+            | 'rejected'
             | 'restricted'
             | 'unsupported';
 
@@ -4708,6 +5496,14 @@ export namespace Account {
           export namespace StatusDetail {
             export type Code =
               | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
               | 'requirements_past_due'
               | 'requirements_pending_verification'
               | 'restricted_other'
@@ -4751,6 +5547,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -4769,6 +5566,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -4787,6 +5592,7 @@ export namespace Account {
             export type Status =
               | 'active'
               | 'pending'
+              | 'rejected'
               | 'restricted'
               | 'unsupported';
 
@@ -4805,6 +5611,14 @@ export namespace Account {
             export namespace StatusDetail {
               export type Code =
                 | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
                 | 'requirements_past_due'
                 | 'requirements_pending_verification'
                 | 'restricted_other'
@@ -5190,8 +6004,10 @@ export namespace Account {
       export namespace Error {
         export type Code =
           | 'invalid_address_city_state_postal_code'
+          | 'invalid_address_cmra_address'
           | 'invalid_address_highway_contract_box'
           | 'invalid_address_private_mailbox'
+          | 'invalid_address_registered_agent_address'
           | 'invalid_business_profile_name'
           | 'invalid_business_profile_name_denylisted'
           | 'invalid_company_name_denylisted'
@@ -5321,6 +6137,7 @@ export namespace Account {
             | 'bank_accounts.local'
             | 'bank_accounts.wire'
             | 'blik_payments'
+            | 'blik_recurring_payments'
             | 'boleto_payments'
             | 'business_storage.inbound.eur'
             | 'business_storage.inbound.gbp'
@@ -5368,6 +6185,7 @@ export namespace Account {
             | 'received_debits.bank_accounts'
             | 'revolut_pay_payments'
             | 'samsung_pay_payments'
+            | 'satispay_payments'
             | 'sepa_bank_transfer_payments'
             | 'sepa_debit_payments'
             | 'stripe_balance.payouts'
@@ -6034,7 +6852,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: BankAccountOwnershipVerification.Type;
         }
 
         export interface CompanyLicense {
@@ -6046,7 +6864,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: CompanyLicense.Type;
         }
 
         export interface CompanyMemorandumOfAssociation {
@@ -6058,7 +6876,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: CompanyMemorandumOfAssociation.Type;
         }
 
         export interface CompanyMinisterialDecree {
@@ -6070,7 +6888,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: CompanyMinisterialDecree.Type;
         }
 
         export interface CompanyRegistrationVerification {
@@ -6082,7 +6900,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: CompanyRegistrationVerification.Type;
         }
 
         export interface CompanyTaxIdVerification {
@@ -6094,7 +6912,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: CompanyTaxIdVerification.Type;
         }
 
         export interface PrimaryVerification {
@@ -6106,7 +6924,7 @@ export namespace Account {
           /**
            * The format of the verification document. Currently supports `front_back` only.
            */
-          type: 'front_back';
+          type: PrimaryVerification.Type;
         }
 
         export interface ProofOfAddress {
@@ -6118,7 +6936,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: ProofOfAddress.Type;
         }
 
         export interface ProofOfRegistration {
@@ -6135,7 +6953,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: ProofOfRegistration.Type;
         }
 
         export interface ProofOfUltimateBeneficialOwnership {
@@ -6152,7 +6970,31 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: ProofOfUltimateBeneficialOwnership.Type;
+        }
+
+        export namespace BankAccountOwnershipVerification {
+          export type Type = 'files' | OtherString;
+        }
+
+        export namespace CompanyLicense {
+          export type Type = 'files' | OtherString;
+        }
+
+        export namespace CompanyMemorandumOfAssociation {
+          export type Type = 'files' | OtherString;
+        }
+
+        export namespace CompanyMinisterialDecree {
+          export type Type = 'files' | OtherString;
+        }
+
+        export namespace CompanyRegistrationVerification {
+          export type Type = 'files' | OtherString;
+        }
+
+        export namespace CompanyTaxIdVerification {
+          export type Type = 'files' | OtherString;
         }
 
         export namespace PrimaryVerification {
@@ -6167,6 +7009,12 @@ export namespace Account {
              */
             front: string;
           }
+
+          export type Type = 'front_back' | OtherString;
+        }
+
+        export namespace ProofOfAddress {
+          export type Type = 'files' | OtherString;
         }
 
         export namespace ProofOfRegistration {
@@ -6176,6 +7024,8 @@ export namespace Account {
              */
             person: string;
           }
+
+          export type Type = 'files' | OtherString;
         }
 
         export namespace ProofOfUltimateBeneficialOwnership {
@@ -6185,6 +7035,8 @@ export namespace Account {
              */
             person: string;
           }
+
+          export type Type = 'files' | OtherString;
         }
       }
 
@@ -6664,7 +7516,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: CompanyAuthorization.Type;
         }
 
         export interface Passport {
@@ -6676,7 +7528,7 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: Passport.Type;
         }
 
         export interface PrimaryVerification {
@@ -6688,7 +7540,7 @@ export namespace Account {
           /**
            * The format of the verification document. Currently supports `front_back` only.
            */
-          type: 'front_back';
+          type: PrimaryVerification.Type;
         }
 
         export interface SecondaryVerification {
@@ -6700,7 +7552,7 @@ export namespace Account {
           /**
            * The format of the verification document. Currently supports `front_back` only.
            */
-          type: 'front_back';
+          type: SecondaryVerification.Type;
         }
 
         export interface Visa {
@@ -6712,7 +7564,15 @@ export namespace Account {
           /**
            * The format of the document. Currently supports `files` only.
            */
-          type: 'files';
+          type: Visa.Type;
+        }
+
+        export namespace CompanyAuthorization {
+          export type Type = 'files' | OtherString;
+        }
+
+        export namespace Passport {
+          export type Type = 'files' | OtherString;
         }
 
         export namespace PrimaryVerification {
@@ -6727,6 +7587,8 @@ export namespace Account {
              */
             front: string;
           }
+
+          export type Type = 'front_back' | OtherString;
         }
 
         export namespace SecondaryVerification {
@@ -6741,6 +7603,12 @@ export namespace Account {
              */
             front: string;
           }
+
+          export type Type = 'front_back' | OtherString;
+        }
+
+        export namespace Visa {
+          export type Type = 'files' | OtherString;
         }
       }
 
@@ -7032,8 +7900,10 @@ export namespace Account {
       export namespace Error {
         export type Code =
           | 'invalid_address_city_state_postal_code'
+          | 'invalid_address_cmra_address'
           | 'invalid_address_highway_contract_box'
           | 'invalid_address_private_mailbox'
+          | 'invalid_address_registered_agent_address'
           | 'invalid_business_profile_name'
           | 'invalid_business_profile_name_denylisted'
           | 'invalid_company_name_denylisted'
@@ -7163,6 +8033,7 @@ export namespace Account {
             | 'bank_accounts.local'
             | 'bank_accounts.wire'
             | 'blik_payments'
+            | 'blik_recurring_payments'
             | 'boleto_payments'
             | 'business_storage.inbound.eur'
             | 'business_storage.inbound.gbp'
@@ -7210,6 +8081,7 @@ export namespace Account {
             | 'received_debits.bank_accounts'
             | 'revolut_pay_payments'
             | 'samsung_pay_payments'
+            | 'satispay_payments'
             | 'sepa_bank_transfer_payments'
             | 'sepa_debit_payments'
             | 'stripe_balance.payouts'
@@ -7284,7 +8156,7 @@ export namespace V2 {
   export namespace Core {
     export interface AccountCreateParams {
       /**
-       * The account token generated by the account token api.
+       * The account token generated by the account token API.
        */
       account_token?: string;
 
@@ -7488,6 +8360,11 @@ export namespace V2 {
           script_statement_descriptor?: Merchant.ScriptStatementDescriptor;
 
           /**
+           * Settings used for SEPA Direct Debit payments.
+           */
+          sepa_debit_payments?: Merchant.SepaDebitPayments;
+
+          /**
            * Settings used for Smart Disputes.
            */
           smart_disputes?: Merchant.SmartDisputes;
@@ -7553,7 +8430,7 @@ export namespace V2 {
             /**
              * Customer shipping address.
              */
-            address?: AddressParam;
+            address?: Shipping.Address;
 
             /**
              * Customer name.
@@ -7645,6 +8522,40 @@ export namespace V2 {
               requested: boolean;
             }
           }
+
+          export namespace Shipping {
+            export interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country?: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1?: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
         }
 
         export namespace Merchant {
@@ -7727,6 +8638,11 @@ export namespace V2 {
              * Allow the merchant to process BLIK payments.
              */
             blik_payments?: Capabilities.BlikPayments;
+
+            /**
+             * Allow the merchant to process recurring BLIK payments.
+             */
+            blik_recurring_payments?: Capabilities.BlikRecurringPayments;
 
             /**
              * Allow the merchant to process Boleto payments.
@@ -7869,6 +8785,11 @@ export namespace V2 {
             samsung_pay_payments?: Capabilities.SamsungPayPayments;
 
             /**
+             * Allow the merchant to process Satispay payments.
+             */
+            satispay_payments?: Capabilities.SatispayPayments;
+
+            /**
              * Allow the merchant to process SEPA bank transfer payments.
              */
             sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -7877,6 +8798,11 @@ export namespace V2 {
              * Allow the merchant to process SEPA Direct Debit payments.
              */
             sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+            /**
+             * Allow the merchant to process SeQura payments.
+             */
+            sequra_payments?: Capabilities.SequraPayments;
 
             /**
              * Allow the merchant to process Sunbit payments.
@@ -7928,6 +8854,13 @@ export namespace V2 {
              * The Kanji variation of statement_descriptor used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
              */
             kanji?: ScriptStatementDescriptor.Kanji;
+          }
+
+          export interface SepaDebitPayments {
+            /**
+             * Creditor ID for SEPA Direct Debit payments.
+             */
+            creditor_id?: string;
           }
 
           export interface SmartDisputes {
@@ -8036,6 +8969,13 @@ export namespace V2 {
             }
 
             export interface BlikPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface BlikRecurringPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -8238,6 +9178,13 @@ export namespace V2 {
               requested: boolean;
             }
 
+            export interface SatispayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
             export interface SepaBankTransferPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -8246,6 +9193,13 @@ export namespace V2 {
             }
 
             export interface SepaDebitPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface SequraPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -9482,7 +10436,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: BankAccountOwnershipVerification.Type;
             }
 
             export interface CompanyLicense {
@@ -9494,7 +10448,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyLicense.Type;
             }
 
             export interface CompanyMemorandumOfAssociation {
@@ -9506,7 +10460,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyMemorandumOfAssociation.Type;
             }
 
             export interface CompanyMinisterialDecree {
@@ -9518,7 +10472,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyMinisterialDecree.Type;
             }
 
             export interface CompanyRegistrationVerification {
@@ -9530,7 +10484,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyRegistrationVerification.Type;
             }
 
             export interface CompanyTaxIdVerification {
@@ -9542,7 +10496,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyTaxIdVerification.Type;
             }
 
             export interface PrimaryVerification {
@@ -9554,7 +10508,7 @@ export namespace V2 {
               /**
                * The format of the verification document. Currently supports `front_back` only.
                */
-              type: 'front_back';
+              type: PrimaryVerification.Type;
             }
 
             export interface ProofOfAddress {
@@ -9566,7 +10520,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: ProofOfAddress.Type;
             }
 
             export interface ProofOfRegistration {
@@ -9583,7 +10537,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: ProofOfRegistration.Type;
             }
 
             export interface ProofOfUltimateBeneficialOwnership {
@@ -9600,7 +10554,31 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: ProofOfUltimateBeneficialOwnership.Type;
+            }
+
+            export namespace BankAccountOwnershipVerification {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyLicense {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyMemorandumOfAssociation {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyMinisterialDecree {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyRegistrationVerification {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyTaxIdVerification {
+              export type Type = 'files' | OtherString;
             }
 
             export namespace PrimaryVerification {
@@ -9615,6 +10593,12 @@ export namespace V2 {
                  */
                 front: string;
               }
+
+              export type Type = 'front_back' | OtherString;
+            }
+
+            export namespace ProofOfAddress {
+              export type Type = 'files' | OtherString;
             }
 
             export namespace ProofOfRegistration {
@@ -9624,6 +10608,8 @@ export namespace V2 {
                  */
                 person: string;
               }
+
+              export type Type = 'files' | OtherString;
             }
 
             export namespace ProofOfUltimateBeneficialOwnership {
@@ -9633,6 +10619,8 @@ export namespace V2 {
                  */
                 person: string;
               }
+
+              export type Type = 'files' | OtherString;
             }
           }
 
@@ -10076,7 +11064,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyAuthorization.Type;
             }
 
             export interface Passport {
@@ -10088,7 +11076,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: Passport.Type;
             }
 
             export interface PrimaryVerification {
@@ -10100,7 +11088,7 @@ export namespace V2 {
               /**
                * The format of the verification document. Currently supports `front_back` only.
                */
-              type: 'front_back';
+              type: PrimaryVerification.Type;
             }
 
             export interface SecondaryVerification {
@@ -10112,7 +11100,7 @@ export namespace V2 {
               /**
                * The format of the verification document. Currently supports `front_back` only.
                */
-              type: 'front_back';
+              type: SecondaryVerification.Type;
             }
 
             export interface Visa {
@@ -10124,7 +11112,15 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: Visa.Type;
+            }
+
+            export namespace CompanyAuthorization {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace Passport {
+              export type Type = 'files' | OtherString;
             }
 
             export namespace PrimaryVerification {
@@ -10139,6 +11135,8 @@ export namespace V2 {
                  */
                 front: string;
               }
+
+              export type Type = 'front_back' | OtherString;
             }
 
             export namespace SecondaryVerification {
@@ -10153,6 +11151,12 @@ export namespace V2 {
                  */
                 front: string;
               }
+
+              export type Type = 'front_back' | OtherString;
+            }
+
+            export namespace Visa {
+              export type Type = 'files' | OtherString;
             }
           }
 
@@ -10370,7 +11374,7 @@ export namespace V2 {
   export namespace Core {
     export interface AccountUpdateParams {
       /**
-       * The account token generated by the account token api.
+       * The account token generated by the account token API.
        */
       account_token?: string;
 
@@ -10591,6 +11595,11 @@ export namespace V2 {
           script_statement_descriptor?: Merchant.ScriptStatementDescriptor;
 
           /**
+           * Settings for SEPA Direct Debit payments.
+           */
+          sepa_debit_payments?: Merchant.SepaDebitPayments;
+
+          /**
            * Settings for Smart Disputes automatic response feature.
            */
           smart_disputes?: Merchant.SmartDisputes;
@@ -10681,7 +11690,7 @@ export namespace V2 {
             /**
              * Customer shipping address.
              */
-            address?: AddressParam;
+            address?: Shipping.Address;
 
             /**
              * Customer name.
@@ -10775,6 +11784,40 @@ export namespace V2 {
               requested?: boolean;
             }
           }
+
+          export namespace Shipping {
+            export interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country?: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1?: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
         }
 
         export namespace Merchant {
@@ -10857,6 +11900,11 @@ export namespace V2 {
              * Allow the merchant to process BLIK payments.
              */
             blik_payments?: Capabilities.BlikPayments;
+
+            /**
+             * Allow the merchant to process recurring BLIK payments.
+             */
+            blik_recurring_payments?: Capabilities.BlikRecurringPayments;
 
             /**
              * Allow the merchant to process Boleto payments.
@@ -10999,6 +12047,11 @@ export namespace V2 {
             samsung_pay_payments?: Capabilities.SamsungPayPayments;
 
             /**
+             * Allow the merchant to process Satispay payments.
+             */
+            satispay_payments?: Capabilities.SatispayPayments;
+
+            /**
              * Allow the merchant to process SEPA bank transfer payments.
              */
             sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -11007,6 +12060,11 @@ export namespace V2 {
              * Allow the merchant to process SEPA Direct Debit payments.
              */
             sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+            /**
+             * Allow the merchant to process SeQura payments.
+             */
+            sequra_payments?: Capabilities.SequraPayments;
 
             /**
              * Allow the merchant to process Sunbit payments.
@@ -11060,6 +12118,13 @@ export namespace V2 {
             kanji?: ScriptStatementDescriptor.Kanji;
           }
 
+          export interface SepaDebitPayments {
+            /**
+             * Creditor ID for SEPA Direct Debit payments.
+             */
+            creditor_id?: string;
+          }
+
           export interface SmartDisputes {
             /**
              * Settings for Smart Disputes auto_respond.
@@ -11083,7 +12148,7 @@ export namespace V2 {
             /**
              * A publicly available mailing address for sending support issues to.
              */
-            address?: JapanAddressParam;
+            address?: Support.Address;
 
             /**
              * A publicly available email address for sending support issues to.
@@ -11166,6 +12231,13 @@ export namespace V2 {
             }
 
             export interface BlikPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface BlikRecurringPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -11368,6 +12440,13 @@ export namespace V2 {
               requested?: boolean;
             }
 
+            export interface SatispayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
             export interface SepaBankTransferPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -11376,6 +12455,13 @@ export namespace V2 {
             }
 
             export interface SepaDebitPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface SequraPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -11501,6 +12587,45 @@ export namespace V2 {
 
             export namespace AutoRespond {
               export type Preference = 'inherit' | 'off' | 'on';
+            }
+          }
+
+          export namespace Support {
+            export interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country?: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1?: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+
+              /**
+               * Town or district.
+               */
+              town?: string;
             }
           }
         }
@@ -12037,7 +13162,7 @@ export namespace V2 {
           /**
            * The business registration address of the business entity.
            */
-          address?: JapanAddressParam;
+          address?: BusinessDetails.Address;
 
           /**
            * The business gross annual revenue for its preceding fiscal year.
@@ -12116,7 +13241,7 @@ export namespace V2 {
           /**
            * The individual's residential address.
            */
-          address?: JapanAddressParam;
+          address?: Individual.Address;
 
           /**
            * The individual's date of birth.
@@ -12383,6 +13508,43 @@ export namespace V2 {
             town?: string;
           }
 
+          export interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
+
           export interface AnnualRevenue {
             /**
              * A non-negative integer representing the amount in the smallest currency unit.
@@ -12492,12 +13654,12 @@ export namespace V2 {
             /**
              * Kana Address.
              */
-            kana?: JapanAddressParam;
+            kana?: ScriptAddresses.Kana;
 
             /**
              * Kanji Address.
              */
-            kanji?: JapanAddressParam;
+            kanji?: ScriptAddresses.Kanji;
           }
 
           export interface ScriptNames {
@@ -12558,7 +13720,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: BankAccountOwnershipVerification.Type;
             }
 
             export interface CompanyLicense {
@@ -12570,7 +13732,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyLicense.Type;
             }
 
             export interface CompanyMemorandumOfAssociation {
@@ -12582,7 +13744,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyMemorandumOfAssociation.Type;
             }
 
             export interface CompanyMinisterialDecree {
@@ -12594,7 +13756,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyMinisterialDecree.Type;
             }
 
             export interface CompanyRegistrationVerification {
@@ -12606,7 +13768,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyRegistrationVerification.Type;
             }
 
             export interface CompanyTaxIdVerification {
@@ -12618,7 +13780,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyTaxIdVerification.Type;
             }
 
             export interface PrimaryVerification {
@@ -12630,7 +13792,7 @@ export namespace V2 {
               /**
                * The format of the verification document. Currently supports `front_back` only.
                */
-              type: 'front_back';
+              type: PrimaryVerification.Type;
             }
 
             export interface ProofOfAddress {
@@ -12642,7 +13804,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: ProofOfAddress.Type;
             }
 
             export interface ProofOfRegistration {
@@ -12659,7 +13821,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: ProofOfRegistration.Type;
             }
 
             export interface ProofOfUltimateBeneficialOwnership {
@@ -12676,7 +13838,31 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: ProofOfUltimateBeneficialOwnership.Type;
+            }
+
+            export namespace BankAccountOwnershipVerification {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyLicense {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyMemorandumOfAssociation {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyMinisterialDecree {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyRegistrationVerification {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace CompanyTaxIdVerification {
+              export type Type = 'files' | OtherString;
             }
 
             export namespace PrimaryVerification {
@@ -12691,6 +13877,12 @@ export namespace V2 {
                  */
                 front?: string;
               }
+
+              export type Type = 'front_back' | OtherString;
+            }
+
+            export namespace ProofOfAddress {
+              export type Type = 'files' | OtherString;
             }
 
             export namespace ProofOfRegistration {
@@ -12700,6 +13892,8 @@ export namespace V2 {
                  */
                 person: string;
               }
+
+              export type Type = 'files' | OtherString;
             }
 
             export namespace ProofOfUltimateBeneficialOwnership {
@@ -12709,6 +13903,8 @@ export namespace V2 {
                  */
                 person: string;
               }
+
+              export type Type = 'files' | OtherString;
             }
           }
 
@@ -12832,6 +14028,82 @@ export namespace V2 {
               | OtherString;
           }
 
+          export namespace ScriptAddresses {
+            export interface Kana {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country?: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1?: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+
+              /**
+               * Town or district.
+               */
+              town?: string;
+            }
+
+            export interface Kanji {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country?: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1?: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+
+              /**
+               * Town or district.
+               */
+              town?: string;
+            }
+          }
+
           export namespace ScriptNames {
             export interface Kana {
               /**
@@ -12912,6 +14184,43 @@ export namespace V2 {
              * The person's last or family name.
              */
             surname?: string;
+          }
+
+          export interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
           }
 
           export interface DateOfBirth {
@@ -13005,12 +14314,12 @@ export namespace V2 {
             /**
              * Kana Address.
              */
-            kana?: JapanAddressParam;
+            kana?: ScriptAddresses.Kana;
 
             /**
              * Kanji Address.
              */
-            kanji?: JapanAddressParam;
+            kanji?: ScriptAddresses.Kanji;
           }
 
           export interface ScriptNames {
@@ -13039,7 +14348,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: CompanyAuthorization.Type;
             }
 
             export interface Passport {
@@ -13051,7 +14360,7 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: Passport.Type;
             }
 
             export interface PrimaryVerification {
@@ -13063,7 +14372,7 @@ export namespace V2 {
               /**
                * The format of the verification document. Currently supports `front_back` only.
                */
-              type: 'front_back';
+              type: PrimaryVerification.Type;
             }
 
             export interface SecondaryVerification {
@@ -13075,7 +14384,7 @@ export namespace V2 {
               /**
                * The format of the verification document. Currently supports `front_back` only.
                */
-              type: 'front_back';
+              type: SecondaryVerification.Type;
             }
 
             export interface Visa {
@@ -13087,7 +14396,15 @@ export namespace V2 {
               /**
                * The format of the document. Currently supports `files` only.
                */
-              type: 'files';
+              type: Visa.Type;
+            }
+
+            export namespace CompanyAuthorization {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace Passport {
+              export type Type = 'files' | OtherString;
             }
 
             export namespace PrimaryVerification {
@@ -13102,6 +14419,8 @@ export namespace V2 {
                  */
                 front?: string;
               }
+
+              export type Type = 'front_back' | OtherString;
             }
 
             export namespace SecondaryVerification {
@@ -13116,6 +14435,12 @@ export namespace V2 {
                  */
                 front?: string;
               }
+
+              export type Type = 'front_back' | OtherString;
+            }
+
+            export namespace Visa {
+              export type Type = 'files' | OtherString;
             }
           }
 
@@ -13199,6 +14524,82 @@ export namespace V2 {
               | 'uy_dni'
               | 'za_id'
               | OtherString;
+          }
+
+          export namespace ScriptAddresses {
+            export interface Kana {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country?: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1?: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+
+              /**
+               * Town or district.
+               */
+              town?: string;
+            }
+
+            export interface Kanji {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country?: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1?: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+
+              /**
+               * Town or district.
+               */
+              town?: string;
+            }
           }
 
           export namespace ScriptNames {

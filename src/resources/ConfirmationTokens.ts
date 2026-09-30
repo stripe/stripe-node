@@ -238,6 +238,8 @@ export namespace ConfirmationToken {
 
     sepa_debit?: PaymentMethodPreview.SepaDebit;
 
+    sequra?: PaymentMethodPreview.Sequra;
+
     shopeepay?: PaymentMethodPreview.Shopeepay;
 
     sofort?: PaymentMethodPreview.Sofort;
@@ -1007,6 +1009,8 @@ export namespace ConfirmationToken {
       last4: string | null;
     }
 
+    export interface Sequra {}
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -1084,6 +1088,7 @@ export namespace ConfirmationToken {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'

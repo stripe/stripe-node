@@ -31,6 +31,7 @@ import {
 } from './net/HttpClient.js';
 import {Stripe} from './stripe.core.js';
 import {
+  validatePath,
   jsonStringifyRequestData,
   normalizeHeaders,
   queryStringifyRequestData,
@@ -41,6 +42,9 @@ import {
 } from './utils.js';
 
 export type HttpClientResponseError = {code: string};
+
+const STRIPE_NOTICE_SUPPRESSION_MESSAGE =
+  'To suppress Stripe notices in test and sandbox environments, set the STRIPE_SUPPRESS_NOTICES environment variable to true.';
 
 export class RequestSender {
   protected _stripe: Stripe;
@@ -101,11 +105,25 @@ export class RequestSender {
 
   private _emitStripeNotice(headers: ResponseHeaders): void {
     const notice = headers['stripe-notice'];
-    if (notice) {
-      this._stripe._platformFunctions.emitWarning(
-        typeof notice === 'string' ? notice : notice[0]
-      );
+    if (!notice) {
+      return;
     }
+
+    const aiAgent = this._stripe.getConstant('AI_AGENT') as string;
+    const suppressionValue = this._stripe._platformFunctions
+      .getEnv()
+      ?.STRIPE_SUPPRESS_NOTICES?.toLowerCase();
+    const shouldSuppress = !aiAgent && suppressionValue === 'true';
+    if (shouldSuppress) {
+      return;
+    }
+
+    const noticeMessage = typeof notice === 'string' ? notice : notice[0];
+    this._stripe._platformFunctions.emitWarning(
+      aiAgent
+        ? noticeMessage
+        : `${noticeMessage}\n${STRIPE_NOTICE_SUPPRESSION_MESSAGE}`
+    );
   }
 
   /**
@@ -222,18 +240,7 @@ export class RequestSender {
               responseEvent.body = (e as any).rawBody;
             }
 
-            // A body we could not read to completion is a transport failure,
-            // not a malformed payload. Only a timeout is reported as such for
-            // now: a connection severed mid-body already surfaced here as a
-            // StripeAPIError on the fetch client, so reclassifying it would
-            // break anyone catching it. A timeout, by contrast, never got this
-            // far -- it hung -- so there is no behavior to preserve.
-            // TODO(DEVSDK-3247): report every HttpClientResponseBodyError as a
-            // StripeConnectionError, since none of them are parse failures.
-            if (
-              e instanceof HttpClientResponseBodyError &&
-              e.code === HttpClient.TIMEOUT_ERROR_CODE
-            ) {
+            if (e instanceof HttpClientResponseBodyError) {
               throw RequestSender._generateConnectionError(
                 e,
                 timeout,
@@ -388,8 +395,22 @@ export class RequestSender {
   }
 
   _defaultIdempotencyKey(method: string, apiMode: ApiMode): string | null {
-    const genKey = (): string =>
-      `stripe-node-retry-${this._stripe._platformFunctions.uuid4()}`;
+    const genKey = (): string => {
+      let uuid: string;
+      try {
+        uuid = this._stripe._platformFunctions.uuid4();
+      } catch {
+        // our uuid4 function needs to be cryptographically secure, but idempotency key just needs to be unique
+        // so we can safely fall back to a basic approach
+        uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+          const r = (Math.random() * 16) | 0;
+          const v = c === 'x' ? r : (r & 0x3) | 0x8;
+          return v.toString(16);
+        });
+      }
+
+      return `stripe-node-retry-${uuid}`;
+    };
 
     // more verbose than it needs to be, but gives clear separation between V1 and V2 behavior
     if (apiMode === 'v2') {
@@ -620,6 +641,9 @@ export class RequestSender {
   ): void {
     let requestData: string | Uint8Array;
     authenticator = authenticator ?? this._stripe._authenticator;
+    // Validate before anything derives meaning from the path -- apiMode is
+    // sniffed from its prefix, and the path may have come from remote data.
+    validatePath(path);
     const apiMode: ApiMode = getAPIMode(path);
     const retryRequest = (
       requestFn: typeof makeRequest,

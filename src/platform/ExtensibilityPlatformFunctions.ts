@@ -21,7 +21,7 @@ const unsupportedRuntimeError = (method: string, alternative?: string): Error =>
   );
 
 /**
- * Platform functions for extensibility scripts.
+ * Platform functions for extensibility scripts. It uses a pretty plain Deno ECMAScript implementation without many imports.
  */
 export class ExtensibilityPlatformFunctions extends PlatformFunctions {
   /** @override */

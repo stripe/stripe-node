@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Stripe} from '../../../stripe.core.js';
+import {Stripe} from '../../../../stripe.core.js';
 import {
   V2 as V2Namespace0,
   FinancialAddressResource,

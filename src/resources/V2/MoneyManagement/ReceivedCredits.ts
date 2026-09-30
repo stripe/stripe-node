@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {OtherString} from '../../../shared.js';
+import {RangeQueryParam, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ReceivedCreditResource extends StripeResource {
@@ -54,6 +54,11 @@ export interface ReceivedCredit {
    * The amount and currency of the ReceivedCredit.
    */
   amount: V2Amount;
+
+  /**
+   * The amount and currency of the ReceivedCredit that was received.
+   */
+  amount_received: V2Amount;
 
   /**
    * This object stores details about the originating Stripe transaction that resulted in the ReceivedCredit. Present if `type` field value is `balance_transfer`.
@@ -151,17 +156,17 @@ export namespace ReceivedCredit {
     financial_address: string;
 
     /**
-     * Hash containing the transaction bank details. Present if `origin_type` field value is `gb_bank_account`.
+     * Deprecated. Use `originating_bank_account.sort_code` instead.
      */
     gb_bank_account?: BankTransfer.GbBankAccount;
 
     /**
-     * Open Enum. Indicates the origin of source from which external funds originated from.
+     * Hash containing the originating bank account details and type for this bank transfer.
      */
-    origin_type: BankTransfer.OriginType;
+    originating_bank_account: BankTransfer.OriginatingBankAccount;
 
     /**
-     * Hash containing the transaction bank details. Present if `origin_type` field value is `sepa_bank_account`.
+     * Deprecated. Use `originating_bank_account.iban` instead.
      */
     sepa_bank_account?: BankTransfer.SepaBankAccount;
 
@@ -171,7 +176,7 @@ export namespace ReceivedCredit {
     statement_descriptor?: string;
 
     /**
-     * Hash containing the transaction bank details. Present if `origin_type` field value is `us_bank_account`.
+     * Deprecated. Use `originating_bank_account.aba` instead.
      */
     us_bank_account?: BankTransfer.UsBankAccount;
   }
@@ -259,11 +264,27 @@ export namespace ReceivedCredit {
       sort_code?: string;
     }
 
-    export type OriginType =
-      | 'gb_bank_account'
-      | 'sepa_bank_account'
-      | 'us_bank_account'
-      | OtherString;
+    export interface OriginatingBankAccount {
+      /**
+       * Hash containing the transaction bank details. Present if `type` field value is `aba`.
+       */
+      aba?: OriginatingBankAccount.Aba;
+
+      /**
+       * Hash containing the transaction bank details. Present if `type` field value is `iban`.
+       */
+      iban?: OriginatingBankAccount.Iban;
+
+      /**
+       * Hash containing the transaction bank details. Present if `type` field value is `sort_code`.
+       */
+      sort_code?: OriginatingBankAccount.SortCode;
+
+      /**
+       * Open Enum. The type of bank transfer that originated this ReceivedCredit.
+       */
+      type: OriginatingBankAccount.Type;
+    }
 
     export interface SepaBankAccount {
       /**
@@ -294,7 +315,7 @@ export namespace ReceivedCredit {
       /**
        * The money transmission network used to send funds for this ReceivedCredit.
        */
-      network: 'sepa_credit_transfer';
+      network: SepaBankAccount.Network;
     }
 
     export interface UsBankAccount {
@@ -328,6 +349,112 @@ export namespace ReceivedCredit {
       export type Network = 'chaps' | 'fps' | OtherString;
     }
 
+    export namespace OriginatingBankAccount {
+      export interface Aba {
+        /**
+         * The name of the account holder that sent the payment.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The bank name the transfer was received from.
+         */
+        bank_name?: string;
+
+        /**
+         * The last 4 digits of the account number that originated the transfer.
+         */
+        last4?: string;
+
+        /**
+         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+         */
+        network: Aba.Network;
+
+        /**
+         * The routing number of the account that originated the transfer.
+         */
+        routing_number?: string;
+      }
+
+      export interface Iban {
+        /**
+         * The account holder name of the bank account the transfer was received from.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The bank name the transfer was received from.
+         */
+        bank_name?: string;
+
+        /**
+         * The BIC/SWIFT code of the account that originated the transfer.
+         */
+        bic?: string;
+
+        /**
+         * The origination country of the bank transfer.
+         */
+        country?: string;
+
+        /**
+         * The IBAN that originated the transfer.
+         */
+        iban?: string;
+
+        /**
+         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+         */
+        network: Iban.Network;
+      }
+
+      export interface SortCode {
+        /**
+         * The account holder name of the bank account the transfer was received from.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The bank name the transfer was received from.
+         */
+        bank_name?: string;
+
+        /**
+         * The last 4 digits of the account number that originated the transfer.
+         */
+        last4?: string;
+
+        /**
+         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+         */
+        network: SortCode.Network;
+
+        /**
+         * The sort code of the account that originated the transfer.
+         */
+        sort_code?: string;
+      }
+
+      export type Type = 'aba' | 'iban' | 'sort_code' | OtherString;
+
+      export namespace Aba {
+        export type Network = 'ach' | 'rtp' | 'us_domestic_wire' | OtherString;
+      }
+
+      export namespace Iban {
+        export type Network = 'sepa_credit_transfer' | OtherString;
+      }
+
+      export namespace SortCode {
+        export type Network = 'chaps' | 'fps' | OtherString;
+      }
+    }
+
+    export namespace SepaBankAccount {
+      export type Network = 'sepa_credit_transfer' | OtherString;
+    }
+
     export namespace UsBankAccount {
       export type Network = 'ach' | 'rtp' | 'us_domestic_wire' | OtherString;
     }
@@ -345,7 +472,7 @@ export namespace ReceivedCredit {
       /**
        * Open Enum. The `returned` status reason.
        */
-      reason: 'originator_initiated_reversal';
+      reason: Returned.Reason;
     }
 
     export namespace Failed {
@@ -355,6 +482,10 @@ export namespace ReceivedCredit {
         | 'financial_address_inactive'
         | 'stripe_rejected'
         | OtherString;
+    }
+
+    export namespace Returned {
+      export type Reason = 'originator_initiated_reversal' | OtherString;
     }
   }
 }
@@ -367,34 +498,9 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface ReceivedCreditListParams {
       /**
-       * Filter for objects created at the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+       * Hash of options for filtering on creation time.
        */
-      created?: string;
-
-      /**
-       * Filter for objects created after the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_gt?: string;
-
-      /**
-       * Filter for objects created on or after the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_gte?: string;
-
-      /**
-       * Filter for objects created before the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_lt?: string;
-
-      /**
-       * Filter for objects created on or before the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_lte?: string;
+      created?: RangeQueryParam;
 
       /**
        * The page limit.
