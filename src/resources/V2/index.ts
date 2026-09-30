@@ -2,8 +2,6 @@
 
 import {Stripe} from '../../stripe.core.js';
 import {DeletedObject} from './DeletedObject.js';
-import {FinancialAddressCreditSimulation} from './FinancialAddressCreditSimulations.js';
-import {FinancialAddressGeneratedMicrodeposits} from './FinancialAddressGeneratedMicrodeposits.js';
 import {Billing} from './Billing/index.js';
 import {Commerce} from './Commerce/index.js';
 import {Core} from './Core/index.js';
@@ -14,11 +12,8 @@ import {MoneyManagement} from './MoneyManagement/index.js';
 import {Network} from './Network/index.js';
 import {OrchestratedCommerce} from './OrchestratedCommerce/index.js';
 import {Signals} from './Signals/index.js';
-import {TestHelpers} from './TestHelpers/index.js';
 
 export {DeletedObject} from './DeletedObject.js';
-export {FinancialAddressCreditSimulation} from './FinancialAddressCreditSimulations.js';
-export {FinancialAddressGeneratedMicrodeposits} from './FinancialAddressGeneratedMicrodeposits.js';
 
 export class V2 {
   billing: Billing;
@@ -31,7 +26,6 @@ export class V2 {
   network: Network;
   orchestratedCommerce: OrchestratedCommerce;
   signals: Signals;
-  testHelpers: TestHelpers;
 
   constructor(private readonly stripe: Stripe) {
     this.billing = new Billing(stripe);
@@ -44,14 +38,11 @@ export class V2 {
     this.network = new Network(stripe);
     this.orchestratedCommerce = new OrchestratedCommerce(stripe);
     this.signals = new Signals(stripe);
-    this.testHelpers = new TestHelpers(stripe);
   }
 }
 
 export declare namespace V2 {
   export {DeletedObject};
-  export {FinancialAddressCreditSimulation};
-  export {FinancialAddressGeneratedMicrodeposits};
   export {Billing};
   export {Commerce};
   export {Core};
@@ -62,5 +53,4 @@ export declare namespace V2 {
   export {Network};
   export {OrchestratedCommerce};
   export {Signals};
-  export {TestHelpers};
 }

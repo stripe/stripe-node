@@ -344,7 +344,7 @@ export namespace Cadence {
     /**
      * A string identifying the type of the payer. Currently the only supported value is `customer`.
      */
-    type: 'customer';
+    type: Payer.Type;
   }
 
   export interface Settings {
@@ -526,6 +526,10 @@ export namespace Cadence {
         second?: number;
       }
     }
+  }
+
+  export namespace Payer {
+    export type Type = 'customer' | OtherString;
   }
 
   export namespace Settings {
@@ -755,7 +759,7 @@ export namespace Cadence {
           /**
            * The funding method type to be used when there are not enough funds in the customer balance. Currently the only supported value is `bank_transfer`.
            */
-          funding_type?: 'bank_transfer';
+          funding_type?: CustomerBalance.FundingType;
         }
 
         export interface Konbini {}
@@ -843,6 +847,8 @@ export namespace Cadence {
              */
             type?: BankTransfer.Type;
           }
+
+          export type FundingType = 'bank_transfer' | OtherString;
 
           export namespace BankTransfer {
             export interface EuBankTransfer {
@@ -1223,7 +1229,11 @@ export namespace V2 {
       /**
        * Additional resource to include in the response.
        */
-      include?: Array<'settings_data'>;
+      include?: Array<CadenceRetrieveParams.Include>;
+    }
+
+    export namespace CadenceRetrieveParams {
+      export type Include = 'settings_data' | OtherString;
     }
   }
 }
@@ -1311,7 +1321,7 @@ export namespace V2 {
       /**
        * Additional resource to include in the response.
        */
-      include?: Array<'settings_data'>;
+      include?: Array<CadenceListParams.Include>;
 
       /**
        * Optionally set the maximum number of results per page. Defaults to 20.
@@ -1338,6 +1348,8 @@ export namespace V2 {
     }
 
     export namespace CadenceListParams {
+      export type Include = 'settings_data' | OtherString;
+
       export interface Payer {
         /**
          * The ID of the Customer object. If provided, only cadences that specifically reference the provided customer ID will be returned.
@@ -1347,7 +1359,11 @@ export namespace V2 {
         /**
          * A string identifying the type of the payer. Currently the only supported value is `customer`.
          */
-        type: 'customer';
+        type: Payer.Type;
+      }
+
+      export namespace Payer {
+        export type Type = 'customer' | OtherString;
       }
     }
   }

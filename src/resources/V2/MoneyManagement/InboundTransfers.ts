@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {OtherString} from '../../../shared.js';
+import {RangeQueryParam, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class InboundTransferResource extends StripeResource {
@@ -132,27 +132,27 @@ export namespace InboundTransfer {
 
   export interface TransferHistory {
     /**
-     * The history entry for a failed InboundTransfer.
+     * The InboundTransfer failed. See `failure_reason` for more details.
      */
     bank_debit_failed?: TransferHistory.BankDebitFailed;
 
     /**
-     * The history entry for a processing InboundTransfer.
+     * The InboundTransfer was submitted to the scheme for processing. The debit is still in progress and can later succeed or fail.
      */
     bank_debit_processing?: TransferHistory.BankDebitProcessing;
 
     /**
-     * The history entry for a queued InboundTransfer.
+     * The InboundTransfer was created and is waiting to be submitted to the scheme for processing.
      */
     bank_debit_queued?: TransferHistory.BankDebitQueued;
 
     /**
-     * The history entry for a returned InboundTransfer.
+     * The InboundTransfer was returned. The original transaction has been reversed.
      */
     bank_debit_returned?: TransferHistory.BankDebitReturned;
 
     /**
-     * The history entry for a succeeded InboundTransfer.
+     * The InboundTransfer succeeded. Funds might not yet be available; check the associated Transaction for availability.
      */
     bank_debit_succeeded?: TransferHistory.BankDebitSucceeded;
 
@@ -170,11 +170,6 @@ export namespace InboundTransfer {
      * A unique ID for the HistoryEntry.
      */
     id: string;
-
-    /**
-     * Open Enum. The Level of the HistoryEntry.
-     */
-    level: TransferHistory.Level;
 
     /**
      * Open Enum. The type of the HistoryEntry.
@@ -216,8 +211,6 @@ export namespace InboundTransfer {
     }
 
     export interface BankDebitSucceeded {}
-
-    export type Level = 'canonical' | 'debug' | OtherString;
 
     export type Type =
       | 'bank_debit_failed'
@@ -309,34 +302,9 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface InboundTransferListParams {
       /**
-       * Filter for objects created at the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+       * Hash of options for filtering on creation time.
        */
-      created?: string;
-
-      /**
-       * Filter for objects created after the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_gt?: string;
-
-      /**
-       * Filter for objects created on or after the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_gte?: string;
-
-      /**
-       * Filter for objects created before the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_lt?: string;
-
-      /**
-       * Filter for objects created on or before the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_lte?: string;
+      created?: RangeQueryParam;
 
       /**
        * The page limit.

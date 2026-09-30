@@ -376,6 +376,7 @@ export const AI_AGENTS: [string, string][] = [
   ['CODEX_CI', 'codex_cli'],
   ['CURSOR_AGENT', 'cursor'],
   ['GEMINI_CLI', 'gemini_cli'],
+  ['HERMES_AGENT', 'hermes'],
   ['OPENCLAW_SHELL', 'openclaw'],
   ['OPENCODE', 'open_code'],
   // The end of the section generated from our OpenAPI spec
@@ -436,6 +437,37 @@ function dateTimeReplacer(this: any, key: string, value: any): string {
  */
 export function jsonStringifyRequestData(data: RequestData | string): string {
   return JSON.stringify(data, dateTimeReplacer);
+}
+
+/**
+ * Asserts that a request path is origin-relative: that it begins with a single
+ * '/'.
+ *
+ * Some HTTP clients build the absolute URL by concatenating a host onto this
+ * path, and the configured hosts carry no trailing slash. A path like
+ * '@evil.example/v1/x' or '.evil.example/v1/x' would modify the resulting host
+ * and direct the request (including the API key) to a non-Stripe host.
+ *
+ * Because some relative urls arrive from potentially untrusted sources (like
+ * webhook bodies), we have to be a little defensive.
+ *
+ * So, we require that a path starts with a leading slash.
+ *
+ * NodeHttpClient passes {host, path} to `http.request` individually, so it doesn't need the same checks
+ * but the public `httpClient` needs the same security guarantees.
+ */
+export function validatePath(path: string): void {
+  if (
+    typeof path !== 'string' ||
+    !path.startsWith('/') ||
+    path.startsWith('//')
+  ) {
+    throw new Error(
+      `Request path must be a string beginning with a single "/", got: ${JSON.stringify(
+        path
+      )}`
+    );
+  }
 }
 
 /**

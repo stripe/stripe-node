@@ -537,7 +537,7 @@ export interface PaymentLink {
   currency: string;
 
   /**
-   * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
+   * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `elements`.
    */
   custom_fields: Array<PaymentLink.CustomField>;
 
@@ -859,6 +859,7 @@ export namespace PaymentLink {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'
@@ -1023,7 +1024,7 @@ export namespace PaymentLink {
 
     export interface Label {
       /**
-       * Custom text for the label, displayed to the customer. Up to 50 characters.
+       * Custom text for the label, displayed to the customer. Up to 100 characters.
        */
       custom: string | null;
 
@@ -1633,12 +1634,12 @@ export interface PaymentLinkCreateParams {
   currency?: string;
 
   /**
-   * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
+   * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `elements`.
    */
   custom_fields?: Array<PaymentLinkCreateParams.CustomField>;
 
   /**
-   * Display additional text for your customers using custom text. You can't set this parameter if `ui_mode` is `custom`.
+   * Display additional text for your customers using custom text. You can't set this parameter if `ui_mode` is `elements`.
    */
   custom_text?: PaymentLinkCreateParams.CustomText;
 
@@ -2039,6 +2040,7 @@ export namespace PaymentLinkCreateParams {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'
@@ -2121,7 +2123,7 @@ export namespace PaymentLinkCreateParams {
     enabled: boolean;
 
     /**
-     * Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this parameter if `ui_mode` is `custom`.
+     * Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this parameter if `ui_mode` is `elements`.
      */
     required?: TaxIdCollection.Required;
   }
@@ -2210,7 +2212,7 @@ export namespace PaymentLinkCreateParams {
 
     export interface Label {
       /**
-       * Custom text for the label, displayed to the customer. Up to 50 characters.
+       * Custom text for the label, displayed to the customer. Up to 100 characters.
        */
       custom: string;
 
@@ -2957,12 +2959,12 @@ export interface PaymentLinkUpdateParams {
   consent_collection?: PaymentLinkUpdateParams.ConsentCollection;
 
   /**
-   * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
+   * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `elements`.
    */
   custom_fields?: Emptyable<Array<PaymentLinkUpdateParams.CustomField>>;
 
   /**
-   * Display additional text for your customers using custom text. You can't set this parameter if `ui_mode` is `custom`.
+   * Display additional text for your customers using custom text. You can't set this parameter if `ui_mode` is `elements`.
    */
   custom_text?: PaymentLinkUpdateParams.CustomText;
 
@@ -3352,6 +3354,7 @@ export namespace PaymentLinkUpdateParams {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'
@@ -3429,7 +3432,7 @@ export namespace PaymentLinkUpdateParams {
     enabled: boolean;
 
     /**
-     * Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this parameter if `ui_mode` is `custom`.
+     * Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this parameter if `ui_mode` is `elements`.
      */
     required?: TaxIdCollection.Required;
   }
@@ -3518,7 +3521,7 @@ export namespace PaymentLinkUpdateParams {
 
     export interface Label {
       /**
-       * Custom text for the label, displayed to the customer. Up to 50 characters.
+       * Custom text for the label, displayed to the customer. Up to 100 characters.
        */
       custom: string;
 

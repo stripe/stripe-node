@@ -27,6 +27,7 @@ export class UsBankAccountResource extends StripeResource {
    * @throws Stripe.BlockedByStripeError
    * @throws Stripe.InvalidPaymentMethodError
    * @throws Stripe.QuotaExceededError
+   * @throws Stripe.CannotProceedError
    */
   create(
     params: V2.Core.Vault.UsBankAccountCreateParams,
@@ -59,6 +60,7 @@ export class UsBankAccountResource extends StripeResource {
    * @throws Stripe.BlockedByStripeError
    * @throws Stripe.InvalidPaymentMethodError
    * @throws Stripe.QuotaExceededError
+   * @throws Stripe.CannotProceedError
    */
   update(
     id: string,
@@ -77,7 +79,7 @@ export class UsBankAccountResource extends StripeResource {
    * Archived USBankAccount objects cannot be used as outbound destinations
    * and will not appear in the outbound destination list.
    * @throws Stripe.CannotProceedError
-   * @throws Stripe.ControlledByDashboardError
+   * @throws Stripe.ControlledByAlternateResourceError
    */
   archive(
     id: string,
@@ -93,7 +95,10 @@ export class UsBankAccountResource extends StripeResource {
   }
   /**
    * Confirm microdeposits amounts or descriptor code that you have received from the Send Microdeposits request. Once you correctly confirm this, this US Bank Account will be verified and eligible to transfer funds with.
+   * @throws Stripe.VerificationAttemptFailedError
    * @throws Stripe.ControlledByAlternateResourceError
+   * @throws Stripe.VerificationNotInitiatedError
+   * @throws Stripe.VerificationExpiredError
    */
   confirmMicrodeposits(
     id: string,

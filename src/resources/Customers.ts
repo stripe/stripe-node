@@ -993,7 +993,7 @@ export interface Customer {
   object: 'customer';
 
   /**
-   * The customer's address.
+   * The customer's billing address.
    */
   address?: Address | null;
 
@@ -1357,7 +1357,7 @@ export interface CustomerCreateParams {
   individual_name?: Emptyable<string>;
 
   /**
-   * The prefix for the customer used to generate unique invoice numbers. Must be 3–12 uppercase letters or numbers.
+   * The prefix for the customer used to generate unique invoice numbers. Must be 1–12 uppercase letters or numbers.
    */
   invoice_prefix?: string;
 
@@ -1729,7 +1729,7 @@ export interface CustomerUpdateParams {
   individual_name?: Emptyable<string>;
 
   /**
-   * The prefix for the customer used to generate unique invoice numbers. Must be 3–12 uppercase letters or numbers.
+   * The prefix for the customer used to generate unique invoice numbers. Must be 1–12 uppercase letters or numbers.
    */
   invoice_prefix?: string;
 
@@ -2278,6 +2278,7 @@ export namespace CustomerListPaymentMethodsParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'

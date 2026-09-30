@@ -7,6 +7,13 @@ import Stripe from 'npm:stripe@^11.16';
 
 const stripe = Stripe(Deno.env.get('STRIPE_API_KEY'));
 
+const webhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET');
+
+if (!webhookSecret) {
+  console.error('Please set the STRIPE_WEBHOOK_SECRET environment variable');
+  Deno.exit(1);
+}
+
 // Must specify hostname explicitly, see https://github.com/denoland/deno/issues/5144
 const server = Deno.listen({hostname: '127.0.0.1', port: 0});
 const {port} = server.addr;
@@ -24,7 +31,7 @@ async function handler(request) {
     event = await stripe.webhooks.constructEventAsync(
       body,
       signature,
-      Deno.env.get('STRIPE_WEBHOOK_SECRET'),
+      webhookSecret,
       undefined
     );
   } catch (err) {

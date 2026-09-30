@@ -6,7 +6,7 @@ import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class FeedbackOptionResource extends StripeResource {
   /**
-   * An API method for listing the feedback options model
+   * Returns a list of your feedback options.
    */
   list(
     params?: Billing.FeedbackOptionListParams,
@@ -37,7 +37,7 @@ export class FeedbackOptionResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieves a feedback options object given an ID.
+   * Retrieves a feedback option object given an ID.
    */
   retrieve(
     id: string,
@@ -122,6 +122,9 @@ export namespace FeedbackOption {
 }
 export namespace Billing {
   export interface FeedbackOptionCreateParams {
+    /**
+     * The text of the feedback option, which customers see when canceling. Maximum 100 characters.
+     */
     description: string;
 
     /**
@@ -140,6 +143,9 @@ export namespace Billing {
 }
 export namespace Billing {
   export interface FeedbackOptionUpdateParams {
+    /**
+     * The text of the feedback option, which customers see when canceling. Maximum 100 characters.
+     */
     description?: string;
 
     /**

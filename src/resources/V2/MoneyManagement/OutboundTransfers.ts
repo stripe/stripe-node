@@ -283,7 +283,7 @@ export namespace OutboundTransfer {
       /**
        * Open Enum. The `processing` status reason.
        */
-      reason: 'under_review';
+      reason: Processing.Reason;
     }
 
     export interface Returned {
@@ -305,6 +305,10 @@ export namespace OutboundTransfer {
         | 'review_rejected'
         | 'unknown_failure'
         | OtherString;
+    }
+
+    export namespace Processing {
+      export type Reason = 'under_review' | OtherString;
     }
 
     export namespace Returned {

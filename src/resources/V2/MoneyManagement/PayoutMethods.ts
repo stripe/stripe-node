@@ -41,7 +41,6 @@ export class PayoutMethodResource extends StripeResource {
   /**
    * Archive a PayoutMethod object. Archived objects cannot be used as payout methods
    * and will not appear in the payout method list.
-   * @throws Stripe.ControlledByDashboardError
    * @throws Stripe.CannotProceedError
    * @throws Stripe.InvalidPayoutMethodError
    * @throws Stripe.ControlledByAlternateResourceError
@@ -78,7 +77,6 @@ export class PayoutMethodResource extends StripeResource {
   }
   /**
    * Unarchive an PayoutMethod object.
-   * @throws Stripe.ControlledByDashboardError
    * @throws Stripe.InvalidPayoutMethodError
    * @throws Stripe.ControlledByAlternateResourceError
    */
@@ -110,6 +108,13 @@ export interface PayoutMethod {
    * The alternative reference for this payout method, if it's a projected payout method.
    */
   alternative_reference?: PayoutMethod.AlternativeReference;
+
+  /**
+   * Whether the payout method was archived. Payout methods can be archived through the /archive API,
+   * and they will not be automatically archived by Stripe. Archived payout methods cannot be used
+   * for outbound money movement.
+   */
+  archived: boolean;
 
   /**
    * A set of available payout speeds for this payout method.
@@ -174,13 +179,6 @@ export namespace PayoutMethod {
 
   export interface BankAccount {
     /**
-     * Whether this PayoutMethodBankAccount object was archived. PayoutMethodBankAccount objects can be archived through
-     * the /archive API, and they will not be automatically archived by Stripe. Archived PayoutMethodBankAccount objects
-     * cannot be used as payout methods and will not appear in the payout method list.
-     */
-    archived: boolean;
-
-    /**
      * The type of bank account (checking or savings).
      */
     bank_account_type: BankAccount.BankAccountType;
@@ -232,13 +230,6 @@ export namespace PayoutMethod {
   }
 
   export interface Card {
-    /**
-     * Whether the PayoutMethodCard object was archived. PayoutMethodCard objects can be archived through
-     * the /archive API, and they will not be automatically archived by Stripe. Archived PayoutMethodCard objects
-     * cannot be used as payout methods and will not appear in the payout method list.
-     */
-    archived: boolean;
-
     /**
      * The month the card expires.
      */
@@ -294,12 +285,14 @@ export namespace PayoutMethod {
     export type Payments =
       | 'disabled'
       | 'eligible'
+      | 'ineligible'
       | 'invalid'
       | 'requires_action';
 
     export type Transfers =
       | 'disabled'
       | 'eligible'
+      | 'ineligible'
       | 'invalid'
       | 'requires_action';
   }
@@ -340,12 +333,14 @@ export namespace V2 {
         export type Payment =
           | 'disabled'
           | 'eligible'
+          | 'ineligible'
           | 'invalid'
           | 'requires_action';
 
         export type Transfer =
           | 'disabled'
           | 'eligible'
+          | 'ineligible'
           | 'invalid'
           | 'requires_action';
       }

@@ -148,6 +148,11 @@ export namespace AccountEvaluation {
 
   export interface EvaluatedSignals {
     /**
+     * Fraudulent website result for the evaluation, when available.
+     */
+    fraudulent_website?: EvaluatedSignals.FraudulentWebsite;
+
+    /**
      * User account-sharing result for the evaluation, when available.
      */
     user_account_sharing?: EvaluatedSignals.UserAccountSharing;
@@ -159,11 +164,13 @@ export namespace AccountEvaluation {
   }
 
   export type PendingSignal =
+    | 'fraudulent_website'
     | 'user_account_sharing'
     | 'user_multi_accounting'
     | OtherString;
 
   export type RequestedSignal =
+    | 'fraudulent_website'
     | 'user_account_sharing'
     | 'user_multi_accounting'
     | OtherString;
@@ -174,6 +181,11 @@ export namespace AccountEvaluation {
        * Default account settings.
        */
       defaults?: Data.Defaults;
+
+      /**
+       * Identity data.
+       */
+      identity?: Data.Identity;
     }
 
     export namespace Data {
@@ -182,6 +194,13 @@ export namespace AccountEvaluation {
          * Account profile data.
          */
         profile: Defaults.Profile;
+      }
+
+      export interface Identity {
+        /**
+         * Business details for identity data.
+         */
+        business_details: Identity.BusinessDetails;
       }
 
       export namespace Defaults {
@@ -202,10 +221,41 @@ export namespace AccountEvaluation {
           product_description?: string;
         }
       }
+
+      export namespace Identity {
+        export interface BusinessDetails {
+          /**
+           * Registered business name.
+           */
+          registered_name?: string;
+        }
+      }
     }
   }
 
   export namespace EvaluatedSignals {
+    export interface FraudulentWebsite {
+      /**
+       * Human-readable details about the fraudulent website evaluation, when available.
+       */
+      details?: string;
+
+      /**
+       * Timestamp at which the signal was evaluated.
+       */
+      evaluated_at?: string;
+
+      /**
+       * Categorical assessment of the fraudulent website risk.
+       */
+      risk_level: FraudulentWebsite.RiskLevel;
+
+      /**
+       * The account signal ID containing the full fraudulent website signal result.
+       */
+      signal?: string;
+    }
+
     export interface UserAccountSharing {
       /**
        * Timestamp at which the signal was evaluated.
@@ -248,6 +298,15 @@ export namespace AccountEvaluation {
        * The account signal ID containing the full user multi-accounting signal result.
        */
       signal?: string;
+    }
+
+    export namespace FraudulentWebsite {
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'unknown';
     }
 
     export namespace UserAccountSharing {
@@ -307,6 +366,7 @@ export namespace V2 {
       }
 
       export type RequestedSignal =
+        | 'fraudulent_website'
         | 'user_account_sharing'
         | 'user_multi_accounting'
         | OtherString;
@@ -442,6 +502,11 @@ export namespace V2 {
            * Default account settings.
            */
           defaults?: Data.Defaults;
+
+          /**
+           * Identity data.
+           */
+          identity?: Data.Identity;
         }
 
         export namespace Data {
@@ -450,6 +515,13 @@ export namespace V2 {
              * Account profile data.
              */
             profile: Defaults.Profile;
+          }
+
+          export interface Identity {
+            /**
+             * Business details for identity data.
+             */
+            business_details: Identity.BusinessDetails;
           }
 
           export namespace Defaults {
@@ -468,6 +540,15 @@ export namespace V2 {
                * Description of the account's product or service.
                */
               product_description?: string;
+            }
+          }
+
+          export namespace Identity {
+            export interface BusinessDetails {
+              /**
+               * Registered business name.
+               */
+              registered_name?: string;
             }
           }
         }

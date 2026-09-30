@@ -115,6 +115,8 @@ export namespace Mandate {
 
     bacs_debit?: PaymentMethodDetails.BacsDebit;
 
+    blik?: PaymentMethodDetails.Blik;
+
     card?: PaymentMethodDetails.Card;
 
     cashapp?: PaymentMethodDetails.Cashapp;
@@ -251,7 +253,21 @@ export namespace Mandate {
       url: string;
     }
 
-    export interface Card {}
+    export interface Blik {
+      /**
+       * Date at which the mandate expires.
+       */
+      expires_at: number | null;
+
+      /**
+       * Type of the mandate.
+       */
+      type: 'off_session';
+    }
+
+    export interface Card {
+      india?: Card.India;
+    }
 
     export interface Cashapp {}
 
@@ -431,6 +447,27 @@ export namespace Mandate {
         | 'could_not_process'
         | 'debit_not_authorized'
         | OtherString;
+    }
+
+    export namespace Card {
+      export interface India {
+        /**
+         * The reason why the mandate has an `inactive` status. This field is only populated if the mandate is inactive.
+         */
+        inactive_reason: India.InactiveReason | null;
+      }
+
+      export namespace India {
+        export type InactiveReason =
+          | 'canceled'
+          | 'card_not_supported'
+          | 'currency_not_supported'
+          | 'expired'
+          | 'issuer_not_supported'
+          | 'processing_error'
+          | 'undetermined'
+          | OtherString;
+      }
     }
 
     export namespace Payto {

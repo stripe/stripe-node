@@ -20,15 +20,6 @@ class StreamProcessingError extends StripeError {}
  */
 export class NodePlatformFunctions extends PlatformFunctions {
   /** @override */
-  uuid4(): string {
-    // available in: v14.17.x+
-    if (crypto.randomUUID) {
-      return crypto.randomUUID();
-    }
-    return super.uuid4();
-  }
-
-  /** @override */
   getPlatformInfo(): string {
     return `${process.platform} ${os.release()} ${os.arch()}`;
   }

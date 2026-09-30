@@ -59,7 +59,7 @@ export interface MeterEventAdjustment {
   /**
    * Open Enum. Specifies the type of cancellation. Currently supports canceling a single event.
    */
-  type: 'cancel';
+  type: MeterEventAdjustment.Type;
 }
 export namespace MeterEventAdjustment {
   export interface Cancel {
@@ -70,6 +70,8 @@ export namespace MeterEventAdjustment {
   }
 
   export type Status = 'complete' | 'pending' | OtherString;
+
+  export type Type = 'cancel' | OtherString;
 }
 export namespace V2 {
   export namespace Billing {
@@ -87,7 +89,7 @@ export namespace V2 {
       /**
        * Specifies the type of cancellation. Currently supports canceling a single event.
        */
-      type: 'cancel';
+      type: MeterEventAdjustmentCreateParams.Type;
     }
 
     export namespace MeterEventAdjustmentCreateParams {
@@ -97,6 +99,8 @@ export namespace V2 {
          */
         identifier: string;
       }
+
+      export type Type = 'cancel' | OtherString;
     }
   }
 }

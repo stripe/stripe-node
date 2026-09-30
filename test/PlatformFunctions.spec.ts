@@ -14,15 +14,9 @@ import {SubtleCryptoProvider} from '../src/crypto/SubtleCryptoProvider.js';
 import {expect} from 'chai';
 import {webcrypto} from 'crypto';
 
-if (process.versions.node < '15') {
-  console.log(
-    `Skipping WebPlatformFunctions tests. Cannot load WebPlatformFunctions because 'Event' is not available in the global scope for ${process.version}.`
-  );
-} else {
-  import(
-    '../src/platform/WebPlatformFunctions.js'
-  ).then(({WebPlatformFunctions}) => testPlatform(new WebPlatformFunctions()));
-}
+import(
+  '../src/platform/WebPlatformFunctions.js'
+).then(({WebPlatformFunctions}) => testPlatform(new WebPlatformFunctions()));
 
 testPlatform(new NodePlatformFunctions());
 
@@ -32,13 +26,12 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
   describe(`${platformFunctions.constructor.name}`, () => {
     describe('uuid', () => {
       describe('should use crypto.randomUUID if it exists', () => {
-        const crypto = require('crypto');
         let randomUUID$;
         let called;
         beforeEach(() => {
           // if it's available, mock it and ensure it's called
           // otherwise, skip this whole operation
-          if (isNodeEnvironment && crypto.randomUUID) {
+          if (typeof crypto !== 'undefined') {
             called = false;
             randomUUID$ = crypto.randomUUID;
             crypto.randomUUID = (): string => {
@@ -55,16 +48,8 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
         it('is called if available', () => {
           if (randomUUID$) {
             expect(platformFunctions.uuid4()).to.equal('no, YOU you id');
-            expect(called).to.equal(isNodeEnvironment);
+            expect(called).to.equal(true);
           }
-        });
-
-        it('returns a valid v4 UUID without it', () => {
-          crypto.randomUUID = null;
-          expect(platformFunctions.uuid4()).to.match(
-            // regex from https://createuuid.com/validator/, specifically for v4
-            /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-          );
         });
       });
 
@@ -75,6 +60,20 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
         );
         // further test: could spy on crypto.randomUUID to ensure it's being used, if available
         // whether that's useful is a race between using jest/sinon for these tests and dropping support for node < 14
+      });
+
+      it('is not derived from Math.random', () => {
+        // Idempotency-Key values come from uuid4, so pinning Math.random must
+        // not pin them.
+        const random$ = Math.random;
+        Math.random = (): number => 0.5;
+        try {
+          expect(platformFunctions.uuid4()).to.not.equal(
+            platformFunctions.uuid4()
+          );
+        } finally {
+          Math.random = random$;
+        }
       });
     });
 
@@ -306,13 +305,6 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
       if (!isNodeEnvironment) {
         // WebPlatformFunctions
         it('should throw an error in web environments if streaming data is provided', () => {
-          if (process.versions.node < '18') {
-            console.log(
-              `'ReadableStream' is not available in the global scope for ${process.version}, skipping test.`
-            );
-            return;
-          }
-
           const f = new ReadableStream();
           const data = {
             file: {
@@ -389,20 +381,10 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
     });
 
     describe('createFetchHttpClient', () => {
-      if (process.versions.node < '18.0.0') {
-        // Until Node.js 18.0.0 global fetch was either behind the behind --experimental-global-fetch CLI flag
-        // or not defined at all and this test will therefore throw
-        it('should throw without fetch implementation on Node 12', () => {
-          expect(() => {
-            platformFunctions.createFetchHttpClient();
-          }).to.throw();
-        });
-      } else {
-        it('should create an instance of FetchHttpClient using global fetch', () => {
-          const fetchClient = platformFunctions.createFetchHttpClient();
-          expect(fetchClient).to.be.an.instanceof(FetchHttpClient);
-        });
-      }
+      it('should create an instance of FetchHttpClient using global fetch', () => {
+        const fetchClient = platformFunctions.createFetchHttpClient();
+        expect(fetchClient).to.be.an.instanceof(FetchHttpClient);
+      });
     });
 
     describe('createNodeCryptoProvider', () => {
@@ -438,3 +420,40 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
     });
   });
 }
+
+describe('PlatformFunctions.uuid4 without crypto', () => {
+  // because uuid4 is used in a cryptographic context, PlatformFunctions.uuid4 should throw if it can't access a CSPRNG
+
+  beforeEach(() => {
+    Object.defineProperty(crypto, 'randomUUID', {
+      value: undefined,
+      configurable: true,
+      writable: true,
+    });
+  });
+
+  afterEach(() => {
+    delete (crypto as any).randomUUID;
+  });
+
+  it('throws instead of degrading to a weak RNG', () => {
+    expect(() => new PlatformFunctions().uuid4()).to.throw(
+      /no cryptographically secure random number generator is available/
+    );
+  });
+
+  it('does not fall back to Math.random', () => {
+    const random$ = Math.random;
+    let called = false;
+    Math.random = (): number => {
+      called = true;
+      return 0.5;
+    };
+    try {
+      expect(() => new PlatformFunctions().uuid4()).to.throw();
+      expect(called).to.equal(false);
+    } finally {
+      Math.random = random$;
+    }
+  });
+});
