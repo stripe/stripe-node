@@ -3660,18 +3660,10 @@ export interface V1InvoiceSentEventNotification extends EventNotificationBase {
  */
 export interface V1InvoiceUpcomingEvent extends EventBase {
   type: 'v1.invoice.upcoming';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<V1Invoice>;
 }
 export interface V1InvoiceUpcomingEventNotification
   extends EventNotificationBase {
   type: 'v1.invoice.upcoming';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<V1Invoice>;
   fetchEvent(): Promise<V1InvoiceUpcomingEvent>;
 }
 
