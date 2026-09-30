@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams} from '../shared.js';
+import {PaginationParams, OtherString} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class TaxCodeResource extends StripeResource {
@@ -52,6 +52,23 @@ export interface TaxCode {
    * A short name for the tax code.
    */
   name: string;
+
+  /**
+   * An object that describes more information about the tax location required for this tax code. Some tax codes require a [performance location](https://docs.stripe.com/tax/location-sales#required-versus-optional-performance-locations) to calculate tax correctly.
+   */
+  requirements: TaxCode.Requirements | null;
+}
+export namespace TaxCode {
+  export interface Requirements {
+    /**
+     * Describes whether a performance location is required for a successful tax calculation with a tax code.
+     */
+    performance_location: Requirements.PerformanceLocation;
+  }
+
+  export namespace Requirements {
+    export type PerformanceLocation = 'optional' | 'required' | OtherString;
+  }
 }
 export interface TaxCodeRetrieveParams {
   /**

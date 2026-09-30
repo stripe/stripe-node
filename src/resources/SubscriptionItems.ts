@@ -488,6 +488,11 @@ export interface SubscriptionItem {
   current_period_start: number;
 
   /**
+   * The current trial that is applied to this subscription item.
+   */
+  current_trial: SubscriptionItem.CurrentTrial | null;
+
+  /**
    * Always true for a deleted object
    */
   deleted?: void;
@@ -503,10 +508,10 @@ export interface SubscriptionItem {
   metadata: Metadata;
 
   /**
-   * You can now model subscriptions more flexibly using the [Prices API](https://api.stripe.com#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
+   * You can now model subscriptions more flexibly using the [Prices API](https://docs.stripe.com/api#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
    *
    * Plans define the base price, currency, and billing cycle for recurring purchases of products.
-   * [Products](https://api.stripe.com#products) help you track inventory or provisioning, and plans help you track pricing. Different physical goods or levels of service should be represented by products, and pricing options should be represented by plans. This approach lets you change prices without having to change your provisioning scheme.
+   * [Products](https://docs.stripe.com/api#products) help you track inventory or provisioning, and plans help you track pricing. Different physical goods or levels of service should be represented by products, and pricing options should be represented by plans. This approach lets you change prices without having to change your provisioning scheme.
    *
    * For example, you might have a single "gold" product that has plans for $10/month, $100/year, €9/month, and €90/year.
    *
@@ -516,7 +521,7 @@ export interface SubscriptionItem {
 
   /**
    * Prices define the unit cost, currency, and (optional) billing cycle for both recurring and one-time purchases of products.
-   * [Products](https://api.stripe.com#products) help you track inventory or provisioning, and prices help you track payment terms. Different physical goods or levels of service should be represented by products, and pricing options should be represented by prices. This approach lets you change prices without having to change your provisioning scheme.
+   * [Products](https://docs.stripe.com/api#products) help you track inventory or provisioning, and prices help you track payment terms. Different physical goods or levels of service should be represented by products, and pricing options should be represented by prices. This approach lets you change prices without having to change your provisioning scheme.
    *
    * For example, you might have a single "gold" product that has prices for $10/month, $100/year, and €9 once.
    *
@@ -562,6 +567,14 @@ export namespace SubscriptionItem {
      */
     usage_gte: number | null;
   }
+
+  export interface CurrentTrial {
+    end_date: number;
+
+    start_date: number;
+
+    trial_offer: string;
+  }
 }
 export interface SubscriptionItemCreateParams {
   /**
@@ -575,6 +588,11 @@ export interface SubscriptionItemCreateParams {
   billing_thresholds?: Emptyable<
     SubscriptionItemCreateParams.BillingThresholds
   >;
+
+  /**
+   * The trial offer to apply to this subscription item.
+   */
+  current_trial?: SubscriptionItemCreateParams.CurrentTrial;
 
   /**
    * The coupons to redeem into discounts for the subscription item.
@@ -637,6 +655,13 @@ export namespace SubscriptionItemCreateParams {
      * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
      */
     usage_gte: number;
+  }
+
+  export interface CurrentTrial {
+    /**
+     * The ID of the trial offer to apply to the subscription item.
+     */
+    trial_offer: string;
   }
 
   export interface Discount {
@@ -740,6 +765,11 @@ export interface SubscriptionItemUpdateParams {
   >;
 
   /**
+   * The trial offer to apply to this subscription item.
+   */
+  current_trial?: SubscriptionItemUpdateParams.CurrentTrial;
+
+  /**
    * The coupons to redeem into discounts for the subscription item.
    */
   discounts?: Emptyable<Array<SubscriptionItemUpdateParams.Discount>>;
@@ -770,12 +800,12 @@ export interface SubscriptionItemUpdateParams {
   plan?: string;
 
   /**
-   * The ID of the price object. One of `price` or `price_data` is required. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+   * The ID of the price object. You can use either `price` or `price_data`, but not both, to set or change this item's price. If you're updating an existing item without changing its price, omit both. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
    */
   price?: string;
 
   /**
-   * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
+   * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. You can use either `price` or `price_data`, but not both, to set or change this item's price. If you're updating an existing item without changing its price, omit both.
    */
   price_data?: SubscriptionItemUpdateParams.PriceData;
 
@@ -805,6 +835,13 @@ export namespace SubscriptionItemUpdateParams {
      * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
      */
     usage_gte: number;
+  }
+
+  export interface CurrentTrial {
+    /**
+     * The ID of the trial offer to apply to the subscription item.
+     */
+    trial_offer: string;
   }
 
   export interface Discount {

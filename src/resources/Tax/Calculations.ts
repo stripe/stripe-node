@@ -421,7 +421,11 @@ export namespace Calculation {
         state: string | null;
       }
 
-      export type Sourcing = 'destination' | 'origin' | OtherString;
+      export type Sourcing =
+        | 'destination'
+        | 'origin'
+        | 'performance'
+        | OtherString;
 
       export interface TaxRateDetails {
         /**
@@ -470,21 +474,32 @@ export namespace Calculation {
 
       export namespace TaxRateDetails {
         export type TaxType =
+          | 'admissions_tax'
           | 'amusement_tax'
+          | 'attendance_tax'
           | 'communications_tax'
+          | 'digital_excise_tax'
+          | 'entertainment_tax'
+          | 'gross_receipts_tax'
           | 'gst'
+          | 'hospitality_tax'
           | 'hst'
           | 'igst'
           | 'jct'
           | 'lease_tax'
+          | 'luxury_tax'
           | 'mass_transit_parking_tax'
           | 'parking_tax'
           | 'pst'
           | 'qst'
+          | 'recycling_fee'
+          | 'resort_tax'
           | 'retail_delivery_fee'
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
+          | 'tourism_tax'
+          | 'utility_users_tax'
           | 'vat'
           | OtherString;
       }
@@ -558,21 +573,32 @@ export namespace Calculation {
       export type RateType = 'flat_amount' | 'percentage' | OtherString;
 
       export type TaxType =
+        | 'admissions_tax'
         | 'amusement_tax'
+        | 'attendance_tax'
         | 'communications_tax'
+        | 'digital_excise_tax'
+        | 'entertainment_tax'
+        | 'gross_receipts_tax'
         | 'gst'
+        | 'hospitality_tax'
         | 'hst'
         | 'igst'
         | 'jct'
         | 'lease_tax'
+        | 'luxury_tax'
         | 'mass_transit_parking_tax'
         | 'parking_tax'
         | 'pst'
         | 'qst'
+        | 'recycling_fee'
+        | 'resort_tax'
         | 'retail_delivery_fee'
         | 'rst'
         | 'sales_tax'
         | 'service_tax'
+        | 'tourism_tax'
+        | 'utility_users_tax'
         | 'vat'
         | OtherString;
     }
@@ -633,6 +659,11 @@ export namespace Tax {
        * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata?: MetadataParam;
+
+      /**
+       * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+       */
+      performance_location?: string;
 
       /**
        * If provided, the product's `tax_code` will be used as the line item's `tax_code`.

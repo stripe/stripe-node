@@ -337,6 +337,8 @@ export namespace PaymentAttemptRecord {
 
     mobilepay?: PaymentMethodDetails.Mobilepay;
 
+    momo?: PaymentMethodDetails.Momo;
+
     multibanco?: PaymentMethodDetails.Multibanco;
 
     naver_pay?: PaymentMethodDetails.NaverPay;
@@ -360,6 +362,8 @@ export namespace PaymentAttemptRecord {
 
     paypal?: PaymentMethodDetails.Paypal;
 
+    paypay?: PaymentMethodDetails.Paypay;
+
     payto?: PaymentMethodDetails.Payto;
 
     pix?: PaymentMethodDetails.Pix;
@@ -377,6 +381,8 @@ export namespace PaymentAttemptRecord {
     sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
+
+    sequra?: PaymentMethodDetails.Sequra;
 
     sofort?: PaymentMethodDetails.Sofort;
 
@@ -1321,6 +1327,11 @@ export namespace PaymentAttemptRecord {
        * Two-letter ISO code representing the funding source country beneath the Link payment. You could use this attribute to get a sense of international fees.
        */
       country: string | null;
+
+      /**
+       * The [funding source group code](https://docs.stripe.com/payments/link/link-payment-methods) applied to this Link payment at confirmation time.
+       */
+      funding_source_group?: string;
     }
 
     export interface MbWay {}
@@ -1330,6 +1341,18 @@ export namespace PaymentAttemptRecord {
        * Internal card details
        */
       card: Mobilepay.Card | null;
+    }
+
+    export interface Momo {
+      /**
+       * Uniquely identifies this particular MoMo account. You can use this attribute to check whether two MoMo accounts are the same.
+       */
+      fingerprint: string | null;
+
+      /**
+       * ID of the multi-use Mandate created by, or used to make, this MoMo payment.
+       */
+      mandate?: string;
     }
 
     export interface Multibanco {
@@ -1482,6 +1505,8 @@ export namespace PaymentAttemptRecord {
       transaction_id: string | null;
     }
 
+    export interface Paypay {}
+
     export interface Payto {
       /**
        * Bank-State-Branch number of the bank account.
@@ -1610,6 +1635,13 @@ export namespace PaymentAttemptRecord {
        * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://docs.stripe.com/api/mandates/retrieve).
        */
       mandate: string | null;
+    }
+
+    export interface Sequra {
+      /**
+       * The SeQura transaction ID associated with this payment.
+       */
+      transaction_id: string | null;
     }
 
     export interface Sofort {
@@ -1792,7 +1824,7 @@ export namespace PaymentAttemptRecord {
         /**
          * funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -1827,6 +1859,8 @@ export namespace PaymentAttemptRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 
@@ -1950,8 +1984,10 @@ export namespace PaymentAttemptRecord {
 
         google_pay?: Wallet.GooglePay;
 
+        link?: Wallet.Link;
+
         /**
-         * The type of the card wallet, one of `apple_pay` or `google_pay`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
+         * The type of the card wallet, one of `apple_pay`, `google_pay`, or `link`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
          */
         type: string;
       }
@@ -2044,7 +2080,13 @@ export namespace PaymentAttemptRecord {
           | 'rejected'
           | OtherString;
 
-        export type Version = '1.0.2' | '2.1.0' | '2.2.0' | OtherString;
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
+          | OtherString;
       }
 
       export namespace Wallet {
@@ -2056,6 +2098,8 @@ export namespace PaymentAttemptRecord {
         }
 
         export interface GooglePay {}
+
+        export interface Link {}
       }
     }
 
@@ -2509,7 +2553,7 @@ export namespace PaymentAttemptRecord {
         /**
          * Funding type of the underlying payment method.
          */
-        type: 'card' | null;
+        type: Funding.Type | null;
       }
 
       export namespace Funding {
@@ -2544,6 +2588,8 @@ export namespace PaymentAttemptRecord {
            */
           last4: string | null;
         }
+
+        export type Type = 'card' | OtherString;
       }
     }
 

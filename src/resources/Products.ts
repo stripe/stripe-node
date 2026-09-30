@@ -283,6 +283,11 @@ export interface Product {
   tax_code?: string | TaxCode | null;
 
   /**
+   * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+   */
+  tax_details: Product.TaxDetails | null;
+
+  /**
    * The type of the product. The product is either of type `good`, which is eligible for use with Orders and SKUs, or `service`, which is eligible for use with Subscriptions and Plans.
    */
   type: Product.Type;
@@ -346,6 +351,18 @@ export namespace Product {
      * Width, in inches.
      */
     width: number;
+  }
+
+  export interface TaxDetails {
+    /**
+     * The ID of a tax location with type `performance`, representing where the performance takes place.
+     */
+    performance_location: string | null;
+
+    /**
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+     */
+    tax_code: string | null;
   }
 
   export type Type = 'good' | 'service' | OtherString;
@@ -418,6 +435,11 @@ export interface ProductCreateParams {
    * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
    */
   tax_code?: string;
+
+  /**
+   * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+   */
+  tax_details?: ProductCreateParams.TaxDetails;
 
   /**
    * The type of the product. Defaults to `service` if not explicitly specified, enabling use of this product with Subscriptions and Plans. Set this parameter to `good` to use this product with Orders and SKUs. On API versions before `2018-02-05`, this field defaults to `good` for compatibility reasons.
@@ -506,6 +528,18 @@ export namespace ProductCreateParams {
      * Width, in inches. Maximum precision is 2 decimal places.
      */
     width: number;
+  }
+
+  export interface TaxDetails {
+    /**
+     * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+     */
+    performance_location?: string;
+
+    /**
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+     */
+    tax_code?: Emptyable<string>;
   }
 
   export type Type = 'good' | 'service' | OtherString;
@@ -711,6 +745,11 @@ export interface ProductUpdateParams {
   tax_code?: Emptyable<string>;
 
   /**
+   * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+   */
+  tax_details?: Emptyable<ProductUpdateParams.TaxDetails>;
+
+  /**
    * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal. May only be set if `type=service`.
    */
   unit_label?: Emptyable<string>;
@@ -749,6 +788,18 @@ export namespace ProductUpdateParams {
      */
     width: number;
   }
+
+  export interface TaxDetails {
+    /**
+     * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+     */
+    performance_location?: string;
+
+    /**
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+     */
+    tax_code?: Emptyable<string>;
+  }
 }
 export interface ProductListParams extends PaginationParams {
   /**
@@ -767,7 +818,7 @@ export interface ProductListParams extends PaginationParams {
   expand?: Array<string>;
 
   /**
-   * Only return products with the given IDs. Cannot be used with [starting_after](https://api.stripe.com#list_products-starting_after) or [ending_before](https://api.stripe.com#list_products-ending_before).
+   * Only return products with the given IDs. Cannot be used with [starting_after](https://docs.stripe.com/api#list_products-starting_after) or [ending_before](https://docs.stripe.com/api#list_products-ending_before).
    */
   ids?: Array<string>;
 

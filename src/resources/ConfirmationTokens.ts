@@ -212,6 +212,8 @@ export namespace ConfirmationToken {
 
     paypal?: PaymentMethodPreview.Paypal;
 
+    paypay?: PaymentMethodPreview.Paypay;
+
     payto?: PaymentMethodPreview.Payto;
 
     pix?: PaymentMethodPreview.Pix;
@@ -227,6 +229,8 @@ export namespace ConfirmationToken {
     scalapay?: PaymentMethodPreview.Scalapay;
 
     sepa_debit?: PaymentMethodPreview.SepaDebit;
+
+    sequra?: PaymentMethodPreview.Sequra;
 
     sofort?: PaymentMethodPreview.Sofort;
 
@@ -891,6 +895,8 @@ export namespace ConfirmationToken {
       payer_id: string | null;
     }
 
+    export interface Paypay {}
+
     export interface Payto {
       /**
        * Bank-State-Branch number of the bank account.
@@ -957,6 +963,8 @@ export namespace ConfirmationToken {
       last4: string | null;
     }
 
+    export interface Sequra {}
+
     export interface Sofort {
       /**
        * Two-letter ISO code representing the country the bank account is located in.
@@ -1012,6 +1020,7 @@ export namespace ConfirmationToken {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'paypay'
       | 'payto'
       | 'pix'
       | 'promptpay'
@@ -1020,6 +1029,7 @@ export namespace ConfirmationToken {
       | 'satispay'
       | 'scalapay'
       | 'sepa_debit'
+      | 'sequra'
       | 'sofort'
       | 'sunbit'
       | 'swish'

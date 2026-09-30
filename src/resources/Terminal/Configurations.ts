@@ -833,14 +833,14 @@ export namespace Terminal {
 
     export interface Cellular {
       /**
-       * Determines whether to allow the reader to connect to a cellular network. Defaults to false.
+       * Determines whether to allow the reader to connect to a cellular network.
        */
       enabled: boolean;
     }
 
     export interface Offline {
       /**
-       * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
+       * Determines whether to allow transactions to be collected while reader is offline.
        */
       enabled: boolean;
     }
@@ -1572,14 +1572,14 @@ export namespace Terminal {
 
     export interface Cellular {
       /**
-       * Determines whether to allow the reader to connect to a cellular network. Defaults to false.
+       * Determines whether to allow the reader to connect to a cellular network.
        */
       enabled: boolean;
     }
 
     export interface Offline {
       /**
-       * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
+       * Determines whether to allow transactions to be collected while reader is offline.
        */
       enabled: boolean;
     }
