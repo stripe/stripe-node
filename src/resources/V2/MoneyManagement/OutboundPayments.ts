@@ -25,6 +25,7 @@ export class OutboundPaymentResource extends StripeResource {
   }
   /**
    * Creates an OutboundPayment.
+   * @throws Stripe.BlockedByStripeError
    * @throws Stripe.InsufficientFundsError
    * @throws Stripe.FeatureNotEnabledError
    * @throws Stripe.QuotaExceededError

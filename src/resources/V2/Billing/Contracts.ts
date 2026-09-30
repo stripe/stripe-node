@@ -90,6 +90,18 @@ export class ContractResource extends StripeResource {
                     price_details: {
                       kind: 'object',
                       fields: {
+                        pricing_overrides: {
+                          kind: 'array',
+                          element: {
+                            kind: 'object',
+                            fields: {
+                              overwrite_price: {
+                                kind: 'object',
+                                fields: {unit_amount: {kind: 'decimal_string'}},
+                              },
+                            },
+                          },
+                        },
                         quantity_changes: {
                           kind: 'array',
                           element: {
@@ -100,6 +112,18 @@ export class ContractResource extends StripeResource {
                       },
                     },
                   },
+                },
+              },
+            },
+          },
+          pricing_overrides: {
+            kind: 'array',
+            element: {
+              kind: 'object',
+              fields: {
+                multiply_pricing: {
+                  kind: 'object',
+                  fields: {factor: {kind: 'decimal_string'}},
                 },
               },
             },
@@ -231,6 +255,20 @@ export class ContractResource extends StripeResource {
                           price_details: {
                             kind: 'object',
                             fields: {
+                              pricing_overrides: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    overwrite_price: {
+                                      kind: 'object',
+                                      fields: {
+                                        unit_amount: {kind: 'decimal_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
                               quantity_changes: {
                                 kind: 'array',
                                 element: {
@@ -253,6 +291,27 @@ export class ContractResource extends StripeResource {
                           price_details: {
                             kind: 'object',
                             fields: {
+                              pricing_override_actions: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    add: {
+                                      kind: 'object',
+                                      fields: {
+                                        overwrite_price: {
+                                          kind: 'object',
+                                          fields: {
+                                            unit_amount: {
+                                              kind: 'decimal_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
                               quantity_changes: {
                                 kind: 'array',
                                 element: {
@@ -1419,9 +1478,9 @@ export namespace V2 {
 
               export interface OverwritePrice {
                 /**
-                 * The per-unit amount to be charged, represented as a decimal string in minor currency units.
+                 * The per-unit amount to be charged in minor currency units.
                  */
-                unit_amount?: string;
+                unit_amount?: Decimal;
               }
 
               export interface StartsAt {
@@ -1492,9 +1551,9 @@ export namespace V2 {
           criteria?: Array<MultiplyPricing.Criterion>;
 
           /**
-           * The multiply_pricing factor, represented as a decimal string. e.g. "0.8" for a 20% reduction.
+           * The multiply_pricing factor. e.g. "0.8" for a 20% reduction.
            */
-          factor: string;
+          factor: Decimal;
         }
 
         export interface StartsAt {
@@ -1568,6 +1627,11 @@ export namespace V2 {
   export namespace Billing {
     export interface ContractUpdateParams {
       /**
+       * The billing settings to update on the contract.
+       */
+      billing_settings?: ContractUpdateParams.BillingSettings;
+
+      /**
        * Additional fields to include in the response.
        */
       include?: Array<ContractUpdateParams.Include>;
@@ -1596,6 +1660,23 @@ export namespace V2 {
     }
 
     export namespace ContractUpdateParams {
+      export interface BillingSettings {
+        /**
+         * The bill settings to update (tax calculation type and/or invoice time until due).
+         */
+        bill_settings_details?: BillingSettings.BillSettingsDetails;
+
+        /**
+         * The billing profile details to update.
+         */
+        billing_profile_details?: BillingSettings.BillingProfileDetails;
+
+        /**
+         * The collection settings details to update on the contract.
+         */
+        collection_settings_details?: BillingSettings.CollectionSettingsDetails;
+      }
+
       export type Include =
         | 'billing_settings'
         | 'one_time_fees'
@@ -1667,6 +1748,93 @@ export namespace V2 {
          * Update a pricing override.
          */
         update?: PricingOverrideAction.Update;
+      }
+
+      export namespace BillingSettings {
+        export interface BillSettingsDetails {
+          /**
+           * The tax calculation settings to update.
+           */
+          calculation?: BillSettingsDetails.Calculation;
+
+          /**
+           * The invoice settings to update.
+           */
+          invoice?: BillSettingsDetails.Invoice;
+        }
+
+        export interface BillingProfileDetails {
+          /**
+           * The default payment method to charge for the contract.
+           */
+          default_payment_method?: string;
+        }
+
+        export interface CollectionSettingsDetails {
+          /**
+           * How payment is collected for the contract. An omitted value leaves the
+           * collection method unchanged.
+           */
+          collection_method?: CollectionSettingsDetails.CollectionMethod;
+
+          /**
+           * The payment method configuration.
+           */
+          payment_method_configuration?: string;
+        }
+
+        export namespace BillSettingsDetails {
+          export interface Calculation {
+            /**
+             * Tax calculation settings.
+             */
+            tax?: Calculation.Tax;
+          }
+
+          export interface Invoice {
+            /**
+             * How long the customer has to pay the invoice before it's past due.
+             */
+            time_until_due?: Invoice.TimeUntilDue;
+          }
+
+          export namespace Calculation {
+            export interface Tax {
+              /**
+               * The type of tax calculation.
+               */
+              type: Tax.Type;
+            }
+
+            export namespace Tax {
+              export type Type = 'automatic' | 'manual';
+            }
+          }
+
+          export namespace Invoice {
+            export interface TimeUntilDue {
+              /**
+               * The interval unit.
+               */
+              interval: TimeUntilDue.Interval;
+
+              /**
+               * The number of intervals.
+               */
+              interval_count: number;
+            }
+
+            export namespace TimeUntilDue {
+              export type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+          }
+        }
+
+        export namespace CollectionSettingsDetails {
+          export type CollectionMethod =
+            | 'charge_automatically'
+            | 'send_invoice';
+        }
       }
 
       export namespace OneTimeFeeAction {
@@ -1966,9 +2134,9 @@ export namespace V2 {
 
                 export interface OverwritePrice {
                   /**
-                   * The per-unit amount to be charged, represented as a decimal string in minor currency units.
+                   * The per-unit amount to be charged in minor currency units.
                    */
-                  unit_amount?: string;
+                  unit_amount?: Decimal;
                 }
 
                 export interface StartsAt {
@@ -2199,9 +2367,9 @@ export namespace V2 {
 
                   export interface OverwritePrice {
                     /**
-                     * The per-unit amount to be charged, represented as a decimal string in minor currency units.
+                     * The per-unit amount to be charged in minor currency units.
                      */
-                    unit_amount?: string;
+                    unit_amount?: Decimal;
                   }
 
                   export interface StartsAt {

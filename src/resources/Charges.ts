@@ -1043,6 +1043,11 @@ export namespace Charge {
       capture_before?: number;
 
       /**
+       * If present, indicates that the Card Account Updater changed the card's credentials during this authorization. `number_changed` means the card number was updated (the expiration date may have changed as well); `expiry_changed` means only the expiration date was updated.
+       */
+      card_account_update?: Card.CardAccountUpdate | null;
+
+      /**
        * Check results by Card networks on Card address and CVC at time of payment.
        */
       checks: Card.Checks | null;
@@ -2354,6 +2359,11 @@ export namespace Charge {
          */
         issuer: string | null;
       }
+
+      export type CardAccountUpdate =
+        | 'expiry_changed'
+        | 'number_changed'
+        | OtherString;
 
       export interface Checks {
         /**

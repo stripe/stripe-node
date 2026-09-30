@@ -318,6 +318,8 @@ export interface PaymentMethod {
 
   sepa_debit?: PaymentMethod.SepaDebit;
 
+  sequra?: PaymentMethod.Sequra;
+
   /**
    * ID of the shared payment granted token used in the creation of this PaymentMethod.
    */
@@ -1072,6 +1074,8 @@ export namespace PaymentMethod {
      */
     last4: string | null;
   }
+
+  export interface Sequra {}
 
   export interface Shopeepay {}
 
@@ -2381,6 +2385,11 @@ export interface PaymentMethodCreateParams {
   sepa_debit?: PaymentMethodCreateParams.SepaDebit;
 
   /**
+   * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+   */
+  sequra?: PaymentMethodCreateParams.Sequra;
+
+  /**
    * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
    */
   shopeepay?: PaymentMethodCreateParams.Shopeepay;
@@ -2765,6 +2774,8 @@ export namespace PaymentMethodCreateParams {
      */
     iban: string;
   }
+
+  export interface Sequra {}
 
   export interface Shopeepay {}
 
@@ -3159,11 +3170,6 @@ export interface PaymentMethodUpdateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
-   * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
-   */
-  payto?: PaymentMethodUpdateParams.Payto;
-
-  /**
    * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
    */
   us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
@@ -3229,23 +3235,6 @@ export namespace PaymentMethodUpdateParams {
      * Indicates whether the payment method supports off-session payments.
      */
     usage?: 'off_session';
-  }
-
-  export interface Payto {
-    /**
-     * The account number for the bank account.
-     */
-    account_number?: string;
-
-    /**
-     * Bank-State-Branch number of the bank account.
-     */
-    bsb_number?: string;
-
-    /**
-     * The PayID alias for the bank account.
-     */
-    pay_id?: string;
   }
 
   export interface UsBankAccount {

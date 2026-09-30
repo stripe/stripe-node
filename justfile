@@ -21,9 +21,11 @@ test *args: install build
 
 # try to compile the example TS file to make sure exports work
 types-test: build
-    for dir in types types-cjs types-cjs-node16; do \
-        if [ ! -d "testProjects/$dir/node_modules" ]; then (cd "testProjects/$dir" && npm install); fi; \
-        tsc --build "testProjects/$dir"; \
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for dir in types types-cjs types-cjs-node16; do
+        if [ ! -d "testProjects/$dir/node_modules" ]; then (cd "testProjects/$dir" && npm install); fi
+        tsc --build "testProjects/$dir"
     done
 
 # run full integration tests by installing a bunch of packages and starting servers (slow)

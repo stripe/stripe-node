@@ -539,7 +539,7 @@ export interface PaymentLink {
   currency: string;
 
   /**
-   * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
+   * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `elements`.
    */
   custom_fields: Array<PaymentLink.CustomField>;
 
@@ -883,6 +883,7 @@ export namespace PaymentLink {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'
@@ -1611,12 +1612,19 @@ export namespace PaymentLink {
     export namespace TrialSettings {
       export interface EndBehavior {
         /**
+         * Indicates how the subscription's billing cycle anchor is reset when a trial ends. If not set, the default is `now`.
+         */
+        billing_cycle_anchor?: EndBehavior.BillingCycleAnchor | null;
+
+        /**
          * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
          */
         missing_payment_method: EndBehavior.MissingPaymentMethod;
       }
 
       export namespace EndBehavior {
+        export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+
         export type MissingPaymentMethod =
           | 'cancel'
           | 'create_invoice'
@@ -1682,12 +1690,12 @@ export interface PaymentLinkCreateParams {
   currency?: string;
 
   /**
-   * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
+   * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `elements`.
    */
   custom_fields?: Array<PaymentLinkCreateParams.CustomField>;
 
   /**
-   * Display additional text for your customers using custom text. You can't set this parameter if `ui_mode` is `custom`.
+   * Display additional text for your customers using custom text. You can't set this parameter if `ui_mode` is `elements`.
    */
   custom_text?: PaymentLinkCreateParams.CustomText;
 
@@ -2105,6 +2113,7 @@ export namespace PaymentLinkCreateParams {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'
@@ -2187,7 +2196,7 @@ export namespace PaymentLinkCreateParams {
     enabled: boolean;
 
     /**
-     * Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this parameter if `ui_mode` is `custom`.
+     * Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this parameter if `ui_mode` is `elements`.
      */
     required?: TaxIdCollection.Required;
   }
@@ -2969,12 +2978,19 @@ export namespace PaymentLinkCreateParams {
     export namespace TrialSettings {
       export interface EndBehavior {
         /**
+         * Indicates how the subscription's billing cycle anchor is reset when a trial ends. Defaults to `now`.
+         */
+        billing_cycle_anchor?: EndBehavior.BillingCycleAnchor;
+
+        /**
          * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
          */
         missing_payment_method: EndBehavior.MissingPaymentMethod;
       }
 
       export namespace EndBehavior {
+        export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+
         export type MissingPaymentMethod =
           | 'cancel'
           | 'create_invoice'
@@ -3036,12 +3052,12 @@ export interface PaymentLinkUpdateParams {
   consent_collection?: PaymentLinkUpdateParams.ConsentCollection;
 
   /**
-   * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
+   * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `elements`.
    */
   custom_fields?: Emptyable<Array<PaymentLinkUpdateParams.CustomField>>;
 
   /**
-   * Display additional text for your customers using custom text. You can't set this parameter if `ui_mode` is `custom`.
+   * Display additional text for your customers using custom text. You can't set this parameter if `ui_mode` is `elements`.
    */
   custom_text?: PaymentLinkUpdateParams.CustomText;
 
@@ -3431,6 +3447,7 @@ export namespace PaymentLinkUpdateParams {
     | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'sequra'
     | 'shopeepay'
     | 'sofort'
     | 'sunbit'
@@ -3508,7 +3525,7 @@ export namespace PaymentLinkUpdateParams {
     enabled: boolean;
 
     /**
-     * Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this parameter if `ui_mode` is `custom`.
+     * Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this parameter if `ui_mode` is `elements`.
      */
     required?: TaxIdCollection.Required;
   }
@@ -4159,12 +4176,19 @@ export namespace PaymentLinkUpdateParams {
     export namespace TrialSettings {
       export interface EndBehavior {
         /**
+         * Indicates how the subscription's billing cycle anchor is reset when a trial ends. Defaults to `now`.
+         */
+        billing_cycle_anchor?: EndBehavior.BillingCycleAnchor;
+
+        /**
          * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
          */
         missing_payment_method: EndBehavior.MissingPaymentMethod;
       }
 
       export namespace EndBehavior {
+        export type BillingCycleAnchor = 'now' | 'unchanged' | OtherString;
+
         export type MissingPaymentMethod =
           | 'cancel'
           | 'create_invoice'

@@ -40,7 +40,7 @@ export class AccountEvaluationResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieves an AccountEvaluation by its ID.
+   * Retrieves an AccountEvaluation by its ID for up to 90 days after creation. Evaluations more than 90 days old are inaccessible.
    */
   retrieve(
     id: string,

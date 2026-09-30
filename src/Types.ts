@@ -78,7 +78,6 @@ export type RawErrorType =
   | 'blocked_by_stripe'
   | 'cannot_proceed'
   | 'controlled_by_alternate_resource'
-  | 'controlled_by_dashboard'
   | 'feature_not_enabled'
   | 'financial_account_not_open'
   | 'fx_quote_expired'
@@ -86,6 +85,7 @@ export type RawErrorType =
   | 'insufficient_funds'
   | 'invalid_payment_method'
   | 'invalid_payout_method'
+  | 'invalid_vaulted_credential'
   | 'merchant_not_gated'
   | 'non_zero_balance'
   | 'not_cancelable'
@@ -93,7 +93,10 @@ export type RawErrorType =
   | 'rate_limit'
   | 'recipient_not_notifiable'
   | 'service_unavailable'
-  | 'temporary_session_expired';
+  | 'temporary_session_expired'
+  | 'verification_attempt_failed'
+  | 'verification_expired'
+  | 'verification_not_initiated';
 // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 export type RequestArgs = Array<any>;
 export type StripeRequest = {
@@ -172,7 +175,7 @@ export type StreamingFile = {
 export type StripeRawError = {
   // errorRawFields: The beginning of the section generated from our OpenAPI spec
   /**
-   * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://docs.stripe.com/declines#retrying-issuer-declines) if they provide one.
+   * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://docs.stripe.com/declines/card#retrying-issuer-declines) if they provide one.
    */
   advice_code?: string;
   /**

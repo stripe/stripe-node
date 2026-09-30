@@ -252,7 +252,7 @@ export namespace Card {
     currency: string;
 
     /**
-     * The type of wallet (standard or bridge_wallet).
+     * The type of crypto wallet.
      */
     type: CryptoWallet.Type | null;
   }
@@ -426,7 +426,7 @@ export namespace Card {
   }
 
   export namespace CryptoWallet {
-    export type Type = 'bridge_wallet' | 'standard' | OtherString;
+    export type Type = 'bridge_wallet' | 'squads' | 'standard' | OtherString;
   }
 
   export namespace LatestFraudWarning {
@@ -1615,7 +1615,7 @@ export namespace Issuing {
       currency: string;
 
       /**
-       * The type of wallet (standard or bridge_wallet).
+       * The type of crypto wallet.
        */
       type?: CryptoWallet.Type;
     }
@@ -1723,7 +1723,7 @@ export namespace Issuing {
     export type Status = 'active' | 'inactive' | OtherString;
 
     export namespace CryptoWallet {
-      export type Type = 'bridge_wallet' | 'standard' | OtherString;
+      export type Type = 'bridge_wallet' | 'squads' | 'standard' | OtherString;
     }
 
     export namespace LifecycleControls {

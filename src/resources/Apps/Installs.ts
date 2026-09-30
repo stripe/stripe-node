@@ -1,7 +1,81 @@
 // File generated from our OpenAPI spec
 
-import {OtherString} from '../../shared.js';
-import {RequestOptions} from '../../lib.js';
+import {StripeResource} from '../../StripeResource.js';
+import {OtherString, PaginationParams, RangeQueryParam} from '../../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
+
+export class InstallResource extends StripeResource {
+  /**
+   * Returns a list of app installs. An app developer filtering by its own app with its own key sees that app's installs across the accounts that installed it. An app developer acting on a connected account through Stripe-Account and filtering by its app sees that account's installs of the app, and an embedding platform acting on a connected account sees only the installs it created there. Other callers see the installs on their own account. A live key lists live installs and a test key lists test installs; the key of an app's managed sandbox filtering by app lists that app's installs across every sandbox.
+   */
+  list(
+    params?: Apps.InstallListParams,
+    options?: RequestOptions
+  ): ApiListPromise<Install> {
+    return this._makeRequest('GET', '/v1/apps/installs', params, options, {
+      methodType: 'list',
+    }) as any;
+  }
+  /**
+   * Creates an app install. An account installs its own private app with its own key; public and testing installs are made from the Dashboard. An app developer acting on a connected account through Stripe-Account installs or reinstalls its app there, and an embedding platform can do the same once the app's developer approves its request to embed the app. For a private app, creating an install installs the newest completed upload; when that version is already installed with nothing pending, the existing install is returned.
+   */
+  create(
+    params: Apps.InstallCreateParams,
+    options?: RequestOptions
+  ): Promise<Response<Install>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/apps/installs',
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Retrieves an app install. The installing account, the app's developer (with the keys of the account that owns the app or of the app's managed sandbox), and the embedding platform that created the install can retrieve it.
+   */
+  retrieve(
+    id: string,
+    params?: Apps.InstallRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<Install>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/apps/installs/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Reauthorizes an app install. The installer grants the permissions, content security policy entries, and endpoints that the version being installed requests. An account reauthorizes its own installs on any channel with its own key, which grants all of that access, so only give app_install_write to keys that may approve an app's access. App developers and embedding platforms reauthorize installs on connected accounts through Stripe-Account. An app developer can't grant new access. An embedding platform can grant new access only once the app's developer approves its request to embed the app. For private apps, the version being installed is the newest completed upload.
+   */
+  update(
+    id: string,
+    params?: Apps.InstallUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<Install>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/apps/installs/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Uninstalls an app from the account that installed it.
+   */
+  uninstall(
+    id: string,
+    params?: Apps.InstallUninstallParams,
+    options?: RequestOptions
+  ): Promise<Response<Install>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/apps/installs/${encodeURIComponent(id)}/uninstall`,
+      params,
+      options
+    ) as any;
+  }
+}
 export interface Install {
   /**
    * Unique identifier for the object.
@@ -24,7 +98,7 @@ export interface Install {
   app: string;
 
   /**
-   * Whether the installer must authorize pending permissions, content security policy entries, or endpoints. For private apps, `approval_required` stays `false`. Install a new version from the Dashboard to grant its permissions.
+   * Whether the installer must authorize pending permissions, content security policy entries, or endpoints. For private apps, `approval_required` stays `false`; creating or reauthorizing the install through the API installs the newest completed upload and grants its permissions.
    */
   approval_required: boolean;
 
@@ -33,27 +107,12 @@ export interface Install {
    */
   auth_code: string | null;
 
-  authorized_content_security_policy: Install.AuthorizedContentSecurityPolicy;
-
-  /**
-   * The endpoint URLs authorized by the installer.
-   */
-  authorized_endpoints: Array<string>;
-
-  /**
-   * The permissions authorized by the installer.
-   */
-  authorized_permissions: Array<string>;
-
   /**
    * The distribution channel associated with the app install.
    */
-  channel: string;
+  channel: Install.Channel;
 
-  /**
-   * The content security policy entries authorized by the installer.
-   */
-  content_security_policy_granted: Install.ContentSecurityPolicyGranted | null;
+  content_security_policy_granted: Install.ContentSecurityPolicyGranted;
 
   content_security_policy_pending: Install.ContentSecurityPolicyPending;
 
@@ -70,7 +129,7 @@ export interface Install {
   /**
    * The endpoint URLs authorized by the installer.
    */
-  endpoints_granted: Array<string> | null;
+  endpoints_granted: Array<string>;
 
   /**
    * The endpoint URLs requested by the latest app version that the installer has not authorized.
@@ -85,7 +144,7 @@ export interface Install {
   /**
    * The permissions authorized by the installer.
    */
-  permissions_granted: Array<string> | null;
+  permissions_granted: Array<string>;
 
   /**
    * The permissions requested by the latest app version that the installer has not authorized.
@@ -95,21 +154,16 @@ export interface Install {
   /**
    * The status of the app install.
    */
-  state: string;
-
-  /**
-   * The status of the app install.
-   */
-  status: Install.Status | null;
+  status: Install.Status;
 }
 export namespace Install {
-  export interface AuthorizedContentSecurityPolicy {
-    connect_src: Array<string> | null;
-
-    image_src: Array<string> | null;
-
-    purpose: string | null;
-  }
+  export type Channel =
+    | 'private_live'
+    | 'private_test'
+    | 'public'
+    | 'review'
+    | 'testing'
+    | OtherString;
 
   export interface ContentSecurityPolicyGranted {
     /**
@@ -142,4 +196,125 @@ export namespace Install {
     | 'uninstall_failed'
     | 'uninstalling'
     | OtherString;
+}
+export namespace Apps {
+  export interface InstallCreateParams {
+    /**
+     * The ID of the app to install.
+     */
+    app: string;
+
+    /**
+     * The distribution channel to install from. Defaults to `public`, which only app developers and embedding platforms can use. An account installing its own private app must pass `private_test` or `private_live`, matching the mode of the API key.
+     */
+    channel?: InstallCreateParams.Channel;
+
+    /**
+     * For OAuth apps, the PKCE code challenge used to issue the `auth_code` returned on the install. Must be 43 to 128 characters and contain only letters, numbers, `-`, `.`, `_`, and `~`. Only applies to installs made by the app developer or an embedding platform; ignored when an account installs its own private app.
+     */
+    code_challenge?: string;
+
+    /**
+     * The method used to derive `code_challenge`. Required when `code_challenge` is provided, and must be `S256`.
+     */
+    code_challenge_method?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  export namespace InstallCreateParams {
+    export type Channel =
+      | 'private_live'
+      | 'private_test'
+      | 'public'
+      | 'testing'
+      | OtherString;
+  }
+}
+export namespace Apps {
+  export interface InstallRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+}
+export namespace Apps {
+  export interface InstallUpdateParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+}
+export namespace Apps {
+  export interface InstallListParams extends PaginationParams {
+    /**
+     * Only return installs made by this account. Only useful to an app developer filtering by its own app with its own key, whose list spans the accounts that installed the app; other lists only accept the authenticated account.
+     */
+    account?: string;
+
+    /**
+     * Only return installs for the app specified by this app ID.
+     */
+    app?: string;
+
+    /**
+     * Only return installs whose installer must authorize pending permissions, content security policy entries, or endpoints.
+     */
+    approval_required?: boolean;
+
+    /**
+     * Only return installs in the distribution channel specified by this channel name.
+     */
+    channel?: InstallListParams.Channel;
+
+    /**
+     * Only return app installs that were created during the given date interval.
+     */
+    created?: RangeQueryParam | number;
+
+    /**
+     * Only return installs created by the embedding platform specified by this account ID.
+     */
+    created_by?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Only return installs with the given status: `installed`, `installing`, `install_failed`, `uninstalling`, or `uninstall_failed`.
+     */
+    status?: InstallListParams.Status;
+  }
+
+  export namespace InstallListParams {
+    export type Channel =
+      | 'private_live'
+      | 'private_test'
+      | 'public'
+      | 'testing'
+      | OtherString;
+
+    export type Status =
+      | 'install_failed'
+      | 'installed'
+      | 'installing'
+      | 'uninstall_failed'
+      | 'uninstalling'
+      | OtherString;
+  }
+}
+export namespace Apps {
+  export interface InstallUninstallParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
 }
