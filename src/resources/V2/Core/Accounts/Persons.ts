@@ -541,7 +541,7 @@ export namespace V2 {
             /**
              * The format of the document. Currently supports `files` only.
              */
-            type: 'files';
+            type: CompanyAuthorization.Type;
           }
 
           export interface Passport {
@@ -553,7 +553,7 @@ export namespace V2 {
             /**
              * The format of the document. Currently supports `files` only.
              */
-            type: 'files';
+            type: Passport.Type;
           }
 
           export interface PrimaryVerification {
@@ -565,7 +565,7 @@ export namespace V2 {
             /**
              * The format of the verification document. Currently supports `front_back` only.
              */
-            type: 'front_back';
+            type: PrimaryVerification.Type;
           }
 
           export interface SecondaryVerification {
@@ -577,7 +577,7 @@ export namespace V2 {
             /**
              * The format of the verification document. Currently supports `front_back` only.
              */
-            type: 'front_back';
+            type: SecondaryVerification.Type;
           }
 
           export interface Visa {
@@ -589,7 +589,15 @@ export namespace V2 {
             /**
              * The format of the document. Currently supports `files` only.
              */
-            type: 'files';
+            type: Visa.Type;
+          }
+
+          export namespace CompanyAuthorization {
+            export type Type = 'files' | OtherString;
+          }
+
+          export namespace Passport {
+            export type Type = 'files' | OtherString;
           }
 
           export namespace PrimaryVerification {
@@ -604,6 +612,8 @@ export namespace V2 {
                */
               front: string;
             }
+
+            export type Type = 'front_back' | OtherString;
           }
 
           export namespace SecondaryVerification {
@@ -618,6 +628,12 @@ export namespace V2 {
                */
               front: string;
             }
+
+            export type Type = 'front_back' | OtherString;
+          }
+
+          export namespace Visa {
+            export type Type = 'files' | OtherString;
           }
         }
 
@@ -1183,7 +1199,7 @@ export namespace V2 {
             /**
              * The format of the document. Currently supports `files` only.
              */
-            type: 'files';
+            type: CompanyAuthorization.Type;
           }
 
           export interface Passport {
@@ -1195,7 +1211,7 @@ export namespace V2 {
             /**
              * The format of the document. Currently supports `files` only.
              */
-            type: 'files';
+            type: Passport.Type;
           }
 
           export interface PrimaryVerification {
@@ -1207,7 +1223,7 @@ export namespace V2 {
             /**
              * The format of the verification document. Currently supports `front_back` only.
              */
-            type: 'front_back';
+            type: PrimaryVerification.Type;
           }
 
           export interface SecondaryVerification {
@@ -1219,7 +1235,7 @@ export namespace V2 {
             /**
              * The format of the verification document. Currently supports `front_back` only.
              */
-            type: 'front_back';
+            type: SecondaryVerification.Type;
           }
 
           export interface Visa {
@@ -1231,7 +1247,15 @@ export namespace V2 {
             /**
              * The format of the document. Currently supports `files` only.
              */
-            type: 'files';
+            type: Visa.Type;
+          }
+
+          export namespace CompanyAuthorization {
+            export type Type = 'files' | OtherString;
+          }
+
+          export namespace Passport {
+            export type Type = 'files' | OtherString;
           }
 
           export namespace PrimaryVerification {
@@ -1246,6 +1270,8 @@ export namespace V2 {
                */
               front?: string;
             }
+
+            export type Type = 'front_back' | OtherString;
           }
 
           export namespace SecondaryVerification {
@@ -1260,6 +1286,12 @@ export namespace V2 {
                */
               front?: string;
             }
+
+            export type Type = 'front_back' | OtherString;
+          }
+
+          export namespace Visa {
+            export type Type = 'files' | OtherString;
           }
         }
 

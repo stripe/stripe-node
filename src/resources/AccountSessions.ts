@@ -5,7 +5,7 @@ import {RequestOptions, Response} from '../lib.js';
 
 export class AccountSessionResource extends StripeResource {
   /**
-   * Creates a AccountSession object that includes a single-use token that the platform can use on their front-end to grant client-side API access.
+   * Creates an AccountSession object that includes a single-use token that the platform can use on their front-end to grant client-side API access.
    */
   create(
     params: AccountSessionCreateParams,

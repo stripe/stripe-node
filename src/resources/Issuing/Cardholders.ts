@@ -305,12 +305,12 @@ export namespace Cardholder {
     export namespace Verification {
       export interface Document {
         /**
-         * The back of a document returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
+         * The back of a document returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`.
          */
         back: string | File | null;
 
         /**
-         * The front of a document returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
+         * The front of a document returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`.
          */
         front: string | File | null;
       }
@@ -1514,12 +1514,12 @@ export namespace Issuing {
       export namespace Verification {
         export interface Document {
           /**
-           * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
+           * The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`.
            */
           back?: string;
 
           /**
-           * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
+           * The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`.
            */
           front?: string;
         }
@@ -2699,12 +2699,12 @@ export namespace Issuing {
       export namespace Verification {
         export interface Document {
           /**
-           * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
+           * The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`.
            */
           back?: string;
 
           /**
-           * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
+           * The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `identity_document`.
            */
           front?: string;
         }

@@ -44,9 +44,7 @@ export class ChargeResource extends StripeResource {
     }) as any;
   }
   /**
-   * This method is no longer recommended—use the [Payment Intents API](https://docs.stripe.com/docs/api/payment_intents)
-   * to initiate a new payment instead. Confirmation of the PaymentIntent creates the Charge
-   * object used to request payment.
+   * This method is deprecated and will be removed soon. If your integration uses it, you need to update it to use a different payment flow, such as [the Payment Intents API](https://docs.stripe.com/docs/payments/payment-intents).
    */
   create(
     params?: ChargeCreateParams,
@@ -99,11 +97,7 @@ export class ChargeResource extends StripeResource {
     }) as any;
   }
   /**
-   * Capture the payment of an existing, uncaptured charge that was created with the capture option set to false.
-   *
-   * Uncaptured payments expire a set number of days after they are created ([7 by default](https://docs.stripe.com/docs/charges/placing-a-hold)), after which they are marked as refunded and capture attempts will fail.
-   *
-   * Don't use this method to capture a PaymentIntent-initiated charge. Use [Capture a PaymentIntent](https://docs.stripe.com/docs/api/payment_intents/capture).
+   * This method is deprecated and will be removed soon. If your integration uses it, you need to update it to use a different payment flow, such as [the Payment Intents API](https://docs.stripe.com/docs/payments/payment-intents).
    */
   capture(
     id: string,
@@ -543,6 +537,8 @@ export namespace Charge {
 
     paypal?: PaymentMethodDetails.Paypal;
 
+    paypay?: PaymentMethodDetails.Paypay;
+
     payto?: PaymentMethodDetails.Payto;
 
     pix?: PaymentMethodDetails.Pix;
@@ -560,6 +556,8 @@ export namespace Charge {
     sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
+
+    sequra?: PaymentMethodDetails.Sequra;
 
     sofort?: PaymentMethodDetails.Sofort;
 
@@ -1011,6 +1009,11 @@ export namespace Charge {
       description?: string | null;
 
       /**
+       * The Electronic Commerce Indicator (ECI) returned by the card network in the authorization response. Indicates the level of authentication used. Only populated for Visa and Mastercard transactions. This is the network's final ECI and can differ from the request value. An authenticated ECI alone doesn't determine liability shift.
+       */
+      electronic_commerce_indicator: string | null;
+
+      /**
        * Two-digit number representing the card's expiration month.
        */
       exp_month: number;
@@ -1061,7 +1064,7 @@ export namespace Charge {
       /**
        * ID of the mandate used to make this payment or created by it.
        */
-      mandate: string | null;
+      mandate: string | Mandate | null;
 
       /**
        * True if this payment was marked as MOTO and out of scope for SCA.
@@ -1733,6 +1736,8 @@ export namespace Charge {
       transaction_id: string | null;
     }
 
+    export interface Paypay {}
+
     export interface Payto {
       /**
        * Bank-State-Branch number of the bank account.
@@ -1866,6 +1871,13 @@ export namespace Charge {
        * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://docs.stripe.com/api/mandates/retrieve).
        */
       mandate: string | null;
+    }
+
+    export interface Sequra {
+      /**
+       * The SeQura transaction ID associated with this payment.
+       */
+      transaction_id: string | null;
     }
 
     export interface Sofort {
@@ -2914,7 +2926,7 @@ export interface ChargeCreateParams {
   application_fee_amount?: number;
 
   /**
-   * Whether to immediately capture the charge. Defaults to `true`. When `false`, the charge issues an authorization (or pre-authorization), and will need to be [captured](https://api.stripe.com#capture_charge) later. Uncaptured charges expire after a set number of days (7 by default). For more information, see the [authorizing charges and settling later](https://docs.stripe.com/charges/placing-a-hold) documentation.
+   * Whether to immediately capture the charge. Defaults to `true`. When `false`, the charge issues an authorization (or pre-authorization), and will need to be [captured](https://docs.stripe.com/api#capture_charge) later. Uncaptured charges expire after a set number of days (7 by default). For more information, see the [authorizing charges and settling later](https://docs.stripe.com/charges/placing-a-hold) documentation.
    */
   capture?: boolean;
 

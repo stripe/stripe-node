@@ -238,6 +238,8 @@ export interface PaymentMethod {
 
   paypal?: PaymentMethod.Paypal;
 
+  paypay?: PaymentMethod.Paypay;
+
   payto?: PaymentMethod.Payto;
 
   pix?: PaymentMethod.Pix;
@@ -258,6 +260,8 @@ export interface PaymentMethod {
   scalapay?: PaymentMethod.Scalapay;
 
   sepa_debit?: PaymentMethod.SepaDebit;
+
+  sequra?: PaymentMethod.Sequra;
 
   sofort?: PaymentMethod.Sofort;
 
@@ -846,6 +850,8 @@ export namespace PaymentMethod {
     payer_id: string | null;
   }
 
+  export interface Paypay {}
+
   export interface Payto {
     /**
      * Bank-State-Branch number of the bank account.
@@ -919,6 +925,8 @@ export namespace PaymentMethod {
     last4: string | null;
   }
 
+  export interface Sequra {}
+
   export interface Sofort {
     /**
      * Two-letter ISO code representing the country the bank account is located in.
@@ -974,6 +982,7 @@ export namespace PaymentMethod {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
@@ -982,6 +991,7 @@ export namespace PaymentMethod {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'sofort'
     | 'sunbit'
     | 'swish'
@@ -1831,12 +1841,12 @@ export interface PaymentMethodCreateParams {
   allow_redisplay?: PaymentMethodCreateParams.AllowRedisplay;
 
   /**
-   * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+   * If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
    */
   alma?: PaymentMethodCreateParams.Alma;
 
   /**
-   * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+   * If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
    */
   amazon_pay?: PaymentMethodCreateParams.AmazonPay;
 
@@ -2036,6 +2046,11 @@ export interface PaymentMethodCreateParams {
   paypal?: PaymentMethodCreateParams.Paypal;
 
   /**
+   * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+   */
+  paypay?: PaymentMethodCreateParams.Paypay;
+
+  /**
    * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
    */
   payto?: PaymentMethodCreateParams.Payto;
@@ -2079,6 +2094,11 @@ export interface PaymentMethodCreateParams {
    * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
    */
   sepa_debit?: PaymentMethodCreateParams.SepaDebit;
+
+  /**
+   * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
+   */
+  sequra?: PaymentMethodCreateParams.Sequra;
 
   /**
    * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
@@ -2376,6 +2396,8 @@ export namespace PaymentMethodCreateParams {
 
   export interface Paypal {}
 
+  export interface Paypay {}
+
   export interface Payto {
     /**
      * The account number for the bank account.
@@ -2418,6 +2440,8 @@ export namespace PaymentMethodCreateParams {
      */
     iban: string;
   }
+
+  export interface Sequra {}
 
   export interface Sofort {
     /**
@@ -2472,6 +2496,7 @@ export namespace PaymentMethodCreateParams {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
@@ -2480,6 +2505,7 @@ export namespace PaymentMethodCreateParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'sofort'
     | 'sunbit'
     | 'swish'
@@ -2760,11 +2786,6 @@ export interface PaymentMethodUpdateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
-   * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
-   */
-  payto?: PaymentMethodUpdateParams.Payto;
-
-  /**
    * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
    */
   us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
@@ -2818,23 +2839,6 @@ export namespace PaymentMethodUpdateParams {
      * Contains information about card networks used to process the payment.
      */
     networks?: Card.Networks;
-  }
-
-  export interface Payto {
-    /**
-     * The account number for the bank account.
-     */
-    account_number?: string;
-
-    /**
-     * Bank-State-Branch number of the bank account.
-     */
-    bsb_number?: string;
-
-    /**
-     * The PayID alias for the bank account.
-     */
-    pay_id?: string;
   }
 
   export interface UsBankAccount {
@@ -2945,6 +2949,7 @@ export namespace PaymentMethodListParams {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
@@ -2953,6 +2958,7 @@ export namespace PaymentMethodListParams {
     | 'satispay'
     | 'scalapay'
     | 'sepa_debit'
+    | 'sequra'
     | 'sofort'
     | 'sunbit'
     | 'swish'

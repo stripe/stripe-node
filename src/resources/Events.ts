@@ -88,7 +88,7 @@ export interface EventBase {
 export namespace Event {
   export interface Data {
     /**
-     * Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](https://api.stripe.com#invoice_object) as the value of the object key.
+     * Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](https://docs.stripe.com/api#invoice_object) as the value of the object key.
      */
     object: Data.Object;
 
@@ -120,6 +120,9 @@ export namespace Event {
     | 'application_fee.created'
     | 'application_fee.refund.updated'
     | 'application_fee.refunded'
+    | 'apps.install.created'
+    | 'apps.install.deleted'
+    | 'apps.install.updated'
     | 'balance.available'
     | 'balance_settings.updated'
     | 'billing.alert.triggered'
@@ -415,6 +418,7 @@ export interface EventListParams extends PaginationParams {
    */
   types?: Array<string>;
 }
+import {Apps} from './Apps/index.js';
 import {Billing} from './Billing/index.js';
 import {BillingPortal} from './BillingPortal/index.js';
 import {Checkout} from './Checkout/index.js';
@@ -485,6 +489,9 @@ export type Event =
   | ApplicationFeeCreatedEvent
   | ApplicationFeeRefundUpdatedEvent
   | ApplicationFeeRefundedEvent
+  | AppsInstallCreatedEvent
+  | AppsInstallDeletedEvent
+  | AppsInstallUpdatedEvent
   | BalanceAvailableEvent
   | BalanceSettingsUpdatedEvent
   | BillingAlertTriggeredEvent
@@ -883,6 +890,54 @@ export namespace ApplicationFeeRefundedEvent {
     object: ApplicationFee;
 
     previous_attributes?: Partial<ApplicationFee>;
+  }
+}
+
+/**
+ * Occurs whenever a user installs a Stripe app. Sent to the app developer, embedding platform, and installing merchant.
+ */
+export interface AppsInstallCreatedEvent extends EventBase {
+  type: 'apps.install.created';
+  data: AppsInstallCreatedEvent.Data;
+}
+
+export namespace AppsInstallCreatedEvent {
+  export interface Data extends Event.Data {
+    object: Apps.Install;
+
+    previous_attributes?: Partial<Apps.Install>;
+  }
+}
+
+/**
+ * Occurs whenever a user uninstalls a Stripe app. Sent to the app developer, embedding platform, and installing merchant.
+ */
+export interface AppsInstallDeletedEvent extends EventBase {
+  type: 'apps.install.deleted';
+  data: AppsInstallDeletedEvent.Data;
+}
+
+export namespace AppsInstallDeletedEvent {
+  export interface Data extends Event.Data {
+    object: Apps.Install;
+
+    previous_attributes?: Partial<Apps.Install>;
+  }
+}
+
+/**
+ * Occurs whenever a user updates a Stripe app. Sent to the app developer, embedding platform, and installing merchant.
+ */
+export interface AppsInstallUpdatedEvent extends EventBase {
+  type: 'apps.install.updated';
+  data: AppsInstallUpdatedEvent.Data;
+}
+
+export namespace AppsInstallUpdatedEvent {
+  export interface Data extends Event.Data {
+    object: Apps.Install;
+
+    previous_attributes?: Partial<Apps.Install>;
   }
 }
 
@@ -2646,7 +2701,7 @@ export namespace InvoiceItemDeletedEvent {
 }
 
 /**
- * Occurs whenever an authorization is created.
+ * Occurs whenever an authorization is created. For verification authorizations, this event is only accessible via private preview.
  */
 export interface IssuingAuthorizationCreatedEvent extends EventBase {
   type: 'issuing_authorization.created';
@@ -2678,7 +2733,7 @@ export namespace IssuingAuthorizationRequestEvent {
 }
 
 /**
- * Occurs whenever an authorization is updated.
+ * Occurs whenever an authorization is updated. For verification authorizations, this event is only accessible via private preview.
  */
 export interface IssuingAuthorizationUpdatedEvent extends EventBase {
   type: 'issuing_authorization.updated';
@@ -3960,7 +4015,7 @@ export namespace SetupIntentSetupFailedEvent {
 }
 
 /**
- * Occurs when an SetupIntent has successfully setup a payment method.
+ * Occurs when a SetupIntent has successfully setup a payment method.
  */
 export interface SetupIntentSucceededEvent extends EventBase {
   type: 'setup_intent.succeeded';
@@ -4520,7 +4575,7 @@ export namespace TransferUpdatedEvent {
 }
 
 /**
- * Occurs whenever an CreditReversal is submitted and created.
+ * Occurs whenever a CreditReversal is submitted and created.
  */
 export interface TreasuryCreditReversalCreatedEvent extends EventBase {
   type: 'treasury.credit_reversal.created';
@@ -4536,7 +4591,7 @@ export namespace TreasuryCreditReversalCreatedEvent {
 }
 
 /**
- * Occurs whenever an CreditReversal post is posted.
+ * Occurs whenever a CreditReversal post is posted.
  */
 export interface TreasuryCreditReversalPostedEvent extends EventBase {
   type: 'treasury.credit_reversal.posted';
