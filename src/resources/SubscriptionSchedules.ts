@@ -2239,7 +2239,7 @@ export namespace SubscriptionScheduleCreateParams {
         bill_for?: Settings.BillFor;
 
         /**
-         * Determines whether to generate an invoice for outstanding amounts when pausing.
+         * Determines whether to generate an invoice for outstanding amounts when pausing. When adding a pause schedule, defaults to `pending_invoice_item`. On updates, the existing value is preserved if not provided.
          */
         invoicing_behavior?: Settings.InvoicingBehavior;
 
@@ -2276,14 +2276,14 @@ export namespace SubscriptionScheduleCreateParams {
         export namespace BillFor {
           export interface OutstandingUsageThrough {
             /**
-             * Determines whether to collect metered usage accrued up to the pause date.
+             * Determines whether to collect metered usage accrued up to the pause date. When adding a pause schedule, defaults to `pause_at`. On updates, the existing value is preserved if not provided.
              */
             type?: OutstandingUsageThrough.Type;
           }
 
           export interface UnusedTimeFrom {
             /**
-             * Determines which point in the billing period unused time is credited from.
+             * Determines which point in the billing period unused time is credited from. When adding a pause schedule, defaults to `pause_at`. On updates, the existing value is preserved if not provided.
              */
             type?: UnusedTimeFrom.Type;
           }
@@ -2323,17 +2323,17 @@ export namespace SubscriptionScheduleCreateParams {
 
       export interface Settings {
         /**
-         * Controls the billing cycle anchor when the subscription resumes.
+         * Controls the billing cycle anchor when the subscription resumes. When adding a pause schedule, defaults to `resume_at`. On updates, the existing value is preserved if not provided.
          */
         billing_cycle_anchor?: Settings.BillingCycleAnchor;
 
         /**
-         * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. The default is `resume_on_payment_success`.
+         * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. When adding a pause schedule, defaults to `resume_on_payment_success`. On updates, the existing value is preserved if not provided.
          */
         payment_behavior?: Settings.PaymentBehavior;
 
         /**
-         * Determines how to handle prorations when the subscription resumes. The default is `create_prorations`.
+         * Determines how to handle prorations when the subscription resumes. When adding a pause schedule, defaults to `create_prorations`. On updates, the existing value is preserved if not provided.
          */
         proration_behavior?: Settings.ProrationBehavior;
       }
@@ -3713,7 +3713,7 @@ export namespace SubscriptionScheduleUpdateParams {
         bill_for?: Settings.BillFor;
 
         /**
-         * Determines whether to generate an invoice for outstanding amounts when pausing.
+         * Determines whether to generate an invoice for outstanding amounts when pausing. When adding a pause schedule, defaults to `pending_invoice_item`. On updates, the existing value is preserved if not provided.
          */
         invoicing_behavior?: Settings.InvoicingBehavior;
 
@@ -3750,14 +3750,14 @@ export namespace SubscriptionScheduleUpdateParams {
         export namespace BillFor {
           export interface OutstandingUsageThrough {
             /**
-             * Determines whether to collect metered usage accrued up to the pause date.
+             * Determines whether to collect metered usage accrued up to the pause date. When adding a pause schedule, defaults to `pause_at`. On updates, the existing value is preserved if not provided.
              */
             type?: OutstandingUsageThrough.Type;
           }
 
           export interface UnusedTimeFrom {
             /**
-             * Determines which point in the billing period unused time is credited from.
+             * Determines which point in the billing period unused time is credited from. When adding a pause schedule, defaults to `pause_at`. On updates, the existing value is preserved if not provided.
              */
             type?: UnusedTimeFrom.Type;
           }
@@ -3797,17 +3797,17 @@ export namespace SubscriptionScheduleUpdateParams {
 
       export interface Settings {
         /**
-         * Controls the billing cycle anchor when the subscription resumes.
+         * Controls the billing cycle anchor when the subscription resumes. When adding a pause schedule, defaults to `resume_at`. On updates, the existing value is preserved if not provided.
          */
         billing_cycle_anchor?: Settings.BillingCycleAnchor;
 
         /**
-         * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. The default is `resume_on_payment_success`.
+         * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. When adding a pause schedule, defaults to `resume_on_payment_success`. On updates, the existing value is preserved if not provided.
          */
         payment_behavior?: Settings.PaymentBehavior;
 
         /**
-         * Determines how to handle prorations when the subscription resumes. The default is `create_prorations`.
+         * Determines how to handle prorations when the subscription resumes. When adding a pause schedule, defaults to `create_prorations`. On updates, the existing value is preserved if not provided.
          */
         proration_behavior?: Settings.ProrationBehavior;
       }

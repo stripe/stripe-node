@@ -5,7 +5,7 @@ import {
   V2 as V2Namespace0,
   AccountActivity,
   AccountActivityResource,
-} from './AccountActivity.js';
+} from './AccountActivities.js';
 import {
   V2 as V2Namespace1,
   AccountEvaluation,
@@ -27,7 +27,7 @@ import {
   PaymentRetrySignalResource,
 } from './PaymentRetrySignals.js';
 
-export {AccountActivity} from './AccountActivity.js';
+export {AccountActivity} from './AccountActivities.js';
 export {AccountEvaluation} from './AccountEvaluations.js';
 export {AccountSignal} from './AccountSignals.js';
 export {PaymentRetryEvaluation} from './PaymentRetryEvaluations.js';

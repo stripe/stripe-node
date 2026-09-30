@@ -36,7 +36,7 @@ export interface CalculationLineItem {
   /**
    * Indicates the line item represents a performance where the venue location might determine the tax, not the customer address. Leave empty if the tax code doesn't require a tax location. If you provide this value for tax codes with an `optional` location requirement, it overrides the customer address.
    */
-  performance_location?: string | null;
+  performance_location: string | null;
 
   /**
    * The address of the location where this line item's event or service takes place. Depending on the [tax code](https://docs.stripe.com/tax/tax-codes), providing a performance location is required, optional, or not supported. Use this to provide the address inline without pre-creating a [TaxLocation](https://docs.stripe.com/api/tax/location) object. Can't be used with `performance_location`.

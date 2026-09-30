@@ -18,16 +18,9 @@ const file = {
   type: 'application/pdf',
 };
 
-if (process.versions.node < '19') {
-  // Node 18 has no `globalThis.crypto` in CommonJS module scope, so WebPlatformFunctions has no CSPRNG to derive a boundary from.
-  console.log(
-    `Skipping WebPlatformFunctions multipart tests. No 'globalThis.crypto' in module scope for ${process.version}.`
-  );
-} else {
-  import(
-    '../src/platform/WebPlatformFunctions.js'
-  ).then(({WebPlatformFunctions}) => testMultipart(new WebPlatformFunctions()));
-}
+import(
+  '../src/platform/WebPlatformFunctions.js'
+).then(({WebPlatformFunctions}) => testMultipart(new WebPlatformFunctions()));
 
 testMultipart(new NodePlatformFunctions());
 

@@ -73,9 +73,19 @@ export namespace FinancingSummary {
     disclaimer_variant?: Details.DisclaimerVariant;
 
     /**
+     * The ways the connected account can pay toward its financing(s).
+     */
+    enabled_payment_types?: Array<Details.EnabledPaymentType>;
+
+    /**
      * Fixed fee amount, in minor units. For example, 100 USD is represented as 10000.
      */
     fee_amount: number;
+
+    /**
+     * The overdue amount, in minor units. For example, 1,000 USD is represented as 100000. Defaults to null for legal cash advances.
+     */
+    overdue_amount?: number | null;
 
     /**
      * The amount the Connected account has paid toward the financing debt so far, in minor units. For example, 1,000 USD is represented as 100000.
@@ -142,6 +152,12 @@ export namespace FinancingSummary {
       | 'youlend_fr_financing'
       | 'youlend_uk_mca'
       | 'youlend_us_mca'
+      | OtherString;
+
+    export type EnabledPaymentType =
+      | 'automatic_debits'
+      | 'manual_payment'
+      | 'withholding'
       | OtherString;
   }
 }

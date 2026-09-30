@@ -844,6 +844,7 @@ import {Sigma} from './resources/Sigma/index.js';
 import {Tax} from './resources/Tax/index.js';
 import {Terminal} from './resources/Terminal/index.js';
 import {TestHelpers} from './resources/TestHelpers/index.js';
+import {ThreeDSecure} from './resources/ThreeDSecure/index.js';
 import {Treasury} from './resources/Treasury/index.js';
 import {V2} from './resources/V2/index.js';
 // StripeInstanceImports: The end of the section generated from our OpenAPI spec
@@ -1368,6 +1369,7 @@ export class Stripe {
   tax: Tax;
   terminal: Terminal;
   testHelpers: TestHelpers;
+  threeDSecure: ThreeDSecure;
   treasury: Treasury;
   v2: V2;
   // StripeInstanceVariables: The end of the section generated from our OpenAPI spec
@@ -1584,6 +1586,7 @@ export class Stripe {
     this.tax = new Tax(this);
     this.terminal = new Terminal(this);
     this.testHelpers = new TestHelpers(this);
+    this.threeDSecure = new ThreeDSecure(this);
     this.treasury = new Treasury(this);
     this.v2 = new V2(this);
     // StripeInitInstanceVariables: The end of the section generated from our OpenAPI spec
@@ -2029,22 +2032,6 @@ export class Stripe {
     );
 
     return this._buildEventNotification(parsePayload(payload));
-  }
-
-  /**
-   * Constructs a [snapshot event](https://docs.stripe.com/event-destinations#snapshot-payload) from an
-   * incoming webhook without first verifying its authenticity. Should be used after calling
-   * `webhooks.verifySignatureHeader(...)` or with input from a trusted source (such as
-   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge), or
-   * [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload). Or, to verify &
-   * construct in a single call, use `webhooks.constructEvent(...)` instead.
-   *
-   * @deprecated Use `stripe.webhooks.constructEventWithoutVerification(...)` instead.
-   * This will be removed in the next major version.
-   */
-  constructEventWithoutVerification(payload: string): Event {
-    // TODO(DEVSDK-3248) remove this
-    return this.webhooks.constructEventWithoutVerification(payload);
   }
 
   /**
@@ -2885,6 +2872,7 @@ export declare namespace Stripe {
   export {Tax};
   export {Terminal};
   export {TestHelpers};
+  export {ThreeDSecure};
   export {Treasury};
   export {V2};
   // StripeInterfaceExports: The end of the section generated from our OpenAPI spec
@@ -3271,112 +3259,6 @@ export declare namespace Stripe {
   export type StripeEventNotificationHandler = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandler;
   export type StripeEventNotificationHandlerWithoutVerification = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandlerWithoutVerification;
   // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
-  export namespace ErrorType {
-    export type StripeError = InstanceType<typeof _Error.StripeError>;
-    export type StripeCardError = InstanceType<typeof _Error.StripeCardError>;
-    export type StripeInvalidRequestError = InstanceType<
-      typeof _Error.StripeInvalidRequestError
-    >;
-    export type StripeAPIError = InstanceType<typeof _Error.StripeAPIError>;
-    export type StripeAuthenticationError = InstanceType<
-      typeof _Error.StripeAuthenticationError
-    >;
-    export type StripePermissionError = InstanceType<
-      typeof _Error.StripePermissionError
-    >;
-    export type StripeRateLimitError = InstanceType<
-      typeof _Error.StripeRateLimitError
-    >;
-    export type StripeConnectionError = InstanceType<
-      typeof _Error.StripeConnectionError
-    >;
-    export type StripeSignatureVerificationError = InstanceType<
-      typeof _Error.StripeSignatureVerificationError
-    >;
-    export type StripeIdempotencyError = InstanceType<
-      typeof _Error.StripeIdempotencyError
-    >;
-    export type StripeOAuthError = InstanceType<typeof _Error.StripeOAuthError>;
-    export type StripeInvalidGrantError = InstanceType<
-      typeof _Error.StripeInvalidGrantError
-    >;
-    export type StripeInvalidClientError = InstanceType<
-      typeof _Error.StripeInvalidClientError
-    >;
-    export type StripeOAuthInvalidRequestError = InstanceType<
-      typeof _Error.StripeOAuthInvalidRequestError
-    >;
-    export type StripeInvalidScopeError = InstanceType<
-      typeof _Error.StripeInvalidScopeError
-    >;
-    export type StripeUnsupportedGrantTypeError = InstanceType<
-      typeof _Error.StripeUnsupportedGrantTypeError
-    >;
-    export type StripeUnsupportedResponseTypeError = InstanceType<
-      typeof _Error.StripeUnsupportedResponseTypeError
-    >;
-    export type AlreadyCanceledError = InstanceType<
-      typeof _Error.AlreadyCanceledError
-    >;
-    export type AlreadyExistsError = InstanceType<
-      typeof _Error.AlreadyExistsError
-    >;
-    export type BlockedByStripeError = InstanceType<
-      typeof _Error.BlockedByStripeError
-    >;
-    export type CannotProceedError = InstanceType<
-      typeof _Error.CannotProceedError
-    >;
-    export type ControlledByAlternateResourceError = InstanceType<
-      typeof _Error.ControlledByAlternateResourceError
-    >;
-    export type ControlledByDashboardError = InstanceType<
-      typeof _Error.ControlledByDashboardError
-    >;
-    export type FeatureNotEnabledError = InstanceType<
-      typeof _Error.FeatureNotEnabledError
-    >;
-    export type FinancialAccountNotOpenError = InstanceType<
-      typeof _Error.FinancialAccountNotOpenError
-    >;
-    export type FxQuoteExpiredError = InstanceType<
-      typeof _Error.FxQuoteExpiredError
-    >;
-    export type FxQuoteNeedsRefreshError = InstanceType<
-      typeof _Error.FxQuoteNeedsRefreshError
-    >;
-    export type InsufficientFundsError = InstanceType<
-      typeof _Error.InsufficientFundsError
-    >;
-    export type InvalidPaymentMethodError = InstanceType<
-      typeof _Error.InvalidPaymentMethodError
-    >;
-    export type InvalidPayoutMethodError = InstanceType<
-      typeof _Error.InvalidPayoutMethodError
-    >;
-    export type MerchantNotGatedError = InstanceType<
-      typeof _Error.MerchantNotGatedError
-    >;
-    export type NonZeroBalanceError = InstanceType<
-      typeof _Error.NonZeroBalanceError
-    >;
-    export type NotCancelableError = InstanceType<
-      typeof _Error.NotCancelableError
-    >;
-    export type QuotaExceededError = InstanceType<
-      typeof _Error.QuotaExceededError
-    >;
-    export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
-    export type RecipientNotNotifiableError = InstanceType<
-      typeof _Error.RecipientNotNotifiableError
-    >;
-    export type ServiceUnavailableError = InstanceType<
-      typeof _Error.ServiceUnavailableError
-    >;
-    export type TemporarySessionExpiredError = InstanceType<
-      typeof _Error.TemporarySessionExpiredError
-    >;
-  }
   export namespace errors {
     export type StripeError = InstanceType<typeof _Error.StripeError>;
     export type StripeCardError = InstanceType<typeof _Error.StripeCardError>;
@@ -3436,9 +3318,6 @@ export declare namespace Stripe {
     export type ControlledByAlternateResourceError = InstanceType<
       typeof _Error.ControlledByAlternateResourceError
     >;
-    export type ControlledByDashboardError = InstanceType<
-      typeof _Error.ControlledByDashboardError
-    >;
     export type FeatureNotEnabledError = InstanceType<
       typeof _Error.FeatureNotEnabledError
     >;
@@ -3459,6 +3338,9 @@ export declare namespace Stripe {
     >;
     export type InvalidPayoutMethodError = InstanceType<
       typeof _Error.InvalidPayoutMethodError
+    >;
+    export type InvalidVaultedCredentialError = InstanceType<
+      typeof _Error.InvalidVaultedCredentialError
     >;
     export type MerchantNotGatedError = InstanceType<
       typeof _Error.MerchantNotGatedError
@@ -3481,6 +3363,15 @@ export declare namespace Stripe {
     >;
     export type TemporarySessionExpiredError = InstanceType<
       typeof _Error.TemporarySessionExpiredError
+    >;
+    export type VerificationAttemptFailedError = InstanceType<
+      typeof _Error.VerificationAttemptFailedError
+    >;
+    export type VerificationExpiredError = InstanceType<
+      typeof _Error.VerificationExpiredError
+    >;
+    export type VerificationNotInitiatedError = InstanceType<
+      typeof _Error.VerificationNotInitiatedError
     >;
   }
   // ErrorTypeNamespaces: The end of the section generated from our OpenAPI spec

@@ -141,32 +141,32 @@ export interface EventDestination {
   object: 'v2.core.event_destination';
 
   /**
-   * Amazon EventBridge configuration.
+   * Configuration for delivering events through an Amazon EventBridge partner event source.
    */
   amazon_eventbridge?: EventDestination.AmazonEventbridge;
 
   /**
-   * Azure Event Grid configuration.
+   * Configuration for delivering events through an Azure Event Grid partner topic.
    */
   azure_event_grid?: EventDestination.AzureEventGrid;
 
   /**
-   * Time at which the object was created.
+   * The time when the destination was created.
    */
   created: string;
 
   /**
-   * An optional description of what the event destination is used for.
+   * An optional user-defined description of the destination's purpose.
    */
   description: string;
 
   /**
-   * The list of events to enable for this endpoint.
+   * The list of event types enabled for delivery to this destination.
    */
   enabled_events: Array<string>;
 
   /**
-   * Payload type of events being subscribed to.
+   * Whether to deliver as snapshot or thin events.
    */
   event_payload: EventDestination.EventPayload;
 
@@ -185,86 +185,86 @@ export interface EventDestination {
   livemode: boolean;
 
   /**
-   * Metadata.
+   * User-defined key/value data for the destination; it has no effect on event matching or delivery.
    */
   metadata?: Metadata;
 
   /**
-   * Event destination name.
+   * A user-defined label for identifying the destination in Stripe.
    */
   name: string;
 
   /**
-   * If using the snapshot event payload, the API version events are rendered as.
+   * For snapshot events only, the Stripe API version used to render event objects. You can't change this value after you create the event destination. Thin events are not pinned to an API version.
    */
   snapshot_api_version?: string;
 
   /**
-   * Status. It can be set to either enabled or disabled.
+   * Whether Stripe currently attempts delivery. Stripe attempts delivery to enabled destinations when their provider configuration is active; disabled destinations do not receive delivery attempts.
    */
   status: EventDestination.Status;
 
   /**
-   * Additional information about event destination status.
+   * Additional lifecycle context for the destination status, when available.
    */
   status_details?: EventDestination.StatusDetails;
 
   /**
-   * Event destination type.
+   * The delivery transport. Chosen when the destination is created and cannot be changed by update.
    */
   type: EventDestination.Type;
 
   /**
-   * Time at which the object was last updated.
+   * The time when the destination object was last updated.
    */
   updated: string;
 
   /**
-   * Webhook endpoint configuration.
+   * Configuration for delivering events to a webhook endpoint. Live mode requires HTTPS; sandbox mode also supports HTTP.
    */
   webhook_endpoint?: EventDestination.WebhookEndpoint;
 }
 export namespace EventDestination {
   export interface AmazonEventbridge {
     /**
-     * The AWS account ID.
+     * The AWS account ID that owns the event bus receiving events.
      */
     aws_account_id: string;
 
     /**
-     * The ARN of the AWS event source.
+     * The ARN of the Stripe-created partner event source in your AWS account.
      */
     aws_event_source_arn: string;
 
     /**
-     * The state of the AWS event source.
+     * The AWS-reported lifecycle state of the partner event source.
      */
     aws_event_source_status: AmazonEventbridge.AwsEventSourceStatus;
   }
 
   export interface AzureEventGrid {
     /**
-     * The name of the Azure partner topic.
+     * The name of the Stripe-created partner topic that receives events.
      */
     azure_partner_topic_name: string;
 
     /**
-     * The status of the Azure partner topic.
+     * The Azure-reported lifecycle state of the partner topic.
      */
     azure_partner_topic_status: AzureEventGrid.AzurePartnerTopicStatus;
 
     /**
-     * The Azure region.
+     * The Azure region where the partner topic is located.
      */
     azure_region: string;
 
     /**
-     * The name of the Azure resource group.
+     * The Azure resource group containing the partner topic.
      */
     azure_resource_group_name: string;
 
     /**
-     * The Azure subscription ID.
+     * The Azure subscription containing the resource group and partner topic.
      */
     azure_subscription_id: string;
   }
@@ -275,7 +275,7 @@ export namespace EventDestination {
 
   export interface StatusDetails {
     /**
-     * Details about why the event destination has been disabled.
+     * Present when the destination was disabled; identifies the cause, time, and provider-side object involved when available.
      */
     disabled?: StatusDetails.Disabled;
   }
@@ -288,12 +288,12 @@ export namespace EventDestination {
 
   export interface WebhookEndpoint {
     /**
-     * The signing secret of the webhook endpoint, only includable on creation.
+     * The secret used to verify Stripe signatures on delivered events. Returned only in the create response when explicitly included; public API clients cannot retrieve it later.
      */
     signing_secret?: string;
 
     /**
-     * The URL of the webhook endpoint, includable.
+     * The URL where Stripe sends matching events. Live mode requires HTTPS; sandbox mode also supports HTTP. Returned only when explicitly included.
      */
     url?: string;
   }
@@ -336,66 +336,66 @@ export namespace V2 {
   export namespace Core {
     export interface EventDestinationCreateParams {
       /**
-       * The list of events to enable for this endpoint.
+       * The list of event types enabled for delivery to this destination.
        */
       enabled_events: Array<string>;
 
       /**
-       * Payload type of events being subscribed to.
+       * Whether to deliver as snapshot or thin events.
        */
       event_payload: EventDestinationCreateParams.EventPayload;
 
       /**
-       * Event destination name.
+       * A user-defined label for identifying the destination.
        */
       name: string;
 
       /**
-       * Event destination type.
+       * The delivery transport. Chosen when the destination is created and cannot be changed by update.
        */
       type: EventDestinationCreateParams.Type;
 
       /**
-       * Amazon EventBridge configuration.
+       * AWS account and region where Stripe creates the EventBridge partner event source.
        */
       amazon_eventbridge?: EventDestinationCreateParams.AmazonEventbridge;
 
       /**
-       * Azure Event Grid configuration.
+       * Azure subscription, resource group, and region where Stripe creates the partner topic.
        */
       azure_event_grid?: EventDestinationCreateParams.AzureEventGrid;
 
       /**
-       * An optional description of what the event destination is used for.
+       * An optional user-defined description of the destination's purpose.
        */
       description?: string;
 
       /**
-       * Specifies which accounts' events route to this destination.
+       * The account or organization scopes that can supply events. Use this with `enabled_events` to define the subscription.
        * `@self`: Receive events from the account that owns the event destination.
-       * `@accounts`: Receive events emitted from other accounts you manage which includes your v1 and v2 accounts.
+       * `@accounts`: Receive events emitted from other accounts you manage, including your v1 and v2 accounts.
        * `@organization_members`: Receive events from accounts directly linked to the organization.
        * `@organization_members/@accounts`: Receive events from all accounts connected to any platform accounts in the organization.
        */
       events_from?: Array<string>;
 
       /**
-       * Additional fields to include in the response.
+       * Include normally redacted webhook fields in the create response. Public API clients must include `webhook_endpoint.signing_secret` to receive the signing secret.
        */
       include?: Array<EventDestinationCreateParams.Include>;
 
       /**
-       * Metadata.
+       * User-defined key/value data for the destination.
        */
       metadata?: MetadataParam;
 
       /**
-       * If using the snapshot event payload, the API version events are rendered as.
+       * For snapshot events only, the Stripe API version used to render event objects; do not provide this for thin events.
        */
       snapshot_api_version?: string;
 
       /**
-       * Webhook endpoint configuration.
+       * Delivery target for the webhook endpoint. Live mode requires HTTPS; sandbox mode also supports HTTP.
        */
       webhook_endpoint?: EventDestinationCreateParams.WebhookEndpoint;
     }
@@ -411,29 +411,29 @@ export namespace V2 {
 
       export interface AmazonEventbridge {
         /**
-         * The AWS account ID.
+         * Your AWS account where Stripe creates the partner event source.
          */
         aws_account_id: string;
 
         /**
-         * The region of the AWS event source.
+         * The AWS region where Stripe creates the partner event source.
          */
         aws_region: string;
       }
 
       export interface AzureEventGrid {
         /**
-         * The Azure region.
+         * The Azure region where Stripe creates the partner topic.
          */
         azure_region: string;
 
         /**
-         * The name of the Azure resource group.
+         * The Azure resource group where Stripe creates the partner topic.
          */
         azure_resource_group_name: string;
 
         /**
-         * The Azure subscription ID.
+         * The Azure subscription where Stripe creates the partner topic.
          */
         azure_subscription_id: string;
       }
@@ -445,7 +445,7 @@ export namespace V2 {
 
       export interface WebhookEndpoint {
         /**
-         * The URL of the webhook endpoint.
+         * The URL where Stripe sends matching events. Live mode requires HTTPS; sandbox mode also supports HTTP.
          */
         url: string;
       }
@@ -470,17 +470,17 @@ export namespace V2 {
   export namespace Core {
     export interface EventDestinationUpdateParams {
       /**
-       * An optional description of what the event destination is used for.
+       * An optional user-defined description of the destination's purpose; it does not control routing.
        */
       description?: string;
 
       /**
-       * The list of events to enable for this endpoint.
+       * The list of event types enabled for delivery to this destination. Event scopes are configured when the destination is created.
        */
       enabled_events?: Array<string>;
 
       /**
-       * Additional fields to include in the response. Currently supports `webhook_endpoint.url`.
+       * Include the normally redacted `webhook_endpoint.url` in the response.
        */
       include?: Array<EventDestinationUpdateParams.Include>;
 
@@ -490,12 +490,12 @@ export namespace V2 {
       metadata?: MetadataParam;
 
       /**
-       * Event destination name.
+       * A user-defined label for identifying the destination; it does not control routing.
        */
       name?: string;
 
       /**
-       * Webhook endpoint configuration.
+       * New delivery target for the webhook endpoint. Live mode requires HTTPS; sandbox mode also supports HTTP.
        */
       webhook_endpoint?: EventDestinationUpdateParams.WebhookEndpoint;
     }
@@ -505,7 +505,7 @@ export namespace V2 {
 
       export interface WebhookEndpoint {
         /**
-         * The URL of the webhook endpoint.
+         * The URL where Stripe sends matching events. Live mode requires HTTPS; sandbox mode also supports HTTP.
          */
         url: string;
       }
@@ -516,7 +516,7 @@ export namespace V2 {
   export namespace Core {
     export interface EventDestinationListParams {
       /**
-       * Additional fields to include in the response. Currently supports `webhook_endpoint.url`.
+       * Include the normally redacted `webhook_endpoint.url` in each returned destination.
        */
       include?: Array<EventDestinationListParams.Include>;
 

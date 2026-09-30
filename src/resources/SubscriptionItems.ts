@@ -548,7 +548,7 @@ export interface SubscriptionItem {
   /**
    * The current trial that is applied to this subscription item.
    */
-  current_trial?: SubscriptionItem.CurrentTrial | null;
+  current_trial: SubscriptionItem.CurrentTrial | null;
 
   /**
    * Always true for a deleted object
@@ -632,10 +632,19 @@ export namespace SubscriptionItem {
   }
 
   export interface CurrentTrial {
+    /**
+     * The time the current trial ends.
+     */
     end_date: number;
 
+    /**
+     * The time the current trial started.
+     */
     start_date: number;
 
+    /**
+     * The Trial Offer ID applied to the subscription item.
+     */
     trial_offer: string;
   }
 
