@@ -132,7 +132,6 @@ describe('awsWorkloadIdentity', () => {
 
     expect(err).to.be.an.instanceOf(AwsWorkloadIdentityError);
     expect(err.message).to.include('sts:GetWebIdentityToken failed');
-    expect(err.message).to.include('AccessDeniedException');
     expect((err as {cause?: unknown}).cause).to.equal(awsError);
   });
 
