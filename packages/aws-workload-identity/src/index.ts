@@ -4,8 +4,7 @@ import {
   STSClientConfig,
 } from '@aws-sdk/client-sts';
 
-export const STRIPE_WORKLOAD_IDENTITY_AUDIENCE =
-  'https://access.stripe.com/wif';
+export const STRIPE_WORKLOAD_IDENTITY_AUDIENCE = 'https://stripe.com/wif/v1';
 export const STRIPE_WORKLOAD_IDENTITY_SIGNING_ALGORITHM = 'ES384';
 
 /**

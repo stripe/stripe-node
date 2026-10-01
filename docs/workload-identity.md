@@ -46,7 +46,7 @@ the same configuration object as the normal constructor, except `authenticator`.
 | Client type | `StripeClient` (the default `Stripe` client) |
 | Client ID shape | `oacli_live_...` or `oacli_test_...` (not enforced by the SDK) |
 | Adapter | [`@stripe/aws-workload-identity`](../packages/aws-workload-identity) |
-| Assertion audience | `https://access.stripe.com/wif` (fixed) |
+| Assertion audience | `https://stripe.com/wif/v1` (fixed) |
 | Signing algorithm | `ES384` |
 | Runtime | Node.js 20+ (see below) |
 

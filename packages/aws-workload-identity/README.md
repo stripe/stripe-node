@@ -57,7 +57,7 @@ Token via `sts:GetWebIdentityToken`, using:
 
 | | |
 | --- | --- |
-| Audience | `https://access.stripe.com/wif` |
+| Audience | `https://stripe.com/wif/v1` |
 | Signing algorithm | `ES384` |
 
 Stripe exchanges that token for a short-lived restricted key. This package never
