@@ -5,6 +5,195 @@ Instead, edit a corresponding `.change.md` file and run `hark build`.
 
 # Changelog
 
+## <a id="23-0-0"></a>23.0.0 - 2026-09-30
+This release changes the pinned API version to `2026-09-30.endive`.
+
+* [#2844](https://github.com/stripe/stripe-node/pull/2844) Support `EventNotification`s with singleton related objects
+* [#2853](https://github.com/stripe/stripe-node/pull/2853) Allow suppressing Stripe notices
+
+  Set the `STRIPE_SUPPRESS_NOTICES` environment variable to `true` to suppress Stripe notices in test and sandbox environments when not running under a detected AI agent. Notices remain enabled by default and continue to be shown to AI agents.
+* [#2850](https://github.com/stripe/stripe-node/pull/2850) Fix account scoping for `EventNotificationHandler` callback clients
+  - Fix callback clients to use the event's Stripe context and preserve client telemetry.
+  - Fix 400 errors when using an `EventNotificationHandler` with a `StripeClient` configured with `stripeAccount`.
+* ⚠️ [#2856](https://github.com/stripe/stripe-node/pull/2856) Remove V1-only fields from V2 list response types
+
+  Remove the V1-only `object`, `has_more`, and `url` fields from `Stripe.V2List<T>`. These fields were never populated and were added only to maintain type compatibility when correcting the V2 list response type in a minor release.
+* ⚠️ [#2862](https://github.com/stripe/stripe-node/pull/2862) Remove Stripe.constructEventWithoutVerification
+
+  Removed the function `Stripe.constructEventWithoutVerification()` that was mistakenly added in version 22.5.0 of this package. The same functionality can be achieved via stripe.webhooks.constructEventWithoutVerification(payload);
+* ⚠️ Generate operation-specific address parameters for V2 requests
+  - Change V2 request address properties from shared V1 address parameter types to operation-specific V2 interfaces.
+* ⚠️ [#2865](https://github.com/stripe/stripe-node/pull/2865) Remove `ErrorType` export
+
+  Remove the ErrorType interface from the top level client. Users can use .errors instead since it works as both a type and a value
+* ⚠️ [#2868](https://github.com/stripe/stripe-node/pull/2868) Classify incomplete response bodies as connection errors
+  - Responses that stall or are severed before the body is complete now throw `StripeConnectionError` instead of `StripeAPIError`.
+* Fix `NodeHttpClient` compatibility with HTTP request interceptors
+  - Fix `NodeHttpClient` requests hanging when using Nock 14 or MSW interceptors ([#2211](https://github.com/stripe/stripe-node/issues/2211)).
+* ⚠️ Drop support for Node 18
+
+  Drop support for Node.js 18. Node.js 20 is now the minimum supported version.
+* ⚠️ [#2876](https://github.com/stripe/stripe-node/pull/2876) Update verifyHeader and verifyHeaderAsync methods to use DEFAULT_TOLERANCE
+
+  `stripe.webhooks.signature.verifyHeader()` and `verifyHeaderAsync()` previously skipped timestamp tolerance verification when the `tolerance` argument was omitted. They now default to `Webhook.DEFAULT_TOLERANCE`
+
+  Passing 0 to stripe.webhooks.constructEvent now properly skips timestamp tolerance verification. Previously, passing 0 would perform verification with the default tolerance Webhook.DEFAULT_TOLERANCE.
+* [#2879](https://github.com/stripe/stripe-node/pull/2879) Update generated code
+  * Release specs are identical.
+* ⚠️ [#2832](https://github.com/stripe/stripe-node/pull/2832) Update generated code
+  * Add support for new resources `Apps.Install`, `ProductCatalog.TrialOffer`, `Tax.Location`, and `ThreeDSecure.Authentication`
+  * Add support for `create`, `list`, `retrieve`, `uninstall`, and `update` methods on resource `Apps.Install`
+  * Add support for `create`, `list`, `retrieve`, and `update` methods on resource `ProductCatalog.TrialOffer`
+  * Add support for `create`, `list`, and `retrieve` methods on resource `Tax.Location`
+  * Add support for `cancel`, `create`, `list`, `retrieve`, and `submit` methods on resource `ThreeDSecure.Authentication`
+  * Add support for `pause` method on resource `Subscription`
+  * Add support for `specified_commercial_transactions_act_url` on `Account.business_profile`, `AccountCreateParams.business_profile`, and `AccountUpdateParams.business_profile`
+  * Add support for `blik_recurring_payments` and `sequra_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, `AccountUpdateParams.capabilities`, `V2.Core.Account.configuration.merchant.capabilities`, `V2.Core.AccountCreateParams.configuration.merchant.capabilities`, and `V2.Core.AccountUpdateParams.configuration.merchant.capabilities`
+  * Add support for `paypay_payments` on `Account.capabilities`, `Account.settings`, `AccountCreateParams.capabilities`, `AccountCreateParams.settings`, `AccountUpdateParams.capabilities`, and `AccountUpdateParams.settings`
+  * Add support for `sepa_debit_payments` on `AccountCreateParams.settings`, `V2.Core.AccountCreateParams.configuration.merchant`, and `V2.Core.AccountUpdateParams.configuration.merchant`
+  * ⚠️ Change type of `AccountRejectParams.reason` from `string` to `enum`
+  * ⚠️ Add support for new values `invalid_address_cmra_address` and `invalid_address_registered_agent_address` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, `BankAccount.requirements.errors[].code`, `Capability.future_requirements.errors[].code`, `Capability.requirements.errors[].code`, `Person.future_requirements.errors[].code`, and `Person.requirements.errors[].code`
+  * Add support for `performance_location` on `Tax.CalculationCreateParams.line_items[]` and `Tax.CalculationLineItem`
+  * Add support for new value `performance` on enums `Tax.Calculation.shipping_cost.tax_breakdown[].sourcing`, `Tax.CalculationLineItem.tax_breakdown[].sourcing`, and `Tax.Transaction.shipping_cost.tax_breakdown[].sourcing`
+  * Add support for new values `admissions_tax`, `attendance_tax`, `digital_excise_tax`, `entertainment_tax`, `gross_receipts_tax`, `hospitality_tax`, `luxury_tax`, `recycling_fee`, `resort_tax`, `tourism_tax`, and `utility_users_tax` on enums `Tax.Calculation.shipping_cost.tax_breakdown[].tax_rate_details.tax_type`, `Tax.Calculation.tax_breakdown[].tax_rate_details.tax_type`, `Tax.CalculationLineItem.tax_breakdown[].tax_rate_details.tax_type`, and `Tax.Transaction.shipping_cost.tax_breakdown[].tax_rate_details.tax_type`
+  * Add support for `destination` on `Reserve.Hold`, `Reserve.Plan`, and `Reserve.Release`
+  * Add support for `manual_release` on `Reserve.Plan`
+  * ⚠️ Add support for new value `other` on enum `Reserve.Plan.status`
+  * ⚠️ Add support for new values `manual_release` and `other` on enum `Reserve.Plan.type`
+  * ⚠️ Add support for new value `hold_expired` on enum `Reserve.Release.reason`
+  * ⚠️ Remove support for value `bulk_hold_expiry` from enum `Reserve.Release.reason`
+  * Add support for new values `issuing_dispute_provisional_credit_reversal` and `issuing_dispute_provisional_credit` on enum `BalanceTransaction.type`
+  * Add support for `paypay` on `Charge.payment_method_details`, `ConfirmationToken.payment_method_preview`, `ConfirmationTokenCreateParams.testHelpers.payment_method_data`, `PaymentAttemptRecord.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodConfigurationCreateParams`, `PaymentMethodConfigurationUpdateParams`, `PaymentMethodConfiguration`, `PaymentMethodCreateParams`, `PaymentMethod`, `PaymentRecord.payment_method_details`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
+  * Add support for `sequra` on `Charge.payment_method_details`, `Checkout.Session.payment_method_options`, `Checkout.SessionCreateParams.payment_method_options`, `ConfirmationToken.payment_method_preview`, `ConfirmationTokenCreateParams.testHelpers.payment_method_data`, `PaymentAttemptRecord.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodConfigurationCreateParams`, `PaymentMethodConfigurationUpdateParams`, `PaymentMethodConfiguration`, `PaymentMethodCreateParams`, `PaymentMethod`, `PaymentRecord.payment_method_details`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
+  * Add support for `electronic_commerce_indicator` on `Charge.payment_method_details.card`
+  * ⚠️ Change type of `Charge.payment_method_details.card.mandate` from `string` to `expandable(Mandate)`
+  * Add support for `allowed_payment_method_types` on `Checkout.SessionCreateParams` and `Checkout.Session`
+  * ⚠️ Remove support for `payment_method_types` on `Checkout.SessionCreateParams`, `PaymentIntentConfirmParams`, `PaymentIntentCreateParams`, `PaymentIntentUpdateParams`, `SetupIntentCreateParams`, and `SetupIntentUpdateParams`
+  * Add support for new values `paypay` and `sequra` on enums `Checkout.SessionCreateParams.excluded_payment_method_types`, `PaymentIntent.excluded_payment_method_types`, `PaymentIntentConfirmParams.excluded_payment_method_types`, `PaymentIntentCreateParams.excluded_payment_method_types`, `PaymentIntentUpdateParams.excluded_payment_method_types`, `SetupIntent.excluded_payment_method_types`, `SetupIntentCreateParams.excluded_payment_method_types`, and `SetupIntentUpdateParams.excluded_payment_method_types`
+  * Add support for `tax_details` on `Checkout.SessionCreateParams.line_items[].price_data.product_data`, `Checkout.SessionUpdateParams.line_items[].price_data.product_data`, `InvoiceAddLinesParams.lines[].price_data.product_data`, `InvoiceLineItemUpdateParams.price_data.product_data`, `InvoiceUpdateLinesParams.lines[].price_data.product_data`, `PaymentLinkCreateParams.line_items[].price_data.product_data`, `PlanCreateParams.product[0]`, `PriceCreateParams.product_data`, `ProductCreateParams`, `ProductUpdateParams`, and `Product`
+  * Add support for `blik` on `Checkout.SessionCreateParams.payment_method_options`, `Invoice.payment_settings.payment_method_options`, `InvoiceCreateParams.payment_settings.payment_method_options`, `InvoiceUpdateParams.payment_settings.payment_method_options`, `Mandate.payment_method_details`, `SetupAttempt.payment_method_details`, `SetupIntent.payment_method_options`, `SetupIntentConfirmParams.payment_method_options`, `SetupIntentCreateParams.payment_method_options`, `SetupIntentUpdateParams.payment_method_options`, `Subscription.payment_settings.payment_method_options`, `SubscriptionCreateParams.payment_settings.payment_method_options`, and `SubscriptionUpdateParams.payment_settings.payment_method_options`
+  * Change type of `Checkout.SessionCreateParams.payment_method_options.bancontact.setup_future_usage`, `PaymentIntentConfirmParams.payment_method_options.blik.setup_future_usage`, `PaymentIntentCreateParams.payment_method_options.blik.setup_future_usage`, and `PaymentIntentUpdateParams.payment_method_options.blik.setup_future_usage` from `literal('none')` to `enum('none'|'off_session')`
+  * ⚠️ Change type of `Checkout.Session.payment_method_options.bancontact.setup_future_usage` and `PaymentIntent.payment_method_options.blik.setup_future_usage` from `literal('none')` to `enum('none'|'off_session')`
+  * Add support for new values `paypay` and `sequra` on enums `ConfirmationTokenCreateParams.testHelpers.payment_method_data.type`, `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `SetupIntentConfirmParams.payment_method_data.type`, `SetupIntentCreateParams.payment_method_data.type`, and `SetupIntentUpdateParams.payment_method_data.type`
+  * Add support for new values `paypay` and `sequra` on enums `ConfirmationToken.payment_method_preview.type` and `PaymentMethod.type`
+  * Add support for new values `paypay` and `sequra` on enums `CustomerListPaymentMethodsParams.type`, `PaymentMethodCreateParams.type`, and `PaymentMethodListParams.type`
+  * Add support for new values `apps.install.created`, `apps.install.deleted`, and `apps.install.updated` on enum `Event.type`
+  * Add support for new values `expired` and `pending` on enum `FinancialConnections.Account.account_numbers[].status`
+  * Add support for `country` on `FinancialConnections.SessionCreateParams.filters`
+  * ⚠️ Remove support for `countries` on `FinancialConnections.Session.filters` and `FinancialConnections.SessionCreateParams.filters`
+  * Add support for `invoicing_rules` on `InvoiceItemUpdateParams` and `InvoiceItem`
+  * Add support for `company_details` on `Invoice.payment_settings.payment_method_options.billie`, `InvoiceCreateParams.payment_settings.payment_method_options.billie`, `InvoiceUpdateParams.payment_settings.payment_method_options.billie`, `PaymentIntent.payment_method_options.billie`, `PaymentIntentConfirmParams.payment_method_options.billie`, `PaymentIntentCreateParams.payment_method_options.billie`, `PaymentIntentUpdateParams.payment_method_options.billie`, `Subscription.payment_settings.payment_method_options.billie`, `SubscriptionCreateParams.payment_settings.payment_method_options.billie`, and `SubscriptionUpdateParams.payment_settings.payment_method_options.billie`
+  * Add support for `reference` on `Invoice.payment_settings.payment_method_options.billie`, `InvoiceCreateParams.payment_settings.payment_method_options.billie`, `InvoiceUpdateParams.payment_settings.payment_method_options.billie`, `PaymentIntent.payment_method_options.billie`, `PaymentIntentConfirmParams.payment_method_options.billie`, `PaymentIntentCreateParams.payment_method_options.billie`, and `PaymentIntentUpdateParams.payment_method_options.billie`
+  * Add support for new value `blik` on enums `Invoice.payment_settings.payment_method_types`, `InvoiceCreateParams.payment_settings.payment_method_types`, `InvoiceUpdateParams.payment_settings.payment_method_types`, `Subscription.payment_settings.payment_method_types`, `SubscriptionCreateParams.payment_settings.payment_method_types`, and `SubscriptionUpdateParams.payment_settings.payment_method_types`
+  * Add support for new values `digital_excise_tax` and `utility_users_tax` on enums `InvoiceAddLinesParams.lines[].tax_amounts[].tax_rate_data.tax_type`, `InvoiceLineItemUpdateParams.tax_amounts[].tax_rate_data.tax_type`, `InvoiceUpdateLinesParams.lines[].tax_amounts[].tax_rate_data.tax_type`, `TaxRate.tax_type`, `TaxRateCreateParams.tax_type`, and `TaxRateUpdateParams.tax_type`
+  * Add support for `pause` on `InvoiceCreatePreviewParams.subscription_details`
+  * ⚠️ Change type of `InvoiceCreatePreviewParams.subscription_details.billing_cycle_anchor` from `enum('now'|'unchanged') | DateTime` to `billing_cycle_anchor_param`
+  * Add support for `current_trial` on `InvoiceCreatePreviewParams.subscription_details.items[]`, `SubscriptionCreateParams.items[]`, `SubscriptionItemCreateParams`, `SubscriptionItemUpdateParams`, `SubscriptionItem`, and `SubscriptionUpdateParams.items[]`
+  * Add support for `status_details` on `Invoice` and `Subscription`
+  * Add support for `india` on `Mandate.payment_method_details.card`
+  * Add support for `momo` on `PaymentAttemptRecord.payment_method_details` and `PaymentRecord.payment_method_details`
+  * Add support for new values `2.3.0` and `2.3.1` on enums `PaymentAttemptRecord.payment_method_details.card.three_d_secure.version` and `PaymentRecord.payment_method_details.card.three_d_secure.version`
+  * Add support for `link` on `PaymentAttemptRecord.payment_method_details.card.wallet` and `PaymentRecord.payment_method_details.card.wallet`
+  * Add support for `funding_source_group` on `PaymentAttemptRecord.payment_method_details.link` and `PaymentRecord.payment_method_details.link`
+  * Add support for new values `card_present` and `interac_present` on enums `PaymentIntent.allowed_payment_method_types`, `PaymentIntentConfirmParams.allowed_payment_method_types`, `PaymentIntentCreateParams.allowed_payment_method_types`, `PaymentIntentUpdateParams.allowed_payment_method_types`, `SetupIntent.allowed_payment_method_types`, `SetupIntentConfirmParams.allowed_payment_method_types`, `SetupIntentCreateParams.allowed_payment_method_types`, and `SetupIntentUpdateParams.allowed_payment_method_types`
+  * Add support for `mandate_options` on `PaymentIntent.payment_method_options.blik`, `PaymentIntentConfirmParams.payment_method_options.blik`, `PaymentIntentCreateParams.payment_method_options.blik`, and `PaymentIntentUpdateParams.payment_method_options.blik`
+  * Add support for `payment_record` on `PaymentIntent`
+  * Add support for `expires_at` on `PaymentIntent.next_action.swish_handle_redirect_or_display_qr_code.qr_code`
+  * Add support for new values `paypay` and `sequra` on enums `PaymentLink.payment_method_types`, `PaymentLinkCreateParams.payment_method_types`, and `PaymentLinkUpdateParams.payment_method_types`
+  * ⚠️ Remove support for `payto` on `PaymentMethodUpdateParams`
+  * Add support for `canceled` on `PaymentRecordReportPaymentAttemptParams` and `PaymentRecordReportPaymentParams`
+  * Add support for new value `canceled` on enums `PaymentRecordReportPaymentAttemptParams.outcome` and `PaymentRecordReportPaymentParams.outcome`
+  * Add support for new value `rerouted` on enum `Radar.PaymentEvaluation.outcome.type`
+  * Add support for `early_fraud_warning` and `fraudulent_dispute` on `Radar.PaymentEvaluation.signals`
+  * ⚠️ Change type of `Radar.PaymentEvaluation.signals.fraudulent_payment.score` from `number` to `number | null`
+  * Add support for `pause_schedules` on `SubscriptionScheduleCreateParams`, `SubscriptionScheduleUpdateParams`, and `SubscriptionSchedule`
+  * ⚠️ Change type of `SubscriptionResumeParams.billing_cycle_anchor` and `SubscriptionUpdateParams.billing_cycle_anchor` from `enum('now'|'unchanged')` to `billing_cycle_anchor_param`
+  * Add support for `billing_cycle_anchor` on `Subscription.trial_settings.end_behavior`, `SubscriptionCreateParams.trial_settings.end_behavior`, and `SubscriptionUpdateParams.trial_settings.end_behavior`
+  * Change `SubscriptionCreateParams.trial_settings.end_behavior.missing_payment_method` and `SubscriptionUpdateParams.trial_settings.end_behavior.missing_payment_method` to be optional
+  * Add support for `payment_behavior` on `SubscriptionResumeParams`
+  * Add support for `cancel_at_period_end` on `Subscription.pending_update`
+  * ⚠️ Remove support for `igic` on `Tax.Registration.country_options.at`, `Tax.Registration.country_options.be`, `Tax.Registration.country_options.bg`, `Tax.Registration.country_options.cy`, `Tax.Registration.country_options.cz`, `Tax.Registration.country_options.de`, `Tax.Registration.country_options.dk`, `Tax.Registration.country_options.ee`, `Tax.Registration.country_options.es`, `Tax.Registration.country_options.fi`, `Tax.Registration.country_options.fr`, `Tax.Registration.country_options.gr`, `Tax.Registration.country_options.hr`, `Tax.Registration.country_options.hu`, `Tax.Registration.country_options.ie`, `Tax.Registration.country_options.it`, `Tax.Registration.country_options.lt`, `Tax.Registration.country_options.lu`, `Tax.Registration.country_options.lv`, `Tax.Registration.country_options.mt`, `Tax.Registration.country_options.nl`, `Tax.Registration.country_options.pl`, `Tax.Registration.country_options.pt`, `Tax.Registration.country_options.ro`, `Tax.Registration.country_options.se`, `Tax.Registration.country_options.si`, `Tax.Registration.country_options.sk`, `Tax.RegistrationCreateParams.country_options.at`, `Tax.RegistrationCreateParams.country_options.be`, `Tax.RegistrationCreateParams.country_options.bg`, `Tax.RegistrationCreateParams.country_options.cy`, `Tax.RegistrationCreateParams.country_options.cz`, `Tax.RegistrationCreateParams.country_options.de`, `Tax.RegistrationCreateParams.country_options.dk`, `Tax.RegistrationCreateParams.country_options.ee`, `Tax.RegistrationCreateParams.country_options.es`, `Tax.RegistrationCreateParams.country_options.fi`, `Tax.RegistrationCreateParams.country_options.fr`, `Tax.RegistrationCreateParams.country_options.gr`, `Tax.RegistrationCreateParams.country_options.hr`, `Tax.RegistrationCreateParams.country_options.hu`, `Tax.RegistrationCreateParams.country_options.ie`, `Tax.RegistrationCreateParams.country_options.it`, `Tax.RegistrationCreateParams.country_options.lt`, `Tax.RegistrationCreateParams.country_options.lu`, `Tax.RegistrationCreateParams.country_options.lv`, `Tax.RegistrationCreateParams.country_options.mt`, `Tax.RegistrationCreateParams.country_options.nl`, `Tax.RegistrationCreateParams.country_options.pl`, `Tax.RegistrationCreateParams.country_options.pt`, `Tax.RegistrationCreateParams.country_options.ro`, `Tax.RegistrationCreateParams.country_options.se`, `Tax.RegistrationCreateParams.country_options.si`, and `Tax.RegistrationCreateParams.country_options.sk`
+  * Add support for `admissions_tax`, `attendance_tax`, `entertainment_tax`, `gross_receipts_tax`, `hospitality_tax`, `luxury_tax`, `resort_tax`, and `tourism_tax` on `Tax.Registration.country_options.us` and `Tax.RegistrationCreateParams.country_options.us`
+  * Add support for new values `admissions_tax`, `attendance_tax`, `entertainment_tax`, `gross_receipts_tax`, `hospitality_tax`, `luxury_tax`, `resort_tax`, and `tourism_tax` on enums `Tax.Registration.country_options.us.type` and `Tax.RegistrationCreateParams.country_options.us.type`
+  * Add support for `requirements` on `TaxCode`
+  * Add support for new value `rtp` on enum `Treasury.FinancialAccount.financial_addresses[].supported_networks`
+  * Add support for new value `rtp` on enum `Treasury.ReceivedCreditCreateParams.testHelpers.network`
+  * Add support for new value `rtp` on enum `Treasury.ReceivedCredit.network`
+  * Add support for new values `apps.install.created`, `apps.install.deleted`, and `apps.install.updated` on enums `WebhookEndpointCreateParams.enabled_events` and `WebhookEndpointUpdateParams.enabled_events`
+  * Add support for new value `2026-09-30.endive` on enum `WebhookEndpointCreateParams.api_version`
+  * ⚠️ Remove support for `configurations` on `V2.Core.AccountLink.use_case.account_onboarding`, `V2.Core.AccountLink.use_case.account_update`, `V2.Core.AccountLinkCreateParams.use_case.account_onboarding`, and `V2.Core.AccountLinkCreateParams.use_case.account_update`
+  * ⚠️ Add support for new value `rejected` on enums `V2.Core.Account.configuration.customer.capabilities.automatic_indirect_tax.status`, `V2.Core.Account.configuration.merchant.capabilities.ach_debit_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.acss_debit_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.affirm_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.afterpay_clearpay_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.alma_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.amazon_pay_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.au_becs_debit_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.bacs_debit_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.bancontact_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.blik_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.boleto_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.card_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.cartes_bancaires_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.cashapp_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.eps_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.fpx_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.gb_bank_transfer_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.grabpay_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.ideal_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.jcb_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.jp_bank_transfer_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.kakao_pay_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.klarna_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.konbini_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.kr_card_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.link_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.mobilepay_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.multibanco_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.mx_bank_transfer_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.naver_pay_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.oxxo_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.p24_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.pay_by_bank_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.payco_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.paynow_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.promptpay_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.revolut_pay_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.samsung_pay_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.sepa_bank_transfer_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.sepa_debit_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.stripe_balance.payouts.status`, `V2.Core.Account.configuration.merchant.capabilities.sunbit_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.swish_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.twint_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.us_bank_transfer_payments.status`, `V2.Core.Account.configuration.merchant.capabilities.zip_payments.status`, `V2.Core.Account.configuration.recipient.capabilities.stripe_balance.payouts.status`, and `V2.Core.Account.configuration.recipient.capabilities.stripe_balance.stripe_transfers.status`
+  * ⚠️ Add support for new values `rejected_fraud`, `rejected_incomplete_verification`, `rejected_listed`, `rejected_other`, `rejected_platform_fraud`, `rejected_platform_other`, `rejected_platform_terms_of_service`, and `rejected_terms_of_service` on enums `V2.Core.Account.configuration.customer.capabilities.automatic_indirect_tax.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.ach_debit_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.acss_debit_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.affirm_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.afterpay_clearpay_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.alma_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.amazon_pay_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.au_becs_debit_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.bacs_debit_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.bancontact_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.blik_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.boleto_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.card_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.cartes_bancaires_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.cashapp_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.eps_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.fpx_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.gb_bank_transfer_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.grabpay_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.ideal_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.jcb_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.jp_bank_transfer_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.kakao_pay_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.klarna_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.konbini_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.kr_card_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.link_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.mobilepay_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.multibanco_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.mx_bank_transfer_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.naver_pay_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.oxxo_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.p24_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.pay_by_bank_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.payco_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.paynow_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.promptpay_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.revolut_pay_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.samsung_pay_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.sepa_bank_transfer_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.sepa_debit_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.stripe_balance.payouts.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.sunbit_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.swish_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.twint_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.us_bank_transfer_payments.status_details[].code`, `V2.Core.Account.configuration.merchant.capabilities.zip_payments.status_details[].code`, `V2.Core.Account.configuration.recipient.capabilities.stripe_balance.payouts.status_details[].code`, and `V2.Core.Account.configuration.recipient.capabilities.stripe_balance.stripe_transfers.status_details[].code`
+  * Add support for `satispay_payments` on `V2.Core.Account.configuration.merchant.capabilities`, `V2.Core.AccountCreateParams.configuration.merchant.capabilities`, and `V2.Core.AccountUpdateParams.configuration.merchant.capabilities`
+  * Add support for new values `invalid_address_cmra_address` and `invalid_address_registered_agent_address` on enums `V2.Core.Account.future_requirements.entries[].errors[].code` and `V2.Core.Account.requirements.entries[].errors[].code`
+  * Add support for new values `blik_recurring_payments` and `satispay_payments` on enums `V2.Core.Account.future_requirements.entries[].impact.restricts_capabilities[].capability` and `V2.Core.Account.requirements.entries[].impact.restricts_capabilities[].capability`
+  * Add support for `snapshot_event` on `V2.Core.Event`
+  * Add support for new values `blik_recurring_payments`, `satispay_payments`, and `sequra_payments` on enum `EventsV2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent.updated_capability`
+  * Add support for snapshot events `AppsInstallCreatedEvent`, `AppsInstallDeletedEvent`, and `AppsInstallUpdatedEvent` with resource `Apps.Install`
+  * Add support for event notifications `V1AccountApplicationAuthorizedEvent`, `V1AccountApplicationDeauthorizedEvent`, `V1AccountExternalAccountCreatedEvent`, `V1AccountExternalAccountDeletedEvent`, `V1AccountExternalAccountUpdatedEvent`, `V1BillingPortalSessionCreatedEvent`, and `V1EntitlementsActiveEntitlementSummaryUpdatedEvent`
+  * Add support for event notification `V1AccountUpdatedEvent` with related object `Account`
+  * Add support for event notifications `V1ApplicationFeeCreatedEvent` and `V1ApplicationFeeRefundedEvent` with related object `ApplicationFee`
+  * Add support for event notification `V1ApplicationFeeRefundUpdatedEvent` with related object `FeeRefund`
+  * Add support for event notification `V1BalanceAvailableEvent` with related object `Balance`
+  * Add support for event notification `V1BalanceSettingsUpdatedEvent` with related object `BalanceSettings`
+  * Add support for event notification `V1BillingAlertTriggeredEvent` with related object `Billing.Alert`
+  * Add support for event notification `V1BillingCreditBalanceTransactionCreatedEvent` with related object `Billing.CreditBalanceTransaction`
+  * Add support for event notifications `V1BillingCreditGrantCreatedEvent` and `V1BillingCreditGrantUpdatedEvent` with related object `Billing.CreditGrant`
+  * Add support for event notifications `V1BillingMeterCreatedEvent`, `V1BillingMeterDeactivatedEvent`, `V1BillingMeterReactivatedEvent`, and `V1BillingMeterUpdatedEvent` with related object `Billing.Meter`
+  * Add support for event notifications `V1BillingPortalConfigurationCreatedEvent` and `V1BillingPortalConfigurationUpdatedEvent` with related object `BillingPortal.Configuration`
+  * Add support for event notification `V1CapabilityUpdatedEvent` with related object `Capability`
+  * Add support for event notification `V1CashBalanceFundsAvailableEvent` with related object `CashBalance`
+  * Add support for event notifications `V1ChargeCapturedEvent`, `V1ChargeExpiredEvent`, `V1ChargeFailedEvent`, `V1ChargePendingEvent`, `V1ChargeRefundedEvent`, `V1ChargeSucceededEvent`, and `V1ChargeUpdatedEvent` with related object `Charge`
+  * Add support for event notifications `V1ChargeDisputeClosedEvent`, `V1ChargeDisputeCreatedEvent`, `V1ChargeDisputeFundsReinstatedEvent`, `V1ChargeDisputeFundsWithdrawnEvent`, and `V1ChargeDisputeUpdatedEvent` with related object `Dispute`
+  * Add support for event notifications `V1ChargeRefundUpdatedEvent`, `V1RefundCreatedEvent`, `V1RefundFailedEvent`, and `V1RefundUpdatedEvent` with related object `Refund`
+  * Add support for event notifications `V1CheckoutSessionAsyncPaymentFailedEvent`, `V1CheckoutSessionAsyncPaymentSucceededEvent`, `V1CheckoutSessionCompletedEvent`, and `V1CheckoutSessionExpiredEvent` with related object `Checkout.Session`
+  * Add support for event notifications `V1ClimateOrderCanceledEvent`, `V1ClimateOrderCreatedEvent`, `V1ClimateOrderDelayedEvent`, `V1ClimateOrderDeliveredEvent`, and `V1ClimateOrderProductSubstitutedEvent` with related object `Climate.Order`
+  * Add support for event notifications `V1ClimateProductCreatedEvent` and `V1ClimateProductPricingUpdatedEvent` with related object `Climate.Product`
+  * Add support for event notifications `V1CouponCreatedEvent`, `V1CouponDeletedEvent`, and `V1CouponUpdatedEvent` with related object `Coupon`
+  * Add support for event notifications `V1CreditNoteCreatedEvent`, `V1CreditNoteUpdatedEvent`, and `V1CreditNoteVoidedEvent` with related object `CreditNote`
+  * Add support for event notifications `V1CustomerCreatedEvent`, `V1CustomerDeletedEvent`, and `V1CustomerUpdatedEvent` with related object `Customer`
+  * Add support for event notifications `V1CustomerDiscountCreatedEvent`, `V1CustomerDiscountDeletedEvent`, and `V1CustomerDiscountUpdatedEvent` with related object `Discount`
+  * Add support for event notifications `V1CustomerSubscriptionCreatedEvent`, `V1CustomerSubscriptionDeletedEvent`, `V1CustomerSubscriptionPausedEvent`, `V1CustomerSubscriptionPendingUpdateAppliedEvent`, `V1CustomerSubscriptionPendingUpdateExpiredEvent`, `V1CustomerSubscriptionResumedEvent`, `V1CustomerSubscriptionTrialWillEndEvent`, and `V1CustomerSubscriptionUpdatedEvent` with related object `Subscription`
+  * Add support for event notifications `V1CustomerTaxIdCreatedEvent`, `V1CustomerTaxIdDeletedEvent`, and `V1CustomerTaxIdUpdatedEvent` with related object `TaxId`
+  * Add support for event notification `V1CustomerCashBalanceTransactionCreatedEvent` with related object `CustomerCashBalanceTransaction`
+  * Add support for event notification `V1FileCreatedEvent` with related object `File`
+  * Add support for event notifications `V1FinancialConnectionsAccountAccountNumbersUpdatedEvent`, `V1FinancialConnectionsAccountCreatedEvent`, `V1FinancialConnectionsAccountDeactivatedEvent`, `V1FinancialConnectionsAccountDisconnectedEvent`, `V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent`, `V1FinancialConnectionsAccountReactivatedEvent`, `V1FinancialConnectionsAccountRefreshedBalanceEvent`, `V1FinancialConnectionsAccountRefreshedOwnershipEvent`, `V1FinancialConnectionsAccountRefreshedTransactionsEvent`, `V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent`, `V1FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent`, and `V1FinancialConnectionsAccountUpcomingDeactivationEvent` with related object `FinancialConnections.Account`
+  * Add support for event notifications `V1IdentityVerificationSessionCanceledEvent`, `V1IdentityVerificationSessionCreatedEvent`, `V1IdentityVerificationSessionProcessingEvent`, `V1IdentityVerificationSessionRedactedEvent`, `V1IdentityVerificationSessionRequiresInputEvent`, and `V1IdentityVerificationSessionVerifiedEvent` with related object `Identity.VerificationSession`
+  * Add support for event notifications `V1InvoiceCreatedEvent`, `V1InvoiceDeletedEvent`, `V1InvoiceFinalizationFailedEvent`, `V1InvoiceFinalizedEvent`, `V1InvoiceMarkedUncollectibleEvent`, `V1InvoiceOverdueEvent`, `V1InvoiceOverpaidEvent`, `V1InvoicePaidEvent`, `V1InvoicePaymentActionRequiredEvent`, `V1InvoicePaymentAttemptRequiredEvent`, `V1InvoicePaymentFailedEvent`, `V1InvoicePaymentSucceededEvent`, `V1InvoiceSentEvent`, `V1InvoiceUpcomingEvent`, `V1InvoiceUpdatedEvent`, `V1InvoiceVoidedEvent`, and `V1InvoiceWillBeDueEvent` with related object `Invoice`
+  * Add support for event notification `V1InvoicePaymentPaidEvent` with related object `InvoicePayment`
+  * Add support for event notifications `V1InvoiceitemCreatedEvent` and `V1InvoiceitemDeletedEvent` with related object `InvoiceItem`
+  * Add support for event notifications `V1IssuingAuthorizationCreatedEvent`, `V1IssuingAuthorizationRequestEvent`, and `V1IssuingAuthorizationUpdatedEvent` with related object `Issuing.Authorization`
+  * Add support for event notifications `V1IssuingCardCreatedEvent` and `V1IssuingCardUpdatedEvent` with related object `Issuing.Card`
+  * Add support for event notifications `V1IssuingCardholderCreatedEvent` and `V1IssuingCardholderUpdatedEvent` with related object `Issuing.Cardholder`
+  * Add support for event notifications `V1IssuingDisputeClosedEvent`, `V1IssuingDisputeCreatedEvent`, `V1IssuingDisputeFundsReinstatedEvent`, `V1IssuingDisputeFundsRescindedEvent`, `V1IssuingDisputeSubmittedEvent`, and `V1IssuingDisputeUpdatedEvent` with related object `Issuing.Dispute`
+  * Add support for event notifications `V1IssuingPersonalizationDesignActivatedEvent`, `V1IssuingPersonalizationDesignDeactivatedEvent`, `V1IssuingPersonalizationDesignRejectedEvent`, and `V1IssuingPersonalizationDesignUpdatedEvent` with related object `Issuing.PersonalizationDesign`
+  * Add support for event notifications `V1IssuingTokenCreatedEvent` and `V1IssuingTokenUpdatedEvent` with related object `Issuing.Token`
+  * Add support for event notifications `V1IssuingTransactionCreatedEvent`, `V1IssuingTransactionPurchaseDetailsReceiptUpdatedEvent`, and `V1IssuingTransactionUpdatedEvent` with related object `Issuing.Transaction`
+  * Add support for event notification `V1MandateUpdatedEvent` with related object `Mandate`
+  * Add support for event notifications `V1PaymentIntentAmountCapturableUpdatedEvent`, `V1PaymentIntentCanceledEvent`, `V1PaymentIntentCreatedEvent`, `V1PaymentIntentPartiallyFundedEvent`, `V1PaymentIntentPaymentFailedEvent`, `V1PaymentIntentProcessingEvent`, `V1PaymentIntentRequiresActionEvent`, and `V1PaymentIntentSucceededEvent` with related object `PaymentIntent`
+  * Add support for event notifications `V1PaymentLinkCreatedEvent` and `V1PaymentLinkUpdatedEvent` with related object `PaymentLink`
+  * Add support for event notifications `V1PaymentMethodAttachedEvent`, `V1PaymentMethodAutomaticallyUpdatedEvent`, `V1PaymentMethodDetachedEvent`, and `V1PaymentMethodUpdatedEvent` with related object `PaymentMethod`
+  * Add support for event notifications `V1PayoutCanceledEvent`, `V1PayoutCreatedEvent`, `V1PayoutFailedEvent`, `V1PayoutPaidEvent`, `V1PayoutReconciliationCompletedEvent`, and `V1PayoutUpdatedEvent` with related object `Payout`
+  * Add support for event notifications `V1PersonCreatedEvent`, `V1PersonDeletedEvent`, and `V1PersonUpdatedEvent` with related object `Person`
+  * Add support for event notifications `V1PlanCreatedEvent`, `V1PlanDeletedEvent`, and `V1PlanUpdatedEvent` with related object `Plan`
+  * Add support for event notifications `V1PriceCreatedEvent`, `V1PriceDeletedEvent`, and `V1PriceUpdatedEvent` with related object `Price`
+  * Add support for event notifications `V1ProductCreatedEvent`, `V1ProductDeletedEvent`, and `V1ProductUpdatedEvent` with related object `Product`
+  * Add support for event notifications `V1PromotionCodeCreatedEvent` and `V1PromotionCodeUpdatedEvent` with related object `PromotionCode`
+  * Add support for event notifications `V1QuoteAcceptedEvent`, `V1QuoteCanceledEvent`, `V1QuoteCreatedEvent`, and `V1QuoteFinalizedEvent` with related object `Quote`
+  * Add support for event notifications `V1RadarEarlyFraudWarningCreatedEvent` and `V1RadarEarlyFraudWarningUpdatedEvent` with related object `Radar.EarlyFraudWarning`
+  * Add support for event notifications `V1ReviewClosedEvent` and `V1ReviewOpenedEvent` with related object `Review`
+  * Add support for event notifications `V1SetupIntentCanceledEvent`, `V1SetupIntentCreatedEvent`, `V1SetupIntentRequiresActionEvent`, `V1SetupIntentSetupFailedEvent`, and `V1SetupIntentSucceededEvent` with related object `SetupIntent`
+  * Add support for event notification `V1SigmaScheduledQueryRunCreatedEvent` with related object `Sigma.ScheduledQueryRun`
+  * Add support for event notifications `V1SourceCanceledEvent`, `V1SourceChargeableEvent`, `V1SourceFailedEvent`, and `V1SourceRefundAttributesRequiredEvent` with related object `Source`
+  * Add support for event notifications `V1SubscriptionScheduleAbortedEvent`, `V1SubscriptionScheduleCanceledEvent`, `V1SubscriptionScheduleCompletedEvent`, `V1SubscriptionScheduleCreatedEvent`, `V1SubscriptionScheduleExpiringEvent`, `V1SubscriptionScheduleReleasedEvent`, and `V1SubscriptionScheduleUpdatedEvent` with related object `SubscriptionSchedule`
+  * Add support for event notification `V1TaxSettingsUpdatedEvent` with related object `Tax.Settings`
+  * Add support for event notifications `V1TaxRateCreatedEvent` and `V1TaxRateUpdatedEvent` with related object `TaxRate`
+  * Add support for event notifications `V1TerminalReaderActionFailedEvent`, `V1TerminalReaderActionSucceededEvent`, and `V1TerminalReaderActionUpdatedEvent` with related object `Terminal.Reader`
+  * Add support for event notifications `V1TestHelpersTestClockAdvancingEvent`, `V1TestHelpersTestClockCreatedEvent`, `V1TestHelpersTestClockDeletedEvent`, `V1TestHelpersTestClockInternalFailureEvent`, and `V1TestHelpersTestClockReadyEvent` with related object `TestHelpers.TestClock`
+  * Add support for event notifications `V1TopupCanceledEvent`, `V1TopupCreatedEvent`, `V1TopupFailedEvent`, `V1TopupReversedEvent`, and `V1TopupSucceededEvent` with related object `Topup`
+  * Add support for event notifications `V1TransferCreatedEvent`, `V1TransferReversedEvent`, and `V1TransferUpdatedEvent` with related object `Transfer`
+  * Add support for error codes `dispute_evidence_page_limit_exceeded`, `financial_connections_consent_locale_invalid`, `financial_connections_consent_locale_unsupported`, and `payment_evaluation_on_api_version_not_supported` on `Invoice.last_finalization_error`, `PaymentIntent.last_payment_error`, `SetupAttempt.setup_error`, `SetupIntent.last_setup_error`, `StripeError`, and `Terminal.Reader.action.api_error`
+
 ## <a id="22-6-2"></a>22.6.2 - 2026-09-09
 * [#2841](https://github.com/stripe/stripe-node/pull/2841) Validate that webhook secrets are non-empty
 
@@ -187,6 +376,7 @@ This release changes the pinned API version to `2026-06-24.dahlia`.
 This release changes the pinned API version to `2026-05-27.dahlia`.
 
 * [#2711](https://github.com/stripe/stripe-node/pull/2711) Export manually maintained types for OAuthToken and OAuth param classes
+
   ```ts
   // ❌ Before (v22.0.0-v22.1.1)
   const oAuthToken: Stripe.OAuthToken = {};
@@ -304,6 +494,7 @@ This release changes the pinned API version to `2026-04-22.dahlia`.
 
 ## <a id="22-0-2"></a>22.0.2 - 2026-04-16
 * [#2677](https://github.com/stripe/stripe-node/pull/2677) Fixed named export for Bun
+
   ```ts
   // ✅ Fixed
   import { Stripe } from 'stripe';
@@ -356,6 +547,7 @@ This release uses the same pinned API version to `2026-03-25.dahlia` as the last
 * [#2635](https://github.com/stripe/stripe-node/pull/2635) Updated stripe.spec.ts test and constructEvent.tolerance type
 * [#2638](https://github.com/stripe/stripe-node/pull/2638) Converted V2/Amount.ts to V2/V2Amount.ts
 * ⚠️ [#2643](https://github.com/stripe/stripe-node/pull/2643) Removed per-request host override. To use a custom host, set it in the client configuration. All requests from that client will use that host.
+
   Before:
   ```ts
   import Stripe from 'stripe';
@@ -686,6 +878,7 @@ This release contains breaking changes (prefixed with ⚠️ below)
 * ⚠️ [#2405](https://github.com/stripe/stripe-node/pull/2405) support more npm tags
   - ⚠️ Starting with this release, we'll no longer be tagging releases with `beta` npm tag. Instead, we'll use `latest`, `public-preview`, or `private-preview` to more closely align with Stripe's [release phases](https://docs.stripe.com/release-phases)
 * ⚠️ [#2370](https://github.com/stripe/stripe-node/pull/2370) Add strongly typed EventNotifications
+
   We've overhauled how V2 Events are handled in the SDK! This approach should provide a lot more information at authoring and compile time, leading to more robust integrations. As part of this process, there are a number of changes to be aware of.
   - ⚠️ Rename function `StripeClient.parseThinEvent` to `StripeClient.parseEventNotification` and remove the `Stripe.ThinEvent` interface.
       - This function now returns a `Stripe.V2.EventNotification` which is a union of all possible event notifications instead of `Stripe.ThinEvent`. When applicable, these event notifications will have the `relatedObject` field and a function `fetchRelatedObject()`. They also have a `fetchEvent()` method to retrieve their corresponding event.
@@ -881,6 +1074,7 @@ This release changes the pinned API version to `2025-05-28.basil`.
 ## <a id="18-1-1"></a>18.1.1 - 2025-05-19
 * [#2326](https://github.com/stripe/stripe-node/pull/2326) Adds CONTRIBUTING.md
 * [#2308](https://github.com/stripe/stripe-node/pull/2308) RawRequest now allows you set `host` and `streaming` in request options.
+
   ```typescript
   const file = await stripe.rawRequest(
     'GET',
@@ -926,6 +1120,7 @@ This release changes the pinned API version to `2025-04-30.basil`.
 This release changes the pinned API version to `2025-03-31.basil`.
 
 * [#2279](https://github.com/stripe/stripe-node/pull/2279) Support for APIs in the new API version 2025-03-31.basil
+
   This release changes the pinned API version to `2025-03-31.basil`.
 
   ### ⚠️ Breaking changes due to changes in the Stripe API
@@ -1232,6 +1427,7 @@ This release changes the pinned API version to `2024-10-28.acacia`.
 This release changes the pinned API version to `2024-09-30.acacia`.
 
 * [#2192](https://github.com/stripe/stripe-node/pull/2192) Support for APIs in the new API version 2024-09-30.acacia
+
   This release changes the pinned API version to `2024-09-30.acacia`. Please read the [API Changelog](https://docs.stripe.com/changelog/acacia#2024-09-30.acacia) and carefully review the API changes before upgrading.
 
   ### ⚠️ Breaking changes  due to changes in the Stripe API
@@ -1379,6 +1575,7 @@ This release changes the pinned API version to `2024-06-20`.
 
 * [#2118](https://github.com/stripe/stripe-node/pull/2118) Use worker module in Bun
 * [#2113](https://github.com/stripe/stripe-node/pull/2113) Please read the [API Changelog](https://docs.stripe.com/changelog/2024-06-20) and carefully review the API changes before upgrading.
+
   ### ⚠️ Breaking changes
 
     * Remove the unused resource `PlatformTaxFee`
@@ -2243,6 +2440,7 @@ No product changes.
 
 ## <a id="12-0-0"></a>12.0.0 - 2023-04-06
 * [#1743](https://github.com/stripe/stripe-node/pull/1743) Pin latest API version as the default
+
   **⚠️ ACTION REQUIRED: the breaking change in this release likely affects you ⚠️**
 
   In this release, Stripe API Version `2022-11-15` (the latest at time of release) will be sent by default on all requests.
@@ -2273,6 +2471,7 @@ No product changes.
   Going forward, each major release of this library will be *pinned* by default to the latest Stripe API Version at the time of release.
   That is, instead of upgrading stripe-node and separately upgrading your Stripe API Version through the Stripe Dashboard. whenever you upgrade major versions of stripe-node, you should also upgrade your integration to be compatible with the latest Stripe API version.
 * [#1743](https://github.com/stripe/stripe-node/pull/1743) Remove `Stripe.default` and `Stripe.Stripe`
+
   This was added to maintain backwards compatibility during the transition of stripe-node to a dual ES module / CommonJS package, and should not be functionally necessary.
 
 ## <a id="11-18-0"></a>11.18.0 - 2023-04-06
@@ -2474,6 +2673,7 @@ This release includes breaking changes resulting from moving to use the new API 
 * ⚠️ [#1580](https://github.com/stripe/stripe-node/pull/1580) Remove `Orders` resource.
 * ⚠️ [#1583](https://github.com/stripe/stripe-node/pull/1583) Remove `SKU` resource
 * ⚠️ [#1597](https://github.com/stripe/stripe-node/pull/1597) Remove deprecated configuration setter methods (`setHost`, `setProtocol`, `setPort`, `setApiVersion`, `setApiKey`, `setTimeout`, `setAppInfo`, `setHttpAgent`, `setMaxNetworkRetries`, and `setTelemetryEnabled`).
+
   Use the config object to set these options instead, for example:
   ```typescript
   const stripe = Stripe('sk_test_...', {
@@ -2487,6 +2687,7 @@ This release includes breaking changes resulting from moving to use the new API 
   });
   ```
 * ⚠️ [#1600](https://github.com/stripe/stripe-node/pull/1600) Remove deprecated basic method definitions.
+
   Use basic methods defined on the resource instead.
   ```typescript
   // Before
@@ -4544,6 +4745,7 @@ Pull requests included in this release (cf. [#606](https://github.com/stripe/str
 
 ## <a id="3-5-0"></a>3.5.0 - 2015-06-11
 * Added support for optional parameters when retrieving an upcoming invoice
+
   (Matthew Arkin)
 
 ## <a id="3-4-0"></a>3.4.0 - 2015-06-10
@@ -4683,6 +4885,7 @@ Pull requests included in this release (cf. [#606](https://github.com/stripe/str
 
 ## <a id="1-0-0"></a>1.0.0 - 2011-12-06
 * Add APIs and tests for Plans and "Invoice Items"
+
   (both changes by Ryan Ettipio)
 
 ## <a id="0-0-5"></a>0.0.5 - 2011-11-26
