@@ -1062,11 +1062,11 @@ describe('workload identity', () => {
     });
 
     it('rejects on a transport error', async () => {
-      nock(`https://${WORKLOAD_IDENTITY_TOKEN_HOST}`)
-        .post(WORKLOAD_IDENTITY_TOKEN_PATH)
-        .replyWithError({code: 'ECONNREFUSED', message: 'refused'});
+      const failingFetch = () => Promise.reject(new Error('refused'));
 
-      await expect(postWorkloadIdentityToken('a=b', nodeFetch)).to.be.rejected;
+      await expect(
+        postWorkloadIdentityToken('a=b', failingFetch)
+      ).to.be.rejectedWith('refused');
     });
   });
 
