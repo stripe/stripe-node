@@ -105,7 +105,7 @@ export function attachWorkloadIdentityConfig<T>(
 const EXCHANGE_GUIDANCE =
   'Common causes: the workload identity client ID is invalid or not enabled for workload identity, ' +
   'the client is not configured in the Stripe Dashboard to trust this workload, ' +
-  'the process is not running on supported AWS infrastructure, or the Stripe token exchange is temporarily unavailable.';
+  'or the process is not running on supported AWS infrastructure';
 
 export function validateWorkloadIdentityProvider(
   identityProvider: WorkloadIdentityProvider

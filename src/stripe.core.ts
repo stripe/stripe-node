@@ -1442,12 +1442,6 @@ export class Stripe {
    * Workload identity currently supports AWS only, and is never selected
    * implicitly -- `new Stripe(...)` continues to require an API key.
    *
-   * ```js
-   * import Stripe from 'stripe';
-   * import {awsWorkloadIdentity} from '@stripe/aws-workload-identity';
-   *
-   * const client = Stripe.forWorkloadIdentity('oacli_live_...', awsWorkloadIdentity());
-   * ```
    *
    * @param clientId - A Stripe OAuth client ID (`oacli_live_...` or `oacli_test_...`).
    * @param identityProvider - A workload identity adapter, e.g. `awsWorkloadIdentity()`.
