@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, Metadata, OtherString} from '../../../shared.js';
+import {
+  MetadataParam,
+  RangeQueryParam,
+  Metadata,
+  OtherString,
+} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class TransactionResource extends StripeResource {
@@ -49,6 +54,23 @@ export class TransactionResource extends StripeResource {
     return this._makeRequest(
       'POST',
       `/v2/money_management/transactions/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Creates a fresh hosted URL for a Transaction's regulatory receipt.
+   */
+  refreshRegulatoryReceipt(
+    id: string,
+    params?: V2.MoneyManagement.TransactionRefreshRegulatoryReceiptParams,
+    options?: RequestOptions
+  ): Promise<Response<Transaction>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/transactions/${encodeURIComponent(
+        id
+      )}/refresh_regulatory_receipt`,
       params,
       options
     ) as any;
@@ -119,6 +141,11 @@ export interface Transaction {
   metadata?: Metadata;
 
   /**
+   * Hosted transaction receipt that is provided when money movement is considered regulated under Stripe's money transmission licenses. If not applicable, `regulatory_receipt.status` will be `not_applicable` and no URL will be provided.
+   */
+  regulatory_receipt: Transaction.RegulatoryReceipt;
+
+  /**
    * Closed Enum. Current status of the Transaction.
    * A Transaction is `pending` if either `balance_impact.inbound_pending` or `balance_impact.outbound_pending` is non-zero.
    * A Transaction is `posted` if only `balance_impact.available` is non-zero.
@@ -170,6 +197,7 @@ export namespace Transaction {
     | 'debit_dispute'
     | 'dispute'
     | 'dispute_reversal'
+    | 'earned_credit'
     | 'financing_paydown'
     | 'financing_paydown_reversal'
     | 'inbound_payment'
@@ -261,6 +289,11 @@ export namespace Transaction {
      * If applicable, the ID of the Dispute that created this Transaction.
      */
     dispute?: string;
+
+    /**
+     * If applicable, the ID of the EarnedCredit that created this Transaction.
+     */
+    earned_credit?: string;
 
     /**
      * If applicable, the ID of the FeeTransaction that created this Transaction.
@@ -393,6 +426,23 @@ export namespace Transaction {
     type: Flow.Type;
   }
 
+  export interface RegulatoryReceipt {
+    /**
+     * Current availability of the regulatory receipt.
+     */
+    status: RegulatoryReceipt.Status;
+
+    /**
+     * Hosted URL for the receipt.
+     */
+    url?: string;
+
+    /**
+     * Time until which `url` is valid.
+     */
+    url_expires_at?: string;
+  }
+
   export type Status = 'pending' | 'posted' | 'void';
 
   export interface StatusTransitions {
@@ -416,6 +466,7 @@ export namespace Transaction {
       | 'currency_conversion'
       | 'debit_dispute'
       | 'dispute'
+      | 'earned_credit'
       | 'fee_transaction'
       | 'inbound_transfer'
       | 'issuing_authorization'
@@ -444,6 +495,14 @@ export namespace Transaction {
       | 'treasury_received_debit'
       | OtherString;
   }
+
+  export namespace RegulatoryReceipt {
+    export type Status =
+      | 'available'
+      | 'not_applicable'
+      | 'pending'
+      | 'url_expired';
+  }
 }
 export namespace V2 {
   export namespace MoneyManagement {
@@ -470,29 +529,9 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface TransactionListParams {
       /**
-       * Filter for Transactions created at an exact time.
+       * Set of filters to query Transactions within a range of `created` timestamps.
        */
-      created?: string;
-
-      /**
-       * Filter for Transactions created after the specified timestamp.
-       */
-      created_gt?: string;
-
-      /**
-       * Filter for Transactions created at or after the specified timestamp.
-       */
-      created_gte?: string;
-
-      /**
-       * Filter for Transactions created before the specified timestamp.
-       */
-      created_lt?: string;
-
-      /**
-       * Filter for Transactions created at or before the specified timestamp.
-       */
-      created_lte?: string;
+      created?: RangeQueryParam;
 
       /**
        * Filter for Transactions belonging to a FinancialAccount.
@@ -509,5 +548,10 @@ export namespace V2 {
        */
       limit?: number;
     }
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface TransactionRefreshRegulatoryReceiptParams {}
   }
 }

@@ -5,7 +5,7 @@ import {V2Amount} from './../V2Amounts.js';
 import {
   MetadataParam,
   OtherString,
-  AddressParam,
+  Address,
   Metadata,
 } from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
@@ -382,11 +382,6 @@ export namespace OffSessionPayment {
      * Indicates the strategy for how you want Stripe to retry the payment.
      */
     retry_strategy: RetryDetails.RetryStrategy;
-
-    /**
-     * The timestamp when this payment is no longer eligible to be retried. When this timestamp is reached, the payment will be marked as failed.
-     */
-    retry_until?: string;
   }
 
   export type Status =
@@ -898,7 +893,7 @@ export namespace V2 {
           /**
            * Billing address.
            */
-          address?: AddressParam;
+          address?: BillingDetails.Address;
 
           /**
            * Email address.
@@ -918,11 +913,6 @@ export namespace V2 {
 
         export interface Card {
           /**
-           * The card CVC.
-           */
-          cvc?: string;
-
-          /**
            * The card expiration month.
            */
           exp_month: string;
@@ -939,6 +929,40 @@ export namespace V2 {
         }
 
         export type Type = 'card' | OtherString;
+
+        export namespace BillingDetails {
+          export interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code (ISO 3166-1 alpha-2).
+             */
+            country?: string;
+
+            /**
+             * Address line 1, such as the street, PO Box, or company name.
+             */
+            line1?: string;
+
+            /**
+             * Address line 2, such as the apartment, suite, unit, or building.
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region (ISO 3166-2).
+             */
+            state?: string;
+          }
+        }
       }
 
       export namespace PaymentMethodOptions {

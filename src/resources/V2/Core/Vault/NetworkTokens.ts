@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../../StripeResource.js';
+import {OtherString} from '../../../../shared.js';
 import {RequestOptions, Response} from '../../../../lib.js';
 
 export class NetworkTokenResource extends StripeResource {
@@ -115,6 +116,11 @@ export interface NetworkToken {
   number?: string;
 
   /**
+   * The origin of the resource used to provision this network token.
+   */
+  origin: NetworkToken.Origin;
+
+  /**
    * Closed Enum. The status of the network token.
    */
   status: NetworkToken.Status;
@@ -137,7 +143,9 @@ export namespace NetworkToken {
     value: string;
   }
 
-  export type Status = 'active' | 'deactivated' | 'suspended';
+  export type Origin = 'card_on_file' | 'wallet' | OtherString;
+
+  export type Status = 'active' | 'deactivated' | 'suspended' | OtherString;
 }
 export namespace V2 {
   export namespace Core {
@@ -146,7 +154,7 @@ export namespace V2 {
         /**
          * Private preview supports card only.
          */
-        type: 'card';
+        type: NetworkTokenCreateParams.Type;
 
         /**
          * Raw card values used to provision the network token.
@@ -155,6 +163,8 @@ export namespace V2 {
       }
 
       export namespace NetworkTokenCreateParams {
+        export type Type = 'card' | OtherString;
+
         export interface Card {
           /**
            * The two-digit number representing the card's expiration month.
@@ -174,7 +184,7 @@ export namespace V2 {
           /**
            * The optional origin attestation for the card.
            */
-          origin?: 'card_on_file';
+          origin?: Card.Origin;
 
           /**
            * Optional owner contact details used only when a network requires them for raw-card tokenization.
@@ -183,6 +193,8 @@ export namespace V2 {
         }
 
         export namespace Card {
+          export type Origin = 'card_on_file' | 'wallet' | OtherString;
+
           export interface OwnerDetails {
             /**
              * Cardholder email address.
@@ -213,7 +225,7 @@ export namespace V2 {
         /**
          * Private preview supports card only.
          */
-        type: 'card';
+        type: NetworkTokenCreateFromCredentialParams.Type;
 
         /**
          * The existing Stripe card reference to provision or resolve.
@@ -222,16 +234,22 @@ export namespace V2 {
       }
 
       export namespace NetworkTokenCreateFromCredentialParams {
+        export type Type = 'card' | OtherString;
+
         export interface Card {
           /**
            * The optional origin attestation for the referenced card.
            */
-          origin?: 'card_on_file';
+          origin?: Card.Origin;
 
           /**
            * A supported v2 Card ID or v1 PaymentMethod ID of type card.
            */
           reference: string;
+        }
+
+        export namespace Card {
+          export type Origin = 'card_on_file' | 'wallet' | OtherString;
         }
       }
     }
@@ -244,7 +262,11 @@ export namespace V2 {
         /**
          * The cryptogram type. When omitted, token_cryptogram is used.
          */
-        type?: 'token_cryptogram';
+        type?: NetworkTokenGenerateCryptogramParams.Type;
+      }
+
+      export namespace NetworkTokenGenerateCryptogramParams {
+        export type Type = 'token_cryptogram' | OtherString;
       }
     }
   }

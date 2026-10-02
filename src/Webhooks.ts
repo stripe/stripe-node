@@ -156,7 +156,7 @@ export function createWebhooks(
           payload,
           header,
           secret,
-          tolerance || Webhook.DEFAULT_TOLERANCE,
+          tolerance ?? Webhook.DEFAULT_TOLERANCE,
           cryptoProvider,
           receivedAt
         );
@@ -189,7 +189,7 @@ export function createWebhooks(
         payload,
         header,
         secret,
-        tolerance || Webhook.DEFAULT_TOLERANCE,
+        tolerance ?? Webhook.DEFAULT_TOLERANCE,
         cryptoProvider,
         receivedAt
       );
@@ -272,17 +272,12 @@ export function createWebhooks(
         secret
       );
 
-      /**
-       * TODO(MAJOR): https://go/j/DEVSDK-3087
-       * Passing in 0 by default skips timestamp tolerance verifications. Although it is mostly used in test,
-       * we should change the default behavior to pass DEFAULT_TOLERANCE instead of 0 in the next major.
-       */
       validateComputedSignature(
         payload,
         header,
         details,
         expectedSignature,
-        tolerance || 0,
+        tolerance ?? Webhook.DEFAULT_TOLERANCE,
         suspectPayloadType,
         secretContainsWhitespace,
         receivedAt
@@ -324,17 +319,12 @@ export function createWebhooks(
         secret
       );
 
-      /**
-       * TODO(MAJOR): https://go/j/DEVSDK-3087
-       * Passing in 0 by default skips timestamp tolerance verifications. Although it is mostly used in test,
-       * we should change the default behavior to pass DEFAULT_TOLERANCE instead of 0 in the next major.
-       */
       return validateComputedSignature(
         payload,
         header,
         details,
         expectedSignature,
-        tolerance || 0,
+        tolerance ?? Webhook.DEFAULT_TOLERANCE,
         suspectPayloadType,
         secretContainsWhitespace,
         receivedAt
@@ -434,9 +424,6 @@ export function createWebhooks(
    * expected signature, and that the event timestamp is within the allowed
    * {@link tolerance} window (in seconds). Set `tolerance` to `0` to skip
    * timestamp verification.
-   *
-   * TODO(MAJOR): https://go/j/DEVSDK-3087 - Change this default behavior to use DEFAULT_TOLERANCE instead of 0.
-   * By default, validateComputedSignature doesn't perform timestamp verification.
    *
    * This method is mostly meant for tests or offline processing where the delivery time
    * of the event isn't important.

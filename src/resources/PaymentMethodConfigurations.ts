@@ -216,6 +216,8 @@ export interface PaymentMethodConfiguration {
 
   sepa_debit?: PaymentMethodConfiguration.SepaDebit;
 
+  sequra?: PaymentMethodConfiguration.Sequra;
+
   shopeepay?: PaymentMethodConfiguration.Shopeepay;
 
   sofort?: PaymentMethodConfiguration.Sofort;
@@ -721,6 +723,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: SepaDebit.DisplayPreference;
+  }
+
+  export interface Sequra {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Sequra.DisplayPreference;
   }
 
   export interface Shopeepay {
@@ -2163,6 +2174,31 @@ export namespace PaymentMethodConfiguration {
     }
   }
 
+  export namespace Sequra {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace Shopeepay {
     export interface DisplayPreference {
       /**
@@ -2710,6 +2746,11 @@ export interface PaymentMethodConfigurationCreateParams {
   sepa_debit?: PaymentMethodConfigurationCreateParams.SepaDebit;
 
   /**
+   * SeQura is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that offers customers payment terms ranging from 7-120 days. Customers are redirected from your website or app, authorize the payment with SeQura, then return to your website or app. You get [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+   */
+  sequra?: PaymentMethodConfigurationCreateParams.Sequra;
+
+  /**
    * ShopeePay is a [single use](https://docs.stripe.com/payments/payment-methods#usage) digital wallet payment method popular in Indonesia. When paying with GoPay, customers authenticate and approve payments using the Shopee app. Desktop checkout is performed by scanning a QR code. When checking out on mobile, customers are redirected to the Shopee app to confirm payment.
    */
   shopeepay?: PaymentMethodConfigurationCreateParams.Shopeepay;
@@ -3150,6 +3191,13 @@ export namespace PaymentMethodConfigurationCreateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: SepaDebit.DisplayPreference;
+  }
+
+  export interface Sequra {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Sequra.DisplayPreference;
   }
 
   export interface Shopeepay {
@@ -3938,6 +3986,19 @@ export namespace PaymentMethodConfigurationCreateParams {
   }
 
   export namespace SepaDebit {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Sequra {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
@@ -4383,6 +4444,11 @@ export interface PaymentMethodConfigurationUpdateParams {
   sepa_debit?: PaymentMethodConfigurationUpdateParams.SepaDebit;
 
   /**
+   * SeQura is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that offers customers payment terms ranging from 7-120 days. Customers are redirected from your website or app, authorize the payment with SeQura, then return to your website or app. You get [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+   */
+  sequra?: PaymentMethodConfigurationUpdateParams.Sequra;
+
+  /**
    * ShopeePay is a [single use](https://docs.stripe.com/payments/payment-methods#usage) digital wallet payment method popular in Indonesia. When paying with GoPay, customers authenticate and approve payments using the Shopee app. Desktop checkout is performed by scanning a QR code. When checking out on mobile, customers are redirected to the Shopee app to confirm payment.
    */
   shopeepay?: PaymentMethodConfigurationUpdateParams.Shopeepay;
@@ -4823,6 +4889,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: SepaDebit.DisplayPreference;
+  }
+
+  export interface Sequra {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Sequra.DisplayPreference;
   }
 
   export interface Shopeepay {
@@ -5611,6 +5684,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 
   export namespace SepaDebit {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Sequra {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.

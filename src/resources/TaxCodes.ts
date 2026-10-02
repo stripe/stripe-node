@@ -56,7 +56,7 @@ export interface TaxCode {
   /**
    * An object that describes more information about the tax location required for this tax code. Some tax codes require a [performance location](https://docs.stripe.com/tax/location-sales#required-versus-optional-performance-locations) to calculate tax correctly.
    */
-  requirements?: TaxCode.Requirements | null;
+  requirements: TaxCode.Requirements | null;
 }
 export namespace TaxCode {
   export interface Requirements {

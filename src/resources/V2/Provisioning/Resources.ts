@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {ResourceAccessConfiguration} from './ResourceAccessConfigurations.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class ResourceResource extends StripeResource {
@@ -73,6 +74,26 @@ export class ResourceResource extends StripeResource {
     return this._makeRequest(
       'POST',
       `/v2/provisioning/resources/${encodeURIComponent(id)}/remove`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Reveals the current provider-issued access configuration for a completed Resource.
+   * This is a read-only disclosure: it does not create, refresh, mint, or rotate credentials.
+   * Repeated calls are safe and do not require an idempotency key, but can return a newer
+   * configuration after a separate Rotate operation completes.
+   */
+  revealAccessConfiguration(
+    id: string,
+    params?: V2.Provisioning.ResourceRevealAccessConfigurationParams,
+    options?: RequestOptions
+  ): Promise<Response<ResourceAccessConfiguration>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/provisioning/resources/${encodeURIComponent(
+        id
+      )}/reveal_access_configuration`,
       params,
       options
     ) as any;
@@ -208,7 +229,8 @@ export namespace V2 {
       environment?: ResourceCreateParams.Environment;
 
       /**
-       * Whether the resource should use Stripe live-mode objects. When omitted, this resolves to true.
+       * Whether the resource should use Stripe live-mode objects. When omitted, this resolves to false
+       * for a sandbox target and true otherwise. Sandbox targets cannot create live-mode resources.
        */
       livemode?: boolean;
 
@@ -292,7 +314,8 @@ export namespace V2 {
       environment?: ResourceLinkParams.Environment;
 
       /**
-       * Whether the resource should use Stripe live-mode objects. When omitted, this resolves to true.
+       * Whether the resource should use Stripe live-mode objects. When omitted, this resolves to false
+       * for a sandbox target and true otherwise. Sandbox targets cannot link live-mode resources.
        */
       livemode?: boolean;
 
@@ -312,6 +335,11 @@ export namespace V2 {
 export namespace V2 {
   export namespace Provisioning {
     export interface ResourceRemoveParams {}
+  }
+}
+export namespace V2 {
+  export namespace Provisioning {
+    export interface ResourceRevealAccessConfigurationParams {}
   }
 }
 export namespace V2 {

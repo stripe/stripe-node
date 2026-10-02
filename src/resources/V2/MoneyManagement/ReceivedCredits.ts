@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {OtherString} from '../../../shared.js';
+import {RangeQueryParam, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ReceivedCreditResource extends StripeResource {
@@ -542,7 +542,7 @@ export namespace ReceivedCredit {
     }
 
     export namespace CaBankAccount {
-      export type Network = 'acss' | OtherString;
+      export type Network = 'acss' | 'swift' | OtherString;
     }
 
     export namespace EuBankAccount {
@@ -550,7 +550,7 @@ export namespace ReceivedCredit {
     }
 
     export namespace GbBankAccount {
-      export type Network = 'chaps' | 'fps' | OtherString;
+      export type Network = 'chaps' | 'fps' | 'swift' | OtherString;
     }
 
     export namespace MxBankAccount {
@@ -764,7 +764,12 @@ export namespace ReceivedCredit {
         | OtherString;
 
       export namespace Aba {
-        export type Network = 'ach' | 'rtp' | 'us_domestic_wire' | OtherString;
+        export type Network =
+          | 'ach'
+          | 'rtp'
+          | 'swift'
+          | 'us_domestic_wire'
+          | OtherString;
       }
 
       export namespace Clabe {
@@ -772,24 +777,29 @@ export namespace ReceivedCredit {
       }
 
       export namespace Cpa {
-        export type Network = 'acss' | OtherString;
+        export type Network = 'acss' | 'swift' | OtherString;
       }
 
       export namespace Iban {
-        export type Network = 'sepa_credit_transfer' | OtherString;
+        export type Network = 'sepa_credit_transfer' | 'swift' | OtherString;
       }
 
       export namespace SortCode {
-        export type Network = 'chaps' | 'fps' | OtherString;
+        export type Network = 'chaps' | 'fps' | 'swift' | OtherString;
       }
     }
 
     export namespace SepaBankAccount {
-      export type Network = 'sepa_credit_transfer' | OtherString;
+      export type Network = 'sepa_credit_transfer' | 'swift' | OtherString;
     }
 
     export namespace UsBankAccount {
-      export type Network = 'ach' | 'rtp' | 'us_domestic_wire' | OtherString;
+      export type Network =
+        | 'ach'
+        | 'rtp'
+        | 'swift'
+        | 'us_domestic_wire'
+        | OtherString;
     }
   }
 
@@ -900,34 +910,9 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface ReceivedCreditListParams {
       /**
-       * Filter for objects created at the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+       * Hash of options for filtering on creation time.
        */
-      created?: string;
-
-      /**
-       * Filter for objects created after the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_gt?: string;
-
-      /**
-       * Filter for objects created on or after the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_gte?: string;
-
-      /**
-       * Filter for objects created before the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_lt?: string;
-
-      /**
-       * Filter for objects created on or before the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_lte?: string;
+      created?: RangeQueryParam;
 
       /**
        * The page limit.

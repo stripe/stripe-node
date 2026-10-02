@@ -15,7 +15,7 @@ export class SettingResource extends StripeResource {
     return this._makeRequest('GET', '/v1/tax/settings', params, options) as any;
   }
   /**
-   * Updates Tax Settings parameters used in tax calculations. All parameters are editable but none can be removed once set.
+   * Updates Tax Settings parameters used in tax calculations. All parameters are editable but none can be removed once set. Check the returned Tax Settings object and validate that its status is active.
    */
   update(
     params?: Tax.SettingsUpdateParams,
@@ -66,7 +66,7 @@ export interface Settings {
   livemode: boolean;
 
   /**
-   * The status of the Tax `Settings`.
+   * Whether these settings have the information Stripe Tax needs to calculate tax. It doesn't reflect whether your integration is ready to collect tax.
    */
   status: Settings.Status;
 

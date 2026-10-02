@@ -2406,6 +2406,11 @@ export interface CustomerCreateTaxExemptionParams {
   ca?: CustomerCreateTaxExemptionParams.Ca;
 
   /**
+   * Spain-specific exemption details. Optional when country is ES; must be absent otherwise.
+   */
+  es?: CustomerCreateTaxExemptionParams.Es;
+
+  /**
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
@@ -2431,6 +2436,13 @@ export namespace CustomerCreateTaxExemptionParams {
      * The type of Canadian tax (gst_hst, PST, QST, RST).
      */
     tax_type: Ca.TaxType;
+  }
+
+  export interface Es {
+    /**
+     * Two-letter Spanish subdivision code (ISO 3166-2).
+     */
+    state: string;
   }
 
   export interface Us {

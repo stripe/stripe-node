@@ -24,7 +24,7 @@ export class ScheduledQueryRunResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieves the details of an scheduled query run.
+   * Retrieves the details of a scheduled query run.
    */
   retrieve(
     id: string,

@@ -68,7 +68,6 @@ const bad = new Stripe('sk_test_123', {unknownProperty: true});
 
 // Webhook methods: constructEventWithoutVerification and parseEventNotificationWithoutVerification
 event = stripe.webhooks.constructEventWithoutVerification('payload');
-event = stripe.constructEventWithoutVerification('payload');
 const _notificationWV: Stripe.V2.Core.EventNotification = stripe.parseEventNotificationWithoutVerification(
   'payload'
 );

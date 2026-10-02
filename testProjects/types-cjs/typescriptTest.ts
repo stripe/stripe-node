@@ -443,7 +443,6 @@ event = stripe.webhooks.constructEvent(
 
 // constructEventWithoutVerification on webhooks object and client
 event = stripe.webhooks.constructEventWithoutVerification('payload');
-event = stripe.constructEventWithoutVerification('payload');
 
 // parseEventNotificationWithoutVerification on client
 const _notificationWV: Stripe.V2.Core.EventNotification =

@@ -1,10 +1,21 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {Metadata, OtherString} from '../../shared.js';
-import {RequestOptions, Response} from '../../lib.js';
+import {PaginationParams, OtherString, Metadata} from '../../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class PlanResource extends StripeResource {
+  /**
+   * Returns a list of ReservePlans previously created. The ReservePlans are returned in sorted order, with the most recent ReservePlans appearing first.
+   */
+  list(
+    params?: Reserve.PlanListParams,
+    options?: RequestOptions
+  ): ApiListPromise<Plan> {
+    return this._makeRequest('GET', '/v1/reserve/plans', params, options, {
+      methodType: 'list',
+    }) as any;
+  }
   /**
    * Retrieve a ReservePlan.
    */
@@ -48,6 +59,11 @@ export interface Plan {
   currency: string | null;
 
   /**
+   * The balance destination to which the reserved funds are sent.
+   */
+  destination: Plan.Destination;
+
+  /**
    * Time at which the ReservePlan was disabled.
    */
   disabled_at: number | null;
@@ -58,6 +74,8 @@ export interface Plan {
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
+
+  manual_release?: Plan.ManualRelease;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -84,6 +102,8 @@ export interface Plan {
 export namespace Plan {
   export type CreatedBy = 'application' | 'stripe' | OtherString;
 
+  export type Destination = 'other' | 'risk_reserved' | 'settlement_reserved';
+
   export interface FixedRelease {
     /**
      * The time after which all reserved funds are requested for release.
@@ -95,6 +115,8 @@ export namespace Plan {
      */
     scheduled_release: number;
   }
+
+  export interface ManualRelease {}
 
   export interface RollingRelease {
     /**
@@ -108,9 +130,13 @@ export namespace Plan {
     expires_on: number | null;
   }
 
-  export type Status = 'active' | 'disabled' | 'expired' | OtherString;
+  export type Status = 'active' | 'disabled' | 'expired' | 'other';
 
-  export type Type = 'fixed_release' | 'rolling_release' | OtherString;
+  export type Type =
+    | 'fixed_release'
+    | 'manual_release'
+    | 'other'
+    | 'rolling_release';
 }
 export namespace Reserve {
   export interface PlanRetrieveParams {
@@ -118,5 +144,32 @@ export namespace Reserve {
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+  }
+}
+export namespace Reserve {
+  export interface PlanListParams extends PaginationParams {
+    /**
+     * Only return ReservePlans with the specified destination. If omitted, returns ReservePlans with any destination.
+     */
+    destination?: PlanListParams.Destination;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Only return ReservePlans with the specified status. If omitted, returns ReservePlans with any status.
+     */
+    status?: PlanListParams.Status;
+  }
+
+  export namespace PlanListParams {
+    export type Destination =
+      | 'risk_reserved'
+      | 'settlement_reserved'
+      | OtherString;
+
+    export type Status = 'active' | 'disabled' | 'expired' | OtherString;
   }
 }

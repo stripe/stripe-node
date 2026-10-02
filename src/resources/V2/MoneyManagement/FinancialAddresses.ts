@@ -192,6 +192,11 @@ export namespace FinancialAddress {
       bank_name?: string;
 
       /**
+       * The SWIFT/BIC code.
+       */
+      bic?: string;
+
+      /**
        * The last four digits of the account number.
        */
       last4: string;
@@ -231,6 +236,11 @@ export namespace FinancialAddress {
       bank_name: string;
 
       /**
+       * The SWIFT/BIC code.
+       */
+      bic?: string;
+
+      /**
        * The institution number.
        */
       institution_number: string;
@@ -258,6 +268,11 @@ export namespace FinancialAddress {
       bank_name: string;
 
       /**
+       * The SWIFT/BIC code.
+       */
+      bic: string;
+
+      /**
        * The country of the bank account.
        */
       country: string;
@@ -283,6 +298,16 @@ export namespace FinancialAddress {
        * The full account number.
        */
       account_number?: string;
+
+      /**
+       * The SWIFT/BIC code.
+       */
+      bic?: string;
+
+      /**
+       * The full IBAN.
+       */
+      iban?: string;
 
       /**
        * The last four digits of the account number.

@@ -28,6 +28,7 @@ import {
   ProviderConnectionRequestResource,
 } from './ProviderConnectionRequests.js';
 import {V2 as V2Namespace6, Resource, ResourceResource} from './Resources.js';
+import {ResourceAccessConfiguration} from './ResourceAccessConfigurations.js';
 import {Provider} from './Providers.js';
 import {ProviderServiceDetail} from './ProviderServiceDetails.js';
 import {Catalog} from './Catalog/index.js';
@@ -39,6 +40,7 @@ export {Project} from './Projects.js';
 export {ProviderConnection} from './ProviderConnections.js';
 export {ProviderConnectionRequest} from './ProviderConnectionRequests.js';
 export {Resource} from './Resources.js';
+export {ResourceAccessConfiguration} from './ResourceAccessConfigurations.js';
 export {Provider} from './Providers.js';
 export {ProviderServiceDetail} from './ProviderServiceDetails.js';
 
@@ -88,10 +90,12 @@ export declare namespace Provisioning {
   export import ResourceRetrieveParams = V2Namespace6.Provisioning.ResourceRetrieveParams;
   export import ResourceUpdateParams = V2Namespace6.Provisioning.ResourceUpdateParams;
   export import ResourceRemoveParams = V2Namespace6.Provisioning.ResourceRemoveParams;
+  export import ResourceRevealAccessConfigurationParams = V2Namespace6.Provisioning.ResourceRevealAccessConfigurationParams;
   export import ResourceRotateCredentialsParams = V2Namespace6.Provisioning.ResourceRotateCredentialsParams;
   export import ResourceSubmitInformationParams = V2Namespace6.Provisioning.ResourceSubmitInformationParams;
   export import ResourceUnlinkParams = V2Namespace6.Provisioning.ResourceUnlinkParams;
   export {Resource, ResourceResource};
+  export {ResourceAccessConfiguration};
   export {Provider};
   export {ProviderServiceDetail};
   export {Catalog};

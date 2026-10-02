@@ -108,11 +108,6 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
 
   const cusList: Stripe.ApiList<Stripe.Customer> = await stripe.customers.list();
 
-  /**
-   * TODO(DEVSDK-2534): remove this test when we fix V2List at next major.
-   */
-  const v2EventsListBC: Stripe.ApiList<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
-
   const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
 
   const aThousandCustomers: Array<Stripe.Customer> = await stripe.customers
@@ -273,20 +268,16 @@ const instanceofCheck2 = {} instanceof Stripe.errors.StripeAPIError;
 const instanceofCheck5 = {} instanceof stripe.errors.StripeError;
 const instanceofCheck6 = {} instanceof stripe.errors.StripeAPIError;
 
-// ErrorType namespace provides type-level access (DEVSDK-3141)
-let errorTypeCheck1: Stripe.ErrorType.StripeError;
-let errorTypeCheck2: Stripe.ErrorType.StripeCardError;
-let errorTypeCheck3: Stripe.ErrorType.StripeInvalidRequestError;
+// errors namespace provides type-level access
+let errorsCheck1: Stripe.errors.StripeError;
+let errorsCheck2: Stripe.errors.StripeCardError;
+let errorsCheck3: Stripe.errors.StripeInvalidRequestError;
 
-// Stripe.errors and Stripe.ErrorType are interchangeable as types
-const errorTypeInterchangeable = (
-  e: Stripe.errors.StripeError
-): Stripe.ErrorType.StripeError => e;
 
 // instanceof narrows to the correct type
 const instanceofNarrowing = (
   e: unknown
-): Stripe.ErrorType.StripeError | null => {
+): Stripe.errors.StripeError | null => {
   if (e instanceof Stripe.errors.StripeError) {
     return e;
   }
@@ -294,7 +285,7 @@ const instanceofNarrowing = (
 };
 
 // Error objects expose generated fields with proper types
-const errorFieldAccess = (e: Stripe.ErrorType.StripeError): void => {
+const errorFieldAccess = (e: Stripe.errors.StripeError): void => {
   const networkAdviceCode: string | undefined = e.network_advice_code;
   const networkDeclineCode: string | undefined = e.network_decline_code;
   const adviceCode: string | undefined = e.advice_code;
@@ -540,7 +531,6 @@ event = stripe.webhooks.constructEvent(
 
 // constructEventWithoutVerification on webhooks object and client
 event = stripe.webhooks.constructEventWithoutVerification('payload');
-event = stripe.constructEventWithoutVerification('payload');
 
 // parseEventNotificationWithoutVerification on client
 const _notificationWV: Stripe.V2.Core.EventNotification = stripe.parseEventNotificationWithoutVerification(

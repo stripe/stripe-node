@@ -22,7 +22,10 @@ import {
 } from '../src/Error.js';
 import {RequestSender} from '../src/RequestSender.js';
 import {ApiVersion} from '../src/apiVersion.js';
-import {HttpClientResponse} from '../src/net/HttpClient.js';
+import {
+  HttpClientResponse,
+  HttpClientResponseBodyError,
+} from '../src/net/HttpClient.js';
 import {
   FAKE_API_KEY,
   getSpyableStripe,
@@ -468,31 +471,49 @@ describe('RequestSender', () => {
       // });
 
       it('handles . as a query param', (done) => {
-        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
-          .get('/v1/customers/.', '')
-          .reply(200, '{}');
-
-        realStripe.customers
-          .retrieve('.')
-          .then((response) => {
-            scope.done();
-            done();
-          })
-          .catch(done);
+        let requestUrl;
+        return getTestServerStripe(
+          {},
+          (req, res) => {
+            requestUrl = req.url;
+            res.end('{}');
+          },
+          (err, stripe) => {
+            if (err) {
+              return done(err);
+            }
+            stripe.customers
+              .retrieve('.')
+              .then(() => {
+                expect(requestUrl).to.equal('/v1/customers/.');
+                done();
+              })
+              .catch(done);
+          }
+        );
       });
 
       it('handles .. as a query param', (done) => {
-        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
-          .get('/v1/customers/..', '')
-          .reply(200, '{}');
-
-        realStripe.customers
-          .retrieve('..')
-          .then((response) => {
-            scope.done();
-            done();
-          })
-          .catch(done);
+        let requestUrl;
+        return getTestServerStripe(
+          {},
+          (req, res) => {
+            requestUrl = req.url;
+            res.end('{}');
+          },
+          (err, stripe) => {
+            if (err) {
+              return done(err);
+            }
+            stripe.customers
+              .retrieve('..')
+              .then(() => {
+                expect(requestUrl).to.equal('/v1/customers/..');
+                done();
+              })
+              .catch(done);
+          }
+        );
       });
 
       it('handles empty string as a query param', (done) => {
@@ -957,6 +978,7 @@ describe('RequestSender', () => {
                 done(new Error('Expected an error'));
               })
               .catch((err) => {
+                expect(err).to.be.an.instanceOf(StripeAPIError);
                 expect(err.message).to.deep.equal(
                   'Invalid JSON received from the Stripe API'
                 );
@@ -1085,15 +1107,14 @@ describe('RequestSender', () => {
             );
           });
 
-          // A StripeAPIError is not really the right shape for a severed
-          // connection, but it is what the fetch client already threw here, so
-          // it is preserved until the next major.
-          // TODO(DEVSDK-3247): report every HttpClientResponseBodyError as a
-          it('throws an API error when the connection drops after the headers arrive', (done) => {
+          it('throws a connection error when the connection drops after the headers arrive', (done) => {
             return getTestServerStripe(
               {timeout: 5000, maxNetworkRetries: 0, httpClient},
               (req, res) => {
-                res.writeHead(200, {'Content-Length': '100'});
+                res.writeHead(200, {
+                  'Content-Length': '100',
+                  'Request-Id': 'req_test_response_body',
+                });
                 res.write('{"ab');
                 // Flush the headers and partial body before severing, so this
                 // fails while reading the body rather than before it.
@@ -1109,9 +1130,13 @@ describe('RequestSender', () => {
                   closeServer,
                   done,
                   (err) => {
-                    expect(err).to.be.an.instanceOf(StripeAPIError);
+                    expect(err).to.be.an.instanceOf(StripeConnectionError);
                     expect(err.message).to.deep.equal(
-                      'Invalid JSON received from the Stripe API'
+                      'An error occurred with our connection to Stripe.'
+                    );
+                    expect(err.requestId).to.equal('req_test_response_body');
+                    expect(err.detail).to.be.an.instanceOf(
+                      HttpClientResponseBodyError
                     );
                   }
                 );
@@ -1121,11 +1146,7 @@ describe('RequestSender', () => {
         });
       });
 
-      // Pins the error identity a stalled download surfaces, which is the
-      // coupled cost of reporting a stalled toJSON() body as a timeout. The
-      // TODO(DEVSDK-3247) in NodeHttpClient will deliberately change this back
-      // to an ECONNRESET Error with the message 'aborted'.
-      it('surfaces a stalled streaming response as an ETIMEDOUT error', (done) => {
+      it('surfaces the native error for a stalled streaming response', (done) => {
         return getTestServerStripe(
           {timeout: 50, maxNetworkRetries: 0},
           (req, res) => {
@@ -1146,7 +1167,8 @@ describe('RequestSender', () => {
                 stream.on('error', (streamErr) => {
                   closeServer();
                   try {
-                    expect(streamErr.code).to.equal('ETIMEDOUT');
+                    expect(streamErr.code).to.equal('ECONNRESET');
+                    expect(streamErr.message).to.equal('aborted');
                     done();
                   } catch (e) {
                     done(e);
@@ -1336,10 +1358,12 @@ describe('RequestSender', () => {
       it('retries closed connection errors once', (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)
-          .replyWithError({
-            code: 'ECONNRESET',
-            errno: 'ECONNRESET',
-          })
+          .replyWithError(
+            Object.assign(new Error('Connection reset'), {
+              code: 'ECONNRESET',
+              errno: 'ECONNRESET',
+            })
+          )
           .post(options.path, options.params)
           .reply(200, {
             id: 'ch_123',
@@ -1359,9 +1383,13 @@ describe('RequestSender', () => {
       it('throws on multiple closed connection errors', (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)
-          .replyWithError({code: 'ECONNRESET'})
+          .replyWithError(
+            Object.assign(new Error('Connection reset'), {code: 'ECONNRESET'})
+          )
           .post(options.path, options.params)
-          .replyWithError({code: 'ECONNRESET'});
+          .replyWithError(
+            Object.assign(new Error('Connection reset'), {code: 'ECONNRESET'})
+          );
 
         realStripe.charges
           .create(options.data)
@@ -1381,7 +1409,12 @@ describe('RequestSender', () => {
 
         const scope = nock(`https://${options.host}`)
           .post(options.path, options.params)
-          .replyWithError({code: 'ECONNRESET', errno: 'ECONNRESET'})
+          .replyWithError(
+            Object.assign(new Error('Connection reset'), {
+              code: 'ECONNRESET',
+              errno: 'ECONNRESET',
+            })
+          )
           .post(options.path, options.params)
           .reply(200, {id: 'ch_123', object: 'charge', amount: 1000});
 
