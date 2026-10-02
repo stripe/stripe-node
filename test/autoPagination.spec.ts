@@ -913,6 +913,49 @@ describe('auto pagination', () => {
       expect(paramsLog).to.deep.equal(['?page=foo']);
     });
   });
+  describe('V2 search pagination', () => {
+    it('replays the original POST body for every next page URL', async () => {
+      const body = {
+        query: 'status:"active"',
+        sort: ['name', '-created'],
+        limit: 2,
+        future_field: {enabled: true},
+      };
+      const requests: Array<{method: string; path: string; data: unknown}> = [];
+      const pages = [
+        {data: [], next_page_url: '/v2/items/search?page=2'},
+        {data: [{id: 'item_2'}], next_page_url: null},
+      ];
+      let page = 0;
+      const mockStripe = getMockStripe(
+        {},
+        (method, _host, path, data, _auth, _options, _usage, callback) => {
+          requests.push({method, path, data});
+          callback(null, Promise.resolve(pages[page++]));
+        }
+      );
+      const paginator = makeAutoPaginationMethods(
+        new StripeResource(mockStripe),
+        body,
+        {stripeContext: 'ctx_123'},
+        'POST',
+        '/v2/items/search',
+        {methodType: 'search'},
+        Promise.resolve({
+          data: [{id: 'item_1'}],
+          next_page_url: '/v2/items/search?page=1',
+        })
+      );
+
+      const result = await paginator.autoPagingToArray({limit: 10});
+      expect(result.map((item) => item.id)).to.deep.equal(['item_1', 'item_2']);
+      expect(requests).to.deep.equal([
+        {method: 'POST', path: '/v2/items/search?page=1', data: body},
+        {method: 'POST', path: '/v2/items/search?page=2', data: body},
+      ]);
+    });
+  });
+
   describe('stack traces', () => {
     // Builds a paginator whose first page succeeds but whose second page
     // request fails with an error that has only fake SDK-internal frames,
