@@ -1696,12 +1696,13 @@ export class Stripe {
     config: StripeConfig | Record<string, unknown>
   ): void {
     const workloadIdentity = readWorkloadIdentityConfig(config);
+    const customAuthenticator = props.authenticator || null;
 
     if (workloadIdentity) {
       if (key) {
         throw new Error("Can't specify both an apiKey and workload identity");
       }
-      if (props.authenticator) {
+      if (customAuthenticator) {
         throw new Error(
           "Can't specify both config.authenticator and workload identity"
         );
@@ -1719,36 +1720,26 @@ export class Stripe {
       return;
     }
 
-    this._setAuthenticator(key, props.authenticator || null);
-
-    this._authMethod = key
-      ? {mode: 'api_key', apiKey: key}
-      : {
-          mode: 'custom_authenticator',
-          authenticator: this._authenticator as RequestAuthenticator,
-        };
-  }
-
-  /**
-   * @private
-   */
-  _setAuthenticator(
-    key: string,
-    authenticator: RequestAuthenticator | null
-  ): void {
-    if (!key && !authenticator) {
-      authenticator = this._platformFunctions.createDefaultAuthenticator();
-    }
-
-    if (key && authenticator) {
+    if (key && customAuthenticator) {
       throw new Error("Can't specify both apiKey and authenticator");
     }
 
-    if (!key && !authenticator) {
+    if (key) {
+      this._authMethod = {mode: 'api_key', apiKey: key};
+      this._authenticator = createApiKeyAuthenticator(key);
+      return;
+    }
+
+    const authenticator =
+      customAuthenticator ||
+      this._platformFunctions.createDefaultAuthenticator();
+
+    if (!authenticator) {
       throw new Error('Neither apiKey nor config.authenticator provided');
     }
 
-    this._authenticator = key ? createApiKeyAuthenticator(key) : authenticator;
+    this._authMethod = {mode: 'custom_authenticator', authenticator};
+    this._authenticator = authenticator;
   }
 
   /**
