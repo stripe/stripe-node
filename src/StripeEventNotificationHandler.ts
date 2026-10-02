@@ -376,7 +376,7 @@ export class StripeEventNotificationHandler extends BaseEventNotificationHandler
     fallbackCallback: FallbackCallback
   ) {
     super(client, fallbackCallback);
-    if (!webhookSecret) {
+    if (!webhookSecret || /^[ \t\r\n\f\v]*$/.test(webhookSecret)) {
       throw new Error('webhookSecret must be a non-empty string');
     }
   }
