@@ -1,21 +1,23 @@
 
 name: rules
 
+permissions: {}
+
 on:
   workflow_dispatch: {}
   pull_request:
     # expand this list as we add rules, but be careful that rules are properly guarded with necessary null checks or state checks
     types:
       - auto_merge_enabled
+      - edited
       - opened
       - reopened
-
-permissions: {}
+      - synchronize
 
 jobs:
   check_auto_merge_method_if_enabled:
     name: Check auto-merge method if enabled
-    if: ${{ github.event.pull_request.auto_merge }}
+    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.auto_merge }}
     runs-on: ubuntu-latest
     steps:
       - run: |
@@ -29,4 +31,59 @@ jobs:
             echo "Auto-merge method must be '$expected_merge_method' instead of '${{github.event.pull_request.auto_merge.merge_method}}'"
             exit 1
           fi
+
+  breaking_changefiles_target_next_major:
+    name: Breaking changes target the next-major branch
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Find newly added Hark changefiles
+        id: changefiles
+        run: |
+          set -euo pipefail
+
+          if ! files=$(gh api --paginate             "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/files?per_page=100"             --jq '.[]' 2>&1); then
+            echo "::error::Failed to query pull request files: $files"
+            exit 1
+          fi
+          if ! paths=$(jq -sc             '[.[] | select(.status == "added") | .filename | select(test("^[.]hark/changes/[^/]+[.]change[.]md$"))]'             <<< "$files" 2>&1); then
+            echo "::error::Failed to select newly added Hark changefiles: $paths"
+            exit 1
+          fi
+          echo "paths=$paths" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+
+      - uses: stripe/hark/actions/setup-hark@master # zizmor: ignore[unpinned-uses]
+        name: Setup Hark
+        if: steps.changefiles.outputs.paths != '[]'
+
+      - name: Check breaking changefile merge target
+        if: steps.changefiles.outputs.paths != '[]'
+        run: |
+          set -euo pipefail
+
+          mapfile -t changefiles < <(jq -r '.[]' <<< "$CHANGEFILE_PATHS")
+          inspection=$(hark inspect "${changefiles[@]}")
+          major_paths=$(jq -c             '[.[] | select(.semver_level == "major") | .path]'             <<< "$inspection")
+
+          if [[ "$major_paths" != "[]"             && "$BASE_REF" != "sdk-release/next-major"             && ! ("$HEAD_REF" == "sdk-release/next-major" && "$BASE_REF" == "master") ]]; then
+            affected_paths=$(jq -r 'join(", ")' <<< "$major_paths")
+            echo "::error::Major Hark changefiles must target sdk-release/next-major unless this pull request merges sdk-release/next-major into master. Retarget this pull request from '$BASE_REF' to 'sdk-release/next-major'. Affected files: $affected_paths"
+            exit 1
+          fi
+
+          echo "Changefile merge target check passed"
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          CHANGEFILE_PATHS: ${{ steps.changefiles.outputs.paths }}
+          HEAD_REF: ${{ github.head_ref }}
 
