@@ -124,6 +124,43 @@ export class SessionResource extends StripeResource {
                     },
                   },
                 },
+                payment_settings: {
+                  kind: 'object',
+                  fields: {
+                    application_fee_data: {
+                      kind: 'nullable',
+                      inner: {
+                        kind: 'object',
+                        fields: {
+                          percentage_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                        },
+                      },
+                    },
+                    transfer_data: {
+                      kind: 'nullable',
+                      inner: {
+                        kind: 'object',
+                        fields: {
+                          transfer_amount: {
+                            kind: 'nullable',
+                            inner: {
+                              kind: 'object',
+                              fields: {
+                                percentage_decimal: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
               },
             },
           },
@@ -177,6 +214,24 @@ export class SessionResource extends StripeResource {
                 price_data: {
                   kind: 'object',
                   fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                },
+              },
+            },
+          },
+          payment_settings: {
+            kind: 'object',
+            fields: {
+              application_fee_data: {
+                kind: 'object',
+                fields: {percentage_decimal: {kind: 'decimal_string'}},
+              },
+              transfer_data: {
+                kind: 'object',
+                fields: {
+                  transfer_amount: {
+                    kind: 'object',
+                    fields: {percentage_decimal: {kind: 'decimal_string'}},
+                  },
                 },
               },
             },
@@ -251,6 +306,43 @@ export class SessionResource extends StripeResource {
                             },
                           },
                           unit_amount_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          payment_settings: {
+            kind: 'object',
+            fields: {
+              application_fee_data: {
+                kind: 'nullable',
+                inner: {
+                  kind: 'object',
+                  fields: {
+                    percentage_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+              transfer_data: {
+                kind: 'nullable',
+                inner: {
+                  kind: 'object',
+                  fields: {
+                    transfer_amount: {
+                      kind: 'nullable',
+                      inner: {
+                        kind: 'object',
+                        fields: {
+                          percentage_decimal: {
                             kind: 'nullable',
                             inner: {kind: 'decimal_string'},
                           },
@@ -348,6 +440,43 @@ export class SessionResource extends StripeResource {
                               },
                             },
                             unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            payment_settings: {
+              kind: 'object',
+              fields: {
+                application_fee_data: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {
+                      percentage_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
+                    },
+                  },
+                },
+                transfer_data: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {
+                      transfer_amount: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            percentage_decimal: {
                               kind: 'nullable',
                               inner: {kind: 'decimal_string'},
                             },
@@ -476,6 +605,43 @@ export class SessionResource extends StripeResource {
                 },
               },
             },
+            payment_settings: {
+              kind: 'object',
+              fields: {
+                application_fee_data: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {
+                      percentage_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
+                    },
+                  },
+                },
+                transfer_data: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {
+                      transfer_amount: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            percentage_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
         },
       }
@@ -563,6 +729,43 @@ export class SessionResource extends StripeResource {
                               },
                             },
                             unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            payment_settings: {
+              kind: 'object',
+              fields: {
+                application_fee_data: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {
+                      percentage_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
+                    },
+                  },
+                },
+                transfer_data: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {
+                      transfer_amount: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            percentage_decimal: {
                               kind: 'nullable',
                               inner: {kind: 'decimal_string'},
                             },
@@ -663,6 +866,43 @@ export class SessionResource extends StripeResource {
                               },
                             },
                             unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            payment_settings: {
+              kind: 'object',
+              fields: {
+                application_fee_data: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {
+                      percentage_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
+                    },
+                  },
+                },
+                transfer_data: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {
+                      transfer_amount: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            percentage_decimal: {
                               kind: 'nullable',
                               inner: {kind: 'decimal_string'},
                             },
@@ -997,6 +1237,11 @@ export interface Session {
   name_collection?: Session.NameCollection;
 
   /**
+   * The account on behalf of which to charge. See the [Connect documentation](https://support.stripe.com/questions/sending-invoices-on-behalf-of-connected-accounts) for details.
+   */
+  on_behalf_of?: string | null;
+
+  /**
    * The optional items presented to the customer at checkout.
    */
   optional_items?: Array<Session.OptionalItem> | null;
@@ -1046,6 +1291,8 @@ export interface Session {
    * The ID of the Payment Reservation for this Checkout Session.
    */
   payment_reservation?: string | null;
+
+  payment_settings?: Session.PaymentSettings;
 
   /**
    * The payment status of the Checkout Session, one of `paid`, `unpaid`, or `no_payment_required`.
@@ -1704,6 +1951,48 @@ export namespace Session {
     us_bank_account?: PaymentMethodOptions.UsBankAccount;
 
     wechat_pay?: PaymentMethodOptions.WechatPay;
+  }
+
+  export interface PaymentSettings {
+    /**
+     * Configures an application fee transferred to the application owner's Stripe account.
+     */
+    application_fee_data?: PaymentSettings.ApplicationFeeData | null;
+
+    /**
+     * Controls when the funds will be captured from the customer's account.
+     */
+    capture_method: string | null;
+
+    /**
+     * An arbitrary string attached to the object. Often useful for displaying to users.
+     */
+    description: string | null;
+
+    /**
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: Metadata | null;
+
+    /**
+     * Indicates that you intend to make future payments with the payment method collected by this Checkout Session.
+     */
+    setup_future_usage: PaymentSettings.SetupFutureUsage | null;
+
+    /**
+     * Text that appears on the customer's statement as the statement descriptor for a non-card charge. This value overrides the account's default statement descriptor.
+     */
+    statement_descriptor: string | null;
+
+    /**
+     * Configures automatic transfers to a connected account when payments succeed.
+     */
+    transfer_data?: PaymentSettings.TransferData | null;
+
+    /**
+     * A string that identifies the initial payment as part of a group.
+     */
+    transfer_group?: string | null;
   }
 
   export type PaymentStatus =
@@ -4333,6 +4622,48 @@ export namespace Session {
     }
   }
 
+  export namespace PaymentSettings {
+    export interface ApplicationFeeData {
+      /**
+       * The application fee amount, in the currency's smallest unit, applied to the initial payment.
+       */
+      initial_amount: number | null;
+
+      /**
+       * The percentage of each payment collected as an application fee.
+       */
+      percentage_decimal: Decimal | null;
+    }
+
+    export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
+
+    export interface TransferData {
+      /**
+       * The connected account that receives funds from payments created by this Checkout Session.
+       */
+      destination: string;
+
+      /**
+       * Configures the amount transferred to the destination account.
+       */
+      transfer_amount: TransferData.TransferAmount | null;
+    }
+
+    export namespace TransferData {
+      export interface TransferAmount {
+        /**
+         * The amount, in the currency's smallest unit, transferred from the initial payment.
+         */
+        initial_amount: number | null;
+
+        /**
+         * The percentage of each payment transferred to the destination account.
+         */
+        percentage_decimal: Decimal | null;
+      }
+    }
+  }
+
   export namespace Permissions {
     export interface Update {
       /**
@@ -5039,6 +5370,11 @@ export namespace Checkout {
      * Payment-method-specific configuration.
      */
     payment_method_options?: SessionCreateParams.PaymentMethodOptions;
+
+    /**
+     * A subset of parameters to configure the payment for this Checkout Session.
+     */
+    payment_settings?: SessionCreateParams.PaymentSettings;
 
     /**
      * This property is used to set up permissions for various actions (for example, update) on the CheckoutSession object. Can only be set when creating `embedded_page` or `elements` sessions.
@@ -5963,6 +6299,69 @@ export namespace Checkout {
        * contains details about the WeChat Pay payment method options.
        */
       wechat_pay?: PaymentMethodOptions.WechatPay;
+    }
+
+    export interface PaymentSettings {
+      /**
+       * Configures an application fee transferred to the application owner's Stripe account.
+       */
+      application_fee_data?: PaymentSettings.ApplicationFeeData;
+
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: PaymentSettings.CaptureMethod;
+
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description?: string;
+
+      /**
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: MetadataParam;
+
+      /**
+       * Indicates that you intend to [make future payments](https://docs.stripe.com/payments/payment-intents#future-usage) with the payment
+       * method collected by this Checkout Session.
+       *
+       * When setting this to `on_session`, Checkout will show a notice to the
+       * customer that their payment details will be saved.
+       *
+       * When setting this to `off_session`, Checkout will show a notice to the
+       * customer that their payment details will be saved and used for future
+       * payments.
+       *
+       * If a Customer has been provided or Checkout creates a new Customer,
+       * Checkout will attach the payment method to the Customer.
+       *
+       * If Checkout does not create a Customer, the payment method is not attached
+       * to a Customer. To reuse the payment method, you can retrieve it from the
+       * Checkout Session's PaymentIntent.
+       *
+       * When processing card payments, Checkout also uses `setup_future_usage`
+       * to dynamically optimize your payment flow and comply with regional
+       * legislation and network rules, such as SCA.
+       */
+      setup_future_usage?: PaymentSettings.SetupFutureUsage;
+
+      /**
+       * Text that appears on the customer's statement as the statement descriptor for a non-card charge. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
+       *
+       * Setting this value for a card charge returns an error. For card charges, set the [statement_descriptor_suffix](https://docs.stripe.com/get-started/account/statement-descriptors#dynamic) instead.
+       */
+      statement_descriptor?: string;
+
+      /**
+       * Configures automatic transfers to a connected account when payments succeed.
+       */
+      transfer_data?: PaymentSettings.TransferData;
+
+      /**
+       * A string that identifies the initial payment as part of a group.
+       */
+      transfer_group?: string;
     }
 
     export interface Permissions {
@@ -8660,6 +9059,57 @@ export namespace Checkout {
       }
     }
 
+    export namespace PaymentSettings {
+      export interface ApplicationFeeData {
+        /**
+         * The amount of the application fee, in the currency's smallest unit, to apply to the initial payment and transfer to the application owner's Stripe account. The application fee is capped at the total amount captured.
+         */
+        initial_amount?: number;
+
+        /**
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of each payment total that will be transferred to the application owner's Stripe account.
+         */
+        percentage_decimal?: Decimal;
+      }
+
+      export type CaptureMethod =
+        | 'automatic'
+        | 'automatic_async'
+        | 'manual'
+        | OtherString;
+
+      export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
+
+      export interface TransferData {
+        /**
+         * If specified, successful charges will be attributed to the destination
+         * account for tax reporting, and the funds from charges will be transferred
+         * to the destination account. The ID of the resulting transfer will be
+         * returned on the successful charge's `transfer` field.
+         */
+        destination: string;
+
+        /**
+         * Configures how much of each payment is transferred to the destination account. If omitted, the entire amount is transferred.
+         */
+        transfer_amount?: TransferData.TransferAmount;
+      }
+
+      export namespace TransferData {
+        export interface TransferAmount {
+          /**
+           * The amount, in the currency's smallest unit, that will be transferred to the destination account when the initial payment succeeds.
+           */
+          initial_amount?: number;
+
+          /**
+           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of each payment total that will be transferred to the destination account.
+           */
+          percentage_decimal?: Decimal;
+        }
+      }
+    }
+
     export namespace Permissions {
       export interface Update {
         /**
@@ -9442,6 +9892,7 @@ export namespace Checkout {
        *
        * When processing card payments, Checkout also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as SCA.
        *
+       * You must wrap any Checkout Session update that mutates `setup_future_usage` in [`runServerUpdate`](https://docs.stripe.com/js/custom_checkout/run_server_update) and await it before continuing with the payment.
        * Pass an empty string to remove a previously supplied configuration.
        */
       setup_future_usage?: Emptyable<PaymentIntentData.SetupFutureUsage>;

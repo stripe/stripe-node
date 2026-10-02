@@ -76,6 +76,7 @@ import {FinancingSummaryResource as CapitalFinancingSummary} from './resources/C
 import {FinancingTransactionResource as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions.js';
 import {FormResource as TaxForms} from './resources/Tax/Forms.js';
 import {FraudLiabilityDebitResource as IssuingFraudLiabilityDebits} from './resources/Issuing/FraudLiabilityDebits.js';
+import {FundingSessionResource as V2MoneyManagementFundingSessions} from './resources/V2/MoneyManagement/FundingSessions.js';
 import {GbBankAccountResource as V2CoreVaultGbBankAccounts} from './resources/V2/Core/Vault/GbBankAccounts.js';
 import {GrantedTokenResource as SharedPaymentGrantedTokens} from './resources/SharedPayment/GrantedTokens.js';
 import {GrantedTokenResource as TestHelpersSharedPaymentGrantedTokens} from './resources/TestHelpers/SharedPayment/GrantedTokens.js';
@@ -525,6 +526,7 @@ export const V2 = resourceNamespace('v2', {
     EarnedCredits: V2MoneyManagementEarnedCredits,
     FinancialAccounts: V2MoneyManagementFinancialAccounts,
     FinancialAddresses: V2MoneyManagementFinancialAddresses,
+    FundingSessions: V2MoneyManagementFundingSessions,
     InboundTransfers: V2MoneyManagementInboundTransfers,
     OutboundPaymentQuotes: V2MoneyManagementOutboundPaymentQuotes,
     OutboundPayments: V2MoneyManagementOutboundPayments,

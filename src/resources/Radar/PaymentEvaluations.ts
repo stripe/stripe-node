@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {PaymentMethod} from './../PaymentMethods.js';
+import {Rule} from './Rules.js';
 import {
   MetadataParam,
   OtherString,
@@ -82,6 +83,11 @@ export interface PaymentEvaluation {
    * Recommended action based on the score of the `fraudulent_payment` signal. Possible values are `block`, `continue` and `request_three_d_secure`.
    */
   recommended_action: PaymentEvaluation.RecommendedAction;
+
+  /**
+   * Details about Radar Rules associated with the payment evaluation.
+   */
+  rules?: PaymentEvaluation.Rules | null;
 
   /**
    * Collection of signals for this payment evaluation.
@@ -229,9 +235,31 @@ export namespace PaymentEvaluation {
     statement_descriptor: string | null;
   }
 
-  export type RecommendedAction = 'block' | 'continue' | OtherString;
+  export type RecommendedAction =
+    | 'block'
+    | 'continue'
+    | 'request_three_d_secure'
+    | 'reroute'
+    | OtherString;
+
+  export interface Rules {
+    /**
+     * List of Radar rule tokens that matched during evaluation. Expandable to full rule objects.
+     */
+    matched: Array<string | Rule> | null;
+
+    /**
+     * The Radar rule token selected as the decisive rule for this evaluation. Expandable to the full rule object.
+     */
+    selected: string | Rule | null;
+  }
 
   export interface Signals {
+    /**
+     * The likelihood that this `PaymentEvaluation` results in a bank-initiated return.
+     */
+    bank_initiated_return?: Signals.BankInitiatedReturn | null;
+
     /**
      * The likelihood that this `PaymentEvaluation` results in an early fraud warning.
      */
@@ -571,7 +599,12 @@ export namespace PaymentEvaluation {
       /**
        * Describes the type of money movement.
        */
-      money_movement_type: 'card';
+      money_movement_type: MoneyMovementDetails.MoneyMovementType;
+
+      /**
+       * Describes US bank account money movement details.
+       */
+      us_bank_account?: MoneyMovementDetails.UsBankAccount | null;
     }
 
     export interface PaymentMethodDetails {
@@ -621,6 +654,20 @@ export namespace PaymentEvaluation {
         payment_type: Card.PaymentType | null;
       }
 
+      export type MoneyMovementType = 'card' | 'us_bank_account' | OtherString;
+
+      export interface UsBankAccount {
+        /**
+         * Describes the presence of the customer during the payment.
+         */
+        customer_presence: UsBankAccount.CustomerPresence | null;
+
+        /**
+         * Describes the type of US bank account payment.
+         */
+        payment_type: UsBankAccount.PaymentType | null;
+      }
+
       export namespace Card {
         export type CustomerPresence =
           | 'off_session'
@@ -633,6 +680,15 @@ export namespace PaymentEvaluation {
           | 'setup_one_off'
           | 'setup_recurring'
           | OtherString;
+      }
+
+      export namespace UsBankAccount {
+        export type CustomerPresence =
+          | 'off_session'
+          | 'on_session'
+          | OtherString;
+
+        export type PaymentType = 'one_off' | 'recurring';
       }
     }
 
@@ -684,6 +740,23 @@ export namespace PaymentEvaluation {
   }
 
   export namespace Signals {
+    export interface BankInitiatedReturn {
+      /**
+       * The time when this signal was evaluated.
+       */
+      evaluated_at: number;
+
+      /**
+       * Risk level of this signal, based on the score.
+       */
+      risk_level: BankInitiatedReturn.RiskLevel;
+
+      /**
+       * Numeric score for this signal, returned with two decimal places. Possible values for evaluated payments are between 0 and 100, where higher scores indicate a higher likelihood of the signal being true.
+       */
+      score: number | null;
+    }
+
     export interface EarlyFraudWarning {
       /**
        * The time when this signal was evaluated.
@@ -733,6 +806,17 @@ export namespace PaymentEvaluation {
        * Numeric score for this signal, returned with two decimal places. Possible values for evaluated payments are between 0 and 100, where higher scores indicate a higher likelihood of the signal being true.
        */
       score: number | null;
+    }
+
+    export namespace BankInitiatedReturn {
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'not_assessed'
+        | 'unknown'
+        | OtherString;
     }
 
     export namespace EarlyFraudWarning {
@@ -917,7 +1001,12 @@ export namespace Radar {
         /**
          * Describes the type of money movement.
          */
-        money_movement_type: 'card';
+        money_movement_type: MoneyMovementDetails.MoneyMovementType;
+
+        /**
+         * Describes US bank account money movement details.
+         */
+        us_bank_account?: MoneyMovementDetails.UsBankAccount;
       }
 
       export interface PaymentMethodDetails {
@@ -967,6 +1056,23 @@ export namespace Radar {
           payment_type?: Card.PaymentType;
         }
 
+        export type MoneyMovementType =
+          | 'card'
+          | 'us_bank_account'
+          | OtherString;
+
+        export interface UsBankAccount {
+          /**
+           * Describes the presence of the customer during the payment.
+           */
+          customer_presence?: UsBankAccount.CustomerPresence;
+
+          /**
+           * Describes the type of US bank account payment.
+           */
+          payment_type?: UsBankAccount.PaymentType;
+        }
+
         export namespace Card {
           export type CustomerPresence =
             | 'off_session'
@@ -979,6 +1085,15 @@ export namespace Radar {
             | 'setup_one_off'
             | 'setup_recurring'
             | OtherString;
+        }
+
+        export namespace UsBankAccount {
+          export type CustomerPresence =
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
+
+          export type PaymentType = 'one_off' | 'recurring';
         }
       }
 

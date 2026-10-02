@@ -66,6 +66,11 @@ export interface FinancialAddress {
   object: 'v2.money_management.financial_address';
 
   /**
+   * The ID of the Account that owns this FinancialAddress.
+   */
+  account?: string;
+
+  /**
    * Bank account details for this FinancialAddress.
    */
   bank_account?: FinancialAddress.BankAccount;
@@ -75,9 +80,6 @@ export interface FinancialAddress {
    */
   created: string;
 
-  /**
-   * Crypto wallet details for this FinancialAddress.
-   */
   crypto_wallet?: FinancialAddress.CryptoWallet;
 
   /**
@@ -90,9 +92,6 @@ export interface FinancialAddress {
    */
   livemode: boolean;
 
-  /**
-   * Open Enum. The currency the FinancialAddress settles into the FinancialAccount.
-   */
   settlement_currency?: string;
 
   /**
@@ -112,9 +111,6 @@ export namespace FinancialAddress {
      */
     aba?: BankAccount.Aba;
 
-    /**
-     * CLABE bank account details (Mexico).
-     */
     clabe?: BankAccount.Clabe;
 
     /**
@@ -122,9 +118,6 @@ export namespace FinancialAddress {
      */
     country?: string;
 
-    /**
-     * CPA bank account details (Canada).
-     */
     cpa?: BankAccount.Cpa;
 
     /**
@@ -149,20 +142,18 @@ export namespace FinancialAddress {
   }
 
   export interface CryptoWallet {
-    /**
-     * The blockchain wallet address.
-     */
     address: string;
 
-    /**
-     * An optional memo or tag required by some networks to identify the recipient.
-     */
     memo?: string;
 
-    /**
-     * Open Enum. The blockchain network of the crypto wallet.
-     */
     network: CryptoWallet.Network;
+
+    /**
+     * A map of supported network names to their details, including supported token currencies.
+     */
+    supported_network_details: {
+      [key: string]: CryptoWallet.SupportedNetworkDetails;
+    };
   }
 
   export type Status = 'active' | 'archived' | 'failed' | 'pending';
@@ -208,51 +199,24 @@ export namespace FinancialAddress {
     }
 
     export interface Clabe {
-      /**
-       * The name of the account holder.
-       */
       account_holder_name: string;
 
-      /**
-       * The CLABE interbank code.
-       */
       clabe: string;
     }
 
     export interface Cpa {
-      /**
-       * The name of the account holder.
-       */
       account_holder_name: string;
 
-      /**
-       * The full account number.
-       */
       account_number?: string;
 
-      /**
-       * The name of the bank.
-       */
       bank_name: string;
 
-      /**
-       * The SWIFT/BIC code.
-       */
       bic?: string;
 
-      /**
-       * The institution number.
-       */
       institution_number: string;
 
-      /**
-       * The last four digits of the account number.
-       */
       last4: string;
 
-      /**
-       * The transit number.
-       */
       transit_number: string;
     }
 
@@ -322,9 +286,11 @@ export namespace FinancialAddress {
 
     export type Type =
       | 'aba'
+      | 'bre_b'
       | 'clabe'
       | 'cpa'
       | 'iban'
+      | 'pix'
       | 'sort_code'
       | OtherString;
   }
@@ -334,6 +300,7 @@ export namespace FinancialAddress {
       | 'arbitrum'
       | 'avalanche_c_chain'
       | 'base'
+      | 'bitcoin'
       | 'ethereum'
       | 'optimism'
       | 'polygon'
@@ -341,6 +308,25 @@ export namespace FinancialAddress {
       | 'stellar'
       | 'tempo'
       | OtherString;
+
+    export interface SupportedNetworkDetails {
+      /**
+       * The token currencies supported on this network.
+       */
+      supported_token_currencies: Array<
+        SupportedNetworkDetails.SupportedTokenCurrency
+      >;
+    }
+
+    export namespace SupportedNetworkDetails {
+      export type SupportedTokenCurrency =
+        | 'btc'
+        | 'eth'
+        | 'sol'
+        | 'usdc'
+        | 'usdt'
+        | OtherString;
+    }
   }
 }
 export namespace V2 {
@@ -357,18 +343,17 @@ export namespace V2 {
       type: FinancialAddressCreateParams.Type;
 
       /**
+       * The ID of the Account that owns this FinancialAddress.
+       */
+      account?: string;
+
+      /**
        * Properties for creating a bank account FinancialAddress.
        */
       bank_account?: FinancialAddressCreateParams.BankAccount;
 
-      /**
-       * Properties for creating a crypto wallet FinancialAddress.
-       */
       crypto_wallet?: FinancialAddressCreateParams.CryptoWallet;
 
-      /**
-       * Open Enum. The currency the FinancialAddress settles into the FinancialAccount.
-       */
       settlement_currency?: string;
     }
 
@@ -396,7 +381,9 @@ export namespace V2 {
 
       export namespace BankAccount {
         export type Currency =
+          | 'brl'
           | 'cad'
+          | 'cop'
           | 'eur'
           | 'gbp'
           | 'mxn'
@@ -409,6 +396,7 @@ export namespace V2 {
           | 'arbitrum'
           | 'avalanche_c_chain'
           | 'base'
+          | 'bitcoin'
           | 'ethereum'
           | 'optimism'
           | 'polygon'
@@ -428,6 +416,11 @@ export namespace V2 {
 export namespace V2 {
   export namespace MoneyManagement {
     export interface FinancialAddressListParams {
+      /**
+       * The ID of the Account that owns the FinancialAddresses.
+       */
+      account?: string;
+
       /**
        * The ID of the FinancialAccount for which FinancialAddresses are to be returned.
        */

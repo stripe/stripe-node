@@ -91,6 +91,11 @@ export interface InboundTransfer {
   livemode: boolean;
 
   /**
+   * Network-specific details for the InboundTransfer. Present only when supplied at creation.
+   */
+  network_details?: InboundTransfer.NetworkDetails;
+
+  /**
    * A hosted transaction receipt URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
    */
   receipt_url?: string;
@@ -121,6 +126,13 @@ export namespace InboundTransfer {
      * The Payment Method object used to create the InboundTransfer.
      */
     payment_method: From.PaymentMethod;
+  }
+
+  export interface NetworkDetails {
+    /**
+     * ACH-specific network details.
+     */
+    ach: NetworkDetails.Ach;
   }
 
   export interface To {
@@ -193,6 +205,15 @@ export namespace InboundTransfer {
        * The destination US bank account identifier. eg "usba_***".
        */
       us_bank_account?: string;
+    }
+  }
+
+  export namespace NetworkDetails {
+    export interface Ach {
+      /**
+       * Freeform payment-related information from the type-7 ACH addenda record. Echoes the submitted value.
+       */
+      addenda?: string;
     }
   }
 
@@ -270,6 +291,11 @@ export namespace V2 {
       description?: string;
 
       /**
+       * Network-specific details for the InboundTransfer.
+       */
+      network_details?: InboundTransferCreateParams.NetworkDetails;
+
+      /**
        * An optional statement descriptor surfaced on the payer's bank statement. Max 10 characters.
        * When omitted, Stripe sends its default descriptor.
        */
@@ -300,6 +326,23 @@ export namespace V2 {
          * The FinancialAccount that funds will land in.
          */
         financial_account: string;
+      }
+
+      export interface NetworkDetails {
+        /**
+         * ACH-specific network details. Only applied when the transfer routes over ACH.
+         */
+        ach: NetworkDetails.Ach;
+      }
+
+      export namespace NetworkDetails {
+        export interface Ach {
+          /**
+           * Optional freeform payment-related information written into the type-7 ACH
+           * addenda record of the NACHA submission. Max 80 characters.
+           */
+          addenda?: string;
+        }
       }
     }
   }
