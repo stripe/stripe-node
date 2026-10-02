@@ -17,13 +17,7 @@ npm install stripe @stripe/aws-workload-identity
 
 ### Node.js version
 
-This package supports Node.js 18 or newer, matching stripe-node. Its dependency
-does not: `@aws-sdk/client-sts` requires `sts:GetWebIdentityToken` support, which
-first shipped in `3.952.0` (the version this package declares as its floor), and
-AWS raised that package's own requirement to **Node.js 20** shortly afterwards.
-
-A fresh `npm install` resolves `^3.952.0` to a current AWS SDK, so in practice
-**Node.js 20 or newer is required** unless you pin the dependency yourself:
+This package requires **Node.js 20 or newer**.
 
 ```json
 {"dependencies": {"@aws-sdk/client-sts": "3.952.x"}}
