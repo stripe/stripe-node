@@ -2603,6 +2603,7 @@ export namespace PaymentRecord {
         | OtherString;
 
       export type TokenCurrency =
+        | 'ousd'
         | 'phantom_cash'
         | 'usdc'
         | 'usdg'

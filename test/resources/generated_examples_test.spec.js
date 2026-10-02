@@ -7402,6 +7402,31 @@ describe('Generated tests', function() {
     expect(financialAddress).not.to.be.null;
   });
 
+  it('test_v2_money_management_funding_session_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/money_management/funding_sessions',
+        response:
+          '{"object":"v2.money_management.funding_session","account":"account","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","financial_address_options":{},"financial_address_types":["bank_account"],"id":"obj_123","livemode":true,"return_url":"return_url","url":"url"}',
+      },
+    ]);
+    const fundingSession = await stripe.v2.moneyManagement.fundingSessions.create(
+      {
+        account: 'account',
+        financial_account: 'financial_account',
+        financial_address_options: {
+          crypto_wallet: {
+            settlement_currency: 'usd',
+          },
+        },
+        financial_address_types: ['bank_account'],
+        return_url: 'return_url',
+      }
+    );
+    expect(fundingSession).not.to.be.null;
+  });
+
   it('test_v2_money_management_inbound_transfer_get', async function() {
     const stripe = testUtils.createMockClient([
       {

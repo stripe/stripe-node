@@ -4961,7 +4961,7 @@ export namespace Tax {
         export namespace StateSalesTax {
           export interface Election {
             /**
-             * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction. Supported FIPS codes are: `003` (Allegheny County) and `60000` (Philadelphia City).
+             * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
              */
             jurisdiction?: string;
 

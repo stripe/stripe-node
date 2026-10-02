@@ -3660,11 +3660,27 @@ export interface V1InvoiceSentEventNotification extends EventNotificationBase {
  */
 export interface V1InvoiceUpcomingEvent extends EventBase {
   type: 'v1.invoice.upcoming';
+  // Retrieves data specific to this event.
+  data: V1InvoiceUpcomingEvent.Data;
 }
 export interface V1InvoiceUpcomingEventNotification
   extends EventNotificationBase {
   type: 'v1.invoice.upcoming';
   fetchEvent(): Promise<V1InvoiceUpcomingEvent>;
+}
+
+export namespace V1InvoiceUpcomingEvent {
+  export interface Data {
+    /**
+     * The ID of the customer this upcoming invoice is associated with.
+     */
+    customer: string;
+
+    /**
+     * The ID of the subscription, if any.
+     */
+    subscription?: string;
+  }
 }
 
 /**
