@@ -14,9 +14,6 @@ export type WorkloadIdentityTokenExchange = (
   body: string
 ) => Promise<WorkloadIdentityTokenResponse>;
 
-/** Granted keys normally live for an hour. */
-const DEFAULT_TOKEN_LIFETIME_SEC = 3600;
-
 const REFRESH_SAFETY_MARGIN_SEC = 300; // 5 minutes safety margin before token expiration
 
 export const SUPPORTED_WORKLOAD_IDENTITY_PROVIDERS = ['aws'] as const;
@@ -123,15 +120,11 @@ export function validateWorkloadIdentityProvider(
 type CachedWorkloadIdentityToken = {
   /** The restricted key granted by the exchange. Held in memory only. */
   accessToken: string;
-  /** When the exchange that produced this key completed. */
-  acquiredAt: number;
   /** When the key should be replaced, ahead of its actual expiry. */
   refreshAt: number;
-  /** When the key actually expires, as reported by the exchange. */
-  expiresAt: number;
 };
 
-function normalizeLifetimeSec(expiresIn: unknown): number {
+function parseLifetimeSec(expiresIn: unknown): number {
   if (
     typeof expiresIn === 'number' &&
     Number.isFinite(expiresIn) &&
@@ -139,15 +132,21 @@ function normalizeLifetimeSec(expiresIn: unknown): number {
   ) {
     return expiresIn;
   }
-  return DEFAULT_TOKEN_LIFETIME_SEC;
+
+  throw new Error(
+    `Invalid token lifetime received from API: expected positive finite number, got ${JSON.stringify(
+      expiresIn
+    )}`
+  );
 }
 
 function refreshDelaySec(lifetimeSec: number): number {
-  // A short-lived key still needs to be usable for something, so fall back to
-  // half its lifetime rather than a non-positive window.
-  return lifetimeSec > REFRESH_SAFETY_MARGIN_SEC
-    ? lifetimeSec - REFRESH_SAFETY_MARGIN_SEC
-    : lifetimeSec / 2;
+  if (lifetimeSec <= REFRESH_SAFETY_MARGIN_SEC) {
+    throw new Error(
+      `Stripe token lifetime (${lifetimeSec}s) is smaller than safety margin (${REFRESH_SAFETY_MARGIN_SEC}s).`
+    );
+  }
+  return lifetimeSec - REFRESH_SAFETY_MARGIN_SEC;
 }
 
 /**
@@ -215,9 +214,8 @@ export class WorkloadIdentityCredentials {
       this._cached = null;
     }
 
-    const cached = this._cached;
-    if (cached) {
-      return Promise.resolve(cached.accessToken);
+    if (this._cached) {
+      return Promise.resolve(this._cached.accessToken);
     }
 
     return this._exchangeOnce();
@@ -278,15 +276,6 @@ export class WorkloadIdentityCredentials {
 
     const parsed = parseJsonOrNull(response.body);
 
-    if (response.statusCode >= 300 && response.statusCode < 400) {
-      throw new StripeWorkloadIdentityError({
-        message:
-          `The Stripe workload identity token exchange responded with a redirect (HTTP ${response.statusCode}), which is not followed. ` +
-          EXCHANGE_GUIDANCE,
-        statusCode: response.statusCode,
-      });
-    }
-
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw new StripeWorkloadIdentityError({
         message: `${describeExchangeRejection(
@@ -309,16 +298,14 @@ export class WorkloadIdentityCredentials {
       });
     }
 
-    const lifetimeSec = normalizeLifetimeSec(
+    const lifetimeSec = parseLifetimeSec(
       parsed && (parsed as Record<string, unknown>).expires_in
     );
     const acquiredAt = this._now();
 
     this._cached = {
       accessToken,
-      acquiredAt,
       refreshAt: acquiredAt + refreshDelaySec(lifetimeSec) * 1000,
-      expiresAt: acquiredAt + lifetimeSec * 1000,
     };
 
     return accessToken;

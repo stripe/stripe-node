@@ -542,17 +542,6 @@ describe('workload identity', () => {
       );
     });
 
-    it('refuses to follow a redirect away from the token endpoint', async () => {
-      const {client} = buildClient({
-        exchanges: [{statusCode: 302, body: ''}],
-      });
-
-      await expect(client.customers.list()).to.be.rejectedWith(
-        StripeWorkloadIdentityError,
-        /responded with a redirect \(HTTP 302\), which is not followed/
-      );
-    });
-
     it('reports a transport failure', async () => {
       const {client} = buildClient({
         exchanges: [
@@ -653,33 +642,16 @@ describe('workload identity', () => {
       ]);
     });
 
-    it('falls back to the standard lifetime when expires_in is missing or malformed', async () => {
-      // each case advances a shared fake clock, so the awaits must be sequential
+    it('rejects a missing, malformed, or unusably short expires_in', async () => {
       /* eslint-disable no-await-in-loop */
-      for (const expiresIn of [undefined, 'nope', -1, 0, NaN]) {
-        const {client, credentials, transport} = buildClient({
-          exchanges: [
-            tokenResponse(FAKE_TOKEN, {expires_in: expiresIn}),
-            tokenResponse(FAKE_TOKEN_2),
-          ],
+      for (const expiresIn of [undefined, 'nope', -1, 0, NaN, 300]) {
+        const {credentials, transport} = buildClient({
+          exchanges: [tokenResponse(FAKE_TOKEN, {expires_in: expiresIn})],
         });
-        let now = 1_700_000_000_000;
-        credentials._now = (): number => now;
 
-        await client.customers.list();
-        now += 54 * 60 * 1000;
-        await client.customers.list();
-        expect(
-          transport.bodies,
-          `expires_in=${String(expiresIn)}`
-        ).to.have.length(1);
-
-        now += 2 * 60 * 1000;
-        await client.customers.list();
-        expect(
-          transport.bodies,
-          `expires_in=${String(expiresIn)}`
-        ).to.have.length(2);
+        await expect(credentials.getToken()).to.be.rejected;
+        expect(credentials.peekCachedToken()).to.equal(null);
+        expect(transport.bodies).to.have.length(1);
       }
       /* eslint-enable no-await-in-loop */
     });

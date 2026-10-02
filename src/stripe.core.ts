@@ -1699,9 +1699,6 @@ export class Stripe {
     const customAuthenticator = props.authenticator || null;
 
     if (workloadIdentity) {
-      if (key) {
-        throw new Error("Can't specify both an apiKey and workload identity");
-      }
       if (customAuthenticator) {
         throw new Error(
           "Can't specify both config.authenticator and workload identity"
