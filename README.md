@@ -276,7 +276,7 @@ const customers = await stripe.customers.list();
 ```
 
 API keys remain the default, and workload identity is never selected implicitly.
-See [docs/workload-identity.md](docs/workload-identity.md) for requirements, local
+See [packages/aws-workload-identity/README.md](packages/aws-workload-identity/README.md) for requirements, local
 development guidance, and troubleshooting.
 
 ### Configuring Timeout

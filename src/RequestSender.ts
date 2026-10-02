@@ -825,10 +825,6 @@ export class RequestSender {
             );
         })
         .catch((e: any) => {
-          // Report the failure to the caller. Throwing here would only produce
-          // an unhandled rejection and leave the request hanging forever.
-          // Workload identity errors are already focused and actionable, so
-          // they pass through instead of being wrapped.
           return callback(
             e instanceof StripeWorkloadIdentityError
               ? e

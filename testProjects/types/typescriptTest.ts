@@ -663,7 +663,7 @@ const _withConfig: Stripe = Stripe.forWorkloadIdentity(
 workloadIdentityClient.customers.list().then((customers) => customers.data);
 
 const _badProvider: Stripe.WorkloadIdentityProvider = {
-  // @ts-expect-error - only AWS is supported
+  // @ts-expect-error - only AWS is supported for now
   provider: 'gcp',
   getIdentityAssertion: () => Promise.resolve('fake.assertion'),
 };

@@ -34,11 +34,6 @@ integrations-test: build
 PACKAGES := "aws-workload-identity"
 
 # ⭐ build, typecheck, and test the companion packages in packages/ (all, or just one)
-#
-# Run this at a single, modern Node version rather than across the core SDK's
-# support matrix. `@stripe/aws-workload-identity` depends on
-# `@aws-sdk/client-sts`, whose current releases require Node >= 20 even though
-# the core SDK supports Node >= 18.
 packages-test package="":
     #!/usr/bin/env bash
     set -euo pipefail
@@ -65,11 +60,7 @@ packages-pack: packages-test
     done
 
 # run the full test suite; you probably want `test`
-#
-# `packages-test` is deliberately absent: it runs on its own CI job at a single
-# Node version, because the companion packages' third-party dependencies do not
-# all support every Node version the core SDK supports (see packages-test).
-ci-test: install test types-test integrations-test
+ci-test: install test types-test integrations-test packages-test
 
 _build mode packageType tscArgs: install
     mkdir -p {{ mode }}
