@@ -51,7 +51,7 @@ Token via `sts:GetWebIdentityToken`, using:
 
 | | |
 | --- | --- |
-| Audience | `https://stripe.com/wif/v1` |
+| Audience | `https://api.stripe.com/workload-identity` |
 | Signing algorithm | `ES384` |
 
 Stripe exchanges that token for a short-lived restricted key. This package never

@@ -59,11 +59,11 @@ describe('awsWorkloadIdentity', () => {
     expect(commands).to.have.length(1);
     expect(commands[0]).to.be.an.instanceOf(GetWebIdentityTokenCommand);
     expect(commands[0].input).to.deep.equal({
-      Audience: ['https://stripe.com/wif/v1'],
+      Audience: ['https://api.stripe.com/workload-identity'],
       SigningAlgorithm: 'ES384',
     });
     expect(STRIPE_WORKLOAD_IDENTITY_AUDIENCE).to.equal(
-      'https://stripe.com/wif/v1'
+      'https://api.stripe.com/workload-identity'
     );
     expect(STRIPE_WORKLOAD_IDENTITY_SIGNING_ALGORITHM).to.equal('ES384');
   });
