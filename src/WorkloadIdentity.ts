@@ -17,18 +17,10 @@ export type WorkloadIdentityTokenExchange = (
 /** Granted keys normally live for an hour. */
 const DEFAULT_TOKEN_LIFETIME_SEC = 3600;
 
-/**
- * How early a cached key is replaced. With the usual 3,600s lifetime this
- * refreshes a key once it is 55 minutes old.
- */
-const REFRESH_SAFETY_MARGIN_SEC = 300;
+const REFRESH_SAFETY_MARGIN_SEC = 300; // 5 minutes safety margin before token expiration
 
-/** The only cloud provider supported during the private preview. */
-export type WorkloadIdentityCloudProvider = 'aws';
-
-export const SUPPORTED_WORKLOAD_IDENTITY_PROVIDERS: ReadonlyArray<string> = [
-  'aws',
-];
+export const SUPPORTED_WORKLOAD_IDENTITY_PROVIDERS = ['aws'] as const;
+export type WorkloadIdentityCloudProvider = typeof SUPPORTED_WORKLOAD_IDENTITY_PROVIDERS[number];
 
 /**
  * The contract the core SDK expects from a workload identity adapter, such as
@@ -44,28 +36,6 @@ export interface WorkloadIdentityProvider {
   /** Resolves a signed workload identity assertion for the current process. */
   getIdentityAssertion(): Promise<string>;
 }
-
-/**
- * The single, explicit authentication mode a client was constructed with.
- *
- * Workload identity is never inferred from a missing API key: a client is in
- * `workload_identity` mode only when it came from `Stripe.forWorkloadIdentity`.
- */
-export type AuthenticationMethod =
-  | {
-      mode: 'api_key';
-      apiKey: string;
-    }
-  | {
-      mode: 'workload_identity';
-      clientId: string;
-      identityProvider: WorkloadIdentityProvider;
-    }
-  /** The pre-existing `config.authenticator` escape hatch. */
-  | {
-      mode: 'custom_authenticator';
-      authenticator: RequestAuthenticator;
-    };
 
 /**
  * Carries workload identity state from `Stripe.forWorkloadIdentity` into the

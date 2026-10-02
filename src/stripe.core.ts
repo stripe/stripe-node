@@ -3,6 +3,7 @@ import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
 import {StripeContext} from './StripeContext.js';
 import {
+  AuthenticationMethod,
   BaseAddress,
   RequestAuthenticator,
   UserProvidedConfig,
@@ -61,7 +62,6 @@ import {
 } from './shared.js';
 import {UnknownEventNotification} from './resources/V2/Core/Events.js';
 import {
-  AuthenticationMethod,
   WorkloadIdentityCredentials,
   WorkloadIdentityProvider,
   attachWorkloadIdentityConfig,
@@ -3379,7 +3379,7 @@ export declare namespace Stripe {
   export type StripeConfig = import('./lib.js').StripeConfig;
   export type WorkloadIdentityProvider = import('./WorkloadIdentity.js').WorkloadIdentityProvider;
   export type WorkloadIdentityCloudProvider = import('./WorkloadIdentity.js').WorkloadIdentityCloudProvider;
-  export type AuthenticationMethod = import('./WorkloadIdentity.js').AuthenticationMethod;
+  export type AuthenticationMethod = import('./Types.js').AuthenticationMethod;
   export type LatestApiVersion = import('./lib.js').LatestApiVersion;
   export type HttpAgent = import('./lib.js').HttpAgent;
   export type HttpProtocol = import('./lib.js').HttpProtocol;
