@@ -177,11 +177,15 @@ class V2ListIterator<T> implements AsyncIterator<T> {
   private options: RequestOptions | undefined;
   private spec: MakeRequestSpec | undefined;
   private stripeResource: StripeResourceObject;
+  private method: string;
+  private params: RequestData | undefined;
   constructor(
     firstPagePromise: Promise<PageResult<T>>,
     options: RequestOptions | undefined,
     spec: MakeRequestSpec | undefined,
-    stripeResource: StripeResourceObject
+    stripeResource: StripeResourceObject,
+    method = 'GET',
+    params?: RequestData
   ) {
     this.firstPagePromise = firstPagePromise;
     this.currentPageIterator = null;
@@ -190,6 +194,10 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     this.options = options;
     this.spec = spec;
     this.stripeResource = stripeResource;
+    this.method = method;
+    this.params = params
+      ? (JSON.parse(JSON.stringify(params)) as RequestData)
+      : undefined;
   }
   private async initFirstPage(): Promise<void> {
     if (this.firstPagePromise) {
@@ -202,9 +210,9 @@ class V2ListIterator<T> implements AsyncIterator<T> {
   private async turnPage(): Promise<Iterator<T> | null> {
     if (!this.nextPageUrl) return null;
     const page = await this.stripeResource._makeRequest(
-      'GET',
+      this.method,
       this.nextPageUrl,
-      undefined,
+      this.params,
       this.options,
       this.spec
     );
@@ -294,6 +302,18 @@ export const makeAutoPaginationMethods = <TItem extends {id: string}>(
   if (apiMode === 'v2' && methodType === 'list') {
     return makeAutoPaginationMethodsFromIterator(
       new V2ListIterator(firstPagePromise, options, spec, stripeResource)
+    );
+  }
+  if (apiMode === 'v2' && methodType === 'search') {
+    return makeAutoPaginationMethodsFromIterator(
+      new V2ListIterator(
+        firstPagePromise,
+        options,
+        spec,
+        stripeResource,
+        'POST',
+        params
+      )
     );
   }
   return null;
