@@ -18,6 +18,7 @@ type EndpointFetchRequest = {
 type EndpointFetchResponse = {
   status: number;
   body?: string | null;
+  headers?: Record<string, string>;
 };
 
 type EndpointFetchSuccessResponse = EndpointFetchResponse & {
@@ -27,6 +28,7 @@ type EndpointFetchSuccessResponse = EndpointFetchResponse & {
 type EndpointFetchError = Error & {
   status?: number;
   body?: string | null;
+  headers?: Record<string, string>;
 };
 
 type EndpointFetch = (
@@ -119,6 +121,7 @@ export class EndpointFetchHttpClient extends HttpClient {
     return {
       status: endpointFetchError.status,
       body: endpointFetchError.body ?? '',
+      headers: endpointFetchError.headers,
     };
   }
 }
@@ -127,7 +130,7 @@ export class EndpointFetchHttpClientResponse extends HttpClientResponse {
   private _res: EndpointFetchResponse;
 
   constructor(res: EndpointFetchResponse) {
-    super(res.status, {});
+    super(res.status, res.headers ?? {});
     this._res = res;
   }
 
