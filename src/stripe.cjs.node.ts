@@ -49,6 +49,9 @@ for (const key of Object.getOwnPropertyNames(Stripe_)) {
 interface StripeConstructor extends Stripe_ {}
 declare namespace StripeConstructor {
   export type Stripe = import('./stripe.core.js').Stripe;
+  export type WorkloadIdentityProvider = Stripe_.WorkloadIdentityProvider;
+  export type WorkloadIdentityCloudProvider = Stripe_.WorkloadIdentityCloudProvider;
+  export type AuthenticationMethod = Stripe_.AuthenticationMethod;
   // StripeInterfaceCJSExports: The beginning of the section generated from our OpenAPI spec
   export type Account = Stripe_.Account;
   export type DeletedAccount = Stripe_.DeletedAccount;

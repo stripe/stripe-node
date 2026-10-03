@@ -14,3 +14,5 @@ testProjects/**/_worker.*
 testProjects/**/bun.lock
 # zipped package artifacts
 *.tgz
+packages/**/package-lock.json
+packages/**/*.tgz

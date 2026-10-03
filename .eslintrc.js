@@ -282,7 +282,7 @@ module.exports = {
       },
     },
     {
-      files: ['test/**/*.ts'],
+      files: ['test/**/*.ts', 'packages/*/test/**/*.ts'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
       },
