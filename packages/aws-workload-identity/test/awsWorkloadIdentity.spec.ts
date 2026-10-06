@@ -110,9 +110,13 @@ describe('awsWorkloadIdentity', () => {
           (e: Error) => e
         );
 
+      if (!err) {
+        expect.fail('Expected err to be defined');
+      }
+
       expect(err).to.be.an.instanceOf(AwsWorkloadIdentityError);
-      expect(err!.message).to.include('returned no WebIdentityToken');
-      expect(err!.message).to.include('test API key');
+      expect(err.message).to.include('returned no WebIdentityToken');
+      expect(err.message).to.include('test API key');
     });
   }
 
@@ -152,10 +156,14 @@ describe('awsWorkloadIdentity', () => {
         (e: Error) => e
       );
 
-    expect(err!.message).to.include('running on AWS infrastructure');
-    expect(err!.message).to.include('sts:GetWebIdentityToken');
-    expect(err!.message).to.include('STS global endpoint');
-    expect(err!.message).to.include('mocked Stripe client');
+    if (!err) {
+      expect.fail('Expected err to be defined');
+    }
+
+    expect(err.message).to.include('running on AWS infrastructure');
+    expect(err.message).to.include('sts:GetWebIdentityToken');
+    expect(err.message).to.include('STS global endpoint');
+    expect(err.message).to.include('mocked Stripe client');
   });
 
   it('never renders a token or the request in an error message', async () => {
