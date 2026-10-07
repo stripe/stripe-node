@@ -923,7 +923,7 @@ describe('auto pagination', () => {
       };
       const requests: Array<{method: string; path: string; data: unknown}> = [];
       const pages = [
-        {data: [], next_page_url: '/v2/items/search?page=2'},
+        {data: [], next_page_url: '/v2/items/search?page=2&limit=2'},
         {data: [{id: 'item_2'}], next_page_url: null},
       ];
       let page = 0;
@@ -943,7 +943,7 @@ describe('auto pagination', () => {
         {methodType: 'search'},
         Promise.resolve({
           data: [{id: 'item_1'}],
-          next_page_url: '/v2/items/search?page=1',
+          next_page_url: '/v2/items/search?page=1&limit=2',
         })
       );
 

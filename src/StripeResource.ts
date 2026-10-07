@@ -72,11 +72,8 @@ class StripeResource implements StripeResourceObject {
       getAPIMode(path) === 'v2' &&
       data.limit !== undefined
     ) {
-      if (!/[?&]limit=/.test(path)) {
-        const separator = path.includes('?') ? '&' : '?';
-        path = `${path}${separator}limit=${encodeURIComponent(
-          String(data.limit)
-        )}`;
+      if (!path.includes('?')) {
+        path = `${path}?limit=${encodeURIComponent(String(data.limit))}`;
       }
       delete data.limit;
     }
