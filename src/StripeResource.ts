@@ -1,5 +1,6 @@
 import {
   attachCallSiteToError,
+  getAPIMode,
   makeURLInterpolator,
   processOptions,
   queryStringifyRequestData,
@@ -66,6 +67,19 @@ class StripeResource implements StripeResourceObject {
     const requestMethod = method.toUpperCase();
     const encode = spec?.encode || ((data: RequestData): RequestData => data);
     let data = encode(params ? {...params} : {});
+    if (
+      spec?.methodType === 'search' &&
+      getAPIMode(path) === 'v2' &&
+      data.limit !== undefined
+    ) {
+      if (!/[?&]limit=/.test(path)) {
+        const separator = path.includes('?') ? '&' : '?';
+        path = `${path}${separator}limit=${encodeURIComponent(
+          String(data.limit)
+        )}`;
+      }
+      delete data.limit;
+    }
     const processed = processOptions(options);
     const apiBase = processed.apiBase || spec?.apiBase || null;
     const host = apiBase ? this._stripe.resolveBaseAddress(apiBase) : null;

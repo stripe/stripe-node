@@ -949,9 +949,22 @@ describe('auto pagination', () => {
 
       const result = await paginator.autoPagingToArray({limit: 10});
       expect(result.map((item) => item.id)).to.deep.equal(['item_1', 'item_2']);
+      const requestBody = {
+        query: 'status:"active"',
+        sort: ['name', '-created'],
+        future_field: {enabled: true},
+      };
       expect(requests).to.deep.equal([
-        {method: 'POST', path: '/v2/items/search?page=1', data: body},
-        {method: 'POST', path: '/v2/items/search?page=2', data: body},
+        {
+          method: 'POST',
+          path: '/v2/items/search?page=1&limit=2',
+          data: requestBody,
+        },
+        {
+          method: 'POST',
+          path: '/v2/items/search?page=2&limit=2',
+          data: requestBody,
+        },
       ]);
     });
   });
