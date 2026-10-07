@@ -156,6 +156,7 @@ export type MakeRequestSpec = {
   methodType?: 'search' | 'list';
   streaming?: boolean;
   validator?: (data: RequestData, options: {headers: RequestHeaders}) => void;
+  defaultHeaders?: Record<string, string>;
   headers?: Record<string, string>;
   apiBase?: BaseAddress;
   encode?: (data: RequestData) => RequestData;
@@ -189,6 +190,8 @@ export type UrlInterpolator = (params: Record<string, unknown>) => string;
 export type UserProvidedConfig = {
   authenticator?: RequestAuthenticator;
   apiVersion?: string;
+  // ExtraHeaderUserProvidedConfig: The beginning of the section generated from our OpenAPI spec
+  // ExtraHeaderUserProvidedConfig: The end of the section generated from our OpenAPI spec
   protocol?: string;
   host?: string;
   httpAgent?: any;

@@ -11,6 +11,7 @@ import {
 } from './Types.js';
 import {createWebhooks} from './Webhooks.js';
 import {ApiVersion} from './apiVersion.js';
+import * as ExtraHeaders from './extraHeaders.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
@@ -52,6 +53,8 @@ const APP_INFO_PROPERTIES: (keyof AppInfo)[] = [
 const ALLOWED_CONFIG_PROPERTIES = [
   'authenticator',
   'apiVersion',
+  // ExtraHeaderConfigProperties: The beginning of the section generated from our OpenAPI spec
+  // ExtraHeaderConfigProperties: The end of the section generated from our OpenAPI spec
   'typescript',
   'maxNetworkRetries',
   'httpAgent',
@@ -75,6 +78,8 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
 export class Stripe {
   static PACKAGE_VERSION = '22.2.3';
   static API_VERSION: typeof ApiVersion = ApiVersion;
+  // ExtraHeaderConstants: The beginning of the section generated from our OpenAPI spec
+  // ExtraHeaderConstants: The end of the section generated from our OpenAPI spec
   static aiAgent = '';
   static AI_AGENT = '';
   static USER_AGENT: Record<string, string | boolean | null> = {
@@ -178,6 +183,8 @@ export class Stripe {
       protocol: props.protocol || 'https',
       basePath: DEFAULT_BASE_PATH,
       version: props.apiVersion || DEFAULT_API_VERSION,
+      // ExtraHeaderDefaults: The beginning of the section generated from our OpenAPI spec
+      // ExtraHeaderDefaults: The end of the section generated from our OpenAPI spec
       timeout: validateInteger('timeout', props.timeout, DEFAULT_TIMEOUT),
       maxNetworkRetries: validateInteger(
         'maxNetworkRetries',

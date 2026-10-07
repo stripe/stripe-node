@@ -29,6 +29,9 @@ export interface StripeConfig {
    */
   apiVersion?: LatestApiVersion;
 
+  // ExtraHeaderConfig: The beginning of the section generated from our OpenAPI spec
+  // ExtraHeaderConfig: The end of the section generated from our OpenAPI spec
+
   /**
    * Provide a custom authenticator function for all requests.
    * Cannot be used together with apiKey (the first constructor argument).
@@ -143,6 +146,9 @@ export interface RequestOptions {
    * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (e.g., '2020-03-02').
    */
   apiVersion?: string;
+
+  // ExtraHeaderRequestOptions: The beginning of the section generated from our OpenAPI spec
+  // ExtraHeaderRequestOptions: The end of the section generated from our OpenAPI spec
 
   /**
    * Specify the number of requests to retry in event of error.

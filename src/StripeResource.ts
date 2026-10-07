@@ -1,6 +1,7 @@
 import {
   attachCallSiteToError,
   makeURLInterpolator,
+  normalizeHeaders,
   processOptions,
   queryStringifyRequestData,
 } from './utils.js';
@@ -70,7 +71,12 @@ class StripeResource implements StripeResourceObject {
     const apiBase = processed.apiBase || spec?.apiBase || null;
     const host = apiBase ? this._stripe.resolveBaseAddress(apiBase) : null;
     const streaming = processed.streaming || !!spec?.streaming;
-    const headers = Object.assign(processed.headers, spec?.headers);
+    const headers = Object.assign(
+      {},
+      normalizeHeaders(spec?.defaultHeaders || {}),
+      normalizeHeaders(processed.headers),
+      normalizeHeaders(spec?.headers || {})
+    );
     const usage = spec?.usage || [];
 
     const dataInQuery = requestMethod === 'GET' || requestMethod === 'DELETE';
