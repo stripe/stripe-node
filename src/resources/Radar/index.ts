@@ -43,6 +43,7 @@ import {
   DeletedValueListItem,
   ValueListItemResource,
 } from './ValueListItems.js';
+import {Rule} from './Rules.js';
 
 export {AccountEvaluation} from './AccountEvaluations.js';
 export {BillingEvaluation} from './BillingEvaluations.js';
@@ -52,6 +53,7 @@ export {IssuingAuthorizationEvaluation} from './IssuingAuthorizationEvaluations.
 export {PaymentEvaluation} from './PaymentEvaluations.js';
 export {ValueList} from './ValueLists.js';
 export {ValueListItem} from './ValueListItems.js';
+export {Rule} from './Rules.js';
 
 export class Radar {
   accountEvaluations: AccountEvaluationResource;
@@ -112,4 +114,5 @@ export declare namespace Radar {
   export import ValueListItemSerializeBatchCreateParams = RadarNamespace7.ValueListItemSerializeBatchCreateParams;
   export {DeletedValueListItem};
   export {ValueListItem, ValueListItemResource};
+  export {Rule};
 }

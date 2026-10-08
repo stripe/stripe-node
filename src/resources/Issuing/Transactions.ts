@@ -116,6 +116,22 @@ export class TransactionResource extends StripeResource {
                             },
                           },
                         },
+                        fuels: {
+                          kind: 'nullable',
+                          inner: {
+                            kind: 'array',
+                            element: {
+                              kind: 'object',
+                              fields: {
+                                quantity_decimal: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
+                                unit_cost_decimal: {kind: 'decimal_string'},
+                              },
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -218,6 +234,22 @@ export class TransactionResource extends StripeResource {
                       },
                     },
                   },
+                  fuels: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          quantity_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                          unit_cost_decimal: {kind: 'decimal_string'},
+                        },
+                      },
+                    },
+                  },
                 },
               },
             },
@@ -314,6 +346,22 @@ export class TransactionResource extends StripeResource {
                           inner: {kind: 'decimal_string'},
                         },
                         unit_cost_decimal: {kind: 'decimal_string'},
+                      },
+                    },
+                  },
+                  fuels: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          quantity_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                          unit_cost_decimal: {kind: 'decimal_string'},
+                        },
                       },
                     },
                   },
@@ -620,6 +668,11 @@ export namespace Transaction {
     fuel: PurchaseDetails.Fuel | null;
 
     /**
+     * Information about the list of fuel items that were purchased with this transaction. Typically this information is received from the merchant after the authorization has been approved and the fuel dispensed.
+     */
+    fuels?: Array<PurchaseDetails.Fuels> | null;
+
+    /**
      * Information about lodging that was purchased with this transaction.
      */
     lodging: PurchaseDetails.Lodging | null;
@@ -904,6 +957,33 @@ export namespace Transaction {
     }
 
     export interface Fuel {
+      /**
+       * [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
+       */
+      industry_product_code: string | null;
+
+      /**
+       * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
+       */
+      quantity_decimal: Decimal | null;
+
+      /**
+       * The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`, `unleaded_super`, or `other`.
+       */
+      type: string;
+
+      /**
+       * The units for `quantity_decimal`. One of `charging_minute`, `imperial_gallon`, `kilogram`, `kilowatt_hour`, `liter`, `pound`, `us_gallon`, or `other`.
+       */
+      unit: string;
+
+      /**
+       * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
+       */
+      unit_cost_decimal: Decimal;
+    }
+
+    export interface Fuels {
       /**
        * [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
        */

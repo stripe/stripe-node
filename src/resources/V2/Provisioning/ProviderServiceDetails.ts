@@ -105,8 +105,14 @@ export interface ProviderServiceDetail {
 }
 export namespace ProviderServiceDetail {
   export interface AllowedUpdate {
+    /**
+     * Whether the target service appears in upgrade flows, downgrade flows, or both.
+     */
     direction: AllowedUpdate.Direction;
 
+    /**
+     * Identifier of a service to which a resource can be updated.
+     */
     service: string;
   }
 
@@ -117,16 +123,28 @@ export namespace ProviderServiceDetail {
   };
 
   export interface Constraint {
+    /**
+     * Limit on the number of active resources for the service.
+     */
     count?: Constraint.Count;
 
+    /**
+     * Whether provisioning is blocked when an allowed-update target is active in the same scope.
+     */
     mutual_exclusion_allowed_updates?: boolean;
 
+    /**
+     * Kind of constraint represented by this entry.
+     */
     type: Constraint.Type;
   }
 
   export type Kind = 'deployable' | 'plan';
 
   export interface Pricing {
+    /**
+     * Parent-service-dependent pricing details, set when `type` is `component`.
+     */
     component: Pricing.Component;
 
     /**
@@ -143,6 +161,9 @@ export namespace ProviderServiceDetail {
      */
     paid_pricing: Array<Pricing.PaidPricing>;
 
+    /**
+     * Pricing model for the service: free, paid, or dependent on a parent service.
+     */
     type: Pricing.Type;
   }
 
@@ -154,6 +175,9 @@ export namespace ProviderServiceDetail {
 
   export namespace Constraint {
     export interface Count {
+      /**
+       * Maximum number of active resources for the service within its scope.
+       */
       at_most: number;
     }
 
@@ -162,26 +186,53 @@ export namespace ProviderServiceDetail {
 
   export namespace Pricing {
     export interface Component {
+      /**
+       * Pricing options selected according to the resource's active parent services.
+       */
       options: Array<Component.Option>;
     }
 
     export interface Paid {
+      /**
+       * Additional display information about the price.
+       */
       description?: string;
 
+      /**
+       * Provider-supplied pricing terms, set when `type` is `freeform`.
+       */
       freeform?: string;
 
+      /**
+       * Kind of pricing represented by this entry.
+       */
       type: Paid.Type;
     }
 
     export interface PaidPricing {
+      /**
+       * Service configuration values for which this pricing entry applies.
+       */
       configuration: PaidPricing.Configuration;
 
+      /**
+       * Additional display information about the price.
+       */
       description?: string;
 
+      /**
+       * Provider-supplied pricing terms, set when `type` is `freeform`.
+       */
       freeform?: string;
 
+      /**
+       * Whether this entry is the fallback when no configuration-specific entry matches.
+       */
       is_default?: boolean;
 
+      /**
+       * Kind of pricing represented by this entry.
+       */
       type: PaidPricing.Type;
     }
 
@@ -189,21 +240,42 @@ export namespace ProviderServiceDetail {
 
     export namespace Component {
       export interface Option {
+        /**
+         * Whether this option applies when no parent-service-specific option matches.
+         */
         is_default?: boolean;
 
+        /**
+         * Pricing details for this option, set when `type` is `paid`.
+         */
         paid: Option.Paid;
 
+        /**
+         * Identifiers of active parent services for which this option applies.
+         */
         parent_services: Array<string>;
 
+        /**
+         * Whether the component is free or paid when this option applies.
+         */
         type: Option.Type;
       }
 
       export namespace Option {
         export interface Paid {
+          /**
+           * Additional display information about the price.
+           */
           description?: string;
 
+          /**
+           * Provider-supplied pricing terms, set when `type` is `freeform`.
+           */
           freeform?: string;
 
+          /**
+           * Kind of pricing represented by this entry.
+           */
           type: Paid.Type;
         }
 

@@ -1669,6 +1669,11 @@ export namespace Subscription {
     enabled: boolean;
 
     /**
+     * How `automatic_tax` was set (`explicit`, `managed_payments`, or `tax_integration_configuration`) and why it may have been disabled.
+     */
+    enablement_details?: AutomaticTax.EnablementDetails | null;
+
+    /**
      * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
      */
     liability: AutomaticTax.Liability | null;
@@ -1982,6 +1987,18 @@ export namespace Subscription {
   }
 
   export namespace AutomaticTax {
+    export interface EnablementDetails {
+      /**
+       * Present when `source=tax_integration_configuration`, `automatic_tax[enabled]=false`, and a conflicting parameter is recorded.
+       */
+      integration_configuration_disabled_reason: EnablementDetails.IntegrationConfigurationDisabledReason | null;
+
+      /**
+       * How `automatic_tax` was set: `explicit`, `managed_payments`, or `tax_integration_configuration`.
+       */
+      source: EnablementDetails.Source;
+    }
+
     export interface Liability {
       /**
        * The connected account being referenced when `type` is `account`.
@@ -1992,6 +2009,20 @@ export namespace Subscription {
        * Type of the account referenced.
        */
       type: Liability.Type;
+    }
+
+    export namespace EnablementDetails {
+      export interface IntegrationConfigurationDisabledReason {
+        /**
+         * The parameter that prevented `automatic_tax` from being enabled (for example `default_tax_rates`).
+         */
+        conflicting_field: string;
+      }
+
+      export type Source =
+        | 'explicit'
+        | 'managed_payments'
+        | 'tax_integration_configuration';
     }
 
     export namespace Liability {
@@ -2371,7 +2402,7 @@ export namespace Subscription {
 
       export interface Pix {
         /**
-         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
 
@@ -4181,7 +4212,7 @@ export namespace SubscriptionCreateParams {
 
       export interface Pix {
         /**
-         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
 
@@ -5951,7 +5982,7 @@ export namespace SubscriptionUpdateParams {
 
       export interface Pix {
         /**
-         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
 

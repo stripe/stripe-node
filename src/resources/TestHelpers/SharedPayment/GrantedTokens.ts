@@ -115,6 +115,7 @@ export namespace TestHelpers {
         export namespace Recurring {
           export type Interval =
             | 'day'
+            | 'hour'
             | 'month'
             | 'week'
             | 'year'

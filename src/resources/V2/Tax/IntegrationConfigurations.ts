@@ -45,6 +45,11 @@ export interface IntegrationConfiguration {
   checkout_sessions: IntegrationConfiguration.CheckoutSessions;
 
   /**
+   * Configuration for standalone Invoices automatic tax behavior.
+   */
+  invoices: IntegrationConfiguration.Invoices;
+
+  /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
    */
   livemode: boolean;
@@ -57,7 +62,18 @@ export namespace IntegrationConfiguration {
     automatic_tax_default_value: CheckoutSessions.AutomaticTaxDefaultValue;
   }
 
+  export interface Invoices {
+    /**
+     * Controls the default value of automatic_tax[enabled] on new standalone Invoices.
+     */
+    automatic_tax_default_value: Invoices.AutomaticTaxDefaultValue;
+  }
+
   export namespace CheckoutSessions {
+    export type AutomaticTaxDefaultValue = 'disabled' | 'enabled_when_possible';
+  }
+
+  export namespace Invoices {
     export type AutomaticTaxDefaultValue = 'disabled' | 'enabled_when_possible';
   }
 }
@@ -73,6 +89,11 @@ export namespace V2 {
        * Configuration for Checkout Sessions automatic tax behavior.
        */
       checkout_sessions?: IntegrationConfigurationUpdateParams.CheckoutSessions;
+
+      /**
+       * Configuration for standalone Invoices automatic tax behavior.
+       */
+      invoices?: IntegrationConfigurationUpdateParams.Invoices;
     }
 
     export namespace IntegrationConfigurationUpdateParams {
@@ -83,7 +104,20 @@ export namespace V2 {
         automatic_tax_default_value: CheckoutSessions.AutomaticTaxDefaultValue;
       }
 
+      export interface Invoices {
+        /**
+         * Controls the default value of automatic_tax[enabled] on new standalone Invoices.
+         */
+        automatic_tax_default_value: Invoices.AutomaticTaxDefaultValue;
+      }
+
       export namespace CheckoutSessions {
+        export type AutomaticTaxDefaultValue =
+          | 'disabled'
+          | 'enabled_when_possible';
+      }
+
+      export namespace Invoices {
         export type AutomaticTaxDefaultValue =
           | 'disabled'
           | 'enabled_when_possible';

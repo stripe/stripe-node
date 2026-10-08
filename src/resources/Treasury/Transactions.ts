@@ -268,6 +268,28 @@ export class TransactionResource extends StripeResource {
                                                         },
                                                       },
                                                     },
+                                                    fuels: {
+                                                      kind: 'nullable',
+                                                      inner: {
+                                                        kind: 'array',
+                                                        element: {
+                                                          kind: 'object',
+                                                          fields: {
+                                                            quantity_decimal: {
+                                                              kind: 'nullable',
+                                                              inner: {
+                                                                kind:
+                                                                  'decimal_string',
+                                                              },
+                                                            },
+                                                            unit_cost_decimal: {
+                                                              kind:
+                                                                'decimal_string',
+                                                            },
+                                                          },
+                                                        },
+                                                      },
+                                                    },
                                                   },
                                                 },
                                               },
@@ -522,6 +544,27 @@ export class TransactionResource extends StripeResource {
                                                     },
                                                     unit_cost_decimal: {
                                                       kind: 'decimal_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                              fuels: {
+                                                kind: 'nullable',
+                                                inner: {
+                                                  kind: 'array',
+                                                  element: {
+                                                    kind: 'object',
+                                                    fields: {
+                                                      quantity_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                      unit_cost_decimal: {
+                                                        kind: 'decimal_string',
+                                                      },
                                                     },
                                                   },
                                                 },

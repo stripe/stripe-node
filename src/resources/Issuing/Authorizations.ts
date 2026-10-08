@@ -219,6 +219,24 @@ export class AuthorizationResource extends StripeResource {
                                   },
                                 },
                               },
+                              fuels: {
+                                kind: 'nullable',
+                                inner: {
+                                  kind: 'array',
+                                  element: {
+                                    kind: 'object',
+                                    fields: {
+                                      quantity_decimal: {
+                                        kind: 'nullable',
+                                        inner: {kind: 'decimal_string'},
+                                      },
+                                      unit_cost_decimal: {
+                                        kind: 'decimal_string',
+                                      },
+                                    },
+                                  },
+                                },
+                              },
                             },
                           },
                         },
@@ -420,6 +438,22 @@ export class AuthorizationResource extends StripeResource {
                             },
                           },
                         },
+                        fuels: {
+                          kind: 'nullable',
+                          inner: {
+                            kind: 'array',
+                            element: {
+                              kind: 'object',
+                              fields: {
+                                quantity_decimal: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
+                                unit_cost_decimal: {kind: 'decimal_string'},
+                              },
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -615,6 +649,22 @@ export class AuthorizationResource extends StripeResource {
                                 inner: {kind: 'decimal_string'},
                               },
                               unit_cost_decimal: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                        fuels: {
+                          kind: 'nullable',
+                          inner: {
+                            kind: 'array',
+                            element: {
+                              kind: 'object',
+                              fields: {
+                                quantity_decimal: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
+                                unit_cost_decimal: {kind: 'decimal_string'},
+                              },
                             },
                           },
                         },
@@ -818,6 +868,22 @@ export class AuthorizationResource extends StripeResource {
                             },
                           },
                         },
+                        fuels: {
+                          kind: 'nullable',
+                          inner: {
+                            kind: 'array',
+                            element: {
+                              kind: 'object',
+                              fields: {
+                                quantity_decimal: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
+                                unit_cost_decimal: {kind: 'decimal_string'},
+                              },
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -1018,6 +1084,22 @@ export class AuthorizationResource extends StripeResource {
                             },
                           },
                         },
+                        fuels: {
+                          kind: 'nullable',
+                          inner: {
+                            kind: 'array',
+                            element: {
+                              kind: 'object',
+                              fields: {
+                                quantity_decimal: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
+                                unit_cost_decimal: {kind: 'decimal_string'},
+                              },
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -1107,6 +1189,11 @@ export interface Authorization {
    * Fleet-specific information for authorizations using Fleet cards.
    */
   fleet: Authorization.Fleet | null;
+
+  /**
+   * Details about the flexible credential options for this authorization. This is only populated when enrolled to flex credentials
+   */
+  flexible_credential?: Authorization.FlexibleCredential | null;
 
   /**
    * Fraud challenges sent to the cardholder, if this authorization was declined for fraud risk reasons.
@@ -1313,6 +1400,23 @@ export namespace Authorization {
      * The type of fuel service.
      */
     service_type: Fleet.ServiceType | null;
+  }
+
+  export interface FlexibleCredential {
+    /**
+     * The authorization identifier of a prior product eligibility inquiry that selected the credential for this authorization, if exists.
+     */
+    product_eligibility_inquiry?: string | null;
+
+    /**
+     * Details about the eligible secondary credentials for this authorization.
+     */
+    secondary_credentials?: Array<FlexibleCredential.SecondaryCredential>;
+
+    /**
+     * The `key` of the selected secondary credential for this authorization. Null if the card's primary credential was selected.
+     */
+    selected_secondary?: string | null;
   }
 
   export interface FraudChallenge {
@@ -2425,6 +2529,24 @@ export namespace Authorization {
          */
         national_amount_decimal: Decimal | null;
       }
+    }
+  }
+
+  export namespace FlexibleCredential {
+    export interface SecondaryCredential {
+      /**
+       * The funding source that this credential can support.
+       */
+      funding?: SecondaryCredential.Funding;
+
+      /**
+       * Unique reference of this credential within this array.
+       */
+      key?: string;
+    }
+
+    export namespace SecondaryCredential {
+      export type Funding = 'credit' | OtherString;
     }
   }
 

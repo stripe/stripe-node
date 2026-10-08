@@ -1752,7 +1752,7 @@ export interface SetupIntentCreateParams {
   on_behalf_of?: string;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
+   * The ID of a PaymentMethod to attach to this SetupIntent.
    */
   payment_method?: string;
 
@@ -4109,7 +4109,7 @@ export interface SetupIntentUpdateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent. To unset this field to null, pass in an empty string.
+   * The ID of a PaymentMethod to attach to this SetupIntent. To unset this field to null, pass in an empty string.
    */
   payment_method?: string;
 
@@ -6367,7 +6367,7 @@ export interface SetupIntentConfirmParams {
   mandate_data?: Emptyable<SetupIntentConfirmParams.MandateData>;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
+   * The ID of a PaymentMethod to attach to this SetupIntent.
    */
   payment_method?: string;
 
