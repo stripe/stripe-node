@@ -1,6 +1,11 @@
 import {RequestData, StripeResourceObject, MakeRequestSpec} from './Types.js';
-import {attachCallSiteToError, getAPIMode} from './utils.js';
+import {
+  attachCallSiteToError,
+  getAPIMode,
+  jsonStringifyRequestData,
+} from './utils.js';
 import {RequestOptions} from './lib.js';
+import {coerceV2RequestData} from './V2Coercion.js';
 
 type IterationDoneCallback = (err?: any, result?: any) => void;
 type IterationItemCallback<T> = (
@@ -195,8 +200,21 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     this.spec = spec;
     this.stripeResource = stripeResource;
     this.method = method;
+    // Snapshot params so later mutations by the caller don't leak into
+    // subsequent page requests. Mirrors the real request pipeline: coerce
+    // through the request schema first so bigint/Decimal fields become
+    // their final wire-format strings, then deep-clone with the same
+    // stringify logic RequestSender uses to serialize the body. Once
+    // coerced, nothing unserializable remains, so this is now safe where
+    // a plain JSON round-trip on the raw params was not.
     this.params = params
-      ? (JSON.parse(JSON.stringify(params)) as RequestData)
+      ? (JSON.parse(
+          jsonStringifyRequestData(
+            spec?.requestSchema
+              ? (coerceV2RequestData(params, spec.requestSchema) as RequestData)
+              : params
+          )
+        ) as RequestData)
       : undefined;
   }
   private async initFirstPage(): Promise<void> {

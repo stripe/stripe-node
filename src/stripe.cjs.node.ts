@@ -15821,6 +15821,8 @@ declare namespace StripeConstructor {
   export type TreasuryReceivedDebitCreatedEvent = Stripe_.TreasuryReceivedDebitCreatedEvent;
   export type V2List<T> = Stripe_.V2List<T>;
   export type V2ListPromise<T> = Stripe_.V2ListPromise<T>;
+  export type V2SearchResult<T> = Stripe_.V2SearchResult<T>;
+  export type V2SearchResultPromise<T> = Stripe_.V2SearchResultPromise<T>;
   // StripeInterfaceCJSExports: The end of the section generated from our OpenAPI spec
 
   export type Response<T> = Stripe_.Response<T>;
