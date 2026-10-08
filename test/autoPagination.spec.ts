@@ -931,7 +931,8 @@ describe('auto pagination', () => {
         {},
         (method, _host, path, data, _auth, _options, _usage, callback) => {
           requests.push({method, path, data});
-          callback(null, Promise.resolve(pages[page++]));
+          callback(null, Promise.resolve(pages[page]));
+          page += 1;
         }
       );
       const paginator = makeAutoPaginationMethods(
