@@ -178,6 +178,9 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
 const maxBufferedRequestMetrics: number =
   Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS;
 
+declare const v2SearchResult: Stripe.V2SearchResult<Stripe.V2.Core.Event>;
+declare const v2SearchResultPromise: Stripe.V2SearchResultPromise<Stripe.V2.Core.Event>;
+
 // Test NodeHttpClient request processing.
 import {Agent} from 'http';
 async (): Promise<void> => {

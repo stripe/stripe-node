@@ -1,5 +1,6 @@
 import {
   attachCallSiteToError,
+  getAPIMode,
   makeURLInterpolator,
   processOptions,
   queryStringifyRequestData,
@@ -66,6 +67,18 @@ class StripeResource implements StripeResourceObject {
     const requestMethod = method.toUpperCase();
     const encode = spec?.encode || ((data: RequestData): RequestData => data);
     let data = encode(params ? {...params} : {});
+    if (
+      spec?.methodType === 'search' &&
+      getAPIMode(path) === 'v2' &&
+      data.limit !== undefined
+    ) {
+      // this is true for initial request but not for any next/previous_page_url
+      // requests (which will have the page and limit already baked in)
+      if (!path.includes('?')) {
+        path = `${path}?limit=${encodeURIComponent(String(data.limit))}`;
+      }
+      delete data.limit;
+    }
     const processed = processOptions(options);
     const apiBase = processed.apiBase || spec?.apiBase || null;
     const host = apiBase ? this._stripe.resolveBaseAddress(apiBase) : null;

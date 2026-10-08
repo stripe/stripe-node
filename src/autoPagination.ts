@@ -1,6 +1,11 @@
 import {RequestData, StripeResourceObject, MakeRequestSpec} from './Types.js';
-import {attachCallSiteToError, getAPIMode} from './utils.js';
+import {
+  attachCallSiteToError,
+  getAPIMode,
+  jsonStringifyRequestData,
+} from './utils.js';
 import {RequestOptions} from './lib.js';
+import {coerceV2RequestData} from './V2Coercion.js';
 
 type IterationDoneCallback = (err?: any, result?: any) => void;
 type IterationItemCallback<T> = (
@@ -177,11 +182,15 @@ class V2ListIterator<T> implements AsyncIterator<T> {
   private options: RequestOptions | undefined;
   private spec: MakeRequestSpec | undefined;
   private stripeResource: StripeResourceObject;
+  private method: string;
+  private params: RequestData | undefined;
   constructor(
     firstPagePromise: Promise<PageResult<T>>,
     options: RequestOptions | undefined,
     spec: MakeRequestSpec | undefined,
-    stripeResource: StripeResourceObject
+    stripeResource: StripeResourceObject,
+    method = 'GET',
+    params?: RequestData
   ) {
     this.firstPagePromise = firstPagePromise;
     this.currentPageIterator = null;
@@ -190,6 +199,23 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     this.options = options;
     this.spec = spec;
     this.stripeResource = stripeResource;
+    this.method = method;
+    // Snapshot params so later mutations by the caller don't leak into
+    // subsequent page requests. Mirrors the real request pipeline: coerce
+    // through the request schema first so bigint/Decimal fields become
+    // their final wire-format strings, then deep-clone with the same
+    // stringify logic RequestSender uses to serialize the body. Once
+    // coerced, nothing unserializable remains, so this is now safe where
+    // a plain JSON round-trip on the raw params was not.
+    this.params = params
+      ? (JSON.parse(
+          jsonStringifyRequestData(
+            spec?.requestSchema
+              ? (coerceV2RequestData(params, spec.requestSchema) as RequestData)
+              : params
+          )
+        ) as RequestData)
+      : undefined;
   }
   private async initFirstPage(): Promise<void> {
     if (this.firstPagePromise) {
@@ -202,9 +228,9 @@ class V2ListIterator<T> implements AsyncIterator<T> {
   private async turnPage(): Promise<Iterator<T> | null> {
     if (!this.nextPageUrl) return null;
     const page = await this.stripeResource._makeRequest(
-      'GET',
+      this.method,
       this.nextPageUrl,
-      undefined,
+      this.params,
       this.options,
       this.spec
     );
@@ -294,6 +320,18 @@ export const makeAutoPaginationMethods = <TItem extends {id: string}>(
   if (apiMode === 'v2' && methodType === 'list') {
     return makeAutoPaginationMethodsFromIterator(
       new V2ListIterator(firstPagePromise, options, spec, stripeResource)
+    );
+  }
+  if (apiMode === 'v2' && methodType === 'search') {
+    return makeAutoPaginationMethodsFromIterator(
+      new V2ListIterator(
+        firstPagePromise,
+        options,
+        spec,
+        stripeResource,
+        'POST',
+        params
+      )
     );
   }
   return null;

@@ -6,6 +6,7 @@ import {makeAutoPaginationMethods} from '../src/autoPagination.js';
 import {StripeResource} from '../src/StripeResource.js';
 import {getMockStripe} from './testUtils.js';
 import {StripeAPIError} from '../src/Error.js';
+import {Decimal} from '../src/Decimal.js';
 
 describe('auto pagination', () => {
   const testCase = (mockPaginationFn) => ({
@@ -913,6 +914,179 @@ describe('auto pagination', () => {
       expect(paramsLog).to.deep.equal(['?page=foo']);
     });
   });
+  describe('V2 search pagination', () => {
+    it('replays the original POST body for every next page URL', async () => {
+      const body = {
+        query: 'status:"active"',
+        sort: ['name', '-created'],
+        limit: 2,
+        future_field: {enabled: true},
+      };
+      const requests: Array<{method: string; path: string; data: unknown}> = [];
+      const pages = [
+        {data: [], next_page_url: '/v2/items/search?page=2&limit=2'},
+        {data: [{id: 'item_2'}], next_page_url: null},
+      ];
+      let page = 0;
+      const mockStripe = getMockStripe(
+        {},
+        (method, _host, path, data, _auth, _options, _usage, callback) => {
+          requests.push({method, path, data});
+          callback(null, Promise.resolve(pages[page]));
+          page += 1;
+        }
+      );
+      const paginator = makeAutoPaginationMethods(
+        new StripeResource(mockStripe),
+        body,
+        {stripeContext: 'ctx_123'},
+        'POST',
+        '/v2/items/search',
+        {methodType: 'search'},
+        Promise.resolve({
+          data: [{id: 'item_1'}],
+          next_page_url: '/v2/items/search?page=1&limit=2',
+        })
+      );
+
+      const result = await paginator.autoPagingToArray({limit: 10});
+      expect(result.map((item) => item.id)).to.deep.equal(['item_1', 'item_2']);
+      const requestBody = {
+        query: 'status:"active"',
+        sort: ['name', '-created'],
+        future_field: {enabled: true},
+      };
+      expect(requests).to.deep.equal([
+        {
+          method: 'POST',
+          path: '/v2/items/search?page=1&limit=2',
+          data: requestBody,
+        },
+        {
+          method: 'POST',
+          path: '/v2/items/search?page=2&limit=2',
+          data: requestBody,
+        },
+      ]);
+    });
+
+    it('preserves a bigint int64_string field across every replayed page', async () => {
+      const body = {
+        query: 'status:"active"',
+        amount: 10n,
+        limit: 2,
+      };
+      const requestSchema = {
+        kind: 'object',
+        fields: {
+          amount: {kind: 'int64_string'},
+        },
+      };
+      const requests: Array<{method: string; path: string; data: unknown}> = [];
+      const pages = [
+        {data: [], next_page_url: '/v2/items/search?page=2&limit=2'},
+        {data: [{id: 'item_2'}], next_page_url: null},
+      ];
+      let page = 0;
+      const mockStripe = getMockStripe(
+        {},
+        (method, _host, path, data, _auth, _options, _usage, callback) => {
+          requests.push({method, path, data});
+          callback(null, Promise.resolve(pages[page]));
+          page += 1;
+        }
+      );
+
+      // Constructing the paginator must not throw: JSON.stringify throws
+      // synchronously on a bigint, which the old JSON-based snapshot hit.
+      const paginator = makeAutoPaginationMethods(
+        new StripeResource(mockStripe),
+        body,
+        {},
+        'POST',
+        '/v2/items/search',
+        {methodType: 'search', requestSchema},
+        Promise.resolve({
+          data: [{id: 'item_1'}],
+          next_page_url: '/v2/items/search?page=1&limit=2',
+        })
+      );
+
+      const result = await paginator.autoPagingToArray({limit: 10});
+      expect(result.map((item) => item.id)).to.deep.equal(['item_1', 'item_2']);
+      const requestBody = {query: 'status:"active"', amount: '10'};
+      expect(requests).to.deep.equal([
+        {
+          method: 'POST',
+          path: '/v2/items/search?page=1&limit=2',
+          data: requestBody,
+        },
+        {
+          method: 'POST',
+          path: '/v2/items/search?page=2&limit=2',
+          data: requestBody,
+        },
+      ]);
+    });
+
+    it('preserves a Decimal decimal_string field across every replayed page', async () => {
+      const body = {
+        query: 'status:"active"',
+        fee: Decimal.from('1.50'),
+        limit: 2,
+      };
+      const requestSchema = {
+        kind: 'object',
+        fields: {
+          fee: {kind: 'decimal_string'},
+        },
+      };
+      const requests: Array<{method: string; path: string; data: unknown}> = [];
+      const pages = [
+        {data: [], next_page_url: '/v2/items/search?page=2&limit=2'},
+        {data: [{id: 'item_2'}], next_page_url: null},
+      ];
+      let page = 0;
+      const mockStripe = getMockStripe(
+        {},
+        (method, _host, path, data, _auth, _options, _usage, callback) => {
+          requests.push({method, path, data});
+          callback(null, Promise.resolve(pages[page]));
+          page += 1;
+        }
+      );
+
+      const paginator = makeAutoPaginationMethods(
+        new StripeResource(mockStripe),
+        body,
+        {},
+        'POST',
+        '/v2/items/search',
+        {methodType: 'search', requestSchema},
+        Promise.resolve({
+          data: [{id: 'item_1'}],
+          next_page_url: '/v2/items/search?page=1&limit=2',
+        })
+      );
+
+      const result = await paginator.autoPagingToArray({limit: 10});
+      expect(result.map((item) => item.id)).to.deep.equal(['item_1', 'item_2']);
+      const requestBody = {query: 'status:"active"', fee: '1.5'};
+      expect(requests).to.deep.equal([
+        {
+          method: 'POST',
+          path: '/v2/items/search?page=1&limit=2',
+          data: requestBody,
+        },
+        {
+          method: 'POST',
+          path: '/v2/items/search?page=2&limit=2',
+          data: requestBody,
+        },
+      ]);
+    });
+  });
+
   describe('stack traces', () => {
     // Builds a paginator whose first page succeeds but whose second page
     // request fails with an error that has only fake SDK-internal frames,
