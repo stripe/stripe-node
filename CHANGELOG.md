@@ -7,6 +7,63 @@ Instead, edit a corresponding `.change.md` file and run `hark build`.
 
 > This changelog only covers the **private preview** releases. Each release builds on the most recent GA release; see those notes in [the GA changelog](https://github.com/stripe/stripe-node/blob/master/CHANGELOG.md).
 
+## <a id="23-1-0-alpha-2"></a>23.1.0-alpha.2 - 2026-10-07
+This release changes the pinned API version to `2026-10-07.preview`.
+
+* ⚠️ [#2882](https://github.com/stripe/stripe-node/pull/2882) Update generated code
+  * Add support for new resources `Radar.Rule`, `V2.MoneyManagement.FundingSession`, and `V2.MoneyManagement.InboundTransferMandate`
+  * Add support for `cancel`, `create`, `list`, and `retrieve` methods on resource `V2.MoneyManagement.InboundTransferMandate`
+  * Add support for `create` method on resource `V2.MoneyManagement.FundingSession`
+  * Add support for `excluded_payout_destinations` on `AccountUpdateParams.settings.capital`
+  * Add support for `wero_payments` on `Account.capabilities`
+  * ⚠️ Change type of `Charge.outcome.rule` from `RadarRule` to `Radar.Rule`
+  * Add support for new value `ousd` on enums `Charge.payment_method_details.crypto.token_currency`, `PaymentAttemptRecord.payment_method_details.crypto.token_currency`, and `PaymentRecord.payment_method_details.crypto.token_currency`
+  * Add support for `location` and `reader` on `Charge.payment_method_details.swish`, `PaymentAttemptRecord.payment_method_details.swish`, and `PaymentRecord.payment_method_details.swish`
+  * Add support for `payment_settings` on `Checkout.SessionCreateParams` and `Checkout.Session`
+  * Add support for `on_behalf_of` on `Checkout.Session`
+  * Add support for new values `fednow` and `rtp` on enum `CustomerCashBalanceTransaction.funded.bank_transfer.us_bank_transfer.network`
+  * Add support for `flexible_credential` on `Issuing.Authorization`
+  * Add support for `fuels` on `Issuing.Transaction.purchase_details`
+  * Add support for `us_bank_account` on `PaymentAttemptRecordReportFailedParams.payment_method_details`, `PaymentRecordReportPaymentAttemptFailedParams.payment_method_details`, `PaymentRecordReportPaymentAttemptParams.payment_method_details`, `PaymentRecordReportPaymentParams.payment_method_details`, `Radar.PaymentEvaluation.payment_details.money_movement_details`, and `Radar.PaymentEvaluationCreateParams.payment_details.money_movement_details`
+  * Change type of `PaymentAttemptRecordReportFailedParams.payment_method_details.type` and `PaymentRecordReportPaymentAttemptFailedParams.payment_method_details.type` from `literal('card')` to `enum('card'|'us_bank_account')`
+  * Add support for `fleet` on `PaymentIntent.payment_method_options.card_present`, `PaymentIntentConfirmParams.payment_method_options.card_present`, `PaymentIntentCreateParams.payment_method_options.card_present`, and `PaymentIntentUpdateParams.payment_method_options.card_present`
+  * Add support for `subscription_reference` on `PaymentIntent.payment_method_options.paypay`, `PaymentIntentConfirmParams.payment_method_options.paypay`, `PaymentIntentCreateParams.payment_method_options.paypay`, and `PaymentIntentUpdateParams.payment_method_options.paypay`
+  * Add support for new value `us_bank_account` on enums `PaymentRecordReportPaymentAttemptParams.payment_method_details.type` and `PaymentRecordReportPaymentParams.payment_method_details.type`
+  * Add support for `enablement_details` on `QuotePreviewSubscriptionSchedule.default_settings.automatic_tax`, `QuotePreviewSubscriptionSchedule.phases[].automatic_tax`, `Subscription.automatic_tax`, `SubscriptionSchedule.default_settings.automatic_tax`, and `SubscriptionSchedule.phases[].automatic_tax`
+  * Change type of `Radar.PaymentEvaluationCreateParams.payment_details.money_movement_details.money_movement_type` from `literal('card')` to `enum('card'|'us_bank_account')`
+  * Add support for `rules` on `Radar.PaymentEvaluation`
+  * ⚠️ Change type of `Radar.PaymentEvaluation.payment_details.money_movement_details.money_movement_type` from `literal('card')` to `enum('card'|'us_bank_account')`
+  * Add support for new values `request_three_d_secure` and `reroute` on enum `Radar.PaymentEvaluation.recommended_action`
+  * Add support for `bank_initiated_return` on `Radar.PaymentEvaluation.signals`
+  * Add support for new value `hour` on enums `SharedPayment.GrantedToken.usage_limits.recurring.interval`, `SharedPayment.GrantedTokenCreateParams.testHelpers.usage_limits.recurring.interval`, `SharedPayment.IssuedToken.usage_limits.recurring.interval`, and `SharedPayment.IssuedTokenCreateParams.usage_limits.recurring.interval`
+  * Add support for new values `digital_excise_tax` and `utility_users_tax` on enums `Tax.Registration.country_options.us.type` and `Tax.RegistrationCreateParams.country_options.us.type`
+  * Add support for `utility_users_tax` on `Tax.Registration.country_options.us`
+  * Add support for `enable_customer_cancellation` on `Terminal.ReaderActivateGiftCardParams`, `Terminal.ReaderCashoutGiftCardParams`, `Terminal.ReaderCheckGiftCardBalanceParams`, and `Terminal.ReaderReloadGiftCardParams`
+  * Add support for `vipps_payments` on `V2.Core.Account.configuration.merchant.capabilities`, `V2.Core.AccountCreateParams.configuration.merchant.capabilities`, and `V2.Core.AccountUpdateParams.configuration.merchant.capabilities`
+  * Add support for `business_custodial_storage` on `V2.Core.Account.configuration.money_manager.capabilities`, `V2.Core.AccountCreateParams.configuration.money_manager.capabilities`, and `V2.Core.AccountUpdateParams.configuration.money_manager.capabilities`
+  * Add support for `offramp` and `onramp` on `V2.Core.Account.configuration.money_manager.capabilities.outbound_payments`, `V2.Core.Account.configuration.money_manager.capabilities.outbound_transfers`, `V2.Core.Account.configuration.money_manager.capabilities.received_credits`, `V2.Core.AccountCreateParams.configuration.money_manager.capabilities.outbound_payments`, `V2.Core.AccountCreateParams.configuration.money_manager.capabilities.outbound_transfers`, `V2.Core.AccountCreateParams.configuration.money_manager.capabilities.received_credits`, `V2.Core.AccountUpdateParams.configuration.money_manager.capabilities.outbound_payments`, `V2.Core.AccountUpdateParams.configuration.money_manager.capabilities.outbound_transfers`, and `V2.Core.AccountUpdateParams.configuration.money_manager.capabilities.received_credits`
+  * Add support for `pix` on `V2.Core.Account.configuration.recipient.capabilities`, `V2.Core.AccountCreateParams.configuration.recipient.capabilities`, `V2.Core.AccountUpdateParams.configuration.recipient.capabilities`, `V2.MoneyManagement.OutboundSetupIntentCreateParams.payout_method_data`, and `V2.MoneyManagement.PayoutMethod`
+  * ⚠️ Add support for new value `pix` on enum `V2.Core.Account.configuration.recipient.default_outbound_destination.type`
+  * Add support for new values `pix` and `vipps_payments` on enums `V2.Core.Account.future_requirements.entries[].impact.restricts_capabilities[].capability` and `V2.Core.Account.requirements.entries[].impact.restricts_capabilities[].capability`
+  * Add support for `account` on `V2.MoneyManagement.FinancialAddressCreateParams`, `V2.MoneyManagement.FinancialAddressListParams`, and `V2.MoneyManagement.FinancialAddress`
+  * Add support for new values `bre_b`, `nip`, and `pix` on enum `V2.MoneyManagement.FinancialAddress.bank_account.type`
+  * Add support for `supported_network_details` on `V2.MoneyManagement.FinancialAddress.crypto_wallet`
+  * Add support for new value `bitcoin` on enums `V2.MoneyManagement.FinancialAddress.crypto_wallet.network`, `V2.MoneyManagement.FinancialAddressCreateParams.crypto_wallet.network`, and `V2.MoneyManagement.ReceivedCredit.crypto_wallet_transfer.crypto_wallet.network`
+  * Add support for `network_details` on `V2.MoneyManagement.InboundTransferCreateParams` and `V2.MoneyManagement.InboundTransfer`
+  * Add support for `bacs_debit` on `V2.MoneyManagement.InboundTransfer.from.payment_method`
+  * Add support for new value `pix` on enums `V2.MoneyManagement.OutboundSetupIntentCreateParams.payout_method_data.type`, `V2.MoneyManagement.OutboundSetupIntentUpdateParams.payout_method_data.type`, and `V2.MoneyManagement.PayoutMethod.type`
+  * Add support for `bic` on `V2.MoneyManagement.ReceivedCredit.bank_transfer.originating_bank_account.aba` and `V2.MoneyManagement.ReceivedCredit.bank_transfer.originating_bank_account.sort_code`
+  * Add support for `originating_crypto_wallet`, `token_currency`, and `transaction_hash` on `V2.MoneyManagement.ReceivedCredit.crypto_wallet_transfer`
+  * Add support for `invoices` on `V2.Tax.IntegrationConfigurationUpdateParams` and `V2.Tax.IntegrationConfiguration`
+  * ⚠️ Remove support for `account` on `V2.Risk.InquiryListParams`
+  * Add support for new values `brl`, `cop`, and `ngn` on enum `V2.MoneyManagement.FinancialAddressCreateParams.bank_account.currency`
+  * Add support for `customer` and `subscription` on `EventsV1InvoiceUpcomingEvent`
+  * Add support for new value `vipps_payments` on enum `EventsV2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent.updated_capability`
+  * Add support for new values `business_custodial_storage.inbound.ousd`, `business_custodial_storage.inbound.usdc`, `business_custodial_storage.outbound.ousd`, `business_custodial_storage.outbound.usdc`, `outbound_payments.offramp.bank_accounts.brl`, `outbound_payments.offramp.bank_accounts.cop`, `outbound_payments.offramp.bank_accounts.eur`, `outbound_payments.offramp.bank_accounts.gbp`, `outbound_payments.offramp.bank_accounts.mxn`, `outbound_payments.offramp.bank_accounts.usd`, `outbound_payments.onramp.crypto_wallets.brl`, `outbound_payments.onramp.crypto_wallets.cop`, `outbound_payments.onramp.crypto_wallets.eur`, `outbound_payments.onramp.crypto_wallets.gbp`, `outbound_payments.onramp.crypto_wallets.mxn`, `outbound_payments.onramp.crypto_wallets.usd`, `outbound_transfers.offramp.bank_accounts.brl`, `outbound_transfers.offramp.bank_accounts.cop`, `outbound_transfers.offramp.bank_accounts.eur`, `outbound_transfers.offramp.bank_accounts.gbp`, `outbound_transfers.offramp.bank_accounts.mxn`, `outbound_transfers.offramp.bank_accounts.usd`, `outbound_transfers.onramp.crypto_wallets.brl`, `outbound_transfers.onramp.crypto_wallets.cop`, `outbound_transfers.onramp.crypto_wallets.eur`, `outbound_transfers.onramp.crypto_wallets.gbp`, `outbound_transfers.onramp.crypto_wallets.mxn`, `outbound_transfers.onramp.crypto_wallets.usd`, `received_credits.offramp.bank_accounts.brl`, `received_credits.offramp.bank_accounts.cop`, `received_credits.offramp.bank_accounts.eur`, `received_credits.offramp.bank_accounts.gbp`, `received_credits.offramp.bank_accounts.mxn`, `received_credits.offramp.bank_accounts.usd`, `received_credits.onramp.crypto_wallets.brl`, `received_credits.onramp.crypto_wallets.cop`, `received_credits.onramp.crypto_wallets.eur`, `received_credits.onramp.crypto_wallets.gbp`, `received_credits.onramp.crypto_wallets.mxn`, and `received_credits.onramp.crypto_wallets.usd` on enum `EventsV2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEvent.updated_capability`
+  * Add support for new value `pix` on enum `EventsV2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent.updated_capability`
+  * Add support for event notifications `V2MoneyManagementInboundTransferMandateActivatedEvent`, `V2MoneyManagementInboundTransferMandateCreatedEvent`, `V2MoneyManagementInboundTransferMandateExpiredEvent`, `V2MoneyManagementInboundTransferMandateRefusedEvent`, and `V2MoneyManagementInboundTransferMandateRevokedEvent` with related object `V2.MoneyManagement.InboundTransferMandate`
+  * Add support for error code `service_unavailable` on `ServiceUnavailableError`
+
 ## <a id="23-1-0-alpha-1"></a>23.1.0-alpha.1 - 2026-09-30
 This release changes the pinned API version to `2026-09-30.preview`.
 
