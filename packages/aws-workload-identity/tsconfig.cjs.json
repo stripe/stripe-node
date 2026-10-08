@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "outDir": "./cjs",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "lib": [
+      "es2020"
+    ],
+    "alwaysStrict": true,
+    "declaration": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "types": [
+      "node"
+    ],
+    "sourceMap": false,
+    "esModuleInterop": false,
+    "skipLibCheck": true
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}

@@ -2,7 +2,7 @@
   "extends": "./tsconfig.cjs.json",
   "compilerOptions": {
     "declaration": true,
-    "types": ["node", "mocha"],
+    "types": ["node", "mocha", "chai-as-promised"],
     "rootDir": "./src",
   },
   "ts-node": {

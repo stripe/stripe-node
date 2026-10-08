@@ -10,6 +10,7 @@ import {HttpClientResponseError} from './RequestSender.js';
 import {StripeContext} from './StripeContext.js';
 import {Stripe} from './stripe.core.js';
 import {AppInfo} from './lib.js';
+import {WorkloadIdentityProvider} from './WorkloadIdentity.js';
 // errorTypeImports: The beginning of the section generated from our OpenAPI spec
 import {GiftCardOperation} from './resources/GiftCardOperations.js';
 import {PaymentIntent} from './resources/PaymentIntents.js';
@@ -109,6 +110,22 @@ export type StripeRequest = {
   protocol: string;
 };
 export type RequestAuthenticator = (request: StripeRequest) => Promise<void>;
+
+export type AuthenticationMethod =
+  | {
+      mode: 'api_key';
+      apiKey: string;
+    }
+  | {
+      mode: 'workload_identity';
+      clientId: string;
+      identityProvider: WorkloadIdentityProvider;
+    }
+  | {
+      mode: 'custom_authenticator';
+      authenticator: RequestAuthenticator;
+    };
+
 export type RequestCallback = (
   this: void,
   error: Error | null,
