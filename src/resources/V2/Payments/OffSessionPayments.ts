@@ -73,7 +73,7 @@ export class OffSessionPaymentResource extends StripeResource {
     ) as any;
   }
   /**
-   * Captures an OffSessionPayment that has previously been created.
+   * Deprecated. Captures an OffSessionPayment that has previously been created.
    */
   capture(
     id: string,
@@ -609,7 +609,7 @@ export namespace V2 {
       application_fee_amount?: V2Amount;
 
       /**
-       * Details about the capture configuration for the OffSessionPayment.
+       * Deprecated. Details about the capture configuration for the OffSessionPayment.
        */
       capture?: OffSessionPaymentCreateParams.Capture;
 

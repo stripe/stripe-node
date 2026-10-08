@@ -3086,7 +3086,7 @@ export namespace Invoice {
         amount_includes_iof: Pix.AmountIncludesIof | null;
 
         /**
-         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
       }
@@ -4176,7 +4176,7 @@ export namespace InvoiceCreateParams {
         amount_includes_iof?: Pix.AmountIncludesIof;
 
         /**
-         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
       }
@@ -5284,7 +5284,7 @@ export namespace InvoiceUpdateParams {
         amount_includes_iof?: Pix.AmountIncludesIof;
 
         /**
-         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
       }

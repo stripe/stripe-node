@@ -1122,6 +1122,8 @@ export namespace Registration {
        * Type of registration in the US.
        */
       type: Us.Type;
+
+      utility_users_tax?: Us.UtilityUsersTax;
     }
 
     export interface Uy {
@@ -2075,6 +2077,7 @@ export namespace Registration {
       export type Type =
         | 'admissions_tax'
         | 'attendance_tax'
+        | 'digital_excise_tax'
         | 'entertainment_tax'
         | 'gross_receipts_tax'
         | 'home_rule_tax'
@@ -2089,7 +2092,15 @@ export namespace Registration {
         | 'state_retail_delivery_fee'
         | 'state_sales_tax'
         | 'tourism_tax'
+        | 'utility_users_tax'
         | OtherString;
+
+      export interface UtilityUsersTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=utility_users_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
 
       export namespace StateSalesTax {
         export interface Election {
@@ -4942,6 +4953,7 @@ export namespace Tax {
         export type Type =
           | 'admissions_tax'
           | 'attendance_tax'
+          | 'digital_excise_tax'
           | 'entertainment_tax'
           | 'gross_receipts_tax'
           | 'home_rule_tax'
@@ -4956,12 +4968,13 @@ export namespace Tax {
           | 'state_retail_delivery_fee'
           | 'state_sales_tax'
           | 'tourism_tax'
+          | 'utility_users_tax'
           | OtherString;
 
         export namespace StateSalesTax {
           export interface Election {
             /**
-             * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction. Supported FIPS codes are: `003` (Allegheny County) and `60000` (Philadelphia City).
+             * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
              */
             jurisdiction?: string;
 

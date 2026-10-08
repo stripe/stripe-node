@@ -255,9 +255,24 @@ export namespace ReceivedCredit {
     financial_address: string;
 
     /**
+     * Hash containing details about the crypto wallet that originated this ReceivedCredit.
+     */
+    originating_crypto_wallet?: CryptoWalletTransfer.OriginatingCryptoWallet;
+
+    /**
      * Freeform string set by originator of the external ReceivedCredit.
      */
     statement_descriptor?: string;
+
+    /**
+     * Open Enum. The currency of the crypto tokens received.
+     */
+    token_currency?: CryptoWalletTransfer.TokenCurrency;
+
+    /**
+     * Hash of the deposit transaction on-chain (incoming to Stripe).
+     */
+    transaction_hash?: string;
 
     /**
      * Open Enum. The type of crypto wallet transfer that originated this ReceivedCredit.
@@ -627,6 +642,11 @@ export namespace ReceivedCredit {
         bank_name?: string;
 
         /**
+         * The BIC/SWIFT code of the account that originated the transfer.
+         */
+        bic?: string;
+
+        /**
          * The last 4 digits of the account number that originated the transfer.
          */
         last4?: string;
@@ -740,6 +760,11 @@ export namespace ReceivedCredit {
         bank_name?: string;
 
         /**
+         * The BIC/SWIFT code of the account that originated the transfer.
+         */
+        bic?: string;
+
+        /**
          * The last 4 digits of the account number that originated the transfer.
          */
         last4?: string;
@@ -837,6 +862,35 @@ export namespace ReceivedCredit {
       network: CryptoWallet.Network;
     }
 
+    export interface OriginatingCryptoWallet {
+      /**
+       * The address of the wallet the crypto was received from.
+       */
+      address: string;
+
+      /**
+       * A memo also for identifying the recipient for memo-based blockchains (e.g., Stellar),.
+       */
+      memo: string;
+
+      /**
+       * The network the crypto was received from.
+       */
+      network: OriginatingCryptoWallet.Network;
+    }
+
+    export type TokenCurrency =
+      | 'btc'
+      | 'cash'
+      | 'eth'
+      | 'ousd'
+      | 'sol'
+      | 'usdc'
+      | 'usdg'
+      | 'usdsui'
+      | 'usdt'
+      | OtherString;
+
     export type Type = 'crypto_wallet' | OtherString;
 
     export namespace CryptoWallet {
@@ -844,6 +898,22 @@ export namespace ReceivedCredit {
         | 'arbitrum'
         | 'avalanche_c_chain'
         | 'base'
+        | 'bitcoin'
+        | 'ethereum'
+        | 'optimism'
+        | 'polygon'
+        | 'solana'
+        | 'stellar'
+        | 'tempo'
+        | OtherString;
+    }
+
+    export namespace OriginatingCryptoWallet {
+      export type Network =
+        | 'arbitrum'
+        | 'avalanche_c_chain'
+        | 'base'
+        | 'bitcoin'
         | 'ethereum'
         | 'optimism'
         | 'polygon'

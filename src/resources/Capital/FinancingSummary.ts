@@ -53,7 +53,7 @@ export namespace FinancingSummary {
     advance_amount: number;
 
     /**
-     * The time at which the funds were paid out to the connected account's Stripe balance. Given in milliseconds since unix epoch.
+     * The time at which the funds were paid out to the connected account's Stripe balance. Given in seconds since unix epoch.
      */
     advance_paid_out_at: number | null;
 

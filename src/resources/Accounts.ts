@@ -1092,6 +1092,11 @@ export namespace Account {
     us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
     /**
+     * The status of the Wero capability of the account, or whether the account can directly process Wero payments.
+     */
+    wero_payments?: Capabilities.WeroPayments;
+
+    /**
      * The status of the Zip capability of the account, or whether the account can directly process Zip charges.
      */
     zip_payments?: Capabilities.ZipPayments;
@@ -1821,6 +1826,8 @@ export namespace Account {
       | 'inactive'
       | 'pending'
       | OtherString;
+
+    export type WeroPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
     export type ZipPayments = 'active' | 'inactive' | 'pending' | OtherString;
   }
@@ -7384,6 +7391,11 @@ export namespace AccountUpdateParams {
     }
 
     export interface Capital {
+      /**
+       * The payout destinations excluded from Capital financing payouts.
+       */
+      excluded_payout_destinations?: Emptyable<Array<string>>;
+
       /**
        * Per-currency mapping of user-selected destination accounts used to pay out loans.
        */

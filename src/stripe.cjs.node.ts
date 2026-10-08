@@ -1304,6 +1304,7 @@ declare namespace StripeConstructor {
       export type UpiPayments = Stripe_.Account.Capabilities.UpiPayments;
       export type UsBankAccountAchPayments = Stripe_.Account.Capabilities.UsBankAccountAchPayments;
       export type UsBankTransferPayments = Stripe_.Account.Capabilities.UsBankTransferPayments;
+      export type WeroPayments = Stripe_.Account.Capabilities.WeroPayments;
       export type ZipPayments = Stripe_.Account.Capabilities.ZipPayments;
     }
     export namespace Company {
@@ -2268,7 +2269,6 @@ declare namespace StripeConstructor {
     }
     export namespace Outcome {
       export type AdviceCode = Stripe_.Charge.Outcome.AdviceCode;
-      export type Rule = Stripe_.Charge.Outcome.Rule;
     }
     export namespace PaymentMethodDetails {
       export type AchCreditTransfer = Stripe_.Charge.PaymentMethodDetails.AchCreditTransfer;
@@ -5106,6 +5106,8 @@ declare namespace StripeConstructor {
     export type ProcessorDetails = Stripe_.PaymentAttemptRecordReportFailedParams.ProcessorDetails;
     export namespace PaymentMethodDetails {
       export type Card = Stripe_.PaymentAttemptRecordReportFailedParams.PaymentMethodDetails.Card;
+      export type Type = Stripe_.PaymentAttemptRecordReportFailedParams.PaymentMethodDetails.Type;
+      export type UsBankAccount = Stripe_.PaymentAttemptRecordReportFailedParams.PaymentMethodDetails.UsBankAccount;
       export namespace Card {
         export type Checks = Stripe_.PaymentAttemptRecordReportFailedParams.PaymentMethodDetails.Card.Checks;
         export namespace Checks {
@@ -5938,6 +5940,7 @@ declare namespace StripeConstructor {
         export type CaptureBy = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.CaptureBy;
         export type CaptureDelay = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.CaptureDelay;
         export type CaptureMethod = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.CaptureMethod;
+        export type Fleet = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.Fleet;
         export type PaymentDetails = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.PaymentDetails;
         export type RequestMulticapture = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.RequestMulticapture;
         export type RequestReauthorization = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.RequestReauthorization;
@@ -5945,6 +5948,13 @@ declare namespace StripeConstructor {
         export namespace AadeData {
           export type Mode = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.AadeData.Mode;
           export type UnboundPos = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.AadeData.UnboundPos;
+        }
+        export namespace Fleet {
+          export type TransactionDatum = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.Fleet.TransactionDatum;
+          export namespace TransactionDatum {
+            export type Prompt = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.Fleet.TransactionDatum.Prompt;
+            export type ReceiptBehavior = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.Fleet.TransactionDatum.ReceiptBehavior;
+          }
         }
         export namespace PaymentDetails {
           export type MoneyServices = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.PaymentDetails.MoneyServices;
@@ -6754,6 +6764,7 @@ declare namespace StripeConstructor {
         export type CaptureBy = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.CaptureBy;
         export type CaptureDelay = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.CaptureDelay;
         export type CaptureMethod = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.CaptureMethod;
+        export type Fleet = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.Fleet;
         export type PaymentDetails = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.PaymentDetails;
         export type RequestMulticapture = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.RequestMulticapture;
         export type RequestReauthorization = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.RequestReauthorization;
@@ -6761,6 +6772,13 @@ declare namespace StripeConstructor {
         export namespace AadeData {
           export type Mode = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.AadeData.Mode;
           export type UnboundPos = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.AadeData.UnboundPos;
+        }
+        export namespace Fleet {
+          export type TransactionDatum = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.Fleet.TransactionDatum;
+          export namespace TransactionDatum {
+            export type Prompt = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.Fleet.TransactionDatum.Prompt;
+            export type ReceiptBehavior = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.Fleet.TransactionDatum.ReceiptBehavior;
+          }
         }
         export namespace PaymentDetails {
           export type MoneyServices = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.PaymentDetails.MoneyServices;
@@ -7796,6 +7814,7 @@ declare namespace StripeConstructor {
         export type CaptureBy = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.CaptureBy;
         export type CaptureDelay = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.CaptureDelay;
         export type CaptureMethod = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.CaptureMethod;
+        export type Fleet = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.Fleet;
         export type PaymentDetails = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.PaymentDetails;
         export type RequestMulticapture = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.RequestMulticapture;
         export type RequestReauthorization = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.RequestReauthorization;
@@ -7803,6 +7822,13 @@ declare namespace StripeConstructor {
         export namespace AadeData {
           export type Mode = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.AadeData.Mode;
           export type UnboundPos = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.AadeData.UnboundPos;
+        }
+        export namespace Fleet {
+          export type TransactionDatum = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.Fleet.TransactionDatum;
+          export namespace TransactionDatum {
+            export type Prompt = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.Fleet.TransactionDatum.Prompt;
+            export type ReceiptBehavior = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.Fleet.TransactionDatum.ReceiptBehavior;
+          }
         }
         export namespace PaymentDetails {
           export type MoneyServices = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.PaymentDetails.MoneyServices;
@@ -8674,12 +8700,20 @@ declare namespace StripeConstructor {
         export type CaptureBy = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.CaptureBy;
         export type CaptureDelay = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.CaptureDelay;
         export type CaptureMethod = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.CaptureMethod;
+        export type Fleet = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.Fleet;
         export type RequestMulticapture = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.RequestMulticapture;
         export type RequestReauthorization = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.RequestReauthorization;
         export type Routing = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.Routing;
         export namespace AadeData {
           export type Mode = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.AadeData.Mode;
           export type UnboundPos = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.AadeData.UnboundPos;
+        }
+        export namespace Fleet {
+          export type TransactionDatum = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.Fleet.TransactionDatum;
+          export namespace TransactionDatum {
+            export type Prompt = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.Fleet.TransactionDatum.Prompt;
+            export type ReceiptBehavior = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.Fleet.TransactionDatum.ReceiptBehavior;
+          }
         }
         export namespace Routing {
           export type RequestedPriority = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.Routing.RequestedPriority;
@@ -11201,6 +11235,7 @@ declare namespace StripeConstructor {
       export type Card = Stripe_.PaymentRecordReportPaymentParams.PaymentMethodDetails.Card;
       export type Custom = Stripe_.PaymentRecordReportPaymentParams.PaymentMethodDetails.Custom;
       export type Type = Stripe_.PaymentRecordReportPaymentParams.PaymentMethodDetails.Type;
+      export type UsBankAccount = Stripe_.PaymentRecordReportPaymentParams.PaymentMethodDetails.UsBankAccount;
       export namespace Card {
         export type Checks = Stripe_.PaymentRecordReportPaymentParams.PaymentMethodDetails.Card.Checks;
         export namespace Checks {
@@ -11242,6 +11277,7 @@ declare namespace StripeConstructor {
       export type Card = Stripe_.PaymentRecordReportPaymentAttemptParams.PaymentMethodDetails.Card;
       export type Custom = Stripe_.PaymentRecordReportPaymentAttemptParams.PaymentMethodDetails.Custom;
       export type Type = Stripe_.PaymentRecordReportPaymentAttemptParams.PaymentMethodDetails.Type;
+      export type UsBankAccount = Stripe_.PaymentRecordReportPaymentAttemptParams.PaymentMethodDetails.UsBankAccount;
       export namespace Card {
         export type Checks = Stripe_.PaymentRecordReportPaymentAttemptParams.PaymentMethodDetails.Card.Checks;
         export namespace Checks {
@@ -11261,6 +11297,8 @@ declare namespace StripeConstructor {
     export type ProcessorDetails = Stripe_.PaymentRecordReportPaymentAttemptFailedParams.ProcessorDetails;
     export namespace PaymentMethodDetails {
       export type Card = Stripe_.PaymentRecordReportPaymentAttemptFailedParams.PaymentMethodDetails.Card;
+      export type Type = Stripe_.PaymentRecordReportPaymentAttemptFailedParams.PaymentMethodDetails.Type;
+      export type UsBankAccount = Stripe_.PaymentRecordReportPaymentAttemptFailedParams.PaymentMethodDetails.UsBankAccount;
       export namespace Card {
         export type Checks = Stripe_.PaymentRecordReportPaymentAttemptFailedParams.PaymentMethodDetails.Card.Checks;
         export namespace Checks {
@@ -14214,7 +14252,12 @@ declare namespace StripeConstructor {
     export type TransferData = Stripe_.Subscription.TransferData;
     export type TrialSettings = Stripe_.Subscription.TrialSettings;
     export namespace AutomaticTax {
+      export type EnablementDetails = Stripe_.Subscription.AutomaticTax.EnablementDetails;
       export type Liability = Stripe_.Subscription.AutomaticTax.Liability;
+      export namespace EnablementDetails {
+        export type IntegrationConfigurationDisabledReason = Stripe_.Subscription.AutomaticTax.EnablementDetails.IntegrationConfigurationDisabledReason;
+        export type Source = Stripe_.Subscription.AutomaticTax.EnablementDetails.Source;
+      }
       export namespace Liability {
         export type Type = Stripe_.Subscription.AutomaticTax.Liability.Type;
       }
@@ -15096,7 +15139,12 @@ declare namespace StripeConstructor {
       export type PhaseEffectiveAt = Stripe_.SubscriptionSchedule.DefaultSettings.PhaseEffectiveAt;
       export type TransferData = Stripe_.SubscriptionSchedule.DefaultSettings.TransferData;
       export namespace AutomaticTax {
+        export type EnablementDetails = Stripe_.SubscriptionSchedule.DefaultSettings.AutomaticTax.EnablementDetails;
         export type Liability = Stripe_.SubscriptionSchedule.DefaultSettings.AutomaticTax.Liability;
+        export namespace EnablementDetails {
+          export type IntegrationConfigurationDisabledReason = Stripe_.SubscriptionSchedule.DefaultSettings.AutomaticTax.EnablementDetails.IntegrationConfigurationDisabledReason;
+          export type Source = Stripe_.SubscriptionSchedule.DefaultSettings.AutomaticTax.EnablementDetails.Source;
+        }
         export namespace Liability {
           export type Type = Stripe_.SubscriptionSchedule.DefaultSettings.AutomaticTax.Liability.Type;
         }
@@ -15185,7 +15233,12 @@ declare namespace StripeConstructor {
         }
       }
       export namespace AutomaticTax {
+        export type EnablementDetails = Stripe_.SubscriptionSchedule.Phase.AutomaticTax.EnablementDetails;
         export type Liability = Stripe_.SubscriptionSchedule.Phase.AutomaticTax.Liability;
+        export namespace EnablementDetails {
+          export type IntegrationConfigurationDisabledReason = Stripe_.SubscriptionSchedule.Phase.AutomaticTax.EnablementDetails.IntegrationConfigurationDisabledReason;
+          export type Source = Stripe_.SubscriptionSchedule.Phase.AutomaticTax.EnablementDetails.Source;
+        }
         export namespace Liability {
           export type Type = Stripe_.SubscriptionSchedule.Phase.AutomaticTax.Liability.Type;
         }
@@ -16079,7 +16132,12 @@ declare namespace StripeConstructor {
       export type PhaseEffectiveAt = Stripe_.QuotePreviewSubscriptionSchedule.DefaultSettings.PhaseEffectiveAt;
       export type TransferData = Stripe_.QuotePreviewSubscriptionSchedule.DefaultSettings.TransferData;
       export namespace AutomaticTax {
+        export type EnablementDetails = Stripe_.QuotePreviewSubscriptionSchedule.DefaultSettings.AutomaticTax.EnablementDetails;
         export type Liability = Stripe_.QuotePreviewSubscriptionSchedule.DefaultSettings.AutomaticTax.Liability;
+        export namespace EnablementDetails {
+          export type IntegrationConfigurationDisabledReason = Stripe_.QuotePreviewSubscriptionSchedule.DefaultSettings.AutomaticTax.EnablementDetails.IntegrationConfigurationDisabledReason;
+          export type Source = Stripe_.QuotePreviewSubscriptionSchedule.DefaultSettings.AutomaticTax.EnablementDetails.Source;
+        }
         export namespace Liability {
           export type Type = Stripe_.QuotePreviewSubscriptionSchedule.DefaultSettings.AutomaticTax.Liability.Type;
         }
@@ -16168,7 +16226,12 @@ declare namespace StripeConstructor {
         }
       }
       export namespace AutomaticTax {
+        export type EnablementDetails = Stripe_.QuotePreviewSubscriptionSchedule.Phase.AutomaticTax.EnablementDetails;
         export type Liability = Stripe_.QuotePreviewSubscriptionSchedule.Phase.AutomaticTax.Liability;
+        export namespace EnablementDetails {
+          export type IntegrationConfigurationDisabledReason = Stripe_.QuotePreviewSubscriptionSchedule.Phase.AutomaticTax.EnablementDetails.IntegrationConfigurationDisabledReason;
+          export type Source = Stripe_.QuotePreviewSubscriptionSchedule.Phase.AutomaticTax.EnablementDetails.Source;
+        }
         export namespace Liability {
           export type Type = Stripe_.QuotePreviewSubscriptionSchedule.Phase.AutomaticTax.Liability.Type;
         }
@@ -16828,6 +16891,7 @@ declare namespace StripeConstructor {
       export type PaymentMethodCollection = Stripe_.Checkout.SessionCreateParams.PaymentMethodCollection;
       export type PaymentMethodData = Stripe_.Checkout.SessionCreateParams.PaymentMethodData;
       export type PaymentMethodOptions = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions;
+      export type PaymentSettings = Stripe_.Checkout.SessionCreateParams.PaymentSettings;
       export type Permissions = Stripe_.Checkout.SessionCreateParams.Permissions;
       export type PhoneNumberCollection = Stripe_.Checkout.SessionCreateParams.PhoneNumberCollection;
       export type RedirectOnCompletion = Stripe_.Checkout.SessionCreateParams.RedirectOnCompletion;
@@ -17191,6 +17255,15 @@ declare namespace StripeConstructor {
           export type SetupFutureUsage = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.WechatPay.SetupFutureUsage;
         }
       }
+      export namespace PaymentSettings {
+        export type ApplicationFeeData = Stripe_.Checkout.SessionCreateParams.PaymentSettings.ApplicationFeeData;
+        export type CaptureMethod = Stripe_.Checkout.SessionCreateParams.PaymentSettings.CaptureMethod;
+        export type SetupFutureUsage = Stripe_.Checkout.SessionCreateParams.PaymentSettings.SetupFutureUsage;
+        export type TransferData = Stripe_.Checkout.SessionCreateParams.PaymentSettings.TransferData;
+        export namespace TransferData {
+          export type TransferAmount = Stripe_.Checkout.SessionCreateParams.PaymentSettings.TransferData.TransferAmount;
+        }
+      }
       export namespace Permissions {
         export type Update = Stripe_.Checkout.SessionCreateParams.Permissions.Update;
         export type UpdateDiscounts = Stripe_.Checkout.SessionCreateParams.Permissions.UpdateDiscounts;
@@ -17305,6 +17378,7 @@ declare namespace StripeConstructor {
       export type PaymentMethodCollection = Stripe_.Checkout.Session.PaymentMethodCollection;
       export type PaymentMethodConfigurationDetails = Stripe_.Checkout.Session.PaymentMethodConfigurationDetails;
       export type PaymentMethodOptions = Stripe_.Checkout.Session.PaymentMethodOptions;
+      export type PaymentSettings = Stripe_.Checkout.Session.PaymentSettings;
       export type PaymentStatus = Stripe_.Checkout.Session.PaymentStatus;
       export type Permissions = Stripe_.Checkout.Session.Permissions;
       export type PhoneNumberCollection = Stripe_.Checkout.Session.PhoneNumberCollection;
@@ -17652,6 +17726,14 @@ declare namespace StripeConstructor {
         export namespace WechatPay {
           export type Client = Stripe_.Checkout.Session.PaymentMethodOptions.WechatPay.Client;
           export type SetupFutureUsage = Stripe_.Checkout.Session.PaymentMethodOptions.WechatPay.SetupFutureUsage;
+        }
+      }
+      export namespace PaymentSettings {
+        export type ApplicationFeeData = Stripe_.Checkout.Session.PaymentSettings.ApplicationFeeData;
+        export type SetupFutureUsage = Stripe_.Checkout.Session.PaymentSettings.SetupFutureUsage;
+        export type TransferData = Stripe_.Checkout.Session.PaymentSettings.TransferData;
+        export namespace TransferData {
+          export type TransferAmount = Stripe_.Checkout.Session.PaymentSettings.TransferData.TransferAmount;
         }
       }
       export namespace Permissions {
@@ -18515,6 +18597,7 @@ declare namespace StripeConstructor {
       export type CryptoTransaction = Stripe_.Issuing.Authorization.CryptoTransaction;
       export type EnrichedMerchantData = Stripe_.Issuing.Authorization.EnrichedMerchantData;
       export type Fleet = Stripe_.Issuing.Authorization.Fleet;
+      export type FlexibleCredential = Stripe_.Issuing.Authorization.FlexibleCredential;
       export type FraudChallenge = Stripe_.Issuing.Authorization.FraudChallenge;
       export type Fuel = Stripe_.Issuing.Authorization.Fuel;
       export type Fuels = Stripe_.Issuing.Authorization.Fuels;
@@ -18571,6 +18654,12 @@ declare namespace StripeConstructor {
           export type Fuel = Stripe_.Issuing.Authorization.Fleet.ReportedBreakdown.Fuel;
           export type NonFuel = Stripe_.Issuing.Authorization.Fleet.ReportedBreakdown.NonFuel;
           export type Tax = Stripe_.Issuing.Authorization.Fleet.ReportedBreakdown.Tax;
+        }
+      }
+      export namespace FlexibleCredential {
+        export type SecondaryCredential = Stripe_.Issuing.Authorization.FlexibleCredential.SecondaryCredential;
+        export namespace SecondaryCredential {
+          export type Funding = Stripe_.Issuing.Authorization.FlexibleCredential.SecondaryCredential.Funding;
         }
       }
       export namespace FraudChallenge {
@@ -19047,6 +19136,7 @@ declare namespace StripeConstructor {
         export type Fleet = Stripe_.Issuing.Transaction.PurchaseDetails.Fleet;
         export type Flight = Stripe_.Issuing.Transaction.PurchaseDetails.Flight;
         export type Fuel = Stripe_.Issuing.Transaction.PurchaseDetails.Fuel;
+        export type Fuels = Stripe_.Issuing.Transaction.PurchaseDetails.Fuels;
         export type Lodging = Stripe_.Issuing.Transaction.PurchaseDetails.Lodging;
         export type Receipt = Stripe_.Issuing.Transaction.PurchaseDetails.Receipt;
         export namespace Fleet {
@@ -19173,6 +19263,7 @@ declare namespace StripeConstructor {
     export type ValueListItemDeleteParams = Stripe_.Radar.ValueListItemDeleteParams;
     export type ValueListItemSerializeBatchCreateParams = Stripe_.Radar.ValueListItemSerializeBatchCreateParams;
     export type ValueListItemResource = Stripe_.Radar.ValueListItemResource;
+    export type Rule = Stripe_.Radar.Rule;
     export namespace AccountEvaluationCreateParams {
       export type Type = Stripe_.Radar.AccountEvaluationCreateParams.Type;
       export type LoginInitiated = Stripe_.Radar.AccountEvaluationCreateParams.LoginInitiated;
@@ -19373,9 +19464,15 @@ declare namespace StripeConstructor {
         export type ShippingDetails = Stripe_.Radar.PaymentEvaluationCreateParams.PaymentDetails.ShippingDetails;
         export namespace MoneyMovementDetails {
           export type Card = Stripe_.Radar.PaymentEvaluationCreateParams.PaymentDetails.MoneyMovementDetails.Card;
+          export type MoneyMovementType = Stripe_.Radar.PaymentEvaluationCreateParams.PaymentDetails.MoneyMovementDetails.MoneyMovementType;
+          export type UsBankAccount = Stripe_.Radar.PaymentEvaluationCreateParams.PaymentDetails.MoneyMovementDetails.UsBankAccount;
           export namespace Card {
             export type CustomerPresence = Stripe_.Radar.PaymentEvaluationCreateParams.PaymentDetails.MoneyMovementDetails.Card.CustomerPresence;
             export type PaymentType = Stripe_.Radar.PaymentEvaluationCreateParams.PaymentDetails.MoneyMovementDetails.Card.PaymentType;
+          }
+          export namespace UsBankAccount {
+            export type CustomerPresence = Stripe_.Radar.PaymentEvaluationCreateParams.PaymentDetails.MoneyMovementDetails.UsBankAccount.CustomerPresence;
+            export type PaymentType = Stripe_.Radar.PaymentEvaluationCreateParams.PaymentDetails.MoneyMovementDetails.UsBankAccount.PaymentType;
           }
         }
         export namespace PaymentMethodDetails {
@@ -19391,6 +19488,7 @@ declare namespace StripeConstructor {
       export type Outcome = Stripe_.Radar.PaymentEvaluation.Outcome;
       export type PaymentDetails = Stripe_.Radar.PaymentEvaluation.PaymentDetails;
       export type RecommendedAction = Stripe_.Radar.PaymentEvaluation.RecommendedAction;
+      export type Rules = Stripe_.Radar.PaymentEvaluation.Rules;
       export type Signals = Stripe_.Radar.PaymentEvaluation.Signals;
       export namespace ClientDeviceMetadataDetails {
         export type Data = Stripe_.Radar.PaymentEvaluation.ClientDeviceMetadataDetails.Data;
@@ -19454,9 +19552,15 @@ declare namespace StripeConstructor {
         export type ShippingDetails = Stripe_.Radar.PaymentEvaluation.PaymentDetails.ShippingDetails;
         export namespace MoneyMovementDetails {
           export type Card = Stripe_.Radar.PaymentEvaluation.PaymentDetails.MoneyMovementDetails.Card;
+          export type MoneyMovementType = Stripe_.Radar.PaymentEvaluation.PaymentDetails.MoneyMovementDetails.MoneyMovementType;
+          export type UsBankAccount = Stripe_.Radar.PaymentEvaluation.PaymentDetails.MoneyMovementDetails.UsBankAccount;
           export namespace Card {
             export type CustomerPresence = Stripe_.Radar.PaymentEvaluation.PaymentDetails.MoneyMovementDetails.Card.CustomerPresence;
             export type PaymentType = Stripe_.Radar.PaymentEvaluation.PaymentDetails.MoneyMovementDetails.Card.PaymentType;
+          }
+          export namespace UsBankAccount {
+            export type CustomerPresence = Stripe_.Radar.PaymentEvaluation.PaymentDetails.MoneyMovementDetails.UsBankAccount.CustomerPresence;
+            export type PaymentType = Stripe_.Radar.PaymentEvaluation.PaymentDetails.MoneyMovementDetails.UsBankAccount.PaymentType;
           }
         }
         export namespace PaymentMethodDetails {
@@ -19465,9 +19569,13 @@ declare namespace StripeConstructor {
         }
       }
       export namespace Signals {
+        export type BankInitiatedReturn = Stripe_.Radar.PaymentEvaluation.Signals.BankInitiatedReturn;
         export type EarlyFraudWarning = Stripe_.Radar.PaymentEvaluation.Signals.EarlyFraudWarning;
         export type FraudulentDispute = Stripe_.Radar.PaymentEvaluation.Signals.FraudulentDispute;
         export type FraudulentPayment = Stripe_.Radar.PaymentEvaluation.Signals.FraudulentPayment;
+        export namespace BankInitiatedReturn {
+          export type RiskLevel = Stripe_.Radar.PaymentEvaluation.Signals.BankInitiatedReturn.RiskLevel;
+        }
         export namespace EarlyFraudWarning {
           export type RiskLevel = Stripe_.Radar.PaymentEvaluation.Signals.EarlyFraudWarning.RiskLevel;
         }
@@ -20735,6 +20843,7 @@ declare namespace StripeConstructor {
           export type StateSalesTax = Stripe_.Tax.Registration.CountryOptions.Us.StateSalesTax;
           export type TourismTax = Stripe_.Tax.Registration.CountryOptions.Us.TourismTax;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Us.Type;
+          export type UtilityUsersTax = Stripe_.Tax.Registration.CountryOptions.Us.UtilityUsersTax;
           export namespace StateSalesTax {
             export type Election = Stripe_.Tax.Registration.CountryOptions.Us.StateSalesTax.Election;
             export namespace Election {
@@ -23257,6 +23366,7 @@ declare namespace StripeConstructor {
               export type SwishPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.SwishPayments;
               export type TwintPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.TwintPayments;
               export type UsBankTransferPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.UsBankTransferPayments;
+              export type VippsPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.VippsPayments;
               export type ZipPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.ZipPayments;
               export namespace AchDebitPayments {
                 export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.AchDebitPayments.Protections;
@@ -23540,6 +23650,12 @@ declare namespace StripeConstructor {
                   export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.UsBankTransferPayments.Protections.PspMigration;
                 }
               }
+              export namespace VippsPayments {
+                export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.VippsPayments.Protections;
+                export namespace Protections {
+                  export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.VippsPayments.Protections.PspMigration;
+                }
+              }
               export namespace ZipPayments {
                 export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.ZipPayments.Protections;
                 export namespace Protections {
@@ -23577,6 +23693,7 @@ declare namespace StripeConstructor {
             export type RegulatedActivity = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.RegulatedActivity;
             export type SourceOfFunds = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.SourceOfFunds;
             export namespace Capabilities {
+              export type BusinessCustodialStorage = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage;
               export type BusinessStorage = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessStorage;
               export type ConsumerStorage = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ConsumerStorage;
               export type InboundTransfers = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.InboundTransfers;
@@ -23584,6 +23701,42 @@ declare namespace StripeConstructor {
               export type OutboundTransfers = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers;
               export type ReceivedCredits = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits;
               export type ReceivedDebits = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedDebits;
+              export namespace BusinessCustodialStorage {
+                export type Inbound = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound;
+                export type Outbound = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound;
+                export namespace Inbound {
+                  export type Ousd = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Ousd;
+                  export type Usdc = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Usdc;
+                  export namespace Ousd {
+                    export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Ousd.Protections;
+                    export namespace Protections {
+                      export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Ousd.Protections.PspMigration;
+                    }
+                  }
+                  export namespace Usdc {
+                    export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Usdc.Protections;
+                    export namespace Protections {
+                      export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Usdc.Protections.PspMigration;
+                    }
+                  }
+                }
+                export namespace Outbound {
+                  export type Ousd = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Ousd;
+                  export type Usdc = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Usdc;
+                  export namespace Ousd {
+                    export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Ousd.Protections;
+                    export namespace Protections {
+                      export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Ousd.Protections.PspMigration;
+                    }
+                  }
+                  export namespace Usdc {
+                    export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Usdc.Protections;
+                    export namespace Protections {
+                      export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Usdc.Protections.PspMigration;
+                    }
+                  }
+                }
+              }
               export namespace BusinessStorage {
                 export type Inbound = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessStorage.Inbound;
                 export type Outbound = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.BusinessStorage.Outbound;
@@ -23740,6 +23893,8 @@ declare namespace StripeConstructor {
                 export type Cards = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Cards;
                 export type CryptoWallets = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.CryptoWallets;
                 export type FinancialAccounts = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.FinancialAccounts;
+                export type Offramp = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp;
+                export type Onramp = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp;
                 export type PaperChecks = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.PaperChecks;
                 export namespace BankAccounts {
                   export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.BankAccounts.Protections;
@@ -23765,6 +23920,100 @@ declare namespace StripeConstructor {
                     export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.FinancialAccounts.Protections.PspMigration;
                   }
                 }
+                export namespace Offramp {
+                  export type BankAccounts = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts;
+                  export namespace BankAccounts {
+                    export type Brl = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Brl;
+                    export type Cop = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Cop;
+                    export type Eur = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Eur;
+                    export type Gbp = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Gbp;
+                    export type Mxn = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Mxn;
+                    export type Usd = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Usd;
+                    export namespace Brl {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Brl.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Brl.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Cop {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Cop.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Cop.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Eur {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Eur.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Eur.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Gbp {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Gbp.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Gbp.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Mxn {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Mxn.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Mxn.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Usd {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Usd.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Usd.Protections.PspMigration;
+                      }
+                    }
+                  }
+                }
+                export namespace Onramp {
+                  export type CryptoWallets = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets;
+                  export namespace CryptoWallets {
+                    export type Brl = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Brl;
+                    export type Cop = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Cop;
+                    export type Eur = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Eur;
+                    export type Gbp = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Gbp;
+                    export type Mxn = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Mxn;
+                    export type Usd = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Usd;
+                    export namespace Brl {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Brl.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Brl.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Cop {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Cop.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Cop.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Eur {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Eur.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Eur.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Gbp {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Gbp.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Gbp.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Mxn {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Mxn.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Mxn.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Usd {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Usd.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Usd.Protections.PspMigration;
+                      }
+                    }
+                  }
+                }
                 export namespace PaperChecks {
                   export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundPayments.PaperChecks.Protections;
                   export namespace Protections {
@@ -23776,6 +24025,8 @@ declare namespace StripeConstructor {
                 export type BankAccounts = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.BankAccounts;
                 export type CryptoWallets = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.CryptoWallets;
                 export type FinancialAccounts = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.FinancialAccounts;
+                export type Offramp = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp;
+                export type Onramp = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp;
                 export namespace BankAccounts {
                   export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.BankAccounts.Protections;
                   export namespace Protections {
@@ -23794,10 +24045,106 @@ declare namespace StripeConstructor {
                     export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.FinancialAccounts.Protections.PspMigration;
                   }
                 }
+                export namespace Offramp {
+                  export type BankAccounts = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts;
+                  export namespace BankAccounts {
+                    export type Brl = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Brl;
+                    export type Cop = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Cop;
+                    export type Eur = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Eur;
+                    export type Gbp = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Gbp;
+                    export type Mxn = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Mxn;
+                    export type Usd = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Usd;
+                    export namespace Brl {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Brl.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Brl.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Cop {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Cop.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Cop.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Eur {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Eur.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Eur.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Gbp {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Gbp.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Gbp.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Mxn {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Mxn.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Mxn.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Usd {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Usd.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Usd.Protections.PspMigration;
+                      }
+                    }
+                  }
+                }
+                export namespace Onramp {
+                  export type CryptoWallets = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets;
+                  export namespace CryptoWallets {
+                    export type Brl = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Brl;
+                    export type Cop = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Cop;
+                    export type Eur = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Eur;
+                    export type Gbp = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Gbp;
+                    export type Mxn = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Mxn;
+                    export type Usd = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Usd;
+                    export namespace Brl {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Brl.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Brl.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Cop {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Cop.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Cop.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Eur {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Eur.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Eur.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Gbp {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Gbp.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Gbp.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Mxn {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Mxn.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Mxn.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Usd {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Usd.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Usd.Protections.PspMigration;
+                      }
+                    }
+                  }
+                }
               }
               export namespace ReceivedCredits {
                 export type BankAccounts = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.BankAccounts;
                 export type CryptoWallets = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.CryptoWallets;
+                export type Offramp = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp;
+                export type Onramp = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp;
                 export namespace BankAccounts {
                   export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.BankAccounts.Protections;
                   export namespace Protections {
@@ -23808,6 +24155,100 @@ declare namespace StripeConstructor {
                   export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.CryptoWallets.Protections;
                   export namespace Protections {
                     export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.CryptoWallets.Protections.PspMigration;
+                  }
+                }
+                export namespace Offramp {
+                  export type BankAccounts = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts;
+                  export namespace BankAccounts {
+                    export type Brl = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Brl;
+                    export type Cop = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Cop;
+                    export type Eur = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Eur;
+                    export type Gbp = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Gbp;
+                    export type Mxn = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Mxn;
+                    export type Usd = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Usd;
+                    export namespace Brl {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Brl.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Brl.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Cop {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Cop.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Cop.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Eur {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Eur.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Eur.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Gbp {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Gbp.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Gbp.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Mxn {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Mxn.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Mxn.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Usd {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Usd.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Usd.Protections.PspMigration;
+                      }
+                    }
+                  }
+                }
+                export namespace Onramp {
+                  export type CryptoWallets = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets;
+                  export namespace CryptoWallets {
+                    export type Brl = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Brl;
+                    export type Cop = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Cop;
+                    export type Eur = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Eur;
+                    export type Gbp = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Gbp;
+                    export type Mxn = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Mxn;
+                    export type Usd = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Usd;
+                    export namespace Brl {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Brl.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Brl.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Cop {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Cop.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Cop.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Eur {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Eur.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Eur.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Gbp {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Gbp.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Gbp.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Mxn {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Mxn.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Mxn.Protections.PspMigration;
+                      }
+                    }
+                    export namespace Usd {
+                      export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Usd.Protections;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Usd.Protections.PspMigration;
+                      }
+                    }
                   }
                 }
               }
@@ -23829,6 +24270,7 @@ declare namespace StripeConstructor {
               export type Cards = Stripe_.V2.Core.AccountCreateParams.Configuration.Recipient.Capabilities.Cards;
               export type CryptoWallets = Stripe_.V2.Core.AccountCreateParams.Configuration.Recipient.Capabilities.CryptoWallets;
               export type PaperChecks = Stripe_.V2.Core.AccountCreateParams.Configuration.Recipient.Capabilities.PaperChecks;
+              export type Pix = Stripe_.V2.Core.AccountCreateParams.Configuration.Recipient.Capabilities.Pix;
               export type StripeBalance = Stripe_.V2.Core.AccountCreateParams.Configuration.Recipient.Capabilities.StripeBalance;
               export namespace BankAccounts {
                 export type Ach = Stripe_.V2.Core.AccountCreateParams.Configuration.Recipient.Capabilities.BankAccounts.Ach;
@@ -23939,6 +24381,12 @@ declare namespace StripeConstructor {
                 export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.Recipient.Capabilities.PaperChecks.Protections;
                 export namespace Protections {
                   export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.Recipient.Capabilities.PaperChecks.Protections.PspMigration;
+                }
+              }
+              export namespace Pix {
+                export type Protections = Stripe_.V2.Core.AccountCreateParams.Configuration.Recipient.Capabilities.Pix.Protections;
+                export namespace Protections {
+                  export type PspMigration = Stripe_.V2.Core.AccountCreateParams.Configuration.Recipient.Capabilities.Pix.Protections.PspMigration;
                 }
               }
               export namespace StripeBalance {
@@ -24609,6 +25057,7 @@ declare namespace StripeConstructor {
               export type SwishPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.SwishPayments;
               export type TwintPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.TwintPayments;
               export type UsBankTransferPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.UsBankTransferPayments;
+              export type VippsPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.VippsPayments;
               export type ZipPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.ZipPayments;
               export namespace AchDebitPayments {
                 export type Protections = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.AchDebitPayments.Protections;
@@ -25333,6 +25782,21 @@ declare namespace StripeConstructor {
                   export type Resolution = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.UsBankTransferPayments.StatusDetail.Resolution;
                 }
               }
+              export namespace VippsPayments {
+                export type Protections = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.VippsPayments.Protections;
+                export type Status = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.VippsPayments.Status;
+                export type StatusDetail = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.VippsPayments.StatusDetail;
+                export namespace Protections {
+                  export type PspMigration = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.VippsPayments.Protections.PspMigration;
+                  export namespace PspMigration {
+                    export type Status = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.VippsPayments.Protections.PspMigration.Status;
+                  }
+                }
+                export namespace StatusDetail {
+                  export type Code = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.VippsPayments.StatusDetail.Code;
+                  export type Resolution = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.VippsPayments.StatusDetail.Resolution;
+                }
+              }
               export namespace ZipPayments {
                 export type Protections = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.ZipPayments.Protections;
                 export type Status = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.ZipPayments.Status;
@@ -25380,6 +25844,7 @@ declare namespace StripeConstructor {
             export type RegulatedActivity = Stripe_.V2.Core.Account.Configuration.MoneyManager.RegulatedActivity;
             export type SourceOfFunds = Stripe_.V2.Core.Account.Configuration.MoneyManager.SourceOfFunds;
             export namespace Capabilities {
+              export type BusinessCustodialStorage = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage;
               export type BusinessStorage = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessStorage;
               export type ConsumerStorage = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ConsumerStorage;
               export type InboundTransfers = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.InboundTransfers;
@@ -25387,6 +25852,78 @@ declare namespace StripeConstructor {
               export type OutboundTransfers = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers;
               export type ReceivedCredits = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits;
               export type ReceivedDebits = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedDebits;
+              export namespace BusinessCustodialStorage {
+                export type Inbound = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound;
+                export type Outbound = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound;
+                export namespace Inbound {
+                  export type Ousd = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Ousd;
+                  export type Usdc = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Usdc;
+                  export namespace Ousd {
+                    export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Ousd.Protections;
+                    export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Ousd.Status;
+                    export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Ousd.StatusDetail;
+                    export namespace Protections {
+                      export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Ousd.Protections.PspMigration;
+                      export namespace PspMigration {
+                        export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Ousd.Protections.PspMigration.Status;
+                      }
+                    }
+                    export namespace StatusDetail {
+                      export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Ousd.StatusDetail.Code;
+                      export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Ousd.StatusDetail.Resolution;
+                    }
+                  }
+                  export namespace Usdc {
+                    export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Usdc.Protections;
+                    export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Usdc.Status;
+                    export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Usdc.StatusDetail;
+                    export namespace Protections {
+                      export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Usdc.Protections.PspMigration;
+                      export namespace PspMigration {
+                        export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Usdc.Protections.PspMigration.Status;
+                      }
+                    }
+                    export namespace StatusDetail {
+                      export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Usdc.StatusDetail.Code;
+                      export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Inbound.Usdc.StatusDetail.Resolution;
+                    }
+                  }
+                }
+                export namespace Outbound {
+                  export type Ousd = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Ousd;
+                  export type Usdc = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Usdc;
+                  export namespace Ousd {
+                    export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Ousd.Protections;
+                    export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Ousd.Status;
+                    export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Ousd.StatusDetail;
+                    export namespace Protections {
+                      export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Ousd.Protections.PspMigration;
+                      export namespace PspMigration {
+                        export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Ousd.Protections.PspMigration.Status;
+                      }
+                    }
+                    export namespace StatusDetail {
+                      export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Ousd.StatusDetail.Code;
+                      export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Ousd.StatusDetail.Resolution;
+                    }
+                  }
+                  export namespace Usdc {
+                    export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Usdc.Protections;
+                    export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Usdc.Status;
+                    export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Usdc.StatusDetail;
+                    export namespace Protections {
+                      export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Usdc.Protections.PspMigration;
+                      export namespace PspMigration {
+                        export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Usdc.Protections.PspMigration.Status;
+                      }
+                    }
+                    export namespace StatusDetail {
+                      export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Usdc.StatusDetail.Code;
+                      export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessCustodialStorage.Outbound.Usdc.StatusDetail.Resolution;
+                    }
+                  }
+                }
+              }
               export namespace BusinessStorage {
                 export type Inbound = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessStorage.Inbound;
                 export type Outbound = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.BusinessStorage.Outbound;
@@ -25714,6 +26251,8 @@ declare namespace StripeConstructor {
                 export type Cards = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Cards;
                 export type CryptoWallets = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.CryptoWallets;
                 export type FinancialAccounts = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.FinancialAccounts;
+                export type Offramp = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp;
+                export type Onramp = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp;
                 export type PaperChecks = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.PaperChecks;
                 export namespace BankAccounts {
                   export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.BankAccounts.Protections;
@@ -25775,6 +26314,208 @@ declare namespace StripeConstructor {
                     export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.FinancialAccounts.StatusDetail.Resolution;
                   }
                 }
+                export namespace Offramp {
+                  export type BankAccounts = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts;
+                  export namespace BankAccounts {
+                    export type Brl = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Brl;
+                    export type Cop = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Cop;
+                    export type Eur = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Eur;
+                    export type Gbp = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Gbp;
+                    export type Mxn = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Mxn;
+                    export type Usd = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Usd;
+                    export namespace Brl {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Brl.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Brl.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Brl.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Brl.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Brl.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Brl.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Brl.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Cop {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Cop.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Cop.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Cop.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Cop.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Cop.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Cop.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Cop.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Eur {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Eur.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Eur.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Eur.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Eur.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Eur.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Eur.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Eur.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Gbp {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Gbp.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Gbp.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Gbp.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Gbp.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Gbp.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Gbp.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Gbp.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Mxn {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Mxn.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Mxn.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Mxn.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Mxn.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Mxn.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Mxn.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Mxn.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Usd {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Usd.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Usd.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Usd.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Usd.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Usd.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Usd.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Offramp.BankAccounts.Usd.StatusDetail.Resolution;
+                      }
+                    }
+                  }
+                }
+                export namespace Onramp {
+                  export type CryptoWallets = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets;
+                  export namespace CryptoWallets {
+                    export type Brl = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Brl;
+                    export type Cop = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Cop;
+                    export type Eur = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Eur;
+                    export type Gbp = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Gbp;
+                    export type Mxn = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Mxn;
+                    export type Usd = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Usd;
+                    export namespace Brl {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Brl.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Brl.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Brl.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Brl.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Brl.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Brl.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Brl.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Cop {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Cop.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Cop.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Cop.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Cop.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Cop.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Cop.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Cop.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Eur {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Eur.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Eur.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Eur.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Eur.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Eur.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Eur.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Eur.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Gbp {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Gbp.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Gbp.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Gbp.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Gbp.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Gbp.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Gbp.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Gbp.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Mxn {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Mxn.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Mxn.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Mxn.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Mxn.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Mxn.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Mxn.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Mxn.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Usd {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Usd.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Usd.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Usd.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Usd.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Usd.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Usd.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.Onramp.CryptoWallets.Usd.StatusDetail.Resolution;
+                      }
+                    }
+                  }
+                }
                 export namespace PaperChecks {
                   export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.PaperChecks.Protections;
                   export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundPayments.PaperChecks.Status;
@@ -25795,6 +26536,8 @@ declare namespace StripeConstructor {
                 export type BankAccounts = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.BankAccounts;
                 export type CryptoWallets = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.CryptoWallets;
                 export type FinancialAccounts = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.FinancialAccounts;
+                export type Offramp = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp;
+                export type Onramp = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp;
                 export namespace BankAccounts {
                   export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.BankAccounts.Protections;
                   export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.BankAccounts.Status;
@@ -25840,10 +26583,214 @@ declare namespace StripeConstructor {
                     export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.FinancialAccounts.StatusDetail.Resolution;
                   }
                 }
+                export namespace Offramp {
+                  export type BankAccounts = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts;
+                  export namespace BankAccounts {
+                    export type Brl = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Brl;
+                    export type Cop = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Cop;
+                    export type Eur = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Eur;
+                    export type Gbp = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Gbp;
+                    export type Mxn = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Mxn;
+                    export type Usd = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Usd;
+                    export namespace Brl {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Brl.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Brl.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Brl.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Brl.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Brl.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Brl.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Brl.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Cop {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Cop.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Cop.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Cop.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Cop.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Cop.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Cop.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Cop.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Eur {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Eur.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Eur.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Eur.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Eur.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Eur.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Eur.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Eur.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Gbp {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Gbp.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Gbp.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Gbp.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Gbp.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Gbp.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Gbp.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Gbp.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Mxn {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Mxn.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Mxn.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Mxn.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Mxn.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Mxn.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Mxn.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Mxn.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Usd {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Usd.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Usd.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Usd.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Usd.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Usd.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Usd.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Offramp.BankAccounts.Usd.StatusDetail.Resolution;
+                      }
+                    }
+                  }
+                }
+                export namespace Onramp {
+                  export type CryptoWallets = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets;
+                  export namespace CryptoWallets {
+                    export type Brl = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Brl;
+                    export type Cop = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Cop;
+                    export type Eur = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Eur;
+                    export type Gbp = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Gbp;
+                    export type Mxn = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Mxn;
+                    export type Usd = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Usd;
+                    export namespace Brl {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Brl.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Brl.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Brl.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Brl.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Brl.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Brl.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Brl.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Cop {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Cop.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Cop.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Cop.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Cop.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Cop.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Cop.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Cop.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Eur {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Eur.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Eur.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Eur.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Eur.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Eur.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Eur.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Eur.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Gbp {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Gbp.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Gbp.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Gbp.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Gbp.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Gbp.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Gbp.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Gbp.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Mxn {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Mxn.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Mxn.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Mxn.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Mxn.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Mxn.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Mxn.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Mxn.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Usd {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Usd.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Usd.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Usd.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Usd.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Usd.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Usd.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.OutboundTransfers.Onramp.CryptoWallets.Usd.StatusDetail.Resolution;
+                      }
+                    }
+                  }
+                }
               }
               export namespace ReceivedCredits {
                 export type BankAccounts = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.BankAccounts;
                 export type CryptoWallets = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.CryptoWallets;
+                export type Offramp = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp;
+                export type Onramp = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp;
                 export namespace BankAccounts {
                   export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.BankAccounts.Protections;
                   export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.BankAccounts.Status;
@@ -25872,6 +26819,208 @@ declare namespace StripeConstructor {
                   export namespace StatusDetail {
                     export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.CryptoWallets.StatusDetail.Code;
                     export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.CryptoWallets.StatusDetail.Resolution;
+                  }
+                }
+                export namespace Offramp {
+                  export type BankAccounts = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts;
+                  export namespace BankAccounts {
+                    export type Brl = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Brl;
+                    export type Cop = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Cop;
+                    export type Eur = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Eur;
+                    export type Gbp = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Gbp;
+                    export type Mxn = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Mxn;
+                    export type Usd = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Usd;
+                    export namespace Brl {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Brl.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Brl.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Brl.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Brl.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Brl.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Brl.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Brl.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Cop {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Cop.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Cop.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Cop.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Cop.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Cop.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Cop.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Cop.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Eur {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Eur.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Eur.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Eur.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Eur.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Eur.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Eur.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Eur.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Gbp {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Gbp.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Gbp.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Gbp.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Gbp.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Gbp.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Gbp.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Gbp.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Mxn {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Mxn.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Mxn.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Mxn.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Mxn.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Mxn.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Mxn.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Mxn.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Usd {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Usd.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Usd.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Usd.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Usd.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Usd.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Usd.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Offramp.BankAccounts.Usd.StatusDetail.Resolution;
+                      }
+                    }
+                  }
+                }
+                export namespace Onramp {
+                  export type CryptoWallets = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets;
+                  export namespace CryptoWallets {
+                    export type Brl = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Brl;
+                    export type Cop = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Cop;
+                    export type Eur = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Eur;
+                    export type Gbp = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Gbp;
+                    export type Mxn = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Mxn;
+                    export type Usd = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Usd;
+                    export namespace Brl {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Brl.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Brl.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Brl.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Brl.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Brl.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Brl.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Brl.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Cop {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Cop.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Cop.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Cop.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Cop.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Cop.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Cop.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Cop.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Eur {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Eur.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Eur.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Eur.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Eur.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Eur.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Eur.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Eur.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Gbp {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Gbp.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Gbp.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Gbp.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Gbp.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Gbp.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Gbp.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Gbp.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Mxn {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Mxn.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Mxn.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Mxn.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Mxn.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Mxn.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Mxn.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Mxn.StatusDetail.Resolution;
+                      }
+                    }
+                    export namespace Usd {
+                      export type Protections = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Usd.Protections;
+                      export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Usd.Status;
+                      export type StatusDetail = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Usd.StatusDetail;
+                      export namespace Protections {
+                        export type PspMigration = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Usd.Protections.PspMigration;
+                        export namespace PspMigration {
+                          export type Status = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Usd.Protections.PspMigration.Status;
+                        }
+                      }
+                      export namespace StatusDetail {
+                        export type Code = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Usd.StatusDetail.Code;
+                        export type Resolution = Stripe_.V2.Core.Account.Configuration.MoneyManager.Capabilities.ReceivedCredits.Onramp.CryptoWallets.Usd.StatusDetail.Resolution;
+                      }
+                    }
                   }
                 }
               }
@@ -25903,6 +27052,7 @@ declare namespace StripeConstructor {
               export type Cards = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.Cards;
               export type CryptoWallets = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.CryptoWallets;
               export type PaperChecks = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.PaperChecks;
+              export type Pix = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.Pix;
               export type StripeBalance = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.StripeBalance;
               export namespace BankAccounts {
                 export type Ach = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.BankAccounts.Ach;
@@ -26157,6 +27307,21 @@ declare namespace StripeConstructor {
                 export namespace StatusDetail {
                   export type Code = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.PaperChecks.StatusDetail.Code;
                   export type Resolution = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.PaperChecks.StatusDetail.Resolution;
+                }
+              }
+              export namespace Pix {
+                export type Protections = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.Pix.Protections;
+                export type Status = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.Pix.Status;
+                export type StatusDetail = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.Pix.StatusDetail;
+                export namespace Protections {
+                  export type PspMigration = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.Pix.Protections.PspMigration;
+                  export namespace PspMigration {
+                    export type Status = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.Pix.Protections.PspMigration.Status;
+                  }
+                }
+                export namespace StatusDetail {
+                  export type Code = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.Pix.StatusDetail.Code;
+                  export type Resolution = Stripe_.V2.Core.Account.Configuration.Recipient.Capabilities.Pix.StatusDetail.Resolution;
                 }
               }
               export namespace StripeBalance {
@@ -27634,11 +28799,20 @@ declare namespace StripeConstructor {
       export type FinancialAddressRetrieveParams = Stripe_.V2.MoneyManagement.FinancialAddressRetrieveParams;
       export type FinancialAddressListParams = Stripe_.V2.MoneyManagement.FinancialAddressListParams;
       export type FinancialAddressResource = Stripe_.V2.MoneyManagement.FinancialAddressResource;
+      export type FundingSession = Stripe_.V2.MoneyManagement.FundingSession;
+      export type FundingSessionCreateParams = Stripe_.V2.MoneyManagement.FundingSessionCreateParams;
+      export type FundingSessionResource = Stripe_.V2.MoneyManagement.FundingSessionResource;
       export type InboundTransfer = Stripe_.V2.MoneyManagement.InboundTransfer;
       export type InboundTransferCreateParams = Stripe_.V2.MoneyManagement.InboundTransferCreateParams;
       export type InboundTransferRetrieveParams = Stripe_.V2.MoneyManagement.InboundTransferRetrieveParams;
       export type InboundTransferListParams = Stripe_.V2.MoneyManagement.InboundTransferListParams;
       export type InboundTransferResource = Stripe_.V2.MoneyManagement.InboundTransferResource;
+      export type InboundTransferMandate = Stripe_.V2.MoneyManagement.InboundTransferMandate;
+      export type InboundTransferMandateCreateParams = Stripe_.V2.MoneyManagement.InboundTransferMandateCreateParams;
+      export type InboundTransferMandateRetrieveParams = Stripe_.V2.MoneyManagement.InboundTransferMandateRetrieveParams;
+      export type InboundTransferMandateListParams = Stripe_.V2.MoneyManagement.InboundTransferMandateListParams;
+      export type InboundTransferMandateCancelParams = Stripe_.V2.MoneyManagement.InboundTransferMandateCancelParams;
+      export type InboundTransferMandateResource = Stripe_.V2.MoneyManagement.InboundTransferMandateResource;
       export type OutboundPayment = Stripe_.V2.MoneyManagement.OutboundPayment;
       export type OutboundPaymentCreateParams = Stripe_.V2.MoneyManagement.OutboundPaymentCreateParams;
       export type OutboundPaymentRetrieveParams = Stripe_.V2.MoneyManagement.OutboundPaymentRetrieveParams;
@@ -27871,18 +29045,44 @@ declare namespace StripeConstructor {
         }
         export namespace CryptoWallet {
           export type Network = Stripe_.V2.MoneyManagement.FinancialAddress.CryptoWallet.Network;
+          export type SupportedNetworkDetails = Stripe_.V2.MoneyManagement.FinancialAddress.CryptoWallet.SupportedNetworkDetails;
+          export namespace SupportedNetworkDetails {
+            export type SupportedTokenCurrency = Stripe_.V2.MoneyManagement.FinancialAddress.CryptoWallet.SupportedNetworkDetails.SupportedTokenCurrency;
+          }
+        }
+      }
+      export namespace FundingSessionCreateParams {
+        export type FinancialAddressOptions = Stripe_.V2.MoneyManagement.FundingSessionCreateParams.FinancialAddressOptions;
+        export type FinancialAddressType = Stripe_.V2.MoneyManagement.FundingSessionCreateParams.FinancialAddressType;
+        export namespace FinancialAddressOptions {
+          export type CryptoWallet = Stripe_.V2.MoneyManagement.FundingSessionCreateParams.FinancialAddressOptions.CryptoWallet;
+        }
+      }
+      export namespace FundingSession {
+        export type FinancialAddressOptions = Stripe_.V2.MoneyManagement.FundingSession.FinancialAddressOptions;
+        export type FinancialAddressType = Stripe_.V2.MoneyManagement.FundingSession.FinancialAddressType;
+        export namespace FinancialAddressOptions {
+          export type CryptoWallet = Stripe_.V2.MoneyManagement.FundingSession.FinancialAddressOptions.CryptoWallet;
         }
       }
       export namespace InboundTransferCreateParams {
         export type From = Stripe_.V2.MoneyManagement.InboundTransferCreateParams.From;
         export type To = Stripe_.V2.MoneyManagement.InboundTransferCreateParams.To;
+        export type NetworkDetails = Stripe_.V2.MoneyManagement.InboundTransferCreateParams.NetworkDetails;
+        export namespace NetworkDetails {
+          export type Ach = Stripe_.V2.MoneyManagement.InboundTransferCreateParams.NetworkDetails.Ach;
+        }
       }
       export namespace InboundTransfer {
         export type From = Stripe_.V2.MoneyManagement.InboundTransfer.From;
+        export type NetworkDetails = Stripe_.V2.MoneyManagement.InboundTransfer.NetworkDetails;
         export type To = Stripe_.V2.MoneyManagement.InboundTransfer.To;
         export type TransferHistory = Stripe_.V2.MoneyManagement.InboundTransfer.TransferHistory;
         export namespace From {
           export type PaymentMethod = Stripe_.V2.MoneyManagement.InboundTransfer.From.PaymentMethod;
+        }
+        export namespace NetworkDetails {
+          export type Ach = Stripe_.V2.MoneyManagement.InboundTransfer.NetworkDetails.Ach;
         }
         export namespace TransferHistory {
           export type BankDebitFailed = Stripe_.V2.MoneyManagement.InboundTransfer.TransferHistory.BankDebitFailed;
@@ -27897,6 +29097,33 @@ declare namespace StripeConstructor {
           export namespace BankDebitReturned {
             export type ReturnReason = Stripe_.V2.MoneyManagement.InboundTransfer.TransferHistory.BankDebitReturned.ReturnReason;
           }
+        }
+      }
+      export namespace InboundTransferMandateCreateParams {
+        export type Type = Stripe_.V2.MoneyManagement.InboundTransferMandateCreateParams.Type;
+        export type AuBecs = Stripe_.V2.MoneyManagement.InboundTransferMandateCreateParams.AuBecs;
+        export type Bacs = Stripe_.V2.MoneyManagement.InboundTransferMandateCreateParams.Bacs;
+        export type UserAcceptedDetails = Stripe_.V2.MoneyManagement.InboundTransferMandateCreateParams.UserAcceptedDetails;
+        export namespace UserAcceptedDetails {
+          export type Online = Stripe_.V2.MoneyManagement.InboundTransferMandateCreateParams.UserAcceptedDetails.Online;
+        }
+      }
+      export namespace InboundTransferMandate {
+        export type AuBecs = Stripe_.V2.MoneyManagement.InboundTransferMandate.AuBecs;
+        export type Bacs = Stripe_.V2.MoneyManagement.InboundTransferMandate.Bacs;
+        export type Status = Stripe_.V2.MoneyManagement.InboundTransferMandate.Status;
+        export type StatusDetails = Stripe_.V2.MoneyManagement.InboundTransferMandate.StatusDetails;
+        export type StatusTransitions = Stripe_.V2.MoneyManagement.InboundTransferMandate.StatusTransitions;
+        export type Type = Stripe_.V2.MoneyManagement.InboundTransferMandate.Type;
+        export type UserAcceptedDetails = Stripe_.V2.MoneyManagement.InboundTransferMandate.UserAcceptedDetails;
+        export namespace StatusDetails {
+          export type Canceled = Stripe_.V2.MoneyManagement.InboundTransferMandate.StatusDetails.Canceled;
+          export namespace Canceled {
+            export type Reason = Stripe_.V2.MoneyManagement.InboundTransferMandate.StatusDetails.Canceled.Reason;
+          }
+        }
+        export namespace UserAcceptedDetails {
+          export type Online = Stripe_.V2.MoneyManagement.InboundTransferMandate.UserAcceptedDetails.Online;
         }
       }
       export namespace OutboundPaymentCreateParams {
@@ -28085,6 +29312,7 @@ declare namespace StripeConstructor {
           export type BankAccount = Stripe_.V2.MoneyManagement.OutboundSetupIntentCreateParams.PayoutMethodData.BankAccount;
           export type Card = Stripe_.V2.MoneyManagement.OutboundSetupIntentCreateParams.PayoutMethodData.Card;
           export type CryptoWallet = Stripe_.V2.MoneyManagement.OutboundSetupIntentCreateParams.PayoutMethodData.CryptoWallet;
+          export type Pix = Stripe_.V2.MoneyManagement.OutboundSetupIntentCreateParams.PayoutMethodData.Pix;
           export type Type = Stripe_.V2.MoneyManagement.OutboundSetupIntentCreateParams.PayoutMethodData.Type;
           export namespace BankAccount {
             export type BankAccountType = Stripe_.V2.MoneyManagement.OutboundSetupIntentCreateParams.PayoutMethodData.BankAccount.BankAccountType;
@@ -28270,6 +29498,7 @@ declare namespace StripeConstructor {
         export type Card = Stripe_.V2.MoneyManagement.PayoutMethod.Card;
         export type CryptoWallet = Stripe_.V2.MoneyManagement.PayoutMethod.CryptoWallet;
         export type NetworkBusinessProfileWallet = Stripe_.V2.MoneyManagement.PayoutMethod.NetworkBusinessProfileWallet;
+        export type Pix = Stripe_.V2.MoneyManagement.PayoutMethod.Pix;
         export type Type = Stripe_.V2.MoneyManagement.PayoutMethod.Type;
         export type UsageStatus = Stripe_.V2.MoneyManagement.PayoutMethod.UsageStatus;
         export namespace AlternativeReference {
@@ -28372,9 +29601,14 @@ declare namespace StripeConstructor {
         }
         export namespace CryptoWalletTransfer {
           export type CryptoWallet = Stripe_.V2.MoneyManagement.ReceivedCredit.CryptoWalletTransfer.CryptoWallet;
+          export type OriginatingCryptoWallet = Stripe_.V2.MoneyManagement.ReceivedCredit.CryptoWalletTransfer.OriginatingCryptoWallet;
+          export type TokenCurrency = Stripe_.V2.MoneyManagement.ReceivedCredit.CryptoWalletTransfer.TokenCurrency;
           export type Type = Stripe_.V2.MoneyManagement.ReceivedCredit.CryptoWalletTransfer.Type;
           export namespace CryptoWallet {
             export type Network = Stripe_.V2.MoneyManagement.ReceivedCredit.CryptoWalletTransfer.CryptoWallet.Network;
+          }
+          export namespace OriginatingCryptoWallet {
+            export type Network = Stripe_.V2.MoneyManagement.ReceivedCredit.CryptoWalletTransfer.OriginatingCryptoWallet.Network;
           }
         }
         export namespace StatusDetails {
@@ -29139,8 +30373,12 @@ declare namespace StripeConstructor {
       export type OperationsResolveAddressResult = Stripe_.V2.Tax.OperationsResolveAddressResult;
       export namespace IntegrationConfiguration {
         export type CheckoutSessions = Stripe_.V2.Tax.IntegrationConfiguration.CheckoutSessions;
+        export type Invoices = Stripe_.V2.Tax.IntegrationConfiguration.Invoices;
         export namespace CheckoutSessions {
           export type AutomaticTaxDefaultValue = Stripe_.V2.Tax.IntegrationConfiguration.CheckoutSessions.AutomaticTaxDefaultValue;
+        }
+        export namespace Invoices {
+          export type AutomaticTaxDefaultValue = Stripe_.V2.Tax.IntegrationConfiguration.Invoices.AutomaticTaxDefaultValue;
         }
       }
       export namespace ManualRuleCreateParams {
@@ -30000,6 +31238,16 @@ declare namespace StripeConstructor {
     export type V2MoneyManagementInboundTransferBankDebitReturnedEventNotification = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferBankDebitReturnedEventNotification;
     export type V2MoneyManagementInboundTransferBankDebitSucceededEvent = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferBankDebitSucceededEvent;
     export type V2MoneyManagementInboundTransferBankDebitSucceededEventNotification = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferBankDebitSucceededEventNotification;
+    export type V2MoneyManagementInboundTransferMandateActivatedEvent = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferMandateActivatedEvent;
+    export type V2MoneyManagementInboundTransferMandateActivatedEventNotification = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferMandateActivatedEventNotification;
+    export type V2MoneyManagementInboundTransferMandateCreatedEvent = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferMandateCreatedEvent;
+    export type V2MoneyManagementInboundTransferMandateCreatedEventNotification = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferMandateCreatedEventNotification;
+    export type V2MoneyManagementInboundTransferMandateExpiredEvent = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferMandateExpiredEvent;
+    export type V2MoneyManagementInboundTransferMandateExpiredEventNotification = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferMandateExpiredEventNotification;
+    export type V2MoneyManagementInboundTransferMandateRefusedEvent = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferMandateRefusedEvent;
+    export type V2MoneyManagementInboundTransferMandateRefusedEventNotification = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferMandateRefusedEventNotification;
+    export type V2MoneyManagementInboundTransferMandateRevokedEvent = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferMandateRevokedEvent;
+    export type V2MoneyManagementInboundTransferMandateRevokedEventNotification = Stripe_.V2.Core.Events.V2MoneyManagementInboundTransferMandateRevokedEventNotification;
     export type V2MoneyManagementOutboundPaymentCanceledEvent = Stripe_.V2.Core.Events.V2MoneyManagementOutboundPaymentCanceledEvent;
     export type V2MoneyManagementOutboundPaymentCanceledEventNotification = Stripe_.V2.Core.Events.V2MoneyManagementOutboundPaymentCanceledEventNotification;
     export type V2MoneyManagementOutboundPaymentCreatedEvent = Stripe_.V2.Core.Events.V2MoneyManagementOutboundPaymentCreatedEvent;
@@ -30162,6 +31410,9 @@ declare namespace StripeConstructor {
     }
     export namespace V1BillingMeterNoMeterFoundEvent {
       export type Data = Stripe_.V2.Core.Events.V1BillingMeterNoMeterFoundEvent.Data;
+    }
+    export namespace V1InvoiceUpcomingEvent {
+      export type Data = Stripe_.V2.Core.Events.V1InvoiceUpcomingEvent.Data;
     }
     export namespace V2BillingCadenceBilledEvent {
       export type Data = Stripe_.V2.Core.Events.V2BillingCadenceBilledEvent.Data;

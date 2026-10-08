@@ -192,7 +192,7 @@ export namespace V2 {
       include?: Array<SchemaListParams.Include>;
 
       /**
-       * The maximum number of results per page. Defaults to 10. Maximum is 100.
+       * The maximum number of results per page. Defaults to 10. Maximum is 1,000.
        */
       limit?: number;
 
