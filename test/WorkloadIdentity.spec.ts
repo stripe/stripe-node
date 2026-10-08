@@ -433,13 +433,13 @@ describe('workload identity', () => {
       ]);
     });
 
-    it('POSTs to the fixed https://api.stripe.com endpoint, ignoring client host config', async () => {
+    it('POSTs to the fixed https://access.stripe.com endpoint, ignoring client host config', async () => {
       // The real exchange function is used here, with `node-fetch` swapped in
       // only so `nock` (which can't intercept the global `fetch`/undici the
       // default uses) can see the request: this asserts the destination an
       // assertion is actually sent to.
       let exchangedBody: Record<string, string> | null = null;
-      const scope = nock('https://api.stripe.com', {
+      const scope = nock('https://access.stripe.com', {
         reqheaders: {
           'content-type': 'application/x-www-form-urlencoded',
         },
@@ -463,7 +463,7 @@ describe('workload identity', () => {
           httpClient: http,
           telemetry: false,
           // Deliberately hostile client configuration: it must not move the
-          // token exchange off api.stripe.com.
+          // token exchange off access.stripe.com.
           host: 'workload-identity.example.com',
           protocol: 'http',
           port: '1234',
@@ -556,7 +556,7 @@ describe('workload identity', () => {
 
       expect(err).to.be.an.instanceOf(StripeWorkloadIdentityError);
       expect(err.message).to.include(
-        'https://api.stripe.com/stripe-workload/oauth2/token'
+        'https://access.stripe.com/wif/oauth2/token'
       );
       // The underlying failure is reachable the same way it is on any other
       // Stripe error.

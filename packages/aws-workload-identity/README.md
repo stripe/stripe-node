@@ -51,7 +51,7 @@ Token via `sts:GetWebIdentityToken`, using:
 
 | | |
 | --- | --- |
-| Audience | `https://api.stripe.com/workload-identity` |
+| Audience | `https://access.stripe.com/wif` |
 | Signing algorithm | `ES384` |
 
 Stripe exchanges that token for a short-lived restricted key. This package never
@@ -61,7 +61,7 @@ AWS region and credentials come from the AWS SDK's normal resolution. You can
 override the STS client configuration if you need to:
 
 ```js
-awsWorkloadIdentity({stsClientConfig: {region: 'us-west-2'}});
+stsClientConfig: {region: 'us-west-2'};
 ```
 
 Note that `GetWebIdentityToken` is not available on the STS global endpoint, so a

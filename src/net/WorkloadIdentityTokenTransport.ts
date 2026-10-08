@@ -6,9 +6,9 @@
  * settings are applied here, and the exchange never follows redirects.
  */
 export const WORKLOAD_IDENTITY_TOKEN_PROTOCOL = 'https';
-export const WORKLOAD_IDENTITY_TOKEN_HOST = 'api.stripe.com';
+export const WORKLOAD_IDENTITY_TOKEN_HOST = 'access.stripe.com';
 export const WORKLOAD_IDENTITY_TOKEN_PORT = '443';
-export const WORKLOAD_IDENTITY_TOKEN_PATH = '/stripe-workload/oauth2/token';
+export const WORKLOAD_IDENTITY_TOKEN_PATH = '/wif/oauth2/token';
 export const WORKLOAD_IDENTITY_TOKEN_URL = `${WORKLOAD_IDENTITY_TOKEN_PROTOCOL}://${WORKLOAD_IDENTITY_TOKEN_HOST}${WORKLOAD_IDENTITY_TOKEN_PATH}`;
 
 /** The exchange is a single short request, so it gets its own fixed timeout. */

@@ -5,7 +5,7 @@ import {
 } from '@aws-sdk/client-sts';
 
 export const STRIPE_WORKLOAD_IDENTITY_AUDIENCE =
-  'https://api.stripe.com/workload-identity';
+  'https://access.stripe.com/wif';
 export const STRIPE_WORKLOAD_IDENTITY_SIGNING_ALGORITHM = 'ES384';
 
 /**
