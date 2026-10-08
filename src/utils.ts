@@ -16,8 +16,6 @@ const OPTIONS_KEYS = [
   'idempotencyKey',
   'stripeAccount',
   'apiVersion',
-  // ExtraHeaderOptionKeys: The beginning of the section generated from our OpenAPI spec
-  // ExtraHeaderOptionKeys: The end of the section generated from our OpenAPI spec
   'maxNetworkRetries',
   'timeout',
   'apiBase',
@@ -27,11 +25,6 @@ const OPTIONS_KEYS = [
   'additionalHeaders',
   'streaming',
 ];
-
-const EXTRA_HEADER_OPTIONS: Record<string, string> = {
-  // ExtraHeaderOptionMappings: The beginning of the section generated from our OpenAPI spec
-  // ExtraHeaderOptionMappings: The end of the section generated from our OpenAPI spec
-};
 
 type Settings = {
   timeout?: number;
@@ -232,12 +225,6 @@ export function processOptions(
   }
   if (options.apiVersion) {
     result.headers['Stripe-Version'] = options.apiVersion;
-  }
-  for (const [option, header] of Object.entries(EXTRA_HEADER_OPTIONS)) {
-    const value = options[option as keyof RequestOptions];
-    if (typeof value === 'string') {
-      result.headers[header] = value;
-    }
   }
   if (Number.isInteger(options.maxNetworkRetries)) {
     result.settings.maxNetworkRetries = options.maxNetworkRetries;
