@@ -72,6 +72,8 @@ class StripeResource implements StripeResourceObject {
       getAPIMode(path) === 'v2' &&
       data.limit !== undefined
     ) {
+      // this is true for initial request but not for any next/previous_page_url
+      // requests (which will have the page and limit already baked in)
       if (!path.includes('?')) {
         path = `${path}?limit=${encodeURIComponent(String(data.limit))}`;
       }
