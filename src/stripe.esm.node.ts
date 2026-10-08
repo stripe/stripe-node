@@ -21,8 +21,9 @@ export function createStripe(
   return StripeClass;
 }
 
-import * as Stripe from './stripe.barrel.js'
+export * from './stripe.barrel.js';
 
-createStripe(new NodePlatformFunctions());
+const Stripe = createStripe(new NodePlatformFunctions());
 
+export {Stripe};
 export default Stripe;
