@@ -1841,7 +1841,11 @@ export namespace Session {
 
   export type OriginContext = 'mobile_app' | 'web' | OtherString;
 
-  export type PaymentMethodCollection = 'always' | 'if_required' | OtherString;
+  export type PaymentMethodCollection =
+    | 'always'
+    | 'auto'
+    | 'if_required'
+    | OtherString;
 
   export interface PaymentMethodConfigurationDetails {
     /**
@@ -3109,7 +3113,7 @@ export namespace Session {
       /**
        * The Unix timestamp marking the subscription's backdated start date.
        */
-      backdate_start_date?: number | null;
+      backdate_start_date: number | null;
 
       /**
        * The description for the subscription.
@@ -6029,6 +6033,7 @@ export namespace Checkout {
 
     export type PaymentMethodCollection =
       | 'always'
+      | 'auto'
       | 'if_required'
       | OtherString;
 
@@ -7806,6 +7811,11 @@ export namespace Checkout {
         installments?: Card.Installments;
 
         /**
+         * Configuration options for setting up an eMandate for cards issued in India.
+         */
+        mandate_options?: Card.MandateOptions;
+
+        /**
          * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this CheckoutSession.
          */
         request_decremental_authorization?: Card.RequestDecrementalAuthorization;
@@ -8610,6 +8620,58 @@ export namespace Checkout {
           enabled?: boolean;
         }
 
+        export interface MandateOptions {
+          /**
+           * Maximum or fixed amount for future payments, specified in the Checkout Session's integration currency.
+           */
+          amount?: number;
+
+          /**
+           * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+           */
+          amount_type?: MandateOptions.AmountType;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency?: string;
+
+          /**
+           * A description of the mandate or subscription that is meant to be displayed to the customer.
+           */
+          description?: string;
+
+          /**
+           * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+           */
+          end_date?: number;
+
+          /**
+           * Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
+           */
+          interval?: MandateOptions.Interval;
+
+          /**
+           * The number of intervals between payments. For example, `interval=month` and `interval_count=3` indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks). This parameter is optional when `interval=sporadic`.
+           */
+          interval_count?: number;
+
+          /**
+           * Unique identifier for the mandate or subscription.
+           */
+          reference?: string;
+
+          /**
+           * Start date of the mandate or subscription. Start date should not be lesser than yesterday.
+           */
+          start_date?: number;
+
+          /**
+           * Specifies the type of mandates supported. Possible values are `india`.
+           */
+          supported_types?: Array<'india'>;
+        }
+
         export type RequestDecrementalAuthorization =
           | 'if_available'
           | 'never'
@@ -8654,6 +8716,18 @@ export namespace Checkout {
           | 'off_session'
           | 'on_session'
           | OtherString;
+
+        export namespace MandateOptions {
+          export type AmountType = 'fixed' | 'maximum' | OtherString;
+
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'sporadic'
+            | 'week'
+            | 'year'
+            | OtherString;
+        }
 
         export namespace Restrictions {
           export type BrandsBlocked =

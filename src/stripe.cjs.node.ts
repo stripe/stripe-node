@@ -864,7 +864,7 @@ declare namespace StripeConstructor {
       export type SmartDisputes = Stripe_.AccountCreateParams.Settings.SmartDisputes;
       export type TaxForms = Stripe_.AccountCreateParams.Settings.TaxForms;
       export type Treasury = Stripe_.AccountCreateParams.Settings.Treasury;
-      export type WechatPayPayments = Stripe_.AccountCreateParams.Settings.WechatPayPayments;
+      export type WechatPayMobileWebPayments = Stripe_.AccountCreateParams.Settings.WechatPayMobileWebPayments;
       export namespace CardIssuing {
         export type TosAcceptance = Stripe_.AccountCreateParams.Settings.CardIssuing.TosAcceptance;
       }
@@ -1074,7 +1074,7 @@ declare namespace StripeConstructor {
       export type SmartDisputes = Stripe_.AccountUpdateParams.Settings.SmartDisputes;
       export type TaxForms = Stripe_.AccountUpdateParams.Settings.TaxForms;
       export type Treasury = Stripe_.AccountUpdateParams.Settings.Treasury;
-      export type WechatPayPayments = Stripe_.AccountUpdateParams.Settings.WechatPayPayments;
+      export type WechatPayMobileWebPayments = Stripe_.AccountUpdateParams.Settings.WechatPayMobileWebPayments;
       export namespace CardIssuing {
         export type TosAcceptance = Stripe_.AccountUpdateParams.Settings.CardIssuing.TosAcceptance;
       }
@@ -1381,7 +1381,7 @@ declare namespace StripeConstructor {
       export type SmartDisputes = Stripe_.Account.Settings.SmartDisputes;
       export type TaxForms = Stripe_.Account.Settings.TaxForms;
       export type Treasury = Stripe_.Account.Settings.Treasury;
-      export type WechatPayPayments = Stripe_.Account.Settings.WechatPayPayments;
+      export type WechatPayMobileWebPayments = Stripe_.Account.Settings.WechatPayMobileWebPayments;
       export namespace CardIssuing {
         export type TosAcceptance = Stripe_.Account.Settings.CardIssuing.TosAcceptance;
       }
@@ -1758,6 +1758,7 @@ declare namespace StripeConstructor {
     export type Pending = Stripe_.Balance.Pending;
     export type RefundAndDisputePrefunding = Stripe_.Balance.RefundAndDisputePrefunding;
     export type RiskReserved = Stripe_.Balance.RiskReserved;
+    export type SettlementReserved = Stripe_.Balance.SettlementReserved;
     export type TransitBalancesTotal = Stripe_.Balance.TransitBalancesTotal;
     export namespace Available {
       export type SourceTypes = Stripe_.Balance.Available.SourceTypes;
@@ -1799,6 +1800,16 @@ declare namespace StripeConstructor {
       }
       export namespace Pending {
         export type SourceTypes = Stripe_.Balance.RiskReserved.Pending.SourceTypes;
+      }
+    }
+    export namespace SettlementReserved {
+      export type Available = Stripe_.Balance.SettlementReserved.Available;
+      export type Pending = Stripe_.Balance.SettlementReserved.Pending;
+      export namespace Available {
+        export type SourceTypes = Stripe_.Balance.SettlementReserved.Available.SourceTypes;
+      }
+      export namespace Pending {
+        export type SourceTypes = Stripe_.Balance.SettlementReserved.Pending.SourceTypes;
       }
     }
     export namespace TransitBalancesTotal {
@@ -2288,11 +2299,13 @@ declare namespace StripeConstructor {
       export type Boleto = Stripe_.Charge.PaymentMethodDetails.Boleto;
       export type Card = Stripe_.Charge.PaymentMethodDetails.Card;
       export type CardPresent = Stripe_.Charge.PaymentMethodDetails.CardPresent;
+      export type Carecredit = Stripe_.Charge.PaymentMethodDetails.Carecredit;
       export type Cashapp = Stripe_.Charge.PaymentMethodDetails.Cashapp;
       export type Crypto = Stripe_.Charge.PaymentMethodDetails.Crypto;
       export type CustomerBalance = Stripe_.Charge.PaymentMethodDetails.CustomerBalance;
       export type Eps = Stripe_.Charge.PaymentMethodDetails.Eps;
       export type Fpx = Stripe_.Charge.PaymentMethodDetails.Fpx;
+      export type Getflex = Stripe_.Charge.PaymentMethodDetails.Getflex;
       export type GiftCard = Stripe_.Charge.PaymentMethodDetails.GiftCard;
       export type Giropay = Stripe_.Charge.PaymentMethodDetails.Giropay;
       export type Gopay = Stripe_.Charge.PaymentMethodDetails.Gopay;
@@ -2329,6 +2342,7 @@ declare namespace StripeConstructor {
       export type SepaCreditTransfer = Stripe_.Charge.PaymentMethodDetails.SepaCreditTransfer;
       export type SepaDebit = Stripe_.Charge.PaymentMethodDetails.SepaDebit;
       export type Sequra = Stripe_.Charge.PaymentMethodDetails.Sequra;
+      export type Sezzle = Stripe_.Charge.PaymentMethodDetails.Sezzle;
       export type Shopeepay = Stripe_.Charge.PaymentMethodDetails.Shopeepay;
       export type Sofort = Stripe_.Charge.PaymentMethodDetails.Sofort;
       export type StripeAccount = Stripe_.Charge.PaymentMethodDetails.StripeAccount;
@@ -2565,11 +2579,13 @@ declare namespace StripeConstructor {
       export type Boleto = Stripe_.ConfirmationToken.PaymentMethodPreview.Boleto;
       export type Card = Stripe_.ConfirmationToken.PaymentMethodPreview.Card;
       export type CardPresent = Stripe_.ConfirmationToken.PaymentMethodPreview.CardPresent;
+      export type Carecredit = Stripe_.ConfirmationToken.PaymentMethodPreview.Carecredit;
       export type Cashapp = Stripe_.ConfirmationToken.PaymentMethodPreview.Cashapp;
       export type Crypto = Stripe_.ConfirmationToken.PaymentMethodPreview.Crypto;
       export type CustomerBalance = Stripe_.ConfirmationToken.PaymentMethodPreview.CustomerBalance;
       export type Eps = Stripe_.ConfirmationToken.PaymentMethodPreview.Eps;
       export type Fpx = Stripe_.ConfirmationToken.PaymentMethodPreview.Fpx;
+      export type Getflex = Stripe_.ConfirmationToken.PaymentMethodPreview.Getflex;
       export type GiftCard = Stripe_.ConfirmationToken.PaymentMethodPreview.GiftCard;
       export type Giropay = Stripe_.ConfirmationToken.PaymentMethodPreview.Giropay;
       export type Gopay = Stripe_.ConfirmationToken.PaymentMethodPreview.Gopay;
@@ -2605,6 +2621,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.ConfirmationToken.PaymentMethodPreview.Scalapay;
       export type SepaDebit = Stripe_.ConfirmationToken.PaymentMethodPreview.SepaDebit;
       export type Sequra = Stripe_.ConfirmationToken.PaymentMethodPreview.Sequra;
+      export type Sezzle = Stripe_.ConfirmationToken.PaymentMethodPreview.Sezzle;
       export type Shopeepay = Stripe_.ConfirmationToken.PaymentMethodPreview.Shopeepay;
       export type Sofort = Stripe_.ConfirmationToken.PaymentMethodPreview.Sofort;
       export type StripeBalance = Stripe_.ConfirmationToken.PaymentMethodPreview.StripeBalance;
@@ -5190,12 +5207,14 @@ declare namespace StripeConstructor {
       export type Boleto = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Boleto;
       export type Card = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Card;
       export type CardPresent = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.CardPresent;
+      export type Carecredit = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Carecredit;
       export type Cashapp = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Cashapp;
       export type Crypto = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Crypto;
       export type Custom = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Custom;
       export type CustomerBalance = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.CustomerBalance;
       export type Eps = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Eps;
       export type Fpx = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Fpx;
+      export type Getflex = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Getflex;
       export type GiftCard = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.GiftCard;
       export type Giropay = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Giropay;
       export type Gopay = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Gopay;
@@ -5233,6 +5252,7 @@ declare namespace StripeConstructor {
       export type SepaCreditTransfer = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.SepaCreditTransfer;
       export type SepaDebit = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.SepaDebit;
       export type Sequra = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Sequra;
+      export type Sezzle = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Sezzle;
       export type Shopeepay = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Shopeepay;
       export type Sofort = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.Sofort;
       export type StripeAccount = Stripe_.PaymentAttemptRecord.PaymentMethodDetails.StripeAccount;
@@ -5680,11 +5700,13 @@ declare namespace StripeConstructor {
       export type Bizum = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Bizum;
       export type Blik = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Blik;
       export type Boleto = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Boleto;
+      export type Carecredit = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Carecredit;
       export type Cashapp = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Cashapp;
       export type Crypto = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Crypto;
       export type CustomerBalance = Stripe_.PaymentIntentCreateParams.PaymentMethodData.CustomerBalance;
       export type Eps = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Eps;
       export type Fpx = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Fpx;
+      export type Getflex = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Getflex;
       export type GiftCard = Stripe_.PaymentIntentCreateParams.PaymentMethodData.GiftCard;
       export type Giropay = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Giropay;
       export type Gopay = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Gopay;
@@ -5721,6 +5743,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Scalapay;
       export type SepaDebit = Stripe_.PaymentIntentCreateParams.PaymentMethodData.SepaDebit;
       export type Sequra = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Sequra;
+      export type Sezzle = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Sezzle;
       export type Shopeepay = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Shopeepay;
       export type Sofort = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Sofort;
       export type StripeBalance = Stripe_.PaymentIntentCreateParams.PaymentMethodData.StripeBalance;
@@ -5789,11 +5812,13 @@ declare namespace StripeConstructor {
       export type Boleto = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Boleto;
       export type Card = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Card;
       export type CardPresent = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent;
+      export type Carecredit = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Carecredit;
       export type Cashapp = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Cashapp;
       export type Crypto = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Crypto;
       export type CustomerBalance = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CustomerBalance;
       export type Eps = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Eps;
       export type Fpx = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Fpx;
+      export type Getflex = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Getflex;
       export type GiftCard = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.GiftCard;
       export type Giropay = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Giropay;
       export type Gopay = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Gopay;
@@ -5829,6 +5854,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Scalapay;
       export type SepaDebit = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.SepaDebit;
       export type Sequra = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Sequra;
+      export type Sezzle = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Sezzle;
       export type Shopeepay = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Shopeepay;
       export type Sofort = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Sofort;
       export type StripeBalance = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.StripeBalance;
@@ -5969,6 +5995,9 @@ declare namespace StripeConstructor {
           export type RequestedPriority = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CardPresent.Routing.RequestedPriority;
         }
       }
+      export namespace Carecredit {
+        export type SetupFutureUsage = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Carecredit.SetupFutureUsage;
+      }
       export namespace Cashapp {
         export type SetupFutureUsage = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Cashapp.SetupFutureUsage;
       }
@@ -5994,6 +6023,9 @@ declare namespace StripeConstructor {
           export type RequestedAddressType = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CustomerBalance.BankTransfer.RequestedAddressType;
           export type Type = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.CustomerBalance.BankTransfer.Type;
         }
+      }
+      export namespace Getflex {
+        export type SetupFutureUsage = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.Getflex.SetupFutureUsage;
       }
       export namespace GiftCard {
         export type RequestPartialAuthorization = Stripe_.PaymentIntentCreateParams.PaymentMethodOptions.GiftCard.RequestPartialAuthorization;
@@ -6504,11 +6536,13 @@ declare namespace StripeConstructor {
       export type Bizum = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Bizum;
       export type Blik = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Blik;
       export type Boleto = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Boleto;
+      export type Carecredit = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Carecredit;
       export type Cashapp = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Cashapp;
       export type Crypto = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Crypto;
       export type CustomerBalance = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.CustomerBalance;
       export type Eps = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Eps;
       export type Fpx = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Fpx;
+      export type Getflex = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Getflex;
       export type GiftCard = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.GiftCard;
       export type Giropay = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Giropay;
       export type Gopay = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Gopay;
@@ -6545,6 +6579,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Scalapay;
       export type SepaDebit = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.SepaDebit;
       export type Sequra = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Sequra;
+      export type Sezzle = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Sezzle;
       export type Shopeepay = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Shopeepay;
       export type Sofort = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Sofort;
       export type StripeBalance = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.StripeBalance;
@@ -6613,11 +6648,13 @@ declare namespace StripeConstructor {
       export type Boleto = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Boleto;
       export type Card = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Card;
       export type CardPresent = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent;
+      export type Carecredit = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Carecredit;
       export type Cashapp = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Cashapp;
       export type Crypto = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Crypto;
       export type CustomerBalance = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CustomerBalance;
       export type Eps = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Eps;
       export type Fpx = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Fpx;
+      export type Getflex = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Getflex;
       export type GiftCard = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.GiftCard;
       export type Giropay = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Giropay;
       export type Gopay = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Gopay;
@@ -6653,6 +6690,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Scalapay;
       export type SepaDebit = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.SepaDebit;
       export type Sequra = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Sequra;
+      export type Sezzle = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Sezzle;
       export type Shopeepay = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Shopeepay;
       export type Sofort = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Sofort;
       export type StripeBalance = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.StripeBalance;
@@ -6793,6 +6831,9 @@ declare namespace StripeConstructor {
           export type RequestedPriority = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CardPresent.Routing.RequestedPriority;
         }
       }
+      export namespace Carecredit {
+        export type SetupFutureUsage = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Carecredit.SetupFutureUsage;
+      }
       export namespace Cashapp {
         export type SetupFutureUsage = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Cashapp.SetupFutureUsage;
       }
@@ -6818,6 +6859,9 @@ declare namespace StripeConstructor {
           export type RequestedAddressType = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CustomerBalance.BankTransfer.RequestedAddressType;
           export type Type = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.CustomerBalance.BankTransfer.Type;
         }
+      }
+      export namespace Getflex {
+        export type SetupFutureUsage = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.Getflex.SetupFutureUsage;
       }
       export namespace GiftCard {
         export type RequestPartialAuthorization = Stripe_.PaymentIntentUpdateParams.PaymentMethodOptions.GiftCard.RequestPartialAuthorization;
@@ -7554,11 +7598,13 @@ declare namespace StripeConstructor {
       export type Bizum = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Bizum;
       export type Blik = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Blik;
       export type Boleto = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Boleto;
+      export type Carecredit = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Carecredit;
       export type Cashapp = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Cashapp;
       export type Crypto = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Crypto;
       export type CustomerBalance = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.CustomerBalance;
       export type Eps = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Eps;
       export type Fpx = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Fpx;
+      export type Getflex = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Getflex;
       export type GiftCard = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.GiftCard;
       export type Giropay = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Giropay;
       export type Gopay = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Gopay;
@@ -7595,6 +7641,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Scalapay;
       export type SepaDebit = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.SepaDebit;
       export type Sequra = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Sequra;
+      export type Sezzle = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Sezzle;
       export type Shopeepay = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Shopeepay;
       export type Sofort = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.Sofort;
       export type StripeBalance = Stripe_.PaymentIntentConfirmParams.PaymentMethodData.StripeBalance;
@@ -7663,11 +7710,13 @@ declare namespace StripeConstructor {
       export type Boleto = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Boleto;
       export type Card = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Card;
       export type CardPresent = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent;
+      export type Carecredit = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Carecredit;
       export type Cashapp = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Cashapp;
       export type Crypto = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Crypto;
       export type CustomerBalance = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CustomerBalance;
       export type Eps = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Eps;
       export type Fpx = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Fpx;
+      export type Getflex = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Getflex;
       export type GiftCard = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.GiftCard;
       export type Giropay = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Giropay;
       export type Gopay = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Gopay;
@@ -7703,6 +7752,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Scalapay;
       export type SepaDebit = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.SepaDebit;
       export type Sequra = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Sequra;
+      export type Sezzle = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Sezzle;
       export type Shopeepay = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Shopeepay;
       export type Sofort = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Sofort;
       export type StripeBalance = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.StripeBalance;
@@ -7843,6 +7893,9 @@ declare namespace StripeConstructor {
           export type RequestedPriority = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CardPresent.Routing.RequestedPriority;
         }
       }
+      export namespace Carecredit {
+        export type SetupFutureUsage = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Carecredit.SetupFutureUsage;
+      }
       export namespace Cashapp {
         export type SetupFutureUsage = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Cashapp.SetupFutureUsage;
       }
@@ -7868,6 +7921,9 @@ declare namespace StripeConstructor {
           export type RequestedAddressType = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CustomerBalance.BankTransfer.RequestedAddressType;
           export type Type = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.CustomerBalance.BankTransfer.Type;
         }
+      }
+      export namespace Getflex {
+        export type SetupFutureUsage = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.Getflex.SetupFutureUsage;
       }
       export namespace GiftCard {
         export type RequestPartialAuthorization = Stripe_.PaymentIntentConfirmParams.PaymentMethodOptions.GiftCard.RequestPartialAuthorization;
@@ -8566,11 +8622,13 @@ declare namespace StripeConstructor {
       export type Boleto = Stripe_.PaymentIntent.PaymentMethodOptions.Boleto;
       export type Card = Stripe_.PaymentIntent.PaymentMethodOptions.Card;
       export type CardPresent = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent;
+      export type Carecredit = Stripe_.PaymentIntent.PaymentMethodOptions.Carecredit;
       export type Cashapp = Stripe_.PaymentIntent.PaymentMethodOptions.Cashapp;
       export type Crypto = Stripe_.PaymentIntent.PaymentMethodOptions.Crypto;
       export type CustomerBalance = Stripe_.PaymentIntent.PaymentMethodOptions.CustomerBalance;
       export type Eps = Stripe_.PaymentIntent.PaymentMethodOptions.Eps;
       export type Fpx = Stripe_.PaymentIntent.PaymentMethodOptions.Fpx;
+      export type Getflex = Stripe_.PaymentIntent.PaymentMethodOptions.Getflex;
       export type GiftCard = Stripe_.PaymentIntent.PaymentMethodOptions.GiftCard;
       export type Giropay = Stripe_.PaymentIntent.PaymentMethodOptions.Giropay;
       export type Gopay = Stripe_.PaymentIntent.PaymentMethodOptions.Gopay;
@@ -8606,6 +8664,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.PaymentIntent.PaymentMethodOptions.Scalapay;
       export type SepaDebit = Stripe_.PaymentIntent.PaymentMethodOptions.SepaDebit;
       export type Sequra = Stripe_.PaymentIntent.PaymentMethodOptions.Sequra;
+      export type Sezzle = Stripe_.PaymentIntent.PaymentMethodOptions.Sezzle;
       export type Shopeepay = Stripe_.PaymentIntent.PaymentMethodOptions.Shopeepay;
       export type Sofort = Stripe_.PaymentIntent.PaymentMethodOptions.Sofort;
       export type StripeBalance = Stripe_.PaymentIntent.PaymentMethodOptions.StripeBalance;
@@ -8719,6 +8778,9 @@ declare namespace StripeConstructor {
           export type RequestedPriority = Stripe_.PaymentIntent.PaymentMethodOptions.CardPresent.Routing.RequestedPriority;
         }
       }
+      export namespace Carecredit {
+        export type SetupFutureUsage = Stripe_.PaymentIntent.PaymentMethodOptions.Carecredit.SetupFutureUsage;
+      }
       export namespace Cashapp {
         export type SetupFutureUsage = Stripe_.PaymentIntent.PaymentMethodOptions.Cashapp.SetupFutureUsage;
       }
@@ -8747,6 +8809,9 @@ declare namespace StripeConstructor {
             export type Country = Stripe_.PaymentIntent.PaymentMethodOptions.CustomerBalance.BankTransfer.EuBankTransfer.Country;
           }
         }
+      }
+      export namespace Getflex {
+        export type SetupFutureUsage = Stripe_.PaymentIntent.PaymentMethodOptions.Getflex.SetupFutureUsage;
       }
       export namespace GiftCard {
         export type RequestPartialAuthorization = Stripe_.PaymentIntent.PaymentMethodOptions.GiftCard.RequestPartialAuthorization;
@@ -9316,12 +9381,14 @@ declare namespace StripeConstructor {
     export type Blik = Stripe_.PaymentMethodCreateParams.Blik;
     export type Boleto = Stripe_.PaymentMethodCreateParams.Boleto;
     export type Card = Stripe_.PaymentMethodCreateParams.Card;
+    export type Carecredit = Stripe_.PaymentMethodCreateParams.Carecredit;
     export type Cashapp = Stripe_.PaymentMethodCreateParams.Cashapp;
     export type Crypto = Stripe_.PaymentMethodCreateParams.Crypto;
     export type Custom = Stripe_.PaymentMethodCreateParams.Custom;
     export type CustomerBalance = Stripe_.PaymentMethodCreateParams.CustomerBalance;
     export type Eps = Stripe_.PaymentMethodCreateParams.Eps;
     export type Fpx = Stripe_.PaymentMethodCreateParams.Fpx;
+    export type Getflex = Stripe_.PaymentMethodCreateParams.Getflex;
     export type GiftCard = Stripe_.PaymentMethodCreateParams.GiftCard;
     export type Giropay = Stripe_.PaymentMethodCreateParams.Giropay;
     export type Gopay = Stripe_.PaymentMethodCreateParams.Gopay;
@@ -9358,6 +9425,7 @@ declare namespace StripeConstructor {
     export type Scalapay = Stripe_.PaymentMethodCreateParams.Scalapay;
     export type SepaDebit = Stripe_.PaymentMethodCreateParams.SepaDebit;
     export type Sequra = Stripe_.PaymentMethodCreateParams.Sequra;
+    export type Sezzle = Stripe_.PaymentMethodCreateParams.Sezzle;
     export type Shopeepay = Stripe_.PaymentMethodCreateParams.Shopeepay;
     export type Sofort = Stripe_.PaymentMethodCreateParams.Sofort;
     export type StripeBalance = Stripe_.PaymentMethodCreateParams.StripeBalance;
@@ -9455,12 +9523,14 @@ declare namespace StripeConstructor {
     export type Boleto = Stripe_.PaymentMethod.Boleto;
     export type Card = Stripe_.PaymentMethod.Card;
     export type CardPresent = Stripe_.PaymentMethod.CardPresent;
+    export type Carecredit = Stripe_.PaymentMethod.Carecredit;
     export type Cashapp = Stripe_.PaymentMethod.Cashapp;
     export type Crypto = Stripe_.PaymentMethod.Crypto;
     export type Custom = Stripe_.PaymentMethod.Custom;
     export type CustomerBalance = Stripe_.PaymentMethod.CustomerBalance;
     export type Eps = Stripe_.PaymentMethod.Eps;
     export type Fpx = Stripe_.PaymentMethod.Fpx;
+    export type Getflex = Stripe_.PaymentMethod.Getflex;
     export type GiftCard = Stripe_.PaymentMethod.GiftCard;
     export type Giropay = Stripe_.PaymentMethod.Giropay;
     export type Gopay = Stripe_.PaymentMethod.Gopay;
@@ -9498,6 +9568,7 @@ declare namespace StripeConstructor {
     export type Scalapay = Stripe_.PaymentMethod.Scalapay;
     export type SepaDebit = Stripe_.PaymentMethod.SepaDebit;
     export type Sequra = Stripe_.PaymentMethod.Sequra;
+    export type Sezzle = Stripe_.PaymentMethod.Sezzle;
     export type Shopeepay = Stripe_.PaymentMethod.Shopeepay;
     export type Sofort = Stripe_.PaymentMethod.Sofort;
     export type StripeBalance = Stripe_.PaymentMethod.StripeBalance;
@@ -11381,12 +11452,14 @@ declare namespace StripeConstructor {
       export type Boleto = Stripe_.PaymentRecord.PaymentMethodDetails.Boleto;
       export type Card = Stripe_.PaymentRecord.PaymentMethodDetails.Card;
       export type CardPresent = Stripe_.PaymentRecord.PaymentMethodDetails.CardPresent;
+      export type Carecredit = Stripe_.PaymentRecord.PaymentMethodDetails.Carecredit;
       export type Cashapp = Stripe_.PaymentRecord.PaymentMethodDetails.Cashapp;
       export type Crypto = Stripe_.PaymentRecord.PaymentMethodDetails.Crypto;
       export type Custom = Stripe_.PaymentRecord.PaymentMethodDetails.Custom;
       export type CustomerBalance = Stripe_.PaymentRecord.PaymentMethodDetails.CustomerBalance;
       export type Eps = Stripe_.PaymentRecord.PaymentMethodDetails.Eps;
       export type Fpx = Stripe_.PaymentRecord.PaymentMethodDetails.Fpx;
+      export type Getflex = Stripe_.PaymentRecord.PaymentMethodDetails.Getflex;
       export type GiftCard = Stripe_.PaymentRecord.PaymentMethodDetails.GiftCard;
       export type Giropay = Stripe_.PaymentRecord.PaymentMethodDetails.Giropay;
       export type Gopay = Stripe_.PaymentRecord.PaymentMethodDetails.Gopay;
@@ -11424,6 +11497,7 @@ declare namespace StripeConstructor {
       export type SepaCreditTransfer = Stripe_.PaymentRecord.PaymentMethodDetails.SepaCreditTransfer;
       export type SepaDebit = Stripe_.PaymentRecord.PaymentMethodDetails.SepaDebit;
       export type Sequra = Stripe_.PaymentRecord.PaymentMethodDetails.Sequra;
+      export type Sezzle = Stripe_.PaymentRecord.PaymentMethodDetails.Sezzle;
       export type Shopeepay = Stripe_.PaymentRecord.PaymentMethodDetails.Shopeepay;
       export type Sofort = Stripe_.PaymentRecord.PaymentMethodDetails.Sofort;
       export type StripeAccount = Stripe_.PaymentRecord.PaymentMethodDetails.StripeAccount;
@@ -12684,11 +12758,13 @@ declare namespace StripeConstructor {
       export type Bizum = Stripe_.SetupIntentCreateParams.PaymentMethodData.Bizum;
       export type Blik = Stripe_.SetupIntentCreateParams.PaymentMethodData.Blik;
       export type Boleto = Stripe_.SetupIntentCreateParams.PaymentMethodData.Boleto;
+      export type Carecredit = Stripe_.SetupIntentCreateParams.PaymentMethodData.Carecredit;
       export type Cashapp = Stripe_.SetupIntentCreateParams.PaymentMethodData.Cashapp;
       export type Crypto = Stripe_.SetupIntentCreateParams.PaymentMethodData.Crypto;
       export type CustomerBalance = Stripe_.SetupIntentCreateParams.PaymentMethodData.CustomerBalance;
       export type Eps = Stripe_.SetupIntentCreateParams.PaymentMethodData.Eps;
       export type Fpx = Stripe_.SetupIntentCreateParams.PaymentMethodData.Fpx;
+      export type Getflex = Stripe_.SetupIntentCreateParams.PaymentMethodData.Getflex;
       export type GiftCard = Stripe_.SetupIntentCreateParams.PaymentMethodData.GiftCard;
       export type Giropay = Stripe_.SetupIntentCreateParams.PaymentMethodData.Giropay;
       export type Gopay = Stripe_.SetupIntentCreateParams.PaymentMethodData.Gopay;
@@ -12725,6 +12801,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.SetupIntentCreateParams.PaymentMethodData.Scalapay;
       export type SepaDebit = Stripe_.SetupIntentCreateParams.PaymentMethodData.SepaDebit;
       export type Sequra = Stripe_.SetupIntentCreateParams.PaymentMethodData.Sequra;
+      export type Sezzle = Stripe_.SetupIntentCreateParams.PaymentMethodData.Sezzle;
       export type Shopeepay = Stripe_.SetupIntentCreateParams.PaymentMethodData.Shopeepay;
       export type Sofort = Stripe_.SetupIntentCreateParams.PaymentMethodData.Sofort;
       export type StripeBalance = Stripe_.SetupIntentCreateParams.PaymentMethodData.StripeBalance;
@@ -12930,11 +13007,13 @@ declare namespace StripeConstructor {
       export type Bizum = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Bizum;
       export type Blik = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Blik;
       export type Boleto = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Boleto;
+      export type Carecredit = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Carecredit;
       export type Cashapp = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Cashapp;
       export type Crypto = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Crypto;
       export type CustomerBalance = Stripe_.SetupIntentUpdateParams.PaymentMethodData.CustomerBalance;
       export type Eps = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Eps;
       export type Fpx = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Fpx;
+      export type Getflex = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Getflex;
       export type GiftCard = Stripe_.SetupIntentUpdateParams.PaymentMethodData.GiftCard;
       export type Giropay = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Giropay;
       export type Gopay = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Gopay;
@@ -12971,6 +13050,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Scalapay;
       export type SepaDebit = Stripe_.SetupIntentUpdateParams.PaymentMethodData.SepaDebit;
       export type Sequra = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Sequra;
+      export type Sezzle = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Sezzle;
       export type Shopeepay = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Shopeepay;
       export type Sofort = Stripe_.SetupIntentUpdateParams.PaymentMethodData.Sofort;
       export type StripeBalance = Stripe_.SetupIntentUpdateParams.PaymentMethodData.StripeBalance;
@@ -13186,11 +13266,13 @@ declare namespace StripeConstructor {
       export type Bizum = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Bizum;
       export type Blik = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Blik;
       export type Boleto = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Boleto;
+      export type Carecredit = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Carecredit;
       export type Cashapp = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Cashapp;
       export type Crypto = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Crypto;
       export type CustomerBalance = Stripe_.SetupIntentConfirmParams.PaymentMethodData.CustomerBalance;
       export type Eps = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Eps;
       export type Fpx = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Fpx;
+      export type Getflex = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Getflex;
       export type GiftCard = Stripe_.SetupIntentConfirmParams.PaymentMethodData.GiftCard;
       export type Giropay = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Giropay;
       export type Gopay = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Gopay;
@@ -13227,6 +13309,7 @@ declare namespace StripeConstructor {
       export type Scalapay = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Scalapay;
       export type SepaDebit = Stripe_.SetupIntentConfirmParams.PaymentMethodData.SepaDebit;
       export type Sequra = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Sequra;
+      export type Sezzle = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Sezzle;
       export type Shopeepay = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Shopeepay;
       export type Sofort = Stripe_.SetupIntentConfirmParams.PaymentMethodData.Sofort;
       export type StripeBalance = Stripe_.SetupIntentConfirmParams.PaymentMethodData.StripeBalance;
@@ -17155,6 +17238,7 @@ declare namespace StripeConstructor {
         }
         export namespace Card {
           export type Installments = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Card.Installments;
+          export type MandateOptions = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Card.MandateOptions;
           export type RequestDecrementalAuthorization = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Card.RequestDecrementalAuthorization;
           export type RequestExtendedAuthorization = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Card.RequestExtendedAuthorization;
           export type RequestIncrementalAuthorization = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Card.RequestIncrementalAuthorization;
@@ -17163,6 +17247,10 @@ declare namespace StripeConstructor {
           export type RequestThreeDSecure = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Card.RequestThreeDSecure;
           export type Restrictions = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Card.Restrictions;
           export type SetupFutureUsage = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Card.SetupFutureUsage;
+          export namespace MandateOptions {
+            export type AmountType = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Card.MandateOptions.AmountType;
+            export type Interval = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Card.MandateOptions.Interval;
+          }
           export namespace Restrictions {
             export type BrandsBlocked = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Card.Restrictions.BrandsBlocked;
             export type FundingTypesBlocked = Stripe_.Checkout.SessionCreateParams.PaymentMethodOptions.Card.Restrictions.FundingTypesBlocked;
@@ -28378,9 +28466,7 @@ declare namespace StripeConstructor {
         export type GbBankAccountCreateParams = Stripe_.V2.Core.Vault.GbBankAccountCreateParams;
         export type GbBankAccountRetrieveParams = Stripe_.V2.Core.Vault.GbBankAccountRetrieveParams;
         export type GbBankAccountListParams = Stripe_.V2.Core.Vault.GbBankAccountListParams;
-        export type GbBankAccountAcknowledgeConfirmationOfPayeeParams = Stripe_.V2.Core.Vault.GbBankAccountAcknowledgeConfirmationOfPayeeParams;
         export type GbBankAccountArchiveParams = Stripe_.V2.Core.Vault.GbBankAccountArchiveParams;
-        export type GbBankAccountInitiateConfirmationOfPayeeParams = Stripe_.V2.Core.Vault.GbBankAccountInitiateConfirmationOfPayeeParams;
         export type GbBankAccountResource = Stripe_.V2.Core.Vault.GbBankAccountResource;
         export type NetworkToken = Stripe_.V2.Core.Vault.NetworkToken;
         export type NetworkTokenCreateParams = Stripe_.V2.Core.Vault.NetworkTokenCreateParams;
@@ -29037,9 +29123,12 @@ declare namespace StripeConstructor {
         export type Type = Stripe_.V2.MoneyManagement.FinancialAddress.Type;
         export namespace BankAccount {
           export type Aba = Stripe_.V2.MoneyManagement.FinancialAddress.BankAccount.Aba;
+          export type BreB = Stripe_.V2.MoneyManagement.FinancialAddress.BankAccount.BreB;
           export type Clabe = Stripe_.V2.MoneyManagement.FinancialAddress.BankAccount.Clabe;
           export type Cpa = Stripe_.V2.MoneyManagement.FinancialAddress.BankAccount.Cpa;
           export type Iban = Stripe_.V2.MoneyManagement.FinancialAddress.BankAccount.Iban;
+          export type Nip = Stripe_.V2.MoneyManagement.FinancialAddress.BankAccount.Nip;
+          export type Pix = Stripe_.V2.MoneyManagement.FinancialAddress.BankAccount.Pix;
           export type SortCode = Stripe_.V2.MoneyManagement.FinancialAddress.BankAccount.SortCode;
           export type Type = Stripe_.V2.MoneyManagement.FinancialAddress.BankAccount.Type;
         }
@@ -29567,13 +29656,19 @@ declare namespace StripeConstructor {
           }
           export namespace OriginatingBankAccount {
             export type Aba = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.Aba;
+            export type BreB = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.BreB;
             export type Clabe = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.Clabe;
             export type Cpa = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.Cpa;
             export type Iban = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.Iban;
+            export type Nip = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.Nip;
+            export type Pix = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.Pix;
             export type SortCode = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.SortCode;
             export type Type = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.Type;
             export namespace Aba {
               export type Network = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.Aba.Network;
+            }
+            export namespace BreB {
+              export type Network = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.BreB.Network;
             }
             export namespace Clabe {
               export type Network = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.Clabe.Network;
@@ -29583,6 +29678,12 @@ declare namespace StripeConstructor {
             }
             export namespace Iban {
               export type Network = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.Iban.Network;
+            }
+            export namespace Nip {
+              export type Network = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.Nip.Network;
+            }
+            export namespace Pix {
+              export type Network = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.Pix.Network;
             }
             export namespace SortCode {
               export type Network = Stripe_.V2.MoneyManagement.ReceivedCredit.BankTransfer.OriginatingBankAccount.SortCode.Network;
@@ -29790,7 +29891,6 @@ declare namespace StripeConstructor {
       export type OffSessionPaymentRetrieveParams = Stripe_.V2.Payments.OffSessionPaymentRetrieveParams;
       export type OffSessionPaymentListParams = Stripe_.V2.Payments.OffSessionPaymentListParams;
       export type OffSessionPaymentCancelParams = Stripe_.V2.Payments.OffSessionPaymentCancelParams;
-      export type OffSessionPaymentCaptureParams = Stripe_.V2.Payments.OffSessionPaymentCaptureParams;
       export type OffSessionPaymentPauseParams = Stripe_.V2.Payments.OffSessionPaymentPauseParams;
       export type OffSessionPaymentResumeParams = Stripe_.V2.Payments.OffSessionPaymentResumeParams;
       export type OffSessionPaymentResource = Stripe_.V2.Payments.OffSessionPaymentResource;
@@ -29806,7 +29906,6 @@ declare namespace StripeConstructor {
       export namespace OffSessionPaymentCreateParams {
         export type Cadence = Stripe_.V2.Payments.OffSessionPaymentCreateParams.Cadence;
         export type AmountDetails = Stripe_.V2.Payments.OffSessionPaymentCreateParams.AmountDetails;
-        export type Capture = Stripe_.V2.Payments.OffSessionPaymentCreateParams.Capture;
         export type PaymentDetails = Stripe_.V2.Payments.OffSessionPaymentCreateParams.PaymentDetails;
         export type PaymentMethodData = Stripe_.V2.Payments.OffSessionPaymentCreateParams.PaymentMethodData;
         export type PaymentMethodOptions = Stripe_.V2.Payments.OffSessionPaymentCreateParams.PaymentMethodOptions;
@@ -29820,9 +29919,6 @@ declare namespace StripeConstructor {
           export namespace LineItem {
             export type Tax = Stripe_.V2.Payments.OffSessionPaymentCreateParams.AmountDetails.LineItem.Tax;
           }
-        }
-        export namespace Capture {
-          export type CaptureMethod = Stripe_.V2.Payments.OffSessionPaymentCreateParams.Capture.CaptureMethod;
         }
         export namespace PaymentMethodData {
           export type BillingDetails = Stripe_.V2.Payments.OffSessionPaymentCreateParams.PaymentMethodData.BillingDetails;
@@ -29842,7 +29938,6 @@ declare namespace StripeConstructor {
       export namespace OffSessionPayment {
         export type AmountDetails = Stripe_.V2.Payments.OffSessionPayment.AmountDetails;
         export type Cadence = Stripe_.V2.Payments.OffSessionPayment.Cadence;
-        export type Capture = Stripe_.V2.Payments.OffSessionPayment.Capture;
         export type FailureReason = Stripe_.V2.Payments.OffSessionPayment.FailureReason;
         export type LatestPaymentAttemptRecordDetails = Stripe_.V2.Payments.OffSessionPayment.LatestPaymentAttemptRecordDetails;
         export type PaymentDetails = Stripe_.V2.Payments.OffSessionPayment.PaymentDetails;
@@ -29861,9 +29956,6 @@ declare namespace StripeConstructor {
           export namespace LineItem {
             export type Tax = Stripe_.V2.Payments.OffSessionPayment.AmountDetails.LineItem.Tax;
           }
-        }
-        export namespace Capture {
-          export type CaptureMethod = Stripe_.V2.Payments.OffSessionPayment.Capture.CaptureMethod;
         }
         export namespace LatestPaymentAttemptRecordDetails {
           export type FailureDetails = Stripe_.V2.Payments.OffSessionPayment.LatestPaymentAttemptRecordDetails.FailureDetails;
@@ -31354,8 +31446,6 @@ declare namespace StripeConstructor {
     export type V2PaymentsOffSessionPaymentFailedEventNotification = Stripe_.V2.Core.Events.V2PaymentsOffSessionPaymentFailedEventNotification;
     export type V2PaymentsOffSessionPaymentPausedEvent = Stripe_.V2.Core.Events.V2PaymentsOffSessionPaymentPausedEvent;
     export type V2PaymentsOffSessionPaymentPausedEventNotification = Stripe_.V2.Core.Events.V2PaymentsOffSessionPaymentPausedEventNotification;
-    export type V2PaymentsOffSessionPaymentRequiresCaptureEvent = Stripe_.V2.Core.Events.V2PaymentsOffSessionPaymentRequiresCaptureEvent;
-    export type V2PaymentsOffSessionPaymentRequiresCaptureEventNotification = Stripe_.V2.Core.Events.V2PaymentsOffSessionPaymentRequiresCaptureEventNotification;
     export type V2PaymentsOffSessionPaymentResumedEvent = Stripe_.V2.Core.Events.V2PaymentsOffSessionPaymentResumedEvent;
     export type V2PaymentsOffSessionPaymentResumedEventNotification = Stripe_.V2.Core.Events.V2PaymentsOffSessionPaymentResumedEventNotification;
     export type V2PaymentsOffSessionPaymentSucceededEvent = Stripe_.V2.Core.Events.V2PaymentsOffSessionPaymentSucceededEvent;
@@ -31930,6 +32020,13 @@ declare namespace StripeConstructor {
   export type TestHelpersTestClockDeletedEvent = Stripe_.TestHelpersTestClockDeletedEvent;
   export type TestHelpersTestClockInternalFailureEvent = Stripe_.TestHelpersTestClockInternalFailureEvent;
   export type TestHelpersTestClockReadyEvent = Stripe_.TestHelpersTestClockReadyEvent;
+  export type ThreeDSecureAuthenticationCanceledEvent = Stripe_.ThreeDSecureAuthenticationCanceledEvent;
+  export type ThreeDSecureAuthenticationChallengeStartedEvent = Stripe_.ThreeDSecureAuthenticationChallengeStartedEvent;
+  export type ThreeDSecureAuthenticationErroredEvent = Stripe_.ThreeDSecureAuthenticationErroredEvent;
+  export type ThreeDSecureAuthenticationFailedEvent = Stripe_.ThreeDSecureAuthenticationFailedEvent;
+  export type ThreeDSecureAuthenticationRequiresChallengeEvent = Stripe_.ThreeDSecureAuthenticationRequiresChallengeEvent;
+  export type ThreeDSecureAuthenticationRequiresSubmissionEvent = Stripe_.ThreeDSecureAuthenticationRequiresSubmissionEvent;
+  export type ThreeDSecureAuthenticationSucceededEvent = Stripe_.ThreeDSecureAuthenticationSucceededEvent;
   export type TopupCanceledEvent = Stripe_.TopupCanceledEvent;
   export type TopupCreatedEvent = Stripe_.TopupCreatedEvent;
   export type TopupFailedEvent = Stripe_.TopupFailedEvent;

@@ -144,6 +144,11 @@ export namespace TestHelpers {
       boleto?: PaymentMethodData.Boleto;
 
       /**
+       * If this is a `carecredit` PaymentMethod, this hash contains details about the CareCredit payment method.
+       */
+      carecredit?: PaymentMethodData.Carecredit;
+
+      /**
        * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
        */
       cashapp?: PaymentMethodData.Cashapp;
@@ -167,6 +172,11 @@ export namespace TestHelpers {
        * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
        */
       fpx?: PaymentMethodData.Fpx;
+
+      /**
+       * If this is a `getflex` PaymentMethod, this hash contains details about the GetFlex payment method.
+       */
+      getflex?: PaymentMethodData.Getflex;
 
       /**
        * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
@@ -352,6 +362,11 @@ export namespace TestHelpers {
        * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
        */
       sequra?: PaymentMethodData.Sequra;
+
+      /**
+       * If this is a `sezzle` PaymentMethod, this hash contains details about the Sezzle payment method.
+       */
+      sezzle?: PaymentMethodData.Sezzle;
 
       /**
        * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
@@ -550,6 +565,8 @@ export namespace TestHelpers {
         tax_id: string;
       }
 
+      export interface Carecredit {}
+
       export interface Cashapp {}
 
       export interface Crypto {}
@@ -574,6 +591,8 @@ export namespace TestHelpers {
          */
         bank: Fpx.Bank;
       }
+
+      export interface Getflex {}
 
       export interface GiftCard {
         /**
@@ -734,6 +753,8 @@ export namespace TestHelpers {
 
       export interface Sequra {}
 
+      export interface Sezzle {}
+
       export interface Shopeepay {}
 
       export interface Sofort {
@@ -772,11 +793,13 @@ export namespace TestHelpers {
         | 'bizum'
         | 'blik'
         | 'boleto'
+        | 'carecredit'
         | 'cashapp'
         | 'crypto'
         | 'customer_balance'
         | 'eps'
         | 'fpx'
+        | 'getflex'
         | 'gift_card'
         | 'giropay'
         | 'gopay'
@@ -811,6 +834,7 @@ export namespace TestHelpers {
         | 'scalapay'
         | 'sepa_debit'
         | 'sequra'
+        | 'sezzle'
         | 'shopeepay'
         | 'sofort'
         | 'stripe_balance'

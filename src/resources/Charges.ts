@@ -500,6 +500,8 @@ export namespace Charge {
 
     card_present?: PaymentMethodDetails.CardPresent;
 
+    carecredit?: PaymentMethodDetails.Carecredit;
+
     cashapp?: PaymentMethodDetails.Cashapp;
 
     crypto?: PaymentMethodDetails.Crypto;
@@ -509,6 +511,8 @@ export namespace Charge {
     eps?: PaymentMethodDetails.Eps;
 
     fpx?: PaymentMethodDetails.Fpx;
+
+    getflex?: PaymentMethodDetails.Getflex;
 
     gift_card?: PaymentMethodDetails.GiftCard;
 
@@ -581,6 +585,8 @@ export namespace Charge {
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
     sequra?: PaymentMethodDetails.Sequra;
+
+    sezzle?: PaymentMethodDetails.Sezzle;
 
     /**
      * ID of the shared payment granted token used to make this payment.
@@ -1326,6 +1332,8 @@ export namespace Charge {
       wallet?: CardPresent.Wallet;
     }
 
+    export interface Carecredit {}
+
     export interface Cashapp {
       /**
        * A unique and immutable identifier assigned by Cash App to every buyer.
@@ -1407,6 +1415,8 @@ export namespace Charge {
        */
       transaction_id: string | null;
     }
+
+    export interface Getflex {}
 
     export interface GiftCard {
       balance: GiftCard.Balance;
@@ -2081,6 +2091,8 @@ export namespace Charge {
        */
       transaction_id: string | null;
     }
+
+    export interface Sezzle {}
 
     export interface Shopeepay {}
 

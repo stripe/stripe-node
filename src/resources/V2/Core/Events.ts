@@ -772,7 +772,6 @@ export type Event =
   | V2PaymentsOffSessionPaymentCreatedEvent
   | V2PaymentsOffSessionPaymentFailedEvent
   | V2PaymentsOffSessionPaymentPausedEvent
-  | V2PaymentsOffSessionPaymentRequiresCaptureEvent
   | V2PaymentsOffSessionPaymentResumedEvent
   | V2PaymentsOffSessionPaymentSucceededEvent
   | V2PaymentsSettlementAllocationIntentCanceledEvent
@@ -1249,7 +1248,6 @@ export type EventNotification =
   | V2PaymentsOffSessionPaymentCreatedEventNotification
   | V2PaymentsOffSessionPaymentFailedEventNotification
   | V2PaymentsOffSessionPaymentPausedEventNotification
-  | V2PaymentsOffSessionPaymentRequiresCaptureEventNotification
   | V2PaymentsOffSessionPaymentResumedEventNotification
   | V2PaymentsOffSessionPaymentSucceededEventNotification
   | V2PaymentsSettlementAllocationIntentCanceledEventNotification
@@ -13448,27 +13446,6 @@ export interface V2PaymentsOffSessionPaymentPausedEventNotification
 }
 
 /**
- * Deprecated. Sent when the off-session payment becomes available for capture.
- */
-export interface V2PaymentsOffSessionPaymentRequiresCaptureEvent
-  extends EventBase {
-  type: 'v2.payments.off_session_payment.requires_capture';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
-}
-export interface V2PaymentsOffSessionPaymentRequiresCaptureEventNotification
-  extends EventNotificationBase {
-  type: 'v2.payments.off_session_payment.requires_capture';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
-  fetchEvent(): Promise<V2PaymentsOffSessionPaymentRequiresCaptureEvent>;
-}
-
-/**
  * Sent immediately following a user's call to the Off-Session Payments resume endpoint.
  */
 export interface V2PaymentsOffSessionPaymentResumedEvent extends EventBase {
@@ -14482,7 +14459,6 @@ export declare namespace Events {
     V2PaymentsOffSessionPaymentCreatedEvent,
     V2PaymentsOffSessionPaymentFailedEvent,
     V2PaymentsOffSessionPaymentPausedEvent,
-    V2PaymentsOffSessionPaymentRequiresCaptureEvent,
     V2PaymentsOffSessionPaymentResumedEvent,
     V2PaymentsOffSessionPaymentSucceededEvent,
     V2PaymentsSettlementAllocationIntentCanceledEvent,
@@ -14957,7 +14933,6 @@ export declare namespace Events {
     V2PaymentsOffSessionPaymentCreatedEventNotification,
     V2PaymentsOffSessionPaymentFailedEventNotification,
     V2PaymentsOffSessionPaymentPausedEventNotification,
-    V2PaymentsOffSessionPaymentRequiresCaptureEventNotification,
     V2PaymentsOffSessionPaymentResumedEventNotification,
     V2PaymentsOffSessionPaymentSucceededEventNotification,
     V2PaymentsSettlementAllocationIntentCanceledEventNotification,

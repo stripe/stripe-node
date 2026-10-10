@@ -37,9 +37,7 @@ export declare namespace Vault {
   export import GbBankAccountListParams = V2Namespace0.Core.Vault.GbBankAccountListParams;
   export import GbBankAccountCreateParams = V2Namespace0.Core.Vault.GbBankAccountCreateParams;
   export import GbBankAccountRetrieveParams = V2Namespace0.Core.Vault.GbBankAccountRetrieveParams;
-  export import GbBankAccountAcknowledgeConfirmationOfPayeeParams = V2Namespace0.Core.Vault.GbBankAccountAcknowledgeConfirmationOfPayeeParams;
   export import GbBankAccountArchiveParams = V2Namespace0.Core.Vault.GbBankAccountArchiveParams;
-  export import GbBankAccountInitiateConfirmationOfPayeeParams = V2Namespace0.Core.Vault.GbBankAccountInitiateConfirmationOfPayeeParams;
   export {GbBankAccount, GbBankAccountResource};
   export import NetworkTokenCreateParams = V2Namespace1.Core.Vault.NetworkTokenCreateParams;
   export import NetworkTokenCreateFromCredentialParams = V2Namespace1.Core.Vault.NetworkTokenCreateFromCredentialParams;

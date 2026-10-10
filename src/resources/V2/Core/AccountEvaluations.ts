@@ -59,6 +59,11 @@ export interface AccountEvaluation {
 export namespace AccountEvaluation {
   export interface AccountData {
     /**
+     * The account's contact email.
+     */
+    contact_email?: string;
+
+    /**
      * Default account settings.
      */
     defaults?: AccountData.Defaults;
@@ -146,6 +151,11 @@ export namespace V2 {
         | OtherString;
 
       export interface AccountData {
+        /**
+         * The account's contact email.
+         */
+        contact_email?: string;
+
         /**
          * Default account settings.
          */

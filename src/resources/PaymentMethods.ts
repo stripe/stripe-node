@@ -201,6 +201,8 @@ export interface PaymentMethod {
 
   card_present?: PaymentMethod.CardPresent;
 
+  carecredit?: PaymentMethod.Carecredit;
+
   cashapp?: PaymentMethod.Cashapp;
 
   /**
@@ -224,6 +226,8 @@ export interface PaymentMethod {
   eps?: PaymentMethod.Eps;
 
   fpx?: PaymentMethod.Fpx;
+
+  getflex?: PaymentMethod.Getflex;
 
   gift_card?: PaymentMethod.GiftCard;
 
@@ -319,6 +323,8 @@ export interface PaymentMethod {
   sepa_debit?: PaymentMethod.SepaDebit;
 
   sequra?: PaymentMethod.Sequra;
+
+  sezzle?: PaymentMethod.Sezzle;
 
   /**
    * ID of the shared payment granted token used in the creation of this PaymentMethod.
@@ -666,6 +672,8 @@ export namespace PaymentMethod {
     wallet?: CardPresent.Wallet;
   }
 
+  export interface Carecredit {}
+
   export interface Cashapp {
     /**
      * A unique and immutable identifier assigned by Cash App to every buyer.
@@ -727,6 +735,8 @@ export namespace PaymentMethod {
      */
     bank: Fpx.Bank;
   }
+
+  export interface Getflex {}
 
   export interface GiftCard {
     /**
@@ -1077,6 +1087,8 @@ export namespace PaymentMethod {
 
   export interface Sequra {}
 
+  export interface Sezzle {}
+
   export interface Shopeepay {}
 
   export interface Sofort {
@@ -1117,12 +1129,14 @@ export namespace PaymentMethod {
     | 'boleto'
     | 'card'
     | 'card_present'
+    | 'carecredit'
     | 'cashapp'
     | 'crypto'
     | 'custom'
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -1158,6 +1172,7 @@ export namespace PaymentMethod {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -2160,6 +2175,11 @@ export interface PaymentMethodCreateParams {
   card?: PaymentMethodCreateParams.Card;
 
   /**
+   * If this is a `carecredit` PaymentMethod, this hash contains details about the CareCredit payment method.
+   */
+  carecredit?: PaymentMethodCreateParams.Carecredit;
+
+  /**
    * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
    */
   cashapp?: PaymentMethodCreateParams.Cashapp;
@@ -2198,6 +2218,11 @@ export interface PaymentMethodCreateParams {
    * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
    */
   fpx?: PaymentMethodCreateParams.Fpx;
+
+  /**
+   * If this is a `getflex` PaymentMethod, this hash contains details about the GetFlex payment method.
+   */
+  getflex?: PaymentMethodCreateParams.Getflex;
 
   /**
    * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
@@ -2388,6 +2413,11 @@ export interface PaymentMethodCreateParams {
    * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
    */
   sequra?: PaymentMethodCreateParams.Sequra;
+
+  /**
+   * If this is a `sezzle` PaymentMethod, this hash contains details about the Sezzle payment method.
+   */
+  sezzle?: PaymentMethodCreateParams.Sezzle;
 
   /**
    * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
@@ -2586,6 +2616,8 @@ export namespace PaymentMethodCreateParams {
     token?: string;
   }
 
+  export interface Carecredit {}
+
   export interface Cashapp {}
 
   export interface Crypto {}
@@ -2617,6 +2649,8 @@ export namespace PaymentMethodCreateParams {
      */
     bank: Fpx.Bank;
   }
+
+  export interface Getflex {}
 
   export interface GiftCard {
     /**
@@ -2777,6 +2811,8 @@ export namespace PaymentMethodCreateParams {
 
   export interface Sequra {}
 
+  export interface Sezzle {}
+
   export interface Shopeepay {}
 
   export interface Sofort {
@@ -2816,12 +2852,14 @@ export namespace PaymentMethodCreateParams {
     | 'blik'
     | 'boleto'
     | 'card'
+    | 'carecredit'
     | 'cashapp'
     | 'crypto'
     | 'custom'
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -2856,6 +2894,7 @@ export namespace PaymentMethodCreateParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -3320,12 +3359,14 @@ export namespace PaymentMethodListParams {
     | 'blik'
     | 'boleto'
     | 'card'
+    | 'carecredit'
     | 'cashapp'
     | 'crypto'
     | 'custom'
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -3360,6 +3401,7 @@ export namespace PaymentMethodListParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'

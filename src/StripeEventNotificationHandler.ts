@@ -475,7 +475,6 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.payments.off_session_payment.created',
   'v2.payments.off_session_payment.failed',
   'v2.payments.off_session_payment.paused',
-  'v2.payments.off_session_payment.requires_capture',
   'v2.payments.off_session_payment.resumed',
   'v2.payments.off_session_payment.succeeded',
   'v2.payments.settlement_allocation_intent.canceled',
