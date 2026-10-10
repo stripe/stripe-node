@@ -111,6 +111,11 @@ export namespace FinancialAddress {
      */
     aba?: BankAccount.Aba;
 
+    /**
+     * BRE-B bank account details (Colombia).
+     */
+    bre_b?: BankAccount.BreB;
+
     clabe?: BankAccount.Clabe;
 
     /**
@@ -129,6 +134,16 @@ export namespace FinancialAddress {
      * IBAN bank account details.
      */
     iban?: BankAccount.Iban;
+
+    /**
+     * NIP bank account details (Nigeria).
+     */
+    nip?: BankAccount.Nip;
+
+    /**
+     * Pix bank account details (Brazil).
+     */
+    pix?: BankAccount.Pix;
 
     /**
      * Sort code bank account details (UK).
@@ -198,6 +213,18 @@ export namespace FinancialAddress {
       routing_number: string;
     }
 
+    export interface BreB {
+      /**
+       * The name of the account holder.
+       */
+      account_holder_name: string;
+
+      /**
+       * The BRE-B payment key.
+       */
+      bre_b_key: string;
+    }
+
     export interface Clabe {
       account_holder_name: string;
 
@@ -250,6 +277,40 @@ export namespace FinancialAddress {
        * The last four digits of the IBAN.
        */
       last4: string;
+    }
+
+    export interface Nip {
+      /**
+       * The name of the account holder.
+       */
+      account_holder_name: string;
+
+      /**
+       * The NIP bank code.
+       */
+      bank_code: string;
+
+      /**
+       * The name of the bank.
+       */
+      bank_name: string;
+
+      /**
+       * The NUBAN account number.
+       */
+      nuban: string;
+    }
+
+    export interface Pix {
+      /**
+       * The name of the account holder.
+       */
+      account_holder_name: string;
+
+      /**
+       * The Pix BR code.
+       */
+      br_code: string;
     }
 
     export interface SortCode {

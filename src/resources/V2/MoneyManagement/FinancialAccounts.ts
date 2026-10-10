@@ -22,7 +22,7 @@ export class FinancialAccountResource extends StripeResource {
     this.walletExport = new WalletExportResource(stripe);
   }
   /**
-   * Lists FinancialAccounts in this compartment.
+   * Lists FinancialAccounts in this account.
    */
   list(
     params?: V2.MoneyManagement.FinancialAccountListParams,

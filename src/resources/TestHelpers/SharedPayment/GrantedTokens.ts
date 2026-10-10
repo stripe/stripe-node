@@ -7,7 +7,7 @@ import {RequestOptions, Response} from '../../../lib.js';
 
 export class GrantedTokenResource extends StripeResource {
   /**
-   * Creates a new test SharedPaymentGrantedToken object. This endpoint is only available in test mode and allows sellers to create SharedPaymentGrantedTokens for testing their integration
+   * Creates a new test SharedPaymentGrantedToken object. This test helper allows sellers to create SharedPaymentGrantedTokens for testing their integration.
    */
   create(
     params: TestHelpers.SharedPayment.GrantedTokenCreateParams,
@@ -21,7 +21,7 @@ export class GrantedTokenResource extends StripeResource {
     ) as any;
   }
   /**
-   * Revokes a test SharedPaymentGrantedToken object. This endpoint is only available in test mode and allows sellers to revoke SharedPaymentGrantedTokens for testing their integration
+   * Revokes a test SharedPaymentGrantedToken object. This test helper allows sellers to revoke SharedPaymentGrantedTokens for testing their integration.
    */
   revoke(
     id: string,
