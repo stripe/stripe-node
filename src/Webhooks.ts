@@ -32,6 +32,16 @@ type WebhookParsedEvent = {
   decodedHeader: string;
   suspectPayloadType: boolean;
 };
+type WebhookDebugMetadata = {
+  secret?: string | null;
+  destination?: string | null;
+  payload?: string | null;
+};
+type SignatureValidationFailure =
+  | 'invalid_payload_type'
+  | 'signature_mismatch'
+  | 'timestamp_outside_tolerance';
+
 export type WebhookTestHeaderOptions = {
   timestamp?: number;
   payload: string;
@@ -268,24 +278,30 @@ export function createWebhooks(
             'No webhook secret value was provided. It should start with `whsec_`',
         });
       }
-      const secretContainsWhitespace = /\s/.test(secret);
-
-      cryptoProvider = cryptoProvider || getCryptoProvider();
-      const expectedSignature = cryptoProvider.computeHMACSignature(
+      const provider = cryptoProvider || getCryptoProvider();
+      const expectedSignature = provider.computeHMACSignature(
         makeHMACContent(payload, details),
         secret
       );
 
-      validateComputedSignature(
-        payload,
-        header,
+      const failure = validateComputedSignature(
         details,
         expectedSignature,
         tolerance ?? Webhook.DEFAULT_TOLERANCE,
         suspectPayloadType,
-        secretContainsWhitespace,
         receivedAt
       );
+      if (failure) {
+        throw new StripeSignatureVerificationError(header, payload, {
+          message: getSignatureVerificationErrorMessage(
+            header,
+            payload,
+            secret,
+            failure,
+            provider
+          ),
+        });
+      }
 
       return true;
     },
@@ -314,25 +330,32 @@ export function createWebhooks(
             'No webhook secret value was provided. It should start with `whsec_`',
         });
       }
-      const secretContainsWhitespace = /\s/.test(secret);
-
-      cryptoProvider = cryptoProvider || getCryptoProvider();
-
-      const expectedSignature = await cryptoProvider.computeHMACSignatureAsync(
+      const provider = cryptoProvider || getCryptoProvider();
+      const expectedSignature = await provider.computeHMACSignatureAsync(
         makeHMACContent(payload, details),
         secret
       );
 
-      return validateComputedSignature(
-        payload,
-        header,
+      const failure = validateComputedSignature(
         details,
         expectedSignature,
         tolerance ?? Webhook.DEFAULT_TOLERANCE,
         suspectPayloadType,
-        secretContainsWhitespace,
         receivedAt
       );
+      if (failure) {
+        throw new StripeSignatureVerificationError(header, payload, {
+          message: await getSignatureVerificationErrorMessageAsync(
+            header,
+            payload,
+            secret,
+            failure,
+            provider
+          ),
+        });
+      }
+
+      return true;
     },
   };
 
@@ -433,62 +456,26 @@ export function createWebhooks(
    * of the event isn't important.
    * Integrations that process webhooks as they come in should use constructEvent method instead.
    *
-   * @param payload The decoded webhook payload string.
-   * @param header  The decoded `stripe-signature` header value.
    * @param details Parsed header containing timestamp and signatures.
    * @param expectedSignature HMAC signature computed from the payload and secret.
    * @param tolerance Maximum allowed age of the event in seconds. Use 0 to skip timestamp tolerance verification.
    * @param suspectPayloadType Whether the payload was not a string or Buffer.
-   * @param secretContainsWhitespace Whether the signing secret contains whitespace.
    * @param receivedAt - Timestamp for age calculation
-   * @returns `true` if the signature and timestamp are valid.
-   *
-   * @throws {StripeSignatureVerificationError} If verification fails.
+   * @returns The failure reason, or `null` if the signature and timestamp are valid.
    */
   function validateComputedSignature(
-    payload: string,
-    header: string,
     details: WebhookParsedHeader,
     expectedSignature: string,
     tolerance: number,
     suspectPayloadType: boolean,
-    secretContainsWhitespace: boolean,
     receivedAt?: number
-  ): boolean {
-    const signatureFound = !!details.signatures.filter(
+  ): SignatureValidationFailure | null {
+    const matchingSignatureFound = !!details.signatures.filter(
       platformFunctions.secureCompare.bind(platformFunctions, expectedSignature)
     ).length;
 
-    const docsLocation =
-      '\nLearn more about webhook signing and explore webhook integration examples for various frameworks at ' +
-      'https://docs.stripe.com/webhooks/signature';
-
-    const whitespaceMessage = secretContainsWhitespace
-      ? '\n\nNote: The provided signing secret contains whitespace. This often indicates an extra newline or space is in the value'
-      : '';
-
-    if (!signatureFound) {
-      if (suspectPayloadType) {
-        throw new StripeSignatureVerificationError(header, payload, {
-          message:
-            'Webhook payload must be provided as a string or a Buffer (https://nodejs.org/api/buffer.html) instance representing the _raw_ request body.' +
-            'Payload was provided as a parsed JavaScript object instead. \n' +
-            'Signature verification is impossible without access to the original signed material. \n' +
-            docsLocation +
-            '\n' +
-            whitespaceMessage,
-        });
-      }
-      throw new StripeSignatureVerificationError(header, payload, {
-        message:
-          'No signatures found matching the expected signature for payload.' +
-          ' Are you passing the raw request body you received from Stripe? \n' +
-          ' If a webhook request is being forwarded by a third-party tool,' +
-          ' ensure that the exact request body, including JSON formatting and new line style, is preserved.\n' +
-          docsLocation +
-          '\n' +
-          whitespaceMessage,
-      });
+    if (!matchingSignatureFound) {
+      return suspectPayloadType ? 'invalid_payload_type' : 'signature_mismatch';
     }
 
     const timestampAge =
@@ -497,12 +484,190 @@ export function createWebhooks(
       ) - details.timestamp;
 
     if (tolerance > 0 && timestampAge > tolerance) {
-      throw new StripeSignatureVerificationError(header, payload, {
-        message: 'Timestamp outside the tolerance zone',
-      });
+      return 'timestamp_outside_tolerance';
     }
 
-    return true;
+    return null;
+  }
+
+  function getSignatureVerificationErrorMessage(
+    header: string,
+    payload: string,
+    secret: string,
+    failure: SignatureValidationFailure,
+    cryptoProvider: CryptoProvider
+  ): string {
+    if (failure === 'signature_mismatch') {
+      const metadata = getSignatureDebugMetadata(header);
+      let errorMessage = getMismatchedSecretErrorMessage(metadata, secret);
+      // If metadata includes the truncated payload hash, compare with the payload passed in
+      if (!errorMessage && metadata.payload) {
+        try {
+          const hash = cryptoProvider.computeSHA256(
+            new TextEncoder().encode(payload)
+          );
+          errorMessage = getMismatchedPayloadErrorMessage(
+            metadata.payload,
+            hash
+          );
+        } catch {
+          // Ignore and fall back to a more generic error
+        }
+      }
+      if (errorMessage) {
+        return errorMessage;
+      }
+    }
+    return getDefaultSignatureErrorMessage(failure, secret);
+  }
+
+  async function getSignatureVerificationErrorMessageAsync(
+    header: string,
+    payload: string,
+    secret: string,
+    failure: SignatureValidationFailure,
+    cryptoProvider: CryptoProvider
+  ): Promise<string> {
+    if (failure === 'signature_mismatch') {
+      const metadata = getSignatureDebugMetadata(header);
+      let errorMessage = getMismatchedSecretErrorMessage(metadata, secret);
+      // If metadata includes the truncated payload hash, compare with the payload passed in
+      if (!errorMessage && metadata.payload) {
+        try {
+          const hash = await cryptoProvider.computeSHA256Async(
+            new TextEncoder().encode(payload)
+          );
+          errorMessage = getMismatchedPayloadErrorMessage(
+            metadata.payload,
+            hash
+          );
+        } catch {
+          // Ignore and fall back to a more generic error
+        }
+      }
+      if (errorMessage) {
+        return errorMessage;
+      }
+    }
+    return getDefaultSignatureErrorMessage(failure, secret);
+  }
+
+  /** @return An diagnostic error message about a mismatch with the supplied signing secret, or null if it's fine. */
+  function getMismatchedSecretErrorMessage(
+    metadata: WebhookDebugMetadata,
+    secret: string
+  ): string | null {
+    // If metadata has an asterisk-masked secret, compare against its length and last four characters
+    const maskedSecret = metadata.secret || '';
+    const secretSuffix = secret.slice(-4);
+    if (
+      maskedSecret.includes('*') &&
+      (secret.length !== maskedSecret.length ||
+        secretSuffix !== maskedSecret.slice(-4))
+    ) {
+      let dashboardUrl = 'https://dashboard.stripe.com/webhooks';
+      if (metadata.destination) {
+        dashboardUrl += `/${encodeURIComponent(metadata.destination)}`;
+      }
+      return (
+        'Webhook signature verification failed. This request may not have originated from Stripe.\n\n' +
+        `The signing secret you provided is ${secret.length} characters long and ends in \`${secretSuffix}\`. ` +
+        `However, the signing secret for this destination is ${maskedSecret.length} characters long ` +
+        `and looks like \`${maskedSecret}\`. Ensure you're using the signing secret for this ` +
+        `destination, as shown on the Dashboard: ${dashboardUrl}\n\n` +
+        'Learn more: https://docs.stripe.com/webhooks/signature'
+      );
+    }
+
+    return null;
+  }
+
+  /** @return An diagnostic error message about a mismatch with the supplied payload, or null if it's fine. */
+  function getMismatchedPayloadErrorMessage(
+    expectedHash: string,
+    hash: Uint8Array
+  ): string | null {
+    const actualHash = Array.from(hash.slice(-4), (byte) =>
+      byte.toString(16).padStart(2, '0')
+    ).join('');
+    if (expectedHash === actualHash) {
+      return null;
+    }
+    return (
+      'Webhook signature verification failed.\n\n' +
+      'The request body you passed to this function differs from the request body sent by Stripe ' +
+      'to this webhook destination.\n' +
+      `The SHA-256 hash of the body should end in \`${expectedHash}\`. However, ` +
+      `the SHA-256 hash of the body you provided ends in \`${actualHash}\`.\n\n` +
+      'Make sure your code does not reformat or otherwise alter the raw HTTP request body ' +
+      'before passing it to this function.\n\n' +
+      'Learn more: https://docs.stripe.com/webhooks/signature'
+    );
+  }
+
+  /** @return The diagnostic error message that corresponds to the given failure mode. */
+  function getDefaultSignatureErrorMessage(
+    failure: SignatureValidationFailure,
+    secret: string
+  ): string {
+    if (failure === 'timestamp_outside_tolerance') {
+      return 'Timestamp outside the tolerance zone';
+    }
+
+    const docsLocation =
+      '\nLearn more about webhook signing and explore webhook integration examples for various frameworks at ' +
+      'https://docs.stripe.com/webhooks/signature';
+    const whitespaceMessage = /\s/.test(secret)
+      ? '\n\nNote: The provided signing secret contains whitespace. This often indicates an extra newline or space is in the value'
+      : '';
+
+    if (failure === 'invalid_payload_type') {
+      return (
+        'Webhook payload must be provided as a string or a Buffer (https://nodejs.org/api/buffer.html) instance representing the _raw_ request body.' +
+        'Payload was provided as a parsed JavaScript object instead. \n' +
+        'Signature verification is impossible without access to the original signed material. \n' +
+        docsLocation +
+        '\n' +
+        whitespaceMessage
+      );
+    }
+
+    return (
+      'No signatures found matching the expected signature for payload. ' +
+      'Are you passing the raw request body you received from Stripe?\n' +
+      'If a webhook request is being forwarded by a third-party tool, ' +
+      'ensure that the exact request body, including JSON formatting and new line style, is preserved.\n' +
+      docsLocation +
+      '\n' +
+      whitespaceMessage
+    );
+  }
+
+  /** @return Metadata from the stripe-signature header value to help debug verification failures. */
+  function getSignatureDebugMetadata(header: string): WebhookDebugMetadata {
+    // For each metadata key, extract the first value found in the header
+    const metadata: WebhookDebugMetadata = {};
+    for (const item of header.split(/,\s*/)) {
+      const separator = item.indexOf('=');
+      const key = separator === -1 ? item : item.slice(0, separator);
+      if (
+        (key === 'secret' || key === 'destination' || key === 'payload') &&
+        !Object.prototype.hasOwnProperty.call(metadata, key)
+      ) {
+        const value = separator === -1 ? null : item.slice(separator + 1);
+        // Ignore overly long, potentially attacker-provided metadata values
+        metadata[key] =
+          value !== null && value.length <= 100 ? value.trim() || null : null;
+      }
+    }
+    if (metadata.payload) {
+      metadata.payload =
+        metadata.payload.length === 8 &&
+        /^[0-9a-fA-F]{8}$/.test(metadata.payload)
+          ? metadata.payload.toLowerCase()
+          : null;
+    }
+    return metadata;
   }
 
   function parseHeader(
