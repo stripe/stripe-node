@@ -80,16 +80,16 @@ export function validateWorkloadIdentityProvider(
   if (!identityProvider || typeof identityProvider !== 'object') {
     throw new StripeWorkloadIdentityError({
       message:
-        '`Stripe.forWorkloadIdentity` requires a workload identity provider as its second argument, ' +
-        'e.g. `awsWorkloadIdentity()` from `@stripe/aws-workload-identity`.',
+        'Stripe.forWorkloadIdentity requires a workload identity provider as its second argument, ' +
+        'e.g. awsWorkloadIdentity() from @stripe/aws-workload-identity.',
     });
   }
 
   if (typeof identityProvider.getIdentityAssertion !== 'function') {
     throw new StripeWorkloadIdentityError({
       message:
-        'The workload identity provider is invalid: it must expose a `getIdentityAssertion()` method. ' +
-        'Use `awsWorkloadIdentity()` from `@stripe/aws-workload-identity`.',
+        'The workload identity provider is invalid: it must expose a getIdentityAssertion() method. ' +
+        'Use awsWorkloadIdentity() from @stripe/aws-workload-identity.',
     });
   }
 
@@ -99,8 +99,8 @@ export function validateWorkloadIdentityProvider(
   ) {
     throw new StripeWorkloadIdentityError({
       message:
-        'The workload identity provider is invalid: it must expose a `provider` identifier. ' +
-        'Use `awsWorkloadIdentity()` from `@stripe/aws-workload-identity`.',
+        'The workload identity provider is invalid: it must expose a provider identifier. ' +
+        'Use awsWorkloadIdentity() from @stripe/aws-workload-identity.',
     });
   }
 
@@ -292,7 +292,7 @@ export class WorkloadIdentityCredentials {
     if (!accessToken) {
       throw new StripeWorkloadIdentityError({
         message:
-          'The Stripe workload identity token exchange returned a response without a usable `access_token`. ' +
+          'The Stripe workload identity token exchange returned a response without a usable access_token. ' +
           EXCHANGE_GUIDANCE,
         statusCode: response.statusCode,
       });
@@ -320,7 +320,7 @@ export class WorkloadIdentityCredentials {
         message:
           `Unable to obtain a workload identity assertion from '${this.identityProvider.provider}'. ` +
           'Check that the process is running on supported infrastructure and is allowed to request an identity token. ' +
-          'For local development, tests, and CI, use a test API key with `new Stripe(...)` or a fully mocked client instead.',
+          'For local development, tests, and CI, use a test API key with new Stripe(...) or a fully mocked client instead.',
         exception: err,
       });
     }
@@ -351,9 +351,6 @@ function readString(parsed: unknown, key: string): string | undefined {
   return typeof value === 'string' && value ? value : undefined;
 }
 
-/** Bound on how much server-supplied text is relayed into an error message. */
-const MAX_RELAYED_DESCRIPTION_LENGTH = 256;
-
 /**
  * Prepares server-supplied text for inclusion in an error message. The response
  * comes from the only party that already holds the assertion, but an error
@@ -365,9 +362,7 @@ function sanitizeRelayedText(text: string, secret: string): string {
   if (secret && secret.length >= 8) {
     sanitized = sanitized.split(secret).join('[redacted]');
   }
-  return sanitized.length > MAX_RELAYED_DESCRIPTION_LENGTH
-    ? `${sanitized.slice(0, MAX_RELAYED_DESCRIPTION_LENGTH)}...`
-    : sanitized;
+  return sanitized;
 }
 
 /**

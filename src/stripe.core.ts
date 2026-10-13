@@ -1452,7 +1452,7 @@ export class Stripe {
   static forWorkloadIdentity(
     clientId: string,
     identityProvider: WorkloadIdentityProvider,
-    config: StripeConfig = {}
+    config: Omit<StripeConfig, 'authenticator'> = {}
   ): Stripe {
     validateWorkloadIdentityProvider(identityProvider);
 

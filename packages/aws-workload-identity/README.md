@@ -23,8 +23,6 @@ This package requires **Node.js 20 or newer**.
 {"dependencies": {"@aws-sdk/client-sts": "3.952.x"}}
 ```
 
-Pinning is verified to work: this package is built and tested against both
-`3.952.0` and the latest release.
 
 ## Usage
 
@@ -57,11 +55,18 @@ Token via `sts:GetWebIdentityToken`, using:
 Stripe exchanges that token for a short-lived restricted key. This package never
 sees the Stripe credential — it only produces the AWS assertion.
 
-AWS region and credentials come from the AWS SDK's normal resolution. You can
-override the STS client configuration if you need to:
+Both values can be overridden, e.g. if Stripe asks you to use a different one
+before you've upgraded to a version of this package with a new default:
 
 ```js
-stsClientConfig: {region: 'us-west-2'};
+awsWorkloadIdentity({audience: '...', signingAlgorithm: '...'});
+```
+
+AWS region and credentials come from the AWS SDK's normal resolution. Any other
+STS client configuration can be passed through the same object:
+
+```js
+awsWorkloadIdentity({region: 'us-west-2'});
 ```
 
 Note that `GetWebIdentityToken` is not available on the STS global endpoint, so a

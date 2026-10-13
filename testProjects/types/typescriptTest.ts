@@ -649,6 +649,11 @@ const _withConfig: Stripe = Stripe.forWorkloadIdentity(
   {apiVersion: Stripe.API_VERSION, maxNetworkRetries: 3}
 );
 
+Stripe.forWorkloadIdentity('oacli_live_123', workloadIdentityProvider, {
+  // @ts-expect-error - an authenticator can't be combined with workload identity
+  authenticator: () => Promise.resolve(),
+});
+
 // A workload identity client is an ordinary client.
 workloadIdentityClient.customers.list().then((customers) => customers.data);
 

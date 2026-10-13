@@ -1,8 +1,8 @@
 /**
- * The workload identity token exchange is deliberately pinned to a single
- * origin. An identity assertion proves where the application is running, so
- * sending one to an attacker-chosen endpoint would hand over a usable
- * credential. None of the client's configurable `host` / `port` / `protocol`
+ * The workload identity token exchange is deliberately pinned to a single,
+ * hardcoded origin: the request body carries a signed identity assertion, and
+ * that assertion should never be redirected to an endpoint of the caller's
+ * choosing. None of the normal client's configurable `host` / `port` / `protocol`
  * settings are applied here, and the exchange never follows redirects.
  */
 export const WORKLOAD_IDENTITY_TOKEN_PROTOCOL = 'https';

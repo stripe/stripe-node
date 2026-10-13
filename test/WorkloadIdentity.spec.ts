@@ -369,7 +369,7 @@ describe('workload identity', () => {
         StripeConstructor.forWorkloadIdentity(FAKE_CLIENT_ID, ({
           getIdentityAssertion: () => Promise.resolve('x'),
         } as unknown) as WorkloadIdentityProvider)
-      ).to.throw(StripeWorkloadIdentityError, /`provider` identifier/);
+      ).to.throw(StripeWorkloadIdentityError, /provider identifier/);
     });
 
     it('rejects unsupported cloud providers', () => {
@@ -527,7 +527,7 @@ describe('workload identity', () => {
       );
 
       expect(err).to.be.an.instanceOf(StripeWorkloadIdentityError);
-      expect(err!.message).to.include('without a usable `access_token`');
+      expect(err!.message).to.include('without a usable access_token');
       expect(credentials.peekCachedToken()).to.equal(null);
     });
 
@@ -538,7 +538,7 @@ describe('workload identity', () => {
 
       await expect(client.customers.list()).to.be.rejectedWith(
         StripeWorkloadIdentityError,
-        /without a usable `access_token`/
+        /without a usable access_token/
       );
     });
 

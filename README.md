@@ -263,6 +263,10 @@ const stripe = Stripe('sk_test_...', {
 Applications running on AWS can authenticate without a long-lived secret API key,
 by proving where they are running instead of storing a Stripe credential:
 
+```sh
+npm install stripe @stripe/aws-workload-identity
+```
+
 ```js
 import Stripe from 'stripe';
 import {awsWorkloadIdentity} from '@stripe/aws-workload-identity';

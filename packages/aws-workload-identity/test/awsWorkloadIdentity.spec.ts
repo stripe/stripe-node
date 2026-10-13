@@ -94,6 +94,23 @@ describe('awsWorkloadIdentity', () => {
     expect(await provider.getIdentityAssertion()).to.equal(FAKE_TOKEN);
   });
 
+  it('overrides the audience and signing algorithm when configured', async () => {
+    const {commands} = mockSts({WebIdentityToken: FAKE_TOKEN});
+
+    const provider = awsWorkloadIdentity({
+      region: 'us-west-2',
+      audience: 'https://access.stripe.com/wif-v2',
+      signingAlgorithm: 'RS256',
+    });
+    await provider.getIdentityAssertion();
+
+    expect(commands).to.have.length(1);
+    expect(commands[0].input).to.deep.equal({
+      Audience: ['https://access.stripe.com/wif-v2'],
+      SigningAlgorithm: 'RS256',
+    });
+  });
+
   for (const [label, response] of [
     ['an empty response', {}],
     ['a missing token', {WebIdentityToken: undefined}],

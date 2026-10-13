@@ -20,13 +20,6 @@ export interface WorkloadIdentityProvider {
 
 /** Raised when AWS would not produce a usable workload identity assertion. */
 export class AwsWorkloadIdentityError extends Error {
-  /**
-   * The underlying AWS SDK failure, when one caused this error.
-   *
-   * Declared explicitly because `Error.cause` is ES2022 and we target ES2020
-   */
-  readonly cause?: unknown;
-
   constructor(message: string, cause?: unknown) {
     super(message);
     this.name = 'AwsWorkloadIdentityError';
@@ -40,6 +33,22 @@ const SETUP_GUIDANCE =
   'For local development, unit tests, and CI that are not running on AWS, use a normal Stripe test API key with ' +
   '`new Stripe(apiKey)` or a fully mocked Stripe client instead.';
 
+export interface AwsWorkloadIdentityConfig extends STSClientConfig {
+  /**
+   * Overrides the JWT audience requested from AWS STS. Defaults to
+   * `STRIPE_WORKLOAD_IDENTITY_AUDIENCE`. Only set this if Stripe has told you
+   * to use a different value -- an audience Stripe does not expect will cause
+   * every token exchange to be rejected.
+   */
+  audience?: string;
+  /**
+   * Overrides the JWT signing algorithm requested from AWS STS. Defaults to
+   * `STRIPE_WORKLOAD_IDENTITY_SIGNING_ALGORITHM`. Only set this if Stripe has
+   * told you to use a different value.
+   */
+  signingAlgorithm?: string;
+}
+
 /**
  * Builds the AWS workload identity provider for `Stripe.forWorkloadIdentity`.
  *
@@ -49,9 +58,14 @@ const SETUP_GUIDANCE =
  *
  */
 export function awsWorkloadIdentity(
-  config: STSClientConfig = {}
+  config: AwsWorkloadIdentityConfig = {}
 ): WorkloadIdentityProvider {
-  const client = new STSClient(config);
+  const {
+    audience = STRIPE_WORKLOAD_IDENTITY_AUDIENCE,
+    signingAlgorithm = STRIPE_WORKLOAD_IDENTITY_SIGNING_ALGORITHM,
+    ...stsClientConfig
+  } = config;
+  const client = new STSClient(stsClientConfig);
 
   return {
     provider: 'aws',
@@ -61,8 +75,8 @@ export function awsWorkloadIdentity(
       try {
         response = await client.send(
           new GetWebIdentityTokenCommand({
-            Audience: [STRIPE_WORKLOAD_IDENTITY_AUDIENCE],
-            SigningAlgorithm: STRIPE_WORKLOAD_IDENTITY_SIGNING_ALGORITHM,
+            Audience: [audience],
+            SigningAlgorithm: signingAlgorithm,
           })
         );
       } catch (err) {
