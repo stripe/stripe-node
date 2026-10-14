@@ -5,6 +5,12 @@
   },
   "releases": [
     {
+      "version": "23.1.0-alpha.2",
+      "released_on": "2026-10-07",
+      "pinned_api_version": "2026-10-07.preview",
+      "minimum_runtime_version": "20"
+    },
+    {
       "version": "23.1.0-alpha.1",
       "released_on": "2026-09-30",
       "pinned_api_version": "2026-09-30.preview",

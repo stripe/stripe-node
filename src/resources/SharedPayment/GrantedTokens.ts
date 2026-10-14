@@ -550,7 +550,13 @@ export namespace GrantedToken {
     export type RecurringInterval = 'month' | 'week' | 'year' | OtherString;
 
     export namespace Recurring {
-      export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
+      export type Interval =
+        | 'day'
+        | 'hour'
+        | 'month'
+        | 'week'
+        | 'year'
+        | OtherString;
     }
   }
 }

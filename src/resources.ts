@@ -76,11 +76,13 @@ import {FinancingSummaryResource as CapitalFinancingSummary} from './resources/C
 import {FinancingTransactionResource as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions.js';
 import {FormResource as TaxForms} from './resources/Tax/Forms.js';
 import {FraudLiabilityDebitResource as IssuingFraudLiabilityDebits} from './resources/Issuing/FraudLiabilityDebits.js';
+import {FundingSessionResource as V2MoneyManagementFundingSessions} from './resources/V2/MoneyManagement/FundingSessions.js';
 import {GbBankAccountResource as V2CoreVaultGbBankAccounts} from './resources/V2/Core/Vault/GbBankAccounts.js';
 import {GrantedTokenResource as SharedPaymentGrantedTokens} from './resources/SharedPayment/GrantedTokens.js';
 import {GrantedTokenResource as TestHelpersSharedPaymentGrantedTokens} from './resources/TestHelpers/SharedPayment/GrantedTokens.js';
 import {HoldResource as ReserveHolds} from './resources/Reserve/Holds.js';
 import {ImportResource as V2CommerceProductCatalogImports} from './resources/V2/Commerce/ProductCatalog/Imports.js';
+import {InboundTransferMandateResource as V2MoneyManagementInboundTransferMandates} from './resources/V2/MoneyManagement/InboundTransferMandates.js';
 import {InboundTransferResource as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransferResource as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {InboundTransferResource as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
@@ -525,6 +527,8 @@ export const V2 = resourceNamespace('v2', {
     EarnedCredits: V2MoneyManagementEarnedCredits,
     FinancialAccounts: V2MoneyManagementFinancialAccounts,
     FinancialAddresses: V2MoneyManagementFinancialAddresses,
+    FundingSessions: V2MoneyManagementFundingSessions,
+    InboundTransferMandates: V2MoneyManagementInboundTransferMandates,
     InboundTransfers: V2MoneyManagementInboundTransfers,
     OutboundPaymentQuotes: V2MoneyManagementOutboundPaymentQuotes,
     OutboundPayments: V2MoneyManagementOutboundPayments,

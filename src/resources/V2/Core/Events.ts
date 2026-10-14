@@ -107,7 +107,7 @@ export interface EventBase {
   reason?: Event.Reason;
 
   /**
-   * For interop events, this is the snapshot event ID.
+   * For thin events with a corresponding snapshot event, this is the snapshot event ID.
    */
   snapshot_event?: string;
 
@@ -714,6 +714,11 @@ export type Event =
   | V2MoneyManagementInboundTransferBankDebitQueuedEvent
   | V2MoneyManagementInboundTransferBankDebitReturnedEvent
   | V2MoneyManagementInboundTransferBankDebitSucceededEvent
+  | V2MoneyManagementInboundTransferMandateActivatedEvent
+  | V2MoneyManagementInboundTransferMandateCreatedEvent
+  | V2MoneyManagementInboundTransferMandateExpiredEvent
+  | V2MoneyManagementInboundTransferMandateRefusedEvent
+  | V2MoneyManagementInboundTransferMandateRevokedEvent
   | V2MoneyManagementOutboundPaymentCanceledEvent
   | V2MoneyManagementOutboundPaymentCreatedEvent
   | V2MoneyManagementOutboundPaymentFailedEvent
@@ -1186,6 +1191,11 @@ export type EventNotification =
   | V2MoneyManagementInboundTransferBankDebitQueuedEventNotification
   | V2MoneyManagementInboundTransferBankDebitReturnedEventNotification
   | V2MoneyManagementInboundTransferBankDebitSucceededEventNotification
+  | V2MoneyManagementInboundTransferMandateActivatedEventNotification
+  | V2MoneyManagementInboundTransferMandateCreatedEventNotification
+  | V2MoneyManagementInboundTransferMandateExpiredEventNotification
+  | V2MoneyManagementInboundTransferMandateRefusedEventNotification
+  | V2MoneyManagementInboundTransferMandateRevokedEventNotification
   | V2MoneyManagementOutboundPaymentCanceledEventNotification
   | V2MoneyManagementOutboundPaymentCreatedEventNotification
   | V2MoneyManagementOutboundPaymentFailedEventNotification
@@ -3660,11 +3670,27 @@ export interface V1InvoiceSentEventNotification extends EventNotificationBase {
  */
 export interface V1InvoiceUpcomingEvent extends EventBase {
   type: 'v1.invoice.upcoming';
+  // Retrieves data specific to this event.
+  data: V1InvoiceUpcomingEvent.Data;
 }
 export interface V1InvoiceUpcomingEventNotification
   extends EventNotificationBase {
   type: 'v1.invoice.upcoming';
   fetchEvent(): Promise<V1InvoiceUpcomingEvent>;
+}
+
+export namespace V1InvoiceUpcomingEvent {
+  export interface Data {
+    /**
+     * The ID of the customer this upcoming invoice is associated with.
+     */
+    customer: string;
+
+    /**
+     * The ID of the subscription, if any.
+     */
+    subscription?: string;
+  }
 }
 
 /**
@@ -7325,6 +7351,7 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'swish_payments'
       | 'twint_payments'
       | 'us_bank_transfer_payments'
+      | 'vipps_payments'
       | 'zip_payments'
       | OtherString;
   }
@@ -7388,6 +7415,10 @@ export namespace V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatus
 
   export namespace Data {
     export type UpdatedCapability =
+      | 'business_custodial_storage.inbound.ousd'
+      | 'business_custodial_storage.inbound.usdc'
+      | 'business_custodial_storage.outbound.ousd'
+      | 'business_custodial_storage.outbound.usdc'
       | 'business_storage.inbound.cad'
       | 'business_storage.inbound.eur'
       | 'business_storage.inbound.gbp'
@@ -7409,12 +7440,48 @@ export namespace V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatus
       | 'outbound_payments.cards'
       | 'outbound_payments.crypto_wallets'
       | 'outbound_payments.financial_accounts'
+      | 'outbound_payments.offramp.bank_accounts.brl'
+      | 'outbound_payments.offramp.bank_accounts.cop'
+      | 'outbound_payments.offramp.bank_accounts.eur'
+      | 'outbound_payments.offramp.bank_accounts.gbp'
+      | 'outbound_payments.offramp.bank_accounts.mxn'
+      | 'outbound_payments.offramp.bank_accounts.usd'
+      | 'outbound_payments.onramp.crypto_wallets.brl'
+      | 'outbound_payments.onramp.crypto_wallets.cop'
+      | 'outbound_payments.onramp.crypto_wallets.eur'
+      | 'outbound_payments.onramp.crypto_wallets.gbp'
+      | 'outbound_payments.onramp.crypto_wallets.mxn'
+      | 'outbound_payments.onramp.crypto_wallets.usd'
       | 'outbound_payments.paper_checks'
       | 'outbound_transfers.bank_accounts'
       | 'outbound_transfers.crypto_wallets'
       | 'outbound_transfers.financial_accounts'
+      | 'outbound_transfers.offramp.bank_accounts.brl'
+      | 'outbound_transfers.offramp.bank_accounts.cop'
+      | 'outbound_transfers.offramp.bank_accounts.eur'
+      | 'outbound_transfers.offramp.bank_accounts.gbp'
+      | 'outbound_transfers.offramp.bank_accounts.mxn'
+      | 'outbound_transfers.offramp.bank_accounts.usd'
+      | 'outbound_transfers.onramp.crypto_wallets.brl'
+      | 'outbound_transfers.onramp.crypto_wallets.cop'
+      | 'outbound_transfers.onramp.crypto_wallets.eur'
+      | 'outbound_transfers.onramp.crypto_wallets.gbp'
+      | 'outbound_transfers.onramp.crypto_wallets.mxn'
+      | 'outbound_transfers.onramp.crypto_wallets.usd'
       | 'received_credits.bank_accounts'
       | 'received_credits.crypto_wallets'
+      | 'received_credits.offramp.bank_accounts.brl'
+      | 'received_credits.offramp.bank_accounts.cop'
+      | 'received_credits.offramp.bank_accounts.eur'
+      | 'received_credits.offramp.bank_accounts.gbp'
+      | 'received_credits.offramp.bank_accounts.mxn'
+      | 'received_credits.offramp.bank_accounts.usd'
+      | 'received_credits.onramp.crypto_wallets.brl'
+      | 'received_credits.onramp.crypto_wallets.cop'
+      | 'received_credits.onramp.crypto_wallets.eur'
+      | 'received_credits.onramp.crypto_wallets.gbp'
+      | 'received_credits.onramp.crypto_wallets.mxn'
+      | 'received_credits.onramp.crypto_wallets.usd'
       | 'received_debits.bank_accounts'
       | OtherString;
   }
@@ -7495,6 +7562,7 @@ export namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpd
       | 'crypto_wallets_v2'
       | 'paper_checks'
       | 'stripe_balance.payouts'
+      | 'pix'
       | 'stripe_balance.stripe_transfers'
       | 'stripe.transfers'
       | OtherString;
@@ -11919,6 +11987,112 @@ export interface V2MoneyManagementInboundTransferBankDebitSucceededEventNotifica
 }
 
 /**
+ * Occurs when an InboundTransferMandate is activated by its banking network.
+ */
+export interface V2MoneyManagementInboundTransferMandateActivatedEvent
+  extends EventBase {
+  type: 'v2.money_management.inbound_transfer_mandate.activated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundTransferMandate>;
+}
+export interface V2MoneyManagementInboundTransferMandateActivatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_transfer_mandate.activated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundTransferMandate>;
+  fetchEvent(): Promise<V2MoneyManagementInboundTransferMandateActivatedEvent>;
+}
+
+/**
+ * Occurs when an InboundTransferMandate is created.
+ */
+export interface V2MoneyManagementInboundTransferMandateCreatedEvent
+  extends EventBase {
+  type: 'v2.money_management.inbound_transfer_mandate.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundTransferMandate>;
+}
+export interface V2MoneyManagementInboundTransferMandateCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_transfer_mandate.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundTransferMandate>;
+  fetchEvent(): Promise<V2MoneyManagementInboundTransferMandateCreatedEvent>;
+}
+
+/**
+ * Occurs when an active InboundTransferMandate expires because its banking network did not
+ * complete it within the allowed window.
+ */
+export interface V2MoneyManagementInboundTransferMandateExpiredEvent
+  extends EventBase {
+  type: 'v2.money_management.inbound_transfer_mandate.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundTransferMandate>;
+}
+export interface V2MoneyManagementInboundTransferMandateExpiredEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_transfer_mandate.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundTransferMandate>;
+  fetchEvent(): Promise<V2MoneyManagementInboundTransferMandateExpiredEvent>;
+}
+
+/**
+ * Occurs when a boarding request for an InboundTransferMandate is refused by its banking network.
+ */
+export interface V2MoneyManagementInboundTransferMandateRefusedEvent
+  extends EventBase {
+  type: 'v2.money_management.inbound_transfer_mandate.refused';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundTransferMandate>;
+}
+export interface V2MoneyManagementInboundTransferMandateRefusedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_transfer_mandate.refused';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundTransferMandate>;
+  fetchEvent(): Promise<V2MoneyManagementInboundTransferMandateRefusedEvent>;
+}
+
+/**
+ * Occurs when an InboundTransferMandate is revoked by its banking network.
+ */
+export interface V2MoneyManagementInboundTransferMandateRevokedEvent
+  extends EventBase {
+  type: 'v2.money_management.inbound_transfer_mandate.revoked';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundTransferMandate>;
+}
+export interface V2MoneyManagementInboundTransferMandateRevokedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_transfer_mandate.revoked';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundTransferMandate>;
+  fetchEvent(): Promise<V2MoneyManagementInboundTransferMandateRevokedEvent>;
+}
+
+/**
  * Occurs when an OutboundPayment transitions into the canceled state.
  */
 export interface V2MoneyManagementOutboundPaymentCanceledEvent
@@ -13274,7 +13448,7 @@ export interface V2PaymentsOffSessionPaymentPausedEventNotification
 }
 
 /**
- * Sent when the off-session payment becomes available for capture.
+ * Deprecated. Sent when the off-session payment becomes available for capture.
  */
 export interface V2PaymentsOffSessionPaymentRequiresCaptureEvent
   extends EventBase {
@@ -14250,6 +14424,11 @@ export declare namespace Events {
     V2MoneyManagementInboundTransferBankDebitQueuedEvent,
     V2MoneyManagementInboundTransferBankDebitReturnedEvent,
     V2MoneyManagementInboundTransferBankDebitSucceededEvent,
+    V2MoneyManagementInboundTransferMandateActivatedEvent,
+    V2MoneyManagementInboundTransferMandateCreatedEvent,
+    V2MoneyManagementInboundTransferMandateExpiredEvent,
+    V2MoneyManagementInboundTransferMandateRefusedEvent,
+    V2MoneyManagementInboundTransferMandateRevokedEvent,
     V2MoneyManagementOutboundPaymentCanceledEvent,
     V2MoneyManagementOutboundPaymentCreatedEvent,
     V2MoneyManagementOutboundPaymentFailedEvent,
@@ -14720,6 +14899,11 @@ export declare namespace Events {
     V2MoneyManagementInboundTransferBankDebitQueuedEventNotification,
     V2MoneyManagementInboundTransferBankDebitReturnedEventNotification,
     V2MoneyManagementInboundTransferBankDebitSucceededEventNotification,
+    V2MoneyManagementInboundTransferMandateActivatedEventNotification,
+    V2MoneyManagementInboundTransferMandateCreatedEventNotification,
+    V2MoneyManagementInboundTransferMandateExpiredEventNotification,
+    V2MoneyManagementInboundTransferMandateRefusedEventNotification,
+    V2MoneyManagementInboundTransferMandateRevokedEventNotification,
     V2MoneyManagementOutboundPaymentCanceledEventNotification,
     V2MoneyManagementOutboundPaymentCreatedEventNotification,
     V2MoneyManagementOutboundPaymentFailedEventNotification,

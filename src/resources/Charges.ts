@@ -14,6 +14,7 @@ import {CustomerSource} from './CustomerSources.js';
 import {Transfer} from './Transfers.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {Mandate} from './Mandates.js';
+import * as Radar from './Radar/index.js';
 import {
   Emptyable,
   MetadataParam,
@@ -451,7 +452,7 @@ export namespace Charge {
     /**
      * The ID of the Radar rule that matched the payment, if applicable.
      */
-    rule?: string | Outcome.Rule;
+    rule?: string | Radar.Rule;
 
     /**
      * A human-readable description of the outcome type and reason, designed for you (the recipient of the payment), not your customer.
@@ -706,23 +707,6 @@ export namespace Charge {
       | 'do_not_try_again'
       | 'try_again_later'
       | OtherString;
-
-    export interface Rule {
-      /**
-       * The action taken on the payment.
-       */
-      action: string;
-
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * The predicate to evaluate the payment against.
-       */
-      predicate: string;
-    }
   }
 
   export namespace PaymentMethodDetails {
@@ -2172,9 +2156,19 @@ export namespace Charge {
       fingerprint: string | null;
 
       /**
+       * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
+       */
+      location?: string;
+
+      /**
        * Payer bank reference number for the payment
        */
       payment_reference: string | null;
+
+      /**
+       * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
+       */
+      reader?: string;
 
       /**
        * The last four digits of the Swish account phone number
@@ -2855,6 +2849,7 @@ export namespace Charge {
         | OtherString;
 
       export type TokenCurrency =
+        | 'ousd'
         | 'phantom_cash'
         | 'usdc'
         | 'usdg'
@@ -3348,7 +3343,7 @@ export interface ChargeCreateParams {
   radar_options?: ChargeCreateParams.RadarOptions;
 
   /**
-   * The email address to which this charge's [receipt](https://docs.stripe.com/dashboard/receipts) will be sent. The receipt will not be sent until the charge is paid, and no receipts will be sent for test mode charges. If this charge is for a [Customer](https://docs.stripe.com/api/customers/object), the email address specified here will override the customer's email address. If `receipt_email` is specified for a charge in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
+   * The email address to which this charge's [receipt](https://docs.stripe.com/dashboard/receipts) will be sent. The receipt will not be sent until the charge is paid, and receipts are only sent for payments in live mode. If this charge is for a [Customer](https://docs.stripe.com/api/customers/object), the email address specified here will override the customer's email address. If `receipt_email` is specified for a charge in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
    */
   receipt_email?: string;
 
@@ -5709,7 +5704,7 @@ export interface ChargeCaptureParams {
   payment_details?: ChargeCaptureParams.PaymentDetails;
 
   /**
-   * The email address to send this charge's receipt to. This will override the previously-specified email address for this charge, if one was set. Receipts will not be sent in test mode.
+   * The email address to send this charge's receipt to. This will override the previously-specified email address for this charge, if one was set. Receipts are only sent for payments in live mode.
    */
   receipt_email?: string;
 

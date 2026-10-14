@@ -2028,9 +2028,19 @@ export namespace PaymentAttemptRecord {
       fingerprint: string | null;
 
       /**
+       * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
+       */
+      location?: string;
+
+      /**
        * Payer bank reference number for the payment
        */
       payment_reference: string | null;
+
+      /**
+       * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
+       */
+      reader?: string;
 
       /**
        * The last four digits of the Swish account phone number
@@ -2574,6 +2584,7 @@ export namespace PaymentAttemptRecord {
         | OtherString;
 
       export type TokenCurrency =
+        | 'ousd'
         | 'phantom_cash'
         | 'usdc'
         | 'usdg'
@@ -3326,7 +3337,12 @@ export namespace PaymentAttemptRecordReportFailedParams {
     /**
      * The type of the payment method details. An additional hash is included on the payment_method_details with a name matching this value. It contains additional information specific to the type.
      */
-    type: 'card';
+    type: PaymentMethodDetails.Type;
+
+    /**
+     * Details about the US bank account payment method.
+     */
+    us_bank_account?: PaymentMethodDetails.UsBankAccount;
   }
 
   export interface ProcessorDetails {
@@ -3352,6 +3368,15 @@ export namespace PaymentAttemptRecordReportFailedParams {
        * Decline code from the card network for the failed payment.
        */
       network_decline_code?: string;
+    }
+
+    export type Type = 'card' | 'us_bank_account' | OtherString;
+
+    export interface UsBankAccount {
+      /**
+       * NACHA ACH return code for a failed US bank account payment.
+       */
+      return_code?: string;
     }
 
     export namespace Card {

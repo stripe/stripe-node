@@ -145,6 +145,9 @@ export class ResourceResource extends StripeResource {
   }
 }
 export interface Resource {
+  /**
+   * Unique identifier for the resource.
+   */
   id: string;
 
   /**
@@ -152,12 +155,24 @@ export interface Resource {
    */
   object: 'v2.provisioning.resource';
 
+  /**
+   * Catalog partition containing the resource's provider service.
+   */
   catalog?: Resource.Catalog;
 
+  /**
+   * Time at which the resource was created.
+   */
   created: string;
 
+  /**
+   * Provider environment in which the resource runs.
+   */
   environment: Resource.Environment;
 
+  /**
+   * Error reported when provisioning the resource fails.
+   */
   error_message?: string;
 
   /**
@@ -166,16 +181,34 @@ export interface Resource {
    */
   livemode: boolean;
 
+  /**
+   * Human-readable name of the resource.
+   */
   name?: string;
 
+  /**
+   * Schema describing additional information the provider requires to finish provisioning.
+   */
   needs_information_schema?: Resource.NeedsInformationSchema;
 
+  /**
+   * Identifier of the provider that manages the resource.
+   */
   provider: string;
 
+  /**
+   * Identifier of the provider service used to provision the resource.
+   */
   service_ref: string;
 
+  /**
+   * Current provisioning status of the resource.
+   */
   status: Resource.Status;
 
+  /**
+   * Message supplied by the provider when the resource becomes ready.
+   */
   user_message?: Resource.UserMessage;
 }
 export namespace Resource {
@@ -195,8 +228,14 @@ export namespace Resource {
     | 'removed';
 
   export interface UserMessage {
+    /**
+     * Message from the provider to display to the user.
+     */
     message: string;
 
+    /**
+     * Time at which Stripe received the message from the provider.
+     */
     received_at: string;
   }
 }

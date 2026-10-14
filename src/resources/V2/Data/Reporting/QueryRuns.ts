@@ -249,7 +249,7 @@ export namespace V2 {
     export namespace Reporting {
       export interface QueryRunRetrieveParams {
         /**
-         * Any optional includes (see https://docs.stripe.com/api-includable-response-values).
+         * Any optional includes (see [include-dependent response values](https://docs.stripe.com/api-includable-response-values)).
          */
         include?: Array<QueryRunRetrieveParams.Include>;
       }

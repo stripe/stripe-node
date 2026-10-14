@@ -242,6 +242,8 @@ export namespace CustomerCashBalanceTransaction {
         export type Network =
           | 'ach'
           | 'domestic_wire_us'
+          | 'fednow'
+          | 'rtp'
           | 'swift'
           | OtherString;
       }

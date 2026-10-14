@@ -144,7 +144,7 @@ export namespace V2 {
   export namespace Data {
     export interface ReportRetrieveParams {
       /**
-       * Any optional includes (see https://docs.stripe.com/api-includable-response-values).
+       * Any optional includes (see [include-dependent response values](https://docs.stripe.com/api-includable-response-values)).
        */
       include?: Array<ReportRetrieveParams.Include>;
     }
@@ -158,12 +158,12 @@ export namespace V2 {
   export namespace Data {
     export interface ReportListParams {
       /**
-       * Any optional includes (see https://docs.stripe.com/api-includable-response-values).
+       * Any optional includes (see [include-dependent response values](https://docs.stripe.com/api-includable-response-values)).
        */
       include?: Array<ReportListParams.Include>;
 
       /**
-       * The maximum number of results per page. Defaults to 10. Maximum is 100.
+       * The maximum number of results per page. Defaults to 10. Maximum is 1,000.
        */
       limit?: number;
 

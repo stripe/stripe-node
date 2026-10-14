@@ -1280,6 +1280,23 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            vipps_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                             zip_payments: {
                               kind: 'object',
                               fields: {
@@ -1307,6 +1324,105 @@ export class AccountResource extends StripeResource {
                         capabilities: {
                           kind: 'object',
                           fields: {
+                            business_custodial_storage: {
+                              kind: 'object',
+                              fields: {
+                                inbound: {
+                                  kind: 'object',
+                                  fields: {
+                                    ousd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usdc: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                outbound: {
+                                  kind: 'object',
+                                  fields: {
+                                    ousd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usdc: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                             business_storage: {
                               kind: 'object',
                               fields: {
@@ -1818,6 +1934,278 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                offramp: {
+                                  kind: 'object',
+                                  fields: {
+                                    bank_accounts: {
+                                      kind: 'object',
+                                      fields: {
+                                        brl: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        cop: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        eur: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        gbp: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        mxn: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        usd: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                onramp: {
+                                  kind: 'object',
+                                  fields: {
+                                    crypto_wallets: {
+                                      kind: 'object',
+                                      fields: {
+                                        brl: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        cop: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        eur: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        gbp: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        mxn: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        usd: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 paper_checks: {
                                   kind: 'object',
                                   fields: {
@@ -1899,6 +2287,278 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                offramp: {
+                                  kind: 'object',
+                                  fields: {
+                                    bank_accounts: {
+                                      kind: 'object',
+                                      fields: {
+                                        brl: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        cop: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        eur: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        gbp: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        mxn: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        usd: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                onramp: {
+                                  kind: 'object',
+                                  fields: {
+                                    crypto_wallets: {
+                                      kind: 'object',
+                                      fields: {
+                                        brl: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        cop: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        eur: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        gbp: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        mxn: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        usd: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                               },
                             },
                             received_credits: {
@@ -1935,6 +2595,278 @@ export class AccountResource extends StripeResource {
                                             expires_at: {kind: 'int64_string'},
                                             requested_at: {
                                               kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                offramp: {
+                                  kind: 'object',
+                                  fields: {
+                                    bank_accounts: {
+                                      kind: 'object',
+                                      fields: {
+                                        brl: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        cop: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        eur: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        gbp: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        mxn: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        usd: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                onramp: {
+                                  kind: 'object',
+                                  fields: {
+                                    crypto_wallets: {
+                                      kind: 'object',
+                                      fields: {
+                                        brl: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        cop: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        eur: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        gbp: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        mxn: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                        usd: {
+                                          kind: 'object',
+                                          fields: {
+                                            protections: {
+                                              kind: 'object',
+                                              fields: {
+                                                psp_migration: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    expires_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                    requested_at: {
+                                                      kind: 'int64_string',
+                                                    },
+                                                  },
+                                                },
+                                              },
                                             },
                                           },
                                         },
@@ -2265,6 +3197,23 @@ export class AccountResource extends StripeResource {
                               },
                             },
                             paper_checks: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            pix: {
                               kind: 'object',
                               fields: {
                                 protections: {
@@ -3564,6 +4513,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                       },
+                      vipps_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
                       zip_payments: {
                         kind: 'object',
                         fields: {
@@ -3591,6 +4557,89 @@ export class AccountResource extends StripeResource {
                   capabilities: {
                     kind: 'object',
                     fields: {
+                      business_custodial_storage: {
+                        kind: 'object',
+                        fields: {
+                          inbound: {
+                            kind: 'object',
+                            fields: {
+                              ousd: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              usdc: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          outbound: {
+                            kind: 'object',
+                            fields: {
+                              ousd: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              usdc: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
                       business_storage: {
                         kind: 'object',
                         fields: {
@@ -4020,6 +5069,278 @@ export class AccountResource extends StripeResource {
                               },
                             },
                           },
+                          offramp: {
+                            kind: 'object',
+                            fields: {
+                              bank_accounts: {
+                                kind: 'object',
+                                fields: {
+                                  brl: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  cop: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  eur: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  gbp: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  mxn: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  usd: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          onramp: {
+                            kind: 'object',
+                            fields: {
+                              crypto_wallets: {
+                                kind: 'object',
+                                fields: {
+                                  brl: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  cop: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  eur: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  gbp: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  mxn: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  usd: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
                           paper_checks: {
                             kind: 'object',
                             fields: {
@@ -4093,6 +5414,278 @@ export class AccountResource extends StripeResource {
                               },
                             },
                           },
+                          offramp: {
+                            kind: 'object',
+                            fields: {
+                              bank_accounts: {
+                                kind: 'object',
+                                fields: {
+                                  brl: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  cop: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  eur: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  gbp: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  mxn: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  usd: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          onramp: {
+                            kind: 'object',
+                            fields: {
+                              crypto_wallets: {
+                                kind: 'object',
+                                fields: {
+                                  brl: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  cop: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  eur: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  gbp: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  mxn: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  usd: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
                         },
                       },
                       received_credits: {
@@ -4126,6 +5719,278 @@ export class AccountResource extends StripeResource {
                                     fields: {
                                       expires_at: {kind: 'int64_string'},
                                       requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          offramp: {
+                            kind: 'object',
+                            fields: {
+                              bank_accounts: {
+                                kind: 'object',
+                                fields: {
+                                  brl: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  cop: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  eur: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  gbp: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  mxn: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  usd: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          onramp: {
+                            kind: 'object',
+                            fields: {
+                              crypto_wallets: {
+                                kind: 'object',
+                                fields: {
+                                  brl: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  cop: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  eur: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  gbp: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  mxn: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                  usd: {
+                                    kind: 'object',
+                                    fields: {
+                                      protections: {
+                                        kind: 'object',
+                                        fields: {
+                                          psp_migration: {
+                                            kind: 'object',
+                                            fields: {
+                                              expires_at: {
+                                                kind: 'int64_string',
+                                              },
+                                              requested_at: {
+                                                kind: 'int64_string',
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
                                     },
                                   },
                                 },
@@ -4427,6 +6292,23 @@ export class AccountResource extends StripeResource {
                         },
                       },
                       paper_checks: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      pix: {
                         kind: 'object',
                         fields: {
                           protections: {
@@ -5734,6 +7616,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        vipps_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         zip_payments: {
                           kind: 'object',
                           fields: {
@@ -5761,6 +7660,97 @@ export class AccountResource extends StripeResource {
                     capabilities: {
                       kind: 'object',
                       fields: {
+                        business_custodial_storage: {
+                          kind: 'object',
+                          fields: {
+                            inbound: {
+                              kind: 'object',
+                              fields: {
+                                ousd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            outbound: {
+                              kind: 'object',
+                              fields: {
+                                ousd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         business_storage: {
                           kind: 'object',
                           fields: {
@@ -6226,6 +8216,278 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            offramp: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            onramp: {
+                              kind: 'object',
+                              fields: {
+                                crypto_wallets: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                             paper_checks: {
                               kind: 'object',
                               fields: {
@@ -6299,6 +8561,278 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            offramp: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            onramp: {
+                              kind: 'object',
+                              fields: {
+                                crypto_wallets: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                           },
                         },
                         received_credits: {
@@ -6332,6 +8866,278 @@ export class AccountResource extends StripeResource {
                                       fields: {
                                         expires_at: {kind: 'int64_string'},
                                         requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            offramp: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            onramp: {
+                              kind: 'object',
+                              fields: {
+                                crypto_wallets: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
                                       },
                                     },
                                   },
@@ -6633,6 +9439,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         paper_checks: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        pix: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -7960,6 +10783,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        vipps_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         zip_payments: {
                           kind: 'object',
                           fields: {
@@ -7987,6 +10827,97 @@ export class AccountResource extends StripeResource {
                     capabilities: {
                       kind: 'object',
                       fields: {
+                        business_custodial_storage: {
+                          kind: 'object',
+                          fields: {
+                            inbound: {
+                              kind: 'object',
+                              fields: {
+                                ousd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            outbound: {
+                              kind: 'object',
+                              fields: {
+                                ousd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         business_storage: {
                           kind: 'object',
                           fields: {
@@ -8452,6 +11383,278 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            offramp: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            onramp: {
+                              kind: 'object',
+                              fields: {
+                                crypto_wallets: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                             paper_checks: {
                               kind: 'object',
                               fields: {
@@ -8525,6 +11728,278 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            offramp: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            onramp: {
+                              kind: 'object',
+                              fields: {
+                                crypto_wallets: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                           },
                         },
                         received_credits: {
@@ -8558,6 +12033,278 @@ export class AccountResource extends StripeResource {
                                       fields: {
                                         expires_at: {kind: 'int64_string'},
                                         requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            offramp: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            onramp: {
+                              kind: 'object',
+                              fields: {
+                                crypto_wallets: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
                                       },
                                     },
                                   },
@@ -8859,6 +12606,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         paper_checks: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        pix: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -10167,6 +13931,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        vipps_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         zip_payments: {
                           kind: 'object',
                           fields: {
@@ -10194,6 +13975,97 @@ export class AccountResource extends StripeResource {
                     capabilities: {
                       kind: 'object',
                       fields: {
+                        business_custodial_storage: {
+                          kind: 'object',
+                          fields: {
+                            inbound: {
+                              kind: 'object',
+                              fields: {
+                                ousd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            outbound: {
+                              kind: 'object',
+                              fields: {
+                                ousd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         business_storage: {
                           kind: 'object',
                           fields: {
@@ -10659,6 +14531,278 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            offramp: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            onramp: {
+                              kind: 'object',
+                              fields: {
+                                crypto_wallets: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                             paper_checks: {
                               kind: 'object',
                               fields: {
@@ -10732,6 +14876,278 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            offramp: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            onramp: {
+                              kind: 'object',
+                              fields: {
+                                crypto_wallets: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                           },
                         },
                         received_credits: {
@@ -10765,6 +15181,278 @@ export class AccountResource extends StripeResource {
                                       fields: {
                                         expires_at: {kind: 'int64_string'},
                                         requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            offramp: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            onramp: {
+                              kind: 'object',
+                              fields: {
+                                crypto_wallets: {
+                                  kind: 'object',
+                                  fields: {
+                                    brl: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    cop: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    eur: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    mxn: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
                                       },
                                     },
                                   },
@@ -11066,6 +15754,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         paper_checks: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        pix: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -13750,6 +18455,11 @@ export namespace Account {
         us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
         /**
+         * Allow the merchant to process Vipps payments.
+         */
+        vipps_payments?: Capabilities.VippsPayments;
+
+        /**
          * Allow the merchant to process Zip payments.
          */
         zip_payments?: Capabilities.ZipPayments;
@@ -14641,6 +19351,23 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<UsBankTransferPayments.StatusDetail>;
+        }
+
+        export interface VippsPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: VippsPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: VippsPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<VippsPayments.StatusDetail>;
         }
 
         export interface ZipPayments {
@@ -18471,6 +23198,85 @@ export namespace Account {
           }
         }
 
+        export namespace VippsPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
         export namespace ZipPayments {
           export interface Protections {
             /**
@@ -18687,6 +23493,11 @@ export namespace Account {
     export namespace MoneyManager {
       export interface Capabilities {
         /**
+         * Can send or receive business custodial storage-type funds on Stripe.
+         */
+        business_custodial_storage?: Capabilities.BusinessCustodialStorage;
+
+        /**
          * Can send or receive business storage-type funds on Stripe.
          */
         business_storage?: Capabilities.BusinessStorage;
@@ -18794,6 +23605,18 @@ export namespace Account {
         | OtherString;
 
       export namespace Capabilities {
+        export interface BusinessCustodialStorage {
+          /**
+           * Can receive business custodial storage-type funds on Stripe.
+           */
+          inbound?: BusinessCustodialStorage.Inbound;
+
+          /**
+           * Can send business custodial storage-type funds on Stripe.
+           */
+          outbound?: BusinessCustodialStorage.Outbound;
+        }
+
         export interface BusinessStorage {
           /**
            * Can receive business storage-type funds on Stripe.
@@ -18847,6 +23670,16 @@ export namespace Account {
           financial_accounts?: OutboundPayments.FinancialAccounts;
 
           /**
+           * Can send crypto converted into fiat to a bank account.
+           */
+          offramp?: OutboundPayments.Offramp;
+
+          /**
+           * Can send fiat converted into crypto to a crypto wallet.
+           */
+          onramp?: OutboundPayments.Onramp;
+
+          /**
            * Can send funds from a FinancialAccount to someone else via paper check.
            */
           paper_checks?: OutboundPayments.PaperChecks;
@@ -18867,6 +23700,16 @@ export namespace Account {
            * Can send funds from a FinancialAccount to another FinancialAccount belonging to the same user.
            */
           financial_accounts?: OutboundTransfers.FinancialAccounts;
+
+          /**
+           * Can send crypto converted into fiat to a bank account belonging to the same user.
+           */
+          offramp?: OutboundTransfers.Offramp;
+
+          /**
+           * Can send fiat converted into crypto to a crypto wallet belonging to the same user.
+           */
+          onramp?: OutboundTransfers.Onramp;
         }
 
         export interface ReceivedCredits {
@@ -18879,6 +23722,16 @@ export namespace Account {
            * Can receive credits to a crypto wallet like financial address to credit a FinancialAccount.
            */
           crypto_wallets?: ReceivedCredits.CryptoWallets;
+
+          /**
+           * Can receive fiat converted from crypto through a bank-account-like financial address.
+           */
+          offramp?: ReceivedCredits.Offramp;
+
+          /**
+           * Can receive crypto converted from fiat through a crypto-wallet-like financial address.
+           */
+          onramp?: ReceivedCredits.Onramp;
         }
 
         export interface ReceivedDebits {
@@ -18886,6 +23739,420 @@ export namespace Account {
            * Can receive debits to a FinancialAccount from a bank account.
            */
           bank_accounts?: ReceivedDebits.BankAccounts;
+        }
+
+        export namespace BusinessCustodialStorage {
+          export interface Inbound {
+            /**
+             * Can receive business custodial storage-type funds on Stripe in OUSD.
+             */
+            ousd?: Inbound.Ousd;
+
+            /**
+             * Can receive business custodial storage-type funds on Stripe in USDC.
+             */
+            usdc?: Inbound.Usdc;
+          }
+
+          export interface Outbound {
+            /**
+             * Can send business custodial storage-type funds on Stripe in OUSD.
+             */
+            ousd?: Outbound.Ousd;
+
+            /**
+             * Can send business custodial storage-type funds on Stripe in USDC.
+             */
+            usdc?: Outbound.Usdc;
+          }
+
+          export namespace Inbound {
+            export interface Ousd {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Ousd.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Ousd.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Ousd.StatusDetail>;
+            }
+
+            export interface Usdc {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Usdc.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Usdc.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Usdc.StatusDetail>;
+            }
+
+            export namespace Ousd {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Usdc {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+
+          export namespace Outbound {
+            export interface Ousd {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Ousd.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Ousd.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Ousd.StatusDetail>;
+            }
+
+            export interface Usdc {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Usdc.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Usdc.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Usdc.StatusDetail>;
+            }
+
+            export namespace Ousd {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Usdc {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
         }
 
         export namespace BusinessStorage {
@@ -20893,6 +26160,20 @@ export namespace Account {
             status_details: Array<FinancialAccounts.StatusDetail>;
           }
 
+          export interface Offramp {
+            /**
+             * Bank accounts for crypto converted into fiat.
+             */
+            bank_accounts?: Offramp.BankAccounts;
+          }
+
+          export interface Onramp {
+            /**
+             * Crypto wallets for fiat converted into crypto.
+             */
+            crypto_wallets?: Onramp.CryptoWallets;
+          }
+
           export interface PaperChecks {
             /**
              * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
@@ -21226,6 +26507,1230 @@ export namespace Account {
             }
           }
 
+          export namespace Offramp {
+            export interface BankAccounts {
+              /**
+               * Can send crypto converted into BRL to a bank account.
+               */
+              brl?: BankAccounts.Brl;
+
+              /**
+               * Can send crypto converted into COP to a bank account.
+               */
+              cop?: BankAccounts.Cop;
+
+              /**
+               * Can send crypto converted into EUR to a bank account.
+               */
+              eur?: BankAccounts.Eur;
+
+              /**
+               * Can send crypto converted into GBP to a bank account.
+               */
+              gbp?: BankAccounts.Gbp;
+
+              /**
+               * Can send crypto converted into MXN to a bank account.
+               */
+              mxn?: BankAccounts.Mxn;
+
+              /**
+               * Can send crypto converted into USD to a bank account.
+               */
+              usd?: BankAccounts.Usd;
+            }
+
+            export namespace BankAccounts {
+              export interface Brl {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Brl.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Brl.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Brl.StatusDetail>;
+              }
+
+              export interface Cop {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Cop.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Cop.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Cop.StatusDetail>;
+              }
+
+              export interface Eur {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Eur.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Eur.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Eur.StatusDetail>;
+              }
+
+              export interface Gbp {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Gbp.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Gbp.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Gbp.StatusDetail>;
+              }
+
+              export interface Mxn {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Mxn.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Mxn.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Mxn.StatusDetail>;
+              }
+
+              export interface Usd {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Usd.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Usd.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Usd.StatusDetail>;
+              }
+
+              export namespace Brl {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Cop {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Eur {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Gbp {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Mxn {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Usd {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+            }
+          }
+
+          export namespace Onramp {
+            export interface CryptoWallets {
+              /**
+               * Can send BRL converted into crypto to a crypto wallet.
+               */
+              brl?: CryptoWallets.Brl;
+
+              /**
+               * Can send COP converted into crypto to a crypto wallet.
+               */
+              cop?: CryptoWallets.Cop;
+
+              /**
+               * Can send EUR converted into crypto to a crypto wallet.
+               */
+              eur?: CryptoWallets.Eur;
+
+              /**
+               * Can send GBP converted into crypto to a crypto wallet.
+               */
+              gbp?: CryptoWallets.Gbp;
+
+              /**
+               * Can send MXN converted into crypto to a crypto wallet.
+               */
+              mxn?: CryptoWallets.Mxn;
+
+              /**
+               * Can send USD converted into crypto to a crypto wallet.
+               */
+              usd?: CryptoWallets.Usd;
+            }
+
+            export namespace CryptoWallets {
+              export interface Brl {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Brl.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Brl.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Brl.StatusDetail>;
+              }
+
+              export interface Cop {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Cop.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Cop.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Cop.StatusDetail>;
+              }
+
+              export interface Eur {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Eur.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Eur.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Eur.StatusDetail>;
+              }
+
+              export interface Gbp {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Gbp.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Gbp.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Gbp.StatusDetail>;
+              }
+
+              export interface Mxn {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Mxn.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Mxn.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Mxn.StatusDetail>;
+              }
+
+              export interface Usd {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Usd.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Usd.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Usd.StatusDetail>;
+              }
+
+              export namespace Brl {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Cop {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Eur {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Gbp {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Mxn {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Usd {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+            }
+          }
+
           export namespace PaperChecks {
             export interface Protections {
               /**
@@ -21356,6 +27861,20 @@ export namespace Account {
              * Additional details about the capability's status. This value is empty when `status` is `active`.
              */
             status_details: Array<FinancialAccounts.StatusDetail>;
+          }
+
+          export interface Offramp {
+            /**
+             * Bank accounts for crypto converted into fiat.
+             */
+            bank_accounts?: Offramp.BankAccounts;
+          }
+
+          export interface Onramp {
+            /**
+             * Crypto wallets for fiat converted into crypto.
+             */
+            crypto_wallets?: Onramp.CryptoWallets;
           }
 
           export namespace BankAccounts {
@@ -21594,6 +28113,1230 @@ export namespace Account {
                 | 'provide_info';
             }
           }
+
+          export namespace Offramp {
+            export interface BankAccounts {
+              /**
+               * Can send crypto converted into BRL to a bank account belonging to the same user.
+               */
+              brl?: BankAccounts.Brl;
+
+              /**
+               * Can send crypto converted into COP to a bank account belonging to the same user.
+               */
+              cop?: BankAccounts.Cop;
+
+              /**
+               * Can send crypto converted into EUR to a bank account belonging to the same user.
+               */
+              eur?: BankAccounts.Eur;
+
+              /**
+               * Can send crypto converted into GBP to a bank account belonging to the same user.
+               */
+              gbp?: BankAccounts.Gbp;
+
+              /**
+               * Can send crypto converted into MXN to a bank account belonging to the same user.
+               */
+              mxn?: BankAccounts.Mxn;
+
+              /**
+               * Can send crypto converted into USD to a bank account belonging to the same user.
+               */
+              usd?: BankAccounts.Usd;
+            }
+
+            export namespace BankAccounts {
+              export interface Brl {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Brl.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Brl.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Brl.StatusDetail>;
+              }
+
+              export interface Cop {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Cop.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Cop.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Cop.StatusDetail>;
+              }
+
+              export interface Eur {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Eur.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Eur.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Eur.StatusDetail>;
+              }
+
+              export interface Gbp {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Gbp.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Gbp.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Gbp.StatusDetail>;
+              }
+
+              export interface Mxn {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Mxn.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Mxn.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Mxn.StatusDetail>;
+              }
+
+              export interface Usd {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Usd.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Usd.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Usd.StatusDetail>;
+              }
+
+              export namespace Brl {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Cop {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Eur {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Gbp {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Mxn {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Usd {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+            }
+          }
+
+          export namespace Onramp {
+            export interface CryptoWallets {
+              /**
+               * Can send BRL converted into crypto to a crypto wallet belonging to the same user.
+               */
+              brl?: CryptoWallets.Brl;
+
+              /**
+               * Can send COP converted into crypto to a crypto wallet belonging to the same user.
+               */
+              cop?: CryptoWallets.Cop;
+
+              /**
+               * Can send EUR converted into crypto to a crypto wallet belonging to the same user.
+               */
+              eur?: CryptoWallets.Eur;
+
+              /**
+               * Can send GBP converted into crypto to a crypto wallet belonging to the same user.
+               */
+              gbp?: CryptoWallets.Gbp;
+
+              /**
+               * Can send MXN converted into crypto to a crypto wallet belonging to the same user.
+               */
+              mxn?: CryptoWallets.Mxn;
+
+              /**
+               * Can send USD converted into crypto to a crypto wallet belonging to the same user.
+               */
+              usd?: CryptoWallets.Usd;
+            }
+
+            export namespace CryptoWallets {
+              export interface Brl {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Brl.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Brl.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Brl.StatusDetail>;
+              }
+
+              export interface Cop {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Cop.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Cop.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Cop.StatusDetail>;
+              }
+
+              export interface Eur {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Eur.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Eur.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Eur.StatusDetail>;
+              }
+
+              export interface Gbp {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Gbp.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Gbp.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Gbp.StatusDetail>;
+              }
+
+              export interface Mxn {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Mxn.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Mxn.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Mxn.StatusDetail>;
+              }
+
+              export interface Usd {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Usd.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Usd.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Usd.StatusDetail>;
+              }
+
+              export namespace Brl {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Cop {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Eur {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Gbp {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Mxn {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Usd {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+            }
+          }
         }
 
         export namespace ReceivedCredits {
@@ -21629,6 +29372,20 @@ export namespace Account {
              * Additional details about the capability's status. This value is empty when `status` is `active`.
              */
             status_details: Array<CryptoWallets.StatusDetail>;
+          }
+
+          export interface Offramp {
+            /**
+             * Bank accounts for crypto converted into fiat.
+             */
+            bank_accounts?: Offramp.BankAccounts;
+          }
+
+          export interface Onramp {
+            /**
+             * Crypto wallets for fiat converted into crypto.
+             */
+            crypto_wallets?: Onramp.CryptoWallets;
           }
 
           export namespace BankAccounts {
@@ -21788,6 +29545,1230 @@ export namespace Account {
                 | 'provide_info';
             }
           }
+
+          export namespace Offramp {
+            export interface BankAccounts {
+              /**
+               * Can receive BRL converted from crypto through a bank-account-like financial address.
+               */
+              brl?: BankAccounts.Brl;
+
+              /**
+               * Can receive COP converted from crypto through a bank-account-like financial address.
+               */
+              cop?: BankAccounts.Cop;
+
+              /**
+               * Can receive EUR converted from crypto through a bank-account-like financial address.
+               */
+              eur?: BankAccounts.Eur;
+
+              /**
+               * Can receive GBP converted from crypto through a bank-account-like financial address.
+               */
+              gbp?: BankAccounts.Gbp;
+
+              /**
+               * Can receive MXN converted from crypto through a bank-account-like financial address.
+               */
+              mxn?: BankAccounts.Mxn;
+
+              /**
+               * Can receive USD converted from crypto through a bank-account-like financial address.
+               */
+              usd?: BankAccounts.Usd;
+            }
+
+            export namespace BankAccounts {
+              export interface Brl {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Brl.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Brl.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Brl.StatusDetail>;
+              }
+
+              export interface Cop {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Cop.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Cop.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Cop.StatusDetail>;
+              }
+
+              export interface Eur {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Eur.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Eur.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Eur.StatusDetail>;
+              }
+
+              export interface Gbp {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Gbp.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Gbp.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Gbp.StatusDetail>;
+              }
+
+              export interface Mxn {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Mxn.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Mxn.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Mxn.StatusDetail>;
+              }
+
+              export interface Usd {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Usd.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Usd.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Usd.StatusDetail>;
+              }
+
+              export namespace Brl {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Cop {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Eur {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Gbp {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Mxn {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Usd {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+            }
+          }
+
+          export namespace Onramp {
+            export interface CryptoWallets {
+              /**
+               * Can receive crypto converted from BRL through a crypto-wallet-like financial address.
+               */
+              brl?: CryptoWallets.Brl;
+
+              /**
+               * Can receive crypto converted from COP through a crypto-wallet-like financial address.
+               */
+              cop?: CryptoWallets.Cop;
+
+              /**
+               * Can receive crypto converted from EUR through a crypto-wallet-like financial address.
+               */
+              eur?: CryptoWallets.Eur;
+
+              /**
+               * Can receive crypto converted from GBP through a crypto-wallet-like financial address.
+               */
+              gbp?: CryptoWallets.Gbp;
+
+              /**
+               * Can receive crypto converted from MXN through a crypto-wallet-like financial address.
+               */
+              mxn?: CryptoWallets.Mxn;
+
+              /**
+               * Can receive crypto converted from USD through a crypto-wallet-like financial address.
+               */
+              usd?: CryptoWallets.Usd;
+            }
+
+            export namespace CryptoWallets {
+              export interface Brl {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Brl.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Brl.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Brl.StatusDetail>;
+              }
+
+              export interface Cop {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Cop.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Cop.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Cop.StatusDetail>;
+              }
+
+              export interface Eur {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Eur.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Eur.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Eur.StatusDetail>;
+              }
+
+              export interface Gbp {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Gbp.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Gbp.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Gbp.StatusDetail>;
+              }
+
+              export interface Mxn {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Mxn.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Mxn.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Mxn.StatusDetail>;
+              }
+
+              export interface Usd {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Usd.Protections;
+
+                /**
+                 * The status of the Capability.
+                 */
+                status: Usd.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<Usd.StatusDetail>;
+              }
+
+              export namespace Brl {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Cop {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Eur {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Gbp {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Mxn {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace Usd {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'rejected'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'rejected_fraud'
+                    | 'rejected_incomplete_verification'
+                    | 'rejected_listed'
+                    | 'rejected_other'
+                    | 'rejected_platform_fraud'
+                    | 'rejected_platform_other'
+                    | 'rejected_platform_terms_of_service'
+                    | 'rejected_terms_of_service'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+            }
+          }
         }
 
         export namespace ReceivedDebits {
@@ -21911,6 +30892,11 @@ export namespace Account {
          * Capabilities that enable OutboundPayments via paper check.
          */
         paper_checks?: Capabilities.PaperChecks;
+
+        /**
+         * Capabilities that enable OutboundPayments to a Pix account.
+         */
+        pix?: Capabilities.Pix;
 
         /**
          * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
@@ -22047,6 +31033,23 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<PaperChecks.StatusDetail>;
+        }
+
+        export interface Pix {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: Pix.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: Pix.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<Pix.StatusDetail>;
         }
 
         export interface StripeBalance {
@@ -23548,6 +32551,85 @@ export namespace Account {
           }
         }
 
+        export namespace Pix {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
         export namespace StripeBalance {
           export interface Payouts {
             /**
@@ -23846,6 +32928,7 @@ export namespace Account {
           | 'pa_bank_account'
           | 'pe_bank_account'
           | 'ph_bank_account'
+          | 'pix'
           | 'pk_bank_account'
           | 'pl_bank_account'
           | 'pt_bank_account'
@@ -24321,6 +33404,7 @@ export namespace Account {
             | 'payco_payments'
             | 'paynow_payments'
             | 'pay_by_bank_payments'
+            | 'pix'
             | 'projects'
             | 'promptpay_payments'
             | 'received_credits.bank_accounts'
@@ -24335,6 +33419,7 @@ export namespace Account {
             | 'swish_payments'
             | 'twint_payments'
             | 'us_bank_transfer_payments'
+            | 'vipps_payments'
             | 'zip_payments'
             | OtherString;
 
@@ -27550,6 +36635,7 @@ export namespace Account {
             | 'payco_payments'
             | 'paynow_payments'
             | 'pay_by_bank_payments'
+            | 'pix'
             | 'projects'
             | 'promptpay_payments'
             | 'received_credits.bank_accounts'
@@ -27564,6 +36650,7 @@ export namespace Account {
             | 'swish_payments'
             | 'twint_payments'
             | 'us_bank_transfer_payments'
+            | 'vipps_payments'
             | 'zip_payments'
             | OtherString;
 
@@ -29033,6 +38120,11 @@ export namespace V2 {
             us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
             /**
+             * Allow the merchant to process Vipps payments.
+             */
+            vipps_payments?: Capabilities.VippsPayments;
+
+            /**
              * Allow the merchant to process Zip payments.
              */
             zip_payments?: Capabilities.ZipPayments;
@@ -29677,6 +38769,18 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: UsBankTransferPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface VippsPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: VippsPayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -30542,6 +39646,24 @@ export namespace V2 {
               }
             }
 
+            export namespace VippsPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
             export namespace ZipPayments {
               export interface Protections {
                 /**
@@ -30690,6 +39812,11 @@ export namespace V2 {
         export namespace MoneyManager {
           export interface Capabilities {
             /**
+             * Can send or receive business custodial storage-type funds on Stripe.
+             */
+            business_custodial_storage?: Capabilities.BusinessCustodialStorage;
+
+            /**
              * Can send or receive business storage-type funds on Stripe.
              */
             business_storage?: Capabilities.BusinessStorage;
@@ -30797,6 +39924,18 @@ export namespace V2 {
             | OtherString;
 
           export namespace Capabilities {
+            export interface BusinessCustodialStorage {
+              /**
+               * Can receive business custodial storage-type funds on Stripe.
+               */
+              inbound?: BusinessCustodialStorage.Inbound;
+
+              /**
+               * Can send business custodial storage-type funds on Stripe.
+               */
+              outbound?: BusinessCustodialStorage.Outbound;
+            }
+
             export interface BusinessStorage {
               /**
                * Can receive business storage-type funds on Stripe.
@@ -30850,6 +39989,16 @@ export namespace V2 {
               financial_accounts?: OutboundPayments.FinancialAccounts;
 
               /**
+               * Can send crypto converted into fiat to a bank account.
+               */
+              offramp?: OutboundPayments.Offramp;
+
+              /**
+               * Can send fiat converted into crypto to a crypto wallet.
+               */
+              onramp?: OutboundPayments.Onramp;
+
+              /**
                * Can send funds from a FinancialAccount to someone else via paper check.
                */
               paper_checks?: OutboundPayments.PaperChecks;
@@ -30870,6 +40019,16 @@ export namespace V2 {
                * Can send funds from a FinancialAccount to another FinancialAccount owned by yourself.
                */
               financial_accounts?: OutboundTransfers.FinancialAccounts;
+
+              /**
+               * Can send crypto converted into fiat to a bank account belonging to the same user.
+               */
+              offramp?: OutboundTransfers.Offramp;
+
+              /**
+               * Can send fiat converted into crypto to a crypto wallet belonging to the same user.
+               */
+              onramp?: OutboundTransfers.Onramp;
             }
 
             export interface ReceivedCredits {
@@ -30882,6 +40041,16 @@ export namespace V2 {
                * Can receive funds on a crypto wallet like financial address to credit a FinancialAccount.
                */
               crypto_wallets?: ReceivedCredits.CryptoWallets;
+
+              /**
+               * Can receive fiat converted from crypto through a bank-account-like financial address.
+               */
+              offramp?: ReceivedCredits.Offramp;
+
+              /**
+               * Can receive crypto converted from fiat through a crypto-wallet-like financial address.
+               */
+              onramp?: ReceivedCredits.Onramp;
             }
 
             export interface ReceivedDebits {
@@ -30889,6 +40058,156 @@ export namespace V2 {
                * Can receive debits to a FinancialAccount from a bank account.
                */
               bank_accounts?: ReceivedDebits.BankAccounts;
+            }
+
+            export namespace BusinessCustodialStorage {
+              export interface Inbound {
+                /**
+                 * Can receive business custodial storage-type funds on Stripe in OUSD.
+                 */
+                ousd?: Inbound.Ousd;
+
+                /**
+                 * Can receive business custodial storage-type funds on Stripe in USDC.
+                 */
+                usdc?: Inbound.Usdc;
+              }
+
+              export interface Outbound {
+                /**
+                 * Can send business custodial storage-type funds on Stripe in OUSD.
+                 */
+                ousd?: Outbound.Ousd;
+
+                /**
+                 * Can send business custodial storage-type funds on Stripe in USDC.
+                 */
+                usdc?: Outbound.Usdc;
+              }
+
+              export namespace Inbound {
+                export interface Ousd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Ousd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Usdc {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Usdc.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export namespace Ousd {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Usdc {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+              }
+
+              export namespace Outbound {
+                export interface Ousd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Ousd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Usdc {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Usdc.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export namespace Ousd {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Usdc {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+              }
             }
 
             export namespace BusinessStorage {
@@ -31622,6 +40941,20 @@ export namespace V2 {
                 requested: boolean;
               }
 
+              export interface Offramp {
+                /**
+                 * Bank accounts for crypto converted into fiat.
+                 */
+                bank_accounts?: Offramp.BankAccounts;
+              }
+
+              export interface Onramp {
+                /**
+                 * Crypto wallets for fiat converted into crypto.
+                 */
+                crypto_wallets?: Onramp.CryptoWallets;
+              }
+
               export interface PaperChecks {
                 /**
                  * Protection types to request for this capability (e.g. "psp_migration").
@@ -31706,6 +41039,438 @@ export namespace V2 {
                 }
               }
 
+              export namespace Offramp {
+                export interface BankAccounts {
+                  /**
+                   * Can send crypto converted into BRL to a bank account.
+                   */
+                  brl?: BankAccounts.Brl;
+
+                  /**
+                   * Can send crypto converted into COP to a bank account.
+                   */
+                  cop?: BankAccounts.Cop;
+
+                  /**
+                   * Can send crypto converted into EUR to a bank account.
+                   */
+                  eur?: BankAccounts.Eur;
+
+                  /**
+                   * Can send crypto converted into GBP to a bank account.
+                   */
+                  gbp?: BankAccounts.Gbp;
+
+                  /**
+                   * Can send crypto converted into MXN to a bank account.
+                   */
+                  mxn?: BankAccounts.Mxn;
+
+                  /**
+                   * Can send crypto converted into USD to a bank account.
+                   */
+                  usd?: BankAccounts.Usd;
+                }
+
+                export namespace BankAccounts {
+                  export interface Brl {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Brl.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Cop {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Cop.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Eur {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Eur.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Gbp {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Gbp.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Mxn {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Mxn.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Usd {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Usd.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export namespace Brl {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Cop {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Eur {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Gbp {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Mxn {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Usd {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+                }
+              }
+
+              export namespace Onramp {
+                export interface CryptoWallets {
+                  /**
+                   * Can send BRL converted into crypto to a crypto wallet.
+                   */
+                  brl?: CryptoWallets.Brl;
+
+                  /**
+                   * Can send COP converted into crypto to a crypto wallet.
+                   */
+                  cop?: CryptoWallets.Cop;
+
+                  /**
+                   * Can send EUR converted into crypto to a crypto wallet.
+                   */
+                  eur?: CryptoWallets.Eur;
+
+                  /**
+                   * Can send GBP converted into crypto to a crypto wallet.
+                   */
+                  gbp?: CryptoWallets.Gbp;
+
+                  /**
+                   * Can send MXN converted into crypto to a crypto wallet.
+                   */
+                  mxn?: CryptoWallets.Mxn;
+
+                  /**
+                   * Can send USD converted into crypto to a crypto wallet.
+                   */
+                  usd?: CryptoWallets.Usd;
+                }
+
+                export namespace CryptoWallets {
+                  export interface Brl {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Brl.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Cop {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Cop.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Eur {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Eur.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Gbp {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Gbp.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Mxn {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Mxn.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Usd {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Usd.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export namespace Brl {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Cop {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Eur {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Gbp {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Mxn {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Usd {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+                }
+              }
+
               export namespace PaperChecks {
                 export interface Protections {
                   /**
@@ -31762,6 +41527,20 @@ export namespace V2 {
                 requested: boolean;
               }
 
+              export interface Offramp {
+                /**
+                 * Bank accounts for crypto converted into fiat.
+                 */
+                bank_accounts?: Offramp.BankAccounts;
+              }
+
+              export interface Onramp {
+                /**
+                 * Crypto wallets for fiat converted into crypto.
+                 */
+                crypto_wallets?: Onramp.CryptoWallets;
+              }
+
               export namespace BankAccounts {
                 export interface Protections {
                   /**
@@ -31815,6 +41594,438 @@ export namespace V2 {
                   }
                 }
               }
+
+              export namespace Offramp {
+                export interface BankAccounts {
+                  /**
+                   * Can send crypto converted into BRL to a bank account belonging to the same user.
+                   */
+                  brl?: BankAccounts.Brl;
+
+                  /**
+                   * Can send crypto converted into COP to a bank account belonging to the same user.
+                   */
+                  cop?: BankAccounts.Cop;
+
+                  /**
+                   * Can send crypto converted into EUR to a bank account belonging to the same user.
+                   */
+                  eur?: BankAccounts.Eur;
+
+                  /**
+                   * Can send crypto converted into GBP to a bank account belonging to the same user.
+                   */
+                  gbp?: BankAccounts.Gbp;
+
+                  /**
+                   * Can send crypto converted into MXN to a bank account belonging to the same user.
+                   */
+                  mxn?: BankAccounts.Mxn;
+
+                  /**
+                   * Can send crypto converted into USD to a bank account belonging to the same user.
+                   */
+                  usd?: BankAccounts.Usd;
+                }
+
+                export namespace BankAccounts {
+                  export interface Brl {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Brl.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Cop {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Cop.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Eur {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Eur.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Gbp {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Gbp.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Mxn {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Mxn.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Usd {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Usd.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export namespace Brl {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Cop {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Eur {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Gbp {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Mxn {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Usd {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+                }
+              }
+
+              export namespace Onramp {
+                export interface CryptoWallets {
+                  /**
+                   * Can send BRL converted into crypto to a crypto wallet belonging to the same user.
+                   */
+                  brl?: CryptoWallets.Brl;
+
+                  /**
+                   * Can send COP converted into crypto to a crypto wallet belonging to the same user.
+                   */
+                  cop?: CryptoWallets.Cop;
+
+                  /**
+                   * Can send EUR converted into crypto to a crypto wallet belonging to the same user.
+                   */
+                  eur?: CryptoWallets.Eur;
+
+                  /**
+                   * Can send GBP converted into crypto to a crypto wallet belonging to the same user.
+                   */
+                  gbp?: CryptoWallets.Gbp;
+
+                  /**
+                   * Can send MXN converted into crypto to a crypto wallet belonging to the same user.
+                   */
+                  mxn?: CryptoWallets.Mxn;
+
+                  /**
+                   * Can send USD converted into crypto to a crypto wallet belonging to the same user.
+                   */
+                  usd?: CryptoWallets.Usd;
+                }
+
+                export namespace CryptoWallets {
+                  export interface Brl {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Brl.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Cop {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Cop.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Eur {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Eur.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Gbp {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Gbp.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Mxn {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Mxn.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Usd {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Usd.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export namespace Brl {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Cop {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Eur {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Gbp {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Mxn {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Usd {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+                }
+              }
             }
 
             export namespace ReceivedCredits {
@@ -31840,6 +42051,20 @@ export namespace V2 {
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
+              }
+
+              export interface Offramp {
+                /**
+                 * Bank accounts for crypto converted into fiat.
+                 */
+                bank_accounts?: Offramp.BankAccounts;
+              }
+
+              export interface Onramp {
+                /**
+                 * Crypto wallets for fiat converted into crypto.
+                 */
+                crypto_wallets?: Onramp.CryptoWallets;
               }
 
               export namespace BankAccounts {
@@ -31874,6 +42099,438 @@ export namespace V2 {
                      * To request a protection, pass true.
                      */
                     requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Offramp {
+                export interface BankAccounts {
+                  /**
+                   * Can receive BRL converted from crypto through a bank-account-like financial address.
+                   */
+                  brl?: BankAccounts.Brl;
+
+                  /**
+                   * Can receive COP converted from crypto through a bank-account-like financial address.
+                   */
+                  cop?: BankAccounts.Cop;
+
+                  /**
+                   * Can receive EUR converted from crypto through a bank-account-like financial address.
+                   */
+                  eur?: BankAccounts.Eur;
+
+                  /**
+                   * Can receive GBP converted from crypto through a bank-account-like financial address.
+                   */
+                  gbp?: BankAccounts.Gbp;
+
+                  /**
+                   * Can receive MXN converted from crypto through a bank-account-like financial address.
+                   */
+                  mxn?: BankAccounts.Mxn;
+
+                  /**
+                   * Can receive USD converted from crypto through a bank-account-like financial address.
+                   */
+                  usd?: BankAccounts.Usd;
+                }
+
+                export namespace BankAccounts {
+                  export interface Brl {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Brl.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Cop {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Cop.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Eur {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Eur.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Gbp {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Gbp.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Mxn {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Mxn.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Usd {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Usd.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export namespace Brl {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Cop {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Eur {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Gbp {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Mxn {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Usd {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+                }
+              }
+
+              export namespace Onramp {
+                export interface CryptoWallets {
+                  /**
+                   * Can receive crypto converted from BRL through a crypto-wallet-like financial address.
+                   */
+                  brl?: CryptoWallets.Brl;
+
+                  /**
+                   * Can receive crypto converted from COP through a crypto-wallet-like financial address.
+                   */
+                  cop?: CryptoWallets.Cop;
+
+                  /**
+                   * Can receive crypto converted from EUR through a crypto-wallet-like financial address.
+                   */
+                  eur?: CryptoWallets.Eur;
+
+                  /**
+                   * Can receive crypto converted from GBP through a crypto-wallet-like financial address.
+                   */
+                  gbp?: CryptoWallets.Gbp;
+
+                  /**
+                   * Can receive crypto converted from MXN through a crypto-wallet-like financial address.
+                   */
+                  mxn?: CryptoWallets.Mxn;
+
+                  /**
+                   * Can receive crypto converted from USD through a crypto-wallet-like financial address.
+                   */
+                  usd?: CryptoWallets.Usd;
+                }
+
+                export namespace CryptoWallets {
+                  export interface Brl {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Brl.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Cop {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Cop.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Eur {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Eur.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Gbp {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Gbp.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Mxn {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Mxn.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export interface Usd {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Usd.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  export namespace Brl {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Cop {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Eur {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Gbp {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Mxn {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Usd {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
                   }
                 }
               }
@@ -31934,6 +42591,11 @@ export namespace V2 {
              * Capabilities that enable OutboundPayments via paper check.
              */
             paper_checks?: Capabilities.PaperChecks;
+
+            /**
+             * Capabilities that enable OutboundPayments to a Pix account.
+             */
+            pix?: Capabilities.Pix;
 
             /**
              * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
@@ -32038,6 +42700,18 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: PaperChecks.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface Pix {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: Pix.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -32481,6 +43155,24 @@ export namespace V2 {
             }
 
             export namespace PaperChecks {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace Pix {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -36776,6 +47468,11 @@ export namespace V2 {
             us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
             /**
+             * Allow the merchant to process Vipps payments.
+             */
+            vipps_payments?: Capabilities.VippsPayments;
+
+            /**
              * Allow the merchant to process Zip payments.
              */
             zip_payments?: Capabilities.ZipPayments;
@@ -37420,6 +48117,18 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: UsBankTransferPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface VippsPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: VippsPayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -38285,6 +48994,24 @@ export namespace V2 {
               }
             }
 
+            export namespace VippsPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
             export namespace ZipPayments {
               export interface Protections {
                 /**
@@ -38433,6 +49160,11 @@ export namespace V2 {
         export namespace MoneyManager {
           export interface Capabilities {
             /**
+             * Can send or receive business custodial storage-type funds on Stripe.
+             */
+            business_custodial_storage?: Capabilities.BusinessCustodialStorage;
+
+            /**
              * Can send or receive business storage-type funds on Stripe.
              */
             business_storage?: Capabilities.BusinessStorage;
@@ -38540,6 +49272,18 @@ export namespace V2 {
             | OtherString;
 
           export namespace Capabilities {
+            export interface BusinessCustodialStorage {
+              /**
+               * Can receive business custodial storage-type funds on Stripe.
+               */
+              inbound?: BusinessCustodialStorage.Inbound;
+
+              /**
+               * Can send business custodial storage-type funds on Stripe.
+               */
+              outbound?: BusinessCustodialStorage.Outbound;
+            }
+
             export interface BusinessStorage {
               /**
                * Can receive business storage-type funds on Stripe.
@@ -38593,6 +49337,16 @@ export namespace V2 {
               financial_accounts?: OutboundPayments.FinancialAccounts;
 
               /**
+               * Can send crypto converted into fiat to a bank account.
+               */
+              offramp?: OutboundPayments.Offramp;
+
+              /**
+               * Can send fiat converted into crypto to a crypto wallet.
+               */
+              onramp?: OutboundPayments.Onramp;
+
+              /**
                * Can send funds from a FinancialAccount to someone else via paper check.
                */
               paper_checks?: OutboundPayments.PaperChecks;
@@ -38613,6 +49367,16 @@ export namespace V2 {
                * Can send funds from a FinancialAccount to another FinancialAccount owned by yourself.
                */
               financial_accounts?: OutboundTransfers.FinancialAccounts;
+
+              /**
+               * Can send crypto converted into fiat to a bank account belonging to the same user.
+               */
+              offramp?: OutboundTransfers.Offramp;
+
+              /**
+               * Can send fiat converted into crypto to a crypto wallet belonging to the same user.
+               */
+              onramp?: OutboundTransfers.Onramp;
             }
 
             export interface ReceivedCredits {
@@ -38625,6 +49389,16 @@ export namespace V2 {
                * Can receive funds on a crypto wallet like financial address to credit a FinancialAccount.
                */
               crypto_wallets?: ReceivedCredits.CryptoWallets;
+
+              /**
+               * Can receive fiat converted from crypto through a bank-account-like financial address.
+               */
+              offramp?: ReceivedCredits.Offramp;
+
+              /**
+               * Can receive crypto converted from fiat through a crypto-wallet-like financial address.
+               */
+              onramp?: ReceivedCredits.Onramp;
             }
 
             export interface ReceivedDebits {
@@ -38632,6 +49406,156 @@ export namespace V2 {
                * Can receive debits to a FinancialAccount from a bank account.
                */
               bank_accounts?: ReceivedDebits.BankAccounts;
+            }
+
+            export namespace BusinessCustodialStorage {
+              export interface Inbound {
+                /**
+                 * Can receive business custodial storage-type funds on Stripe in OUSD.
+                 */
+                ousd?: Inbound.Ousd;
+
+                /**
+                 * Can receive business custodial storage-type funds on Stripe in USDC.
+                 */
+                usdc?: Inbound.Usdc;
+              }
+
+              export interface Outbound {
+                /**
+                 * Can send business custodial storage-type funds on Stripe in OUSD.
+                 */
+                ousd?: Outbound.Ousd;
+
+                /**
+                 * Can send business custodial storage-type funds on Stripe in USDC.
+                 */
+                usdc?: Outbound.Usdc;
+              }
+
+              export namespace Inbound {
+                export interface Ousd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Ousd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Usdc {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Usdc.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export namespace Ousd {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Usdc {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+              }
+
+              export namespace Outbound {
+                export interface Ousd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Ousd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Usdc {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Usdc.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export namespace Ousd {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Usdc {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+              }
             }
 
             export namespace BusinessStorage {
@@ -39365,6 +50289,20 @@ export namespace V2 {
                 requested?: boolean;
               }
 
+              export interface Offramp {
+                /**
+                 * Bank accounts for crypto converted into fiat.
+                 */
+                bank_accounts?: Offramp.BankAccounts;
+              }
+
+              export interface Onramp {
+                /**
+                 * Crypto wallets for fiat converted into crypto.
+                 */
+                crypto_wallets?: Onramp.CryptoWallets;
+              }
+
               export interface PaperChecks {
                 /**
                  * Protection types to request for this capability (e.g. "psp_migration").
@@ -39449,6 +50387,438 @@ export namespace V2 {
                 }
               }
 
+              export namespace Offramp {
+                export interface BankAccounts {
+                  /**
+                   * Can send crypto converted into BRL to a bank account.
+                   */
+                  brl?: BankAccounts.Brl;
+
+                  /**
+                   * Can send crypto converted into COP to a bank account.
+                   */
+                  cop?: BankAccounts.Cop;
+
+                  /**
+                   * Can send crypto converted into EUR to a bank account.
+                   */
+                  eur?: BankAccounts.Eur;
+
+                  /**
+                   * Can send crypto converted into GBP to a bank account.
+                   */
+                  gbp?: BankAccounts.Gbp;
+
+                  /**
+                   * Can send crypto converted into MXN to a bank account.
+                   */
+                  mxn?: BankAccounts.Mxn;
+
+                  /**
+                   * Can send crypto converted into USD to a bank account.
+                   */
+                  usd?: BankAccounts.Usd;
+                }
+
+                export namespace BankAccounts {
+                  export interface Brl {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Brl.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Cop {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Cop.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Eur {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Eur.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Gbp {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Gbp.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Mxn {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Mxn.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Usd {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Usd.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export namespace Brl {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Cop {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Eur {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Gbp {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Mxn {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Usd {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+                }
+              }
+
+              export namespace Onramp {
+                export interface CryptoWallets {
+                  /**
+                   * Can send BRL converted into crypto to a crypto wallet.
+                   */
+                  brl?: CryptoWallets.Brl;
+
+                  /**
+                   * Can send COP converted into crypto to a crypto wallet.
+                   */
+                  cop?: CryptoWallets.Cop;
+
+                  /**
+                   * Can send EUR converted into crypto to a crypto wallet.
+                   */
+                  eur?: CryptoWallets.Eur;
+
+                  /**
+                   * Can send GBP converted into crypto to a crypto wallet.
+                   */
+                  gbp?: CryptoWallets.Gbp;
+
+                  /**
+                   * Can send MXN converted into crypto to a crypto wallet.
+                   */
+                  mxn?: CryptoWallets.Mxn;
+
+                  /**
+                   * Can send USD converted into crypto to a crypto wallet.
+                   */
+                  usd?: CryptoWallets.Usd;
+                }
+
+                export namespace CryptoWallets {
+                  export interface Brl {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Brl.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Cop {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Cop.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Eur {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Eur.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Gbp {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Gbp.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Mxn {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Mxn.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Usd {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Usd.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export namespace Brl {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Cop {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Eur {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Gbp {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Mxn {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Usd {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+                }
+              }
+
               export namespace PaperChecks {
                 export interface Protections {
                   /**
@@ -39505,6 +50875,20 @@ export namespace V2 {
                 requested?: boolean;
               }
 
+              export interface Offramp {
+                /**
+                 * Bank accounts for crypto converted into fiat.
+                 */
+                bank_accounts?: Offramp.BankAccounts;
+              }
+
+              export interface Onramp {
+                /**
+                 * Crypto wallets for fiat converted into crypto.
+                 */
+                crypto_wallets?: Onramp.CryptoWallets;
+              }
+
               export namespace BankAccounts {
                 export interface Protections {
                   /**
@@ -39558,6 +50942,438 @@ export namespace V2 {
                   }
                 }
               }
+
+              export namespace Offramp {
+                export interface BankAccounts {
+                  /**
+                   * Can send crypto converted into BRL to a bank account belonging to the same user.
+                   */
+                  brl?: BankAccounts.Brl;
+
+                  /**
+                   * Can send crypto converted into COP to a bank account belonging to the same user.
+                   */
+                  cop?: BankAccounts.Cop;
+
+                  /**
+                   * Can send crypto converted into EUR to a bank account belonging to the same user.
+                   */
+                  eur?: BankAccounts.Eur;
+
+                  /**
+                   * Can send crypto converted into GBP to a bank account belonging to the same user.
+                   */
+                  gbp?: BankAccounts.Gbp;
+
+                  /**
+                   * Can send crypto converted into MXN to a bank account belonging to the same user.
+                   */
+                  mxn?: BankAccounts.Mxn;
+
+                  /**
+                   * Can send crypto converted into USD to a bank account belonging to the same user.
+                   */
+                  usd?: BankAccounts.Usd;
+                }
+
+                export namespace BankAccounts {
+                  export interface Brl {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Brl.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Cop {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Cop.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Eur {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Eur.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Gbp {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Gbp.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Mxn {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Mxn.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Usd {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Usd.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export namespace Brl {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Cop {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Eur {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Gbp {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Mxn {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Usd {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+                }
+              }
+
+              export namespace Onramp {
+                export interface CryptoWallets {
+                  /**
+                   * Can send BRL converted into crypto to a crypto wallet belonging to the same user.
+                   */
+                  brl?: CryptoWallets.Brl;
+
+                  /**
+                   * Can send COP converted into crypto to a crypto wallet belonging to the same user.
+                   */
+                  cop?: CryptoWallets.Cop;
+
+                  /**
+                   * Can send EUR converted into crypto to a crypto wallet belonging to the same user.
+                   */
+                  eur?: CryptoWallets.Eur;
+
+                  /**
+                   * Can send GBP converted into crypto to a crypto wallet belonging to the same user.
+                   */
+                  gbp?: CryptoWallets.Gbp;
+
+                  /**
+                   * Can send MXN converted into crypto to a crypto wallet belonging to the same user.
+                   */
+                  mxn?: CryptoWallets.Mxn;
+
+                  /**
+                   * Can send USD converted into crypto to a crypto wallet belonging to the same user.
+                   */
+                  usd?: CryptoWallets.Usd;
+                }
+
+                export namespace CryptoWallets {
+                  export interface Brl {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Brl.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Cop {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Cop.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Eur {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Eur.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Gbp {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Gbp.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Mxn {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Mxn.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Usd {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Usd.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export namespace Brl {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Cop {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Eur {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Gbp {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Mxn {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Usd {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+                }
+              }
             }
 
             export namespace ReceivedCredits {
@@ -39583,6 +51399,20 @@ export namespace V2 {
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
+              }
+
+              export interface Offramp {
+                /**
+                 * Bank accounts for crypto converted into fiat.
+                 */
+                bank_accounts?: Offramp.BankAccounts;
+              }
+
+              export interface Onramp {
+                /**
+                 * Crypto wallets for fiat converted into crypto.
+                 */
+                crypto_wallets?: Onramp.CryptoWallets;
               }
 
               export namespace BankAccounts {
@@ -39617,6 +51447,438 @@ export namespace V2 {
                      * To request a protection, pass true.
                      */
                     requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Offramp {
+                export interface BankAccounts {
+                  /**
+                   * Can receive BRL converted from crypto through a bank-account-like financial address.
+                   */
+                  brl?: BankAccounts.Brl;
+
+                  /**
+                   * Can receive COP converted from crypto through a bank-account-like financial address.
+                   */
+                  cop?: BankAccounts.Cop;
+
+                  /**
+                   * Can receive EUR converted from crypto through a bank-account-like financial address.
+                   */
+                  eur?: BankAccounts.Eur;
+
+                  /**
+                   * Can receive GBP converted from crypto through a bank-account-like financial address.
+                   */
+                  gbp?: BankAccounts.Gbp;
+
+                  /**
+                   * Can receive MXN converted from crypto through a bank-account-like financial address.
+                   */
+                  mxn?: BankAccounts.Mxn;
+
+                  /**
+                   * Can receive USD converted from crypto through a bank-account-like financial address.
+                   */
+                  usd?: BankAccounts.Usd;
+                }
+
+                export namespace BankAccounts {
+                  export interface Brl {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Brl.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Cop {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Cop.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Eur {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Eur.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Gbp {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Gbp.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Mxn {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Mxn.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Usd {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Usd.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export namespace Brl {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Cop {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Eur {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Gbp {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Mxn {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Usd {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+                }
+              }
+
+              export namespace Onramp {
+                export interface CryptoWallets {
+                  /**
+                   * Can receive crypto converted from BRL through a crypto-wallet-like financial address.
+                   */
+                  brl?: CryptoWallets.Brl;
+
+                  /**
+                   * Can receive crypto converted from COP through a crypto-wallet-like financial address.
+                   */
+                  cop?: CryptoWallets.Cop;
+
+                  /**
+                   * Can receive crypto converted from EUR through a crypto-wallet-like financial address.
+                   */
+                  eur?: CryptoWallets.Eur;
+
+                  /**
+                   * Can receive crypto converted from GBP through a crypto-wallet-like financial address.
+                   */
+                  gbp?: CryptoWallets.Gbp;
+
+                  /**
+                   * Can receive crypto converted from MXN through a crypto-wallet-like financial address.
+                   */
+                  mxn?: CryptoWallets.Mxn;
+
+                  /**
+                   * Can receive crypto converted from USD through a crypto-wallet-like financial address.
+                   */
+                  usd?: CryptoWallets.Usd;
+                }
+
+                export namespace CryptoWallets {
+                  export interface Brl {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Brl.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Cop {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Cop.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Eur {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Eur.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Gbp {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Gbp.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Mxn {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Mxn.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export interface Usd {
+                    /**
+                     * Protection types to request for this capability (e.g. "psp_migration").
+                     */
+                    protections?: Usd.Protections;
+
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  export namespace Brl {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Cop {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Eur {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Gbp {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Mxn {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
+                  }
+
+                  export namespace Usd {
+                    export interface Protections {
+                      /**
+                       * Parameter to request psp_migration protection.
+                       */
+                      psp_migration: Protections.PspMigration;
+                    }
+
+                    export namespace Protections {
+                      export interface PspMigration {
+                        /**
+                         * To request a protection, pass true.
+                         */
+                        requested: boolean;
+                      }
+                    }
                   }
                 }
               }
@@ -39677,6 +51939,11 @@ export namespace V2 {
              * Capabilities that enable OutboundPayments via paper check.
              */
             paper_checks?: Capabilities.PaperChecks;
+
+            /**
+             * Capabilities that enable OutboundPayments to a Pix account.
+             */
+            pix?: Capabilities.Pix;
 
             /**
              * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
@@ -39781,6 +52048,18 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: PaperChecks.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface Pix {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: Pix.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -40224,6 +52503,24 @@ export namespace V2 {
             }
 
             export namespace PaperChecks {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace Pix {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.

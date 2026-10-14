@@ -9,7 +9,7 @@ export class InquiryResource extends StripeResource {
    * Lists risk inquiries for a connected account.
    */
   list(
-    params: V2.Risk.InquiryListParams,
+    params?: V2.Risk.InquiryListParams,
     options?: RequestOptions
   ): V2ListPromise<Inquiry> {
     return this._makeRequest('GET', '/v2/risk/inquiries', params, options, {
@@ -184,11 +184,6 @@ export namespace V2 {
 export namespace V2 {
   export namespace Risk {
     export interface InquiryListParams {
-      /**
-       * The account to list inquiries for.
-       */
-      account: string;
-
       /**
        * Maximum number of results to return. Default: 10. Valid range: 1-100.
        */

@@ -4727,6 +4727,11 @@ export namespace PaymentIntent {
       capture_method?: CardPresent.CaptureMethod;
 
       /**
+       * Fleet prompting data for this payment.
+       */
+      fleet?: CardPresent.Fleet | null;
+
+      /**
        * Request ability to capture this payment beyond the standard [authorization validity window](https://docs.stripe.com/terminal/features/extended-authorizations#authorization-validity)
        */
       request_extended_authorization: boolean | null;
@@ -5245,6 +5250,11 @@ export namespace PaymentIntent {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: Paypay.SetupFutureUsage;
+
+      /**
+       * A reference to the merchant subscription this payment corresponds to.
+       */
+      subscription_reference?: string | null;
     }
 
     export interface Payto {
@@ -5269,12 +5279,12 @@ export namespace PaymentIntent {
       amount_includes_iof?: Pix.AmountIncludesIof;
 
       /**
-       * The number of seconds (between 10 and 1209600) after which Pix payment will expire.
+       * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If neither expiration option is supplied, defaults to 14400 seconds (4 hours). Mutually exclusive with `expires_at`.
        */
       expires_after_seconds: number | null;
 
       /**
-       * The timestamp at which the Pix expires.
+       * The absolute Unix timestamp at which the Pix expires. When supplied as an input, it must be between 60 and 1209600 seconds from the current time at validation, inclusive. If neither expiration option is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually exclusive with `expires_after_seconds`.
        */
       expires_at: number | null;
 
@@ -6102,6 +6112,13 @@ export namespace PaymentIntent {
         | 'manual'
         | 'manual_preferred';
 
+      export interface Fleet {
+        /**
+         * Fleet prompts and values collected for this transaction.
+         */
+        transaction_data: Array<Fleet.TransactionDatum>;
+      }
+
       export type RequestMulticapture = 'if_available' | 'never' | OtherString;
 
       export type RequestReauthorization =
@@ -6123,6 +6140,49 @@ export namespace PaymentIntent {
           | 'interconnection_loss'
           | 'lock'
           | 'replacement_cash_system';
+      }
+
+      export namespace Fleet {
+        export interface TransactionDatum {
+          /**
+           * The prompt that the Terminal SDK displays to collect this Fleet value.
+           */
+          prompt: TransactionDatum.Prompt;
+
+          /**
+           * Whether the collected value is printed on the receipt.
+           */
+          receipt_behavior: TransactionDatum.ReceiptBehavior;
+
+          /**
+           * The value collected for this Fleet prompt.
+           */
+          value: string;
+        }
+
+        export namespace TransactionDatum {
+          export type Prompt =
+            | 'additional_fleet_data_1'
+            | 'additional_fleet_data_2'
+            | 'driver_id'
+            | 'employee_number'
+            | 'entered_data_alphanumeric'
+            | 'entered_data_numeric'
+            | 'generic_id'
+            | 'invoice_number'
+            | 'odometer'
+            | 'postal_code'
+            | 'reefer_hours'
+            | 'replacement_car'
+            | 'trailer_number'
+            | 'trip_number'
+            | 'unit_number'
+            | 'vehicle_id'
+            | 'vehicle_tag'
+            | 'work_order';
+
+          export type ReceiptBehavior = 'omit' | 'print';
+        }
       }
 
       export namespace Routing {
@@ -6882,7 +6942,7 @@ export interface PaymentIntentCreateParams {
   payment_details?: PaymentIntentCreateParams.PaymentDetails;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://docs.stripe.com/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
+   * The ID of a PaymentMethod to attach to this PaymentIntent.
    *
    * If you don't provide the `payment_method` parameter or the `source` parameter with `confirm=true`, `source` automatically populates with `customer.default_source` to improve migration for users of the Charges API. We recommend that you explicitly provide the `payment_method` moving forward.
    * If the payment method is attached to a Customer, you must also provide the ID of that Customer as the [customer](https://docs.stripe.com/api#create_payment_intent-customer) parameter of this PaymentIntent.
@@ -11942,6 +12002,11 @@ export namespace PaymentIntentCreateParams {
       capture_method?: CardPresent.CaptureMethod;
 
       /**
+       * Fleet prompting data for this payment.
+       */
+      fleet?: Emptyable<CardPresent.Fleet>;
+
+      /**
        * Payment details for payment method specific funding transaction fields.
        */
       payment_details?: CardPresent.PaymentDetails;
@@ -12579,6 +12644,11 @@ export namespace PaymentIntentCreateParams {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: Emptyable<Paypay.SetupFutureUsage>;
+
+      /**
+       * The merchant's subscription identifier for this off-session charge.
+       */
+      subscription_reference?: string;
     }
 
     export interface Payto {
@@ -12608,12 +12678,12 @@ export namespace PaymentIntentCreateParams {
       amount_includes_iof?: Pix.AmountIncludesIof;
 
       /**
-       * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+       * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If neither expiration option is supplied, defaults to 14400 seconds (4 hours). Mutually exclusive with `expires_at`.
        */
       expires_after_seconds?: number;
 
       /**
-       * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+       * The absolute Unix timestamp at which the Pix expires, between 60 and 1209600 seconds from the current time. If neither expiration option is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually exclusive with `expires_after_seconds`.
        */
       expires_at?: number;
 
@@ -13592,6 +13662,13 @@ export namespace PaymentIntentCreateParams {
         | 'manual'
         | 'manual_preferred';
 
+      export interface Fleet {
+        /**
+         * Fleet prompts and values collected for this transaction.
+         */
+        transaction_data?: Emptyable<Array<Fleet.TransactionDatum>>;
+      }
+
       export interface PaymentDetails {
         /**
          * Money services details for payment method specific funding fields.
@@ -13620,6 +13697,49 @@ export namespace PaymentIntentCreateParams {
           | 'interconnection_loss'
           | 'lock'
           | 'replacement_cash_system';
+      }
+
+      export namespace Fleet {
+        export interface TransactionDatum {
+          /**
+           * The prompt that the Terminal SDK displays to collect this Fleet value.
+           */
+          prompt: TransactionDatum.Prompt;
+
+          /**
+           * Whether the collected value is printed on the receipt. Defaults to `omit`.
+           */
+          receipt_behavior?: TransactionDatum.ReceiptBehavior;
+
+          /**
+           * The value collected for this Fleet prompt.
+           */
+          value: Emptyable<string>;
+        }
+
+        export namespace TransactionDatum {
+          export type Prompt =
+            | 'additional_fleet_data_1'
+            | 'additional_fleet_data_2'
+            | 'driver_id'
+            | 'employee_number'
+            | 'entered_data_alphanumeric'
+            | 'entered_data_numeric'
+            | 'generic_id'
+            | 'invoice_number'
+            | 'odometer'
+            | 'postal_code'
+            | 'reefer_hours'
+            | 'replacement_car'
+            | 'trailer_number'
+            | 'trip_number'
+            | 'unit_number'
+            | 'vehicle_id'
+            | 'vehicle_tag'
+            | 'work_order';
+
+          export type ReceiptBehavior = 'omit' | 'print';
+        }
       }
 
       export namespace PaymentDetails {
@@ -20690,6 +20810,11 @@ export namespace PaymentIntentUpdateParams {
       capture_method?: CardPresent.CaptureMethod;
 
       /**
+       * Fleet prompting data for this payment.
+       */
+      fleet?: Emptyable<CardPresent.Fleet>;
+
+      /**
        * Payment details for payment method specific funding transaction fields.
        */
       payment_details?: CardPresent.PaymentDetails;
@@ -21327,6 +21452,11 @@ export namespace PaymentIntentUpdateParams {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: Emptyable<Paypay.SetupFutureUsage>;
+
+      /**
+       * The merchant's subscription identifier for this off-session charge.
+       */
+      subscription_reference?: string;
     }
 
     export interface Payto {
@@ -21356,12 +21486,12 @@ export namespace PaymentIntentUpdateParams {
       amount_includes_iof?: Pix.AmountIncludesIof;
 
       /**
-       * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+       * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If neither expiration option is supplied, defaults to 14400 seconds (4 hours). Mutually exclusive with `expires_at`.
        */
       expires_after_seconds?: number;
 
       /**
-       * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+       * The absolute Unix timestamp at which the Pix expires, between 60 and 1209600 seconds from the current time. If neither expiration option is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually exclusive with `expires_after_seconds`.
        */
       expires_at?: number;
 
@@ -22340,6 +22470,13 @@ export namespace PaymentIntentUpdateParams {
         | 'manual'
         | 'manual_preferred';
 
+      export interface Fleet {
+        /**
+         * Fleet prompts and values collected for this transaction.
+         */
+        transaction_data?: Emptyable<Array<Fleet.TransactionDatum>>;
+      }
+
       export interface PaymentDetails {
         /**
          * Money services details for payment method specific funding fields.
@@ -22368,6 +22505,49 @@ export namespace PaymentIntentUpdateParams {
           | 'interconnection_loss'
           | 'lock'
           | 'replacement_cash_system';
+      }
+
+      export namespace Fleet {
+        export interface TransactionDatum {
+          /**
+           * The prompt that the Terminal SDK displays to collect this Fleet value.
+           */
+          prompt: TransactionDatum.Prompt;
+
+          /**
+           * Whether the collected value is printed on the receipt. Defaults to `omit`.
+           */
+          receipt_behavior?: TransactionDatum.ReceiptBehavior;
+
+          /**
+           * The value collected for this Fleet prompt.
+           */
+          value: Emptyable<string>;
+        }
+
+        export namespace TransactionDatum {
+          export type Prompt =
+            | 'additional_fleet_data_1'
+            | 'additional_fleet_data_2'
+            | 'driver_id'
+            | 'employee_number'
+            | 'entered_data_alphanumeric'
+            | 'entered_data_numeric'
+            | 'generic_id'
+            | 'invoice_number'
+            | 'odometer'
+            | 'postal_code'
+            | 'reefer_hours'
+            | 'replacement_car'
+            | 'trailer_number'
+            | 'trip_number'
+            | 'unit_number'
+            | 'vehicle_id'
+            | 'vehicle_tag'
+            | 'work_order';
+
+          export type ReceiptBehavior = 'omit' | 'print';
+        }
       }
 
       export namespace PaymentDetails {
@@ -27240,7 +27420,7 @@ export interface PaymentIntentConfirmParams {
   payment_details?: Emptyable<PaymentIntentConfirmParams.PaymentDetails>;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://docs.stripe.com/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
+   * The ID of a PaymentMethod to attach to this PaymentIntent.
    * If the payment method is attached to a Customer, it must match the [customer](https://docs.stripe.com/api#create_payment_intent-customer) that is set on this PaymentIntent.
    */
   payment_method?: string;
@@ -32193,6 +32373,11 @@ export namespace PaymentIntentConfirmParams {
       capture_method?: CardPresent.CaptureMethod;
 
       /**
+       * Fleet prompting data for this payment.
+       */
+      fleet?: Emptyable<CardPresent.Fleet>;
+
+      /**
        * Payment details for payment method specific funding transaction fields.
        */
       payment_details?: CardPresent.PaymentDetails;
@@ -32830,6 +33015,11 @@ export namespace PaymentIntentConfirmParams {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: Emptyable<Paypay.SetupFutureUsage>;
+
+      /**
+       * The merchant's subscription identifier for this off-session charge.
+       */
+      subscription_reference?: string;
     }
 
     export interface Payto {
@@ -32859,12 +33049,12 @@ export namespace PaymentIntentConfirmParams {
       amount_includes_iof?: Pix.AmountIncludesIof;
 
       /**
-       * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+       * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If neither expiration option is supplied, defaults to 14400 seconds (4 hours). Mutually exclusive with `expires_at`.
        */
       expires_after_seconds?: number;
 
       /**
-       * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+       * The absolute Unix timestamp at which the Pix expires, between 60 and 1209600 seconds from the current time. If neither expiration option is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually exclusive with `expires_after_seconds`.
        */
       expires_at?: number;
 
@@ -33843,6 +34033,13 @@ export namespace PaymentIntentConfirmParams {
         | 'manual'
         | 'manual_preferred';
 
+      export interface Fleet {
+        /**
+         * Fleet prompts and values collected for this transaction.
+         */
+        transaction_data?: Emptyable<Array<Fleet.TransactionDatum>>;
+      }
+
       export interface PaymentDetails {
         /**
          * Money services details for payment method specific funding fields.
@@ -33871,6 +34068,49 @@ export namespace PaymentIntentConfirmParams {
           | 'interconnection_loss'
           | 'lock'
           | 'replacement_cash_system';
+      }
+
+      export namespace Fleet {
+        export interface TransactionDatum {
+          /**
+           * The prompt that the Terminal SDK displays to collect this Fleet value.
+           */
+          prompt: TransactionDatum.Prompt;
+
+          /**
+           * Whether the collected value is printed on the receipt. Defaults to `omit`.
+           */
+          receipt_behavior?: TransactionDatum.ReceiptBehavior;
+
+          /**
+           * The value collected for this Fleet prompt.
+           */
+          value: Emptyable<string>;
+        }
+
+        export namespace TransactionDatum {
+          export type Prompt =
+            | 'additional_fleet_data_1'
+            | 'additional_fleet_data_2'
+            | 'driver_id'
+            | 'employee_number'
+            | 'entered_data_alphanumeric'
+            | 'entered_data_numeric'
+            | 'generic_id'
+            | 'invoice_number'
+            | 'odometer'
+            | 'postal_code'
+            | 'reefer_hours'
+            | 'replacement_car'
+            | 'trailer_number'
+            | 'trip_number'
+            | 'unit_number'
+            | 'vehicle_id'
+            | 'vehicle_tag'
+            | 'work_order';
+
+          export type ReceiptBehavior = 'omit' | 'print';
+        }
       }
 
       export namespace PaymentDetails {

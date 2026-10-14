@@ -1574,6 +1574,11 @@ export namespace Terminal {
     balance?: ReaderActivateGiftCardParams.Balance;
 
     /**
+     * Enables cancel button on gift card operation screens.
+     */
+    enable_customer_cancellation?: boolean;
+
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
@@ -1616,6 +1621,11 @@ export namespace Terminal {
     brand: ReaderCashoutGiftCardParams.Brand;
 
     /**
+     * Enables cancel button on gift card operation screens.
+     */
+    enable_customer_cancellation?: boolean;
+
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
@@ -1636,6 +1646,11 @@ export namespace Terminal {
      * The brand of the gift card.
      */
     brand: ReaderCheckGiftCardBalanceParams.Brand;
+
+    /**
+     * Enables cancel button on gift card operation screens.
+     */
+    enable_customer_cancellation?: boolean;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -2049,6 +2064,11 @@ export namespace Terminal {
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
     currency: string;
+
+    /**
+     * Enables cancel button on gift card operation screens.
+     */
+    enable_customer_cancellation?: boolean;
 
     /**
      * Specifies which fields in the response should be expanded.
