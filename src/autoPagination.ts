@@ -201,12 +201,7 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     this.stripeResource = stripeResource;
     this.method = method;
     // Snapshot params so later mutations by the caller don't leak into
-    // subsequent page requests. Mirrors the real request pipeline: coerce
-    // through the request schema first so bigint/Decimal fields become
-    // their final wire-format strings, then deep-clone with the same
-    // stringify logic RequestSender uses to serialize the body. Once
-    // coerced, nothing unserializable remains, so this is now safe where
-    // a plain JSON round-trip on the raw params was not.
+    // subsequent page requests.
     this.params = params
       ? (JSON.parse(
           jsonStringifyRequestData(
