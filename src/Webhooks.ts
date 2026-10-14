@@ -258,7 +258,7 @@ export function createWebhooks(
         encodedHeader,
         this.EXPECTED_SCHEME
       );
-      if (!secret) {
+      if (!secret || /^[ \t\r\n\f\v]*$/.test(secret)) {
         throw new StripeSignatureVerificationError(header, payload, {
           message:
             'No webhook secret value was provided. It should start with `whsec_`',
@@ -304,7 +304,7 @@ export function createWebhooks(
         encodedHeader,
         this.EXPECTED_SCHEME
       );
-      if (!secret) {
+      if (!secret || /^[ \t\r\n\f\v]*$/.test(secret)) {
         throw new StripeSignatureVerificationError(header, payload, {
           message:
             'No webhook secret value was provided. It should start with `whsec_`',

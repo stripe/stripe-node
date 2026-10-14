@@ -709,6 +709,57 @@ describe('StripeEventNotificationHandler', () => {
 
       expect(errorThrown).to.be.true;
     });
+
+    it('should reject blank webhook secrets', () => {
+      const blankSecrets = [
+        '',
+        ' ',
+        '\t',
+        '\r',
+        '\n',
+        '\f',
+        '\v',
+        ' \t\r\n\f\v',
+      ];
+
+      for (const secret of blankSecrets) {
+        expect(() => {
+          stripe.notificationHandler(secret, async () => {});
+        }).to.throw('webhookSecret must be a non-empty string');
+      }
+    });
+
+    it('should preserve surrounding whitespace in the webhook secret', async () => {
+      const secret = ` \t${DUMMY_WEBHOOK_SECRET}\r\n`;
+      let fallbackCalled = false;
+      const handler = stripe.notificationHandler(secret, async () => {
+        fallbackCalled = true;
+      });
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload: v1BillingMeterPayload,
+        secret,
+      });
+
+      await handler.handle(v1BillingMeterPayload, header);
+
+      expect(fallbackCalled).to.be.true;
+    });
+
+    it('should accept a non-breaking-space-only webhook secret', async () => {
+      const secret = '\u00a0';
+      let fallbackCalled = false;
+      const handler = stripe.notificationHandler(secret, async () => {
+        fallbackCalled = true;
+      });
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload: v1BillingMeterPayload,
+        secret,
+      });
+
+      await handler.handle(v1BillingMeterPayload, header);
+
+      expect(fallbackCalled).to.be.true;
+    });
   });
 
   describe('registeredEventTypes', () => {
@@ -925,12 +976,6 @@ describe('StripeEventNotificationHandlerWithoutVerification', () => {
     );
     expect(typeof handler.on).to.equal('function');
     expect(typeof handler.handle).to.equal('function');
-  });
-
-  it('should throw when constructing the original handler with an empty webhookSecret', () => {
-    expect(() => {
-      stripe.notificationHandler('', async () => {});
-    }).to.throw(/webhookSecret must be a non-empty string/);
   });
 
   describe('preHandle', () => {
