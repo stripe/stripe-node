@@ -54,7 +54,7 @@ export namespace BalanceSettings {
     /**
      * The default settlement currency for the account.
      */
-    default_settlement_currency?: string | null;
+    default_settlement_currency?: string;
 
     /**
      * Settings specific to the account's payouts.

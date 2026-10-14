@@ -460,6 +460,8 @@ export namespace PaymentRecord {
 
     card_present?: PaymentMethodDetails.CardPresent;
 
+    carecredit?: PaymentMethodDetails.Carecredit;
+
     cashapp?: PaymentMethodDetails.Cashapp;
 
     crypto?: PaymentMethodDetails.Crypto;
@@ -476,6 +478,8 @@ export namespace PaymentRecord {
     eps?: PaymentMethodDetails.Eps;
 
     fpx?: PaymentMethodDetails.Fpx;
+
+    getflex?: PaymentMethodDetails.Getflex;
 
     gift_card?: PaymentMethodDetails.GiftCard;
 
@@ -540,6 +544,8 @@ export namespace PaymentRecord {
 
     qris?: PaymentMethodDetails.Qris;
 
+    rakuten_pay?: PaymentMethodDetails.RakutenPay;
+
     rechnung?: PaymentMethodDetails.Rechnung;
 
     revolut_pay?: PaymentMethodDetails.RevolutPay;
@@ -555,6 +561,8 @@ export namespace PaymentRecord {
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
     sequra?: PaymentMethodDetails.Sequra;
+
+    sezzle?: PaymentMethodDetails.Sezzle;
 
     shopeepay?: PaymentMethodDetails.Shopeepay;
 
@@ -1217,6 +1225,8 @@ export namespace PaymentRecord {
       wallet?: CardPresent.Wallet;
     }
 
+    export interface Carecredit {}
+
     export interface Cashapp {
       /**
        * A unique and immutable identifier assigned by Cash App to every buyer.
@@ -1308,6 +1318,8 @@ export namespace PaymentRecord {
        */
       transaction_id: string | null;
     }
+
+    export interface Getflex {}
 
     export interface GiftCard {
       /**
@@ -1882,6 +1894,8 @@ export namespace PaymentRecord {
 
     export interface Qris {}
 
+    export interface RakutenPay {}
+
     export interface Rechnung {
       /**
        * Payment portal URL.
@@ -1984,6 +1998,8 @@ export namespace PaymentRecord {
        */
       transaction_id: string | null;
     }
+
+    export interface Sezzle {}
 
     export interface Shopeepay {}
 

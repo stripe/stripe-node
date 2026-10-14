@@ -156,6 +156,8 @@ export namespace ConfirmationToken {
 
     card_present?: PaymentMethodPreview.CardPresent;
 
+    carecredit?: PaymentMethodPreview.Carecredit;
+
     cashapp?: PaymentMethodPreview.Cashapp;
 
     crypto?: PaymentMethodPreview.Crypto;
@@ -172,6 +174,8 @@ export namespace ConfirmationToken {
     eps?: PaymentMethodPreview.Eps;
 
     fpx?: PaymentMethodPreview.Fpx;
+
+    getflex?: PaymentMethodPreview.Getflex;
 
     gift_card?: PaymentMethodPreview.GiftCard;
 
@@ -229,6 +233,8 @@ export namespace ConfirmationToken {
 
     qris?: PaymentMethodPreview.Qris;
 
+    rakuten_pay?: PaymentMethodPreview.RakutenPay;
+
     rechnung?: PaymentMethodPreview.Rechnung;
 
     revolut_pay?: PaymentMethodPreview.RevolutPay;
@@ -242,6 +248,8 @@ export namespace ConfirmationToken {
     sepa_debit?: PaymentMethodPreview.SepaDebit;
 
     sequra?: PaymentMethodPreview.Sequra;
+
+    sezzle?: PaymentMethodPreview.Sezzle;
 
     shopeepay?: PaymentMethodPreview.Shopeepay;
 
@@ -677,6 +685,8 @@ export namespace ConfirmationToken {
       wallet?: CardPresent.Wallet;
     }
 
+    export interface Carecredit {}
+
     export interface Cashapp {
       /**
        * A unique and immutable identifier assigned by Cash App to every buyer.
@@ -711,6 +721,8 @@ export namespace ConfirmationToken {
        */
       bank: Fpx.Bank;
     }
+
+    export interface Getflex {}
 
     export interface GiftCard {
       /**
@@ -1001,6 +1013,8 @@ export namespace ConfirmationToken {
 
     export interface Qris {}
 
+    export interface RakutenPay {}
+
     export interface Rechnung {
       dob?: Rechnung.Dob;
     }
@@ -1047,6 +1061,8 @@ export namespace ConfirmationToken {
 
     export interface Sequra {}
 
+    export interface Sezzle {}
+
     export interface Shopeepay {}
 
     export interface Sofort {
@@ -1087,12 +1103,14 @@ export namespace ConfirmationToken {
       | 'boleto'
       | 'card'
       | 'card_present'
+      | 'carecredit'
       | 'cashapp'
       | 'crypto'
       | 'custom'
       | 'customer_balance'
       | 'eps'
       | 'fpx'
+      | 'getflex'
       | 'gift_card'
       | 'giropay'
       | 'gopay'
@@ -1121,6 +1139,7 @@ export namespace ConfirmationToken {
       | 'pix'
       | 'promptpay'
       | 'qris'
+      | 'rakuten_pay'
       | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
@@ -1128,6 +1147,7 @@ export namespace ConfirmationToken {
       | 'scalapay'
       | 'sepa_debit'
       | 'sequra'
+      | 'sezzle'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'

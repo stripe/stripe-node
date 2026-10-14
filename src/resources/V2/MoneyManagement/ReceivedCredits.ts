@@ -472,6 +472,11 @@ export namespace ReceivedCredit {
       aba?: OriginatingBankAccount.Aba;
 
       /**
+       * Hash containing the transaction bank details. Present if `type` field value is `bre_b`.
+       */
+      bre_b?: OriginatingBankAccount.BreB;
+
+      /**
        * Hash containing the transaction bank details. Present if `type` field value is `clabe`.
        */
       clabe?: OriginatingBankAccount.Clabe;
@@ -485,6 +490,16 @@ export namespace ReceivedCredit {
        * Hash containing the transaction bank details. Present if `type` field value is `iban`.
        */
       iban?: OriginatingBankAccount.Iban;
+
+      /**
+       * Hash containing the transaction bank details. Present if `type` field value is `nip`.
+       */
+      nip?: OriginatingBankAccount.Nip;
+
+      /**
+       * Hash containing the transaction bank details. Present if `type` field value is `pix`.
+       */
+      pix?: OriginatingBankAccount.Pix;
 
       /**
        * Hash containing the transaction bank details. Present if `type` field value is `sort_code`.
@@ -662,6 +677,23 @@ export namespace ReceivedCredit {
         routing_number?: string;
       }
 
+      export interface BreB {
+        /**
+         * The name of the account holder that sent the payment.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The last 4 digits of the account number that originated the transfer.
+         */
+        last4?: string;
+
+        /**
+         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+         */
+        network: BreB.Network;
+      }
+
       export interface Clabe {
         /**
          * The name of the account holder that sent the payment.
@@ -748,6 +780,55 @@ export namespace ReceivedCredit {
         network: Iban.Network;
       }
 
+      export interface Nip {
+        /**
+         * The name of the account holder that sent the payment.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The Nigerian bank code of the bank that originated the transfer.
+         */
+        bank_code?: string;
+
+        /**
+         * The name of the bank that originated the transfer.
+         */
+        bank_name?: string;
+
+        /**
+         * The last 4 digits of the account number that originated the transfer.
+         */
+        last4?: string;
+
+        /**
+         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+         */
+        network: Nip.Network;
+      }
+
+      export interface Pix {
+        /**
+         * The name of the account holder that sent the payment.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The bank name the transfer was received from.
+         */
+        bank_name?: string;
+
+        /**
+         * The Pix BR code of the account that originated the transfer.
+         */
+        br_code?: string;
+
+        /**
+         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+         */
+        network: Pix.Network;
+      }
+
       export interface SortCode {
         /**
          * The account holder name of the bank account the transfer was received from.
@@ -782,9 +863,12 @@ export namespace ReceivedCredit {
 
       export type Type =
         | 'aba'
+        | 'bre_b'
         | 'clabe'
         | 'cpa'
         | 'iban'
+        | 'nip'
+        | 'pix'
         | 'sort_code'
         | OtherString;
 
@@ -797,6 +881,10 @@ export namespace ReceivedCredit {
           | OtherString;
       }
 
+      export namespace BreB {
+        export type Network = 'bre_b' | OtherString;
+      }
+
       export namespace Clabe {
         export type Network = 'spei' | OtherString;
       }
@@ -807,6 +895,14 @@ export namespace ReceivedCredit {
 
       export namespace Iban {
         export type Network = 'sepa_credit_transfer' | 'swift' | OtherString;
+      }
+
+      export namespace Nip {
+        export type Network = 'nip' | OtherString;
+      }
+
+      export namespace Pix {
+        export type Network = 'pix' | OtherString;
       }
 
       export namespace SortCode {

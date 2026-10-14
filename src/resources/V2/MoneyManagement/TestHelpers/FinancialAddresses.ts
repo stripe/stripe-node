@@ -87,8 +87,10 @@ export namespace V2 {
         export type Network =
           | 'ach'
           | 'acss'
+          | 'bre_b'
           | 'chaps'
           | 'fps'
+          | 'pix'
           | 'rtp'
           | 'sepa_credit_transfer'
           | 'swift'

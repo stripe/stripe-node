@@ -28,6 +28,10 @@ export class AccountEvaluationResource extends StripeResource {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
                 },
+                user_merchant_fit: {
+                  kind: 'object',
+                  fields: {score: {kind: 'decimal_string'}},
+                },
                 user_multi_accounting: {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
@@ -60,6 +64,10 @@ export class AccountEvaluationResource extends StripeResource {
               kind: 'object',
               fields: {
                 user_account_sharing: {
+                  kind: 'object',
+                  fields: {score: {kind: 'decimal_string'}},
+                },
+                user_merchant_fit: {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
                 },
@@ -136,7 +144,7 @@ export namespace AccountEvaluation {
     account?: string;
 
     /**
-     * The v1 customer ID of the account, for users not yet migrated to v2/accounts.
+     * The v1 customer ID of the account, for users not yet migrated to v2 accounts.
      */
     customer?: string;
 
@@ -158,6 +166,11 @@ export namespace AccountEvaluation {
     user_account_sharing?: EvaluatedSignals.UserAccountSharing;
 
     /**
+     * User-merchant fit result for the evaluation, when available.
+     */
+    user_merchant_fit?: EvaluatedSignals.UserMerchantFit;
+
+    /**
      * User multi-accounting result for the evaluation, when available.
      */
     user_multi_accounting?: EvaluatedSignals.UserMultiAccounting;
@@ -166,17 +179,24 @@ export namespace AccountEvaluation {
   export type PendingSignal =
     | 'fraudulent_website'
     | 'user_account_sharing'
+    | 'user_merchant_fit'
     | 'user_multi_accounting'
     | OtherString;
 
   export type RequestedSignal =
     | 'fraudulent_website'
     | 'user_account_sharing'
+    | 'user_merchant_fit'
     | 'user_multi_accounting'
     | OtherString;
 
   export namespace AccountDetails {
     export interface Data {
+      /**
+       * The account's contact email.
+       */
+      contact_email?: string;
+
       /**
        * Default account settings.
        */
@@ -278,6 +298,28 @@ export namespace AccountEvaluation {
       signal?: string;
     }
 
+    export interface UserMerchantFit {
+      /**
+       * Timestamp at which the signal was evaluated.
+       */
+      evaluated_at?: string;
+
+      /**
+       * Categorical assessment of the user-merchant fit.
+       */
+      fit_level: UserMerchantFit.FitLevel;
+
+      /**
+       * The specific fit score for the user, between 0.00 and 100.00. Absent when fit_level is unknown.
+       */
+      score?: Decimal;
+
+      /**
+       * The account signal ID containing the full user-merchant fit signal result.
+       */
+      signal?: string;
+    }
+
     export interface UserMultiAccounting {
       /**
        * Timestamp at which the signal was evaluated.
@@ -318,6 +360,15 @@ export namespace AccountEvaluation {
         | 'unknown';
     }
 
+    export namespace UserMerchantFit {
+      export type FitLevel =
+        | 'standard'
+        | 'strong'
+        | 'unknown'
+        | 'very_strong'
+        | OtherString;
+    }
+
     export namespace UserMultiAccounting {
       export type RiskLevel =
         | 'elevated'
@@ -355,7 +406,7 @@ export namespace V2 {
         account?: string;
 
         /**
-         * The v1 customer ID of the account, for users not yet migrated to v2/accounts.
+         * The v1 customer ID of the account, for users not yet migrated to v2 accounts.
          */
         customer?: string;
 
@@ -368,6 +419,7 @@ export namespace V2 {
       export type RequestedSignal =
         | 'fraudulent_website'
         | 'user_account_sharing'
+        | 'user_merchant_fit'
         | 'user_multi_accounting'
         | OtherString;
 
@@ -501,6 +553,11 @@ export namespace V2 {
 
       export namespace AccountDetails {
         export interface Data {
+          /**
+           * The account's contact email.
+           */
+          contact_email?: string;
+
           /**
            * Default account settings.
            */

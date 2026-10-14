@@ -477,7 +477,7 @@ export namespace InvoiceItem {
 
   export interface ProrationDetails {
     /**
-     * For a credit proration, links to the debit invoice line items or invoice item that the credit applies to.
+     * For a credit proration, links to the debit that the credit applies to. The reference is to an invoice item if the debit was pending when the credit was created, and to invoice line items if the debit was already invoiced.
      */
     credited_items: ProrationDetails.CreditedItems | null;
 
