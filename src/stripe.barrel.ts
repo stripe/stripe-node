@@ -32,6 +32,7 @@ import {
   PaginationParams,
   Emptyable,
   Decimal,
+  OtherString,
 } from './shared.js';
 
 // StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
@@ -75,12 +76,24 @@ export {
   RangeQueryParam,
   PaginationParams,
   Emptyable,
+  OtherString,
 };
 
 export {Decimal};
 
 export {StripeContext as StripeContextType};
 export {StripeRawError};
+export type StripeEventNotificationHandler = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandler;
+export type StripeEventNotificationHandlerWithoutVerification = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandlerWithoutVerification;
+export type UnhandledNotificationDetails = import('./StripeEventNotificationHandler.js').UnhandledNotificationDetails;
+export type HttpClientInterface = import('./net/HttpClient.js').HttpClientInterface;
+export type HttpClientResponseInterface = import('./net/HttpClient.js').HttpClientResponseInterface;
+export type CryptoProvider = import('./crypto/CryptoProvider.js').CryptoProvider;
+export type StripeResource = import('./StripeResource.js').StripeResource;
+export type RawErrorType = import('./Types.js').RawErrorType;
+export type Webhooks = import('./Webhooks.js').WebhookObject;
+export type WebhookTestHeaderOptions = import('./Webhooks.js').WebhookTestHeaderOptions;
+export type Signature = import('./Webhooks.js').WebhookSignatureObject;
 // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
 // ErrorTypeNamespaces: The end of the section generated from our OpenAPI spec
 export import Events = V2.Core.Events;

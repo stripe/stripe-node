@@ -4,6 +4,7 @@ import {RequestHeaders, RequestData} from '../Types.js';
 import {
   HttpClient,
   HttpClientResponse,
+  HttpClientResponseBodyError,
   NodeHttpClientInterface,
   NodeHttpClientResponseInterface,
 } from './HttpClient.js';
@@ -68,34 +69,23 @@ export class NodeHttpClient extends HttpClient
           ciphers: 'DEFAULT:!aNULL:!eNULL:!LOW:!EXPORT:!SSLv2:!MD5',
         });
 
+        let requestTimedOut = false;
+
         req.setTimeout(timeout, () => {
+          requestTimedOut = true;
           req.destroy(HttpClient.makeTimeoutError());
         });
 
-        req.on('response', (res) => {
-          resolve(new NodeHttpClientResponse(res));
+        req.on('response', (response) => {
+          resolve(new NodeHttpClientResponse(response, () => requestTimedOut));
         });
 
         req.on('error', (error) => {
           reject(error);
         });
 
-        req.once('socket', (socket) => {
-          if (socket.connecting) {
-            socket.once(
-              isInsecureConnection ? 'connect' : 'secureConnect',
-              () => {
-                // Send payload; we're safe:
-                req.write(requestData);
-                req.end();
-              }
-            );
-          } else {
-            // we're already connected
-            req.write(requestData);
-            req.end();
-          }
-        });
+        req.write(requestData);
+        req.end();
       }
     );
 
@@ -106,17 +96,23 @@ export class NodeHttpClient extends HttpClient
 export class NodeHttpClientResponse extends HttpClientResponse
   implements NodeHttpClientResponseInterface {
   _res: http_.IncomingMessage;
+  _isRequestTimedOut: () => boolean;
 
-  constructor(res: http_.IncomingMessage) {
+  constructor(
+    res: http_.IncomingMessage,
+    isRequestTimedOut: () => boolean = (): boolean => false
+  ) {
     // @ts-ignore
     super(res.statusCode, res.headers || {});
     this._res = res;
+    this._isRequestTimedOut = isRequestTimedOut;
   }
 
   getRawResponse(): http_.IncomingMessage {
     return this._res;
   }
 
+  /** Returns the raw Node response stream; stream errors are emitted unchanged. */
   toStream(streamCompleteCallback: () => void): http_.IncomingMessage {
     // The raw response is itself the stream, so we just return that. To be
     // backwards compatible, we should invoke the streamCompleteCallback only
@@ -125,21 +121,37 @@ export class NodeHttpClientResponse extends HttpClientResponse
     return this._res;
   }
 
+  /** Buffers and parses the body; body-read failures are normalized for SDK handling. */
   toJSON(): any {
     return new Promise((resolve, reject) => {
       let response = '';
+      const makeBodyError = (error: unknown): HttpClientResponseBodyError =>
+        HttpClient.makeResponseBodyError(
+          this._isRequestTimedOut() ? HttpClient.makeTimeoutError() : error
+        );
 
       this._res.setEncoding('utf8');
       this._res.on('data', (chunk) => {
         response += chunk;
       });
+      // Node only emits 'error' on an IncomingMessage when a listener is
+      // attached; without one, a connection that stalls or drops after the
+      // headers arrive never emits 'end' either, and this promise would hang
+      // forever. See https://github.com/stripe/stripe-node/issues/2814.
+      this._res.once('error', (error) => {
+        reject(makeBodyError(error));
+      });
+      // Not every truncated response emits an 'error', so treat closing before
+      // the body is complete as a failure too.
+      this._res.once('close', () => {
+        if (!this._res.complete) {
+          reject(makeBodyError(null));
+        }
+      });
       this._res.once('end', () => {
         try {
-          resolve(JSON.parse(response));
+          resolve(this._parseResponseBody(response));
         } catch (e) {
-          if (e instanceof Error) {
-            (e as any).rawBody = response;
-          }
           reject(e);
         }
       });

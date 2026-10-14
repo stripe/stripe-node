@@ -6,11 +6,12 @@ import {
   HttpClientInterface,
   HttpClientResponseInterface,
 } from './net/HttpClient.js';
-import {PlatformFunctions} from './platform/PlatformFunctions.js';
-import {HttpClientResponseError, RequestSender} from './RequestSender.js';
+import {HttpClientResponseError} from './RequestSender.js';
 import {StripeContext} from './StripeContext.js';
 import {Stripe} from './stripe.core.js';
 import {AppInfo} from './lib.js';
+// errorTypeImports: The beginning of the section generated from our OpenAPI spec
+// errorTypeImports: The end of the section generated from our OpenAPI spec
 
 export type ApiMode = 'v1' | 'v2';
 export type BaseAddress = 'api' | 'files' | 'connect' | 'meter_events';
@@ -30,7 +31,12 @@ export type V2RuntimeSchema =
   | {kind: 'decimal_string'}
   | {kind: 'object'; fields: Record<string, V2RuntimeSchema>}
   | {kind: 'array'; element: V2RuntimeSchema}
-  | {kind: 'nullable'; inner: V2RuntimeSchema};
+  | {kind: 'nullable'; inner: V2RuntimeSchema}
+  | {
+      kind: 'discriminatedUnion';
+      discriminator: string;
+      variants: Record<string, V2RuntimeSchema>;
+    };
 export type MethodSpec = {
   method: string;
   methodType?: string;
@@ -130,23 +136,25 @@ export type StreamingFile = {
   file: {data: EventEmitter};
 };
 export type StripeRawError = {
+  // errorRawFields: The beginning of the section generated from our OpenAPI spec
   message?: string;
   user_message?: string;
   type?: RawErrorType;
-  headers?: {[header: string]: string};
-  statusCode?: number;
-  requestId?: string;
   code?: string;
   doc_url?: string;
   decline_code?: string;
   param?: string;
-  detail?: string | Error | HttpClientResponseError;
   charge?: string;
   payment_method_type?: string;
   payment_intent?: any;
   payment_method?: any;
   setup_intent?: any;
   source?: any;
+  // errorRawFields: The end of the section generated from our OpenAPI spec
+  headers?: {[header: string]: string};
+  statusCode?: number;
+  requestId?: string;
+  detail?: string | Error | HttpClientResponseError;
   exception?: any;
 };
 /**

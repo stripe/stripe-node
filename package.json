@@ -1,10 +1,10 @@
 {
   "name": "stripe",
-  "version": "22.2.3",
+  "version": "23.0.0",
   "description": "Stripe API wrapper",
   "author": "Stripe <support@stripe.com> (https://stripe.com/)",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "main": "cjs/stripe.cjs.node.js",
   "devDependencies": {
@@ -37,7 +37,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "@types/node": ">=18"
+    "@types/node": ">=20"
   },
   "peerDependenciesMeta": {
     "@types/node": {
@@ -48,6 +48,10 @@
     "test": "tsc -p tsconfig.cjs.json && mocha"
   },
   "exports": {
+    "extensibility": {
+      "import": "./esm/stripe.esm.extensibility.js",
+      "require": "./cjs/stripe.cjs.extensibility.js"
+    },
     "browser": {
       "import": "./esm/stripe.esm.worker.js",
       "require": "./cjs/stripe.cjs.worker.js"
