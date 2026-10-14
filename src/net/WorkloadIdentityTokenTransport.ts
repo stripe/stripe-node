@@ -18,6 +18,8 @@ export type WorkloadIdentityTokenResponse = {
   statusCode: number;
   /** The raw response body. Parsing is left to the caller so that a malformed body can be reported as such. */
   body: string;
+  /** The `request-id` response header, when the server sent one. */
+  requestId?: string;
 };
 
 /**
@@ -58,5 +60,9 @@ export async function postWorkloadIdentityToken(
     clearTimeout(timeoutId);
   }
 
-  return {statusCode: res.status, body: await res.text()};
+  return {
+    statusCode: res.status,
+    body: await res.text(),
+    requestId: res.headers?.get('request-id') ?? undefined,
+  };
 }

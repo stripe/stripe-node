@@ -284,6 +284,7 @@ export class WorkloadIdentityCredentials {
           assertion
         )} ${EXCHANGE_GUIDANCE}`,
         statusCode: response.statusCode,
+        requestId: response.requestId,
         code: readString(parsed, 'error'),
       });
     }
@@ -295,6 +296,7 @@ export class WorkloadIdentityCredentials {
           'The Stripe workload identity token exchange returned a response without a usable access_token. ' +
           EXCHANGE_GUIDANCE,
         statusCode: response.statusCode,
+        requestId: response.requestId,
       });
     }
 

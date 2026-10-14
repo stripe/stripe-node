@@ -1021,7 +1021,11 @@ describe('workload identity', () => {
 
       const response = await postWorkloadIdentityToken('a=b', nodeFetch);
 
-      expect(response).to.deep.equal({statusCode: 201, body: '{"ok":true}'});
+      expect(response).to.deep.equal({
+        statusCode: 201,
+        body: '{"ok":true}',
+        requestId: undefined,
+      });
       expect(scope.isDone()).to.equal(true);
     });
 
