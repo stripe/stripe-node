@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig.cjs.json",
+    "compilerOptions": {
+        "types": [
+            "node",
+            "mocha"
+        ],
+        "rootDir": "./src",
+    },
+    "ts-node": {
+        "experimentalResolver": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "test/**/*.ts"
+    ]
+}
