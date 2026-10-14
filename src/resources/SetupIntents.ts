@@ -330,6 +330,7 @@ export namespace SetupIntent {
     | 'capchase_pay'
     | 'card'
     | 'card_present'
+    | 'carecredit'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -344,6 +345,7 @@ export namespace SetupIntent {
     | 'fpx'
     | 'gcash'
     | 'getbalance'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -386,6 +388,7 @@ export namespace SetupIntent {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -393,6 +396,7 @@ export namespace SetupIntent {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shop_pay'
     | 'shopeepay'
     | 'sofort'
@@ -449,11 +453,13 @@ export namespace SetupIntent {
     | 'blik'
     | 'boleto'
     | 'card'
+    | 'carecredit'
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -480,6 +486,7 @@ export namespace SetupIntent {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -487,6 +494,7 @@ export namespace SetupIntent {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -1818,6 +1826,7 @@ export namespace SetupIntentCreateParams {
     | 'capchase_pay'
     | 'card'
     | 'card_present'
+    | 'carecredit'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -1832,6 +1841,7 @@ export namespace SetupIntentCreateParams {
     | 'fpx'
     | 'gcash'
     | 'getbalance'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -1874,6 +1884,7 @@ export namespace SetupIntentCreateParams {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -1881,6 +1892,7 @@ export namespace SetupIntentCreateParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shop_pay'
     | 'shopeepay'
     | 'sofort'
@@ -1931,11 +1943,13 @@ export namespace SetupIntentCreateParams {
     | 'blik'
     | 'boleto'
     | 'card'
+    | 'carecredit'
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -1962,6 +1976,7 @@ export namespace SetupIntentCreateParams {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -1969,6 +1984,7 @@ export namespace SetupIntentCreateParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -2069,6 +2085,11 @@ export namespace SetupIntentCreateParams {
     boleto?: PaymentMethodData.Boleto;
 
     /**
+     * If this is a `carecredit` PaymentMethod, this hash contains details about the CareCredit payment method.
+     */
+    carecredit?: PaymentMethodData.Carecredit;
+
+    /**
      * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
      */
     cashapp?: PaymentMethodData.Cashapp;
@@ -2092,6 +2113,11 @@ export namespace SetupIntentCreateParams {
      * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
      */
     fpx?: PaymentMethodData.Fpx;
+
+    /**
+     * If this is a `getflex` PaymentMethod, this hash contains details about the GetFlex payment method.
+     */
+    getflex?: PaymentMethodData.Getflex;
 
     /**
      * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
@@ -2244,6 +2270,11 @@ export namespace SetupIntentCreateParams {
     radar_options?: PaymentMethodData.RadarOptions;
 
     /**
+     * If this is a `rakuten_pay` PaymentMethod, this hash contains details about the Rakuten Pay payment method.
+     */
+    rakuten_pay?: PaymentMethodData.RakutenPay;
+
+    /**
      * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
      */
     rechnung?: PaymentMethodData.Rechnung;
@@ -2277,6 +2308,11 @@ export namespace SetupIntentCreateParams {
      * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
      */
     sequra?: PaymentMethodData.Sequra;
+
+    /**
+     * If this is a `sezzle` PaymentMethod, this hash contains details about the Sezzle payment method.
+     */
+    sezzle?: PaymentMethodData.Sezzle;
 
     /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
@@ -2603,6 +2639,8 @@ export namespace SetupIntentCreateParams {
       tax_id: string;
     }
 
+    export interface Carecredit {}
+
     export interface Cashapp {}
 
     export interface Crypto {}
@@ -2627,6 +2665,8 @@ export namespace SetupIntentCreateParams {
        */
       bank: Fpx.Bank;
     }
+
+    export interface Getflex {}
 
     export interface GiftCard {
       /**
@@ -2763,6 +2803,8 @@ export namespace SetupIntentCreateParams {
       session?: string;
     }
 
+    export interface RakutenPay {}
+
     export interface Rechnung {
       /**
        * Customer's date of birth
@@ -2786,6 +2828,8 @@ export namespace SetupIntentCreateParams {
     }
 
     export interface Sequra {}
+
+    export interface Sezzle {}
 
     export interface Shopeepay {}
 
@@ -2825,11 +2869,13 @@ export namespace SetupIntentCreateParams {
       | 'bizum'
       | 'blik'
       | 'boleto'
+      | 'carecredit'
       | 'cashapp'
       | 'crypto'
       | 'customer_balance'
       | 'eps'
       | 'fpx'
+      | 'getflex'
       | 'gift_card'
       | 'giropay'
       | 'gopay'
@@ -2857,6 +2903,7 @@ export namespace SetupIntentCreateParams {
       | 'pix'
       | 'promptpay'
       | 'qris'
+      | 'rakuten_pay'
       | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
@@ -2864,6 +2911,7 @@ export namespace SetupIntentCreateParams {
       | 'scalapay'
       | 'sepa_debit'
       | 'sequra'
+      | 'sezzle'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -4153,6 +4201,7 @@ export namespace SetupIntentUpdateParams {
     | 'capchase_pay'
     | 'card'
     | 'card_present'
+    | 'carecredit'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -4167,6 +4216,7 @@ export namespace SetupIntentUpdateParams {
     | 'fpx'
     | 'gcash'
     | 'getbalance'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -4209,6 +4259,7 @@ export namespace SetupIntentUpdateParams {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -4216,6 +4267,7 @@ export namespace SetupIntentUpdateParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shop_pay'
     | 'shopeepay'
     | 'sofort'
@@ -4252,11 +4304,13 @@ export namespace SetupIntentUpdateParams {
     | 'blik'
     | 'boleto'
     | 'card'
+    | 'carecredit'
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -4283,6 +4337,7 @@ export namespace SetupIntentUpdateParams {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -4290,6 +4345,7 @@ export namespace SetupIntentUpdateParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -4383,6 +4439,11 @@ export namespace SetupIntentUpdateParams {
     boleto?: PaymentMethodData.Boleto;
 
     /**
+     * If this is a `carecredit` PaymentMethod, this hash contains details about the CareCredit payment method.
+     */
+    carecredit?: PaymentMethodData.Carecredit;
+
+    /**
      * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
      */
     cashapp?: PaymentMethodData.Cashapp;
@@ -4406,6 +4467,11 @@ export namespace SetupIntentUpdateParams {
      * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
      */
     fpx?: PaymentMethodData.Fpx;
+
+    /**
+     * If this is a `getflex` PaymentMethod, this hash contains details about the GetFlex payment method.
+     */
+    getflex?: PaymentMethodData.Getflex;
 
     /**
      * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
@@ -4558,6 +4624,11 @@ export namespace SetupIntentUpdateParams {
     radar_options?: PaymentMethodData.RadarOptions;
 
     /**
+     * If this is a `rakuten_pay` PaymentMethod, this hash contains details about the Rakuten Pay payment method.
+     */
+    rakuten_pay?: PaymentMethodData.RakutenPay;
+
+    /**
      * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
      */
     rechnung?: PaymentMethodData.Rechnung;
@@ -4591,6 +4662,11 @@ export namespace SetupIntentUpdateParams {
      * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
      */
     sequra?: PaymentMethodData.Sequra;
+
+    /**
+     * If this is a `sezzle` PaymentMethod, this hash contains details about the Sezzle payment method.
+     */
+    sezzle?: PaymentMethodData.Sezzle;
 
     /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
@@ -4857,6 +4933,8 @@ export namespace SetupIntentUpdateParams {
       tax_id: string;
     }
 
+    export interface Carecredit {}
+
     export interface Cashapp {}
 
     export interface Crypto {}
@@ -4881,6 +4959,8 @@ export namespace SetupIntentUpdateParams {
        */
       bank: Fpx.Bank;
     }
+
+    export interface Getflex {}
 
     export interface GiftCard {
       /**
@@ -5017,6 +5097,8 @@ export namespace SetupIntentUpdateParams {
       session?: string;
     }
 
+    export interface RakutenPay {}
+
     export interface Rechnung {
       /**
        * Customer's date of birth
@@ -5040,6 +5122,8 @@ export namespace SetupIntentUpdateParams {
     }
 
     export interface Sequra {}
+
+    export interface Sezzle {}
 
     export interface Shopeepay {}
 
@@ -5079,11 +5163,13 @@ export namespace SetupIntentUpdateParams {
       | 'bizum'
       | 'blik'
       | 'boleto'
+      | 'carecredit'
       | 'cashapp'
       | 'crypto'
       | 'customer_balance'
       | 'eps'
       | 'fpx'
+      | 'getflex'
       | 'gift_card'
       | 'giropay'
       | 'gopay'
@@ -5111,6 +5197,7 @@ export namespace SetupIntentUpdateParams {
       | 'pix'
       | 'promptpay'
       | 'qris'
+      | 'rakuten_pay'
       | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
@@ -5118,6 +5205,7 @@ export namespace SetupIntentUpdateParams {
       | 'scalapay'
       | 'sepa_debit'
       | 'sequra'
+      | 'sezzle'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -6418,6 +6506,7 @@ export namespace SetupIntentConfirmParams {
     | 'capchase_pay'
     | 'card'
     | 'card_present'
+    | 'carecredit'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -6432,6 +6521,7 @@ export namespace SetupIntentConfirmParams {
     | 'fpx'
     | 'gcash'
     | 'getbalance'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -6474,6 +6564,7 @@ export namespace SetupIntentConfirmParams {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -6481,6 +6572,7 @@ export namespace SetupIntentConfirmParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shop_pay'
     | 'shopeepay'
     | 'sofort'
@@ -6586,6 +6678,11 @@ export namespace SetupIntentConfirmParams {
     boleto?: PaymentMethodData.Boleto;
 
     /**
+     * If this is a `carecredit` PaymentMethod, this hash contains details about the CareCredit payment method.
+     */
+    carecredit?: PaymentMethodData.Carecredit;
+
+    /**
      * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
      */
     cashapp?: PaymentMethodData.Cashapp;
@@ -6609,6 +6706,11 @@ export namespace SetupIntentConfirmParams {
      * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
      */
     fpx?: PaymentMethodData.Fpx;
+
+    /**
+     * If this is a `getflex` PaymentMethod, this hash contains details about the GetFlex payment method.
+     */
+    getflex?: PaymentMethodData.Getflex;
 
     /**
      * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
@@ -6761,6 +6863,11 @@ export namespace SetupIntentConfirmParams {
     radar_options?: PaymentMethodData.RadarOptions;
 
     /**
+     * If this is a `rakuten_pay` PaymentMethod, this hash contains details about the Rakuten Pay payment method.
+     */
+    rakuten_pay?: PaymentMethodData.RakutenPay;
+
+    /**
      * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
      */
     rechnung?: PaymentMethodData.Rechnung;
@@ -6794,6 +6901,11 @@ export namespace SetupIntentConfirmParams {
      * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
      */
     sequra?: PaymentMethodData.Sequra;
+
+    /**
+     * If this is a `sezzle` PaymentMethod, this hash contains details about the Sezzle payment method.
+     */
+    sezzle?: PaymentMethodData.Sezzle;
 
     /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
@@ -7102,6 +7214,8 @@ export namespace SetupIntentConfirmParams {
       tax_id: string;
     }
 
+    export interface Carecredit {}
+
     export interface Cashapp {}
 
     export interface Crypto {}
@@ -7126,6 +7240,8 @@ export namespace SetupIntentConfirmParams {
        */
       bank: Fpx.Bank;
     }
+
+    export interface Getflex {}
 
     export interface GiftCard {
       /**
@@ -7262,6 +7378,8 @@ export namespace SetupIntentConfirmParams {
       session?: string;
     }
 
+    export interface RakutenPay {}
+
     export interface Rechnung {
       /**
        * Customer's date of birth
@@ -7285,6 +7403,8 @@ export namespace SetupIntentConfirmParams {
     }
 
     export interface Sequra {}
+
+    export interface Sezzle {}
 
     export interface Shopeepay {}
 
@@ -7324,11 +7444,13 @@ export namespace SetupIntentConfirmParams {
       | 'bizum'
       | 'blik'
       | 'boleto'
+      | 'carecredit'
       | 'cashapp'
       | 'crypto'
       | 'customer_balance'
       | 'eps'
       | 'fpx'
+      | 'getflex'
       | 'gift_card'
       | 'giropay'
       | 'gopay'
@@ -7356,6 +7478,7 @@ export namespace SetupIntentConfirmParams {
       | 'pix'
       | 'promptpay'
       | 'qris'
+      | 'rakuten_pay'
       | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
@@ -7363,6 +7486,7 @@ export namespace SetupIntentConfirmParams {
       | 'scalapay'
       | 'sepa_debit'
       | 'sequra'
+      | 'sezzle'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'

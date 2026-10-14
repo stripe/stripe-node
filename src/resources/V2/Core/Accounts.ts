@@ -35787,7 +35787,7 @@ export namespace Account {
         /**
          * Purpose of additional address.
          */
-        purpose: 'registered';
+        purpose: AdditionalAddress.Purpose;
 
         /**
          * State, county, province, or region.
@@ -35985,6 +35985,10 @@ export namespace Account {
          * Persons name in kanji script.
          */
         kanji?: ScriptNames.Kanji;
+      }
+
+      export namespace AdditionalAddress {
+        export type Purpose = 'birthplace' | 'registered';
       }
 
       export namespace AdditionalName {
@@ -45485,7 +45489,7 @@ export namespace V2 {
             /**
              * Purpose of additional address.
              */
-            purpose: 'registered';
+            purpose: AdditionalAddress.Purpose;
 
             /**
              * State, county, province, or region.
@@ -45666,6 +45670,10 @@ export namespace V2 {
              * Persons name in kanji script.
              */
             kanji?: ScriptNames.Kanji;
+          }
+
+          export namespace AdditionalAddress {
+            export type Purpose = 'birthplace' | 'registered';
           }
 
           export namespace AdditionalName {
@@ -54833,7 +54841,7 @@ export namespace V2 {
             /**
              * Purpose of additional address.
              */
-            purpose: 'registered';
+            purpose: AdditionalAddress.Purpose;
 
             /**
              * State, county, province, or region.
@@ -55014,6 +55022,10 @@ export namespace V2 {
              * Persons name in kanji script.
              */
             kanji?: ScriptNames.Kanji;
+          }
+
+          export namespace AdditionalAddress {
+            export type Purpose = 'birthplace' | 'registered';
           }
 
           export namespace AdditionalName {
@@ -55353,7 +55365,9 @@ export namespace V2 {
       limit?: number;
 
       /**
-       * Filter by the network object related to the account. If omitted, returns all Accounts regardless of the network object they have.
+       * The ID of a [Business Profile](https://docs.stripe.com/api/v2/network/business-profiles) to filter Accounts by.
+       * A Business Profile represents a business's public identity on the Stripe network.
+       * Returns only Accounts associated with that profile. If omitted, no profile filter is applied.
        */
       related_network_object?: string;
     }

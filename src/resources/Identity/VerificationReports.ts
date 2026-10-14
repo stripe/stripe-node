@@ -367,6 +367,8 @@ export namespace VerificationReport {
   }
 
   export interface Signals {
+    fraudulent_document?: Signals.FraudulentDocument;
+
     fraudulent_email?: Signals.FraudulentEmail;
 
     fraudulent_person?: Signals.FraudulentPerson;
@@ -687,6 +689,18 @@ export namespace VerificationReport {
   }
 
   export namespace Signals {
+    export interface FraudulentDocument {
+      /**
+       * Array of objects representing individual factors that contributed to the calculated risk level.
+       */
+      indicators: Array<FraudulentDocument.Indicator>;
+
+      /**
+       * Categorical assessment of the document risk.
+       */
+      risk_level: FraudulentDocument.RiskLevel;
+    }
+
     export interface FraudulentEmail {
       /**
        * Array of objects representing individual factors that contributed to the calculated risk level.
@@ -721,6 +735,51 @@ export namespace VerificationReport {
        * Categorical assessment of the phone risk.
        */
       risk_level: FraudulentPhone.RiskLevel;
+    }
+
+    export namespace FraudulentDocument {
+      export interface Indicator {
+        /**
+         * A brief explanation of how this indicator contributed to the risk level.
+         */
+        explanation: string;
+
+        /**
+         * The effect this indicator had on the overall risk level.
+         */
+        impact: Indicator.Impact;
+
+        /**
+         * The name of the specific indicator used in the risk assessment.
+         */
+        indicator: Indicator.Indicator;
+      }
+
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'not_assessed'
+        | 'unknown'
+        | OtherString;
+
+      export namespace Indicator {
+        export type Impact =
+          | 'decrease'
+          | 'neutral'
+          | 'slight_increase'
+          | 'strong_increase'
+          | OtherString;
+
+        export type Indicator =
+          | 'dob_mismatch'
+          | 'forged_document'
+          | 'name_mismatch'
+          | 'other'
+          | 'static_document'
+          | OtherString;
+      }
     }
 
     export namespace FraudulentEmail {

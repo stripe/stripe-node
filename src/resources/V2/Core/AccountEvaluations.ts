@@ -59,6 +59,11 @@ export interface AccountEvaluation {
 export namespace AccountEvaluation {
   export interface AccountData {
     /**
+     * The account's contact email.
+     */
+    contact_email?: string;
+
+    /**
      * Default account settings.
      */
     defaults?: AccountData.Defaults;
@@ -72,6 +77,7 @@ export namespace AccountEvaluation {
   export type EvaluationsTriggered =
     | 'fraudulent_website'
     | 'user_account_sharing'
+    | 'user_merchant_fit'
     | 'user_multi_accounting'
     | OtherString;
 
@@ -142,10 +148,16 @@ export namespace V2 {
       export type Signal =
         | 'fraudulent_website'
         | 'user_account_sharing'
+        | 'user_merchant_fit'
         | 'user_multi_accounting'
         | OtherString;
 
       export interface AccountData {
+        /**
+         * The account's contact email.
+         */
+        contact_email?: string;
+
         /**
          * Default account settings.
          */

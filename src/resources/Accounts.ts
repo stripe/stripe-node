@@ -1372,7 +1372,7 @@ export namespace Account {
 
     treasury?: Settings.Treasury;
 
-    wechat_pay_payments?: Settings.WechatPayPayments;
+    wechat_pay_mobile_web_payments?: Settings.WechatPayMobileWebPayments;
   }
 
   export interface TosAcceptance {
@@ -2647,11 +2647,11 @@ export namespace Account {
       tos_acceptance?: Treasury.TosAcceptance;
     }
 
-    export interface WechatPayPayments {
+    export interface WechatPayMobileWebPayments {
       /**
-       * The domains of the user's mobile web checkout pages for WeChat Pay payments. At most 4 domains are allowed.
+       * The domains of the user's mobile web checkout pages for WeChat Pay payments.
        */
-      mobile_web_domains?: Array<string>;
+      domains?: Array<string>;
     }
 
     export namespace CardIssuing {
@@ -3870,9 +3870,9 @@ export namespace AccountCreateParams {
     treasury?: Settings.Treasury;
 
     /**
-     * Settings specific to the WeChat Pay payments method.
+     * Settings specific to WeChat Pay payments made through a mobile web browser.
      */
-    wechat_pay_payments?: Settings.WechatPayPayments;
+    wechat_pay_mobile_web_payments?: Settings.WechatPayMobileWebPayments;
   }
 
   export interface TosAcceptance {
@@ -5095,11 +5095,11 @@ export namespace AccountCreateParams {
       tos_acceptance?: Treasury.TosAcceptance;
     }
 
-    export interface WechatPayPayments {
+    export interface WechatPayMobileWebPayments {
       /**
-       * The domains of the user's mobile web checkout pages for WeChat Pay payments. At most 4 domains are allowed.
+       * The domains of the user's mobile web checkout pages for WeChat Pay payments.
        */
-      mobile_web_domains?: Emptyable<Array<string>>;
+      domains?: Emptyable<Array<string>>;
     }
 
     export namespace CardIssuing {
@@ -6343,9 +6343,9 @@ export namespace AccountUpdateParams {
     treasury?: Settings.Treasury;
 
     /**
-     * Settings specific to the WeChat Pay payments method.
+     * Settings specific to WeChat Pay payments made through a mobile web browser.
      */
-    wechat_pay_payments?: Settings.WechatPayPayments;
+    wechat_pay_mobile_web_payments?: Settings.WechatPayMobileWebPayments;
   }
 
   export interface TosAcceptance {
@@ -7536,11 +7536,11 @@ export namespace AccountUpdateParams {
       tos_acceptance?: Treasury.TosAcceptance;
     }
 
-    export interface WechatPayPayments {
+    export interface WechatPayMobileWebPayments {
       /**
-       * The domains of the user's mobile web checkout pages for WeChat Pay payments. At most 4 domains are allowed.
+       * The domains of the user's mobile web checkout pages for WeChat Pay payments.
        */
-      mobile_web_domains?: Emptyable<Array<string>>;
+      domains?: Emptyable<Array<string>>;
     }
 
     export namespace CardIssuing {

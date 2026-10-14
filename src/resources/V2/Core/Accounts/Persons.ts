@@ -303,7 +303,7 @@ export namespace V2 {
           /**
            * Purpose of additional address.
            */
-          purpose: 'registered';
+          purpose: AdditionalAddress.Purpose;
 
           /**
            * State, county, province, or region.
@@ -506,6 +506,10 @@ export namespace V2 {
            * Persons name in kanji script.
            */
           kanji?: ScriptNames.Kanji;
+        }
+
+        export namespace AdditionalAddress {
+          export type Purpose = 'birthplace' | 'registered';
         }
 
         export namespace AdditionalName {
@@ -981,7 +985,7 @@ export namespace V2 {
           /**
            * Purpose of additional address.
            */
-          purpose: 'registered';
+          purpose: AdditionalAddress.Purpose;
 
           /**
            * State, county, province, or region.
@@ -1184,6 +1188,10 @@ export namespace V2 {
            * Persons name in kanji script.
            */
           kanji?: ScriptNames.Kanji;
+        }
+
+        export namespace AdditionalAddress {
+          export type Purpose = 'birthplace' | 'registered';
         }
 
         export namespace AdditionalName {

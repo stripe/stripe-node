@@ -725,6 +725,7 @@ export namespace PaymentIntent {
     | 'capchase_pay'
     | 'card'
     | 'card_present'
+    | 'carecredit'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -739,6 +740,7 @@ export namespace PaymentIntent {
     | 'fpx'
     | 'gcash'
     | 'getbalance'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -781,6 +783,7 @@ export namespace PaymentIntent {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -788,6 +791,7 @@ export namespace PaymentIntent {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shop_pay'
     | 'shopeepay'
     | 'sofort'
@@ -885,11 +889,13 @@ export namespace PaymentIntent {
     | 'blik'
     | 'boleto'
     | 'card'
+    | 'carecredit'
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -916,6 +922,7 @@ export namespace PaymentIntent {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -923,6 +930,7 @@ export namespace PaymentIntent {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -1208,6 +1216,8 @@ export namespace PaymentIntent {
 
     card_present?: PaymentMethodOptions.CardPresent;
 
+    carecredit?: PaymentMethodOptions.Carecredit;
+
     cashapp?: PaymentMethodOptions.Cashapp;
 
     crypto?: PaymentMethodOptions.Crypto;
@@ -1217,6 +1227,8 @@ export namespace PaymentIntent {
     eps?: PaymentMethodOptions.Eps;
 
     fpx?: PaymentMethodOptions.Fpx;
+
+    getflex?: PaymentMethodOptions.Getflex;
 
     gift_card?: PaymentMethodOptions.GiftCard;
 
@@ -1287,6 +1299,8 @@ export namespace PaymentIntent {
     sepa_debit?: PaymentMethodOptions.SepaDebit;
 
     sequra?: PaymentMethodOptions.Sequra;
+
+    sezzle?: PaymentMethodOptions.Sezzle;
 
     shopeepay?: PaymentMethodOptions.Shopeepay;
 
@@ -4754,6 +4768,24 @@ export namespace PaymentIntent {
       routing?: CardPresent.Routing;
     }
 
+    export interface Carecredit {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Carecredit.SetupFutureUsage;
+    }
+
     export interface Cashapp {
       /**
        * Controls when the funds will be captured from the customer's account.
@@ -4840,6 +4872,24 @@ export namespace PaymentIntent {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: 'none';
+    }
+
+    export interface Getflex {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Getflex.SetupFutureUsage;
     }
 
     export interface GiftCard {
@@ -5412,6 +5462,24 @@ export namespace PaymentIntent {
     }
 
     export interface Sequra {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Sezzle {
       /**
        * Controls when the funds will be captured from the customer's account.
        */
@@ -6193,6 +6261,10 @@ export namespace PaymentIntent {
       }
     }
 
+    export namespace Carecredit {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Cashapp {
       export type SetupFutureUsage =
         | 'none'
@@ -6318,6 +6390,10 @@ export namespace PaymentIntent {
             | OtherString;
         }
       }
+    }
+
+    export namespace Getflex {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace GiftCard {
@@ -7062,6 +7138,7 @@ export namespace PaymentIntentCreateParams {
     | 'capchase_pay'
     | 'card'
     | 'card_present'
+    | 'carecredit'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -7076,6 +7153,7 @@ export namespace PaymentIntentCreateParams {
     | 'fpx'
     | 'gcash'
     | 'getbalance'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -7118,6 +7196,7 @@ export namespace PaymentIntentCreateParams {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -7125,6 +7204,7 @@ export namespace PaymentIntentCreateParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shop_pay'
     | 'shopeepay'
     | 'sofort'
@@ -7226,11 +7306,13 @@ export namespace PaymentIntentCreateParams {
     | 'blik'
     | 'boleto'
     | 'card'
+    | 'carecredit'
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -7257,6 +7339,7 @@ export namespace PaymentIntentCreateParams {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -7264,6 +7347,7 @@ export namespace PaymentIntentCreateParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -7447,6 +7531,11 @@ export namespace PaymentIntentCreateParams {
     boleto?: PaymentMethodData.Boleto;
 
     /**
+     * If this is a `carecredit` PaymentMethod, this hash contains details about the CareCredit payment method.
+     */
+    carecredit?: PaymentMethodData.Carecredit;
+
+    /**
      * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
      */
     cashapp?: PaymentMethodData.Cashapp;
@@ -7470,6 +7559,11 @@ export namespace PaymentIntentCreateParams {
      * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
      */
     fpx?: PaymentMethodData.Fpx;
+
+    /**
+     * If this is a `getflex` PaymentMethod, this hash contains details about the GetFlex payment method.
+     */
+    getflex?: PaymentMethodData.Getflex;
 
     /**
      * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
@@ -7622,6 +7716,11 @@ export namespace PaymentIntentCreateParams {
     radar_options?: PaymentMethodData.RadarOptions;
 
     /**
+     * If this is a `rakuten_pay` PaymentMethod, this hash contains details about the Rakuten Pay payment method.
+     */
+    rakuten_pay?: PaymentMethodData.RakutenPay;
+
+    /**
      * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
      */
     rechnung?: PaymentMethodData.Rechnung;
@@ -7655,6 +7754,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
      */
     sequra?: PaymentMethodData.Sequra;
+
+    /**
+     * If this is a `sezzle` PaymentMethod, this hash contains details about the Sezzle payment method.
+     */
+    sezzle?: PaymentMethodData.Sezzle;
 
     /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
@@ -7804,6 +7908,11 @@ export namespace PaymentIntentCreateParams {
     card_present?: Emptyable<PaymentMethodOptions.CardPresent>;
 
     /**
+     * If this is a `carecredit` PaymentMethod, this sub-hash contains details about the CareCredit payment method options.
+     */
+    carecredit?: Emptyable<PaymentMethodOptions.Carecredit>;
+
+    /**
      * If this is a `cashapp` PaymentMethod, this sub-hash contains details about the Cash App Pay payment method options.
      */
     cashapp?: Emptyable<PaymentMethodOptions.Cashapp>;
@@ -7827,6 +7936,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `fpx` PaymentMethod, this sub-hash contains details about the FPX payment method options.
      */
     fpx?: Emptyable<PaymentMethodOptions.Fpx>;
+
+    /**
+     * If this is a `getflex` PaymentMethod, this sub-hash contains details about the GetFlex payment method options.
+     */
+    getflex?: Emptyable<PaymentMethodOptions.Getflex>;
 
     /**
      * If this is a `gift_card` PaymentMethod, this sub-hash contains details about the gift card payment method options.
@@ -8002,6 +8116,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `sequra` PaymentMethod, this sub-hash contains details about the SeQura payment method options.
      */
     sequra?: Emptyable<PaymentMethodOptions.Sequra>;
+
+    /**
+     * If this is a `sezzle` PaymentMethod, this sub-hash contains details about the Sezzle payment method options.
+     */
+    sezzle?: Emptyable<PaymentMethodOptions.Sezzle>;
 
     /**
      * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
@@ -11006,6 +11125,8 @@ export namespace PaymentIntentCreateParams {
       tax_id: string;
     }
 
+    export interface Carecredit {}
+
     export interface Cashapp {}
 
     export interface Crypto {}
@@ -11030,6 +11151,8 @@ export namespace PaymentIntentCreateParams {
        */
       bank: Fpx.Bank;
     }
+
+    export interface Getflex {}
 
     export interface GiftCard {
       /**
@@ -11166,6 +11289,8 @@ export namespace PaymentIntentCreateParams {
       session?: string;
     }
 
+    export interface RakutenPay {}
+
     export interface Rechnung {
       /**
        * Customer's date of birth
@@ -11189,6 +11314,8 @@ export namespace PaymentIntentCreateParams {
     }
 
     export interface Sequra {}
+
+    export interface Sezzle {}
 
     export interface Shopeepay {}
 
@@ -11228,11 +11355,13 @@ export namespace PaymentIntentCreateParams {
       | 'bizum'
       | 'blik'
       | 'boleto'
+      | 'carecredit'
       | 'cashapp'
       | 'crypto'
       | 'customer_balance'
       | 'eps'
       | 'fpx'
+      | 'getflex'
       | 'gift_card'
       | 'giropay'
       | 'gopay'
@@ -11260,6 +11389,7 @@ export namespace PaymentIntentCreateParams {
       | 'pix'
       | 'promptpay'
       | 'qris'
+      | 'rakuten_pay'
       | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
@@ -11267,6 +11397,7 @@ export namespace PaymentIntentCreateParams {
       | 'scalapay'
       | 'sepa_debit'
       | 'sequra'
+      | 'sezzle'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -12037,6 +12168,28 @@ export namespace PaymentIntentCreateParams {
       routing?: CardPresent.Routing;
     }
 
+    export interface Carecredit {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Carecredit.SetupFutureUsage>;
+    }
+
     export interface Cashapp {
       /**
        * Controls when the funds are captured from the customer's account.
@@ -12149,6 +12302,28 @@ export namespace PaymentIntentCreateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: 'none';
+    }
+
+    export interface Getflex {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Getflex.SetupFutureUsage>;
     }
 
     export interface GiftCard {
@@ -12858,6 +13033,28 @@ export namespace PaymentIntentCreateParams {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Sezzle {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: 'none';
     }
@@ -13777,6 +13974,10 @@ export namespace PaymentIntentCreateParams {
       }
     }
 
+    export namespace Carecredit {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Cashapp {
       export type SetupFutureUsage =
         | 'none'
@@ -13894,6 +14095,10 @@ export namespace PaymentIntentCreateParams {
           | 'us_bank_transfer'
           | OtherString;
       }
+    }
+
+    export namespace Getflex {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace GiftCard {
@@ -15946,6 +16151,7 @@ export namespace PaymentIntentUpdateParams {
     | 'capchase_pay'
     | 'card'
     | 'card_present'
+    | 'carecredit'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -15960,6 +16166,7 @@ export namespace PaymentIntentUpdateParams {
     | 'fpx'
     | 'gcash'
     | 'getbalance'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -16002,6 +16209,7 @@ export namespace PaymentIntentUpdateParams {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -16009,6 +16217,7 @@ export namespace PaymentIntentUpdateParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shop_pay'
     | 'shopeepay'
     | 'sofort'
@@ -16094,11 +16303,13 @@ export namespace PaymentIntentUpdateParams {
     | 'blik'
     | 'boleto'
     | 'card'
+    | 'carecredit'
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -16125,6 +16336,7 @@ export namespace PaymentIntentUpdateParams {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -16132,6 +16344,7 @@ export namespace PaymentIntentUpdateParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -16313,6 +16526,11 @@ export namespace PaymentIntentUpdateParams {
     boleto?: PaymentMethodData.Boleto;
 
     /**
+     * If this is a `carecredit` PaymentMethod, this hash contains details about the CareCredit payment method.
+     */
+    carecredit?: PaymentMethodData.Carecredit;
+
+    /**
      * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
      */
     cashapp?: PaymentMethodData.Cashapp;
@@ -16336,6 +16554,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
      */
     fpx?: PaymentMethodData.Fpx;
+
+    /**
+     * If this is a `getflex` PaymentMethod, this hash contains details about the GetFlex payment method.
+     */
+    getflex?: PaymentMethodData.Getflex;
 
     /**
      * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
@@ -16488,6 +16711,11 @@ export namespace PaymentIntentUpdateParams {
     radar_options?: PaymentMethodData.RadarOptions;
 
     /**
+     * If this is a `rakuten_pay` PaymentMethod, this hash contains details about the Rakuten Pay payment method.
+     */
+    rakuten_pay?: PaymentMethodData.RakutenPay;
+
+    /**
      * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
      */
     rechnung?: PaymentMethodData.Rechnung;
@@ -16521,6 +16749,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
      */
     sequra?: PaymentMethodData.Sequra;
+
+    /**
+     * If this is a `sezzle` PaymentMethod, this hash contains details about the Sezzle payment method.
+     */
+    sezzle?: PaymentMethodData.Sezzle;
 
     /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
@@ -16670,6 +16903,11 @@ export namespace PaymentIntentUpdateParams {
     card_present?: Emptyable<PaymentMethodOptions.CardPresent>;
 
     /**
+     * If this is a `carecredit` PaymentMethod, this sub-hash contains details about the CareCredit payment method options.
+     */
+    carecredit?: Emptyable<PaymentMethodOptions.Carecredit>;
+
+    /**
      * If this is a `cashapp` PaymentMethod, this sub-hash contains details about the Cash App Pay payment method options.
      */
     cashapp?: Emptyable<PaymentMethodOptions.Cashapp>;
@@ -16693,6 +16931,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `fpx` PaymentMethod, this sub-hash contains details about the FPX payment method options.
      */
     fpx?: Emptyable<PaymentMethodOptions.Fpx>;
+
+    /**
+     * If this is a `getflex` PaymentMethod, this sub-hash contains details about the GetFlex payment method options.
+     */
+    getflex?: Emptyable<PaymentMethodOptions.Getflex>;
 
     /**
      * If this is a `gift_card` PaymentMethod, this sub-hash contains details about the gift card payment method options.
@@ -16868,6 +17111,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `sequra` PaymentMethod, this sub-hash contains details about the SeQura payment method options.
      */
     sequra?: Emptyable<PaymentMethodOptions.Sequra>;
+
+    /**
+     * If this is a `sezzle` PaymentMethod, this sub-hash contains details about the Sezzle payment method options.
+     */
+    sezzle?: Emptyable<PaymentMethodOptions.Sezzle>;
 
     /**
      * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
@@ -19814,6 +20062,8 @@ export namespace PaymentIntentUpdateParams {
       tax_id: string;
     }
 
+    export interface Carecredit {}
+
     export interface Cashapp {}
 
     export interface Crypto {}
@@ -19838,6 +20088,8 @@ export namespace PaymentIntentUpdateParams {
        */
       bank: Fpx.Bank;
     }
+
+    export interface Getflex {}
 
     export interface GiftCard {
       /**
@@ -19974,6 +20226,8 @@ export namespace PaymentIntentUpdateParams {
       session?: string;
     }
 
+    export interface RakutenPay {}
+
     export interface Rechnung {
       /**
        * Customer's date of birth
@@ -19997,6 +20251,8 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export interface Sequra {}
+
+    export interface Sezzle {}
 
     export interface Shopeepay {}
 
@@ -20036,11 +20292,13 @@ export namespace PaymentIntentUpdateParams {
       | 'bizum'
       | 'blik'
       | 'boleto'
+      | 'carecredit'
       | 'cashapp'
       | 'crypto'
       | 'customer_balance'
       | 'eps'
       | 'fpx'
+      | 'getflex'
       | 'gift_card'
       | 'giropay'
       | 'gopay'
@@ -20068,6 +20326,7 @@ export namespace PaymentIntentUpdateParams {
       | 'pix'
       | 'promptpay'
       | 'qris'
+      | 'rakuten_pay'
       | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
@@ -20075,6 +20334,7 @@ export namespace PaymentIntentUpdateParams {
       | 'scalapay'
       | 'sepa_debit'
       | 'sequra'
+      | 'sezzle'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -20845,6 +21105,28 @@ export namespace PaymentIntentUpdateParams {
       routing?: CardPresent.Routing;
     }
 
+    export interface Carecredit {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Carecredit.SetupFutureUsage>;
+    }
+
     export interface Cashapp {
       /**
        * Controls when the funds are captured from the customer's account.
@@ -20957,6 +21239,28 @@ export namespace PaymentIntentUpdateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: 'none';
+    }
+
+    export interface Getflex {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Getflex.SetupFutureUsage>;
     }
 
     export interface GiftCard {
@@ -21666,6 +21970,28 @@ export namespace PaymentIntentUpdateParams {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Sezzle {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: 'none';
     }
@@ -22585,6 +22911,10 @@ export namespace PaymentIntentUpdateParams {
       }
     }
 
+    export namespace Carecredit {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Cashapp {
       export type SetupFutureUsage =
         | 'none'
@@ -22702,6 +23032,10 @@ export namespace PaymentIntentUpdateParams {
           | 'us_bank_transfer'
           | OtherString;
       }
+    }
+
+    export namespace Getflex {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace GiftCard {
@@ -27503,6 +27837,7 @@ export namespace PaymentIntentConfirmParams {
     | 'capchase_pay'
     | 'card'
     | 'card_present'
+    | 'carecredit'
     | 'cashapp'
     | 'check_scan'
     | 'click_to_pay'
@@ -27517,6 +27852,7 @@ export namespace PaymentIntentConfirmParams {
     | 'fpx'
     | 'gcash'
     | 'getbalance'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -27559,6 +27895,7 @@ export namespace PaymentIntentConfirmParams {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -27566,6 +27903,7 @@ export namespace PaymentIntentConfirmParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shop_pay'
     | 'shopeepay'
     | 'sofort'
@@ -27651,11 +27989,13 @@ export namespace PaymentIntentConfirmParams {
     | 'blik'
     | 'boleto'
     | 'card'
+    | 'carecredit'
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'getflex'
     | 'gift_card'
     | 'giropay'
     | 'gopay'
@@ -27682,6 +28022,7 @@ export namespace PaymentIntentConfirmParams {
     | 'pix'
     | 'promptpay'
     | 'qris'
+    | 'rakuten_pay'
     | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
@@ -27689,6 +28030,7 @@ export namespace PaymentIntentConfirmParams {
     | 'scalapay'
     | 'sepa_debit'
     | 'sequra'
+    | 'sezzle'
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
@@ -27872,6 +28214,11 @@ export namespace PaymentIntentConfirmParams {
     boleto?: PaymentMethodData.Boleto;
 
     /**
+     * If this is a `carecredit` PaymentMethod, this hash contains details about the CareCredit payment method.
+     */
+    carecredit?: PaymentMethodData.Carecredit;
+
+    /**
      * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
      */
     cashapp?: PaymentMethodData.Cashapp;
@@ -27895,6 +28242,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
      */
     fpx?: PaymentMethodData.Fpx;
+
+    /**
+     * If this is a `getflex` PaymentMethod, this hash contains details about the GetFlex payment method.
+     */
+    getflex?: PaymentMethodData.Getflex;
 
     /**
      * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
@@ -28047,6 +28399,11 @@ export namespace PaymentIntentConfirmParams {
     radar_options?: PaymentMethodData.RadarOptions;
 
     /**
+     * If this is a `rakuten_pay` PaymentMethod, this hash contains details about the Rakuten Pay payment method.
+     */
+    rakuten_pay?: PaymentMethodData.RakutenPay;
+
+    /**
      * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
      */
     rechnung?: PaymentMethodData.Rechnung;
@@ -28080,6 +28437,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
      */
     sequra?: PaymentMethodData.Sequra;
+
+    /**
+     * If this is a `sezzle` PaymentMethod, this hash contains details about the Sezzle payment method.
+     */
+    sezzle?: PaymentMethodData.Sezzle;
 
     /**
      * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
@@ -28229,6 +28591,11 @@ export namespace PaymentIntentConfirmParams {
     card_present?: Emptyable<PaymentMethodOptions.CardPresent>;
 
     /**
+     * If this is a `carecredit` PaymentMethod, this sub-hash contains details about the CareCredit payment method options.
+     */
+    carecredit?: Emptyable<PaymentMethodOptions.Carecredit>;
+
+    /**
      * If this is a `cashapp` PaymentMethod, this sub-hash contains details about the Cash App Pay payment method options.
      */
     cashapp?: Emptyable<PaymentMethodOptions.Cashapp>;
@@ -28252,6 +28619,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `fpx` PaymentMethod, this sub-hash contains details about the FPX payment method options.
      */
     fpx?: Emptyable<PaymentMethodOptions.Fpx>;
+
+    /**
+     * If this is a `getflex` PaymentMethod, this sub-hash contains details about the GetFlex payment method options.
+     */
+    getflex?: Emptyable<PaymentMethodOptions.Getflex>;
 
     /**
      * If this is a `gift_card` PaymentMethod, this sub-hash contains details about the gift card payment method options.
@@ -28427,6 +28799,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `sequra` PaymentMethod, this sub-hash contains details about the SeQura payment method options.
      */
     sequra?: Emptyable<PaymentMethodOptions.Sequra>;
+
+    /**
+     * If this is a `sezzle` PaymentMethod, this sub-hash contains details about the Sezzle payment method options.
+     */
+    sezzle?: Emptyable<PaymentMethodOptions.Sezzle>;
 
     /**
      * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
@@ -31377,6 +31754,8 @@ export namespace PaymentIntentConfirmParams {
       tax_id: string;
     }
 
+    export interface Carecredit {}
+
     export interface Cashapp {}
 
     export interface Crypto {}
@@ -31401,6 +31780,8 @@ export namespace PaymentIntentConfirmParams {
        */
       bank: Fpx.Bank;
     }
+
+    export interface Getflex {}
 
     export interface GiftCard {
       /**
@@ -31537,6 +31918,8 @@ export namespace PaymentIntentConfirmParams {
       session?: string;
     }
 
+    export interface RakutenPay {}
+
     export interface Rechnung {
       /**
        * Customer's date of birth
@@ -31560,6 +31943,8 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export interface Sequra {}
+
+    export interface Sezzle {}
 
     export interface Shopeepay {}
 
@@ -31599,11 +31984,13 @@ export namespace PaymentIntentConfirmParams {
       | 'bizum'
       | 'blik'
       | 'boleto'
+      | 'carecredit'
       | 'cashapp'
       | 'crypto'
       | 'customer_balance'
       | 'eps'
       | 'fpx'
+      | 'getflex'
       | 'gift_card'
       | 'giropay'
       | 'gopay'
@@ -31631,6 +32018,7 @@ export namespace PaymentIntentConfirmParams {
       | 'pix'
       | 'promptpay'
       | 'qris'
+      | 'rakuten_pay'
       | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
@@ -31638,6 +32026,7 @@ export namespace PaymentIntentConfirmParams {
       | 'scalapay'
       | 'sepa_debit'
       | 'sequra'
+      | 'sezzle'
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
@@ -32408,6 +32797,28 @@ export namespace PaymentIntentConfirmParams {
       routing?: CardPresent.Routing;
     }
 
+    export interface Carecredit {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Carecredit.SetupFutureUsage>;
+    }
+
     export interface Cashapp {
       /**
        * Controls when the funds are captured from the customer's account.
@@ -32520,6 +32931,28 @@ export namespace PaymentIntentConfirmParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: 'none';
+    }
+
+    export interface Getflex {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Getflex.SetupFutureUsage>;
     }
 
     export interface GiftCard {
@@ -33229,6 +33662,28 @@ export namespace PaymentIntentConfirmParams {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Sezzle {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: 'none';
     }
@@ -34148,6 +34603,10 @@ export namespace PaymentIntentConfirmParams {
       }
     }
 
+    export namespace Carecredit {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Cashapp {
       export type SetupFutureUsage =
         | 'none'
@@ -34265,6 +34724,10 @@ export namespace PaymentIntentConfirmParams {
           | 'us_bank_transfer'
           | OtherString;
       }
+    }
+
+    export namespace Getflex {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace GiftCard {

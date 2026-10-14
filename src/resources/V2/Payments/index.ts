@@ -34,7 +34,6 @@ export declare namespace Payments {
   export import OffSessionPaymentCreateParams = V2Namespace0.Payments.OffSessionPaymentCreateParams;
   export import OffSessionPaymentRetrieveParams = V2Namespace0.Payments.OffSessionPaymentRetrieveParams;
   export import OffSessionPaymentCancelParams = V2Namespace0.Payments.OffSessionPaymentCancelParams;
-  export import OffSessionPaymentCaptureParams = V2Namespace0.Payments.OffSessionPaymentCaptureParams;
   export import OffSessionPaymentPauseParams = V2Namespace0.Payments.OffSessionPaymentPauseParams;
   export import OffSessionPaymentResumeParams = V2Namespace0.Payments.OffSessionPaymentResumeParams;
   export {OffSessionPayment, OffSessionPaymentResource};
