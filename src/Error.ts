@@ -3,6 +3,8 @@
 
 import {HttpClientResponseError} from './RequestSender.js';
 import {RawErrorType, StripeRawError} from './Types.js';
+// errorImports: The beginning of the section generated from our OpenAPI spec
+// errorImports: The end of the section generated from our OpenAPI spec
 
 export const generateV1Error = (
   rawStripeError: StripeRawError
@@ -41,13 +43,10 @@ export const generateV1Error = (
 export const generateOAuthError = (
   rawStripeError: StripeRawError
 ): StripeError => {
-  const oauthType = rawStripeError.type;
-  switch (oauthType) {
-    default:
-      return new StripeOAuthError(rawStripeError);
-  }
+  return new StripeOAuthError(rawStripeError);
 };
 
+// eslint-disable-next-line complexity
 export const generateV2Error = (
   rawStripeError: StripeRawError
 ): StripeError => {
@@ -80,42 +79,45 @@ export class StripeError extends Error {
   readonly rawType?: RawErrorType;
   readonly headers?: {[header: string]: string};
   readonly requestId?: string;
+  readonly detail?: string | Error | HttpClientResponseError;
+  readonly statusCode?: number;
 
+  // errorProperties: The beginning of the section generated from our OpenAPI spec
   readonly code?: string;
   readonly doc_url?: string;
   readonly param?: string;
-  readonly detail?: string | Error | HttpClientResponseError;
-  readonly statusCode?: number;
   readonly charge?: string;
   readonly decline_code?: string;
   readonly payment_method_type?: string;
-
   readonly payment_intent?: any;
   readonly payment_method?: any;
   readonly setup_intent?: any;
   readonly source?: any;
+  // errorProperties: The end of the section generated from our OpenAPI spec
 
   constructor(raw: StripeRawError = {}, type: string | null = null) {
     super(raw.message);
     this.type = type || this.constructor.name;
     this.raw = raw;
     this.rawType = raw.type;
-    this.code = raw.code;
-    this.doc_url = raw.doc_url;
-    this.param = raw.param;
     this.detail = raw.detail;
     this.headers = raw.headers;
     this.requestId = raw.requestId;
     this.statusCode = raw.statusCode;
     this.message = raw.message ?? '';
     this.userMessage = raw.user_message;
+    // errorAssignments: The beginning of the section generated from our OpenAPI spec
+    this.code = raw.code;
+    this.doc_url = raw.doc_url;
+    this.param = raw.param;
     this.charge = raw.charge;
     this.decline_code = raw.decline_code;
+    this.payment_method_type = raw.payment_method_type;
     this.payment_intent = raw.payment_intent;
     this.payment_method = raw.payment_method;
-    this.payment_method_type = raw.payment_method_type;
     this.setup_intent = raw.setup_intent;
     this.source = raw.source;
+    // errorAssignments: The end of the section generated from our OpenAPI spec
   }
 
   /**
@@ -303,14 +305,4 @@ export class StripeUnsupportedResponseTypeError extends StripeOAuthError {
 }
 
 // classDefinitions: The beginning of the section generated from our OpenAPI spec
-export class RateLimitError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'RateLimitError');
-  }
-}
-export class TemporarySessionExpiredError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'TemporarySessionExpiredError');
-  }
-}
 // classDefinitions: The end of the section generated from our OpenAPI spec

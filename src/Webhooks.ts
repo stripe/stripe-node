@@ -5,6 +5,7 @@ import {
 } from './crypto/CryptoProvider.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {Event} from './resources/Events.js';
+import {maybeExtractFromCloudProviderEnvelope, parsePayload} from './utils.js';
 
 /**
  * Value of the `stripe-signature` header from Stripe.
@@ -16,7 +17,7 @@ import {Event} from './resources/Events.js';
  * since express should never return this header as an array,
  * only a string.
  */
-type WebhookHeader = string | string[] | Uint8Array;
+export type WebhookHeader = string | string[] | Uint8Array;
 type WebhookParsedHeader = {
   signatures: Array<string>;
   timestamp: number;
@@ -27,7 +28,7 @@ type WebhookParsedEvent = {
   decodedHeader: string;
   suspectPayloadType: boolean;
 };
-type WebhookTestHeaderOptions = {
+export type WebhookTestHeaderOptions = {
   timestamp?: number;
   payload: string;
   secret: string;
@@ -36,9 +37,13 @@ type WebhookTestHeaderOptions = {
   cryptoProvider?: CryptoProvider;
 };
 
-// export type WebhookEvent = Record<string, unknown>;
-type WebhookPayload = string | Uint8Array;
-type WebhookSignatureObject = {
+export type WebhookPayload = string | Uint8Array;
+export type WebhookSignatureObject = {
+  /**
+   * Verifies the authenticity (and recency) of a webhook, throwing a `SignatureVerificationError`
+   * if there's a mismatch. Useful for quickly validating incoming webhooks before storing them for
+   * later processing (at which time you can use the `*WithoutVerification` methods for parsing).
+   */
   verifyHeader: (
     encodedPayload: WebhookPayload,
     encodedHeader: WebhookHeader,
@@ -47,6 +52,10 @@ type WebhookSignatureObject = {
     cryptoProvider?: CryptoProvider,
     receivedAt?: number
   ) => boolean;
+  /**
+   * Verifies the authenticity (and recency) of a webhook (async version), throwing a
+   * `SignatureVerificationError` if there's a mismatch.
+   */
   verifyHeaderAsync: (
     encodedPayload: WebhookPayload,
     encodedHeader: WebhookHeader,
@@ -59,6 +68,12 @@ type WebhookSignatureObject = {
 export type WebhookObject = {
   DEFAULT_TOLERANCE: number;
   signature: WebhookSignatureObject | null;
+  /**
+   * Constructs a [snapshot event](https://docs.stripe.com/event-destinations#snapshot-payload) from an
+   * incoming webhook after verifying its authenticity. To work with a webhook that has already been
+   * verified (i.e. one from a cloud provider, an asynchronous queue, or during testing), see
+   * `constructEventWithoutVerification`.
+   */
   constructEvent: (
     payload: WebhookPayload,
     header: WebhookHeader,
@@ -67,6 +82,12 @@ export type WebhookObject = {
     cryptoProvider?: CryptoProvider,
     receivedAt?: number
   ) => Event;
+  /**
+   * Constructs a [snapshot event](https://docs.stripe.com/event-destinations#snapshot-payload) from an
+   * incoming webhook after verifying its authenticity (async version). To work with a webhook that
+   * has already been verified (i.e. one from a cloud provider, an asynchronous queue, or during
+   * testing), see `constructEventWithoutVerification`.
+   */
   constructEventAsync: (
     payload: WebhookPayload,
     header: WebhookHeader,
@@ -75,6 +96,26 @@ export type WebhookObject = {
     cryptoProvider?: CryptoProvider,
     receivedAt?: number
   ) => Promise<Event>;
+  /**
+   * Constructs a [snapshot event](https://docs.stripe.com/event-destinations#snapshot-payload) from an
+   * incoming webhook without first verifying its authenticity. Should be used after calling
+   * `webhooks.verifySignatureHeader(...)` or with input from a trusted source (such as
+   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge), or
+   * [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload). Or, to verify &
+   * construct in a single call, use `webhooks.constructEvent(...)` instead.
+   */
+  constructEventWithoutVerification: (payload: string) => Event;
+  /**
+   * Compute the `Stripe-Signature` header for a given webhook body & secret. Useful for signing
+   * payloads in unit tests.
+   *
+   * @property {number} timestamp - Timestamp of the header. Defaults to Date.now()
+   * @property {string} payload - JSON stringified payload object, containing the 'id' and 'object' parameters
+   * @property {string} secret - Stripe webhook secret 'whsec_...'
+   * @property {string} scheme - Version of API to hit. Defaults to 'v1'.
+   * @property {string} signature - Computed webhook signature
+   * @property {CryptoProvider} cryptoProvider - Crypto provider to use for computing the signature if none was provided. Defaults to NodeCryptoProvider.
+   */
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
   generateTestHeaderStringAsync: (
     opts: WebhookTestHeaderOptions
@@ -84,6 +125,15 @@ export type WebhookObject = {
 export function createWebhooks(
   platformFunctions: PlatformFunctions
 ): WebhookObject {
+  function buildEvent(jsonPayload: Record<string, unknown>): Event {
+    if (jsonPayload && jsonPayload.object === 'v2.core.event') {
+      throw new Error(
+        'You passed a thin event notification to a function that expects a webhook. Use the corresponding EventNotification method instead.'
+      );
+    }
+    return (jsonPayload as unknown) as Event;
+  }
+
   const Webhook: WebhookObject = {
     DEFAULT_TOLERANCE: 300, // 5 minutes
     signature: null,
@@ -106,7 +156,7 @@ export function createWebhooks(
           payload,
           header,
           secret,
-          tolerance || Webhook.DEFAULT_TOLERANCE,
+          tolerance ?? Webhook.DEFAULT_TOLERANCE,
           cryptoProvider,
           receivedAt
         );
@@ -118,16 +168,7 @@ export function createWebhooks(
         throw e;
       }
 
-      const jsonPayload =
-        payload instanceof Uint8Array
-          ? JSON.parse(new TextDecoder('utf8').decode(payload))
-          : JSON.parse(payload);
-      if (jsonPayload && jsonPayload.object === 'v2.core.event') {
-        throw new Error(
-          'You passed an event notification to stripe.webhooks.constructEvent, which expects a webhook payload. Use stripe.parseEventNotification instead.'
-        );
-      }
-      return jsonPayload;
+      return buildEvent(parsePayload(payload));
     },
 
     async constructEventAsync(
@@ -148,45 +189,37 @@ export function createWebhooks(
         payload,
         header,
         secret,
-        tolerance || Webhook.DEFAULT_TOLERANCE,
+        tolerance ?? Webhook.DEFAULT_TOLERANCE,
         cryptoProvider,
         receivedAt
       );
 
-      const jsonPayload =
-        payload instanceof Uint8Array
-          ? JSON.parse(new TextDecoder('utf8').decode(payload))
-          : JSON.parse(payload);
-      if (jsonPayload && jsonPayload.object === 'v2.core.event') {
-        throw new Error(
-          'You passed an event notification to stripe.webhooks.constructEvent, which expects a webhook payload. Use stripe.parseEventNotificationAsync instead.'
-        );
-      }
-      return jsonPayload;
+      return buildEvent(parsePayload(payload));
     },
 
-    /**
-     * Generates a header to be used for webhook mocking
-     *
-     * @typedef {object} opts
-     * @property {number} timestamp - Timestamp of the header. Defaults to Date.now()
-     * @property {string} payload - JSON stringified payload object, containing the 'id' and 'object' parameters
-     * @property {string} secret - Stripe webhook secret 'whsec_...'
-     * @property {string} scheme - Version of API to hit. Defaults to 'v1'.
-     * @property {string} signature - Computed webhook signature
-     * @property {CryptoProvider} cryptoProvider - Crypto provider to use for computing the signature if none was provided. Defaults to NodeCryptoProvider.
-     */
+    constructEventWithoutVerification(payload: string): Event {
+      return buildEvent(maybeExtractFromCloudProviderEnvelope(payload));
+    },
+
     generateTestHeaderString: function(opts: WebhookTestHeaderOptions): string {
-      const preparedOpts = prepareOptions(opts);
+      try {
+        const preparedOpts = prepareOptions(opts);
 
-      const signature =
-        preparedOpts.signature ||
-        preparedOpts.cryptoProvider.computeHMACSignature(
-          preparedOpts.payloadString,
-          preparedOpts.secret
-        );
+        const signature =
+          preparedOpts.signature ||
+          preparedOpts.cryptoProvider.computeHMACSignature(
+            preparedOpts.payloadString,
+            preparedOpts.secret
+          );
 
-      return preparedOpts.generateHeaderString(signature);
+        return preparedOpts.generateHeaderString(signature);
+      } catch (e) {
+        if (e instanceof CryptoProviderOnlySupportsAsyncError) {
+          e.message +=
+            '\nUse `await generateTestHeaderStringAsync(...)` instead of `generateTestHeaderString(...)`';
+        }
+        throw e;
+      }
     },
     generateTestHeaderStringAsync: async function(
       opts: WebhookTestHeaderOptions
@@ -225,6 +258,12 @@ export function createWebhooks(
         encodedHeader,
         this.EXPECTED_SCHEME
       );
+      if (!secret) {
+        throw new StripeSignatureVerificationError(header, payload, {
+          message:
+            'No webhook secret value was provided. It should start with `whsec_`',
+        });
+      }
       const secretContainsWhitespace = /\s/.test(secret);
 
       cryptoProvider = cryptoProvider || getCryptoProvider();
@@ -233,17 +272,12 @@ export function createWebhooks(
         secret
       );
 
-      /**
-       * TODO(MAJOR): https://go/j/DEVSDK-3087
-       * Passing in 0 by default skips timestamp tolerance verifications. Although it is mostly used in test,
-       * we should change the default behavior to pass DEFAULT_TOLERANCE instead of 0 in the next major.
-       */
       validateComputedSignature(
         payload,
         header,
         details,
         expectedSignature,
-        tolerance || 0,
+        tolerance ?? Webhook.DEFAULT_TOLERANCE,
         suspectPayloadType,
         secretContainsWhitespace,
         receivedAt
@@ -270,6 +304,12 @@ export function createWebhooks(
         encodedHeader,
         this.EXPECTED_SCHEME
       );
+      if (!secret) {
+        throw new StripeSignatureVerificationError(header, payload, {
+          message:
+            'No webhook secret value was provided. It should start with `whsec_`',
+        });
+      }
       const secretContainsWhitespace = /\s/.test(secret);
 
       cryptoProvider = cryptoProvider || getCryptoProvider();
@@ -279,17 +319,12 @@ export function createWebhooks(
         secret
       );
 
-      /**
-       * TODO(MAJOR): https://go/j/DEVSDK-3087
-       * Passing in 0 by default skips timestamp tolerance verifications. Although it is mostly used in test,
-       * we should change the default behavior to pass DEFAULT_TOLERANCE instead of 0 in the next major.
-       */
       return validateComputedSignature(
         payload,
         header,
         details,
         expectedSignature,
-        tolerance || 0,
+        tolerance ?? Webhook.DEFAULT_TOLERANCE,
         suspectPayloadType,
         secretContainsWhitespace,
         receivedAt
@@ -389,9 +424,6 @@ export function createWebhooks(
    * expected signature, and that the event timestamp is within the allowed
    * {@link tolerance} window (in seconds). Set `tolerance` to `0` to skip
    * timestamp verification.
-   *
-   * TODO(MAJOR): https://go/j/DEVSDK-3087 - Change this default behavior to use DEFAULT_TOLERANCE instead of 0.
-   * By default, validateComputedSignature doesn't perform timestamp verification.
    *
    * This method is mostly meant for tests or offline processing where the delivery time
    * of the event isn't important.

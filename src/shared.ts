@@ -180,3 +180,12 @@ export interface PaginationParams {
  * in url-encoding. Both `null` and `''` behave identically.
  */
 export type Emptyable<T> = null | '' | T;
+
+/**
+ * Stripe's enums are considered either "open" or "closed". Open enums can have new values added that are backported to older API versions. Because the SDK only includes the enum members that existed when the SDK was released, values you might see at runtime may not be present in the generated types.
+ *
+ * So, we intentionally join the enum Literal types with `OtherString`, which resolves down to `string`. This is to help communicate that your integration should be prepared to handle enum variants that are listed in the API Documentation (but not the SDK).
+ *
+ * For more information, see: https://github.com/stripe/stripe-node#open-and-closed-enum
+ */
+export type OtherString = string & Record<never, never>;

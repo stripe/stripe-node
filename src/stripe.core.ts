@@ -9,8 +9,8 @@ import {
   RequestData,
   DEFAULT_BASE_ADDRESSES,
 } from './Types.js';
-import {createWebhooks} from './Webhooks.js';
-import {ApiVersion} from './apiVersion.js';
+import {createWebhooks, WebhookHeader, WebhookPayload} from './Webhooks.js';
+import {ApiVersion, ApiMajorVersion} from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
@@ -18,9 +18,16 @@ import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
   detectAIAgent,
+  maybeExtractFromCloudProviderEnvelope,
+  parsePayload,
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
+import {
+  FallbackCallback,
+  StripeEventNotificationHandler,
+  StripeEventNotificationHandlerWithoutVerification,
+} from './StripeEventNotificationHandler.js';
 import {
   RawRequestOptions,
   StripeConfig,
@@ -69,12 +76,18 @@ const ALLOWED_CONFIG_PROPERTIES = [
 
 type RequestSenderFactory = (stripe: Stripe) => RequestSender;
 
+type StripeConstructorOptions = {
+  emitter: any;
+  prevRequestMetrics: any;
+};
+
 const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 export class Stripe {
-  static PACKAGE_VERSION = '22.2.3';
+  static PACKAGE_VERSION = '23.0.0';
   static API_VERSION: typeof ApiVersion = ApiVersion;
+  static MAJOR_API_VERSION = ApiMajorVersion;
   static aiAgent = '';
   static AI_AGENT = '';
   static USER_AGENT: Record<string, string | boolean | null> = {
@@ -82,7 +95,6 @@ export class Stripe {
     lang: 'node',
     typescript: false,
   };
-  static SOURCE_HASH: string | null = null;
   static StripeResource = StripeResource;
   static resources = resources;
   static HttpClient = HttpClient;
@@ -148,17 +160,20 @@ export class Stripe {
       ...(runtimeVersion ? {lang_version: runtimeVersion} : {}),
       ...(Stripe.aiAgent ? {ai_agent: Stripe.aiAgent} : {}),
     };
-
-    Stripe.SOURCE_HASH = platformFunctions.getSourceHash();
   }
 
-  constructor(key: string, config: StripeConfig = {}) {
+  constructor(key: string, config?: StripeConfig);
+  constructor(
+    key: string,
+    config: StripeConfig = {},
+    constructorOptions?: StripeConstructorOptions
+  ) {
     const props = this._getPropsFromConfig(config);
 
     this._platformFunctions = Stripe._platformFunctions;
 
     Object.defineProperty(this, '_emitter', {
-      value: this._platformFunctions.createEmitter(),
+      value: constructorOptions?.emitter ?? this._platformFunctions.createEmitter(),
       enumerable: false,
       configurable: false,
       writable: false,
@@ -182,7 +197,7 @@ export class Stripe {
       maxNetworkRetries: validateInteger(
         'maxNetworkRetries',
         props.maxNetworkRetries,
-        2
+        this._platformFunctions.getDefaultMaxNetworkRetries()
       ),
       agent: agent,
       httpClient:
@@ -214,7 +229,7 @@ export class Stripe {
 
     this.webhooks = Stripe.webhooks;
 
-    this._prevRequestMetrics = [];
+    this._prevRequestMetrics = constructorOptions?.prevRequestMetrics ?? [];
     this._enableTelemetry = props.telemetry !== false;
     this._emitEventBodies = props.emitEventBodies === true;
 
@@ -250,6 +265,10 @@ export class Stripe {
     key: string,
     authenticator: RequestAuthenticator | null
   ): void {
+    if (!key && !authenticator) {
+      authenticator = this._platformFunctions.createDefaultAuthenticator();
+    }
+
     if (key && authenticator) {
       throw new Error("Can't specify both apiKey and authenticator");
     }
@@ -413,8 +432,11 @@ export class Stripe {
       userAgent.application = this._appInfo;
     }
 
-    if (Stripe.SOURCE_HASH) {
-      userAgent.source = Stripe.SOURCE_HASH;
+    if (this.getTelemetryEnabled()) {
+      const telemetryId = this._platformFunctions.getTelemetryId();
+      if (telemetryId) {
+        userAgent.telemetry_id = telemetryId;
+      }
     }
 
     cb(JSON.stringify(userAgent));
@@ -535,9 +557,72 @@ export class Stripe {
     return this._api[key];
   }
 
+  _buildEventNotification(
+    parsed: Record<string, unknown>
+  ): V2.Core.EventNotification {
+    if (parsed.object === 'event') {
+      throw new Error(
+        'You passed a v1 Event to a method that expects a thin event notification. Use the corresponding constructEvent method instead.'
+      );
+    }
+    if (parsed.object != null && parsed.object !== 'v2.core.event') {
+      throw new Error(
+        `Unexpected object type '${parsed.object}'. Expected 'v2.core.event' for an event notification.`
+      );
+    }
+
+    if (parsed.context) {
+      parsed.context = StripeContext.parse(parsed.context as string);
+    }
+
+    parsed.fetchEvent = (): Promise<unknown> => {
+      return this._requestSender._rawRequest(
+        'GET',
+        // `id` comes from the notification body, so encode it the way the
+        // generated resources do -- otherwise it can inject path or query segments.
+        `/v2/core/events/${encodeURIComponent(parsed.id as string)}`,
+        undefined,
+        {
+          stripeContext: parsed.context as any,
+          headers: {
+            'Stripe-Request-Trigger': `event=${parsed.id}`,
+          },
+        },
+        ['fetch_event']
+      );
+    };
+
+    parsed.fetchRelatedObject = (): Promise<unknown> => {
+      if (!parsed.related_object) {
+        return Promise.resolve(null);
+      }
+
+      return this._requestSender._rawRequest(
+        'GET',
+        (parsed.related_object as any).url,
+        undefined,
+        {
+          stripeContext: parsed.context as any,
+          headers: {
+            'Stripe-Request-Trigger': `event=${parsed.id}`,
+          },
+        },
+        ['fetch_related_object']
+      );
+    };
+
+    return (parsed as unknown) as V2.Core.EventNotification;
+  }
+
+  /**
+   * Constructs a [thin event notification](https://docs.stripe.com/event-destinations#thin-payload) from an
+   * incoming webhook after verifying its authenticity. To work with a webhook that has already been
+   * verified (i.e. one from a cloud provider, an asynchronous queue, or during testing), see
+   * `parseEventNotificationWithoutVerification`.
+   */
   parseEventNotification(
-    payload: string | Uint8Array,
-    header: string | Uint8Array,
+    payload: WebhookPayload,
+    header: WebhookHeader,
     secret: string,
     tolerance?: number,
     cryptoProvider?: CryptoProvider,
@@ -559,76 +644,12 @@ export class Stripe {
       receivedAt
     );
 
-    const eventNotification =
-      payload instanceof Uint8Array
-        ? JSON.parse(new TextDecoder('utf8').decode(payload))
-        : JSON.parse(payload as string);
-
-    if (eventNotification && eventNotification.object === 'event') {
-      throw new Error(
-        'You passed a webhook payload to stripe.parseEventNotification, which expects an event notification. Use stripe.webhooks.constructEvent instead.'
-      );
-    }
-
-    // TODO(DEVSDK-2968): Remove once Custom Events are sent with the correct type.
-    if (
-      typeof eventNotification.type === 'string' &&
-      eventNotification.type.startsWith('v2.extend.objects.object_record') &&
-      eventNotification.related_object?.type
-    ) {
-      eventNotification.type = eventNotification.type.replace(
-        /^v2\.extend\.objects\.object_record/,
-        eventNotification.related_object.type
-      );
-    }
-
-    // Parse string context into StripeContext object if present
-    if (eventNotification.context) {
-      eventNotification.context = StripeContext.parse(
-        eventNotification.context
-      );
-    }
-
-    eventNotification.fetchEvent = (): Promise<unknown> => {
-      return this._requestSender._rawRequest(
-        'GET',
-        `/v2/core/events/${eventNotification.id}`,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_event']
-      );
-    };
-
-    eventNotification.fetchRelatedObject = (): Promise<unknown> => {
-      if (!eventNotification.related_object) {
-        return Promise.resolve(null);
-      }
-
-      return this._requestSender._rawRequest(
-        'GET',
-        eventNotification.related_object.url,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_related_object']
-      );
-    };
-
-    return eventNotification;
+    return this._buildEventNotification(parsePayload(payload));
   }
 
   async parseEventNotificationAsync(
-    payload: string | Uint8Array,
-    header: string | Uint8Array,
+    payload: WebhookPayload,
+    header: WebhookHeader,
     secret: string,
     tolerance?: number,
     cryptoProvider?: CryptoProvider,
@@ -650,58 +671,86 @@ export class Stripe {
       receivedAt
     );
 
-    const eventNotification =
-      payload instanceof Uint8Array
-        ? JSON.parse(new TextDecoder('utf8').decode(payload))
-        : JSON.parse(payload as string);
+    return this._buildEventNotification(parsePayload(payload));
+  }
 
-    if (eventNotification && eventNotification.object === 'event') {
-      throw new Error(
-        'You passed a webhook payload to stripe.parseEventNotificationAsync, which expects an event notification. Use stripe.webhooks.constructEventAsync instead.'
-      );
-    }
+  /**
+   * Constructs a [thin event notification](https://docs.stripe.com/event-destinations#thin-payload) from an
+   * incoming webhook without first verifying its authenticity. Should be used after calling
+   * `webhooks.verifySignatureHeader(...)` or with input from a trusted source (such as
+   * [AWS EventBridge](https://docs.stripe.com/event-destinations/eventbridge), or
+   * [Azure Event Grid](https://docs.stripe.com/event-destinations/eventgrid) payload). Or, to verify &
+   * parse in a single call, use `parseEventNotification(...)` instead.
+   */
+  parseEventNotificationWithoutVerification(
+    payload: WebhookPayload
+  ): V2.Core.EventNotification {
+    return this._buildEventNotification(
+      maybeExtractFromCloudProviderEnvelope(payload)
+    );
+  }
 
-    // Parse string context into StripeContext object if present
-    if (eventNotification.context) {
-      eventNotification.context = StripeContext.parse(
-        eventNotification.context
-      );
-    }
-
-    eventNotification.fetchEvent = (): Promise<unknown> => {
-      return this._requestSender._rawRequest(
-        'GET',
-        `/v2/core/events/${eventNotification.id}`,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_event']
-      );
+  /**
+   * Creates a new Stripe client with the same configuration and a different
+   * Stripe context. The new client does not inherit this client's Stripe account.
+   */
+  withStripeContext(stripeContext: StripeContext | null | undefined): Stripe {
+    const StripeClient = this.constructor as typeof Stripe & {
+      new (
+        key: string,
+        config: StripeConfig,
+        constructorOptions: StripeConstructorOptions
+      ): Stripe;
     };
-
-    eventNotification.fetchRelatedObject = (): Promise<unknown> => {
-      if (!eventNotification.related_object) {
-        return Promise.resolve(null);
+    const client = new StripeClient(
+      '',
+      {
+        apiVersion: this.getApiField('version'),
+        authenticator: this._authenticator ?? undefined,
+        typescript:
+          StripeClient.USER_AGENT.typescript === true ? true : undefined,
+        maxNetworkRetries: this.getApiField('maxNetworkRetries'),
+        httpClient: this.getApiField('httpClient'),
+        timeout: this.getApiField('timeout'),
+        host: this.getApiField('host'),
+        port: this.getApiField('port'),
+        protocol: this.getApiField('protocol'),
+        telemetry: this.getTelemetryEnabled(),
+        emitEventBodies: this.getEmitEventBodiesEnabled(),
+        appInfo: this._appInfo,
+        stripeContext: stripeContext ?? undefined,
+      },
+      {
+        emitter: this._emitter,
+        prevRequestMetrics: this._prevRequestMetrics,
       }
+    );
 
-      return this._requestSender._rawRequest(
-        'GET',
-        eventNotification.related_object.url,
-        undefined,
-        {
-          stripeContext: eventNotification.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
-          },
-        },
-        ['fetch_related_object']
-      );
-    };
+    const clientId = this.getClientId();
+    if (clientId) {
+      client.setClientId(clientId);
+    }
 
-    return eventNotification;
+    return client;
+  }
+
+  notificationHandler(
+    webhookSecret: string,
+    fallbackCallback: FallbackCallback
+  ): StripeEventNotificationHandler {
+    return new StripeEventNotificationHandler(
+      this,
+      webhookSecret,
+      fallbackCallback
+    );
+  }
+
+  notificationHandlerWithoutVerification(
+    fallbackCallback: FallbackCallback
+  ): StripeEventNotificationHandlerWithoutVerification {
+    return StripeEventNotificationHandler.withoutVerification(
+      this,
+      fallbackCallback
+    );
   }
 }

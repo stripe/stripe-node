@@ -65,7 +65,7 @@ class StripeResource implements StripeResourceObject {
   ): Promise<any> {
     const requestMethod = method.toUpperCase();
     const encode = spec?.encode || ((data: RequestData): RequestData => data);
-    const data = encode(params ? {...params} : {});
+    let data = encode(params ? {...params} : {});
     const processed = processOptions(options);
     const apiBase = processed.apiBase || spec?.apiBase || null;
     const host = apiBase ? this._stripe.resolveBaseAddress(apiBase) : null;
@@ -73,25 +73,22 @@ class StripeResource implements StripeResourceObject {
     const headers = Object.assign(processed.headers, spec?.headers);
     const usage = spec?.usage || [];
 
-    const dataInQuery = requestMethod === 'GET' || requestMethod === 'DELETE';
-    let bodyData: RequestData | null = dataInQuery ? null : data;
-    const queryData: RequestData = dataInQuery ? data : {};
-
     try {
       if (spec?.validator) {
         spec.validator(data, {headers});
       }
 
-      // Coerce int64_string/decimal_string fields in request body
-      if (spec?.requestSchema && bodyData) {
-        bodyData = coerceV2RequestData(
-          bodyData,
-          spec.requestSchema
-        ) as RequestData;
+      // Coerce int64_string/decimal_string fields in request data
+      if (spec?.requestSchema) {
+        data = coerceV2RequestData(data, spec.requestSchema) as RequestData;
       }
     } catch (err) {
       return Promise.reject(err);
     }
+
+    const dataInQuery = requestMethod === 'GET' || requestMethod === 'DELETE';
+    const bodyData: RequestData | null = dataInQuery ? null : data;
+    const queryData: RequestData = dataInQuery ? data : {};
 
     // Capture the caller's stack trace before the async boundary so errors can
     // include the user's call site, not just SDK internals.
