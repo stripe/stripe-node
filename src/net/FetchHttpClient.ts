@@ -228,6 +228,14 @@ export class FetchHttpClientResponse extends HttpClientResponse
     return this._res;
   }
 
+  dispose(): void {
+    this._requestTimeout.release();
+    const body = this._res.body;
+    if (body && typeof body.cancel === 'function' && !body.locked) {
+      body.cancel().catch(() => {});
+    }
+  }
+
   toStream(
     streamCompleteCallback: () => void
   ): ReadableStream<Uint8Array> | null {

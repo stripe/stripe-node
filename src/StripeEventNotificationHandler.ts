@@ -20,6 +20,12 @@ export type PreHandleCallback = (
 // this is an internal-only type; we write a user-facing one separately
 type HandlerCallback = (event: any, client: any) => Promise<void>;
 
+type NotificationForType<T extends V2.Core.EventNotification['type']> = [
+  Extract<V2.Core.EventNotification, {type: T}>
+] extends [never]
+  ? V2.Core.EventNotification
+  : Extract<V2.Core.EventNotification, {type: T}>;
+
 // most languages can check if we have an UnknownEventNotification at runtime
 // but JS only has interfaces so we fall back to a string match to determine known events
 const KNOWN_EVENT_TYPES = new Set<string>([
@@ -51,10 +57,7 @@ class BaseEventNotificationHandler {
   // these types are duplicated in the manual types
   public on<T extends V2.Core.EventNotification['type']>(
     type: T,
-    callback: (
-      event: Extract<V2.Core.EventNotification, {type: T}>,
-      client: Stripe
-    ) => Promise<void>
+    callback: (event: NotificationForType<T>, client: Stripe) => Promise<void>
   ): this;
   public on(type: string, callback: HandlerCallback): this {
     this.assertCanRegister();
@@ -160,7 +163,11 @@ export class StripeEventNotificationHandler extends BaseEventNotificationHandler
     this.hasHandledEvent = true;
 
     return await this.dispatchEvent(
-      this.client.parseEventNotification(rawBody, signature, this.webhookSecret)
+      await this.client.parseEventNotificationAsync(
+        rawBody,
+        signature,
+        this.webhookSecret
+      )
     );
   }
 }
