@@ -1,6 +1,6 @@
 ---
 title: Fix notification handling and discarded fetch retries
-pr_url: https://github.com/stripe/stripe-node/pull/0000
+pr_url: https://github.com/stripe/stripe-node/pull/2895
 semver_level: patch
 ---
 
