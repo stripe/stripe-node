@@ -712,6 +712,7 @@ export class RequestSender {
           req
             .then((res: HttpClientResponseInterface) => {
               if (RequestSender._shouldRetry(res, requestRetries, maxRetries)) {
+                res.dispose?.();
                 return retryRequest(
                   makeRequest,
                   apiVersion,
