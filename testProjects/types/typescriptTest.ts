@@ -436,6 +436,11 @@ async (): Promise<void> => {
       // @ts-expect-error - shouldn't be available
       const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
       const evt: Stripe.Events.V1BillingMeterNoMeterFoundEvent = await event.fetchEvent();
+    })
+    .on('custom.event', async (event) => {
+      const e: Stripe.V2.Core.EventNotification = event;
+      // @ts-expect-error - a custom event cannot be narrowed to a known event
+      const known: Stripe.Events.V1BillingMeterNoMeterFoundEventNotification = event;
     });
 
   const res: void = await handler.handle('', '');

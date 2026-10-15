@@ -1,6 +1,7 @@
 // @ts-nocheck
 import {expect} from 'chai';
 import nock = require('nock');
+import {Readable} from 'stream';
 
 import {
   StripeAPIError,
@@ -71,6 +72,49 @@ describe('RequestSender', () => {
     expect(charge.id).to.equal('ch_123');
     expect(requests).to.equal(2);
     expect(canceled).to.be.true;
+  });
+
+  it('aborts a stalled node-fetch response before retrying', async () => {
+    let sentPartialBody = false;
+    const stalledBody = new Readable({
+      read() {
+        if (!sentPartialBody) {
+          sentPartialBody = true;
+          this.push('partial');
+        }
+      },
+    });
+    nock('https://api.stripe.com')
+      .get('/v1/charges/ch_123')
+      .reply(503, () => stalledBody)
+      .get('/v1/charges/ch_123')
+      .reply(200, {id: 'ch_123', object: 'charge'});
+
+    const nodeFetch = require('node-fetch');
+    let firstSignal: AbortSignal | undefined;
+    let firstBody: Readable | undefined;
+    const fetchFn = async (
+      url: string,
+      init: RequestInit
+    ): Promise<Response> => {
+      const res = await nodeFetch(url, init);
+      if (!firstBody) {
+        firstSignal = init.signal as AbortSignal;
+        firstBody = res.body;
+      }
+      return res;
+    };
+    const client = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
+      httpClient: new FetchHttpClient(fetchFn as typeof fetch),
+      maxNetworkRetries: 1,
+      timeout: 5000,
+    });
+
+    const charge = await client.charges.retrieve('ch_123');
+
+    expect(charge.id).to.equal('ch_123');
+    expect(firstSignal?.aborted).to.be.true;
+    expect(firstBody?.destroyed).to.be.true;
   });
 
   describe('_normalizeStripeContext', () => {
