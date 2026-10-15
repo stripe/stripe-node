@@ -20,11 +20,12 @@ export type PreHandleCallback = (
 // this is an internal-only type; we write a user-facing one separately
 type HandlerCallback = (event: any, client: any) => Promise<void>;
 
-type NotificationForType<T extends V2.Core.EventNotification['type']> = [
-  Extract<V2.Core.EventNotification, {type: T}>
-] extends [never]
-  ? V2.Core.EventNotification
-  : Extract<V2.Core.EventNotification, {type: T}>;
+// Distribute over T so an unknown member of a union gets the fallback.
+type NotificationForType<T extends string> = T extends string
+  ? [Extract<V2.Core.EventNotification, {type: T}>] extends [never]
+    ? V2.Core.EventNotification
+    : Extract<V2.Core.EventNotification, {type: T}>
+  : never;
 
 // most languages can check if we have an UnknownEventNotification at runtime
 // but JS only has interfaces so we fall back to a string match to determine known events
@@ -55,7 +56,7 @@ class BaseEventNotificationHandler {
   ) {}
 
   // these types are duplicated in the manual types
-  public on<T extends V2.Core.EventNotification['type']>(
+  public on<T extends string>(
     type: T,
     callback: (event: NotificationForType<T>, client: Stripe) => Promise<void>
   ): this;
