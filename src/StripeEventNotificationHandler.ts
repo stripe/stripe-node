@@ -20,7 +20,7 @@ export type PreHandleCallback = (
 // this is an internal-only type; we write a user-facing one separately
 type HandlerCallback = (event: any, client: any) => Promise<void>;
 
-type NotificationForType<T extends V2.Core.EventNotification['type']> = [
+type NotificationForType<T extends string> = [
   Extract<V2.Core.EventNotification, {type: T}>
 ] extends [never]
   ? V2.Core.EventNotification
@@ -55,7 +55,7 @@ class BaseEventNotificationHandler {
   ) {}
 
   // these types are duplicated in the manual types
-  public on<T extends V2.Core.EventNotification['type']>(
+  public on<T extends string>(
     type: T,
     callback: (event: NotificationForType<T>, client: Stripe) => Promise<void>
   ): this;
