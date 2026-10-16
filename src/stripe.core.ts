@@ -1,4 +1,6 @@
 import * as _Error from './Error.js';
+import * as Stripe_ from './stripe.barrel.js';
+import {Decimal} from './shared.js';
 import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
 import {StripeContext} from './StripeContext.js';
@@ -102,6 +104,7 @@ export class Stripe {
   static CryptoProvider = CryptoProvider;
   static StripeContext = StripeContext;
   static errors = _Error;
+  static Decimal = Decimal;
 
   private static _platformFunctions: PlatformFunctions;
   private static _requestSenderFactory: RequestSenderFactory = defaultRequestSenderFactory;
@@ -121,6 +124,7 @@ export class Stripe {
   // StripeResource: typeof StripeResource;
   webhooks: ReturnType<typeof createWebhooks>;
   errors: typeof _Error;
+  Decimal: typeof Decimal;
   _api: any;
   _prevRequestMetrics: any;
   _emitter: any;
@@ -226,6 +230,7 @@ export class Stripe {
     this._setAuthenticator(key, props.authenticator || null);
 
     this.errors = _Error;
+    this.Decimal = Decimal;
 
     this.webhooks = Stripe.webhooks;
 
@@ -753,4 +758,73 @@ export class Stripe {
       fallbackCallback
     );
   }
+}
+
+// For backward compatibility, export createStripe as a factory function.
+export function createStripe(
+  platformFunctions: PlatformFunctions,
+  requestSender: RequestSenderFactory = defaultRequestSenderFactory
+): typeof Stripe {
+  Stripe.initialize(platformFunctions, requestSender);
+  return Stripe;
+}
+
+// The generated aliases preserve Stripe.Account and other nested type paths
+// while the barrel owns the module's exported API types.
+export declare namespace Stripe {
+  // StripeInterfaceExports: The beginning of the section generated from our OpenAPI spec
+  // StripeInterfaceExports: The end of the section generated from our OpenAPI spec
+  // StripeEventsNamespace: The beginning of the section generated from our OpenAPI spec
+  // StripeEventsNamespace: The end of the section generated from our OpenAPI spec
+
+  export type Response<T> = Stripe_.Response<T>;
+  export type RequestOptions = Stripe_.RequestOptions;
+  export type RawRequestOptions = Stripe_.RawRequestOptions;
+  export type ApiList<T> = Stripe_.ApiList<T>;
+  export type ApiListPromise<T> = Stripe_.ApiListPromise<T>;
+  export type V2List<T> = Stripe_.V2List<T>;
+  export type V2ListPromise<T> = Stripe_.V2ListPromise<T>;
+  export type V2SearchResult<T> = Stripe_.V2SearchResult<T>;
+  export type V2SearchResultPromise<T> = Stripe_.V2SearchResultPromise<T>;
+  export type ApiSearchResult<T> = Stripe_.ApiSearchResult<T>;
+  export type ApiSearchResultPromise<T> = Stripe_.ApiSearchResultPromise<T>;
+  export type StripeStreamResponse = Stripe_.StripeStreamResponse;
+  export type RequestEvent = Stripe_.RequestEvent;
+  export type ResponseEvent = Stripe_.ResponseEvent;
+  export type AppInfo = Stripe_.AppInfo;
+  export type FileData = Stripe_.FileData;
+  export type Metadata = Stripe_.Metadata;
+  export type MetadataParam = Stripe_.MetadataParam;
+  export type Address = Stripe_.Address;
+  export type JapanAddress = Stripe_.JapanAddress;
+  export type AddressParam = Stripe_.AddressParam;
+  export type ShippingAddressParam = Stripe_.ShippingAddressParam;
+  export type JapanAddressParam = Stripe_.JapanAddressParam;
+  export type RangeQueryParam = Stripe_.RangeQueryParam;
+  export type PaginationParams = Stripe_.PaginationParams;
+  export type Emptyable<T> = Stripe_.Emptyable<T>;
+  export type OtherString = Stripe_.OtherString;
+  export type Decimal = Stripe_.Decimal;
+  export type StripeConfig = Stripe_.StripeConfig;
+  export type LatestApiVersion = Stripe_.LatestApiVersion;
+  export type HttpAgent = Stripe_.HttpAgent;
+  export type HttpProtocol = Stripe_.HttpProtocol;
+  export type StripeResource = Stripe_.StripeResource;
+  export type CryptoProvider = Stripe_.CryptoProvider;
+  export type HttpClient = Stripe_.HttpClientInterface;
+  export type HttpClientResponse = Stripe_.HttpClientResponseInterface;
+  export type HttpClientInterface = Stripe_.HttpClientInterface;
+  export type HttpClientResponseInterface = Stripe_.HttpClientResponseInterface;
+  export type RawErrorType = Stripe_.RawErrorType;
+  export type Webhooks = Stripe_.Webhooks;
+  export type WebhookTestHeaderOptions = Stripe_.WebhookTestHeaderOptions;
+  export type Signature = Stripe_.Signature;
+  export type StripeContextType = Stripe_.StripeContextType;
+  export type StripeRawError = Stripe_.StripeRawError;
+  export type UnhandledNotificationDetails = Stripe_.UnhandledNotificationDetails;
+  export type StripeEventNotificationHandler = Stripe_.StripeEventNotificationHandler;
+  export type StripeEventNotificationHandlerWithoutVerification = Stripe_.StripeEventNotificationHandlerWithoutVerification;
+
+  // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
+  // ErrorTypeNamespaces: The end of the section generated from our OpenAPI spec
 }

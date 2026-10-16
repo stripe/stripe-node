@@ -38,7 +38,6 @@ import {
 } from './shared.js';
 
 // StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
-import {V2} from './resources/V2/index.js';
 // StripeInstanceImports: The end of the section generated from our OpenAPI spec
 // V1EventImports: The beginning of the section generated from our OpenAPI spec
 // V1EventImports: The end of the section generated from our OpenAPI spec
@@ -85,6 +84,10 @@ export {
 
 export {Decimal};
 
+export type LatestApiVersion = import('./lib.js').LatestApiVersion;
+export type HttpAgent = import('./lib.js').HttpAgent;
+export type HttpProtocol = import('./lib.js').HttpProtocol;
+
 export {StripeContext as StripeContextType};
 export {StripeRawError};
 export type StripeEventNotificationHandler = import('./StripeEventNotificationHandler.js').StripeEventNotificationHandler;
@@ -100,4 +103,3 @@ export type WebhookTestHeaderOptions = import('./Webhooks.js').WebhookTestHeader
 export type Signature = import('./Webhooks.js').WebhookSignatureObject;
 // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
 // ErrorTypeNamespaces: The end of the section generated from our OpenAPI spec
-export import Events = V2.Core.Events;

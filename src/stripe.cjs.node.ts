@@ -6,18 +6,16 @@ import {StripeConfig} from './lib.js';
 // Initialize the Stripe class with Node platform functions
 StripeClass.initialize(new NodePlatformFunctions());
 
+// Callable constructor: supports both `new Stripe()` and `Stripe()` for CJS consumers.
 // typeof Stripe provides the construct signature and static members; the intersection
 // adds a call signature for backward compatibility.
 type StripeCallableConstructor = typeof StripeClass & {
   (key: string, config?: StripeConfig): StripeClass;
 };
 
-// Callable constructor: supports both `new Stripe()` and `Stripe()` for CJS consumers.
-// Function declaration merges with the ambient namespace below (CJS `import type` / nested types).
-// TODO: this used to be a const StripeCallableConstructor; it was changed to a function so
-// it merges cleanly with the class and namespace, but we may lose something on the types.
+// The ambient namespace below supplies nested types on the exported callable value.
 // eslint-disable-next-line func-style
-function StripeConstructor(
+const StripeConstructor: StripeCallableConstructor = (function(
   this: any,
   key: string,
   config?: StripeConfig
@@ -27,7 +25,7 @@ function StripeConstructor(
     return new StripeClass(key, config);
   }
   return new StripeClass(key, config);
-}
+} as unknown) as StripeCallableConstructor;
 
 // Copy all static properties from Stripe to the wrapper
 Object.setPrototypeOf(StripeConstructor, StripeClass);
@@ -53,7 +51,7 @@ for (const key of Object.getOwnPropertyNames(StripeClass)) {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface StripeConstructor extends StripeClass {}
 declare namespace StripeConstructor {
-  export type Stripe = StripeClass
+  export type Stripe = StripeClass;
   // StripeInterfaceCJSExports: The beginning of the section generated from our OpenAPI spec
   // StripeInterfaceCJSExports: The end of the section generated from our OpenAPI spec
 
@@ -83,6 +81,10 @@ declare namespace StripeConstructor {
   export type RangeQueryParam = Stripe_.RangeQueryParam;
   export type PaginationParams = Stripe_.PaginationParams;
   export type Emptyable<T> = Stripe_.Emptyable<T>;
+  export type StripeConfig = Stripe_.StripeConfig;
+  export type LatestApiVersion = Stripe_.LatestApiVersion;
+  export type HttpAgent = Stripe_.HttpAgent;
+  export type HttpProtocol = Stripe_.HttpProtocol;
   export type OtherString = Stripe_.OtherString;
   export type StripeEventNotificationHandler = Stripe_.StripeEventNotificationHandler;
   export type StripeEventNotificationHandlerWithoutVerification = Stripe_.StripeEventNotificationHandlerWithoutVerification;
