@@ -62,6 +62,8 @@ declare namespace StripeConstructor {
   export type RawRequestOptions = Stripe_.RawRequestOptions;
   export type ApiList<T> = Stripe_.ApiList<T>;
   export type ApiListPromise<T> = Stripe_.ApiListPromise<T>;
+  export type V2List<T> = Stripe_.V2List<T>;
+  export type V2ListPromise<T> = Stripe_.V2ListPromise<T>;
   export type V2SearchResult<T> = Stripe_.V2SearchResult<T>;
   export type V2SearchResultPromise<T> = Stripe_.V2SearchResultPromise<T>;
   export type ApiSearchResultPromise<T> = Stripe_.ApiSearchResultPromise<T>;
