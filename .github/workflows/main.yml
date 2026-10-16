@@ -138,6 +138,7 @@ jobs:
 
   publish:
     name: Publish
+    environment: release
     if: >-
       (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
       startsWith(github.ref, 'refs/tags/v')

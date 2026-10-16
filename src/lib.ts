@@ -272,6 +272,28 @@ export interface V2ListPromise<T>
   ): Promise<Array<T>>;
 }
 
+/** A page of API v2 search results. */
+export interface V2SearchResult<T> extends V2List<T> {
+  object: 'v2.search_result';
+
+  /** The total number of objects matching the search query. */
+  total_count: number;
+}
+
+export interface V2SearchResultPromise<T>
+  extends Promise<Response<V2SearchResult<T>>>,
+    AsyncIterableIterator<T> {
+  autoPagingEach(
+    handler: (item: T) => boolean | void | Promise<boolean | void>,
+    onDone?: (err: any) => void
+  ): Promise<void>;
+
+  autoPagingToArray(
+    opts: {limit: number},
+    onDone?: (err: any) => void
+  ): Promise<Array<T>>;
+}
+
 /**
  * A container for paginated lists of search results.
  * The array of objects is on the `.data` property,
