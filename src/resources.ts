@@ -74,6 +74,7 @@ import {FinancingOfferResource as CapitalFinancingOffers} from './resources/Capi
 import {FinancingOfferResource as TestHelpersCapitalFinancingOffers} from './resources/TestHelpers/Capital/FinancingOffers.js';
 import {FinancingSummaryResource as CapitalFinancingSummary} from './resources/Capital/FinancingSummary.js';
 import {FinancingTransactionResource as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions.js';
+import {FormResource as RiskForms} from './resources/Risk/Forms.js';
 import {FormResource as TaxForms} from './resources/Tax/Forms.js';
 import {FraudLiabilityDebitResource as IssuingFraudLiabilityDebits} from './resources/Issuing/FraudLiabilityDebits.js';
 import {FundingSessionResource as V2MoneyManagementFundingSessions} from './resources/V2/MoneyManagement/FundingSessions.js';
@@ -383,6 +384,7 @@ export const Reserve = resourceNamespace('reserve', {
   Plans: ReservePlans,
   Releases: ReserveReleases,
 });
+export const Risk = resourceNamespace('risk', {Forms: RiskForms});
 export const SharedPayment = resourceNamespace('sharedPayment', {
   GrantedTokens: SharedPaymentGrantedTokens,
   IssuedTokens: SharedPaymentIssuedTokens,

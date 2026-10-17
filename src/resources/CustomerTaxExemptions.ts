@@ -59,6 +59,9 @@ export interface DeletedCustomerTaxExemption {
    */
   id: string;
 
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
   object: 'customer_tax_exemption';
 
   /**

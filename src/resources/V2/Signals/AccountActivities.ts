@@ -91,9 +91,24 @@ export interface AccountActivity {
   account_suspended?: AccountActivity.AccountSuspended;
 
   /**
+   * Details for the merchant's takeover confirmation. Present only when type is account_takeover_confirmation.
+   */
+  account_takeover_confirmation?: AccountActivity.AccountTakeoverConfirmation;
+
+  /**
+   * Details for the account holder's takeover report. Present only when type is account_takeover_report.
+   */
+  account_takeover_report?: AccountActivity.AccountTakeoverReport;
+
+  /**
    * Timestamp at which the account activity was created.
    */
   created: string;
+
+  /**
+   * Details for the credential change. Present only when type is credential_change.
+   */
+  credential_change?: AccountActivity.CredentialChange;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -114,6 +129,16 @@ export interface AccountActivity {
    * Additional information about the activity.
    */
   metadata?: Metadata;
+
+  /**
+   * Details for the MFA addition. Present only when type is mfa_addition.
+   */
+  mfa_addition?: AccountActivity.MfaAddition;
+
+  /**
+   * Details for the MFA removal. Present only when type is mfa_removal.
+   */
+  mfa_removal?: AccountActivity.MfaRemoval;
 
   /**
    * Timestamp at which the activity occurred. Defaults to the created time if not provided.
@@ -174,6 +199,27 @@ export namespace AccountActivity {
     reason: AccountSuspended.Reason;
   }
 
+  export interface AccountTakeoverConfirmation {
+    /**
+     * The type of credential involved in the confirmed takeover.
+     */
+    credential_type: AccountTakeoverConfirmation.CredentialType;
+  }
+
+  export interface AccountTakeoverReport {
+    /**
+     * The type of credential involved in the reported takeover.
+     */
+    credential_type: AccountTakeoverReport.CredentialType;
+  }
+
+  export interface CredentialChange {
+    /**
+     * The type of credential that changed.
+     */
+    credential_type: CredentialChange.CredentialType;
+  }
+
   export interface LoginAttempt {
     /**
      * Client details captured for the attempt.
@@ -186,6 +232,20 @@ export namespace AccountActivity {
      * The action the merchant took following the evaluation.
      */
     status: LoginDecision.Status;
+  }
+
+  export interface MfaAddition {
+    /**
+     * The authentication method added to the account.
+     */
+    mfa_type: MfaAddition.MfaType;
+  }
+
+  export interface MfaRemoval {
+    /**
+     * The authentication method removed from the account.
+     */
+    mfa_type: MfaRemoval.MfaType;
   }
 
   export interface RegistrationAttempt {
@@ -206,8 +266,14 @@ export namespace AccountActivity {
     | 'account_restricted'
     | 'account_reviewed'
     | 'account_suspended'
+    | 'account_takeover_confirmation'
+    | 'account_takeover_mitigation'
+    | 'account_takeover_report'
+    | 'credential_change'
     | 'login_attempt'
     | 'login_decision'
+    | 'mfa_addition'
+    | 'mfa_removal'
     | 'registration_attempt'
     | 'registration_decision'
     | OtherString;
@@ -287,6 +353,30 @@ export namespace AccountActivity {
     export type Reason = 'abuse' | 'other' | OtherString;
   }
 
+  export namespace AccountTakeoverConfirmation {
+    export type CredentialType =
+      | 'api_key'
+      | 'login_password'
+      | 'other'
+      | OtherString;
+  }
+
+  export namespace AccountTakeoverReport {
+    export type CredentialType =
+      | 'api_key'
+      | 'login_password'
+      | 'other'
+      | OtherString;
+  }
+
+  export namespace CredentialChange {
+    export type CredentialType =
+      | 'api_key'
+      | 'login_password'
+      | 'other'
+      | OtherString;
+  }
+
   export namespace LoginAttempt {
     export interface ClientDetails {
       /**
@@ -322,6 +412,26 @@ export namespace AccountActivity {
 
   export namespace LoginDecision {
     export type Status = 'allowed' | 'blocked' | 'restricted';
+  }
+
+  export namespace MfaAddition {
+    export type MfaType =
+      | 'authenticator_app'
+      | 'email'
+      | 'hardware_key'
+      | 'other'
+      | 'sms'
+      | OtherString;
+  }
+
+  export namespace MfaRemoval {
+    export type MfaType =
+      | 'authenticator_app'
+      | 'email'
+      | 'hardware_key'
+      | 'other'
+      | 'sms'
+      | OtherString;
   }
 
   export namespace RegistrationAttempt {
@@ -398,6 +508,21 @@ export namespace V2 {
       account_suspended?: AccountActivityCreateParams.AccountSuspended;
 
       /**
+       * Required when type is account_takeover_confirmation. Requires an existing customer or account with a customer configuration.
+       */
+      account_takeover_confirmation?: AccountActivityCreateParams.AccountTakeoverConfirmation;
+
+      /**
+       * Required when type is account_takeover_report. Requires an existing customer or account with a customer configuration.
+       */
+      account_takeover_report?: AccountActivityCreateParams.AccountTakeoverReport;
+
+      /**
+       * Required when type is credential_change. Requires an existing customer or account with a customer configuration.
+       */
+      credential_change?: AccountActivityCreateParams.CredentialChange;
+
+      /**
        * Details for the login attempt. Provide only when type is login_attempt.
        */
       login_attempt?: AccountActivityCreateParams.LoginAttempt;
@@ -411,6 +536,16 @@ export namespace V2 {
        * Additional information about the activity.
        */
       metadata?: MetadataParam;
+
+      /**
+       * Required when type is mfa_addition. Requires an existing customer or account with a customer configuration.
+       */
+      mfa_addition?: AccountActivityCreateParams.MfaAddition;
+
+      /**
+       * Required when type is mfa_removal. Requires an existing customer or account with a customer configuration.
+       */
+      mfa_removal?: AccountActivityCreateParams.MfaRemoval;
 
       /**
        * Timestamp at which the activity occurred. Defaults to the created time if not provided.
@@ -433,8 +568,14 @@ export namespace V2 {
         | 'account_restricted'
         | 'account_reviewed'
         | 'account_suspended'
+        | 'account_takeover_confirmation'
+        | 'account_takeover_mitigation'
+        | 'account_takeover_report'
+        | 'credential_change'
         | 'login_attempt'
         | 'login_decision'
+        | 'mfa_addition'
+        | 'mfa_removal'
         | 'registration_attempt'
         | 'registration_decision'
         | OtherString;
@@ -477,6 +618,27 @@ export namespace V2 {
         reason: AccountSuspended.Reason;
       }
 
+      export interface AccountTakeoverConfirmation {
+        /**
+         * The type of credential involved in the confirmed takeover.
+         */
+        credential_type: AccountTakeoverConfirmation.CredentialType;
+      }
+
+      export interface AccountTakeoverReport {
+        /**
+         * The type of credential involved in the reported takeover.
+         */
+        credential_type: AccountTakeoverReport.CredentialType;
+      }
+
+      export interface CredentialChange {
+        /**
+         * The type of credential that changed.
+         */
+        credential_type: CredentialChange.CredentialType;
+      }
+
       export interface LoginAttempt {
         /**
          * Client details captured for the attempt.
@@ -489,6 +651,20 @@ export namespace V2 {
          * The action the merchant took following the evaluation.
          */
         status: LoginDecision.Status;
+      }
+
+      export interface MfaAddition {
+        /**
+         * The authentication method added to the account.
+         */
+        mfa_type: MfaAddition.MfaType;
+      }
+
+      export interface MfaRemoval {
+        /**
+         * The authentication method removed from the account.
+         */
+        mfa_type: MfaRemoval.MfaType;
       }
 
       export interface RegistrationAttempt {
@@ -580,6 +756,30 @@ export namespace V2 {
         export type Reason = 'abuse' | 'other' | OtherString;
       }
 
+      export namespace AccountTakeoverConfirmation {
+        export type CredentialType =
+          | 'api_key'
+          | 'login_password'
+          | 'other'
+          | OtherString;
+      }
+
+      export namespace AccountTakeoverReport {
+        export type CredentialType =
+          | 'api_key'
+          | 'login_password'
+          | 'other'
+          | OtherString;
+      }
+
+      export namespace CredentialChange {
+        export type CredentialType =
+          | 'api_key'
+          | 'login_password'
+          | 'other'
+          | OtherString;
+      }
+
       export namespace LoginAttempt {
         export interface ClientDetails {
           /**
@@ -615,6 +815,26 @@ export namespace V2 {
 
       export namespace LoginDecision {
         export type Status = 'allowed' | 'blocked' | 'restricted';
+      }
+
+      export namespace MfaAddition {
+        export type MfaType =
+          | 'authenticator_app'
+          | 'email'
+          | 'hardware_key'
+          | 'other'
+          | 'sms'
+          | OtherString;
+      }
+
+      export namespace MfaRemoval {
+        export type MfaType =
+          | 'authenticator_app'
+          | 'email'
+          | 'hardware_key'
+          | 'other'
+          | 'sms'
+          | OtherString;
       }
 
       export namespace RegistrationAttempt {

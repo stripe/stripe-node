@@ -75,6 +75,7 @@ export namespace AccountEvaluation {
   }
 
   export type EvaluationsTriggered =
+    | 'account_takeover'
     | 'fraudulent_website'
     | 'user_account_sharing'
     | 'user_merchant_fit'
@@ -146,6 +147,7 @@ export namespace V2 {
 
     export namespace AccountEvaluationCreateParams {
       export type Signal =
+        | 'account_takeover'
         | 'fraudulent_website'
         | 'user_account_sharing'
         | 'user_merchant_fit'
