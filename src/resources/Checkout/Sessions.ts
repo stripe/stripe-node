@@ -1225,6 +1225,11 @@ export interface Session {
   managed_payments: Session.ManagedPayments | null;
 
   /**
+   * Advertising attribution information for this Checkout Session.
+   */
+  marketing_attributions?: Array<Session.MarketingAttribution> | null;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
@@ -1262,7 +1267,7 @@ export interface Session {
   payment_link: string | PaymentLink | null;
 
   /**
-   * Configure whether a Checkout Session should collect a payment method for sessions with mode `payment`. Defaults to `always`.
+   * Configure whether a Checkout Session should collect a payment method. Can only be set in `subscription` mode. Defaults to `always`.
    */
   payment_method_collection: Session.PaymentMethodCollection | null;
 
@@ -1821,6 +1826,50 @@ export namespace Session {
      * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
      */
     enabled: boolean;
+  }
+
+  export interface MarketingAttribution {
+    ad_conversion: MarketingAttribution.AdConversion;
+
+    /**
+     * The advertising platform's click identifier.
+     */
+    click_id: string | null;
+
+    /**
+     * The Unix timestamp when the advertising interaction occurred.
+     */
+    occurred_at: number | null;
+
+    /**
+     * The advertising group ID from the `utm_adgroup` parameter.
+     */
+    utm_adgroup: string | null;
+
+    /**
+     * The advertising content identifier from the `utm_content` parameter.
+     */
+    utm_content: string | null;
+
+    /**
+     * The advertising campaign ID from the `utm_id` parameter.
+     */
+    utm_id: string | null;
+
+    /**
+     * The marketing medium from the `utm_medium` parameter.
+     */
+    utm_medium: string | null;
+
+    /**
+     * The referral source from the `utm_source` parameter.
+     */
+    utm_source: string | null;
+
+    /**
+     * The paid search term from the `utm_term` parameter.
+     */
+    utm_term: string | null;
   }
 
   export type Mode = 'payment' | 'setup' | 'subscription' | OtherString;
@@ -2418,7 +2467,7 @@ export namespace Session {
 
     export interface TaxId {
       /**
-       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
+       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `au_acn`, `nz_bn`, `pt_nif`, `cz_dic`, `fr_siret`, `fr_siren`, `fr_spi`, `sm_coe`, `tt_vat`, `tt_bir`, `mu_vat`, `mz_nuit`, `au_wpn`, `md_cf`, `is_kt`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
        */
       type: TaxId.Type;
 
@@ -2437,7 +2486,9 @@ export namespace Session {
         | 'ao_tin'
         | 'ar_cuit'
         | 'au_abn'
+        | 'au_acn'
         | 'au_arn'
+        | 'au_wpn'
         | 'aw_tin'
         | 'az_tin'
         | 'ba_tin'
@@ -2467,6 +2518,7 @@ export namespace Session {
         | 'co_nit'
         | 'cr_tin'
         | 'cv_nif'
+        | 'cz_dic'
         | 'de_stn'
         | 'do_rcn'
         | 'ec_ruc'
@@ -2476,6 +2528,9 @@ export namespace Session {
         | 'eu_oss_vat'
         | 'eu_vat'
         | 'fo_vat'
+        | 'fr_siren'
+        | 'fr_siret'
+        | 'fr_spi'
         | 'gb_vat'
         | 'ge_vat'
         | 'gi_tin'
@@ -2487,6 +2542,7 @@ export namespace Session {
         | 'id_npwp'
         | 'il_vat'
         | 'in_gst'
+        | 'is_kt'
         | 'is_vat'
         | 'it_cf'
         | 'jp_cn'
@@ -2502,23 +2558,28 @@ export namespace Session {
         | 'li_vat'
         | 'lk_vat'
         | 'ma_vat'
+        | 'md_cf'
         | 'md_vat'
         | 'me_pib'
         | 'mk_vat'
         | 'mr_nif'
+        | 'mu_vat'
         | 'mx_rfc'
         | 'my_frp'
         | 'my_itn'
         | 'my_sst'
+        | 'mz_nuit'
         | 'ng_tin'
         | 'no_vat'
         | 'no_voec'
         | 'np_pan'
+        | 'nz_bn'
         | 'nz_gst'
         | 'om_vat'
         | 'pe_ruc'
         | 'ph_tin'
         | 'pl_nip'
+        | 'pt_nif'
         | 'py_ruc'
         | 'ro_tin'
         | 'rs_pib'
@@ -2528,12 +2589,15 @@ export namespace Session {
         | 'sg_gst'
         | 'sg_uen'
         | 'si_tin'
+        | 'sm_coe'
         | 'sn_ninea'
         | 'sr_fin'
         | 'sv_nit'
         | 'th_vat'
         | 'tj_tin'
         | 'tr_tin'
+        | 'tt_bir'
+        | 'tt_vat'
         | 'tw_vat'
         | 'tz_vat'
         | 'ua_vat'
@@ -2772,7 +2836,7 @@ export namespace Session {
 
     export interface TaxId {
       /**
-       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
+       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `au_acn`, `nz_bn`, `pt_nif`, `cz_dic`, `fr_siret`, `fr_siren`, `fr_spi`, `sm_coe`, `tt_vat`, `tt_bir`, `mu_vat`, `mz_nuit`, `au_wpn`, `md_cf`, `is_kt`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
        */
       type: TaxId.Type;
 
@@ -2791,7 +2855,9 @@ export namespace Session {
         | 'ao_tin'
         | 'ar_cuit'
         | 'au_abn'
+        | 'au_acn'
         | 'au_arn'
+        | 'au_wpn'
         | 'aw_tin'
         | 'az_tin'
         | 'ba_tin'
@@ -2821,6 +2887,7 @@ export namespace Session {
         | 'co_nit'
         | 'cr_tin'
         | 'cv_nif'
+        | 'cz_dic'
         | 'de_stn'
         | 'do_rcn'
         | 'ec_ruc'
@@ -2830,6 +2897,9 @@ export namespace Session {
         | 'eu_oss_vat'
         | 'eu_vat'
         | 'fo_vat'
+        | 'fr_siren'
+        | 'fr_siret'
+        | 'fr_spi'
         | 'gb_vat'
         | 'ge_vat'
         | 'gi_tin'
@@ -2841,6 +2911,7 @@ export namespace Session {
         | 'id_npwp'
         | 'il_vat'
         | 'in_gst'
+        | 'is_kt'
         | 'is_vat'
         | 'it_cf'
         | 'jp_cn'
@@ -2856,23 +2927,28 @@ export namespace Session {
         | 'li_vat'
         | 'lk_vat'
         | 'ma_vat'
+        | 'md_cf'
         | 'md_vat'
         | 'me_pib'
         | 'mk_vat'
         | 'mr_nif'
+        | 'mu_vat'
         | 'mx_rfc'
         | 'my_frp'
         | 'my_itn'
         | 'my_sst'
+        | 'mz_nuit'
         | 'ng_tin'
         | 'no_vat'
         | 'no_voec'
         | 'np_pan'
+        | 'nz_bn'
         | 'nz_gst'
         | 'om_vat'
         | 'pe_ruc'
         | 'ph_tin'
         | 'pl_nip'
+        | 'pt_nif'
         | 'py_ruc'
         | 'ro_tin'
         | 'rs_pib'
@@ -2882,12 +2958,15 @@ export namespace Session {
         | 'sg_gst'
         | 'sg_uen'
         | 'si_tin'
+        | 'sm_coe'
         | 'sn_ninea'
         | 'sr_fin'
         | 'sv_nit'
         | 'th_vat'
         | 'tj_tin'
         | 'tr_tin'
+        | 'tt_bir'
+        | 'tt_vat'
         | 'tw_vat'
         | 'tz_vat'
         | 'ua_vat'
@@ -3244,6 +3323,15 @@ export namespace Session {
     }
   }
 
+  export namespace MarketingAttribution {
+    export interface AdConversion {
+      /**
+       * Whether the customer consented to sending conversion data to an advertising platform.
+       */
+      consent_collected: boolean;
+    }
+  }
+
   export namespace NameCollection {
     export interface Business {
       /**
@@ -3483,6 +3571,8 @@ export namespace Session {
       capture_method?: 'manual';
 
       installments?: Card.Installments;
+
+      mandate_options?: Card.MandateOptions;
 
       /**
        * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this CheckoutSession.
@@ -4213,6 +4303,58 @@ export namespace Session {
         enabled?: boolean;
       }
 
+      export interface MandateOptions {
+        /**
+         * Maximum or fixed amount for future payments, in the mandate's currency.
+         */
+        amount?: number;
+
+        /**
+         * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+         */
+        amount_type?: MandateOptions.AmountType;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency?: string;
+
+        /**
+         * A description of the mandate or subscription that is meant to be displayed to the customer.
+         */
+        description?: string;
+
+        /**
+         * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+         */
+        end_date?: number;
+
+        /**
+         * Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
+         */
+        interval?: MandateOptions.Interval;
+
+        /**
+         * The number of intervals between payments. For example, `interval=month` and `interval_count=3` indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks). This parameter is optional when `interval=sporadic`.
+         */
+        interval_count?: number;
+
+        /**
+         * Unique identifier for the mandate or subscription.
+         */
+        reference?: string;
+
+        /**
+         * Start date of the mandate or subscription. Start date should not be lesser than yesterday.
+         */
+        start_date?: number;
+
+        /**
+         * Specifies the type of mandates supported. Possible values are `india`.
+         */
+        supported_types?: Array<'india'>;
+      }
+
       export type RequestDecrementalAuthorization =
         | 'if_available'
         | 'never'
@@ -4255,6 +4397,18 @@ export namespace Session {
         | 'off_session'
         | 'on_session'
         | OtherString;
+
+      export namespace MandateOptions {
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
+
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
+      }
 
       export namespace Restrictions {
         export type BrandsBlocked =
@@ -5304,6 +5458,11 @@ export namespace Checkout {
     managed_payments?: SessionCreateParams.ManagedPayments;
 
     /**
+     * Advertising attribution information for this Checkout Session. Only one attribution is supported.
+     */
+    marketing_attributions?: Array<SessionCreateParams.MarketingAttribution>;
+
+    /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
@@ -5855,7 +6014,7 @@ export namespace Checkout {
       price?: string;
 
       /**
-       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
+       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline, for [dynamic pricing](https://docs.stripe.com/products-prices/how-products-and-prices-work#inline-pricing) when the amount isn't known ahead of time. One of `price` or `price_data` is required when creating a new line item.
        */
       price_data?: LineItem.PriceData;
 
@@ -5919,6 +6078,53 @@ export namespace Checkout {
        * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
        */
       enabled?: boolean;
+    }
+
+    export interface MarketingAttribution {
+      /**
+       * Information used when sending conversions to an advertising platform.
+       */
+      ad_conversion: MarketingAttribution.AdConversion;
+
+      /**
+       * The advertising platform's click identifier.
+       */
+      click_id?: string;
+
+      /**
+       * The Unix timestamp when the advertising interaction occurred.
+       */
+      occurred_at?: number;
+
+      /**
+       * The advertising group ID from the `utm_adgroup` parameter.
+       */
+      utm_adgroup?: string;
+
+      /**
+       * The advertising content identifier from the `utm_content` parameter.
+       */
+      utm_content?: string;
+
+      /**
+       * The advertising campaign ID from the `utm_id` parameter.
+       */
+      utm_id?: string;
+
+      /**
+       * The marketing medium from the `utm_medium` parameter.
+       */
+      utm_medium?: string;
+
+      /**
+       * The referral source from the `utm_source` parameter.
+       */
+      utm_source?: string;
+
+      /**
+       * The paid search term from the `utm_term` parameter.
+       */
+      utm_term?: string;
     }
 
     export type Mode = 'payment' | 'setup' | 'subscription' | OtherString;
@@ -7486,6 +7692,15 @@ export namespace Checkout {
             | 'year'
             | OtherString;
         }
+      }
+    }
+
+    export namespace MarketingAttribution {
+      export interface AdConversion {
+        /**
+         * Whether the customer consented to sending conversion data to an advertising platform.
+         */
+        consent_collected: boolean;
       }
     }
 
@@ -9922,7 +10137,7 @@ export namespace Checkout {
       price?: string;
 
       /**
-       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required when creating a new line item.
+       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline, for [dynamic pricing](https://docs.stripe.com/products-prices/how-products-and-prices-work#inline-pricing) when the amount isn't known ahead of time. One of `price` or `price_data` is required when creating a new line item.
        */
       price_data?: LineItem.PriceData;
 

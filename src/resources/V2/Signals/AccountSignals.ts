@@ -156,9 +156,19 @@ export interface AccountSignal {
   account_evaluation?: string;
 
   /**
+   * Data for the account takeover signal. Present only when type is account_takeover.
+   */
+  account_takeover?: AccountSignal.AccountTakeover;
+
+  /**
    * Timestamp at which the signal was created.
    */
   created: string;
+
+  /**
+   * Data for the customer risk signal. Present only when type is customer_risk.
+   */
+  customer_risk?: AccountSignal.CustomerRisk;
 
   /**
    * Data for the fraudulent merchant signal. Present only when type is fraudulent_merchant.
@@ -216,6 +226,20 @@ export namespace AccountSignal {
      * The v1 customer ID of the account, for users not yet migrated to v2/accounts.
      */
     customer?: string;
+  }
+
+  export interface AccountTakeover {
+    /**
+     * Categorical assessment of the account takeover risk.
+     */
+    risk_level: AccountTakeover.RiskLevel;
+  }
+
+  export interface CustomerRisk {
+    /**
+     * Categorical assessment of the customer's risk of fraudulent or abusive activity.
+     */
+    risk_level: CustomerRisk.RiskLevel;
   }
 
   export interface FraudulentMerchant {
@@ -279,6 +303,8 @@ export namespace AccountSignal {
   }
 
   export type Type =
+    | 'account_takeover'
+    | 'customer_risk'
     | 'fraudulent_merchant'
     | 'fraudulent_website'
     | 'merchant_delinquency'
@@ -324,6 +350,24 @@ export namespace AccountSignal {
      * not_assessed or unknown, or when the user is not on a product tier that includes numeric scores.
      */
     score?: Decimal;
+  }
+
+  export namespace AccountTakeover {
+    export type RiskLevel =
+      | 'elevated'
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'unknown';
+  }
+
+  export namespace CustomerRisk {
+    export type RiskLevel =
+      | 'elevated'
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'unknown';
   }
 
   export namespace FraudulentMerchant {
@@ -551,6 +595,8 @@ export namespace V2 {
 
     export namespace AccountSignalListParams {
       export type Type =
+        | 'account_takeover'
+        | 'customer_risk'
         | 'fraudulent_merchant'
         | 'fraudulent_website'
         | 'merchant_delinquency'

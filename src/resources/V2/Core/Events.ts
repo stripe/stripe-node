@@ -790,6 +790,7 @@ export type Event =
   | V2ReportingReportRunSucceededEvent
   | V2ReportingReportRunUpdatedEvent
   | V2SignalsAccountEvaluationCompleteEvent
+  | V2SignalsAccountSignalCustomerRiskReadyEvent
   | V2SignalsAccountSignalFraudulentMerchantReadyEvent
   | V2SignalsAccountSignalFraudulentWebsiteReadyEvent
   | V2SignalsAccountSignalMerchantDelinquencyReadyEvent
@@ -1266,6 +1267,7 @@ export type EventNotification =
   | V2ReportingReportRunSucceededEventNotification
   | V2ReportingReportRunUpdatedEventNotification
   | V2SignalsAccountEvaluationCompleteEventNotification
+  | V2SignalsAccountSignalCustomerRiskReadyEventNotification
   | V2SignalsAccountSignalFraudulentMerchantReadyEventNotification
   | V2SignalsAccountSignalFraudulentWebsiteReadyEventNotification
   | V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification
@@ -7418,15 +7420,23 @@ export namespace V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatus
       | 'business_custodial_storage.outbound.ousd'
       | 'business_custodial_storage.outbound.usdc'
       | 'business_storage.inbound.cad'
+      | 'business_storage.inbound.czk'
       | 'business_storage.inbound.eur'
       | 'business_storage.inbound.gbp'
+      | 'business_storage.inbound.nok'
       | 'business_storage.inbound.ousd'
+      | 'business_storage.inbound.pln'
+      | 'business_storage.inbound.sek'
       | 'business_storage.inbound.usd'
       | 'business_storage.inbound.usdc'
       | 'business_storage.outbound.cad'
+      | 'business_storage.outbound.czk'
       | 'business_storage.outbound.eur'
       | 'business_storage.outbound.gbp'
+      | 'business_storage.outbound.nok'
       | 'business_storage.outbound.ousd'
+      | 'business_storage.outbound.pln'
+      | 'business_storage.outbound.sek'
       | 'business_storage.outbound.usd'
       | 'business_storage.outbound.usdc'
       | 'consumer_storage.inbound.usd'
@@ -13880,6 +13890,27 @@ export interface V2SignalsAccountEvaluationCompleteEventNotification
 }
 
 /**
+ * Occurs when a customer's risk level changes and a new customer risk signal is ready.
+ */
+export interface V2SignalsAccountSignalCustomerRiskReadyEvent
+  extends EventBase {
+  type: 'v2.signals.account_signal.customer_risk_ready';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.AccountSignal>;
+}
+export interface V2SignalsAccountSignalCustomerRiskReadyEventNotification
+  extends EventNotificationBase {
+  type: 'v2.signals.account_signal.customer_risk_ready';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.AccountSignal>;
+  fetchEvent(): Promise<V2SignalsAccountSignalCustomerRiskReadyEvent>;
+}
+
+/**
  * Occurs when a fraudulent merchant signal is ready for an account.
  */
 export interface V2SignalsAccountSignalFraudulentMerchantReadyEvent
@@ -14477,6 +14508,7 @@ export declare namespace Events {
     V2ReportingReportRunSucceededEvent,
     V2ReportingReportRunUpdatedEvent,
     V2SignalsAccountEvaluationCompleteEvent,
+    V2SignalsAccountSignalCustomerRiskReadyEvent,
     V2SignalsAccountSignalFraudulentMerchantReadyEvent,
     V2SignalsAccountSignalFraudulentWebsiteReadyEvent,
     V2SignalsAccountSignalMerchantDelinquencyReadyEvent,
@@ -14951,6 +14983,7 @@ export declare namespace Events {
     V2ReportingReportRunSucceededEventNotification,
     V2ReportingReportRunUpdatedEventNotification,
     V2SignalsAccountEvaluationCompleteEventNotification,
+    V2SignalsAccountSignalCustomerRiskReadyEventNotification,
     V2SignalsAccountSignalFraudulentMerchantReadyEventNotification,
     V2SignalsAccountSignalFraudulentWebsiteReadyEventNotification,
     V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification,

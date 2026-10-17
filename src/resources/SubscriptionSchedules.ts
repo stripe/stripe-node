@@ -3283,7 +3283,7 @@ export interface SubscriptionScheduleUpdateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
-   * Configures the subscription's pause behavior and, optionally, its resume behavior. Only one entry is supported. Include a key to update an existing entry. Omit to leave an existing pause schedule unchanged, or pass "" to clear it.
+   * The subscription's pause behavior and optional resume behavior. You can provide one entry. Include its `key` to update an existing pause schedule. Omit `pause_schedules` to leave the existing schedule unchanged, or pass an empty string (`""`) to clear it.
    */
   pause_schedules?: Emptyable<
     Array<SubscriptionScheduleUpdateParams.PauseSchedule>

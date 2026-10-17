@@ -493,6 +493,7 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.reporting.report_run.succeeded',
   'v2.reporting.report_run.updated',
   'v2.signals.account_evaluation.complete',
+  'v2.signals.account_signal.customer_risk_ready',
   'v2.signals.account_signal.fraudulent_merchant_ready',
   'v2.signals.account_signal.fraudulent_website_ready',
   'v2.signals.account_signal.merchant_delinquency_ready',

@@ -2726,6 +2726,7 @@ export namespace PaymentRecord {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
