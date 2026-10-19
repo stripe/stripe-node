@@ -15819,8 +15819,6 @@ declare namespace StripeConstructor {
   export type TreasuryReceivedCreditFailedEvent = Stripe_.TreasuryReceivedCreditFailedEvent;
   export type TreasuryReceivedCreditSucceededEvent = Stripe_.TreasuryReceivedCreditSucceededEvent;
   export type TreasuryReceivedDebitCreatedEvent = Stripe_.TreasuryReceivedDebitCreatedEvent;
-  export type V2List<T> = Stripe_.V2List<T>;
-  export type V2ListPromise<T> = Stripe_.V2ListPromise<T>;
   // StripeInterfaceCJSExports: The end of the section generated from our OpenAPI spec
 
   export type Response<T> = Stripe_.Response<T>;
@@ -15828,6 +15826,10 @@ declare namespace StripeConstructor {
   export type RawRequestOptions = Stripe_.RawRequestOptions;
   export type ApiList<T> = Stripe_.ApiList<T>;
   export type ApiListPromise<T> = Stripe_.ApiListPromise<T>;
+  export type V2List<T> = Stripe_.V2List<T>;
+  export type V2ListPromise<T> = Stripe_.V2ListPromise<T>;
+  export type V2SearchResult<T> = Stripe_.V2SearchResult<T>;
+  export type V2SearchResultPromise<T> = Stripe_.V2SearchResultPromise<T>;
   export type ApiSearchResultPromise<T> = Stripe_.ApiSearchResultPromise<T>;
   export type ApiSearchResult<T> = Stripe_.ApiSearchResult<T>;
   export type StripeStreamResponse = Stripe_.StripeStreamResponse;

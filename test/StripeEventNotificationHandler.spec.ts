@@ -6,6 +6,7 @@ import {
   getTestServerStripe,
   FAKE_API_KEY,
 } from './testUtils.js';
+import {WebPlatformFunctions} from '../src/platform/WebPlatformFunctions.js';
 
 const DUMMY_WEBHOOK_SECRET = 'whsec_test_secret';
 
@@ -71,6 +72,26 @@ describe('StripeEventNotificationHandler', () => {
   });
 
   describe('handler registration and routing', () => {
+    it('verifies notifications with an asynchronous crypto provider', async () => {
+      const webStripe = getSpyableStripe({});
+      (webStripe as any)._platformFunctions = new WebPlatformFunctions();
+      const handler = webStripe.notificationHandler(
+        DUMMY_WEBHOOK_SECRET,
+        async () => {}
+      );
+      let handled = false;
+      handler.on('v1.billing.meter.error_report_triggered', async () => {
+        handled = true;
+      });
+
+      await handler.handle(
+        v1BillingMeterPayload,
+        generateHeader(v1BillingMeterPayload)
+      );
+
+      expect(handled).to.be.true;
+    });
+
     it('should route event to registered handler', async () => {
       let callbackCalled = false;
       let receivedEvent: any = null;
