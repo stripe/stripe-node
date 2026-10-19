@@ -11,8 +11,7 @@ Instead, edit a corresponding `.change.md` file and run `hark build`.
 This release changes the pinned API version to `2026-10-14.preview`.
 
 * Add workload identity authentication for AWS (private preview)
-  - Add `Stripe.forWorkloadIdentity(clientId, provider)` with the `@stripe/aws-workload-identity` package to
-    authenticate using AWS Secure Token Service.
+  - Add `Stripe.forWorkloadIdentity(clientId, provider)` with the `@stripe/workload-identity` package, currently supporting AWS to authenticate using AWS Secure Token Service.
 * ⚠️ [#2889](https://github.com/stripe/stripe-node/pull/2889) Update generated code
   * ⚠️ Remove support for `capture` method on resource `V2.Payments.OffSessionPayment`
   * ⚠️ Remove support for `acknowledge_confirmation_of_payee` and `initiate_confirmation_of_payee` methods on resource `V2.Core.Vault.GbBankAccount`
