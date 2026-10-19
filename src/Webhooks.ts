@@ -5,7 +5,11 @@ import {
 } from './crypto/CryptoProvider.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {Event} from './resources/Events.js';
-import {maybeExtractFromCloudProviderEnvelope, parsePayload} from './utils.js';
+import {
+  isBlankWebhookSecret,
+  maybeExtractFromCloudProviderEnvelope,
+  parsePayload,
+} from './utils.js';
 
 /**
  * Value of the `stripe-signature` header from Stripe.
@@ -258,7 +262,7 @@ export function createWebhooks(
         encodedHeader,
         this.EXPECTED_SCHEME
       );
-      if (!secret || /^[ \t\r\n\f\v]*$/.test(secret)) {
+      if (isBlankWebhookSecret(secret)) {
         throw new StripeSignatureVerificationError(header, payload, {
           message:
             'No webhook secret value was provided. It should start with `whsec_`',
@@ -304,7 +308,7 @@ export function createWebhooks(
         encodedHeader,
         this.EXPECTED_SCHEME
       );
-      if (!secret || /^[ \t\r\n\f\v]*$/.test(secret)) {
+      if (isBlankWebhookSecret(secret)) {
         throw new StripeSignatureVerificationError(header, payload, {
           message:
             'No webhook secret value was provided. It should start with `whsec_`',
