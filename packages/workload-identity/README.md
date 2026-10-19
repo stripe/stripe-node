@@ -5,9 +5,12 @@
 
 Workload identity adapter for [stripe-node](https://github.com/stripe/stripe-node).
 
-Currently, it lets an application running on AWS authenticate to Stripe without holding a
+It lets an application using cloud based token services to authenticate to Stripe without holding a
 long-lived Stripe secret key. The application proves where it is running instead
 of storing a credential.
+
+### Currently supported
+* AWS Secure Token Service
 
 ## Installation
 
