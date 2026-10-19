@@ -485,25 +485,60 @@ function createWebhooksTestSuite(stripe) {
         );
       });
 
-      it('should raise a SignatureVerificationError when the signing secret is empty or nullish', async () => {
+      it('should raise a SignatureVerificationError when the signing secret is blank or nullish', async () => {
         const header = stripe.webhooks.generateTestHeaderString({
           payload: EVENT_PAYLOAD_STRING,
           secret: SECRET,
         });
 
         const expectedMessage = /No webhook secret value was provided\. It should start with `whsec_`/;
+        const blankSecrets = [
+          '',
+          ' ',
+          '\t',
+          '\r',
+          '\n',
+          '\f',
+          '\v',
+          ' \t\r\n\f\v',
+          null,
+          undefined,
+        ];
 
-        await expect(
-          verifyHeaderFn(EVENT_PAYLOAD_STRING, header, '')
-        ).to.be.rejectedWith(StripeSignatureVerificationError, expectedMessage);
+        await Promise.all(
+          blankSecrets.map((secret) =>
+            expect(
+              verifyHeaderFn(EVENT_PAYLOAD_STRING, header, secret)
+            ).to.be.rejectedWith(
+              StripeSignatureVerificationError,
+              expectedMessage
+            )
+          )
+        );
+      });
 
-        await expect(
-          verifyHeaderFn(EVENT_PAYLOAD_STRING, header, null)
-        ).to.be.rejectedWith(StripeSignatureVerificationError, expectedMessage);
+      it('should preserve surrounding whitespace in the signing secret', async () => {
+        const secret = ` \t${SECRET}\r\n`;
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret,
+        });
 
-        await expect(
-          verifyHeaderFn(EVENT_PAYLOAD_STRING, header, undefined)
-        ).to.be.rejectedWith(StripeSignatureVerificationError, expectedMessage);
+        expect(
+          await verifyHeaderFn(EVENT_PAYLOAD_STRING, header, secret, 0)
+        ).to.equal(true);
+      });
+
+      it('should accept a non-breaking-space-only signing secret', async () => {
+        const secret = '\u00a0';
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret,
+        });
+
+        expect(
+          await verifyHeaderFn(EVENT_PAYLOAD_STRING, header, secret, 0)
+        ).to.equal(true);
       });
 
       describe('custom CryptoProvider', () => {

@@ -1,6 +1,7 @@
 import {Stripe} from './stripe.core.js';
 import * as Events from './resources/V2/Core/Events.js';
 import {WebhookHeader, WebhookPayload} from './Webhooks.js';
+import {isBlankWebhookSecret} from './utils.js';
 
 export interface UnhandledNotificationDetails {
   isKnownEventType: boolean;
@@ -380,7 +381,7 @@ export class StripeEventNotificationHandler extends BaseEventNotificationHandler
     fallbackCallback: FallbackCallback
   ) {
     super(client, fallbackCallback);
-    if (!webhookSecret) {
+    if (isBlankWebhookSecret(webhookSecret)) {
       throw new Error('webhookSecret must be a non-empty string');
     }
   }
