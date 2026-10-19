@@ -1,4 +1,4 @@
-name: Publish @stripe/aws-workload-identity
+name: Publish @stripe/workload-identity
 
 # Split out from the core SDK's CI workflow (main.yml) while this package is in
 # private preview: it has its own release cadence, tag, and failure modes, and
@@ -8,25 +8,25 @@ on:
   workflow_dispatch: {}
   push:
     tags:
-      - aws-wif-v[0-9]+.[0-9]+.[0-9]+*
+      - wif-v[0-9]+.[0-9]+.[0-9]+*
 
 permissions: {}
 
 jobs:
   publish:
-    name: 'Publish @stripe/aws-workload-identity'
-    # Released independently of the core SDK, on its own tag: `aws-wif-v<version>`
-    # (e.g. `aws-wif-v0.1.0-alpha.1`).
+    name: 'Publish @stripe/workload-identity'
+    # Released independently of the core SDK, on its own tag: `wif-v<version>`
+    # (e.g. `wif-v0.1.0-alpha.1`).
     if: >-
       (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
-      startsWith(github.ref, 'refs/tags/aws-wif-v')
+      startsWith(github.ref, 'refs/tags/wif-v')
     runs-on: 'ubuntu-24.04'
     permissions:
       contents: read
       id-token: write # Required for OIDC
     env:
-      PACKAGE_DIR: aws-workload-identity
-      TAG_PREFIX: aws-wif-v
+      PACKAGE_DIR: workload-identity
+      TAG_PREFIX: wif-v
     steps:
       - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

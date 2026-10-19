@@ -33,7 +33,7 @@ integrations-test: build
     RUN_INTEGRATION_TESTS=1 mocha test/Integration.spec.ts
 
 # the separately published companion packages maintained in this repo
-PACKAGES := "aws-workload-identity"
+PACKAGES := "workload-identity"
 
 # ⭐ build, typecheck, and test the companion packages in packages/ (all, or just one)
 packages-test package="":

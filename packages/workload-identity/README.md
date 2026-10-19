@@ -1,18 +1,18 @@
-# @stripe/aws-workload-identity
+# @stripe/workload-identity
 
 > **Private preview.** This package and the Stripe workload identity API it
 > depends on are in private preview and may change.
 
-AWS workload identity adapter for [stripe-node](https://github.com/stripe/stripe-node).
+Workload identity adapter for [stripe-node](https://github.com/stripe/stripe-node).
 
-It lets an application running on AWS authenticate to Stripe without holding a
+Currently, it lets an application running on AWS authenticate to Stripe without holding a
 long-lived Stripe secret key. The application proves where it is running instead
 of storing a credential.
 
 ## Installation
 
 ```sh
-npm install stripe @stripe/aws-workload-identity
+npm install stripe @stripe/workload-identity
 ```
 
 ### Node.js version
@@ -28,7 +28,7 @@ This package requires **Node.js 20 or newer**.
 
 ```js
 import Stripe from 'stripe';
-import {awsWorkloadIdentity} from '@stripe/aws-workload-identity';
+import {awsWorkloadIdentity} from '@stripe/workload-identity';
 
 const client = Stripe.forWorkloadIdentity(
   'oacli_live_...',
@@ -100,11 +100,11 @@ This package is versioned and released independently of the core `stripe` packag
 so core releases never republish it and a fix here does not require a core release.
 
 1. Bump `version` in this directory's `package.json` and merge that PR.
-2. Push a matching tag: `aws-wif-v<version>`, e.g.
+2. Push a matching tag: `wif-v<version>`, e.g.
 
    ```sh
-   git tag aws-wif-v0.1.0-alpha.1
-   git push origin aws-wif-v0.1.0-alpha.1
+   git tag wif-v0.1.0-alpha.1
+   git push origin wif-v0.1.0-alpha.1
    ```
 
 CI then builds, typechecks, tests, and publishes. The job refuses to publish if the

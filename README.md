@@ -264,12 +264,12 @@ Applications running on AWS can authenticate without a long-lived secret API key
 by proving where they are running instead of storing a Stripe credential:
 
 ```sh
-npm install stripe @stripe/aws-workload-identity
+npm install stripe @stripe/workload-identity
 ```
 
 ```js
 import Stripe from 'stripe';
-import {awsWorkloadIdentity} from '@stripe/aws-workload-identity';
+import {awsWorkloadIdentity} from '@stripe/workload-identity';
 
 const stripe = Stripe.forWorkloadIdentity(
   'oacli_live_...',
@@ -280,7 +280,7 @@ const customers = await stripe.customers.list();
 ```
 
 API keys remain the default, and workload identity is never selected implicitly.
-See [packages/aws-workload-identity/README.md](packages/aws-workload-identity/README.md) for requirements, local
+See [packages/workload-identity/README.md](packages/workload-identity/README.md) for requirements, local
 development guidance, and troubleshooting.
 
 ### Configuring Timeout
