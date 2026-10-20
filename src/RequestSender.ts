@@ -264,6 +264,12 @@ export class RequestSender {
 
             // Expose raw response object.
             const rawResponse = res.getRawResponse();
+            Object.defineProperty(rawResponse, 'statusCode', {
+              value: statusCode,
+              enumerable: true,
+              writable: true,
+              configurable: true,
+            });
             this._addHeadersDirectlyToObject(rawResponse, headers);
             Object.defineProperty(jsonResponse, 'lastResponse', {
               enumerable: false,
