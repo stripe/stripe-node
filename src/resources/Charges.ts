@@ -2962,6 +2962,7 @@ export namespace Charge {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }

@@ -1795,6 +1795,7 @@ export namespace ConfirmationToken {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }

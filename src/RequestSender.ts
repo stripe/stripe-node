@@ -269,6 +269,18 @@ export class RequestSender {
 
             // Expose raw response object.
             const rawResponse = res.getRawResponse();
+            if (
+              rawResponse !== null &&
+              typeof rawResponse === 'object' &&
+              !('statusCode' in rawResponse)
+            ) {
+              Object.defineProperty(rawResponse, 'statusCode', {
+                value: statusCode,
+                enumerable: true,
+                writable: true,
+                configurable: true,
+              });
+            }
             this._addHeadersDirectlyToObject(rawResponse, headers);
             Object.defineProperty(jsonResponse, 'lastResponse', {
               enumerable: false,
@@ -758,6 +770,7 @@ export class RequestSender {
               }
 
               if (RequestSender._shouldRetry(res, requestRetries, maxRetries)) {
+                res.dispose?.();
                 return retryRequest(
                   makeRequest,
                   apiVersion,

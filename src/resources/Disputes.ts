@@ -206,7 +206,10 @@ export namespace Dispute {
      */
     access_activity_log: string | null;
 
-    appeal?: Evidence.Appeal;
+    /**
+     * Appeal evidence submitted during the appeal stage.
+     */
+    appeal?: Evidence.Appeal | null;
 
     /**
      * The billing address provided by the customer.
@@ -367,7 +370,7 @@ export namespace Dispute {
     /**
      * Whether the dispute was submitted manually, with Smart Disputes, or not submitted.
      */
-    submission_method?: EvidenceDetails.SubmissionMethod;
+    submission_method: EvidenceDetails.SubmissionMethod;
   }
 
   export type IntendedSubmissionMethod =

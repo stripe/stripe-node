@@ -55,6 +55,52 @@ export class SessionResource extends StripeResource {
                     fields: {fx_rate: {kind: 'decimal_string'}},
                   },
                 },
+                items: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      metronome_commit: {
+                        kind: 'object',
+                        fields: {
+                          commits: {
+                            kind: 'array',
+                            element: {
+                              kind: 'object',
+                              fields: {
+                                access_schedule: {
+                                  kind: 'nullable',
+                                  inner: {
+                                    kind: 'object',
+                                    fields: {
+                                      schedule_items: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            amount: {kind: 'decimal_string'},
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                priority: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
+                                rollover_fraction: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
                 line_items: {
                   kind: 'object',
                   fields: {
@@ -184,6 +230,33 @@ export class SessionResource extends StripeResource {
             element: {
               kind: 'object',
               fields: {
+                metronome_commit: {
+                  kind: 'object',
+                  fields: {
+                    commits: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          access_schedule: {
+                            kind: 'object',
+                            fields: {
+                              schedule_items: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {amount: {kind: 'decimal_string'}},
+                                },
+                              },
+                            },
+                          },
+                          priority: {kind: 'decimal_string'},
+                          rollover_fraction: {kind: 'decimal_string'},
+                        },
+                      },
+                    },
+                  },
+                },
                 subscription: {
                   kind: 'object',
                   fields: {
@@ -246,6 +319,50 @@ export class SessionResource extends StripeResource {
             inner: {
               kind: 'object',
               fields: {fx_rate: {kind: 'decimal_string'}},
+            },
+          },
+          items: {
+            kind: 'array',
+            element: {
+              kind: 'object',
+              fields: {
+                metronome_commit: {
+                  kind: 'object',
+                  fields: {
+                    commits: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          access_schedule: {
+                            kind: 'nullable',
+                            inner: {
+                              kind: 'object',
+                              fields: {
+                                schedule_items: {
+                                  kind: 'array',
+                                  element: {
+                                    kind: 'object',
+                                    fields: {amount: {kind: 'decimal_string'}},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          priority: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                          rollover_fraction: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
             },
           },
           line_items: {
@@ -380,6 +497,52 @@ export class SessionResource extends StripeResource {
               inner: {
                 kind: 'object',
                 fields: {fx_rate: {kind: 'decimal_string'}},
+              },
+            },
+            items: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  metronome_commit: {
+                    kind: 'object',
+                    fields: {
+                      commits: {
+                        kind: 'array',
+                        element: {
+                          kind: 'object',
+                          fields: {
+                            access_schedule: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  schedule_items: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        amount: {kind: 'decimal_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            priority: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                            rollover_fraction: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
               },
             },
             line_items: {
@@ -536,6 +699,52 @@ export class SessionResource extends StripeResource {
                 fields: {fx_rate: {kind: 'decimal_string'}},
               },
             },
+            items: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  metronome_commit: {
+                    kind: 'object',
+                    fields: {
+                      commits: {
+                        kind: 'array',
+                        element: {
+                          kind: 'object',
+                          fields: {
+                            access_schedule: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  schedule_items: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        amount: {kind: 'decimal_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            priority: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                            rollover_fraction: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
             line_items: {
               kind: 'object',
               fields: {
@@ -669,6 +878,52 @@ export class SessionResource extends StripeResource {
               inner: {
                 kind: 'object',
                 fields: {fx_rate: {kind: 'decimal_string'}},
+              },
+            },
+            items: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  metronome_commit: {
+                    kind: 'object',
+                    fields: {
+                      commits: {
+                        kind: 'array',
+                        element: {
+                          kind: 'object',
+                          fields: {
+                            access_schedule: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  schedule_items: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        amount: {kind: 'decimal_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            priority: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                            rollover_fraction: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
               },
             },
             line_items: {
@@ -806,6 +1061,52 @@ export class SessionResource extends StripeResource {
               inner: {
                 kind: 'object',
                 fields: {fx_rate: {kind: 'decimal_string'}},
+              },
+            },
+            items: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  metronome_commit: {
+                    kind: 'object',
+                    fields: {
+                      commits: {
+                        kind: 'array',
+                        element: {
+                          kind: 'object',
+                          fields: {
+                            access_schedule: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  schedule_items: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        amount: {kind: 'decimal_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            priority: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                            rollover_fraction: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
               },
             },
             line_items: {
@@ -1225,6 +1526,11 @@ export interface Session {
   managed_payments: Session.ManagedPayments | null;
 
   /**
+   * Advertising attribution information for this Checkout Session.
+   */
+  marketing_attributions?: Array<Session.MarketingAttribution> | null;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
@@ -1262,7 +1568,7 @@ export interface Session {
   payment_link: string | PaymentLink | null;
 
   /**
-   * Configure whether a Checkout Session should collect a payment method for sessions with mode `payment`. Defaults to `always`.
+   * Configure whether a Checkout Session should collect a payment method. Can only be set in `subscription` mode. Defaults to `always`.
    */
   payment_method_collection: Session.PaymentMethodCollection | null;
 
@@ -1764,6 +2070,8 @@ export namespace Session {
      */
     key: string;
 
+    metronome_commit?: Item.MetronomeCommit;
+
     subscription?: Item.Subscription;
 
     /**
@@ -1821,6 +2129,50 @@ export namespace Session {
      * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
      */
     enabled: boolean;
+  }
+
+  export interface MarketingAttribution {
+    ad_conversion: MarketingAttribution.AdConversion;
+
+    /**
+     * The advertising platform's click identifier.
+     */
+    click_id: string | null;
+
+    /**
+     * The Unix timestamp when the advertising interaction occurred.
+     */
+    occurred_at: number | null;
+
+    /**
+     * The advertising group ID from the `utm_adgroup` parameter.
+     */
+    utm_adgroup: string | null;
+
+    /**
+     * The advertising content identifier from the `utm_content` parameter.
+     */
+    utm_content: string | null;
+
+    /**
+     * The advertising campaign ID from the `utm_id` parameter.
+     */
+    utm_id: string | null;
+
+    /**
+     * The marketing medium from the `utm_medium` parameter.
+     */
+    utm_medium: string | null;
+
+    /**
+     * The referral source from the `utm_source` parameter.
+     */
+    utm_source: string | null;
+
+    /**
+     * The paid search term from the `utm_term` parameter.
+     */
+    utm_term: string | null;
   }
 
   export type Mode = 'payment' | 'setup' | 'subscription' | OtherString;
@@ -2418,7 +2770,7 @@ export namespace Session {
 
     export interface TaxId {
       /**
-       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
+       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `au_acn`, `nz_bn`, `pt_nif`, `cz_dic`, `fr_siret`, `fr_siren`, `fr_spi`, `sm_coe`, `tt_vat`, `tt_bir`, `mu_vat`, `mz_nuit`, `au_wpn`, `md_cf`, `is_kt`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
        */
       type: TaxId.Type;
 
@@ -2437,7 +2789,9 @@ export namespace Session {
         | 'ao_tin'
         | 'ar_cuit'
         | 'au_abn'
+        | 'au_acn'
         | 'au_arn'
+        | 'au_wpn'
         | 'aw_tin'
         | 'az_tin'
         | 'ba_tin'
@@ -2467,6 +2821,7 @@ export namespace Session {
         | 'co_nit'
         | 'cr_tin'
         | 'cv_nif'
+        | 'cz_dic'
         | 'de_stn'
         | 'do_rcn'
         | 'ec_ruc'
@@ -2476,6 +2831,9 @@ export namespace Session {
         | 'eu_oss_vat'
         | 'eu_vat'
         | 'fo_vat'
+        | 'fr_siren'
+        | 'fr_siret'
+        | 'fr_spi'
         | 'gb_vat'
         | 'ge_vat'
         | 'gi_tin'
@@ -2487,6 +2845,7 @@ export namespace Session {
         | 'id_npwp'
         | 'il_vat'
         | 'in_gst'
+        | 'is_kt'
         | 'is_vat'
         | 'it_cf'
         | 'jp_cn'
@@ -2502,23 +2861,28 @@ export namespace Session {
         | 'li_vat'
         | 'lk_vat'
         | 'ma_vat'
+        | 'md_cf'
         | 'md_vat'
         | 'me_pib'
         | 'mk_vat'
         | 'mr_nif'
+        | 'mu_vat'
         | 'mx_rfc'
         | 'my_frp'
         | 'my_itn'
         | 'my_sst'
+        | 'mz_nuit'
         | 'ng_tin'
         | 'no_vat'
         | 'no_voec'
         | 'np_pan'
+        | 'nz_bn'
         | 'nz_gst'
         | 'om_vat'
         | 'pe_ruc'
         | 'ph_tin'
         | 'pl_nip'
+        | 'pt_nif'
         | 'py_ruc'
         | 'ro_tin'
         | 'rs_pib'
@@ -2528,12 +2892,15 @@ export namespace Session {
         | 'sg_gst'
         | 'sg_uen'
         | 'si_tin'
+        | 'sm_coe'
         | 'sn_ninea'
         | 'sr_fin'
         | 'sv_nit'
         | 'th_vat'
         | 'tj_tin'
         | 'tr_tin'
+        | 'tt_bir'
+        | 'tt_vat'
         | 'tw_vat'
         | 'tz_vat'
         | 'ua_vat'
@@ -2772,7 +3139,7 @@ export namespace Session {
 
     export interface TaxId {
       /**
-       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
+       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `au_acn`, `nz_bn`, `pt_nif`, `cz_dic`, `fr_siret`, `fr_siren`, `fr_spi`, `sm_coe`, `tt_vat`, `tt_bir`, `mu_vat`, `mz_nuit`, `au_wpn`, `md_cf`, `is_kt`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
        */
       type: TaxId.Type;
 
@@ -2791,7 +3158,9 @@ export namespace Session {
         | 'ao_tin'
         | 'ar_cuit'
         | 'au_abn'
+        | 'au_acn'
         | 'au_arn'
+        | 'au_wpn'
         | 'aw_tin'
         | 'az_tin'
         | 'ba_tin'
@@ -2821,6 +3190,7 @@ export namespace Session {
         | 'co_nit'
         | 'cr_tin'
         | 'cv_nif'
+        | 'cz_dic'
         | 'de_stn'
         | 'do_rcn'
         | 'ec_ruc'
@@ -2830,6 +3200,9 @@ export namespace Session {
         | 'eu_oss_vat'
         | 'eu_vat'
         | 'fo_vat'
+        | 'fr_siren'
+        | 'fr_siret'
+        | 'fr_spi'
         | 'gb_vat'
         | 'ge_vat'
         | 'gi_tin'
@@ -2841,6 +3214,7 @@ export namespace Session {
         | 'id_npwp'
         | 'il_vat'
         | 'in_gst'
+        | 'is_kt'
         | 'is_vat'
         | 'it_cf'
         | 'jp_cn'
@@ -2856,23 +3230,28 @@ export namespace Session {
         | 'li_vat'
         | 'lk_vat'
         | 'ma_vat'
+        | 'md_cf'
         | 'md_vat'
         | 'me_pib'
         | 'mk_vat'
         | 'mr_nif'
+        | 'mu_vat'
         | 'mx_rfc'
         | 'my_frp'
         | 'my_itn'
         | 'my_sst'
+        | 'mz_nuit'
         | 'ng_tin'
         | 'no_vat'
         | 'no_voec'
         | 'np_pan'
+        | 'nz_bn'
         | 'nz_gst'
         | 'om_vat'
         | 'pe_ruc'
         | 'ph_tin'
         | 'pl_nip'
+        | 'pt_nif'
         | 'py_ruc'
         | 'ro_tin'
         | 'rs_pib'
@@ -2882,12 +3261,15 @@ export namespace Session {
         | 'sg_gst'
         | 'sg_uen'
         | 'si_tin'
+        | 'sm_coe'
         | 'sn_ninea'
         | 'sr_fin'
         | 'sv_nit'
         | 'th_vat'
         | 'tj_tin'
         | 'tr_tin'
+        | 'tt_bir'
+        | 'tt_vat'
         | 'tw_vat'
         | 'tz_vat'
         | 'ua_vat'
@@ -3109,6 +3491,25 @@ export namespace Session {
   }
 
   export namespace Item {
+    export interface MetronomeCommit {
+      /**
+       * The list of commits for this Metronome contract.
+       */
+      commits: Array<MetronomeCommit.Commit>;
+
+      /**
+       * The Metronome contract ID associated with this checkout item.
+       */
+      metronome_contract: string;
+
+      /**
+       * The Metronome customer ID associated with this checkout item, resolved during validation.
+       */
+      metronome_customer: string | null;
+
+      price_configuration: MetronomeCommit.PriceConfiguration;
+    }
+
     export interface Subscription {
       /**
        * The Unix timestamp marking the subscription's backdated start date.
@@ -3161,7 +3562,245 @@ export namespace Session {
       trial_settings: Subscription.TrialSettings | null;
     }
 
-    export type Type = 'subscription' | OtherString;
+    export type Type = 'metronome_commit' | 'subscription' | OtherString;
+
+    export namespace MetronomeCommit {
+      export interface Commit {
+        /**
+         * Sets the balance amount and release schedule. Mutually exclusive with `commit_options`.
+         */
+        access_schedule: Commit.AccessSchedule | null;
+
+        /**
+         * Metronome product tags this commit can be drawn down against. Products must have all specified tags. If `applicable_metronome_products`, `applicable_metronome_product_tags`, and `specifiers` are all absent, the commit applies to all products. See Metronome's [applicable_product_tags](https://docs.metronome.com/api-reference/contracts/edit-a-contract#body-add-commits-items-applicable-product-tags).
+         */
+        applicable_metronome_product_tags: Array<string> | null;
+
+        /**
+         * Metronome product IDs this commit can be drawn down against. If `applicable_metronome_products`, `applicable_metronome_product_tags`, and `specifiers` are all absent, the commit applies to all products. See Metronome's [applicable_product_ids](https://docs.metronome.com/api-reference/contracts/edit-a-contract#body-add-commits-items-applicable-product-ids).
+         */
+        applicable_metronome_products: Array<string> | null;
+
+        /**
+         * Customer selects the balance amount to purchase. Mutually exclusive with `access_schedule`.
+         */
+        commit_options: Commit.CommitOptions | null;
+
+        /**
+         * The Metronome Custom Pricing Unit credit type ID for this commit. Null when the commit prices in fiat.
+         */
+        credit_type_id: string | null;
+
+        /**
+         * Key-value pairs forwarded to the Metronome commit's [custom_fields](https://docs.metronome.com/api-reference/contracts/edit-a-contract#body-add-commits-items-custom-fields).
+         */
+        custom_fields: {
+          [key: string]: string;
+        } | null;
+
+        /**
+         * Free-form description. Forwarded to the Metronome commit's description.
+         */
+        description: string | null;
+
+        /**
+         * The Metronome commit ID, populated after successful activation.
+         */
+        metronome_commit: string | null;
+
+        /**
+         * The Metronome product ID for this commit.
+         */
+        metronome_product: string;
+
+        /**
+         * Display name for the commit. Surfaced on the Metronome commit's name.
+         */
+        name: string;
+
+        /**
+         * Priority for applying the commit. Lower priority values apply first. Forwarded to Metronome as-is.
+         */
+        priority: Decimal | null;
+
+        /**
+         * Specifies which rates are used to draw down the commit. Accepts `commit_rate`, `list_rate`, `COMMIT_RATE`, or `LIST_RATE`.
+         */
+        rate_type: string | null;
+
+        /**
+         * Fraction of unused balance that rolls over on a Metronome contract transition. Must be between `0` and `1`. Forwarded to Metronome as-is.
+         */
+        rollover_fraction: Decimal | null;
+
+        /**
+         * Usage filters that determine what draws down the commit. If `applicable_metronome_products`, `applicable_metronome_product_tags`, and `specifiers` are all absent, the commit applies to all products. See Metronome's [specifiers](https://docs.metronome.com/api-reference/contracts/edit-a-contract#body-add-commits-items-specifiers).
+         */
+        specifiers: Array<Commit.Specifier> | null;
+
+        /**
+         * Tax details for the Stripe product created for this commit. If provided, `tax_code` is required.
+         */
+        tax_details: Commit.TaxDetails | null;
+      }
+
+      export interface PriceConfiguration {
+        /**
+         * The currency for this commit purchase, as an ISO 4217 lowercase string (for example, `usd`).
+         */
+        currency: string;
+
+        /**
+         * Specifies whether the price is considered inclusive or exclusive of taxes. When omitted and automatic tax is enabled, uses `tax_settings.defaults.tax_behavior`. If no default is set, the request returns an error.
+         */
+        tax_behavior: PriceConfiguration.TaxBehavior | null;
+      }
+
+      export namespace Commit {
+        export interface AccessSchedule {
+          /**
+           * The fixed price the buyer pays, in minor currency units.
+           */
+          price_amount: number;
+
+          /**
+           * When and how many credits become available.
+           */
+          schedule_items: Array<AccessSchedule.ScheduleItem>;
+        }
+
+        export interface CommitOptions {
+          /**
+           * Custom access amount configuration.
+           */
+          custom_amount: CommitOptions.CustomAmount | null;
+
+          /**
+           * Volume-based discount tiers.
+           */
+          discount_tiers: Array<CommitOptions.DiscountTier> | null;
+
+          /**
+           * When access for the purchased credits ends.
+           */
+          ending_before: string;
+
+          /**
+           * Access-amount presets for the buyer to choose from.
+           */
+          options: Array<CommitOptions.Option>;
+
+          /**
+           * The selected access amount. It matches an `options[].access_amount` for a preset selection, but may be a custom value when `custom_amount` is enabled. New sessions initialize it from the option marked `default_option`, or from the first option when none is marked. It is not necessarily the item's monetary price; use `amount_details` for display and totals.
+           */
+          selected_access_amount: number | null;
+
+          /**
+           * When access for the purchased credits starts.
+           */
+          starting_at: string;
+        }
+
+        export interface Specifier {
+          /**
+           * Key-value pairs for presentation group filters.
+           */
+          presentation_group_values: {
+            [key: string]: string;
+          } | null;
+
+          /**
+           * Key-value pairs for pricing group filters.
+           */
+          pricing_group_values: {
+            [key: string]: string;
+          } | null;
+
+          /**
+           * Metronome product ID to scope this specifier to.
+           */
+          product_id: string | null;
+
+          /**
+           * Metronome product tags to scope this specifier to. Products must have all specified tags.
+           */
+          product_tags: Array<string> | null;
+        }
+
+        export interface TaxDetails {
+          /**
+           * Stripe [tax code](https://docs.stripe.com/tax/tax-codes) for this commit (for example, `txcd_10103000`).
+           */
+          tax_code: string;
+        }
+
+        export namespace AccessSchedule {
+          export interface ScheduleItem {
+            /**
+             * The access amount in credit_type_id units.
+             */
+            amount: Decimal;
+
+            /**
+             * Hour-aligned RFC 3339 timestamp in UTC at which access to the balance amount ends (exclusive).
+             */
+            ending_before: string;
+
+            /**
+             * Hour-aligned RFC 3339 timestamp in UTC at which access to the balance amount starts (inclusive).
+             */
+            starting_at: string;
+          }
+        }
+
+        export namespace CommitOptions {
+          export interface CustomAmount {
+            /**
+             * Whether custom amount input is enabled.
+             */
+            enabled: boolean;
+
+            /**
+             * Maximum `access_amount` the customer can enter. `null` means the effective maximum is `999999999999999`.
+             */
+            maximum: number | null;
+
+            /**
+             * Minimum `access_amount` the customer can enter. `null` means the effective minimum is `1`.
+             */
+            minimum: number | null;
+          }
+
+          export interface DiscountTier {
+            /**
+             * Percentage discount applied to the full access_amount.
+             */
+            discount_percentage: number;
+
+            /**
+             * Upper bound (inclusive) in credit_type_id units. Null means unbounded.
+             */
+            up_to: number | null;
+          }
+
+          export interface Option {
+            /**
+             * The access amount for this option.
+             */
+            access_amount: number;
+
+            /**
+             * Whether this option is pre-selected in the Checkout UI.
+             */
+            default_option: boolean | null;
+          }
+        }
+      }
+
+      export namespace PriceConfiguration {
+        export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
+      }
+    }
 
     export namespace Subscription {
       export interface Item {
@@ -3241,6 +3880,15 @@ export namespace Session {
             | OtherString;
         }
       }
+    }
+  }
+
+  export namespace MarketingAttribution {
+    export interface AdConversion {
+      /**
+       * Whether the customer consented to sending conversion data to an advertising platform.
+       */
+      consent_collected: boolean;
     }
   }
 
@@ -3483,6 +4131,8 @@ export namespace Session {
       capture_method?: 'manual';
 
       installments?: Card.Installments;
+
+      mandate_options?: Card.MandateOptions;
 
       /**
        * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this CheckoutSession.
@@ -4213,6 +4863,58 @@ export namespace Session {
         enabled?: boolean;
       }
 
+      export interface MandateOptions {
+        /**
+         * Maximum or fixed amount for future payments, in the mandate's currency.
+         */
+        amount?: number;
+
+        /**
+         * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+         */
+        amount_type?: MandateOptions.AmountType;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency?: string;
+
+        /**
+         * A description of the mandate or subscription that is meant to be displayed to the customer.
+         */
+        description?: string;
+
+        /**
+         * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+         */
+        end_date?: number;
+
+        /**
+         * Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
+         */
+        interval?: MandateOptions.Interval;
+
+        /**
+         * The number of intervals between payments. For example, `interval=month` and `interval_count=3` indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks). This parameter is optional when `interval=sporadic`.
+         */
+        interval_count?: number;
+
+        /**
+         * Unique identifier for the mandate or subscription.
+         */
+        reference?: string;
+
+        /**
+         * Start date of the mandate or subscription. Start date should not be lesser than yesterday.
+         */
+        start_date?: number;
+
+        /**
+         * Specifies the type of mandates supported. Possible values are `india`.
+         */
+        supported_types?: Array<'india'>;
+      }
+
       export type RequestDecrementalAuthorization =
         | 'if_available'
         | 'never'
@@ -4255,6 +4957,18 @@ export namespace Session {
         | 'off_session'
         | 'on_session'
         | OtherString;
+
+      export namespace MandateOptions {
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
+
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
+          | OtherString;
+      }
 
       export namespace Restrictions {
         export type BrandsBlocked =
@@ -5304,6 +6018,11 @@ export namespace Checkout {
     managed_payments?: SessionCreateParams.ManagedPayments;
 
     /**
+     * Advertising attribution information for this Checkout Session. Only one attribution is supported.
+     */
+    marketing_attributions?: Array<SessionCreateParams.MarketingAttribution>;
+
+    /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
@@ -5828,6 +6547,11 @@ export namespace Checkout {
 
     export interface Item {
       /**
+       * Configuration for the Metronome commit item.
+       */
+      metronome_commit?: Item.MetronomeCommit;
+
+      /**
        * Configuration for the subscription item.
        */
       subscription?: Item.Subscription;
@@ -5855,7 +6579,7 @@ export namespace Checkout {
       price?: string;
 
       /**
-       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
+       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline, for [dynamic pricing](https://docs.stripe.com/products-prices/how-products-and-prices-work#inline-pricing) when the amount isn't known ahead of time. One of `price` or `price_data` is required when creating a new line item.
        */
       price_data?: LineItem.PriceData;
 
@@ -5919,6 +6643,53 @@ export namespace Checkout {
        * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
        */
       enabled?: boolean;
+    }
+
+    export interface MarketingAttribution {
+      /**
+       * Information used when sending conversions to an advertising platform.
+       */
+      ad_conversion: MarketingAttribution.AdConversion;
+
+      /**
+       * The advertising platform's click identifier.
+       */
+      click_id?: string;
+
+      /**
+       * The Unix timestamp when the advertising interaction occurred.
+       */
+      occurred_at?: number;
+
+      /**
+       * The advertising group ID from the `utm_adgroup` parameter.
+       */
+      utm_adgroup?: string;
+
+      /**
+       * The advertising content identifier from the `utm_content` parameter.
+       */
+      utm_content?: string;
+
+      /**
+       * The advertising campaign ID from the `utm_id` parameter.
+       */
+      utm_id?: string;
+
+      /**
+       * The marketing medium from the `utm_medium` parameter.
+       */
+      utm_medium?: string;
+
+      /**
+       * The referral source from the `utm_source` parameter.
+       */
+      utm_source?: string;
+
+      /**
+       * The paid search term from the `utm_term` parameter.
+       */
+      utm_term?: string;
     }
 
     export type Mode = 'payment' | 'setup' | 'subscription' | OtherString;
@@ -7029,6 +7800,23 @@ export namespace Checkout {
     }
 
     export namespace Item {
+      export interface MetronomeCommit {
+        /**
+         * The list of commits to create for this Metronome contract.
+         */
+        commits: Array<MetronomeCommit.Commit>;
+
+        /**
+         * The Metronome contract ID to associate with this checkout item.
+         */
+        metronome_contract: string;
+
+        /**
+         * The currency and tax behavior configuration for this commit purchase.
+         */
+        price_configuration: MetronomeCommit.PriceConfiguration;
+      }
+
       export interface Subscription {
         /**
          * A past timestamp to backdate the subscription's start date to.
@@ -7086,7 +7874,237 @@ export namespace Checkout {
         trial_settings?: Subscription.TrialSettings;
       }
 
-      export type Type = 'subscription' | OtherString;
+      export type Type = 'metronome_commit' | 'subscription' | OtherString;
+
+      export namespace MetronomeCommit {
+        export interface Commit {
+          /**
+           * Sets the balance amount and release schedule. Mutually exclusive with `commit_options`.
+           */
+          access_schedule?: Commit.AccessSchedule;
+
+          /**
+           * Metronome product tags this commit can be drawn down against. A product matches if it has at least one of the specified tags. Mutually exclusive with `specifiers`. If `applicable_metronome_products`, `applicable_metronome_product_tags`, and `specifiers` are all omitted, the commit applies to all products. See Metronome's [applicable_product_tags](https://docs.metronome.com/api-reference/contracts/edit-a-contract#body-add-commits-items-applicable-product-tags).
+           */
+          applicable_metronome_product_tags?: Array<string>;
+
+          /**
+           * Metronome product IDs this commit can be drawn down against. Mutually exclusive with `specifiers`. If `applicable_metronome_products`, `applicable_metronome_product_tags`, and `specifiers` are all omitted, the commit applies to all products. See Metronome's [applicable_product_ids](https://docs.metronome.com/api-reference/contracts/edit-a-contract#body-add-commits-items-applicable-product-ids).
+           */
+          applicable_metronome_products?: Array<string>;
+
+          /**
+           * Customer selects the balance amount to purchase. Mutually exclusive with `access_schedule`.
+           */
+          commit_options?: Commit.CommitOptions;
+
+          /**
+           * The Metronome Custom Pricing Unit credit type ID for this commit, whose access amounts are credit counts. Omit it to price in fiat, where access amounts are in the smallest unit of `price_configuration[currency]`. Fiat credit type IDs are not accepted.
+           */
+          credit_type_id?: string;
+
+          /**
+           * Key-value pairs forwarded to the Metronome commit's [custom_fields](https://docs.metronome.com/api-reference/contracts/edit-a-contract#body-add-commits-items-custom-fields).
+           */
+          custom_fields?: {
+            [key: string]: string;
+          };
+
+          /**
+           * Free-form description. Forwarded to the Metronome commit's description.
+           */
+          description?: string;
+
+          /**
+           * The Metronome product ID for this commit.
+           */
+          metronome_product: string;
+
+          /**
+           * Display name for the commit. Surfaced on the Metronome commit's name.
+           */
+          name: string;
+
+          /**
+           * Priority for applying the commit. Lower priority values apply first. Forwarded to Metronome as-is.
+           */
+          priority?: Decimal;
+
+          /**
+           * Specifies which rates are used to draw down the commit. Accepts `commit_rate`, `list_rate`, `COMMIT_RATE`, or `LIST_RATE`.
+           */
+          rate_type?: Commit.RateType;
+
+          /**
+           * Fraction of unused balance that rolls over on a Metronome contract transition. Must be between `0` and `1`. Forwarded to Metronome as-is.
+           */
+          rollover_fraction?: Decimal;
+
+          /**
+           * Usage filters that determine what draws down the commit. If multiple specifiers are provided, a product only needs to match one. Mutually exclusive with `applicable_metronome_products` and `applicable_metronome_product_tags`. If `applicable_metronome_products`, `applicable_metronome_product_tags`, and `specifiers` are all omitted, the commit applies to all products. See Metronome's [specifiers](https://docs.metronome.com/api-reference/contracts/edit-a-contract#body-add-commits-items-specifiers).
+           */
+          specifiers?: Array<Commit.Specifier>;
+
+          /**
+           * Tax details for this commit. If omitted, Stripe uses the tax code from the Stripe product linked to the Metronome commit product. If there is no linked Stripe product or the Stripe product has no tax code configured, the [preset tax rate on your account](https://docs.stripe.com/api/tax/settings/object#tax_settings_object-defaults-tax_code) will be used. If provided, `tax_code` is required.
+           */
+          tax_details?: Commit.TaxDetails;
+        }
+
+        export interface PriceConfiguration {
+          /**
+           * The currency for this commit purchase, as an ISO 4217 lowercase string (for example, `usd`).
+           */
+          currency: string;
+
+          /**
+           * Specifies whether the price is considered inclusive or exclusive of taxes. When omitted and automatic tax is enabled, uses `tax_settings.defaults.tax_behavior`. If no default is set, the request returns an error.
+           */
+          tax_behavior?: PriceConfiguration.TaxBehavior;
+        }
+
+        export namespace Commit {
+          export interface AccessSchedule {
+            /**
+             * The fixed price the buyer pays, in minor currency units.
+             */
+            price_amount: number;
+
+            /**
+             * When and how many credits become available.
+             */
+            schedule_items: Array<AccessSchedule.ScheduleItem>;
+          }
+
+          export interface CommitOptions {
+            /**
+             * Optionally let the buyer enter a custom access amount.
+             */
+            custom_amount?: CommitOptions.CustomAmount;
+
+            /**
+             * Volume-based discount tiers.
+             */
+            discount_tiers?: Array<CommitOptions.DiscountTier>;
+
+            /**
+             * When access for the purchased credits ends. Hour-aligned UTC timestamp.
+             */
+            ending_before: string;
+
+            /**
+             * Access-amount presets for the buyer to choose from.
+             */
+            options: Array<CommitOptions.Option>;
+
+            /**
+             * When access for the purchased credits starts. Hour-aligned UTC timestamp.
+             */
+            starting_at: string;
+          }
+
+          export type RateType = 'commit_rate' | 'list_rate' | OtherString;
+
+          export interface Specifier {
+            /**
+             * Key-value pairs for presentation group filters.
+             */
+            presentation_group_values?: {
+              [key: string]: string;
+            };
+
+            /**
+             * Key-value pairs for pricing group filters.
+             */
+            pricing_group_values?: {
+              [key: string]: string;
+            };
+
+            /**
+             * Metronome product ID to scope this specifier to.
+             */
+            product_id?: string;
+
+            /**
+             * Metronome product tags to scope this specifier to. A product matches this filter only if it has all specified tags.
+             */
+            product_tags?: Array<string>;
+          }
+
+          export interface TaxDetails {
+            /**
+             * Stripe [tax code](https://docs.stripe.com/tax/tax-codes) for this commit (for example, `txcd_10103000`). If the linked Stripe Product has a tax code, this value must match it.
+             */
+            tax_code: string;
+          }
+
+          export namespace AccessSchedule {
+            export interface ScheduleItem {
+              /**
+               * The access amount in credit_type_id units.
+               */
+              amount: Decimal;
+
+              /**
+               * Hour-aligned RFC 3339 timestamp in UTC at which access to the balance amount ends (exclusive).
+               */
+              ending_before: string;
+
+              /**
+               * Hour-aligned RFC 3339 timestamp in UTC at which access to the balance amount starts (inclusive).
+               */
+              starting_at: string;
+            }
+          }
+
+          export namespace CommitOptions {
+            export interface CustomAmount {
+              /**
+               * Must be `true` when `custom_amount` is present. Omit `custom_amount` to disable custom amounts.
+               */
+              enabled: boolean;
+
+              /**
+               * Maximum `access_amount` the customer can enter. Defaults to `999999999999999` when omitted.
+               */
+              maximum?: number;
+
+              /**
+               * Minimum `access_amount` the customer can enter. Defaults to `1` when omitted.
+               */
+              minimum?: number;
+            }
+
+            export interface DiscountTier {
+              /**
+               * Percentage discount applied to the full access_amount when it falls in this tier.
+               */
+              discount_percentage: number;
+
+              /**
+               * Upper bound (inclusive) in credit_type_id units. Use `inf` to define an unbounded tier.
+               */
+              up_to: number | 'inf';
+            }
+
+            export interface Option {
+              /**
+               * The access amount for this option, in credit_type_id units.
+               */
+              access_amount: number;
+
+              /**
+               * Whether this option is pre-selected in the Checkout UI. At most one option may be marked true.
+               */
+              default_option?: boolean;
+            }
+          }
+        }
+
+        export namespace PriceConfiguration {
+          export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
+        }
+      }
 
       export namespace Subscription {
         export interface BillingCycleAnchorConfig {
@@ -7129,6 +8147,11 @@ export namespace Checkout {
         }
 
         export interface Item {
+          /**
+           * When set, provides configuration for this item's quantity to be adjusted by the customer during Checkout.
+           */
+          adjustable_quantity?: Item.AdjustableQuantity;
+
           /**
            * The trial offer to apply to this subscription item.
            */
@@ -7193,6 +8216,23 @@ export namespace Checkout {
         }
 
         export namespace Item {
+          export interface AdjustableQuantity {
+            /**
+             * Set to true if the quantity can be adjusted to any non-negative integer.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99. You can specify a value up to 999999.
+             */
+            maximum?: number;
+
+            /**
+             * The minimum quantity the customer must purchase for the Checkout Session. By default this value is 0.
+             */
+            minimum?: number;
+          }
+
           export interface CurrentTrial {
             /**
              * The ID of the trial offer to apply to the subscription item.
@@ -7486,6 +8526,15 @@ export namespace Checkout {
             | 'year'
             | OtherString;
         }
+      }
+    }
+
+    export namespace MarketingAttribution {
+      export interface AdConversion {
+        /**
+         * Whether the customer consented to sending conversion data to an advertising platform.
+         */
+        consent_collected: boolean;
       }
     }
 
@@ -9922,7 +10971,7 @@ export namespace Checkout {
       price?: string;
 
       /**
-       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required when creating a new line item.
+       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline, for [dynamic pricing](https://docs.stripe.com/products-prices/how-products-and-prices-work#inline-pricing) when the amount isn't known ahead of time. One of `price` or `price_data` is required when creating a new line item.
        */
       price_data?: LineItem.PriceData;
 

@@ -1707,6 +1707,11 @@ export namespace TestHelpers {
       merchant_amount?: number;
 
       /**
+       * Exchange rate from merchant amount to cardholder amount, expressed in minor units. Must be finite and positive for different currencies. Matching currencies ignore the supplied numeric rate and use 1.0.
+       */
+      merchant_amount_exchange_rate?: number;
+
+      /**
        * The currency of the authorization. If not provided, defaults to the currency of the card. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       merchant_currency?: string;
@@ -1730,6 +1735,11 @@ export namespace TestHelpers {
        * Stripe's assessment of the fraud risk for this authorization.
        */
       risk_assessment?: AuthorizationCreateParams.RiskAssessment;
+
+      /**
+       * The type of the authorization object, for example a payment authorization, an original credit authorization, or a refund authorization.
+       */
+      type?: 'payment';
 
       /**
        * Verifications that Stripe performed on information that the cardholder provided to the merchant.
@@ -2567,6 +2577,11 @@ export namespace TestHelpers {
       expand?: Array<string>;
 
       /**
+       * Exchange rate from merchant amount to capture amount, expressed in minor units. Must be finite and positive for different currencies. Matching currencies ignore the supplied numeric rate and use 1.0. The capture amount remains authoritative.
+       */
+      merchant_amount_exchange_rate?: number;
+
+      /**
        * Details about the transaction, such as processing dates, set by the card network.
        */
       network_data?: AuthorizationCaptureParams.NetworkData;
@@ -2575,6 +2590,11 @@ export namespace TestHelpers {
        * Additional purchase information that is optionally provided by the merchant.
        */
       purchase_details?: AuthorizationCaptureParams.PurchaseDetails;
+
+      /**
+       * Synthetic settlement values for this purchase capture. If omitted, defaults to the final signed transaction amount, transaction currency, and effective merchant-to-cardholder exchange rate. Supply all three fields to override. This does not create a settlement or change funding.
+       */
+      settlement_details?: AuthorizationCaptureParams.SettlementDetails;
     }
 
     export namespace AuthorizationCaptureParams {
@@ -2602,11 +2622,6 @@ export namespace TestHelpers {
         fuel?: PurchaseDetails.Fuel;
 
         /**
-         * Healthcare sub-amounts for IIAS-eligible transactions.
-         */
-        healthcare?: PurchaseDetails.Healthcare;
-
-        /**
          * Information about lodging that was purchased with this transaction.
          */
         lodging?: PurchaseDetails.Lodging;
@@ -2620,6 +2635,23 @@ export namespace TestHelpers {
          * A merchant-specific order number.
          */
         reference?: string;
+      }
+
+      export interface SettlementDetails {
+        /**
+         * Positive settlement amount magnitude in the smallest currency unit. Must match the converted merchant amount and, when settlement and cardholder currencies are the same, this capture's finalized transaction amount magnitude. The transaction type determines the output sign.
+         */
+        amount: number;
+
+        /**
+         * Settlement currency.
+         */
+        currency: string;
+
+        /**
+         * Exchange rate from merchant amount to settlement amount, expressed in minor units. Must be finite and positive for different currencies. Matching currencies ignore the supplied numeric rate and use 1.0.
+         */
+        exchange_rate: number;
       }
 
       export namespace PurchaseDetails {
@@ -2697,48 +2729,6 @@ export namespace TestHelpers {
            * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
            */
           unit_cost_decimal?: Decimal;
-        }
-
-        export interface Healthcare {
-          /**
-           * Clinic and urgent care sub-amount for Visa only.
-           */
-          clinic_amount?: number;
-
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
-
-          /**
-           * Dental care sub-amount for Visa only.
-           */
-          dental_amount?: number;
-
-          /**
-           * Prescription drug sub-amount. Null if the merchant did not send this amount.
-           */
-          prescription_amount?: number;
-
-          /**
-           * The type of healthcare transaction. `medical` for FSA/HSA-eligible healthcare purchases; `transit_for_healthcare` for FSA/HSA-eligible transit for healthcare purchases.
-           */
-          purchase_type?: Healthcare.PurchaseType;
-
-          /**
-           * Total FSA/HSA-eligible amount in the smallest currency unit.
-           */
-          total_qualified_amount: number;
-
-          /**
-           * IIAS verification status from the merchant terminal. For Visa, this is always iias_verified.
-           */
-          verification_status: Healthcare.VerificationStatus;
-
-          /**
-           * Vision/optical sub-amount. Null if the merchant did not send this amount.
-           */
-          vision_amount?: number;
         }
 
         export interface Lodging {
@@ -2902,16 +2892,6 @@ export namespace TestHelpers {
             | 'pound'
             | 'us_gallon'
             | OtherString;
-        }
-
-        export namespace Healthcare {
-          export type PurchaseType = 'medical' | 'transit_for_healthcare';
-
-          export type VerificationStatus =
-            | 'iias_merchant_exempt'
-            | 'iias_merchant_not_certified'
-            | 'iias_verified'
-            | 'not_verified';
         }
       }
     }

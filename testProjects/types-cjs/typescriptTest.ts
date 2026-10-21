@@ -464,6 +464,20 @@ async (): Promise<void> => {
       const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
     }
   );
+  unverifiedHandler.on('custom.event', async (event) => {
+    const notification: Stripe.V2.Core.EventNotification = event;
+    // @ts-expect-error - an unknown name must not narrow to a known event
+    const known: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification = event;
+  });
+  const mixedType: 'v1.billing.meter.error_report_triggered' | 'custom.event' =
+    Math.random() < 0.5
+      ? 'v1.billing.meter.error_report_triggered'
+      : 'custom.event';
+  unverifiedHandler.on(mixedType, async (event) => {
+    const notification: Stripe.V2.Core.EventNotification = event;
+    // @ts-expect-error - the custom alternative prevents known-event narrowing
+    const known: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification = event;
+  });
 
   // handle() takes only the body; there is no signature to pass
   const res: void = await unverifiedHandler.handle('');

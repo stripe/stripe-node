@@ -1834,7 +1834,14 @@ export namespace PaymentMethod {
   }
 
   export namespace IdBankTransfer {
-    export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata' | OtherString;
+    export type Bank =
+      | 'bca'
+      | 'bni'
+      | 'bri'
+      | 'cimb'
+      | 'mandiri'
+      | 'permata'
+      | OtherString;
   }
 
   export namespace Ideal {

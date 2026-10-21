@@ -74,6 +74,7 @@ import {FinancingOfferResource as CapitalFinancingOffers} from './resources/Capi
 import {FinancingOfferResource as TestHelpersCapitalFinancingOffers} from './resources/TestHelpers/Capital/FinancingOffers.js';
 import {FinancingSummaryResource as CapitalFinancingSummary} from './resources/Capital/FinancingSummary.js';
 import {FinancingTransactionResource as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions.js';
+import {FormResource as RiskForms} from './resources/Risk/Forms.js';
 import {FormResource as TaxForms} from './resources/Tax/Forms.js';
 import {FraudLiabilityDebitResource as IssuingFraudLiabilityDebits} from './resources/Issuing/FraudLiabilityDebits.js';
 import {FundingSessionResource as V2MoneyManagementFundingSessions} from './resources/V2/MoneyManagement/FundingSessions.js';
@@ -115,6 +116,7 @@ import {OnboardingLinkResource as TerminalOnboardingLinks} from './resources/Ter
 import {OneTimeItemResource as V2BillingOneTimeItems} from './resources/V2/Billing/OneTimeItems.js';
 import {OnrampSessionResource as CryptoOnrampSessions} from './resources/Crypto/OnrampSessions.js';
 import {OnrampTransactionLimitResource as CryptoOnrampTransactionLimits} from './resources/Crypto/OnrampTransactionLimits.js';
+import {OperationResource as V2DataOperations} from './resources/V2/Data/Operations.js';
 import {OperationResource as V2TaxOperations} from './resources/V2/Tax/Operations.js';
 import {OrderResource as ClimateOrders} from './resources/Climate/Orders.js';
 import {OrderResource as DelegatedCheckoutOrders} from './resources/DelegatedCheckout/Orders.js';
@@ -383,6 +385,7 @@ export const Reserve = resourceNamespace('reserve', {
   Plans: ReservePlans,
   Releases: ReserveReleases,
 });
+export const Risk = resourceNamespace('risk', {Forms: RiskForms});
 export const SharedPayment = resourceNamespace('sharedPayment', {
   GrantedTokens: SharedPaymentGrantedTokens,
   IssuedTokens: SharedPaymentIssuedTokens,
@@ -501,6 +504,7 @@ export const V2 = resourceNamespace('v2', {
     }),
   }),
   Data: resourceNamespace('data', {
+    Operations: V2DataOperations,
     QueryRuns: V2DataQueryRuns,
     ReportRuns: V2DataReportRuns,
     Reports: V2DataReports,
