@@ -1,6 +1,7 @@
 import {Stripe} from './stripe.core.js';
 import * as Events from './resources/V2/Core/Events.js';
 import {WebhookHeader, WebhookPayload} from './Webhooks.js';
+import {isBlankWebhookSecret} from './utils.js';
 
 export interface UnhandledNotificationDetails {
   isKnownEventType: boolean;
@@ -19,6 +20,13 @@ export type PreHandleCallback = (
 
 // this is an internal-only type; we write a user-facing one separately
 type HandlerCallback = (event: any, client: any) => Promise<void>;
+
+// Distribute over T so an unknown member of a union gets the fallback.
+type NotificationForType<T extends string> = T extends string
+  ? [Extract<Stripe.V2.Core.EventNotification, {type: T}>] extends [never]
+    ? Stripe.V2.Core.EventNotification
+    : Extract<Stripe.V2.Core.EventNotification, {type: T}>
+  : never;
 
 // most languages can check if we have an UnknownEventNotification at runtime
 // but JS only has interfaces so we fall back to a string match to determine known events
@@ -361,12 +369,9 @@ class BaseEventNotificationHandler {
   ) {}
 
   // these types are duplicated in the manual types
-  public on<T extends Stripe.V2.Core.EventNotification['type']>(
+  public on<T extends string>(
     type: T,
-    callback: (
-      event: Extract<Stripe.V2.Core.EventNotification, {type: T}>,
-      client: Stripe
-    ) => Promise<void>
+    callback: (event: NotificationForType<T>, client: Stripe) => Promise<void>
   ): this;
   public on(type: string, callback: HandlerCallback): this {
     this.assertCanRegister();
@@ -448,7 +453,7 @@ export class StripeEventNotificationHandler extends BaseEventNotificationHandler
     fallbackCallback: FallbackCallback
   ) {
     super(client, fallbackCallback);
-    if (!webhookSecret) {
+    if (isBlankWebhookSecret(webhookSecret)) {
       throw new Error('webhookSecret must be a non-empty string');
     }
   }
@@ -472,7 +477,11 @@ export class StripeEventNotificationHandler extends BaseEventNotificationHandler
     this.hasHandledEvent = true;
 
     return await this.dispatchEvent(
-      this.client.parseEventNotification(rawBody, signature, this.webhookSecret)
+      await this.client.parseEventNotificationAsync(
+        rawBody,
+        signature,
+        this.webhookSecret
+      )
     );
   }
 }
