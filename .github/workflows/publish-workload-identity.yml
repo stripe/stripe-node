@@ -15,7 +15,7 @@ permissions: {}
 jobs:
   publish:
     name: 'Publish @stripe/workload-identity'
-    environment: Workload-Identity-Release
+    environment: workload-identity-release
     # Released independently of the core SDK, on its own tag: `wif-v<version>`
     # (e.g. `wif-v0.1.0-alpha.1`).
     if: >-
