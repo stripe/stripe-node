@@ -261,9 +261,9 @@ export namespace PaymentEvaluation {
     bank_initiated_return?: Signals.BankInitiatedReturn;
 
     /**
-     * The likelihood that this `PaymentEvaluation` results in an early fraud warning.
+     * A payment evaluation signal with evaluated_at, risk_level, and score fields.
      */
-    early_fraud_warning: Signals.EarlyFraudWarning | null;
+    early_fraud_warning?: Signals.EarlyFraudWarning;
 
     /**
      * The likelihood that this `PaymentEvaluation` results in a dispute with reason code `fraudulent`.

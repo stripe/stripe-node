@@ -164,6 +164,8 @@ export namespace Configuration {
 
     subscription_cancel: Features.SubscriptionCancel;
 
+    subscription_pause: Features.SubscriptionPause;
+
     subscription_update: Features.SubscriptionUpdate;
   }
 
@@ -230,6 +232,15 @@ export namespace Configuration {
        * Whether to create prorations when canceling subscriptions. Possible values are `none` and `create_prorations`.
        */
       proration_behavior: SubscriptionCancel.ProrationBehavior;
+    }
+
+    export interface SubscriptionPause {
+      duration: SubscriptionPause.Duration;
+
+      /**
+       * Whether the feature is enabled. Customers can only pause subscriptions in the [redesigned customer portal](https://docs.stripe.com/customer-management).
+       */
+      enabled: boolean;
     }
 
     export interface SubscriptionUpdate {
@@ -314,6 +325,45 @@ export namespace Configuration {
           | 'too_expensive'
           | 'unused'
           | OtherString;
+      }
+    }
+
+    export namespace SubscriptionPause {
+      export interface Duration {
+        /**
+         * The preset pause durations customers can choose from.
+         */
+        interval_options: Array<Duration.IntervalOption>;
+
+        /**
+         * Whether subscriptions can be paused indefinitely or for a preset duration.
+         */
+        type: Duration.Type;
+      }
+
+      export namespace Duration {
+        export interface IntervalOption {
+          /**
+           * Specifies the pause duration unit. Either `day`, `week`, `month`, or `year`.
+           */
+          interval: IntervalOption.Interval;
+
+          /**
+           * The number of intervals in the pause duration. The maximum duration is three years.
+           */
+          interval_count: number;
+        }
+
+        export type Type = 'indefinite' | 'interval_options' | OtherString;
+
+        export namespace IntervalOption {
+          export type Interval =
+            | 'day'
+            | 'month'
+            | 'week'
+            | 'year'
+            | OtherString;
+        }
       }
     }
 

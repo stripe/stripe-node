@@ -232,7 +232,7 @@ export interface Account {
   livemode: boolean;
 
   /**
-   * The most recent information about the account's owners.
+   * The ID of the [Financial Connections Account Ownership](https://docs.stripe.com/api/financial_connections/ownership) object associated with this account.
    */
   ownership: string | AccountOwnership | null;
 

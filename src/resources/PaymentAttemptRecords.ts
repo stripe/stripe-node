@@ -2697,6 +2697,7 @@ export namespace PaymentAttemptRecord {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }

@@ -736,6 +736,7 @@ export namespace SetupAttempt {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }

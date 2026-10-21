@@ -180,6 +180,8 @@ export namespace Registration {
 
     bs?: CountryOptions.Bs;
 
+    bw?: CountryOptions.Bw;
+
     by?: CountryOptions.By;
 
     ca?: CountryOptions.Ca;
@@ -187,6 +189,8 @@ export namespace Registration {
     cd?: CountryOptions.Cd;
 
     ch?: CountryOptions.Ch;
+
+    ci?: CountryOptions.Ci;
 
     cl?: CountryOptions.Cl;
 
@@ -223,6 +227,8 @@ export namespace Registration {
     gb?: CountryOptions.Gb;
 
     ge?: CountryOptions.Ge;
+
+    gh?: CountryOptions.Gh;
 
     gn?: CountryOptions.Gn;
 
@@ -275,6 +281,8 @@ export namespace Registration {
     mr?: CountryOptions.Mr;
 
     mt?: CountryOptions.Mt;
+
+    mu?: CountryOptions.Mu;
 
     mx?: CountryOptions.Mx;
 
@@ -481,6 +489,13 @@ export namespace Registration {
       type: 'standard';
     }
 
+    export interface Bw {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
     export interface By {
       /**
        * Type of registration in `country`.
@@ -511,6 +526,13 @@ export namespace Registration {
        * Type of registration in `country`.
        */
       type: 'standard';
+    }
+
+    export interface Ci {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
     }
 
     export interface Cl {
@@ -653,6 +675,13 @@ export namespace Registration {
     }
 
     export interface Ge {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Gh {
       /**
        * Type of registration in `country`.
        */
@@ -859,6 +888,13 @@ export namespace Registration {
        * Type of registration in an EU country.
        */
       type: Mt.Type;
+    }
+
+    export interface Mu {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
     }
 
     export interface Mx {

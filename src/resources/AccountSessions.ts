@@ -72,6 +72,11 @@ export namespace AccountSession {
      */
     bills?: Components.Bills | null;
 
+    /**
+     * Configuration for the [Business profile management](https://docs.stripe.com/connect/supported-embedded-components/business-profile-management/) embedded component.
+     */
+    business_profile_management?: Components.BusinessProfileManagement | null;
+
     capital_financing?: Components.CapitalFinancing | null;
 
     capital_financing_application?: Components.CapitalFinancingApplication | null;
@@ -145,19 +150,15 @@ export namespace AccountSession {
      */
     recipients_list?: Components.RecipientsList | null;
 
+    reporting_chart: Components.ReportingChart;
+
     tax_registrations: Components.TaxRegistrations;
 
     tax_settings: Components.TaxSettings;
 
-    /**
-     * Configuration for the [Terminal hardware orders](https://docs.stripe.com/connect/supported-embedded-components/terminal-hardware-orders/) embedded component.
-     */
-    terminal_hardware_orders?: Components.TerminalHardwareOrders | null;
+    terminal_hardware_orders: Components.TerminalHardwareOrders;
 
-    /**
-     * Configuration for the [Terminal hardware shop](https://docs.stripe.com/connect/supported-embedded-components/terminal-hardware-shop/) embedded component.
-     */
-    terminal_hardware_shop?: Components.TerminalHardwareShop | null;
+    terminal_hardware_shop: Components.TerminalHardwareShop;
   }
 
   export namespace Components {
@@ -213,6 +214,15 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: Bills.Features;
+    }
+
+    export interface BusinessProfileManagement {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: BusinessProfileManagement.Features;
     }
 
     export interface CapitalFinancing {
@@ -449,6 +459,15 @@ export namespace AccountSession {
       features: RecipientsList.Features;
     }
 
+    export interface ReportingChart {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: ReportingChart.Features;
+    }
+
     export interface TaxRegistrations {
       /**
        * Whether the embedded component is enabled.
@@ -567,6 +586,10 @@ export namespace AccountSession {
          */
         send_money: boolean;
       }
+    }
+
+    export namespace BusinessProfileManagement {
+      export interface Features {}
     }
 
     export namespace CapitalFinancing {
@@ -956,6 +979,10 @@ export namespace AccountSession {
          */
         send_money: boolean;
       }
+    }
+
+    export namespace ReportingChart {
+      export interface Features {}
     }
 
     export namespace TaxRegistrations {
