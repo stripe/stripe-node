@@ -1,6 +1,6 @@
 {
   "name": "@stripe/workload-identity",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "AWS workload identity adapter for the Stripe Node.js SDK",
   "keywords": [
     "stripe",
