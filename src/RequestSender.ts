@@ -264,12 +264,20 @@ export class RequestSender {
 
             // Expose raw response object.
             const rawResponse = res.getRawResponse();
-            Object.defineProperty(rawResponse, 'statusCode', {
-              value: statusCode,
-              enumerable: true,
-              writable: true,
-              configurable: true,
-            });
+            // TODO: Normalize response metadata without mutating raw responses.
+            // Preserve existing statusCode properties, which may be read-only.
+            if (
+              rawResponse !== null &&
+              typeof rawResponse === 'object' &&
+              !('statusCode' in rawResponse)
+            ) {
+              Object.defineProperty(rawResponse, 'statusCode', {
+                value: statusCode,
+                enumerable: true,
+                writable: true,
+                configurable: true,
+              });
+            }
             this._addHeadersDirectlyToObject(rawResponse, headers);
             Object.defineProperty(jsonResponse, 'lastResponse', {
               enumerable: false,

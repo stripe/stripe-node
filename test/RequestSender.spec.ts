@@ -86,6 +86,47 @@ describe('RequestSender', () => {
       }
     }
 
+    for (const location of ['own', 'inherited']) {
+      for (const existingStatusCode of [201, undefined]) {
+        it(`preserves an ${location} read-only statusCode of ${existingStatusCode}`, async () => {
+          const rawResponse = new Response(
+            JSON.stringify({object: 'balance'}),
+            {
+              status: 201,
+            }
+          );
+          const propertyHolder =
+            location === 'own'
+              ? rawResponse
+              : Object.create(Object.getPrototypeOf(rawResponse));
+          if (location === 'inherited') {
+            Object.setPrototypeOf(rawResponse, propertyHolder);
+          }
+          Object.defineProperty(propertyHolder, 'statusCode', {
+            value: existingStatusCode,
+          });
+          const originalDescriptor = Object.getOwnPropertyDescriptor(
+            propertyHolder,
+            'statusCode'
+          );
+          const client = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
+            httpClient: new FetchHttpClient(() => Promise.resolve(rawResponse)),
+          });
+
+          const result = await client.balance.retrieve();
+
+          expect(result.lastResponse).to.equal(rawResponse);
+          expect(result.lastResponse.statusCode).to.equal(existingStatusCode);
+          expect(
+            Object.getOwnPropertyDescriptor(propertyHolder, 'statusCode')
+          ).to.deep.equal(originalDescriptor);
+          expect(
+            Object.prototype.hasOwnProperty.call(rawResponse, 'statusCode')
+          ).to.equal(location === 'own');
+        });
+      }
+    }
+
     it('exposes HTTP 201 with the Node transport', (done) => {
       getTestServerStripe(
         {},
