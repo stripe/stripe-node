@@ -264,8 +264,9 @@ export class RequestSender {
 
             // Expose raw response object.
             const rawResponse = res.getRawResponse();
-            // TODO: Normalize response metadata without mutating raw responses.
-            // Preserve existing statusCode properties, which may be read-only.
+            // TODO: Build fully type-checked lastResponse metadata separately from
+            // raw transport data while preserving raw-response compatibility.
+            // For now, preserve existing statusCode properties, which may be read-only.
             if (
               rawResponse !== null &&
               typeof rawResponse === 'object' &&
