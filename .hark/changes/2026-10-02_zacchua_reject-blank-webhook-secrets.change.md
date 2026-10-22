@@ -4,6 +4,7 @@ pr_url: https://github.com/stripe/stripe-node/pull/2885
 semver_level: patch
 jira_tickets_closed:
 - RUN_DEVSDK-3378
+released_in_version: 23.0.1
 ---
 
 - Reject webhook signing secrets made entirely of ASCII whitespace instead of using them as HMAC keys.

@@ -5,6 +5,19 @@ Instead, edit a corresponding `.change.md` file and run `hark build`.
 
 # Changelog
 
+## <a id="23-0-1"></a>23.0.1 - 2026-10-22
+* [#2885](https://github.com/stripe/stripe-node/pull/2885) Reject ASCII-whitespace-only webhook secrets
+  - Reject webhook signing secrets made entirely of ASCII whitespace instead of using them as HMAC keys.
+* [#2884](https://github.com/stripe/stripe-node/pull/2884) Add API v2 Search support
+
+  Adds `V2SearchResult<T>` and support for auto pagination of search results.
+* [#2895](https://github.com/stripe/stripe-node/pull/2895) Fix notification handling and discarded fetch retries
+  - Fix `EventNotificationHandler.handle()` to verify signatures asynchronously, so it works with async crypto providers (e.g. the web platform).
+  - Fall back to the full `EventNotification` union type for `on()` callbacks when a specific notification type can't be narrowed, instead of resolving to `never`.
+  - Dispose discarded `fetch` responses before retrying a request, aborting the fetch and closing the unread body.
+* Fix lastResponse.statusCode for fetch responses
+  - Populate `lastResponse.statusCode` with the HTTP status for successful JSON responses when using the fetch HTTP client.
+
 ## <a id="23-0-0"></a>23.0.0 - 2026-09-30
 This release changes the pinned API version to `2026-09-30.endive`.
 

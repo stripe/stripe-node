@@ -2,6 +2,7 @@
 title: Fix notification handling and discarded fetch retries
 pr_url: https://github.com/stripe/stripe-node/pull/2895
 semver_level: patch
+released_in_version: 23.0.1
 ---
 
 - Fix `EventNotificationHandler.handle()` to verify signatures asynchronously, so it works with async crypto providers (e.g. the web platform).
