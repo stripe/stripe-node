@@ -1,6 +1,7 @@
 // @ts-nocheck
 import {expect} from 'chai';
 import nock = require('nock');
+import {Readable} from 'stream';
 
 import {
   StripeAPIError,
@@ -26,6 +27,7 @@ import {
   HttpClientResponse,
   HttpClientResponseBodyError,
 } from '../src/net/HttpClient.js';
+import {FetchHttpClient} from '../src/net/FetchHttpClient.js';
 import {
   FAKE_API_KEY,
   getSpyableStripe,
@@ -39,6 +41,199 @@ const IDEMPOTENCY_KEY = /^stripe-node-retry-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}
 
 describe('RequestSender', () => {
   const sender = new RequestSender(stripe, 0);
+
+  describe('lastResponse statusCode', () => {
+    for (const [name, ResponseClass] of [
+      ['native fetch', Response],
+      ['node-fetch', require('node-fetch').Response],
+    ]) {
+      for (const statusCode of [200, 201]) {
+        it(`exposes HTTP ${statusCode} with ${name} without replacing the raw response`, async () => {
+          const rawResponse = new ResponseClass(
+            JSON.stringify({object: 'balance'}),
+            {
+              status: statusCode,
+              headers: {'request-id': 'req_test_status_code'},
+            }
+          );
+          const originalHeaders = rawResponse.headers;
+          const client = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
+            httpClient: new FetchHttpClient(() => Promise.resolve(rawResponse)),
+          });
+
+          const result = await client.balance.retrieve();
+
+          expect(result.lastResponse.statusCode).to.equal(statusCode);
+          expect(result.lastResponse).to.equal(rawResponse);
+          expect(rawResponse.status).to.equal(statusCode);
+          expect(rawResponse.headers).to.equal(originalHeaders);
+          expect(rawResponse.headers.get('request-id')).to.equal(
+            'req_test_status_code'
+          );
+          expect(result.lastResponse.requestId).to.equal(
+            'req_test_status_code'
+          );
+          expect(
+            Object.getOwnPropertyDescriptor(result, 'lastResponse')
+          ).to.deep.equal({
+            value: rawResponse,
+            enumerable: false,
+            writable: false,
+            configurable: false,
+          });
+          expect(Object.keys(result)).to.deep.equal(['object']);
+        });
+      }
+    }
+
+    for (const location of ['own', 'inherited']) {
+      for (const existingStatusCode of [201, undefined]) {
+        it(`preserves an ${location} read-only statusCode of ${existingStatusCode}`, async () => {
+          const rawResponse = new Response(
+            JSON.stringify({object: 'balance'}),
+            {
+              status: 201,
+            }
+          );
+          const propertyHolder =
+            location === 'own'
+              ? rawResponse
+              : Object.create(Object.getPrototypeOf(rawResponse));
+          if (location === 'inherited') {
+            Object.setPrototypeOf(rawResponse, propertyHolder);
+          }
+          Object.defineProperty(propertyHolder, 'statusCode', {
+            value: existingStatusCode,
+          });
+          const originalDescriptor = Object.getOwnPropertyDescriptor(
+            propertyHolder,
+            'statusCode'
+          );
+          const client = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
+            httpClient: new FetchHttpClient(() => Promise.resolve(rawResponse)),
+          });
+
+          const result = await client.balance.retrieve();
+
+          expect(result.lastResponse).to.equal(rawResponse);
+          expect(result.lastResponse.statusCode).to.equal(existingStatusCode);
+          expect(
+            Object.getOwnPropertyDescriptor(propertyHolder, 'statusCode')
+          ).to.deep.equal(originalDescriptor);
+          expect(
+            Object.prototype.hasOwnProperty.call(rawResponse, 'statusCode')
+          ).to.equal(location === 'own');
+        });
+      }
+    }
+
+    it('exposes HTTP 201 with the Node transport', (done) => {
+      getTestServerStripe(
+        {},
+        (req, res) => {
+          res.writeHead(201, {'request-id': 'req_test_status_code'});
+          res.end(JSON.stringify({object: 'balance'}));
+        },
+        (err, client, closeServer) => {
+          if (err) {
+            closeServer();
+            return done(err);
+          }
+          client.balance
+            .retrieve()
+            .then((result) => {
+              expect(result.lastResponse.statusCode).to.equal(201);
+              expect(result.lastResponse.requestId).to.equal(
+                'req_test_status_code'
+              );
+            })
+            .then(() => {
+              closeServer();
+              done();
+            })
+            .catch((error) => {
+              closeServer();
+              done(error);
+            });
+        }
+      );
+    });
+  });
+
+  it('disposes a discarded fetch response before retrying', async () => {
+    let canceled = false;
+    let requests = 0;
+    const retryBody = new ReadableStream({
+      cancel() {
+        canceled = true;
+      },
+    });
+    const fetchFn = () => {
+      requests += 1;
+      if (requests === 1) {
+        return Promise.resolve(new Response(retryBody, {status: 503}));
+      }
+      return Promise.resolve(
+        new Response(JSON.stringify({id: 'ch_123', object: 'charge'}), {
+          status: 200,
+        })
+      );
+    };
+    const client = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
+      httpClient: new FetchHttpClient(fetchFn as typeof fetch),
+      maxNetworkRetries: 1,
+      timeout: 2000,
+    });
+
+    const charge = await client.charges.retrieve('ch_123');
+
+    expect(charge.id).to.equal('ch_123');
+    expect(requests).to.equal(2);
+    expect(canceled).to.be.true;
+  });
+
+  it('aborts a stalled node-fetch response before retrying', async () => {
+    let sentPartialBody = false;
+    const stalledBody = new Readable({
+      read() {
+        if (!sentPartialBody) {
+          sentPartialBody = true;
+          this.push('partial');
+        }
+      },
+    });
+    nock('https://api.stripe.com')
+      .get('/v1/charges/ch_123')
+      .reply(503, () => stalledBody)
+      .get('/v1/charges/ch_123')
+      .reply(200, {id: 'ch_123', object: 'charge'});
+
+    const nodeFetch = require('node-fetch');
+    let firstSignal: AbortSignal | undefined;
+    let firstBody: Readable | undefined;
+    const fetchFn = async (
+      url: string,
+      init: RequestInit
+    ): Promise<Response> => {
+      const res = await nodeFetch(url, init);
+      if (!firstBody) {
+        firstSignal = init.signal as AbortSignal;
+        firstBody = res.body;
+      }
+      return res;
+    };
+    const client = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
+      httpClient: new FetchHttpClient(fetchFn as typeof fetch),
+      maxNetworkRetries: 1,
+      timeout: 5000,
+    });
+
+    const charge = await client.charges.retrieve('ch_123');
+
+    expect(charge.id).to.equal('ch_123');
+    expect(firstSignal?.aborted).to.be.true;
+    expect(firstBody?.destroyed).to.be.true;
+  });
 
   describe('_normalizeStripeContext', () => {
     it('returns the req string if it exists, representation of the context if it exists', () => {
