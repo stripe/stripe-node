@@ -7,6 +7,8 @@ Instead, edit a corresponding `.change.md` file and run `hark build`.
 
 > This changelog only covers the **public preview** releases. Each release builds on the most recent GA release; see those notes in [the GA changelog](https://github.com/stripe/stripe-node/blob/master/CHANGELOG.md).
 
+## <a id="23-1-0-beta-2"></a>23.1.0-beta.2 - 2026-10-22
+
 ## <a id="23-1-0-beta-1"></a>23.1.0-beta.1 - 2026-09-30
 This release changes the pinned API version to `2026-09-30.preview`.
 
