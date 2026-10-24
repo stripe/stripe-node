@@ -263,6 +263,8 @@ export namespace ConfirmationToken {
 
     tamara?: PaymentMethodPreview.Tamara;
 
+    toss_pay?: PaymentMethodPreview.TossPay;
+
     twint?: PaymentMethodPreview.Twint;
 
     /**
@@ -1085,6 +1087,13 @@ export namespace ConfirmationToken {
 
     export interface Tamara {}
 
+    export interface TossPay {
+      /**
+       * The buyer identifier provided by NICE for this Toss Pay account, when available.
+       */
+      buyer_id: string | null;
+    }
+
     export interface Twint {}
 
     export type Type =
@@ -1154,6 +1163,7 @@ export namespace ConfirmationToken {
       | 'sunbit'
       | 'swish'
       | 'tamara'
+      | 'toss_pay'
       | 'twint'
       | 'upi'
       | 'us_bank_account'

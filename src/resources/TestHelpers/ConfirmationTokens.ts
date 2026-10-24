@@ -409,6 +409,11 @@ export namespace TestHelpers {
       tamara?: PaymentMethodData.Tamara;
 
       /**
+       * If this is a `toss_pay` PaymentMethod, this hash contains details about the Toss Pay payment method.
+       */
+      toss_pay?: PaymentMethodData.TossPay;
+
+      /**
        * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
        */
       twint?: PaymentMethodData.Twint;
@@ -784,6 +789,8 @@ export namespace TestHelpers {
 
       export interface Tamara {}
 
+      export interface TossPay {}
+
       export interface Twint {}
 
       export type Type =
@@ -849,6 +856,7 @@ export namespace TestHelpers {
         | 'sunbit'
         | 'swish'
         | 'tamara'
+        | 'toss_pay'
         | 'twint'
         | 'upi'
         | 'us_bank_account'

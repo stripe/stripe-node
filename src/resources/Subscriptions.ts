@@ -1618,7 +1618,7 @@ export interface Subscription {
    *
    * A subscription that is currently in a trial period is `trialing` and moves to `active` when the trial period is over.
    *
-   * A subscription can only enter a `paused` status [when a trial ends without a payment method](https://docs.stripe.com/billing/subscriptions/trials/free-trials#create-free-trials-without-payment). A `paused` subscription doesn't generate invoices and can be resumed after your customer adds their payment method. The `paused` status is different from [pausing collection](https://docs.stripe.com/billing/subscriptions/pause-payment), which still generates invoices and leaves the subscription's status unchanged.
+   * A subscription can enter a `paused` status in several ways, including [when a trial ends without a payment method](https://docs.stripe.com/billing/subscriptions/trials/free-trials#create-free-trials-without-payment) or when you pause it using the [pause endpoint](https://docs.stripe.com/api/subscriptions/pause). A `paused` subscription doesn't advance to a new billing period or generate invoices until it resumes. The `paused` status is different from [pausing collection](https://docs.stripe.com/billing/subscriptions/pause-payment), which still generates invoices and leaves the subscription's status unchanged.
    *
    * If subscription `collection_method=charge_automatically`, it becomes `past_due` when payment is required but cannot be paid (due to failed payment or awaiting additional user actions). Once Stripe has exhausted all payment retry attempts, the subscription will become `canceled` or `unpaid` (depending on your subscriptions settings).
    *
@@ -2409,7 +2409,12 @@ export namespace Subscription {
         mandate_options?: Pix.MandateOptions;
       }
 
-      export interface SepaDebit {}
+      export interface SepaDebit {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        debit_behavior?: string;
+      }
 
       export interface Upi {
         mandate_options?: Upi.MandateOptions;
@@ -4222,7 +4227,12 @@ export namespace SubscriptionCreateParams {
         mandate_options?: Pix.MandateOptions;
       }
 
-      export interface SepaDebit {}
+      export interface SepaDebit {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        debit_behavior?: string;
+      }
 
       export interface Upi {
         /**
@@ -5992,7 +6002,12 @@ export namespace SubscriptionUpdateParams {
         mandate_options?: Pix.MandateOptions;
       }
 
-      export interface SepaDebit {}
+      export interface SepaDebit {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        debit_behavior?: string;
+      }
 
       export interface Upi {
         /**

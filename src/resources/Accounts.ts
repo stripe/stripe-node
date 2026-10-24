@@ -1177,6 +1177,8 @@ export namespace Account {
      */
     phone?: string | null;
 
+    physical_address?: Address;
+
     principal_place_of_business?: Address;
 
     registration_date?: Company.RegistrationDate;
