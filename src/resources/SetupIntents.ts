@@ -406,6 +406,7 @@ export namespace SetupIntent {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'toss_pay'
     | 'touch_n_go'
     | 'truemoney'
     | 'twint'
@@ -501,6 +502,7 @@ export namespace SetupIntent {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -1902,6 +1904,7 @@ export namespace SetupIntentCreateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'toss_pay'
     | 'touch_n_go'
     | 'truemoney'
     | 'twint'
@@ -1991,6 +1994,7 @@ export namespace SetupIntentCreateParams {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -2348,6 +2352,11 @@ export namespace SetupIntentCreateParams {
      * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
      */
     tamara?: PaymentMethodData.Tamara;
+
+    /**
+     * If this is a `toss_pay` PaymentMethod, this hash contains details about the Toss Pay payment method.
+     */
+    toss_pay?: PaymentMethodData.TossPay;
 
     /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
@@ -2853,6 +2862,8 @@ export namespace SetupIntentCreateParams {
 
     export interface Tamara {}
 
+    export interface TossPay {}
+
     export interface Twint {}
 
     export type Type =
@@ -2918,6 +2929,7 @@ export namespace SetupIntentCreateParams {
       | 'sunbit'
       | 'swish'
       | 'tamara'
+      | 'toss_pay'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -4277,6 +4289,7 @@ export namespace SetupIntentUpdateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'toss_pay'
     | 'touch_n_go'
     | 'truemoney'
     | 'twint'
@@ -4352,6 +4365,7 @@ export namespace SetupIntentUpdateParams {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -4702,6 +4716,11 @@ export namespace SetupIntentUpdateParams {
      * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
      */
     tamara?: PaymentMethodData.Tamara;
+
+    /**
+     * If this is a `toss_pay` PaymentMethod, this hash contains details about the Toss Pay payment method.
+     */
+    toss_pay?: PaymentMethodData.TossPay;
 
     /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
@@ -5147,6 +5166,8 @@ export namespace SetupIntentUpdateParams {
 
     export interface Tamara {}
 
+    export interface TossPay {}
+
     export interface Twint {}
 
     export type Type =
@@ -5212,6 +5233,7 @@ export namespace SetupIntentUpdateParams {
       | 'sunbit'
       | 'swish'
       | 'tamara'
+      | 'toss_pay'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -6582,6 +6604,7 @@ export namespace SetupIntentConfirmParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'toss_pay'
     | 'touch_n_go'
     | 'truemoney'
     | 'twint'
@@ -6941,6 +6964,11 @@ export namespace SetupIntentConfirmParams {
      * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
      */
     tamara?: PaymentMethodData.Tamara;
+
+    /**
+     * If this is a `toss_pay` PaymentMethod, this hash contains details about the Toss Pay payment method.
+     */
+    toss_pay?: PaymentMethodData.TossPay;
 
     /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
@@ -7428,6 +7456,8 @@ export namespace SetupIntentConfirmParams {
 
     export interface Tamara {}
 
+    export interface TossPay {}
+
     export interface Twint {}
 
     export type Type =
@@ -7493,6 +7523,7 @@ export namespace SetupIntentConfirmParams {
       | 'sunbit'
       | 'swish'
       | 'tamara'
+      | 'toss_pay'
       | 'twint'
       | 'upi'
       | 'us_bank_account'

@@ -549,6 +549,8 @@ export namespace PaymentAttemptRecord {
 
     tamara?: PaymentMethodDetails.Tamara;
 
+    toss_pay?: PaymentMethodDetails.TossPay;
+
     twint?: PaymentMethodDetails.Twint;
 
     /**
@@ -1820,7 +1822,12 @@ export namespace PaymentAttemptRecord {
       verified_name?: string | null;
     }
 
-    export interface Paypay {}
+    export interface Paypay {
+      /**
+       * ID of the multi-use Mandate created by, or used to make, this PayPay payment.
+       */
+      mandate?: string;
+    }
 
     export interface Payto {
       /**
@@ -2069,6 +2076,13 @@ export namespace PaymentAttemptRecord {
        * The Tamara transaction ID associated with this payment.
        */
       transaction_id: string | null;
+    }
+
+    export interface TossPay {
+      /**
+       * The buyer identifier provided by NICE for this Toss Pay account, when available.
+       */
+      buyer_id: string | null;
     }
 
     export interface Twint {

@@ -156,6 +156,12 @@ export interface AccountActivity {
   registration_decision?: AccountActivity.RegistrationDecision;
 
   /**
+   * The AccountSignal that prompted this activity, when applicable. This historical reference
+   * may coexist with account_evaluation and remains present after the signal expires.
+   */
+  triggering_signal?: string;
+
+  /**
    * The type of activity.
    */
   type: AccountActivity.Type;
@@ -228,6 +234,11 @@ export namespace AccountActivity {
   }
 
   export interface LoginDecision {
+    /**
+     * Multi-factor authentication challenges performed during the login process.
+     */
+    mfa_challenges?: Array<LoginDecision.MfaChallenge>;
+
     /**
      * The action the merchant took following the evaluation.
      */
@@ -411,7 +422,31 @@ export namespace AccountActivity {
   }
 
   export namespace LoginDecision {
+    export interface MfaChallenge {
+      /**
+       * The authentication method used for the challenge.
+       */
+      mfa_type: MfaChallenge.MfaType;
+
+      /**
+       * The outcome of the authentication challenge.
+       */
+      status: MfaChallenge.Status;
+    }
+
     export type Status = 'allowed' | 'blocked' | 'restricted';
+
+    export namespace MfaChallenge {
+      export type MfaType =
+        | 'authenticator_app'
+        | 'email'
+        | 'hardware_key'
+        | 'other'
+        | 'sms'
+        | OtherString;
+
+      export type Status = 'failed' | 'other' | 'succeeded' | OtherString;
+    }
   }
 
   export namespace MfaAddition {
@@ -561,6 +596,13 @@ export namespace V2 {
        * Details for the registration decision. Provide only when type is registration_decision.
        */
       registration_decision?: AccountActivityCreateParams.RegistrationDecision;
+
+      /**
+       * An accessible AccountSignal that prompted this activity. The signal must be within its
+       * 90-day retrieval window and match the existing account or customer in account_details.
+       * Inline data is unsupported. May be supplied together with account_evaluation.
+       */
+      triggering_signal?: string;
     }
 
     export namespace AccountActivityCreateParams {
@@ -647,6 +689,11 @@ export namespace V2 {
       }
 
       export interface LoginDecision {
+        /**
+         * Multi-factor authentication challenges performed during the login process.
+         */
+        mfa_challenges?: Array<LoginDecision.MfaChallenge>;
+
         /**
          * The action the merchant took following the evaluation.
          */
@@ -814,7 +861,31 @@ export namespace V2 {
       }
 
       export namespace LoginDecision {
+        export interface MfaChallenge {
+          /**
+           * The authentication method used for the challenge.
+           */
+          mfa_type: MfaChallenge.MfaType;
+
+          /**
+           * The outcome of the authentication challenge.
+           */
+          status: MfaChallenge.Status;
+        }
+
         export type Status = 'allowed' | 'blocked' | 'restricted';
+
+        export namespace MfaChallenge {
+          export type MfaType =
+            | 'authenticator_app'
+            | 'email'
+            | 'hardware_key'
+            | 'other'
+            | 'sms'
+            | OtherString;
+
+          export type Status = 'failed' | 'other' | 'succeeded' | OtherString;
+        }
       }
 
       export namespace MfaAddition {

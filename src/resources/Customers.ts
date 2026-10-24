@@ -1424,6 +1424,11 @@ export interface Customer {
   livemode: boolean;
 
   /**
+   * Advertising attribution information for this customer.
+   */
+  marketing_attributions?: Array<Customer.MarketingAttribution>;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata;
@@ -1524,6 +1529,50 @@ export namespace Customer {
     rendering_options: InvoiceSettings.RenderingOptions | null;
   }
 
+  export interface MarketingAttribution {
+    ad_conversion?: MarketingAttribution.AdConversion;
+
+    /**
+     * The advertising platform's click identifier.
+     */
+    click_id: string | null;
+
+    /**
+     * The Unix timestamp when the advertising interaction occurred.
+     */
+    occurred_at: number | null;
+
+    /**
+     * The advertising group ID from the `utm_adgroup` parameter.
+     */
+    utm_adgroup: string | null;
+
+    /**
+     * The advertising content identifier from the `utm_content` parameter.
+     */
+    utm_content: string | null;
+
+    /**
+     * The advertising campaign ID from the `utm_id` parameter.
+     */
+    utm_id: string | null;
+
+    /**
+     * The marketing medium from the `utm_medium` parameter.
+     */
+    utm_medium: string | null;
+
+    /**
+     * The referral source from the `utm_source` parameter.
+     */
+    utm_source: string | null;
+
+    /**
+     * The paid search term from the `utm_term` parameter.
+     */
+    utm_term: string | null;
+  }
+
   export interface Redaction {
     /**
      * Indicates whether this object and its related objects have been redacted or not.
@@ -1602,6 +1651,15 @@ export namespace Customer {
        * ID of the invoice rendering template to be used for this customer's invoices. If set, the template will be used on all invoices for this customer unless a template is set directly on the invoice.
        */
       template: string | null;
+    }
+  }
+
+  export namespace MarketingAttribution {
+    export interface AdConversion {
+      /**
+       * Whether the customer consented to sending conversion data to an advertising platform.
+       */
+      consent_collected: boolean;
     }
   }
 
@@ -1703,6 +1761,11 @@ export interface CustomerCreateParams {
   invoice_settings?: CustomerCreateParams.InvoiceSettings;
 
   /**
+   * Advertising attribution information for this customer. Only one attribution is supported.
+   */
+  marketing_attributions?: Array<CustomerCreateParams.MarketingAttribution>;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
@@ -1787,6 +1850,53 @@ export namespace CustomerCreateParams {
      * Default options for invoice PDF rendering for this customer.
      */
     rendering_options?: Emptyable<InvoiceSettings.RenderingOptions>;
+  }
+
+  export interface MarketingAttribution {
+    /**
+     * Information used when sending conversions to an advertising platform.
+     */
+    ad_conversion?: MarketingAttribution.AdConversion;
+
+    /**
+     * The advertising platform's click identifier.
+     */
+    click_id?: string;
+
+    /**
+     * The Unix timestamp when the advertising interaction occurred.
+     */
+    occurred_at?: number;
+
+    /**
+     * The advertising group ID from the `utm_adgroup` parameter.
+     */
+    utm_adgroup?: string;
+
+    /**
+     * The advertising content identifier from the `utm_content` parameter.
+     */
+    utm_content?: string;
+
+    /**
+     * The advertising campaign ID from the `utm_id` parameter.
+     */
+    utm_id?: string;
+
+    /**
+     * The marketing medium from the `utm_medium` parameter.
+     */
+    utm_medium?: string;
+
+    /**
+     * The referral source from the `utm_source` parameter.
+     */
+    utm_source?: string;
+
+    /**
+     * The paid search term from the `utm_term` parameter.
+     */
+    utm_term?: string;
   }
 
   export interface Shipping {
@@ -1879,6 +1989,15 @@ export namespace CustomerCreateParams {
         | 'exclude_tax'
         | 'include_inclusive_tax'
         | OtherString;
+    }
+  }
+
+  export namespace MarketingAttribution {
+    export interface AdConversion {
+      /**
+       * Whether the customer consented to sending conversion data to an advertising platform.
+       */
+      consent_collected: boolean;
     }
   }
 
@@ -2714,6 +2833,7 @@ export namespace CustomerListPaymentMethodsParams {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
