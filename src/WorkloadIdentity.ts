@@ -14,7 +14,7 @@ export type WorkloadIdentityTokenExchange = (
   body: string
 ) => Promise<WorkloadIdentityTokenResponse>;
 
-const REFRESH_SAFETY_MARGIN_SEC = 300; // 5 minutes safety margin before token expiration
+const REFRESH_SAFETY_MARGIN_SEC = 120; // 2 minutes safety margin before token expiration
 
 export const SUPPORTED_WORKLOAD_IDENTITY_PROVIDERS = ['aws'] as const;
 export type WorkloadIdentityCloudProvider = typeof SUPPORTED_WORKLOAD_IDENTITY_PROVIDERS[number];
