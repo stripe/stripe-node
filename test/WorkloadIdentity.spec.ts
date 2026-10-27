@@ -623,7 +623,7 @@ describe('workload identity', () => {
       expect(provider.calls).to.equal(1);
     });
 
-    it('refreshes proactively once the key is about 55 minutes old', async () => {
+    it('refreshes proactively once the key is about 2 minutes from expiration', async () => {
       const {client, http, credentials, transport, provider} = buildClient({
         exchanges: [tokenResponse(FAKE_TOKEN), tokenResponse(FAKE_TOKEN_2)],
       });
@@ -631,7 +631,7 @@ describe('workload identity', () => {
       credentials._now = (): number => now;
 
       await client.customers.list();
-      now += 55 * 60 * 1000;
+      now += 58 * 60 * 1000;
       await client.customers.list();
 
       expect(transport.bodies).to.have.length(2);
@@ -644,7 +644,7 @@ describe('workload identity', () => {
 
     it('rejects a missing, malformed, or unusably short expires_in', async () => {
       /* eslint-disable no-await-in-loop */
-      for (const expiresIn of [undefined, 'nope', -1, 0, NaN, 300]) {
+      for (const expiresIn of [undefined, 'nope', -1, 0, NaN, 120]) {
         const {credentials, transport} = buildClient({
           exchanges: [tokenResponse(FAKE_TOKEN, {expires_in: expiresIn})],
         });
@@ -671,8 +671,8 @@ describe('workload identity', () => {
       await client.customers.list();
       expect(transport.bodies).to.have.length(1);
 
-      // 600s lifetime - 300s margin = refresh at 5 minutes.
-      now += 2 * 60 * 1000;
+      // 600s lifetime - 120s margin = refresh at 8 minutes.
+      now += 4 * 60 * 1000;
       await client.customers.list();
       expect(transport.bodies).to.have.length(2);
     });
