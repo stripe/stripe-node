@@ -326,20 +326,24 @@ export function flattenAndStringify(
     Object.entries(obj).forEach(([key, value]) => {
       const newKey = prevKey ? `${prevKey}[${key}]` : key;
 
-      if (isObject(value)) {
-        if (
-          !(value instanceof Uint8Array) &&
-          !Object.prototype.hasOwnProperty.call(value, 'data')
-        ) {
-          // Non-buffer non-file Objects are recursively flattened
-          return step(value, newKey);
-        } else {
-          // Buffers and file objects are stored without modification
-          result[newKey] = value;
-        }
+      if (value === undefined) {
+        return;
+      }
+
+      if (value === null || value instanceof Date || !isObject(value)) {
+        result[newKey] = valueToString(value);
+        return;
+      }
+
+      if (
+        !(value instanceof Uint8Array) &&
+        !Object.prototype.hasOwnProperty.call(value, 'data')
+      ) {
+        // Non-buffer non-file Objects are recursively flattened
+        return step(value, newKey);
       } else {
-        // Primitives are converted to strings
-        result[newKey] = String(value);
+        // Buffers and file objects are stored without modification
+        result[newKey] = value;
       }
     });
   };

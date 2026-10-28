@@ -739,7 +739,22 @@ describe('utils', () => {
           c: true,
           d: null,
         })
-      ).to.eql({a: '1', b: 'foo', c: 'true', d: 'null'});
+      ).to.eql({a: '1', b: 'foo', c: 'true', d: ''});
+    });
+
+    it('Handles nested undefined, null, and Date values', () => {
+      expect(
+        utils.flattenAndStringify({
+          x: {
+            omitted: undefined,
+            empty: null,
+            date: new Date('2009-02-13T23:31:30Z'),
+          },
+        })
+      ).to.eql({
+        'x[empty]': '',
+        'x[date]': '1234567890',
+      });
     });
 
     it('Flattens nested values', () => {
