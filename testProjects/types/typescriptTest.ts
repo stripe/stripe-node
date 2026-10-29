@@ -110,6 +110,15 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
 
   const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
 
+  await stripe.v2.core.events.list({
+    created: {gte: '2026-10-28T00:00:00Z'},
+  });
+
+  const legacyV2DateTimeRange: Stripe.RangeQueryParam = {
+    gte: 1793145600,
+  };
+  await stripe.v2.core.events.list({created: legacyV2DateTimeRange});
+
   const aThousandCustomers: Array<Stripe.Customer> = await stripe.customers
     .list()
     .autoPagingToArray({limit: 1000});
