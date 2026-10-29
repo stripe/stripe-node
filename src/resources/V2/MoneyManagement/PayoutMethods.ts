@@ -39,8 +39,9 @@ export class PayoutMethodResource extends StripeResource {
     ) as any;
   }
   /**
-   * Archive a PayoutMethod object. Archived objects cannot be used as payout methods
-   * and will not appear in the payout method list.
+   * Archive a `PayoutMethod`. Archiving prevents the Payout Method from being used for outbound payments
+   * or transfers and omits it from normal list results. To restore list visibility, use the
+   * [unarchive endpoint](https://docs.stripe.com/api/v2/money-management/payout-methods/unarchive).
    * @throws Stripe.CannotProceedError
    * @throws Stripe.InvalidPayoutMethodError
    * @throws Stripe.ControlledByAlternateResourceError
@@ -58,9 +59,9 @@ export class PayoutMethodResource extends StripeResource {
     ) as any;
   }
   /**
-   * Disable a PayoutMethod object. The payout method will not be available for use in outbound money movement.
-   * To re-enable the payout method, create an OutboundSetupIntent
-   * using [`POST /v2/money_management/outbound_setup_intents`](https://docs.stripe.com/api/v2/money-management/outbound-setup-intents/create).
+   * Disable a `PayoutMethod`. Disabling temporarily prevents the Payout Method from being used for outbound
+   * payments or transfers while keeping it in normal list results. To re-enable it, complete setup again by
+   * [creating an Outbound Setup Intent](https://docs.stripe.com/api/v2/money-management/outbound-setup-intents/create).
    * @throws Stripe.CannotProceedError
    */
   disable(
@@ -76,7 +77,8 @@ export class PayoutMethodResource extends StripeResource {
     ) as any;
   }
   /**
-   * Unarchive an PayoutMethod object.
+   * Unarchive a `PayoutMethod`. Unarchiving restores the Payout Method to normal list results and clears
+   * only its archived state. It doesn't guarantee that the Payout Method can be used.
    * @throws Stripe.InvalidPayoutMethodError
    * @throws Stripe.ControlledByAlternateResourceError
    */
@@ -135,6 +137,11 @@ export interface PayoutMethod {
    * Created timestamp.
    */
   created: string;
+
+  /**
+   * The PayoutMethodCryptoWallet object details.
+   */
+  crypto_wallet?: PayoutMethod.CryptoWallet;
 
   /**
    * ID of the underlying active OutboundSetupIntent object, if any.
@@ -209,6 +216,12 @@ export namespace PayoutMethod {
     financial_connections_account?: string;
 
     /**
+     * Uniquely identifies this particular bank account. You can use this attribute to check whether two
+     * recipients who've signed up with you are using the same bank account, for example.
+     */
+    fingerprint?: string;
+
+    /**
      * The last 4 digits of the account number.
      */
     last4: string;
@@ -257,6 +270,23 @@ export namespace PayoutMethod {
     supported_currencies: Array<string>;
   }
 
+  export interface CryptoWallet {
+    /**
+     * Destination wallet address.
+     */
+    address: string;
+
+    /**
+     * Optional field, required if network supports memos (only "stellar" currently).
+     */
+    memo?: string;
+
+    /**
+     * Which rail is being used to make an outbound money movement to this wallet.
+     */
+    network: CryptoWallet.Network;
+  }
+
   export type Type = 'bank_account' | 'card' | 'crypto_wallet' | OtherString;
 
   export interface UsageStatus {
@@ -279,6 +309,20 @@ export namespace PayoutMethod {
 
   export namespace BankAccount {
     export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
+  }
+
+  export namespace CryptoWallet {
+    export type Network =
+      | 'arbitrum'
+      | 'avalanche_c_chain'
+      | 'base'
+      | 'ethereum'
+      | 'optimism'
+      | 'polygon'
+      | 'solana'
+      | 'stellar'
+      | 'tempo'
+      | OtherString;
   }
 
   export namespace UsageStatus {

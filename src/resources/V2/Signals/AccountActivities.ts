@@ -120,7 +120,7 @@ export namespace AccountActivity {
     account?: string;
 
     /**
-     * The v1 customer ID of the account, for users not yet migrated to v2/accounts.
+     * The v1 customer ID of the account, for users not yet migrated to v2 accounts.
      */
     customer?: string;
 
@@ -167,6 +167,11 @@ export namespace AccountActivity {
 
   export namespace AccountDetails {
     export interface Data {
+      /**
+       * The account's contact email.
+       */
+      contact_email?: string;
+
       /**
        * Default account settings.
        */
@@ -356,7 +361,7 @@ export namespace V2 {
         account?: string;
 
         /**
-         * The v1 customer ID of the account, for users not yet migrated to v2/accounts.
+         * The v1 customer ID of the account, for users not yet migrated to v2 accounts.
          */
         customer?: string;
 
@@ -396,6 +401,11 @@ export namespace V2 {
 
       export namespace AccountDetails {
         export interface Data {
+          /**
+           * The account's contact email.
+           */
+          contact_email?: string;
+
           /**
            * Default account settings.
            */

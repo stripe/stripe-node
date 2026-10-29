@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
+import {
+  MetadataParam,
+  OtherString,
+  RangeQueryParam,
+  Metadata,
+} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class OutboundPaymentResource extends StripeResource {
@@ -27,9 +32,10 @@ export class OutboundPaymentResource extends StripeResource {
    * Creates an OutboundPayment.
    * @throws Stripe.BlockedByStripeError
    * @throws Stripe.InsufficientFundsError
-   * @throws Stripe.FeatureNotEnabledError
+   * @throws Stripe.CapabilityNotEnabledError
    * @throws Stripe.QuotaExceededError
    * @throws Stripe.RecipientNotNotifiableError
+   * @throws Stripe.FeatureNotEnabledError
    */
   create(
     params: V2.MoneyManagement.OutboundPaymentCreateParams,
@@ -87,7 +93,7 @@ export interface OutboundPayment {
   object: 'v2.money_management.outbound_payment';
 
   /**
-   * The "presentment amount" for the OutboundPayment.
+   * The amount and currency requested for this OutboundPayment.
    */
   amount: V2Amount;
 
@@ -139,6 +145,11 @@ export interface OutboundPayment {
   outbound_payment_quote?: string;
 
   /**
+   * The PayoutIntent ID that triggered this OutboundPayment.
+   */
+  payout_intent?: string;
+
+  /**
    * The purpose of the OutboundPayment.
    */
   purpose?: OutboundPayment.Purpose;
@@ -154,15 +165,19 @@ export interface OutboundPayment {
   recipient_notification: OutboundPayment.RecipientNotification;
 
   /**
-   * The description that appears on the receiving end for an OutboundPayment (for example, bank statement for external bank transfer). It will default to `STRIPE` if not set on the account settings.
+   * The ID of the RecipientVerification for this OutboundPayment. Required where recipient-name verification is mandated before creating an OutboundPayment.
+   */
+  recipient_verification?: string;
+
+  /**
+   * The description that appears on the receiving end of an OutboundPayment (for example, on a bank statement). Defaults to `STRIPE` if not configured in the account settings.
    */
   statement_descriptor: string;
 
   /**
-   * Closed Enum. Current status of the OutboundPayment: `processing`, `failed`, `posted`, `returned`, `canceled`.
-   * An OutboundPayment is `processing` if it has been created and is processing.
-   * The status changes to `posted` once the OutboundPayment has been "confirmed" and funds have left the account, or to `failed` or `canceled`.
-   * If an OutboundPayment fails to arrive at its payout method, its status will change to `returned`.
+   * Current status of the OutboundPayment.
+   * An OutboundPayment is `processing` after creation. It becomes `posted` when funds leave the account,
+   * `failed` if it cannot be sent, `canceled` if canceled before posting, or `returned` if the funds are returned.
    */
   status: OutboundPayment.Status;
 
@@ -185,6 +200,11 @@ export interface OutboundPayment {
    * A unique identifier that can be used to track this OutboundPayment with recipient bank. Banks might call this a "reference number" or something similar.
    */
   trace_id: OutboundPayment.TraceId;
+
+  /**
+   * Information to track this OutboundPayment with the recipient bank.
+   */
+  tracking_details?: OutboundPayment.TrackingDetails;
 }
 export namespace OutboundPayment {
   export interface DeliveryOptions {
@@ -211,7 +231,7 @@ export namespace OutboundPayment {
   export interface RecipientNotification {
     /**
      * Closed Enum. Configuration option to enable or disable notifications to recipients.
-     * Do not send notifications when setting is NONE. Default to account setting when setting is CONFIGURED or not set.
+     * Do not send notifications when `setting` is `none`. Use the account setting when `setting` is `configured` or omitted.
      */
     setting: RecipientNotification.Setting;
   }
@@ -275,7 +295,12 @@ export namespace OutboundPayment {
     /**
      * The payout method which the OutboundPayment uses to send payout.
      */
-    payout_method: string;
+    payout_method?: string;
+
+    /**
+     * Payout method options for the OutboundPayment.
+     */
+    payout_method_options?: To.PayoutMethodOptions;
 
     /**
      * To which account the OutboundPayment is sent.
@@ -287,7 +312,7 @@ export namespace OutboundPayment {
     /**
      * Possible values are `pending`, `supported`, and `unsupported`. Initially set to `pending`, it changes to
      * `supported` when the recipient bank provides a trace ID, or `unsupported` if the recipient bank doesn't support it.
-     * Note that this status may not align with the OutboundPayment or OutboundTransfer status and can remain `pending`
+     * This status may not align with the OutboundPayment or OutboundTransfer status and can remain `pending`
      * even after the payment or transfer is posted.
      */
     status: TraceId.Status;
@@ -296,6 +321,33 @@ export namespace OutboundPayment {
      * The trace ID value if `trace_id.status` is `supported`, otherwise empty.
      */
     value?: string;
+  }
+
+  export interface TrackingDetails {
+    /**
+     * Bank account tracking details.
+     */
+    bank_account?: TrackingDetails.BankAccount;
+
+    /**
+     * Card tracking details.
+     */
+    card?: TrackingDetails.Card;
+
+    /**
+     * Crypto wallet tracking details.
+     */
+    crypto_wallet?: TrackingDetails.CryptoWallet;
+
+    /**
+     * The status of the tracking details for this OutboundPayment.
+     */
+    status: TrackingDetails.Status;
+
+    /**
+     * The type of tracking details for this OutboundPayment.
+     */
+    type: TrackingDetails.Type;
   }
 
   export namespace DeliveryOptions {
@@ -363,15 +415,103 @@ export namespace OutboundPayment {
     }
   }
 
+  export namespace To {
+    export interface PayoutMethodOptions {
+      /**
+       * Options for bank account payout methods.
+       */
+      bank_account?: PayoutMethodOptions.BankAccount;
+    }
+
+    export namespace PayoutMethodOptions {
+      export interface BankAccount {
+        /**
+         * Per-network configuration options.
+         */
+        preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+        /**
+         * The preferred networks to use for this OutboundPayment.
+         */
+        preferred_networks?: Array<BankAccount.PreferredNetwork>;
+      }
+
+      export namespace BankAccount {
+        export interface PreferredNetworkOptions {
+          /**
+           * ACH-specific network options.
+           */
+          ach?: PreferredNetworkOptions.Ach;
+        }
+
+        export type PreferredNetwork =
+          | 'ach'
+          | 'fedwire'
+          | 'fps'
+          | 'rtp'
+          | 'sepa'
+          | 'swift'
+          | OtherString;
+
+        export namespace PreferredNetworkOptions {
+          export interface Ach {
+            /**
+             * Open Enum. ACH submission timing.
+             */
+            submission?: Ach.Submission;
+
+            /**
+             * The transaction purpose for this ACH payment.
+             */
+            transaction_purpose?: Ach.TransactionPurpose;
+          }
+
+          export namespace Ach {
+            export type Submission = 'next_day' | 'same_day' | OtherString;
+
+            export type TransactionPurpose = 'payroll' | OtherString;
+          }
+        }
+      }
+    }
+  }
+
   export namespace TraceId {
     export type Status = 'pending' | 'supported' | 'unsupported' | OtherString;
+  }
+
+  export namespace TrackingDetails {
+    export interface BankAccount {
+      /**
+       * A unique identifier that can be used to track this OutboundPayment with the recipient bank. Banks might call this a “reference number” or something similar.
+       */
+      trace_id?: string;
+    }
+
+    export interface Card {
+      /**
+       * A unique identifier that can be used to track this OutboundPayment with the recipient card.
+       */
+      retrieval_reference?: string;
+    }
+
+    export interface CryptoWallet {
+      /**
+       * A unique identifier that can be used to track this OutboundPayment with the recipient crypto wallet.
+       */
+      blockchain_transaction?: string;
+    }
+
+    export type Status = 'pending' | 'supported' | 'unsupported' | OtherString;
+
+    export type Type = 'bank_account' | 'card' | 'crypto_wallet' | OtherString;
   }
 }
 export namespace V2 {
   export namespace MoneyManagement {
     export interface OutboundPaymentCreateParams {
       /**
-       * The "presentment amount" to be sent to the recipient.
+       * The requested amount and currency for the OutboundPayment.
        */
       amount: V2Amount;
 
@@ -414,6 +554,16 @@ export namespace V2 {
        * Details about the notification settings for the OutboundPayment recipient.
        */
       recipient_notification?: OutboundPaymentCreateParams.RecipientNotification;
+
+      /**
+       * The ID of the RecipientVerification for this OutboundPayment. Required where recipient-name verification is mandated before creating an OutboundPayment.
+       */
+      recipient_verification?: string;
+
+      /**
+       * The description that appears on the receiving end for an OutboundPayment (for example, on a bank statement). Must be between 3 and 22 characters long for most destinations (500 for FinancialAccount destinations), and not contain profanity.
+       */
+      statement_descriptor?: string;
     }
 
     export namespace OutboundPaymentCreateParams {
@@ -435,9 +585,9 @@ export namespace V2 {
          * If included, this currency must match a currency supported by the destination.
          * Can be omitted in the following cases:
          * - destination only supports one currency
-         * - destination supports multiple currencies and one of the currencies matches the FA currency
-         * - destination supports multiple currencies and one of the currencies matches the presentment currency
-         * Note - when both FA currency and presentment currency are supported, we pick the FA currency to minimize FX.
+         * - destination supports multiple currencies and one matches `from.currency`
+         * - destination supports multiple currencies and one matches `amount.currency`
+         * When both `from.currency` and `amount.currency` are supported, Stripe selects `from.currency` to minimize currency conversion.
          */
         currency?: string;
 
@@ -445,6 +595,11 @@ export namespace V2 {
          * The payout method which the OutboundPayment uses to send payout.
          */
         payout_method?: string;
+
+        /**
+         * Payout method options for the OutboundPayment.
+         */
+        payout_method_options?: To.PayoutMethodOptions;
 
         /**
          * To which account the OutboundPayment is sent.
@@ -464,7 +619,7 @@ export namespace V2 {
       export interface RecipientNotification {
         /**
          * Closed Enum. Configuration option to enable or disable notifications to recipients.
-         * Do not send notifications when setting is NONE. Default to account setting when setting is CONFIGURED or not set.
+         * Do not send notifications when `setting` is `none`. Use the account setting when `setting` is `configured` or omitted.
          */
         setting: RecipientNotification.Setting;
       }
@@ -475,6 +630,67 @@ export namespace V2 {
 
       export namespace RecipientNotification {
         export type Setting = 'configured' | 'none';
+      }
+
+      export namespace To {
+        export interface PayoutMethodOptions {
+          /**
+           * Options for bank account payout methods.
+           */
+          bank_account?: PayoutMethodOptions.BankAccount;
+        }
+
+        export namespace PayoutMethodOptions {
+          export interface BankAccount {
+            /**
+             * Per-network configuration options.
+             */
+            preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+            /**
+             * The preferred networks to use for this OutboundPayment.
+             */
+            preferred_networks?: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export namespace BankAccount {
+            export interface PreferredNetworkOptions {
+              /**
+               * ACH-specific network options.
+               */
+              ach?: PreferredNetworkOptions.Ach;
+            }
+
+            export type PreferredNetwork =
+              | 'ach'
+              | 'fedwire'
+              | 'fps'
+              | 'rtp'
+              | 'sepa'
+              | 'swift'
+              | OtherString;
+
+            export namespace PreferredNetworkOptions {
+              export interface Ach {
+                /**
+                 * Open Enum. ACH submission timing.
+                 */
+                submission?: Ach.Submission;
+
+                /**
+                 * The transaction purpose for this ACH payment.
+                 */
+                transaction_purpose?: Ach.TransactionPurpose;
+              }
+
+              export namespace Ach {
+                export type Submission = 'next_day' | 'same_day' | OtherString;
+
+                export type TransactionPurpose = 'payroll' | OtherString;
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -488,34 +704,9 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface OutboundPaymentListParams {
       /**
-       * Filter for objects created at the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+       * Filter OutboundPayments by their creation time.
        */
-      created?: string;
-
-      /**
-       * Filter for objects created after the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_gt?: string;
-
-      /**
-       * Filter for objects created on or after the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_gte?: string;
-
-      /**
-       * Filter for objects created before the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_lt?: string;
-
-      /**
-       * Filter for objects created on or before the specified timestamp.
-       * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
-       */
-      created_lte?: string;
+      created?: RangeQueryParam;
 
       /**
        * The maximum number of results to return.

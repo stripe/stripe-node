@@ -82,12 +82,16 @@ export const generateV2Error = (
       return new BlockedByStripeError(rawStripeError);
     case 'cannot_proceed':
       return new CannotProceedError(rawStripeError);
+    case 'capability_not_enabled':
+      return new CapabilityNotEnabledError(rawStripeError);
     case 'controlled_by_alternate_resource':
       return new ControlledByAlternateResourceError(rawStripeError);
     case 'feature_not_enabled':
       return new FeatureNotEnabledError(rawStripeError);
     case 'financial_account_not_open':
       return new FinancialAccountNotOpenError(rawStripeError);
+    case 'fx_quote_needs_refresh':
+      return new FxQuoteNeedsRefreshError(rawStripeError);
     case 'insufficient_funds':
       return new InsufficientFundsError(rawStripeError);
     case 'invalid_payment_method':
@@ -443,6 +447,11 @@ export class CannotProceedError extends StripeError {
     this.reason = this.raw.reason;
   }
 }
+export class CapabilityNotEnabledError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'CapabilityNotEnabledError');
+  }
+}
 export class ControlledByAlternateResourceError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'ControlledByAlternateResourceError');
@@ -456,6 +465,11 @@ export class FeatureNotEnabledError extends StripeError {
 export class FinancialAccountNotOpenError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'FinancialAccountNotOpenError');
+  }
+}
+export class FxQuoteNeedsRefreshError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'FxQuoteNeedsRefreshError');
   }
 }
 export class InsufficientFundsError extends StripeError {

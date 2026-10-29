@@ -8,6 +8,7 @@ import {RequestOptions, Response} from '../../../lib.js';
 export class OutboundPaymentQuoteResource extends StripeResource {
   /**
    * Creates an OutboundPaymentQuote usable in an OutboundPayment.
+   * @throws Stripe.CapabilityNotEnabledError
    * @throws Stripe.FeatureNotEnabledError
    */
   create(
@@ -109,6 +110,11 @@ export namespace OutboundPaymentQuote {
     network_fee_details?: EstimatedFee.NetworkFeeDetails;
 
     /**
+     * Tax charged for this fee, if applicable. Value expressed as a decimal string in major units.
+     */
+    tax_amount?: EstimatedFee.TaxAmount;
+
+    /**
      * The fee type.
      */
     type: EstimatedFee.Type;
@@ -167,6 +173,11 @@ export namespace OutboundPaymentQuote {
     payout_method: string;
 
     /**
+     * Payout method options for the OutboundPaymentQuote.
+     */
+    payout_method_options?: To.PayoutMethodOptions;
+
+    /**
      * To which account the OutboundPayment is sent.
      */
     recipient: string;
@@ -189,11 +200,24 @@ export namespace OutboundPaymentQuote {
       network_options: NetworkFeeDetails.NetworkOptions;
     }
 
+    export interface TaxAmount {
+      /**
+       * Currency code.
+       */
+      currency: string;
+
+      /**
+       * Tax amount value represented as a decimal string in major units.
+       */
+      value_decimal: string;
+    }
+
     export type Type =
       | 'cross_border_payout_fee'
       | 'foreign_exchange_fee'
       | 'instant_payout_fee'
       | 'network_fee'
+      | 'next_day_payout_fee'
       | 'standard_payout_fee'
       | 'wire_payout_fee'
       | OtherString;
@@ -201,15 +225,11 @@ export namespace OutboundPaymentQuote {
     export namespace NetworkFeeDetails {
       export type Network =
         | 'ach'
-        | 'becs'
-        | 'eft'
         | 'fedwire'
         | 'fps'
         | 'local'
-        | 'npp'
         | 'rtp'
         | 'sepa'
-        | 'sepa_instant'
         | 'swift'
         | OtherString;
 
@@ -245,6 +265,67 @@ export namespace OutboundPaymentQuote {
        * The exchange rate going from_currency -> to_currency.
        */
       exchange_rate: string;
+    }
+  }
+
+  export namespace To {
+    export interface PayoutMethodOptions {
+      /**
+       * Options for bank account payout methods.
+       */
+      bank_account?: PayoutMethodOptions.BankAccount;
+    }
+
+    export namespace PayoutMethodOptions {
+      export interface BankAccount {
+        /**
+         * Per-network configuration options.
+         */
+        preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+        /**
+         * The preferred networks to use for this OutboundPayment.
+         */
+        preferred_networks?: Array<BankAccount.PreferredNetwork>;
+      }
+
+      export namespace BankAccount {
+        export interface PreferredNetworkOptions {
+          /**
+           * ACH-specific network options.
+           */
+          ach?: PreferredNetworkOptions.Ach;
+        }
+
+        export type PreferredNetwork =
+          | 'ach'
+          | 'fedwire'
+          | 'fps'
+          | 'rtp'
+          | 'sepa'
+          | 'swift'
+          | OtherString;
+
+        export namespace PreferredNetworkOptions {
+          export interface Ach {
+            /**
+             * Open Enum. ACH submission timing.
+             */
+            submission?: Ach.Submission;
+
+            /**
+             * The transaction purpose for this ACH payment.
+             */
+            transaction_purpose?: Ach.TransactionPurpose;
+          }
+
+          export namespace Ach {
+            export type Submission = 'next_day' | 'same_day' | OtherString;
+
+            export type TransactionPurpose = 'payroll' | OtherString;
+          }
+        }
+      }
     }
   }
 }
@@ -303,6 +384,11 @@ export namespace V2 {
         payout_method?: string;
 
         /**
+         * Payout method options for the OutboundPaymentQuote.
+         */
+        payout_method_options?: To.PayoutMethodOptions;
+
+        /**
          * To which account the OutboundPayment is sent.
          */
         recipient: string;
@@ -317,6 +403,67 @@ export namespace V2 {
 
       export namespace DeliveryOptions {
         export type BankAccount = 'automatic' | 'local' | 'wire' | OtherString;
+      }
+
+      export namespace To {
+        export interface PayoutMethodOptions {
+          /**
+           * Options for bank account payout methods.
+           */
+          bank_account?: PayoutMethodOptions.BankAccount;
+        }
+
+        export namespace PayoutMethodOptions {
+          export interface BankAccount {
+            /**
+             * Per-network configuration options.
+             */
+            preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+            /**
+             * The preferred networks to use for this OutboundPayment.
+             */
+            preferred_networks?: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export namespace BankAccount {
+            export interface PreferredNetworkOptions {
+              /**
+               * ACH-specific network options.
+               */
+              ach?: PreferredNetworkOptions.Ach;
+            }
+
+            export type PreferredNetwork =
+              | 'ach'
+              | 'fedwire'
+              | 'fps'
+              | 'rtp'
+              | 'sepa'
+              | 'swift'
+              | OtherString;
+
+            export namespace PreferredNetworkOptions {
+              export interface Ach {
+                /**
+                 * Open Enum. ACH submission timing.
+                 */
+                submission?: Ach.Submission;
+
+                /**
+                 * The transaction purpose for this ACH payment.
+                 */
+                transaction_purpose?: Ach.TransactionPurpose;
+              }
+
+              export namespace Ach {
+                export type Submission = 'next_day' | 'same_day' | OtherString;
+
+                export type TransactionPurpose = 'payroll' | OtherString;
+              }
+            }
+          }
+        }
       }
     }
   }

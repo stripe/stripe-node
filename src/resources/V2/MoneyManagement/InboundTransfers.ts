@@ -24,7 +24,7 @@ export class InboundTransferResource extends StripeResource {
     ) as any;
   }
   /**
-   * InboundTransfers APIs are used to create, retrieve or list InboundTransfers.
+   * Creates an InboundTransfer to pull funds from a bank account into a financial account. Per-transfer and rolling weekly limits vary by account and payment rail. See [transfer limits](https://docs.stripe.com/treasury/add-funds#transfer-limits).
    * @throws Stripe.BlockedByStripeError
    */
   create(
@@ -113,7 +113,7 @@ export namespace InboundTransfer {
     debited: V2Amount;
 
     /**
-     * The Payment Method object used to create the InboundTransfer.
+     * The bank account credential used to fund the InboundTransfer (for example, a US bank account), not a Payments API `pm_` PaymentMethod.
      */
     payment_method: From.PaymentMethod;
   }
@@ -180,7 +180,7 @@ export namespace InboundTransfer {
   export namespace From {
     export interface PaymentMethod {
       /**
-       * The type of object this destination represents. For a us bank account, we expect us_bank_account.
+       * The type of PaymentMethod used to create the InboundTransfer. Clients should tolerate future values.
        */
       type: string;
 
@@ -245,17 +245,17 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface InboundTransferCreateParams {
       /**
-       * The amount, in specified currency, by which the FinancialAccount balance will increase due to the InboundTransfer.
+       * The amount and currency to credit to the FinancialAccount.
        */
       amount: V2Amount;
 
       /**
-       * Object containing details about where the funds will originate from.
+       * The verified bank account credential to debit for this InboundTransfer.
        */
       from: InboundTransferCreateParams.From;
 
       /**
-       * Object containing details about where the funds will land.
+       * The FinancialAccount and currency to credit with the transferred funds.
        */
       to: InboundTransferCreateParams.To;
 
@@ -274,19 +274,19 @@ export namespace V2 {
         currency?: string;
 
         /**
-         * ID of the Payment Method using which IBT will be made.
+         * ID of the verified bank account credential to debit for this InboundTransfer (for example, `usba_`), not a Payments API `pm_` PaymentMethod.
          */
         payment_method: string;
       }
 
       export interface To {
         /**
-         * The currency in which funds will land in.
+         * The currency to credit to the FinancialAccount.
          */
         currency: string;
 
         /**
-         * The FinancialAccount that funds will land in.
+         * The FinancialAccount that receives the funds.
          */
         financial_account: string;
       }

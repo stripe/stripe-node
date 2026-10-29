@@ -29,9 +29,8 @@ export declare namespace Vault {
   export import GbBankAccountListParams = V2Namespace0.Core.Vault.GbBankAccountListParams;
   export import GbBankAccountCreateParams = V2Namespace0.Core.Vault.GbBankAccountCreateParams;
   export import GbBankAccountRetrieveParams = V2Namespace0.Core.Vault.GbBankAccountRetrieveParams;
-  export import GbBankAccountAcknowledgeConfirmationOfPayeeParams = V2Namespace0.Core.Vault.GbBankAccountAcknowledgeConfirmationOfPayeeParams;
   export import GbBankAccountArchiveParams = V2Namespace0.Core.Vault.GbBankAccountArchiveParams;
-  export import GbBankAccountInitiateConfirmationOfPayeeParams = V2Namespace0.Core.Vault.GbBankAccountInitiateConfirmationOfPayeeParams;
+  export import GbBankAccountUnarchiveParams = V2Namespace0.Core.Vault.GbBankAccountUnarchiveParams;
   export {GbBankAccount, GbBankAccountResource};
   export import UsBankAccountListParams = V2Namespace1.Core.Vault.UsBankAccountListParams;
   export import UsBankAccountCreateParams = V2Namespace1.Core.Vault.UsBankAccountCreateParams;
@@ -40,5 +39,6 @@ export declare namespace Vault {
   export import UsBankAccountArchiveParams = V2Namespace1.Core.Vault.UsBankAccountArchiveParams;
   export import UsBankAccountConfirmMicrodepositsParams = V2Namespace1.Core.Vault.UsBankAccountConfirmMicrodepositsParams;
   export import UsBankAccountSendMicrodepositsParams = V2Namespace1.Core.Vault.UsBankAccountSendMicrodepositsParams;
+  export import UsBankAccountUnarchiveParams = V2Namespace1.Core.Vault.UsBankAccountUnarchiveParams;
   export {UsBankAccount, UsBankAccountResource};
 }

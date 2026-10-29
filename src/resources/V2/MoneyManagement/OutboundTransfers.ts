@@ -26,6 +26,7 @@ export class OutboundTransferResource extends StripeResource {
   /**
    * Creates an OutboundTransfer.
    * @throws Stripe.InsufficientFundsError
+   * @throws Stripe.CapabilityNotEnabledError
    * @throws Stripe.FeatureNotEnabledError
    */
   create(
@@ -250,13 +251,18 @@ export namespace OutboundTransfer {
      * The payout method which the OutboundTransfer uses to send payout.
      */
     payout_method: string;
+
+    /**
+     * Payout method options for the OutboundTransfer.
+     */
+    payout_method_options?: To.PayoutMethodOptions;
   }
 
   export interface TraceId {
     /**
      * Possible values are `pending`, `supported`, and `unsupported`. Initially set to `pending`, it changes to
      * `supported` when the recipient bank provides a trace ID, or `unsupported` if the recipient bank doesn't support it.
-     * Note that this status may not align with the OutboundPayment or OutboundTransfer status and can remain `pending`
+     * This status may not align with the OutboundPayment or OutboundTransfer status and can remain `pending`
      * even after the payment or transfer is posted.
      */
     status: TraceId.Status;
@@ -328,6 +334,50 @@ export namespace OutboundTransfer {
     }
   }
 
+  export namespace To {
+    export interface PayoutMethodOptions {
+      /**
+       * Options for bank account payout methods.
+       */
+      bank_account?: PayoutMethodOptions.BankAccount;
+    }
+
+    export namespace PayoutMethodOptions {
+      export interface BankAccount {
+        /**
+         * Per-network configuration options.
+         */
+        preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+        /**
+         * The preferred networks to use for this OutboundTransfer.
+         */
+        preferred_networks: Array<BankAccount.PreferredNetwork>;
+      }
+
+      export namespace BankAccount {
+        export interface PreferredNetworkOptions {
+          /**
+           * ACH-specific network options.
+           */
+          ach?: PreferredNetworkOptions.Ach;
+        }
+
+        export type PreferredNetwork =
+          | 'ach'
+          | 'fedwire'
+          | 'fps'
+          | 'sepa'
+          | 'swift'
+          | OtherString;
+
+        export namespace PreferredNetworkOptions {
+          export interface Ach {}
+        }
+      }
+    }
+  }
+
   export namespace TraceId {
     export type Status = 'pending' | 'supported' | 'unsupported' | OtherString;
   }
@@ -364,6 +414,11 @@ export namespace V2 {
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata?: MetadataParam;
+
+      /**
+       * The description that appears on the receiving end for an OutboundTransfer (for example, on a bank statement). Must be between 3 and 22 characters long for most destinations (500 for FinancialAccount destinations), and not contain profanity.
+       */
+      statement_descriptor?: string;
     }
 
     export namespace OutboundTransferCreateParams {
@@ -395,6 +450,11 @@ export namespace V2 {
          * The payout method which the OutboundTransfer uses to send payout.
          */
         payout_method: string;
+
+        /**
+         * Payout method options for the OutboundTransfer.
+         */
+        payout_method_options?: To.PayoutMethodOptions;
       }
 
       export interface DeliveryOptions {
@@ -406,6 +466,50 @@ export namespace V2 {
 
       export namespace DeliveryOptions {
         export type BankAccount = 'automatic' | 'local' | 'wire' | OtherString;
+      }
+
+      export namespace To {
+        export interface PayoutMethodOptions {
+          /**
+           * Options for bank account payout methods.
+           */
+          bank_account?: PayoutMethodOptions.BankAccount;
+        }
+
+        export namespace PayoutMethodOptions {
+          export interface BankAccount {
+            /**
+             * Per-network configuration options.
+             */
+            preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+            /**
+             * The preferred networks to use for this OutboundTransfer.
+             */
+            preferred_networks: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export namespace BankAccount {
+            export interface PreferredNetworkOptions {
+              /**
+               * ACH-specific network options.
+               */
+              ach?: PreferredNetworkOptions.Ach;
+            }
+
+            export type PreferredNetwork =
+              | 'ach'
+              | 'fedwire'
+              | 'fps'
+              | 'sepa'
+              | 'swift'
+              | OtherString;
+
+            export namespace PreferredNetworkOptions {
+              export interface Ach {}
+            }
+          }
+        }
       }
     }
   }

@@ -334,7 +334,17 @@ export namespace Refund {
   export namespace DestinationDetails {
     export interface Affirm {}
 
-    export interface AfterpayClearpay {}
+    export interface AfterpayClearpay {
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
+    }
 
     export interface Alipay {}
 
@@ -460,7 +470,17 @@ export namespace Refund {
       reference_status: string | null;
     }
 
-    export interface Klarna {}
+    export interface Klarna {
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
+    }
 
     export interface MbWay {
       /**
@@ -519,6 +539,16 @@ export namespace Refund {
        * For refunds declined by the network, a decline code provided by the network which indicates the reason the refund failed.
        */
       network_decline_code: string | null;
+
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
     }
 
     export interface Pix {}

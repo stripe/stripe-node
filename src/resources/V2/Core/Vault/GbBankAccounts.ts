@@ -56,26 +56,6 @@ export class GbBankAccountResource extends StripeResource {
     ) as any;
   }
   /**
-   * Confirm that you have received the result of the Confirmation of Payee request, and that you are okay with
-   * proceeding to pay out to this bank account despite the account not matching, partially matching, or the service
-   * being unavailable. Once you confirm this, you will be able to send OutboundPayments, but this may lead to
-   * funds being sent to the wrong account, which we might not be able to recover.
-   */
-  acknowledgeConfirmationOfPayee(
-    id: string,
-    params?: V2.Core.Vault.GbBankAccountAcknowledgeConfirmationOfPayeeParams,
-    options?: RequestOptions
-  ): Promise<Response<GbBankAccount>> {
-    return this._makeRequest(
-      'POST',
-      `/v2/core/vault/gb_bank_accounts/${encodeURIComponent(
-        id
-      )}/acknowledge_confirmation_of_payee`,
-      params,
-      options
-    ) as any;
-  }
-  /**
    * Archive a GBBankAccount object. Archived GBBankAccount objects cannot be used as outbound destinations
    * and will not appear in the outbound destination list.
    * @throws Stripe.CannotProceedError
@@ -94,21 +74,17 @@ export class GbBankAccountResource extends StripeResource {
     ) as any;
   }
   /**
-   * Initiate Confirmation of Payee (CoP) in order to verify that the owner of a UK bank account matches
-   * who you expect. This must be done on all UK bank accounts before sending domestic OutboundPayments. If
-   * the result is a partial match or a non match, explicit acknowledgement using AcknowledgeConfirmationOfPayee
-   * is required before sending funds.
+   * Unarchive a GBBankAccount object.
+   * @throws Stripe.ControlledByAlternateResourceError
    */
-  initiateConfirmationOfPayee(
+  unarchive(
     id: string,
-    params?: V2.Core.Vault.GbBankAccountInitiateConfirmationOfPayeeParams,
+    params?: V2.Core.Vault.GbBankAccountUnarchiveParams,
     options?: RequestOptions
   ): Promise<Response<GbBankAccount>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/vault/gb_bank_accounts/${encodeURIComponent(
-        id
-      )}/initiate_confirmation_of_payee`,
+      `/v2/core/vault/gb_bank_accounts/${encodeURIComponent(id)}/unarchive`,
       params,
       options
     ) as any;
@@ -159,6 +135,12 @@ export interface GbBankAccount {
   created: string;
 
   /**
+   * Uniquely identifies this particular bank account. You can use this attribute to check whether two
+   * recipients who've signed up with you are using the same bank account, for example.
+   */
+  fingerprint?: string;
+
+  /**
    * The last 4 digits of the account number or IBAN.
    */
   last4: string;
@@ -196,7 +178,7 @@ export namespace GbBankAccount {
     type: AlternativeReference.Type;
   }
 
-  export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
+  export type BankAccountType = 'checking' | 'savings';
 
   export interface ConfirmationOfPayee {
     /**
@@ -327,7 +309,7 @@ export namespace V2 {
       }
 
       export namespace GbBankAccountCreateParams {
-        export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
+        export type BankAccountType = 'checking' | 'savings';
 
         export interface ConfirmationOfPayee {
           /**
@@ -376,13 +358,6 @@ export namespace V2 {
 export namespace V2 {
   export namespace Core {
     export namespace Vault {
-      export interface GbBankAccountAcknowledgeConfirmationOfPayeeParams {}
-    }
-  }
-}
-export namespace V2 {
-  export namespace Core {
-    export namespace Vault {
       export interface GbBankAccountArchiveParams {}
     }
   }
@@ -390,21 +365,7 @@ export namespace V2 {
 export namespace V2 {
   export namespace Core {
     export namespace Vault {
-      export interface GbBankAccountInitiateConfirmationOfPayeeParams {
-        /**
-         * The business type to be checked against. Legal entity information will be used if unspecified.
-         */
-        business_type?: GbBankAccountInitiateConfirmationOfPayeeParams.BusinessType;
-
-        /**
-         * The name of the user to be checked against. Legal entity information will be used if unspecified.
-         */
-        name?: string;
-      }
-
-      export namespace GbBankAccountInitiateConfirmationOfPayeeParams {
-        export type BusinessType = 'business' | 'personal';
-      }
+      export interface GbBankAccountUnarchiveParams {}
     }
   }
 }

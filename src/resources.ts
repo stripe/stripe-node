@@ -77,6 +77,7 @@ import {MeterEventResource as BillingMeterEvents} from './resources/Billing/Mete
 import {MeterEventResource as V2BillingMeterEvents} from './resources/V2/Billing/MeterEvents.js';
 import {MeterUsageResource as BillingAnalyticsMeterUsage} from './resources/Billing/Analytics/MeterUsage.js';
 import {MeterResource as BillingMeters} from './resources/Billing/Meters.js';
+import {MoneyManagementResource as V2TestHelpersMoneyManagement} from './resources/V2/TestHelpers/MoneyManagement.js';
 import {OnboardingLinkResource as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
 import {OrderResource as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPaymentQuoteResource as V2MoneyManagementOutboundPaymentQuotes} from './resources/V2/MoneyManagement/OutboundPaymentQuotes.js';
@@ -88,6 +89,7 @@ import {OutboundTransferResource as TestHelpersTreasuryOutboundTransfers} from '
 import {OutboundTransferResource as TreasuryOutboundTransfers} from './resources/Treasury/OutboundTransfers.js';
 import {OutboundTransferResource as V2MoneyManagementOutboundTransfers} from './resources/V2/MoneyManagement/OutboundTransfers.js';
 import {PaymentEvaluationResource as RadarPaymentEvaluations} from './resources/Radar/PaymentEvaluations.js';
+import {PayoutIntentResource as V2MoneyManagementPayoutIntents} from './resources/V2/MoneyManagement/PayoutIntents.js';
 import {PayoutMethodResource as V2MoneyManagementPayoutMethods} from './resources/V2/MoneyManagement/PayoutMethods.js';
 import {PayoutMethodsBankAccountSpecResource as V2MoneyManagementPayoutMethodsBankAccountSpec} from './resources/V2/MoneyManagement/PayoutMethodsBankAccountSpec.js';
 import {PersonalizationDesignResource as IssuingPersonalizationDesigns} from './resources/Issuing/PersonalizationDesigns.js';
@@ -96,6 +98,7 @@ import {PhysicalBundleResource as IssuingPhysicalBundles} from './resources/Issu
 import {PlanResource as ReservePlans} from './resources/Reserve/Plans.js';
 import {ProductResource as ClimateProducts} from './resources/Climate/Products.js';
 import {ProfileResource as V2BillingProfiles} from './resources/V2/Billing/Profiles.js';
+import {QueryRunResource as V2DataQueryRuns} from './resources/V2/Data/QueryRuns.js';
 import {QueryRunResource as V2DataReportingQueryRuns} from './resources/V2/Data/Reporting/QueryRuns.js';
 import {ReaderCollectedDatumResource as TerminalReaderCollectedData} from './resources/Terminal/ReaderCollectedData.js';
 import {ReaderResource as TerminalReaders} from './resources/Terminal/Readers.js';
@@ -106,14 +109,18 @@ import {ReceivedCreditResource as V2MoneyManagementReceivedCredits} from './reso
 import {ReceivedDebitResource as TestHelpersTreasuryReceivedDebits} from './resources/TestHelpers/Treasury/ReceivedDebits.js';
 import {ReceivedDebitResource as TreasuryReceivedDebits} from './resources/Treasury/ReceivedDebits.js';
 import {ReceivedDebitResource as V2MoneyManagementReceivedDebits} from './resources/V2/MoneyManagement/ReceivedDebits.js';
+import {RecipientVerificationResource as V2MoneyManagementRecipientVerifications} from './resources/V2/MoneyManagement/RecipientVerifications.js';
 import {RedactionJobResource as PrivacyRedactionJobs} from './resources/Privacy/RedactionJobs.js';
 import {RefundResource as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js';
 import {RegistrationResource as TaxRegistrations} from './resources/Tax/Registrations.js';
 import {ReleaseResource as ReserveReleases} from './resources/Reserve/Releases.js';
 import {ReportRunResource as ReportingReportRuns} from './resources/Reporting/ReportRuns.js';
+import {ReportRunResource as V2DataReportRuns} from './resources/V2/Data/ReportRuns.js';
 import {ReportTypeResource as ReportingReportTypes} from './resources/Reporting/ReportTypes.js';
+import {ReportResource as V2DataReports} from './resources/V2/Data/Reports.js';
 import {RequestResource as ForwardingRequests} from './resources/Forwarding/Requests.js';
 import {ScheduledQueryRunResource as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns.js';
+import {SchemaResource as V2DataSchemas} from './resources/V2/Data/Schemas.js';
 import {SecretResource as AppsSecrets} from './resources/Apps/Secrets.js';
 import {SessionResource as BillingPortalSessions} from './resources/BillingPortal/Sessions.js';
 import {SessionResource as CheckoutSessions} from './resources/Checkout/Sessions.js';
@@ -178,6 +185,7 @@ export {PaymentLinkResource as PaymentLinks} from './resources/PaymentLinks.js';
 export {PaymentMethodResource as PaymentMethods} from './resources/PaymentMethods.js';
 export {PaymentMethodConfigurationResource as PaymentMethodConfigurations} from './resources/PaymentMethodConfigurations.js';
 export {PaymentMethodDomainResource as PaymentMethodDomains} from './resources/PaymentMethodDomains.js';
+export {PaymentPlanResource as PaymentPlans} from './resources/PaymentPlans.js';
 export {PaymentRecordResource as PaymentRecords} from './resources/PaymentRecords.js';
 export {PayoutResource as Payouts} from './resources/Payouts.js';
 export {PlanResource as Plans} from './resources/Plans.js';
@@ -382,6 +390,10 @@ export const V2 = resourceNamespace('v2', {
     }),
   }),
   Data: resourceNamespace('data', {
+    QueryRuns: V2DataQueryRuns,
+    ReportRuns: V2DataReportRuns,
+    Reports: V2DataReports,
+    Schemas: V2DataSchemas,
     Reporting: resourceNamespace('reporting', {
       QueryRuns: V2DataReportingQueryRuns,
     }),
@@ -400,10 +412,12 @@ export const V2 = resourceNamespace('v2', {
     OutboundPayments: V2MoneyManagementOutboundPayments,
     OutboundSetupIntents: V2MoneyManagementOutboundSetupIntents,
     OutboundTransfers: V2MoneyManagementOutboundTransfers,
+    PayoutIntents: V2MoneyManagementPayoutIntents,
     PayoutMethods: V2MoneyManagementPayoutMethods,
     PayoutMethodsBankAccountSpec: V2MoneyManagementPayoutMethodsBankAccountSpec,
     ReceivedCredits: V2MoneyManagementReceivedCredits,
     ReceivedDebits: V2MoneyManagementReceivedDebits,
+    RecipientVerifications: V2MoneyManagementRecipientVerifications,
     TransactionEntries: V2MoneyManagementTransactionEntries,
     Transactions: V2MoneyManagementTransactions,
     TestHelpers: resourceNamespace('testHelpers', {
@@ -420,5 +434,8 @@ export const V2 = resourceNamespace('v2', {
     AccountActivities: V2SignalsAccountActivities,
     AccountEvaluations: V2SignalsAccountEvaluations,
     AccountSignals: V2SignalsAccountSignals,
+  }),
+  TestHelpers: resourceNamespace('testHelpers', {
+    MoneyManagement: V2TestHelpersMoneyManagement,
   }),
 });

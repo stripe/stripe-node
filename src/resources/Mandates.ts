@@ -525,6 +525,9 @@ export interface MandateRetrieveParams {
   expand?: Array<string>;
 }
 export interface MandateListParams extends PaginationParams {
+  /**
+   * The ID of the payment method whose mandates you want to retrieve.
+   */
   payment_method: string;
 
   /**

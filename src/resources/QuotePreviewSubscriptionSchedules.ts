@@ -99,7 +99,7 @@ export interface QuotePreviewSubscriptionSchedule {
   /**
    * The pause schedules for this subscription schedule.
    */
-  pause_schedules?: Array<QuotePreviewSubscriptionSchedule.PauseSchedule>;
+  pause_schedules: Array<QuotePreviewSubscriptionSchedule.PauseSchedule>;
 
   /**
    * Configuration for the subscription schedule's phases.

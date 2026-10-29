@@ -51,17 +51,17 @@ export interface TransactionEntry {
   object: 'v2.money_management.transaction_entry';
 
   /**
-   * The delta to the FinancialAccount's balance.
+   * The change to the FinancialAccount's balance that takes effect at this TransactionEntry's `effective_at` timestamp.
    */
   balance_impact: TransactionEntry.BalanceImpact;
 
   /**
-   * Time at which the object was created.
+   * Time at which the object was created. Represented as an RFC 3339 timestamp in UTC with millisecond precision, for example `2022-09-18T13:22:18.123Z`.
    */
   created: string;
 
   /**
-   * Time at which the entry impacted (or will impact if it's in the future) the FinancialAccount balance.
+   * Time at which the TransactionEntry affects the FinancialAccount balance. This can be in the past or future.
    */
   effective_at: string;
 
@@ -71,46 +71,51 @@ export interface TransactionEntry {
   livemode: boolean;
 
   /**
-   * The Transaction that this TransactionEntry belongs to.
+   * The ID of the Transaction that this TransactionEntry belongs to.
    */
   transaction: string;
 
   /**
-   * Details copied from the transaction that this TransactionEntry belongs to.
+   * Details copied from the Transaction that this TransactionEntry belongs to.
    */
   transaction_details: TransactionEntry.TransactionDetails;
 }
 export namespace TransactionEntry {
   export interface BalanceImpact {
     /**
-     * Impact to the available balance.
+     * The change to the available balance.
      */
     available: V2Amount;
 
     /**
-     * Impact to the inbound_pending balance.
+     * The change to the `inbound_pending` balance.
      */
     inbound_pending: V2Amount;
 
     /**
-     * Impact to the outbound_pending balance.
+     * The change to the `outbound_pending` balance.
      */
     outbound_pending: V2Amount;
   }
 
   export interface TransactionDetails {
     /**
-     * Closed Enum for now, and will be turned into an Open Enum soon. A descriptive category used to classify the Transaction.
+     * Open Enum. The category of this TransactionEntry's parent Transaction.
      */
     category: TransactionDetails.Category;
 
     /**
-     * Indicates the FinancialAccount affected by this Transaction.
+     * The ID of the FinancialAccount affected by this Transaction.
      */
     financial_account: string;
 
     /**
-     * Details about the Flow object that created the Transaction.
+     * Details about the flow object that created the Transaction this entry belongs to, such as an
+     * InboundTransfer or OutboundPayment. `transaction_details.flow.type` identifies the kind of object.
+     * The corresponding field contains its ID, when available: for an InboundTransfer,
+     * `transaction_details.flow.inbound_transfer` contains the InboundTransfer's ID. To list entries for
+     * the parent Transaction, pass the TransactionEntry's `transaction` ID to the `transaction` parameter
+     * on List Transaction Entries.
      */
     flow?: TransactionDetails.Flow;
   }
@@ -140,14 +145,14 @@ export namespace TransactionEntry {
       adjustment?: string;
 
       /**
-       * In the future, this will be the ID of the currency conversion that created this Transaction. For now, this field is always null.
+       * When available, the ID of the CurrencyConversion that created this Transaction.
        */
       currency_conversion?: string;
 
       /**
-       * If applicable, the ID of the FeeTransaction that created this Transaction.
+       * If applicable, the ID of the FeeBatch that created this Transaction.
        */
-      fee_transaction?: string;
+      fee_batch?: string;
 
       /**
        * If applicable, the ID of the InboundTransfer that created this Transaction.
@@ -175,7 +180,7 @@ export namespace TransactionEntry {
       received_debit?: string;
 
       /**
-       * Open Enum. Type of the flow that created the Transaction. The field matching this value will contain the ID of the flow.
+       * Open Enum. The type of flow that created the Transaction. When available, the flow's ID is provided in the corresponding field.
        */
       type: Flow.Type;
     }
@@ -184,7 +189,7 @@ export namespace TransactionEntry {
       export type Type =
         | 'adjustment'
         | 'currency_conversion'
-        | 'fee_transaction'
+        | 'fee_batch'
         | 'inbound_transfer'
         | 'outbound_payment'
         | 'outbound_transfer'
@@ -203,7 +208,7 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface TransactionEntryListParams {
       /**
-       * Set of filters to query TransactionEntries within a range of `created` timestamps.
+       * Filter for TransactionEntries created within a specified time range.
        */
       created?: RangeQueryParam;
 
@@ -213,7 +218,8 @@ export namespace V2 {
       limit?: number;
 
       /**
-       * Filter for TransactionEntries belonging to a Transaction.
+       * Filter for TransactionEntries belonging to a specific Transaction. This filter only supports
+       * filtering by a Transaction ID, which appears in each TransactionEntry's `transaction` field.
        */
       transaction?: string;
     }

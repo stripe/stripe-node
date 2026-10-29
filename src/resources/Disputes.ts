@@ -127,7 +127,7 @@ export interface Dispute {
   /**
    * Intended submission method for the dispute.
    */
-  intended_submission_method?: Dispute.IntendedSubmissionMethod | null;
+  intended_submission_method: Dispute.IntendedSubmissionMethod | null;
 
   /**
    * If true, it's still possible to refund the disputed payment. After the payment has been fully refunded, no further funds are withdrawn from your Stripe account as a result of this dispute.
@@ -164,7 +164,7 @@ export interface Dispute {
   smart_disputes?: Dispute.SmartDisputes;
 
   /**
-   * The current status of a dispute. Possible values include:`warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `won`, `lost`, or `prevented`.
+   * The current status of a dispute. Possible values include:`warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `appeal_needs_response`, `appeal_under_review`, `won`, `lost`, or `prevented`.
    */
   status: Dispute.Status;
 }
@@ -181,7 +181,10 @@ export namespace Dispute {
      */
     access_activity_log: string | null;
 
-    appeal?: Evidence.Appeal;
+    /**
+     * Appeal evidence submitted during the appeal stage.
+     */
+    appeal?: Evidence.Appeal | null;
 
     /**
      * The billing address provided by the customer.
@@ -342,7 +345,7 @@ export namespace Dispute {
     /**
      * Whether the dispute was submitted manually, with Smart Disputes, or not submitted.
      */
-    submission_method?: EvidenceDetails.SubmissionMethod;
+    submission_method: EvidenceDetails.SubmissionMethod;
   }
 
   export type IntendedSubmissionMethod =
@@ -379,6 +382,8 @@ export namespace Dispute {
   }
 
   export type Status =
+    | 'appeal_needs_response'
+    | 'appeal_under_review'
     | 'lost'
     | 'needs_response'
     | 'prevented'

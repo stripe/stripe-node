@@ -492,6 +492,7 @@ export namespace SetupIntent {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
+    | 'wero'
     | 'zip'
     | OtherString;
 
@@ -891,11 +892,13 @@ export namespace SetupIntent {
       | 'shipping_calculation_failed'
       | 'siret_invalid'
       | 'sku_inactive'
+      | 'smart_disputes_not_available'
       | 'state_unsupported'
       | 'status_transition_invalid'
       | 'storer_capability_missing'
       | 'storer_capability_not_active'
       | 'stripe_tax_inactive'
+      | 'subscription_update_trial_after_billing_cycle_anchor'
       | 'tax_id_invalid'
       | 'tax_id_prohibited'
       | 'taxes_calculation_failed'
@@ -908,6 +911,8 @@ export namespace SetupIntent {
       | 'terminal_reader_offline'
       | 'terminal_reader_timeout'
       | 'testmode_charges_only'
+      | 'three_d_secure_authentication_not_supported'
+      | 'three_d_secure_authentication_upstream_error'
       | 'tls_version_unsupported'
       | 'token_already_used'
       | 'token_card_network_invalid'
@@ -1673,7 +1678,7 @@ export interface SetupIntentCreateParams {
   on_behalf_of?: string;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
+   * The ID of a PaymentMethod to attach to this SetupIntent.
    */
   payment_method?: string;
 
@@ -1893,6 +1898,7 @@ export namespace SetupIntentCreateParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
+    | 'wero'
     | 'zip'
     | OtherString;
 
@@ -2240,6 +2246,11 @@ export namespace SetupIntentCreateParams {
      * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
      */
     wechat_pay?: PaymentMethodData.WechatPay;
+
+    /**
+     * If this is a Wero PaymentMethod, this hash contains details about the Wero payment method.
+     */
+    wero?: PaymentMethodData.Wero;
 
     /**
      * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
@@ -2744,6 +2755,7 @@ export namespace SetupIntentCreateParams {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
+      | 'wero'
       | 'zip'
       | OtherString;
 
@@ -2771,6 +2783,11 @@ export namespace SetupIntentCreateParams {
       account_type?: UsBankAccount.AccountType;
 
       /**
+       * An external token used to create a payment method.
+       */
+      external_token?: UsBankAccount.ExternalToken;
+
+      /**
        * The ID of a Financial Connections Account to use as a payment method.
        */
       financial_connections_account?: string;
@@ -2782,6 +2799,8 @@ export namespace SetupIntentCreateParams {
     }
 
     export interface WechatPay {}
+
+    export interface Wero {}
 
     export interface Zip {}
 
@@ -2856,6 +2875,7 @@ export namespace SetupIntentCreateParams {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
@@ -3001,6 +3021,22 @@ export namespace SetupIntentCreateParams {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface ExternalToken {
+        /**
+         * The Plaid processor token to use for this bank account.
+         */
+        plaid_processor_token?: string;
+
+        /**
+         * The type of external token.
+         */
+        type: ExternalToken.Type;
+      }
+
+      export namespace ExternalToken {
+        export type Type = 'plaid_processor_token' | OtherString;
+      }
     }
   }
 
@@ -3923,7 +3959,7 @@ export interface SetupIntentUpdateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent. To unset this field to null, pass in an empty string.
+   * The ID of a PaymentMethod to attach to this SetupIntent. To unset this field to null, pass in an empty string.
    */
   payment_method?: string;
 
@@ -4107,6 +4143,7 @@ export namespace SetupIntentUpdateParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
+    | 'wero'
     | 'zip'
     | OtherString;
 
@@ -4447,6 +4484,11 @@ export namespace SetupIntentUpdateParams {
      * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
      */
     wechat_pay?: PaymentMethodData.WechatPay;
+
+    /**
+     * If this is a Wero PaymentMethod, this hash contains details about the Wero payment method.
+     */
+    wero?: PaymentMethodData.Wero;
 
     /**
      * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
@@ -4891,6 +4933,7 @@ export namespace SetupIntentUpdateParams {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
+      | 'wero'
       | 'zip'
       | OtherString;
 
@@ -4918,6 +4961,11 @@ export namespace SetupIntentUpdateParams {
       account_type?: UsBankAccount.AccountType;
 
       /**
+       * An external token used to create a payment method.
+       */
+      external_token?: UsBankAccount.ExternalToken;
+
+      /**
        * The ID of a Financial Connections Account to use as a payment method.
        */
       financial_connections_account?: string;
@@ -4929,6 +4977,8 @@ export namespace SetupIntentUpdateParams {
     }
 
     export interface WechatPay {}
+
+    export interface Wero {}
 
     export interface Zip {}
 
@@ -5003,6 +5053,7 @@ export namespace SetupIntentUpdateParams {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
@@ -5148,6 +5199,22 @@ export namespace SetupIntentUpdateParams {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface ExternalToken {
+        /**
+         * The Plaid processor token to use for this bank account.
+         */
+        plaid_processor_token?: string;
+
+        /**
+         * The type of external token.
+         */
+        type: ExternalToken.Type;
+      }
+
+      export namespace ExternalToken {
+        export type Type = 'plaid_processor_token' | OtherString;
+      }
     }
   }
 
@@ -6074,7 +6141,7 @@ export interface SetupIntentConfirmParams {
   mandate_data?: Emptyable<SetupIntentConfirmParams.MandateData>;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
+   * The ID of a PaymentMethod to attach to this SetupIntent.
    */
   payment_method?: string;
 
@@ -6546,6 +6613,11 @@ export namespace SetupIntentConfirmParams {
      * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
      */
     wechat_pay?: PaymentMethodData.WechatPay;
+
+    /**
+     * If this is a Wero PaymentMethod, this hash contains details about the Wero payment method.
+     */
+    wero?: PaymentMethodData.Wero;
 
     /**
      * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
@@ -7032,6 +7104,7 @@ export namespace SetupIntentConfirmParams {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
+      | 'wero'
       | 'zip'
       | OtherString;
 
@@ -7059,6 +7132,11 @@ export namespace SetupIntentConfirmParams {
       account_type?: UsBankAccount.AccountType;
 
       /**
+       * An external token used to create a payment method.
+       */
+      external_token?: UsBankAccount.ExternalToken;
+
+      /**
        * The ID of a Financial Connections Account to use as a payment method.
        */
       financial_connections_account?: string;
@@ -7070,6 +7148,8 @@ export namespace SetupIntentConfirmParams {
     }
 
     export interface WechatPay {}
+
+    export interface Wero {}
 
     export interface Zip {}
 
@@ -7144,6 +7224,7 @@ export namespace SetupIntentConfirmParams {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
@@ -7289,6 +7370,22 @@ export namespace SetupIntentConfirmParams {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface ExternalToken {
+        /**
+         * The Plaid processor token to use for this bank account.
+         */
+        plaid_processor_token?: string;
+
+        /**
+         * The type of external token.
+         */
+        type: ExternalToken.Type;
+      }
+
+      export namespace ExternalToken {
+        export type Type = 'plaid_processor_token' | OtherString;
+      }
     }
   }
 

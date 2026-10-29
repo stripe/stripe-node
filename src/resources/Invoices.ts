@@ -11,6 +11,7 @@ import {PaymentMethod} from './PaymentMethods.js';
 import {CustomerSource} from './CustomerSources.js';
 import {TaxRate} from './TaxRates.js';
 import {Account} from './Accounts.js';
+import {PaymentPlan} from './PaymentPlans.js';
 import {InvoicePayment} from './InvoicePayments.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {SetupIntent} from './SetupIntents.js';
@@ -1398,6 +1399,11 @@ export interface Invoice {
    */
   parent: Invoice.Parent | null;
 
+  /**
+   * The ID of the payment plan associated with this invoice, if any. Use `expand[]=payment_plan` to include the full payment plan object.
+   */
+  payment_plan?: string | PaymentPlan;
+
   payment_settings: Invoice.PaymentSettings;
 
   /**
@@ -1671,7 +1677,7 @@ export namespace Invoice {
 
   export interface CustomerTaxId {
     /**
-     * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
+     * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `au_acn`, `nz_bn`, `pt_nif`, `cz_dic`, `fr_siret`, `fr_siren`, `fr_spi`, `sm_coe`, `tt_vat`, `tt_bir`, `mu_vat`, `mz_nuit`, `au_wpn`, `md_cf`, `is_kt`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, `gh_tin`, `bw_vat`, `ci_vat`, or `unknown`
      */
     type: CustomerTaxId.Type;
 
@@ -2099,7 +2105,9 @@ export namespace Invoice {
       | 'ao_tin'
       | 'ar_cuit'
       | 'au_abn'
+      | 'au_acn'
       | 'au_arn'
+      | 'au_wpn'
       | 'aw_tin'
       | 'az_tin'
       | 'ba_tin'
@@ -2113,6 +2121,7 @@ export namespace Invoice {
       | 'br_cnpj'
       | 'br_cpf'
       | 'bs_tin'
+      | 'bw_vat'
       | 'by_tin'
       | 'ca_bn'
       | 'ca_gst_hst'
@@ -2123,12 +2132,14 @@ export namespace Invoice {
       | 'cd_nif'
       | 'ch_uid'
       | 'ch_vat'
+      | 'ci_vat'
       | 'cl_tin'
       | 'cm_niu'
       | 'cn_tin'
       | 'co_nit'
       | 'cr_tin'
       | 'cv_nif'
+      | 'cz_dic'
       | 'de_stn'
       | 'do_rcn'
       | 'ec_ruc'
@@ -2138,8 +2149,12 @@ export namespace Invoice {
       | 'eu_oss_vat'
       | 'eu_vat'
       | 'fo_vat'
+      | 'fr_siren'
+      | 'fr_siret'
+      | 'fr_spi'
       | 'gb_vat'
       | 'ge_vat'
+      | 'gh_tin'
       | 'gi_tin'
       | 'gn_nif'
       | 'hk_br'
@@ -2149,6 +2164,7 @@ export namespace Invoice {
       | 'id_npwp'
       | 'il_vat'
       | 'in_gst'
+      | 'is_kt'
       | 'is_vat'
       | 'it_cf'
       | 'jp_cn'
@@ -2164,23 +2180,28 @@ export namespace Invoice {
       | 'li_vat'
       | 'lk_vat'
       | 'ma_vat'
+      | 'md_cf'
       | 'md_vat'
       | 'me_pib'
       | 'mk_vat'
       | 'mr_nif'
+      | 'mu_vat'
       | 'mx_rfc'
       | 'my_frp'
       | 'my_itn'
       | 'my_sst'
+      | 'mz_nuit'
       | 'ng_tin'
       | 'no_vat'
       | 'no_voec'
       | 'np_pan'
+      | 'nz_bn'
       | 'nz_gst'
       | 'om_vat'
       | 'pe_ruc'
       | 'ph_tin'
       | 'pl_nip'
+      | 'pt_nif'
       | 'py_ruc'
       | 'ro_tin'
       | 'rs_pib'
@@ -2190,12 +2211,15 @@ export namespace Invoice {
       | 'sg_gst'
       | 'sg_uen'
       | 'si_tin'
+      | 'sm_coe'
       | 'sn_ninea'
       | 'sr_fin'
       | 'sv_nit'
       | 'th_vat'
       | 'tj_tin'
       | 'tr_tin'
+      | 'tt_bir'
+      | 'tt_vat'
       | 'tw_vat'
       | 'tz_vat'
       | 'ua_vat'
@@ -2403,11 +2427,13 @@ export namespace Invoice {
       | 'shipping_calculation_failed'
       | 'siret_invalid'
       | 'sku_inactive'
+      | 'smart_disputes_not_available'
       | 'state_unsupported'
       | 'status_transition_invalid'
       | 'storer_capability_missing'
       | 'storer_capability_not_active'
       | 'stripe_tax_inactive'
+      | 'subscription_update_trial_after_billing_cycle_anchor'
       | 'tax_id_invalid'
       | 'tax_id_prohibited'
       | 'taxes_calculation_failed'
@@ -2420,6 +2446,8 @@ export namespace Invoice {
       | 'terminal_reader_offline'
       | 'terminal_reader_timeout'
       | 'testmode_charges_only'
+      | 'three_d_secure_authentication_not_supported'
+      | 'three_d_secure_authentication_upstream_error'
       | 'tls_version_unsupported'
       | 'token_already_used'
       | 'token_card_network_invalid'
@@ -2609,6 +2637,7 @@ export namespace Invoice {
       | 'satispay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
+      | 'sequra'
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
@@ -2679,7 +2708,7 @@ export namespace Invoice {
         amount_includes_iof: Pix.AmountIncludesIof | null;
 
         /**
-         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
       }
@@ -3601,6 +3630,7 @@ export namespace InvoiceCreateParams {
       | 'satispay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
+      | 'sequra'
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
@@ -3688,7 +3718,7 @@ export namespace InvoiceCreateParams {
         amount_includes_iof?: Pix.AmountIncludesIof;
 
         /**
-         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
       }
@@ -4640,6 +4670,7 @@ export namespace InvoiceUpdateParams {
       | 'satispay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
+      | 'sequra'
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
@@ -4727,7 +4758,7 @@ export namespace InvoiceUpdateParams {
         amount_includes_iof?: Pix.AmountIncludesIof;
 
         /**
-         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
       }
@@ -5608,22 +5639,32 @@ export namespace InvoiceAddLinesParams {
           | OtherString;
 
         export type TaxType =
+          | 'admissions_tax'
           | 'amusement_tax'
+          | 'attendance_tax'
           | 'communications_tax'
           | 'digital_excise_tax'
+          | 'entertainment_tax'
+          | 'get_fund'
+          | 'gross_receipts_tax'
           | 'gst'
+          | 'hospitality_tax'
           | 'hst'
           | 'igst'
           | 'jct'
           | 'lease_tax'
+          | 'luxury_tax'
           | 'mass_transit_parking_tax'
+          | 'nhil'
           | 'parking_tax'
           | 'pst'
           | 'qst'
+          | 'resort_tax'
           | 'retail_delivery_fee'
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
+          | 'tourism_tax'
           | 'utility_users_tax'
           | 'vat'
           | OtherString;
@@ -5870,12 +5911,12 @@ export namespace InvoiceCreatePreviewParams {
     period?: InvoiceItem.Period;
 
     /**
-     * The ID of the price object. One of `price` or `price_data` is required.
+     * The ID of the price object.
      */
     price?: string;
 
     /**
-     * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
+     * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
      */
     price_data?: InvoiceItem.PriceData;
 
@@ -5949,6 +5990,11 @@ export namespace InvoiceCreatePreviewParams {
      * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel the underlying subscription.
      */
     end_behavior?: ScheduleDetails.EndBehavior;
+
+    /**
+     * The subscription's pause behavior and optional resume behavior. You can provide one entry. Include its `key` to update an existing pause schedule. Omit `pause_schedules` to leave the existing schedule unchanged, or pass an empty string (`""`) to clear it.
+     */
+    pause_schedules?: Emptyable<Array<ScheduleDetails.PauseSchedule>>;
 
     /**
      * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
@@ -6099,7 +6145,7 @@ export namespace InvoiceCreatePreviewParams {
 
     export interface TaxId {
       /**
-       * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
+       * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_acn`, `au_arn`, `au_wpn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `bw_vat`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `ci_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `cz_dic`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `fr_siren`, `fr_siret`, `fr_spi`, `gb_vat`, `ge_vat`, `gh_tin`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_kt`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_cf`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mu_vat`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `mz_nuit`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_bn`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `pt_nif`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sm_coe`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tt_bir`, `tt_vat`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
        */
       type: TaxId.Type;
 
@@ -6118,7 +6164,9 @@ export namespace InvoiceCreatePreviewParams {
         | 'ao_tin'
         | 'ar_cuit'
         | 'au_abn'
+        | 'au_acn'
         | 'au_arn'
+        | 'au_wpn'
         | 'aw_tin'
         | 'az_tin'
         | 'ba_tin'
@@ -6132,6 +6180,7 @@ export namespace InvoiceCreatePreviewParams {
         | 'br_cnpj'
         | 'br_cpf'
         | 'bs_tin'
+        | 'bw_vat'
         | 'by_tin'
         | 'ca_bn'
         | 'ca_gst_hst'
@@ -6142,12 +6191,14 @@ export namespace InvoiceCreatePreviewParams {
         | 'cd_nif'
         | 'ch_uid'
         | 'ch_vat'
+        | 'ci_vat'
         | 'cl_tin'
         | 'cm_niu'
         | 'cn_tin'
         | 'co_nit'
         | 'cr_tin'
         | 'cv_nif'
+        | 'cz_dic'
         | 'de_stn'
         | 'do_rcn'
         | 'ec_ruc'
@@ -6157,8 +6208,12 @@ export namespace InvoiceCreatePreviewParams {
         | 'eu_oss_vat'
         | 'eu_vat'
         | 'fo_vat'
+        | 'fr_siren'
+        | 'fr_siret'
+        | 'fr_spi'
         | 'gb_vat'
         | 'ge_vat'
+        | 'gh_tin'
         | 'gi_tin'
         | 'gn_nif'
         | 'hk_br'
@@ -6168,6 +6223,7 @@ export namespace InvoiceCreatePreviewParams {
         | 'id_npwp'
         | 'il_vat'
         | 'in_gst'
+        | 'is_kt'
         | 'is_vat'
         | 'it_cf'
         | 'jp_cn'
@@ -6183,23 +6239,28 @@ export namespace InvoiceCreatePreviewParams {
         | 'li_vat'
         | 'lk_vat'
         | 'ma_vat'
+        | 'md_cf'
         | 'md_vat'
         | 'me_pib'
         | 'mk_vat'
         | 'mr_nif'
+        | 'mu_vat'
         | 'mx_rfc'
         | 'my_frp'
         | 'my_itn'
         | 'my_sst'
+        | 'mz_nuit'
         | 'ng_tin'
         | 'no_vat'
         | 'no_voec'
         | 'np_pan'
+        | 'nz_bn'
         | 'nz_gst'
         | 'om_vat'
         | 'pe_ruc'
         | 'ph_tin'
         | 'pl_nip'
+        | 'pt_nif'
         | 'py_ruc'
         | 'ro_tin'
         | 'rs_pib'
@@ -6209,12 +6270,15 @@ export namespace InvoiceCreatePreviewParams {
         | 'sg_gst'
         | 'sg_uen'
         | 'si_tin'
+        | 'sm_coe'
         | 'sn_ninea'
         | 'sr_fin'
         | 'sv_nit'
         | 'th_vat'
         | 'tj_tin'
         | 'tr_tin'
+        | 'tt_bir'
+        | 'tt_vat'
         | 'tw_vat'
         | 'tz_vat'
         | 'ua_vat'
@@ -6467,6 +6531,23 @@ export namespace InvoiceCreatePreviewParams {
     }
 
     export type EndBehavior = 'cancel' | 'release' | OtherString;
+
+    export interface PauseSchedule {
+      /**
+       * A unique identifier for this pause schedule entry.
+       */
+      key?: string;
+
+      /**
+       * Configuration for when and how the subscription pauses.
+       */
+      pause?: PauseSchedule.Pause;
+
+      /**
+       * Configuration for when and how the subscription resumes.
+       */
+      resume?: Emptyable<PauseSchedule.Resume>;
+    }
 
     export interface Phase {
       /**
@@ -7206,6 +7287,195 @@ export namespace InvoiceCreatePreviewParams {
 
       export namespace Flexible {
         export type ProrationDiscounts = 'included' | 'itemized' | OtherString;
+      }
+    }
+
+    export namespace PauseSchedule {
+      export interface Pause {
+        /**
+         * When to pause the subscription.
+         */
+        pause_at?: Pause.PauseAt;
+
+        /**
+         * Settings controlling billing behavior during the pause.
+         */
+        settings?: Pause.Settings;
+      }
+
+      export interface Resume {
+        /**
+         * When to resume the subscription.
+         */
+        resume_at?: Resume.ResumeAt;
+
+        /**
+         * Settings controlling how the subscription resumes.
+         */
+        settings?: Resume.Settings;
+      }
+
+      export namespace Pause {
+        export interface PauseAt {
+          /**
+           * The Unix timestamp at which to pause the subscription. Required when `type` is `timestamp`.
+           */
+          timestamp?: number;
+
+          /**
+           * When to pause the subscription. Use `now` to pause immediately or `timestamp` to pause at a specific time.
+           */
+          type: PauseAt.Type;
+        }
+
+        export interface Settings {
+          /**
+           * Controls what to bill for when pausing the subscription.
+           */
+          bill_for?: Settings.BillFor;
+
+          /**
+           * Determines whether to generate an invoice for outstanding amounts when pausing. When adding a pause schedule, defaults to `pending_invoice_item`. On updates, the existing value is preserved if not provided.
+           */
+          invoicing_behavior?: Settings.InvoicingBehavior;
+
+          /**
+           * The pause type. Currently only `subscription` is supported.
+           */
+          type?: Settings.Type;
+        }
+
+        export namespace PauseAt {
+          export type Type = 'now' | 'timestamp' | OtherString;
+        }
+
+        export namespace Settings {
+          export interface BillFor {
+            /**
+             * Controls whether to collect metered usage accrued up to the pause date.
+             */
+            outstanding_usage_through?: BillFor.OutstandingUsageThrough;
+
+            /**
+             * Controls how unused time on subscription items is credited when pausing.
+             */
+            unused_time_from?: BillFor.UnusedTimeFrom;
+          }
+
+          export type InvoicingBehavior =
+            | 'invoice'
+            | 'pending_invoice_item'
+            | OtherString;
+
+          export type Type = 'subscription' | OtherString;
+
+          export namespace BillFor {
+            export interface OutstandingUsageThrough {
+              /**
+               * Determines whether to collect metered usage accrued up to the pause date. When adding a pause schedule, defaults to `pause_at`. On updates, the existing value is preserved if not provided.
+               */
+              type?: OutstandingUsageThrough.Type;
+            }
+
+            export interface UnusedTimeFrom {
+              /**
+               * Determines which point in the billing period unused time is credited from. When adding a pause schedule, defaults to `pause_at`. On updates, the existing value is preserved if not provided.
+               */
+              type?: UnusedTimeFrom.Type;
+            }
+
+            export namespace OutstandingUsageThrough {
+              export type Type = 'none' | 'pause_at' | OtherString;
+            }
+
+            export namespace UnusedTimeFrom {
+              export type Type =
+                | 'item_current_period_start'
+                | 'none'
+                | 'pause_at'
+                | OtherString;
+            }
+          }
+        }
+      }
+
+      export namespace Resume {
+        export interface ResumeAt {
+          /**
+           * The duration after which to resume the subscription. Required when `type` is `duration`.
+           */
+          duration?: ResumeAt.Duration;
+
+          /**
+           * The Unix timestamp at which to resume the subscription. Required when `type` is `timestamp`.
+           */
+          timestamp?: number;
+
+          /**
+           * When to resume the subscription. Use `now` to resume immediately, `duration` to resume after a set duration, or `timestamp` to resume at a specific time.
+           */
+          type: ResumeAt.Type;
+        }
+
+        export interface Settings {
+          /**
+           * Controls the billing cycle anchor when the subscription resumes. When adding a pause schedule, defaults to `resume_at`. On updates, the existing value is preserved if not provided.
+           */
+          billing_cycle_anchor?: Settings.BillingCycleAnchor;
+
+          /**
+           * Controls whether Stripe attempts payment on the resumption invoice and how payment affects the subscription's status. When adding a pause schedule, defaults to `resume_on_payment_success`. On updates, the existing value is preserved if not provided.
+           */
+          payment_behavior?: Settings.PaymentBehavior;
+
+          /**
+           * Determines how to handle prorations when the subscription resumes. When adding a pause schedule, defaults to `create_prorations`. On updates, the existing value is preserved if not provided.
+           */
+          proration_behavior?: Settings.ProrationBehavior;
+        }
+
+        export namespace ResumeAt {
+          export interface Duration {
+            /**
+             * The time unit for the resume duration. One of `day`, `week`, `month`, or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals after which the subscription resumes.
+             */
+            interval_count?: number;
+          }
+
+          export type Type = 'duration' | 'now' | 'timestamp' | OtherString;
+
+          export namespace Duration {
+            export type Interval =
+              | 'day'
+              | 'month'
+              | 'week'
+              | 'year'
+              | OtherString;
+          }
+        }
+
+        export namespace Settings {
+          export type BillingCycleAnchor =
+            | 'resume_at'
+            | 'unchanged'
+            | OtherString;
+
+          export type PaymentBehavior =
+            | 'resume_on_payment_attempt'
+            | 'resume_on_payment_success'
+            | OtherString;
+
+          export type ProrationBehavior =
+            | 'always_invoice'
+            | 'create_prorations'
+            | 'none'
+            | OtherString;
+        }
       }
     }
 
@@ -8816,22 +9086,32 @@ export namespace InvoiceUpdateLinesParams {
           | OtherString;
 
         export type TaxType =
+          | 'admissions_tax'
           | 'amusement_tax'
+          | 'attendance_tax'
           | 'communications_tax'
           | 'digital_excise_tax'
+          | 'entertainment_tax'
+          | 'get_fund'
+          | 'gross_receipts_tax'
           | 'gst'
+          | 'hospitality_tax'
           | 'hst'
           | 'igst'
           | 'jct'
           | 'lease_tax'
+          | 'luxury_tax'
           | 'mass_transit_parking_tax'
+          | 'nhil'
           | 'parking_tax'
           | 'pst'
           | 'qst'
+          | 'resort_tax'
           | 'retail_delivery_fee'
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
+          | 'tourism_tax'
           | 'utility_users_tax'
           | 'vat'
           | OtherString;
@@ -9183,22 +9463,32 @@ export namespace InvoiceUpdateLineItemParams {
         | OtherString;
 
       export type TaxType =
+        | 'admissions_tax'
         | 'amusement_tax'
+        | 'attendance_tax'
         | 'communications_tax'
         | 'digital_excise_tax'
+        | 'entertainment_tax'
+        | 'get_fund'
+        | 'gross_receipts_tax'
         | 'gst'
+        | 'hospitality_tax'
         | 'hst'
         | 'igst'
         | 'jct'
         | 'lease_tax'
+        | 'luxury_tax'
         | 'mass_transit_parking_tax'
+        | 'nhil'
         | 'parking_tax'
         | 'pst'
         | 'qst'
+        | 'resort_tax'
         | 'retail_delivery_fee'
         | 'rst'
         | 'sales_tax'
         | 'service_tax'
+        | 'tourism_tax'
         | 'utility_users_tax'
         | 'vat'
         | OtherString;

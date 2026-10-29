@@ -404,6 +404,11 @@ export namespace TestHelpers {
       wechat_pay?: PaymentMethodData.WechatPay;
 
       /**
+       * If this is a Wero PaymentMethod, this hash contains details about the Wero payment method.
+       */
+      wero?: PaymentMethodData.Wero;
+
+      /**
        * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
        */
       zip?: PaymentMethodData.Zip;
@@ -795,6 +800,7 @@ export namespace TestHelpers {
         | 'upi'
         | 'us_bank_account'
         | 'wechat_pay'
+        | 'wero'
         | 'zip'
         | OtherString;
 
@@ -822,6 +828,11 @@ export namespace TestHelpers {
         account_type?: UsBankAccount.AccountType;
 
         /**
+         * An external token used to create a payment method.
+         */
+        external_token?: UsBankAccount.ExternalToken;
+
+        /**
          * The ID of a Financial Connections Account to use as a payment method.
          */
         financial_connections_account?: string;
@@ -833,6 +844,8 @@ export namespace TestHelpers {
       }
 
       export interface WechatPay {}
+
+      export interface Wero {}
 
       export interface Zip {}
 
@@ -907,6 +920,7 @@ export namespace TestHelpers {
           | 'bni'
           | 'bri'
           | 'cimb'
+          | 'mandiri'
           | 'permata'
           | OtherString;
       }
@@ -1052,6 +1066,22 @@ export namespace TestHelpers {
         export type AccountHolderType = 'company' | 'individual' | OtherString;
 
         export type AccountType = 'checking' | 'savings' | OtherString;
+
+        export interface ExternalToken {
+          /**
+           * The Plaid processor token to use for this bank account.
+           */
+          plaid_processor_token?: string;
+
+          /**
+           * The type of external token.
+           */
+          type: ExternalToken.Type;
+        }
+
+        export namespace ExternalToken {
+          export type Type = 'plaid_processor_token' | OtherString;
+        }
       }
     }
 

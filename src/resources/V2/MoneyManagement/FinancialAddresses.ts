@@ -85,10 +85,7 @@ export interface FinancialAddress {
    */
   livemode: boolean;
 
-  /**
-   * Open Enum. The currency the FinancialAddress settles into the FinancialAccount.
-   */
-  settlement_currency?: string;
+  settlement_currency: string;
 
   /**
    * Closed Enum. The status of the FinancialAddress.
@@ -108,7 +105,8 @@ export namespace FinancialAddress {
     aba?: BankAccount.Aba;
 
     /**
-     * The country of the bank account.
+     * The country of the bank account. Always included in the response, but null while the bank
+     * account is pending and its country is not yet known.
      */
     country?: string;
 
@@ -140,29 +138,24 @@ export namespace FinancialAddress {
   export namespace BankAccount {
     export interface Aba {
       /**
-       * The address of the account holder.
-       */
-      account_holder_address?: JapanAddress;
-
-      /**
        * The name of the account holder.
        */
       account_holder_name?: string;
 
       /**
-       * The full account number.
+       * The full account number. Empty while the bank account is pending allocation.
        */
-      account_number?: string;
+      account_number: string;
+
+      /**
+       * The address of the account holder.
+       */
+      address?: JapanAddress;
 
       /**
        * The name of the bank.
        */
       bank_name?: string;
-
-      /**
-       * The last four digits of the account number.
-       */
-      last4: string;
 
       /**
        * The ABA routing number.
@@ -182,19 +175,9 @@ export namespace FinancialAddress {
       bank_name: string;
 
       /**
-       * The country of the bank account.
+       * The full IBAN. Empty while the bank account is pending allocation.
        */
-      country: string;
-
-      /**
-       * The full IBAN.
-       */
-      iban?: string;
-
-      /**
-       * The last four digits of the IBAN.
-       */
-      last4: string;
+      iban: string;
     }
 
     export interface SortCode {
@@ -204,14 +187,9 @@ export namespace FinancialAddress {
       account_holder_name: string;
 
       /**
-       * The full account number.
+       * The full account number. Empty while the bank account is pending allocation.
        */
-      account_number?: string;
-
-      /**
-       * The last four digits of the account number.
-       */
-      last4: string;
+      account_number: string;
 
       /**
        * The sort code.
@@ -239,11 +217,6 @@ export namespace V2 {
        * Properties for creating a bank account FinancialAddress.
        */
       bank_account?: FinancialAddressCreateParams.BankAccount;
-
-      /**
-       * Open Enum. The currency the FinancialAddress settles into the FinancialAccount.
-       */
-      settlement_currency?: string;
     }
 
     export namespace FinancialAddressCreateParams {
@@ -256,13 +229,13 @@ export namespace V2 {
         country?: string;
 
         /**
-         * The currency of the bank account to provision.
+         * The currency of the bank account to provision. Available currencies depend on your account's enabled features and rollout access; `eur` requires the Financial Address Global Payouts EU preview.
          */
         currency: BankAccount.Currency;
       }
 
       export namespace BankAccount {
-        export type Currency = 'gbp' | 'usd' | OtherString;
+        export type Currency = 'eur' | 'gbp' | 'usd' | OtherString;
       }
     }
   }
