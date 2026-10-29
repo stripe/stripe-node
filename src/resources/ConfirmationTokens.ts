@@ -263,6 +263,8 @@ export namespace ConfirmationToken {
 
     wechat_pay?: PaymentMethodPreview.WechatPay;
 
+    wero?: PaymentMethodPreview.Wero;
+
     zip?: PaymentMethodPreview.Zip;
   }
 
@@ -1098,6 +1100,7 @@ export namespace ConfirmationToken {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
+      | 'wero'
       | 'zip'
       | OtherString;
 
@@ -1161,6 +1164,8 @@ export namespace ConfirmationToken {
     }
 
     export interface WechatPay {}
+
+    export interface Wero {}
 
     export interface Zip {}
 
@@ -1677,6 +1682,7 @@ export namespace ConfirmationToken {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }

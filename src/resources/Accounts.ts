@@ -1032,6 +1032,11 @@ export namespace Account {
     us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
     /**
+     * The status of the Wero capability of the account, or whether the account can directly process Wero payments.
+     */
+    wero_payments?: Capabilities.WeroPayments;
+
+    /**
      * The status of the Zip capability of the account, or whether the account can directly process Zip charges.
      */
     zip_payments?: Capabilities.ZipPayments;
@@ -1111,6 +1116,8 @@ export namespace Account {
      * The company's phone number (used for verification).
      */
     phone?: string | null;
+
+    physical_address?: Address;
 
     principal_place_of_business?: Address;
 
@@ -1757,6 +1764,8 @@ export namespace Account {
       | 'inactive'
       | 'pending'
       | OtherString;
+
+    export type WeroPayments = 'active' | 'inactive' | 'pending' | OtherString;
 
     export type ZipPayments = 'active' | 'inactive' | 'pending' | OtherString;
   }
@@ -2745,7 +2754,7 @@ export interface AccountCreateParams {
   company?: AccountCreateParams.Company;
 
   /**
-   * A hash of configuration describing the account controller's attributes.
+   * Configures the account's Dashboard access, loss liability, requirements collection, and Stripe fee responsibility.
    */
   controller?: AccountCreateParams.Controller;
 
@@ -3295,6 +3304,11 @@ export namespace AccountCreateParams {
     us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
     /**
+     * The wero_payments capability.
+     */
+    wero_payments?: Capabilities.WeroPayments;
+
+    /**
      * The zip_payments capability.
      */
     zip_payments?: Capabilities.ZipPayments;
@@ -3380,6 +3394,11 @@ export namespace AccountCreateParams {
      * The company's phone number (used for verification).
      */
     phone?: string;
+
+    /**
+     * A location where the business has a meaningful physical operating presence.
+     */
+    physical_address?: AddressParam;
 
     /**
      * The primary location where the business conducts operations.
@@ -3496,6 +3515,11 @@ export namespace AccountCreateParams {
      * One or more documents that demonstrate proof of address.
      */
     proof_of_address?: Documents.ProofOfAddress;
+
+    /**
+     * One or more documents that demonstrate proof of business presence.
+     */
+    proof_of_business_presence?: Documents.ProofOfBusinessPresence;
 
     /**
      * One or more documents that demonstrate proof of ultimate beneficial ownership.
@@ -4372,6 +4396,13 @@ export namespace AccountCreateParams {
       requested?: boolean;
     }
 
+    export interface WeroPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface ZipPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -4529,14 +4560,14 @@ export namespace AccountCreateParams {
 
     export interface Fees {
       /**
-       * A value indicating the responsible payer of Stripe fees on this account. Defaults to `account`. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior).
+       * Controls who pays Stripe fees for direct charges and other pricing-control-eligible Stripe products. Setting `controller.losses.payments=application` requires `controller.fees.payer=application`. For destination charges and separate charges and transfers, Stripe bills the platform regardless of this setting. Defaults to `account`. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior), including application fees and pricing considerations.
        */
       payer?: Fees.Payer;
     }
 
     export interface Losses {
       /**
-       * A value indicating who is liable when this account can't pay back negative balances resulting from payments. Defaults to `stripe`.
+       * Controls who is responsible for payment-related negative balances on this account. The platform remains liable for negative balances on its own account. To use Stripe negative balance liability, your integration must meet [Managed Risk requirements](https://docs.stripe.com/connect/risk-management/managed-risk). Defaults to `stripe`.
        */
       payments?: Losses.Payments;
     }
@@ -4611,6 +4642,13 @@ export namespace AccountCreateParams {
     }
 
     export interface ProofOfAddress {
+      /**
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
+       */
+      files?: Array<string>;
+    }
+
+    export interface ProofOfBusinessPresence {
       /**
        * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
@@ -5687,6 +5725,11 @@ export namespace AccountUpdateParams {
     us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
     /**
+     * The wero_payments capability.
+     */
+    wero_payments?: Capabilities.WeroPayments;
+
+    /**
      * The zip_payments capability.
      */
     zip_payments?: Capabilities.ZipPayments;
@@ -5774,6 +5817,11 @@ export namespace AccountUpdateParams {
     phone?: string;
 
     /**
+     * A location where the business has a meaningful physical operating presence.
+     */
+    physical_address?: AddressParam;
+
+    /**
      * The primary location where the business conducts operations.
      */
     principal_place_of_business?: AddressParam;
@@ -5853,6 +5901,11 @@ export namespace AccountUpdateParams {
      * One or more documents that demonstrate proof of address.
      */
     proof_of_address?: Documents.ProofOfAddress;
+
+    /**
+     * One or more documents that demonstrate proof of business presence.
+     */
+    proof_of_business_presence?: Documents.ProofOfBusinessPresence;
 
     /**
      * One or more documents showing the company's proof of registration with the national business registry.
@@ -6776,6 +6829,13 @@ export namespace AccountUpdateParams {
       requested?: boolean;
     }
 
+    export interface WeroPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface ZipPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -6950,6 +7010,13 @@ export namespace AccountUpdateParams {
     }
 
     export interface ProofOfAddress {
+      /**
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
+       */
+      files?: Array<string>;
+    }
+
+    export interface ProofOfBusinessPresence {
       /**
        * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */

@@ -413,6 +413,14 @@ import {
   PaymentMethodDomainResource,
 } from './resources/PaymentMethodDomains.js';
 import {
+  PaymentPlan,
+  PaymentPlanCreateParams,
+  PaymentPlanRetrieveParams,
+  PaymentPlanUpdateParams,
+  PaymentPlanListParams,
+  PaymentPlanResource,
+} from './resources/PaymentPlans.js';
+import {
   PaymentRecord,
   PaymentRecordRetrieveParams,
   PaymentRecordListParams,
@@ -892,6 +900,11 @@ import {
   PaymentMethodAutomaticallyUpdatedEvent,
   PaymentMethodDetachedEvent,
   PaymentMethodUpdatedEvent,
+  PaymentPlanCreatedEvent,
+  PaymentPlanInstallmentDueEvent,
+  PaymentPlanInstallmentPaidEvent,
+  PaymentPlanInstallmentWillBeDueEvent,
+  PaymentPlanUpdatedEvent,
   PayoutCanceledEvent,
   PayoutCreatedEvent,
   PayoutFailedEvent,
@@ -977,6 +990,13 @@ import {
   TestHelpersTestClockDeletedEvent,
   TestHelpersTestClockInternalFailureEvent,
   TestHelpersTestClockReadyEvent,
+  ThreeDSecureAuthenticationCanceledEvent,
+  ThreeDSecureAuthenticationChallengeStartedEvent,
+  ThreeDSecureAuthenticationErroredEvent,
+  ThreeDSecureAuthenticationFailedEvent,
+  ThreeDSecureAuthenticationRequiresChallengeEvent,
+  ThreeDSecureAuthenticationRequiresSubmissionEvent,
+  ThreeDSecureAuthenticationSucceededEvent,
   TopupCanceledEvent,
   TopupCreatedEvent,
   TopupFailedEvent,
@@ -1167,6 +1187,7 @@ export class Stripe {
   paymentMethodConfigurations: PaymentMethodConfigurationResource;
   paymentMethodDomains: PaymentMethodDomainResource;
   paymentMethods: PaymentMethodResource;
+  paymentPlans: PaymentPlanResource;
   paymentRecords: PaymentRecordResource;
   payouts: PayoutResource;
   plans: PlanResource;
@@ -1372,6 +1393,7 @@ export class Stripe {
     );
     this.paymentMethodDomains = new PaymentMethodDomainResource(this);
     this.paymentMethods = new PaymentMethodResource(this);
+    this.paymentPlans = new PaymentPlanResource(this);
     this.paymentRecords = new PaymentRecordResource(this);
     this.payouts = new PayoutResource(this);
     this.plans = new PlanResource(this);
@@ -2296,6 +2318,14 @@ export declare namespace Stripe {
     PaymentMethodDomainResource,
   };
   export {
+    PaymentPlan,
+    PaymentPlanCreateParams,
+    PaymentPlanRetrieveParams,
+    PaymentPlanUpdateParams,
+    PaymentPlanListParams,
+    PaymentPlanResource,
+  };
+  export {
     PaymentRecord,
     PaymentRecordRetrieveParams,
     PaymentRecordListParams,
@@ -2755,6 +2785,11 @@ export declare namespace Stripe {
     PaymentMethodAutomaticallyUpdatedEvent,
     PaymentMethodDetachedEvent,
     PaymentMethodUpdatedEvent,
+    PaymentPlanCreatedEvent,
+    PaymentPlanInstallmentDueEvent,
+    PaymentPlanInstallmentPaidEvent,
+    PaymentPlanInstallmentWillBeDueEvent,
+    PaymentPlanUpdatedEvent,
     PayoutCanceledEvent,
     PayoutCreatedEvent,
     PayoutFailedEvent,
@@ -2840,6 +2875,13 @@ export declare namespace Stripe {
     TestHelpersTestClockDeletedEvent,
     TestHelpersTestClockInternalFailureEvent,
     TestHelpersTestClockReadyEvent,
+    ThreeDSecureAuthenticationCanceledEvent,
+    ThreeDSecureAuthenticationChallengeStartedEvent,
+    ThreeDSecureAuthenticationErroredEvent,
+    ThreeDSecureAuthenticationFailedEvent,
+    ThreeDSecureAuthenticationRequiresChallengeEvent,
+    ThreeDSecureAuthenticationRequiresSubmissionEvent,
+    ThreeDSecureAuthenticationSucceededEvent,
     TopupCanceledEvent,
     TopupCreatedEvent,
     TopupFailedEvent,
@@ -3004,6 +3046,9 @@ export declare namespace Stripe {
     export type CannotProceedError = InstanceType<
       typeof _Error.CannotProceedError
     >;
+    export type CapabilityNotEnabledError = InstanceType<
+      typeof _Error.CapabilityNotEnabledError
+    >;
     export type ControlledByAlternateResourceError = InstanceType<
       typeof _Error.ControlledByAlternateResourceError
     >;
@@ -3012,6 +3057,9 @@ export declare namespace Stripe {
     >;
     export type FinancialAccountNotOpenError = InstanceType<
       typeof _Error.FinancialAccountNotOpenError
+    >;
+    export type FxQuoteNeedsRefreshError = InstanceType<
+      typeof _Error.FxQuoteNeedsRefreshError
     >;
     export type InsufficientFundsError = InstanceType<
       typeof _Error.InsufficientFundsError

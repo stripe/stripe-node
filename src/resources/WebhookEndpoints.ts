@@ -471,6 +471,13 @@ export namespace WebhookEndpointCreateParams {
     | 'test_helpers.test_clock.deleted'
     | 'test_helpers.test_clock.internal_failure'
     | 'test_helpers.test_clock.ready'
+    | 'three_d_secure.authentication.canceled'
+    | 'three_d_secure.authentication.challenge_started'
+    | 'three_d_secure.authentication.errored'
+    | 'three_d_secure.authentication.failed'
+    | 'three_d_secure.authentication.requires_challenge'
+    | 'three_d_secure.authentication.requires_submission'
+    | 'three_d_secure.authentication.succeeded'
     | 'topup.canceled'
     | 'topup.created'
     | 'topup.failed'
@@ -638,7 +645,8 @@ export namespace WebhookEndpointCreateParams {
     | '2026-06-24.dahlia'
     | '2026-07-29.dahlia'
     | '2026-08-26.dahlia'
-    | '2026-09-30.endive';
+    | '2026-09-30.endive'
+    | '2026-10-28.endive';
 }
 export interface WebhookEndpointRetrieveParams {
   /**
@@ -949,6 +957,13 @@ export namespace WebhookEndpointUpdateParams {
     | 'test_helpers.test_clock.deleted'
     | 'test_helpers.test_clock.internal_failure'
     | 'test_helpers.test_clock.ready'
+    | 'three_d_secure.authentication.canceled'
+    | 'three_d_secure.authentication.challenge_started'
+    | 'three_d_secure.authentication.errored'
+    | 'three_d_secure.authentication.failed'
+    | 'three_d_secure.authentication.requires_challenge'
+    | 'three_d_secure.authentication.requires_submission'
+    | 'three_d_secure.authentication.succeeded'
     | 'topup.canceled'
     | 'topup.created'
     | 'topup.failed'

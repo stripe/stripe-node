@@ -234,6 +234,8 @@ export interface PaymentMethodConfiguration {
 
   wechat_pay?: PaymentMethodConfiguration.WechatPay;
 
+  wero?: PaymentMethodConfiguration.Wero;
+
   zip?: PaymentMethodConfiguration.Zip;
 }
 export namespace PaymentMethodConfiguration {
@@ -802,6 +804,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: WechatPay.DisplayPreference;
+  }
+
+  export interface Wero {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Wero.DisplayPreference;
   }
 
   export interface Zip {
@@ -2388,6 +2399,31 @@ export namespace PaymentMethodConfiguration {
     }
   }
 
+  export namespace Wero {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace Zip {
     export interface DisplayPreference {
       /**
@@ -2753,6 +2789,11 @@ export interface PaymentMethodConfigurationCreateParams {
    * WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users. Chinese consumers can use WeChat Pay to pay for goods and services inside of businesses' apps and websites. WeChat Pay users buy most frequently in gaming, e-commerce, travel, online education, and food/nutrition. Check this [page](https://docs.stripe.com/payments/wechat-pay) for more details.
    */
   wechat_pay?: PaymentMethodConfigurationCreateParams.WechatPay;
+
+  /**
+   * Wero is a pan-European payment method that enables secure and instant money transfers between bank accounts. Learn more about the [Wero](https://docs.stripe.com/payments/wero) payment method.
+   */
+  wero?: PaymentMethodConfigurationCreateParams.Wero;
 
   /**
    * Zip gives your customers a way to split purchases over a series of payments. Check this [page](https://docs.stripe.com/payments/zip) for more details like country availability.
@@ -3215,6 +3256,13 @@ export namespace PaymentMethodConfigurationCreateParams {
     display_preference?: WechatPay.DisplayPreference;
   }
 
+  export interface Wero {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Wero.DisplayPreference;
+  }
+
   export interface Zip {
     /**
      * Whether or not the payment method should be displayed.
@@ -4067,6 +4115,19 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
   }
 
+  export namespace Wero {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace Zip {
     export interface DisplayPreference {
       /**
@@ -4426,6 +4487,11 @@ export interface PaymentMethodConfigurationUpdateParams {
    * WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users. Chinese consumers can use WeChat Pay to pay for goods and services inside of businesses' apps and websites. WeChat Pay users buy most frequently in gaming, e-commerce, travel, online education, and food/nutrition. Check this [page](https://docs.stripe.com/payments/wechat-pay) for more details.
    */
   wechat_pay?: PaymentMethodConfigurationUpdateParams.WechatPay;
+
+  /**
+   * Wero is a pan-European payment method that enables secure and instant money transfers between bank accounts. Learn more about the [Wero](https://docs.stripe.com/payments/wero) payment method.
+   */
+  wero?: PaymentMethodConfigurationUpdateParams.Wero;
 
   /**
    * Zip gives your customers a way to split purchases over a series of payments. Check this [page](https://docs.stripe.com/payments/zip) for more details like country availability.
@@ -4888,6 +4954,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
     display_preference?: WechatPay.DisplayPreference;
   }
 
+  export interface Wero {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Wero.DisplayPreference;
+  }
+
   export interface Zip {
     /**
      * Whether or not the payment method should be displayed.
@@ -5728,6 +5801,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 
   export namespace WechatPay {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Wero {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.

@@ -312,6 +312,11 @@ export namespace Event {
     | 'payment_method.automatically_updated'
     | 'payment_method.detached'
     | 'payment_method.updated'
+    | 'payment_plan.created'
+    | 'payment_plan.installment_due'
+    | 'payment_plan.installment_paid'
+    | 'payment_plan.installment_will_be_due'
+    | 'payment_plan.updated'
     | 'payout.canceled'
     | 'payout.created'
     | 'payout.failed'
@@ -397,6 +402,13 @@ export namespace Event {
     | 'test_helpers.test_clock.deleted'
     | 'test_helpers.test_clock.internal_failure'
     | 'test_helpers.test_clock.ready'
+    | 'three_d_secure.authentication.canceled'
+    | 'three_d_secure.authentication.challenge_started'
+    | 'three_d_secure.authentication.errored'
+    | 'three_d_secure.authentication.failed'
+    | 'three_d_secure.authentication.requires_challenge'
+    | 'three_d_secure.authentication.requires_submission'
+    | 'three_d_secure.authentication.succeeded'
     | 'topup.canceled'
     | 'topup.created'
     | 'topup.failed'
@@ -534,6 +546,7 @@ import {Sigma} from './Sigma/index.js';
 import {Tax} from './Tax/index.js';
 import {Terminal} from './Terminal/index.js';
 import {TestHelpers} from './TestHelpers/index.js';
+import {ThreeDSecure} from './ThreeDSecure/index.js';
 import {Treasury} from './Treasury/index.js';
 import {Application} from './Applications.js';
 import {ExternalAccount} from './ExternalAccounts.js';
@@ -565,6 +578,7 @@ import {Mandate} from './Mandates.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {PaymentLink} from './PaymentLinks.js';
 import {PaymentMethod} from './PaymentMethods.js';
+import {PaymentPlan} from './PaymentPlans.js';
 import {Payout} from './Payouts.js';
 import {Person} from './Persons.js';
 import {Plan} from './Plans.js';
@@ -765,6 +779,11 @@ export type Event =
   | PaymentMethodAutomaticallyUpdatedEvent
   | PaymentMethodDetachedEvent
   | PaymentMethodUpdatedEvent
+  | PaymentPlanCreatedEvent
+  | PaymentPlanInstallmentDueEvent
+  | PaymentPlanInstallmentPaidEvent
+  | PaymentPlanInstallmentWillBeDueEvent
+  | PaymentPlanUpdatedEvent
   | PayoutCanceledEvent
   | PayoutCreatedEvent
   | PayoutFailedEvent
@@ -850,6 +869,13 @@ export type Event =
   | TestHelpersTestClockDeletedEvent
   | TestHelpersTestClockInternalFailureEvent
   | TestHelpersTestClockReadyEvent
+  | ThreeDSecureAuthenticationCanceledEvent
+  | ThreeDSecureAuthenticationChallengeStartedEvent
+  | ThreeDSecureAuthenticationErroredEvent
+  | ThreeDSecureAuthenticationFailedEvent
+  | ThreeDSecureAuthenticationRequiresChallengeEvent
+  | ThreeDSecureAuthenticationRequiresSubmissionEvent
+  | ThreeDSecureAuthenticationSucceededEvent
   | TopupCanceledEvent
   | TopupCreatedEvent
   | TopupFailedEvent
@@ -3838,6 +3864,86 @@ export namespace PaymentMethodUpdatedEvent {
 }
 
 /**
+ * Occurs whenever a new payment plan is created.
+ */
+export interface PaymentPlanCreatedEvent extends EventBase {
+  type: 'payment_plan.created';
+  data: PaymentPlanCreatedEvent.Data;
+}
+
+export namespace PaymentPlanCreatedEvent {
+  export interface Data extends Event.Data {
+    object: PaymentPlan;
+
+    previous_attributes?: Partial<PaymentPlan>;
+  }
+}
+
+/**
+ * Occurs whenever a payment plan installment becomes due.
+ */
+export interface PaymentPlanInstallmentDueEvent extends EventBase {
+  type: 'payment_plan.installment_due';
+  data: PaymentPlanInstallmentDueEvent.Data;
+}
+
+export namespace PaymentPlanInstallmentDueEvent {
+  export interface Data extends Event.Data {
+    object: PaymentPlan;
+
+    previous_attributes?: Partial<PaymentPlan>;
+  }
+}
+
+/**
+ * Occurs whenever a payment plan installment is paid.
+ */
+export interface PaymentPlanInstallmentPaidEvent extends EventBase {
+  type: 'payment_plan.installment_paid';
+  data: PaymentPlanInstallmentPaidEvent.Data;
+}
+
+export namespace PaymentPlanInstallmentPaidEvent {
+  export interface Data extends Event.Data {
+    object: PaymentPlan;
+
+    previous_attributes?: Partial<PaymentPlan>;
+  }
+}
+
+/**
+ * Occurs whenever a payment plan installment is about to become due.
+ */
+export interface PaymentPlanInstallmentWillBeDueEvent extends EventBase {
+  type: 'payment_plan.installment_will_be_due';
+  data: PaymentPlanInstallmentWillBeDueEvent.Data;
+}
+
+export namespace PaymentPlanInstallmentWillBeDueEvent {
+  export interface Data extends Event.Data {
+    object: PaymentPlan;
+
+    previous_attributes?: Partial<PaymentPlan>;
+  }
+}
+
+/**
+ * Occurs whenever a payment plan is updated.
+ */
+export interface PaymentPlanUpdatedEvent extends EventBase {
+  type: 'payment_plan.updated';
+  data: PaymentPlanUpdatedEvent.Data;
+}
+
+export namespace PaymentPlanUpdatedEvent {
+  export interface Data extends Event.Data {
+    object: PaymentPlan;
+
+    previous_attributes?: Partial<PaymentPlan>;
+  }
+}
+
+/**
  * Occurs whenever a payout is canceled.
  */
 export interface PayoutCanceledEvent extends EventBase {
@@ -5195,6 +5301,121 @@ export namespace TestHelpersTestClockReadyEvent {
     object: TestHelpers.TestClock;
 
     previous_attributes?: Partial<TestHelpers.TestClock>;
+  }
+}
+
+/**
+ * Occurs when a 3DS Authentication's status transitions to 'canceled'
+ */
+export interface ThreeDSecureAuthenticationCanceledEvent extends EventBase {
+  type: 'three_d_secure.authentication.canceled';
+  data: ThreeDSecureAuthenticationCanceledEvent.Data;
+}
+
+export namespace ThreeDSecureAuthenticationCanceledEvent {
+  export interface Data extends Event.Data {
+    object: ThreeDSecure.Authentication;
+
+    previous_attributes?: Partial<ThreeDSecure.Authentication>;
+  }
+}
+
+/**
+ * Occurs when a 3DS Authentication's 'challenge_url' was loaded.
+ */
+export interface ThreeDSecureAuthenticationChallengeStartedEvent
+  extends EventBase {
+  type: 'three_d_secure.authentication.challenge_started';
+  data: ThreeDSecureAuthenticationChallengeStartedEvent.Data;
+}
+
+export namespace ThreeDSecureAuthenticationChallengeStartedEvent {
+  export interface Data extends Event.Data {
+    object: ThreeDSecure.Authentication;
+
+    previous_attributes?: Partial<ThreeDSecure.Authentication>;
+  }
+}
+
+/**
+ * Occurs when a 3DS Authentication's status transitions to 'error'
+ */
+export interface ThreeDSecureAuthenticationErroredEvent extends EventBase {
+  type: 'three_d_secure.authentication.errored';
+  data: ThreeDSecureAuthenticationErroredEvent.Data;
+}
+
+export namespace ThreeDSecureAuthenticationErroredEvent {
+  export interface Data extends Event.Data {
+    object: ThreeDSecure.Authentication;
+
+    previous_attributes?: Partial<ThreeDSecure.Authentication>;
+  }
+}
+
+/**
+ * Occurs when a 3DS Authentication's status transitions to 'failed'
+ */
+export interface ThreeDSecureAuthenticationFailedEvent extends EventBase {
+  type: 'three_d_secure.authentication.failed';
+  data: ThreeDSecureAuthenticationFailedEvent.Data;
+}
+
+export namespace ThreeDSecureAuthenticationFailedEvent {
+  export interface Data extends Event.Data {
+    object: ThreeDSecure.Authentication;
+
+    previous_attributes?: Partial<ThreeDSecure.Authentication>;
+  }
+}
+
+/**
+ * Occurs when a 3DS Authentication's status transitions to 'requires_challenge'
+ */
+export interface ThreeDSecureAuthenticationRequiresChallengeEvent
+  extends EventBase {
+  type: 'three_d_secure.authentication.requires_challenge';
+  data: ThreeDSecureAuthenticationRequiresChallengeEvent.Data;
+}
+
+export namespace ThreeDSecureAuthenticationRequiresChallengeEvent {
+  export interface Data extends Event.Data {
+    object: ThreeDSecure.Authentication;
+
+    previous_attributes?: Partial<ThreeDSecure.Authentication>;
+  }
+}
+
+/**
+ * Occurs when a 3DS Authentication's status transitions to 'requires_submission'
+ */
+export interface ThreeDSecureAuthenticationRequiresSubmissionEvent
+  extends EventBase {
+  type: 'three_d_secure.authentication.requires_submission';
+  data: ThreeDSecureAuthenticationRequiresSubmissionEvent.Data;
+}
+
+export namespace ThreeDSecureAuthenticationRequiresSubmissionEvent {
+  export interface Data extends Event.Data {
+    object: ThreeDSecure.Authentication;
+
+    previous_attributes?: Partial<ThreeDSecure.Authentication>;
+  }
+}
+
+/**
+ * Occurs when a 3DS Authentication's status transitions to 'succeeded'
+ */
+export interface ThreeDSecureAuthenticationSucceededEvent extends EventBase {
+  type: 'three_d_secure.authentication.succeeded';
+  data: ThreeDSecureAuthenticationSucceededEvent.Data;
+}
+
+export namespace ThreeDSecureAuthenticationSucceededEvent {
+  export interface Data extends Event.Data {
+    object: ThreeDSecure.Authentication;
+
+    previous_attributes?: Partial<ThreeDSecure.Authentication>;
   }
 }
 

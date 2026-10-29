@@ -310,6 +310,8 @@ export interface PaymentMethod {
 
   wechat_pay?: PaymentMethod.WechatPay;
 
+  wero?: PaymentMethod.Wero;
+
   zip?: PaymentMethod.Zip;
 }
 export namespace PaymentMethod {
@@ -1083,6 +1085,7 @@ export namespace PaymentMethod {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
+    | 'wero'
     | 'zip'
     | OtherString;
 
@@ -1146,6 +1149,8 @@ export namespace PaymentMethod {
   }
 
   export interface WechatPay {}
+
+  export interface Wero {}
 
   export interface Zip {}
 
@@ -1671,7 +1676,14 @@ export namespace PaymentMethod {
   }
 
   export namespace IdBankTransfer {
-    export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata' | OtherString;
+    export type Bank =
+      | 'bca'
+      | 'bni'
+      | 'bri'
+      | 'cimb'
+      | 'mandiri'
+      | 'permata'
+      | OtherString;
   }
 
   export namespace Ideal {
@@ -2287,6 +2299,11 @@ export interface PaymentMethodCreateParams {
   wechat_pay?: PaymentMethodCreateParams.WechatPay;
 
   /**
+   * If this is a Wero PaymentMethod, this hash contains details about the Wero payment method.
+   */
+  wero?: PaymentMethodCreateParams.Wero;
+
+  /**
    * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
    */
   zip?: PaymentMethodCreateParams.Zip;
@@ -2692,6 +2709,7 @@ export namespace PaymentMethodCreateParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
+    | 'wero'
     | 'zip'
     | OtherString;
 
@@ -2719,6 +2737,11 @@ export namespace PaymentMethodCreateParams {
     account_type?: UsBankAccount.AccountType;
 
     /**
+     * An external token used to create a payment method.
+     */
+    external_token?: UsBankAccount.ExternalToken;
+
+    /**
      * The ID of a Financial Connections Account to use as a payment method.
      */
     financial_connections_account?: string;
@@ -2730,6 +2753,8 @@ export namespace PaymentMethodCreateParams {
   }
 
   export interface WechatPay {}
+
+  export interface Wero {}
 
   export interface Zip {}
 
@@ -2816,7 +2841,14 @@ export namespace PaymentMethodCreateParams {
   }
 
   export namespace IdBankTransfer {
-    export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata' | OtherString;
+    export type Bank =
+      | 'bca'
+      | 'bni'
+      | 'bri'
+      | 'cimb'
+      | 'mandiri'
+      | 'permata'
+      | OtherString;
   }
 
   export namespace Ideal {
@@ -2953,6 +2985,22 @@ export namespace PaymentMethodCreateParams {
     export type AccountHolderType = 'company' | 'individual' | OtherString;
 
     export type AccountType = 'checking' | 'savings' | OtherString;
+
+    export interface ExternalToken {
+      /**
+       * The Plaid processor token to use for this bank account.
+       */
+      plaid_processor_token?: string;
+
+      /**
+       * The type of external token.
+       */
+      type: ExternalToken.Type;
+    }
+
+    export namespace ExternalToken {
+      export type Type = 'plaid_processor_token' | OtherString;
+    }
   }
 }
 export interface PaymentMethodRetrieveParams {
@@ -3174,6 +3222,7 @@ export namespace PaymentMethodListParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
+    | 'wero'
     | 'zip'
     | OtherString;
 }

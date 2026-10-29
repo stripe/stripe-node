@@ -40,7 +40,7 @@ export class AccountEvaluationResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieves an AccountEvaluation by its ID.
+   * Retrieves an AccountEvaluation by its ID when its created timestamp is no more than 90 days old.
    */
   retrieve(
     id: string,
@@ -136,7 +136,7 @@ export namespace AccountEvaluation {
     account?: string;
 
     /**
-     * The v1 customer ID of the account, for users not yet migrated to v2/accounts.
+     * The v1 customer ID of the account, for users not yet migrated to v2 accounts.
      */
     customer?: string;
 
@@ -177,6 +177,11 @@ export namespace AccountEvaluation {
 
   export namespace AccountDetails {
     export interface Data {
+      /**
+       * The account's contact email.
+       */
+      contact_email?: string;
+
       /**
        * Default account settings.
        */
@@ -355,7 +360,7 @@ export namespace V2 {
         account?: string;
 
         /**
-         * The v1 customer ID of the account, for users not yet migrated to v2/accounts.
+         * The v1 customer ID of the account, for users not yet migrated to v2 accounts.
          */
         customer?: string;
 
@@ -401,7 +406,8 @@ export namespace V2 {
           registration_attempt?: Data.RegistrationAttempt;
 
           /**
-           * The type of activity. Must be registration_attempt or login_attempt.
+           * The type of activity. Supports registration_attempt, login_attempt, mfa_addition, mfa_removal,
+           * credential_change, account_takeover_report, account_takeover_confirmation, or account_takeover_mitigation.
            */
           type: Data.Type;
         }
@@ -498,6 +504,11 @@ export namespace V2 {
 
       export namespace AccountDetails {
         export interface Data {
+          /**
+           * The account's contact email.
+           */
+          contact_email?: string;
+
           /**
            * Default account settings.
            */

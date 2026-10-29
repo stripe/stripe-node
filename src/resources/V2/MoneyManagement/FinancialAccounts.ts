@@ -2,12 +2,12 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
+import {MetadataParam, Metadata, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FinancialAccountResource extends StripeResource {
   /**
-   * Lists FinancialAccounts in this compartment.
+   * Returns a list of FinancialAccounts in your account that match the provided filters.
    */
   list(
     params?: V2.MoneyManagement.FinancialAccountListParams,
@@ -55,7 +55,7 @@ export class FinancialAccountResource extends StripeResource {
     ) as any;
   }
   /**
-   * Updates an existing FinancialAccount.
+   * Updates an existing FinancialAccount using the provided parameters.
    */
   update(
     id: string,
@@ -70,7 +70,7 @@ export class FinancialAccountResource extends StripeResource {
     ) as any;
   }
   /**
-   * Closes a FinancialAccount with or without forwarding settings.
+   * Closes a FinancialAccount. You must provide forwarding settings if it has a non-zero balance.
    * @throws Stripe.NonZeroBalanceError
    */
   close(
@@ -98,22 +98,23 @@ export interface FinancialAccount {
   object: 'v2.money_management.financial_account';
 
   /**
-   * Multi-currency balance of this FinancialAccount, split by availability state. Each balance is represented as a hash where the key is the three-letter ISO currency code, in lowercase, and the value is the amount for that currency.
+   * The FinancialAccount's balance, split into `available`, `inbound_pending`, and `outbound_pending` balances.
+   * Each balance is a hash keyed by lowercase currency codes, with an amount for each currency.
    */
   balance: FinancialAccount.Balance;
 
   /**
-   * Open Enum. Two-letter country code that represents the country where the LegalEntity associated with the FinancialAccount is based in.
+   * Open Enum. The country where the LegalEntity associated with the FinancialAccount is based, represented as a two-letter country code.
    */
   country: string;
 
   /**
-   * Time at which the object was created.
+   * Time at which the object was created. Represented as an RFC 3339 timestamp in UTC with millisecond precision, for example `2022-09-18T13:22:18.123Z`.
    */
   created: string;
 
   /**
-   * A descriptive name for the FinancialAccount, up to 50 characters long. This name will be used in the Stripe Dashboard and embedded components.
+   * A descriptive name for the FinancialAccount, up to 50 characters long. This name appears in the Stripe Dashboard and embedded components.
    */
   display_name?: string;
 
@@ -123,12 +124,14 @@ export interface FinancialAccount {
   livemode: boolean;
 
   /**
-   * Metadata associated with the FinancialAccount.
+   * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information
+   * about the object in a structured format.
    */
   metadata?: Metadata;
 
   /**
-   * If this is a `other` FinancialAccount, this hash indicates what the actual type is. Upgrade your API version to see it reflected in `type`.
+   * If the FinancialAccount's `type` is `other`, this hash identifies its actual type.
+   * Upgrade your API version to see that type in `type`.
    */
   other?: FinancialAccount.Other;
 
@@ -143,34 +146,34 @@ export interface FinancialAccount {
   status_details?: FinancialAccount.StatusDetails;
 
   /**
-   * If this is a `storage` FinancialAccount, this hash includes details specific to `storage` FinancialAccounts.
+   * If the FinancialAccount's `type` is `storage`, this hash contains details specific to that type.
    */
   storage?: FinancialAccount.Storage;
 
   /**
-   * Type of the FinancialAccount. An additional hash is included on the FinancialAccount with a name matching this value.
-   * It contains additional information specific to the FinancialAccount type.
+   * Closed Enum. The type of the FinancialAccount. Details specific to the type appear in the matching hash.
+   * For example, a `storage` FinancialAccount includes a `storage` hash.
    */
   type: FinancialAccount.Type;
 }
 export namespace FinancialAccount {
   export interface Balance {
     /**
-     * Balance that can be used for money movement.
+     * Balance available for money movement.
      */
     available: {
       [key: string]: V2Amount;
     };
 
     /**
-     * Balance of inbound funds that will later transition to the `available` balance.
+     * Balance of inbound funds that aren't yet available for money movement and will later move to the `available` balance.
      */
     inbound_pending: {
       [key: string]: V2Amount;
     };
 
     /**
-     * Balance of funds that are being used for a pending outbound money movement.
+     * Balance of funds being used for pending outbound money movements.
      */
     outbound_pending: {
       [key: string]: V2Amount;
@@ -179,7 +182,8 @@ export namespace FinancialAccount {
 
   export interface Other {
     /**
-     * The type of the FinancialAccount, represented as a string. Upgrade your API version to see the type reflected in `financial_account.type`.
+     * The FinancialAccount's actual type, represented as a string.
+     * Upgrade your API version to see this value in `financial_account.type`.
      */
     type: string;
   }
@@ -188,7 +192,7 @@ export namespace FinancialAccount {
 
   export interface StatusDetails {
     /**
-     * Details related to the closed state of the FinancialAccount.
+     * Details about the FinancialAccount's closure. Only populated when `status` is `closed`.
      */
     closed?: StatusDetails.Closed;
   }
@@ -210,12 +214,12 @@ export namespace FinancialAccount {
   export namespace StatusDetails {
     export interface Closed {
       /**
-       * The forwarding settings for the closed FinancialAccount.
+       * When configured, the forwarding settings for the closed FinancialAccount.
        */
       forwarding_settings?: Closed.ForwardingSettings;
 
       /**
-       * The reason the FinancialAccount was closed.
+       * Closed Enum. The reason the FinancialAccount was closed.
        */
       reason: Closed.Reason;
     }
@@ -223,12 +227,13 @@ export namespace FinancialAccount {
     export namespace Closed {
       export interface ForwardingSettings {
         /**
-         * The address to send forwarded payments to.
+         * ID of the FinancialAccount that supplies funds to cover negative balances
+         * during or after this FinancialAccount's closure.
          */
         payment_method?: string;
 
         /**
-         * The address to send forwarded payouts to.
+         * ID of the FinancialAccount that receives funds forwarded from this FinancialAccount when it closes.
          */
         payout_method?: string;
       }
@@ -289,41 +294,10 @@ export namespace V2 {
     export namespace FinancialAccountCreateParams {
       export interface Storage {
         /**
-         * Array of eligibility objects, segmented by bank name and deposit insurance scheme.
-         */
-        deposit_insurance_eligibility?: Array<
-          Storage.DepositInsuranceEligibility
-        >;
-
-        /**
-         * The currencies that this FinancialAccount can hold.
+         * The currencies that the storage FinancialAccount can hold a balance in. Three-letter ISO currency code, in lowercase.
+         * Must be a subset of the currencies requested in `configuration.storer.features.holds_currencies` of the v2/accounts API.
          */
         holds_currencies: Array<string>;
-      }
-
-      export namespace Storage {
-        export interface DepositInsuranceEligibility {
-          /**
-           * The bank where funds are stored.
-           */
-          bank_name: DepositInsuranceEligibility.BankName;
-
-          /**
-           * Currencies eligible for deposit insurance at this bank under this scheme.
-           */
-          currencies: Array<string>;
-
-          /**
-           * The deposit insurance scheme.
-           */
-          type: DepositInsuranceEligibility.Type;
-        }
-
-        export namespace DepositInsuranceEligibility {
-          export type BankName = 'fifth_third' | OtherString;
-
-          export type Type = 'fdic' | 'fdic_passthrough' | OtherString;
-        }
       }
     }
   }
@@ -342,12 +316,13 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface FinancialAccountUpdateParams {
       /**
-       * A descriptive name for the FinancialAccount, up to 50 characters long. This name will be used in the Stripe Dashboard and embedded components.
+       * A descriptive name for the FinancialAccount, up to 50 characters long. This name appears in the Stripe Dashboard and embedded components.
        */
       display_name?: string;
 
       /**
-       * Metadata associated with the FinancialAccount.
+       * Set of key-value pairs that you can attach to the FinancialAccount. Individual keys can be unset by posting
+       * null to them.
        */
       metadata?: MetadataParam;
     }
@@ -367,7 +342,8 @@ export namespace V2 {
       limit?: number;
 
       /**
-       * Filter for FinancialAccount `status`. By default, closed FinancialAccounts are not returned.
+       * Return FinancialAccounts whose `status` matches any of the provided values.
+       * If omitted, closed FinancialAccounts are not returned.
        */
       statuses?: Array<FinancialAccountListParams.Status>;
     }
@@ -381,7 +357,8 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface FinancialAccountCloseParams {
       /**
-       * The addresses to forward any incoming transactions to.
+       * Settings that specify where to send positive balances and how to cover negative balances.
+       * You must provide these settings if the FinancialAccount has a non-zero balance.
        */
       forwarding_settings?: FinancialAccountCloseParams.ForwardingSettings;
     }
@@ -389,12 +366,13 @@ export namespace V2 {
     export namespace FinancialAccountCloseParams {
       export interface ForwardingSettings {
         /**
-         * The address to send forwarded payments to.
+         * ID of the FinancialAccount that supplies funds to cover negative balances
+         * during or after this FinancialAccount's closure.
          */
         payment_method?: string;
 
         /**
-         * The address to send forwarded payouts to.
+         * ID of the FinancialAccount that receives funds forwarded from this FinancialAccount when it closes.
          */
         payout_method?: string;
       }

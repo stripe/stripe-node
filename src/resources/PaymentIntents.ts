@@ -831,6 +831,7 @@ export namespace PaymentIntent {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
+    | 'wero'
     | 'zip'
     | OtherString;
 
@@ -1176,6 +1177,8 @@ export namespace PaymentIntent {
     us_bank_account?: PaymentMethodOptions.UsBankAccount;
 
     wechat_pay?: PaymentMethodOptions.WechatPay;
+
+    wero?: PaymentMethodOptions.Wero;
 
     zip?: PaymentMethodOptions.Zip;
   }
@@ -1576,11 +1579,13 @@ export namespace PaymentIntent {
       | 'shipping_calculation_failed'
       | 'siret_invalid'
       | 'sku_inactive'
+      | 'smart_disputes_not_available'
       | 'state_unsupported'
       | 'status_transition_invalid'
       | 'storer_capability_missing'
       | 'storer_capability_not_active'
       | 'stripe_tax_inactive'
+      | 'subscription_update_trial_after_billing_cycle_anchor'
       | 'tax_id_invalid'
       | 'tax_id_prohibited'
       | 'taxes_calculation_failed'
@@ -1593,6 +1598,8 @@ export namespace PaymentIntent {
       | 'terminal_reader_offline'
       | 'terminal_reader_timeout'
       | 'testmode_charges_only'
+      | 'three_d_secure_authentication_not_supported'
+      | 'three_d_secure_authentication_upstream_error'
       | 'tls_version_unsupported'
       | 'token_already_used'
       | 'token_card_network_invalid'
@@ -4519,12 +4526,12 @@ export namespace PaymentIntent {
       amount_includes_iof?: Pix.AmountIncludesIof;
 
       /**
-       * The number of seconds (between 10 and 1209600) after which Pix payment will expire.
+       * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If neither expiration option is supplied, defaults to 14400 seconds (4 hours). Mutually exclusive with `expires_at`.
        */
       expires_after_seconds: number | null;
 
       /**
-       * The timestamp at which the Pix expires.
+       * The absolute Unix timestamp at which the Pix expires. When supplied as an input, it must be between 60 and 1209600 seconds from the current time at validation, inclusive. If neither expiration option is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually exclusive with `expires_after_seconds`.
        */
       expires_at: number | null;
 
@@ -4828,6 +4835,19 @@ export namespace PaymentIntent {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: WechatPay.SetupFutureUsage;
+    }
+
+    export interface Wero {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Wero.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -5700,6 +5720,10 @@ export namespace PaymentIntent {
 
       export type SetupFutureUsage = 'none' | OtherString;
     }
+
+    export namespace Wero {
+      export type SetupFutureUsage = 'none' | OtherString;
+    }
   }
 
   export namespace Processing {
@@ -5876,7 +5900,7 @@ export interface PaymentIntentCreateParams {
   payment_details?: PaymentIntentCreateParams.PaymentDetails;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://docs.stripe.com/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
+   * The ID of a PaymentMethod to attach to this PaymentIntent.
    *
    * If you don't provide the `payment_method` parameter or the `source` parameter with `confirm=true`, `source` automatically populates with `customer.default_source` to improve migration for users of the Charges API. We recommend that you explicitly provide the `payment_method` moving forward.
    * If the payment method is attached to a Customer, you must also provide the ID of that Customer as the [customer](https://docs.stripe.com/api#create_payment_intent-customer) parameter of this PaymentIntent.
@@ -6189,6 +6213,7 @@ export namespace PaymentIntentCreateParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
+    | 'wero'
     | 'zip'
     | OtherString;
 
@@ -6601,6 +6626,11 @@ export namespace PaymentIntentCreateParams {
     wechat_pay?: PaymentMethodData.WechatPay;
 
     /**
+     * If this is a Wero PaymentMethod, this hash contains details about the Wero payment method.
+     */
+    wero?: PaymentMethodData.Wero;
+
+    /**
      * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
      */
     zip?: PaymentMethodData.Zip;
@@ -6921,6 +6951,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `wechat_pay` PaymentMethod, this sub-hash contains details about the WeChat Pay payment method options.
      */
     wechat_pay?: Emptyable<PaymentMethodOptions.WechatPay>;
+
+    /**
+     * If this is a `wero` PaymentMethod, this sub-hash contains details about the Wero payment method options.
+     */
+    wero?: Emptyable<PaymentMethodOptions.Wero>;
 
     /**
      * If this is a `zip` PaymentMethod, this sub-hash contains details about the Zip payment method options.
@@ -9467,6 +9502,7 @@ export namespace PaymentIntentCreateParams {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
+      | 'wero'
       | 'zip'
       | OtherString;
 
@@ -9494,6 +9530,11 @@ export namespace PaymentIntentCreateParams {
       account_type?: UsBankAccount.AccountType;
 
       /**
+       * An external token used to create a payment method.
+       */
+      external_token?: UsBankAccount.ExternalToken;
+
+      /**
        * The ID of a Financial Connections Account to use as a payment method.
        */
       financial_connections_account?: string;
@@ -9505,6 +9546,8 @@ export namespace PaymentIntentCreateParams {
     }
 
     export interface WechatPay {}
+
+    export interface Wero {}
 
     export interface Zip {}
 
@@ -9579,6 +9622,7 @@ export namespace PaymentIntentCreateParams {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
@@ -9724,6 +9768,22 @@ export namespace PaymentIntentCreateParams {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface ExternalToken {
+        /**
+         * The Plaid processor token to use for this bank account.
+         */
+        plaid_processor_token?: string;
+
+        /**
+         * The type of external token.
+         */
+        type: ExternalToken.Type;
+      }
+
+      export namespace ExternalToken {
+        export type Type = 'plaid_processor_token' | OtherString;
+      }
     }
   }
 
@@ -10742,12 +10802,12 @@ export namespace PaymentIntentCreateParams {
       amount_includes_iof?: Pix.AmountIncludesIof;
 
       /**
-       * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+       * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If neither expiration option is supplied, defaults to 14400 seconds (4 hours). Mutually exclusive with `expires_at`.
        */
       expires_after_seconds?: number;
 
       /**
-       * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+       * The absolute Unix timestamp at which the Pix expires, between 60 and 1209600 seconds from the current time. If neither expiration option is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually exclusive with `expires_after_seconds`.
        */
       expires_at?: number;
 
@@ -11110,6 +11170,21 @@ export namespace PaymentIntentCreateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: WechatPay.SetupFutureUsage;
+    }
+
+    export interface Wero {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: Wero.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -13428,6 +13503,10 @@ export namespace PaymentIntentCreateParams {
 
       export type SetupFutureUsage = 'none' | OtherString;
     }
+
+    export namespace Wero {
+      export type SetupFutureUsage = 'none' | OtherString;
+    }
   }
 
   export namespace TransferData {
@@ -13820,6 +13899,7 @@ export namespace PaymentIntentUpdateParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
+    | 'wero'
     | 'zip'
     | OtherString;
 
@@ -14230,6 +14310,11 @@ export namespace PaymentIntentUpdateParams {
     wechat_pay?: PaymentMethodData.WechatPay;
 
     /**
+     * If this is a Wero PaymentMethod, this hash contains details about the Wero payment method.
+     */
+    wero?: PaymentMethodData.Wero;
+
+    /**
      * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
      */
     zip?: PaymentMethodData.Zip;
@@ -14550,6 +14635,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `wechat_pay` PaymentMethod, this sub-hash contains details about the WeChat Pay payment method options.
      */
     wechat_pay?: Emptyable<PaymentMethodOptions.WechatPay>;
+
+    /**
+     * If this is a `wero` PaymentMethod, this sub-hash contains details about the Wero payment method options.
+     */
+    wero?: Emptyable<PaymentMethodOptions.Wero>;
 
     /**
      * If this is a `zip` PaymentMethod, this sub-hash contains details about the Zip payment method options.
@@ -17050,6 +17140,7 @@ export namespace PaymentIntentUpdateParams {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
+      | 'wero'
       | 'zip'
       | OtherString;
 
@@ -17077,6 +17168,11 @@ export namespace PaymentIntentUpdateParams {
       account_type?: UsBankAccount.AccountType;
 
       /**
+       * An external token used to create a payment method.
+       */
+      external_token?: UsBankAccount.ExternalToken;
+
+      /**
        * The ID of a Financial Connections Account to use as a payment method.
        */
       financial_connections_account?: string;
@@ -17088,6 +17184,8 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export interface WechatPay {}
+
+    export interface Wero {}
 
     export interface Zip {}
 
@@ -17162,6 +17260,7 @@ export namespace PaymentIntentUpdateParams {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
@@ -17307,6 +17406,22 @@ export namespace PaymentIntentUpdateParams {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface ExternalToken {
+        /**
+         * The Plaid processor token to use for this bank account.
+         */
+        plaid_processor_token?: string;
+
+        /**
+         * The type of external token.
+         */
+        type: ExternalToken.Type;
+      }
+
+      export namespace ExternalToken {
+        export type Type = 'plaid_processor_token' | OtherString;
+      }
     }
   }
 
@@ -18325,12 +18440,12 @@ export namespace PaymentIntentUpdateParams {
       amount_includes_iof?: Pix.AmountIncludesIof;
 
       /**
-       * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+       * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If neither expiration option is supplied, defaults to 14400 seconds (4 hours). Mutually exclusive with `expires_at`.
        */
       expires_after_seconds?: number;
 
       /**
-       * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+       * The absolute Unix timestamp at which the Pix expires, between 60 and 1209600 seconds from the current time. If neither expiration option is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually exclusive with `expires_after_seconds`.
        */
       expires_at?: number;
 
@@ -18693,6 +18808,21 @@ export namespace PaymentIntentUpdateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: WechatPay.SetupFutureUsage;
+    }
+
+    export interface Wero {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: Wero.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -21009,6 +21139,10 @@ export namespace PaymentIntentUpdateParams {
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
 
+      export type SetupFutureUsage = 'none' | OtherString;
+    }
+
+    export namespace Wero {
       export type SetupFutureUsage = 'none' | OtherString;
     }
   }
@@ -23389,7 +23523,7 @@ export interface PaymentIntentConfirmParams {
   payment_details?: Emptyable<PaymentIntentConfirmParams.PaymentDetails>;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://docs.stripe.com/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
+   * The ID of a PaymentMethod to attach to this PaymentIntent.
    * If the payment method is attached to a Customer, it must match the [customer](https://docs.stripe.com/api#create_payment_intent-customer) that is set on this PaymentIntent.
    */
   payment_method?: string;
@@ -23654,6 +23788,7 @@ export namespace PaymentIntentConfirmParams {
     | 'upi'
     | 'us_bank_account'
     | 'wechat_pay'
+    | 'wero'
     | 'zip'
     | OtherString;
 
@@ -24066,6 +24201,11 @@ export namespace PaymentIntentConfirmParams {
     wechat_pay?: PaymentMethodData.WechatPay;
 
     /**
+     * If this is a Wero PaymentMethod, this hash contains details about the Wero payment method.
+     */
+    wero?: PaymentMethodData.Wero;
+
+    /**
      * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
      */
     zip?: PaymentMethodData.Zip;
@@ -24386,6 +24526,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `wechat_pay` PaymentMethod, this sub-hash contains details about the WeChat Pay payment method options.
      */
     wechat_pay?: Emptyable<PaymentMethodOptions.WechatPay>;
+
+    /**
+     * If this is a `wero` PaymentMethod, this sub-hash contains details about the Wero payment method options.
+     */
+    wero?: Emptyable<PaymentMethodOptions.Wero>;
 
     /**
      * If this is a `zip` PaymentMethod, this sub-hash contains details about the Zip payment method options.
@@ -26890,6 +27035,7 @@ export namespace PaymentIntentConfirmParams {
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay'
+      | 'wero'
       | 'zip'
       | OtherString;
 
@@ -26917,6 +27063,11 @@ export namespace PaymentIntentConfirmParams {
       account_type?: UsBankAccount.AccountType;
 
       /**
+       * An external token used to create a payment method.
+       */
+      external_token?: UsBankAccount.ExternalToken;
+
+      /**
        * The ID of a Financial Connections Account to use as a payment method.
        */
       financial_connections_account?: string;
@@ -26928,6 +27079,8 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export interface WechatPay {}
+
+    export interface Wero {}
 
     export interface Zip {}
 
@@ -27002,6 +27155,7 @@ export namespace PaymentIntentConfirmParams {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
@@ -27147,6 +27301,22 @@ export namespace PaymentIntentConfirmParams {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface ExternalToken {
+        /**
+         * The Plaid processor token to use for this bank account.
+         */
+        plaid_processor_token?: string;
+
+        /**
+         * The type of external token.
+         */
+        type: ExternalToken.Type;
+      }
+
+      export namespace ExternalToken {
+        export type Type = 'plaid_processor_token' | OtherString;
+      }
     }
   }
 
@@ -28165,12 +28335,12 @@ export namespace PaymentIntentConfirmParams {
       amount_includes_iof?: Pix.AmountIncludesIof;
 
       /**
-       * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+       * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If neither expiration option is supplied, defaults to 14400 seconds (4 hours). Mutually exclusive with `expires_at`.
        */
       expires_after_seconds?: number;
 
       /**
-       * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+       * The absolute Unix timestamp at which the Pix expires, between 60 and 1209600 seconds from the current time. If neither expiration option is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually exclusive with `expires_after_seconds`.
        */
       expires_at?: number;
 
@@ -28533,6 +28703,21 @@ export namespace PaymentIntentConfirmParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: WechatPay.SetupFutureUsage;
+    }
+
+    export interface Wero {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: Wero.SetupFutureUsage;
     }
 
     export interface Zip {
@@ -30849,6 +31034,10 @@ export namespace PaymentIntentConfirmParams {
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web' | OtherString;
 
+      export type SetupFutureUsage = 'none' | OtherString;
+    }
+
+    export namespace Wero {
       export type SetupFutureUsage = 'none' | OtherString;
     }
   }

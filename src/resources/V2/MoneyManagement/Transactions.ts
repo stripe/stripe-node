@@ -2,7 +2,12 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {RangeQueryParam, OtherString} from '../../../shared.js';
+import {
+  MetadataParam,
+  RangeQueryParam,
+  Metadata,
+  OtherString,
+} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class TransactionResource extends StripeResource {
@@ -38,6 +43,38 @@ export class TransactionResource extends StripeResource {
       options
     ) as any;
   }
+  /**
+   * Updates an existing Transaction. You can update its description and metadata.
+   */
+  update(
+    id: string,
+    params?: V2.MoneyManagement.TransactionUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<Transaction>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/transactions/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Creates a fresh hosted URL for a Transaction's regulatory receipt.
+   */
+  refreshRegulatoryReceipt(
+    id: string,
+    params?: V2.MoneyManagement.TransactionRefreshRegulatoryReceiptParams,
+    options?: RequestOptions
+  ): Promise<Response<Transaction>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/transactions/${encodeURIComponent(
+        id
+      )}/refresh_regulatory_receipt`,
+      params,
+      options
+    ) as any;
+  }
 }
 export interface Transaction {
   /**
@@ -56,39 +93,42 @@ export interface Transaction {
   amount: V2Amount;
 
   /**
-   * The delta to the FinancialAccount's balance. The balance_impact for the Transaction is equal to sum of its
-   * TransactionEntries that have `effective_at`s in the past.
+   * The change to the FinancialAccount's balance. This is the sum of the balance impacts of this Transaction's
+   * TransactionEntries with `effective_at` timestamps in the past.
    */
   balance_impact: Transaction.BalanceImpact;
 
   /**
-   * Open Enum. A descriptive category used to classify the Transaction.
+   * Open Enum. A category used to classify the Transaction.
    */
   category: Transaction.Category;
 
   /**
-   * Counterparty to this Transaction.
+   * Details about the counterparty to this Transaction.
    */
   counterparty?: Transaction.Counterparty;
 
   /**
-   * Time at which the object was created. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+   * Time at which the object was created. Represented as an RFC 3339 timestamp in UTC with millisecond precision, for example `2022-09-18T13:22:18.123Z`.
    */
   created: string;
 
   /**
-   * Description of this Transaction. When applicable, the description is copied from the Flow object at the time
-   * of transaction creation.
+   * A description of the Transaction. When applicable, the description is copied from the flow object when
+   * the Transaction is created. You can update it using the Update Transaction endpoint.
    */
   description?: string;
 
   /**
-   * Indicates the FinancialAccount affected by this Transaction.
+   * The ID of the FinancialAccount affected by this Transaction.
    */
   financial_account: string;
 
   /**
-   * Details about the Flow object that created the Transaction.
+   * Details about the flow object that created the Transaction, such as an InboundTransfer or OutboundPayment.
+   * `flow.type` identifies the kind of object. The corresponding field contains its ID, when available:
+   * for an InboundTransfer, `flow.inbound_transfer` contains the InboundTransfer's ID. Pass that ID to
+   * the `flow` parameter on List Transactions.
    */
   flow?: Transaction.Flow;
 
@@ -98,33 +138,44 @@ export interface Transaction {
   livemode: boolean;
 
   /**
-   * Closed Enum. Current status of the Transaction.
+   * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information
+   * about the object in a structured format.
+   */
+  metadata?: Metadata;
+
+  /**
+   * Hosted transaction receipt that is provided when money movement is considered regulated under Stripe's money transmission licenses. If not applicable, `regulatory_receipt.status` will be `not_applicable` and no URL will be provided unless you opt in by calling `/refresh_regulatory_receipt`.
+   */
+  regulatory_receipt: Transaction.RegulatoryReceipt;
+
+  /**
+   * Closed Enum. The current status of the Transaction.
    * A Transaction is `pending` if either `balance_impact.inbound_pending` or `balance_impact.outbound_pending` is non-zero.
    * A Transaction is `posted` if only `balance_impact.available` is non-zero.
    * A Transaction is `void` if there is no balance impact.
-   * `posted` and `void` are terminal states, and no additional entries will be added to the Transaction.
+   * `posted` and `void` are terminal states, and no additional TransactionEntries will be added to the Transaction.
    */
   status: Transaction.Status;
 
   /**
-   * Timestamps for when the Transaction transitioned to a particular status.
+   * Timestamps for when the Transaction transitioned to each status.
    */
   status_transitions: Transaction.StatusTransitions;
 }
 export namespace Transaction {
   export interface BalanceImpact {
     /**
-     * Impact to the available balance.
+     * The change to the available balance.
      */
     available: V2Amount;
 
     /**
-     * Impact to the inbound_pending balance.
+     * The change to the `inbound_pending` balance.
      */
     inbound_pending: V2Amount;
 
     /**
-     * Impact to the outbound_pending balance.
+     * The change to the `outbound_pending` balance.
      */
     outbound_pending: V2Amount;
   }
@@ -160,14 +211,14 @@ export namespace Transaction {
     adjustment?: string;
 
     /**
-     * In the future, this will be the ID of the currency conversion that created this Transaction. For now, this field is always null.
+     * When available, the ID of the CurrencyConversion that created this Transaction.
      */
     currency_conversion?: string;
 
     /**
-     * If applicable, the ID of the FeeTransaction that created this Transaction.
+     * If applicable, the ID of the FeeBatch that created this Transaction.
      */
-    fee_transaction?: string;
+    fee_batch?: string;
 
     /**
      * If applicable, the ID of the InboundTransfer that created this Transaction.
@@ -195,21 +246,38 @@ export namespace Transaction {
     received_debit?: string;
 
     /**
-     * Open Enum. Type of the flow that created the Transaction. The field matching this value will contain the ID of the flow.
+     * Open Enum. The type of flow that created the Transaction. When available, the flow's ID is provided in the corresponding field.
      */
     type: Flow.Type;
+  }
+
+  export interface RegulatoryReceipt {
+    /**
+     * Current availability of the regulatory receipt.
+     */
+    status: RegulatoryReceipt.Status;
+
+    /**
+     * Hosted URL for the receipt.
+     */
+    url?: string;
+
+    /**
+     * Time until which `url` is valid.
+     */
+    url_expires_at?: string;
   }
 
   export type Status = 'pending' | 'posted' | 'void';
 
   export interface StatusTransitions {
     /**
-     * The time at which the Transaction became posted. Only present if status == posted.
+     * The time at which the Transaction became `posted`. Only present when `status` is `posted`.
      */
     posted_at?: string;
 
     /**
-     * The time at which the Transaction became void. Only present if status == void.
+     * The time at which the Transaction became `void`. Only present when `status` is `void`.
      */
     void_at?: string;
   }
@@ -218,13 +286,21 @@ export namespace Transaction {
     export type Type =
       | 'adjustment'
       | 'currency_conversion'
-      | 'fee_transaction'
+      | 'fee_batch'
       | 'inbound_transfer'
       | 'outbound_payment'
       | 'outbound_transfer'
       | 'received_credit'
       | 'received_debit'
       | OtherString;
+  }
+
+  export namespace RegulatoryReceipt {
+    export type Status =
+      | 'available'
+      | 'not_applicable'
+      | 'pending'
+      | 'url_expired';
   }
 }
 export namespace V2 {
@@ -234,19 +310,38 @@ export namespace V2 {
 }
 export namespace V2 {
   export namespace MoneyManagement {
+    export interface TransactionUpdateParams {
+      /**
+       * A description of the Transaction, up to 100 characters. Pass `null` to clear the description,
+       * or omit this parameter to leave it unchanged.
+       */
+      description?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to the Transaction. Individual keys can be unset by posting
+       * null to them.
+       */
+      metadata?: MetadataParam;
+    }
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
     export interface TransactionListParams {
       /**
-       * Set of filters to query Transactions within a range of `created` timestamps.
+       * Filter for Transactions created within a specified time range.
        */
       created?: RangeQueryParam;
 
       /**
-       * Filter for Transactions belonging to a FinancialAccount.
+       * Filter for Transactions belonging to a specific FinancialAccount. This filter only supports filtering by the FinancialAccount's ID.
        */
       financial_account?: string;
 
       /**
-       * Filter for Transactions corresponding to a Flow.
+       * Filter for Transactions created by a specific flow object. This filter only supports filtering by
+       * the flow object's ID, such as `ibt_123` for an InboundTransfer. A value that doesn't match a flow ID
+       * returns an empty list.
        */
       flow?: string;
 
@@ -255,5 +350,10 @@ export namespace V2 {
        */
       limit?: number;
     }
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface TransactionRefreshRegulatoryReceiptParams {}
   }
 }

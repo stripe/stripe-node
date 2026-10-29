@@ -69,8 +69,10 @@ export namespace V2 {
         export type Network =
           | 'ach'
           | 'chaps'
+          | 'fedwire'
           | 'fps'
           | 'rtp'
+          | 'sepa'
           | 'wire'
           | OtherString;
       }

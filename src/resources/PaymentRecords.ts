@@ -542,6 +542,8 @@ export namespace PaymentRecord {
 
     wechat_pay?: PaymentMethodDetails.WechatPay;
 
+    wero?: PaymentMethodDetails.Wero;
+
     zip?: PaymentMethodDetails.Zip;
   }
 
@@ -2013,6 +2015,8 @@ export namespace PaymentRecord {
       transaction_id: string | null;
     }
 
+    export interface Wero {}
+
     export interface Zip {}
 
     export namespace AchDebit {
@@ -2430,6 +2434,7 @@ export namespace PaymentRecord {
         | OtherString;
 
       export type TokenCurrency =
+        | 'ousd'
         | 'phantom_cash'
         | 'usdc'
         | 'usdg'
@@ -2510,6 +2515,7 @@ export namespace PaymentRecord {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }

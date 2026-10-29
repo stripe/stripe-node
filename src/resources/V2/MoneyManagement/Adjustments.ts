@@ -51,7 +51,10 @@ export interface Adjustment {
   object: 'v2.money_management.adjustment';
 
   /**
-   * If applicable, contains information about the original flow linked to this Adjustment.
+   * Details about the original flow object linked to this Adjustment, if applicable.
+   * `adjusted_flow.type` identifies the kind of object. The corresponding field contains its ID:
+   * for an InboundTransfer, `adjusted_flow.inbound_transfer` contains the InboundTransfer's ID.
+   * Pass that ID to the `adjusted_flow` parameter on List Adjustments.
    */
   adjusted_flow?: Adjustment.AdjustedFlow;
 
@@ -61,17 +64,18 @@ export interface Adjustment {
   amount: V2Amount;
 
   /**
-   * Time at which the object was created. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+   * Time at which the object was created. Represented as an RFC 3339 timestamp in UTC with millisecond precision,
+   * for example `2022-09-18T13:22:18.123Z`.
    */
   created: string;
 
   /**
-   * Description of the Adjustment and what it was used for.
+   * A description of the Adjustment and its purpose.
    */
   description?: string;
 
   /**
-   * The FinancialAccount that this adjustment is for.
+   * The ID of the FinancialAccount whose balance this Adjustment affects.
    */
   financial_account: string;
 
@@ -81,14 +85,16 @@ export interface Adjustment {
   livemode: boolean;
 
   /**
-   * A link to the Stripe-hosted receipt that is provided when money movement is considered regulated under Stripe's money transmission licenses. The receipt link remains active for 60 days from the Adjustment creation date. After this period, the link will expire and the receipt url value will be null.
+   * A link to the Stripe-hosted receipt provided when money movement is regulated under Stripe's money transmission licenses.
+   * You can use this link to view the receipt for 60 days after the Adjustment is created.
+   * After that, the link expires and `receipt_url` is `null`.
    */
   receipt_url?: string;
 }
 export namespace Adjustment {
   export interface AdjustedFlow {
     /**
-     * If applicable, the ID of the Adjustment linked to this Adjustment.
+     * If applicable, the ID of the original Adjustment linked to this Adjustment.
      */
     adjustment?: string;
 
@@ -126,8 +132,6 @@ export namespace Adjustment {
   export namespace AdjustedFlow {
     export type Type =
       | 'adjustment'
-      | 'balance_exchange'
-      | 'inbound_payment'
       | 'inbound_transfer'
       | 'outbound_payment'
       | 'outbound_transfer'
@@ -145,12 +149,13 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface AdjustmentListParams {
       /**
-       * Filter for Adjustments linked to a Flow.
+       * Filter for Adjustments linked to a specific flow object. This filter only supports filtering by
+       * the flow object's ID, such as `ibt_123` for an InboundTransfer.
        */
       adjusted_flow?: string;
 
       /**
-       * Set of filters to query Adjustments within a range of `created` timestamps.
+       * Filter for Adjustments by their creation time using `gt`, `gte`, `lt`, or `lte`.
        */
       created?: RangeQueryParam;
 

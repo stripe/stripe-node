@@ -59,7 +59,6 @@ export class OutboundSetupIntentResource extends StripeResource {
   }
   /**
    * Update an OutboundSetupIntent object.
-   * @throws Stripe.QuotaExceededError
    * @throws Stripe.BlockedByStripeError
    * @throws Stripe.InvalidPayoutMethodError
    * @throws Stripe.ControlledByAlternateResourceError
@@ -123,7 +122,7 @@ export interface OutboundSetupIntent {
   /**
    * Use the PayoutMethods API to list and interact with PayoutMethod objects.
    */
-  payout_method: PayoutMethod;
+  payout_method?: PayoutMethod;
 
   /**
    * Closed Enum. Status of the outbound setup intent.
@@ -212,6 +211,11 @@ export namespace V2 {
         card?: PayoutMethodData.Card;
 
         /**
+         * The type specific details of the crypto wallet payout method.
+         */
+        crypto_wallet?: PayoutMethodData.CryptoWallet;
+
+        /**
          * Open Enum. The type of payout method to be created.
          */
         type: PayoutMethodData.Type;
@@ -279,6 +283,23 @@ export namespace V2 {
           number: string;
         }
 
+        export interface CryptoWallet {
+          /**
+           * Crypto wallet address.
+           */
+          address: string;
+
+          /**
+           * Optional field, required if network supports memos (only "stellar" currently).
+           */
+          memo?: string;
+
+          /**
+           * Which rail we should use to make an Outbound money movement to this wallet.
+           */
+          network: CryptoWallet.Network;
+        }
+
         export type Type =
           | 'bank_account'
           | 'card'
@@ -291,6 +312,20 @@ export namespace V2 {
             | 'futsu'
             | 'savings'
             | 'toza';
+        }
+
+        export namespace CryptoWallet {
+          export type Network =
+            | 'arbitrum'
+            | 'avalanche_c_chain'
+            | 'base'
+            | 'ethereum'
+            | 'optimism'
+            | 'polygon'
+            | 'solana'
+            | 'stellar'
+            | 'tempo'
+            | OtherString;
         }
       }
     }
