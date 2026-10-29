@@ -4,7 +4,7 @@ import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {
   MetadataParam,
-  RangeQueryParam,
+  LegacyV2DateTimeRangeQueryParam,
   Metadata,
   OtherString,
 } from '../../../shared.js';
@@ -331,7 +331,7 @@ export namespace V2 {
       /**
        * Filter for Transactions created within a specified time range.
        */
-      created?: RangeQueryParam;
+      created?: TransactionListParams.Created | LegacyV2DateTimeRangeQueryParam;
 
       /**
        * Filter for Transactions belonging to a specific FinancialAccount. This filter only supports filtering by the FinancialAccount's ID.
@@ -349,6 +349,30 @@ export namespace V2 {
        * The page limit.
        */
       limit?: number;
+    }
+
+    export namespace TransactionListParams {
+      export interface Created {
+        /**
+         * Filter for objects created after the specified timestamp.
+         */
+        gt?: string;
+
+        /**
+         * Filter for objects created at or after the specified timestamp.
+         */
+        gte?: string;
+
+        /**
+         * Filter for objects created before the specified timestamp.
+         */
+        lt?: string;
+
+        /**
+         * Filter for objects created at or before the specified timestamp.
+         */
+        lte?: string;
+      }
     }
   }
 }

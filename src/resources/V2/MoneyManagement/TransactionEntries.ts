@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {RangeQueryParam, OtherString} from '../../../shared.js';
+import {LegacyV2DateTimeRangeQueryParam, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class TransactionEntryResource extends StripeResource {
@@ -210,7 +210,9 @@ export namespace V2 {
       /**
        * Filter for TransactionEntries created within a specified time range.
        */
-      created?: RangeQueryParam;
+      created?:
+        | TransactionEntryListParams.Created
+        | LegacyV2DateTimeRangeQueryParam;
 
       /**
        * The page limit.
@@ -222,6 +224,30 @@ export namespace V2 {
        * filtering by a Transaction ID, which appears in each TransactionEntry's `transaction` field.
        */
       transaction?: string;
+    }
+
+    export namespace TransactionEntryListParams {
+      export interface Created {
+        /**
+         * Filter for objects created after the specified timestamp.
+         */
+        gt?: string;
+
+        /**
+         * Filter for objects created at or after the specified timestamp.
+         */
+        gte?: string;
+
+        /**
+         * Filter for objects created before the specified timestamp.
+         */
+        lt?: string;
+
+        /**
+         * Filter for objects created at or before the specified timestamp.
+         */
+        lte?: string;
+      }
     }
   }
 }

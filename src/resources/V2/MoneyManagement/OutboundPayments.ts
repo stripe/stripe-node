@@ -5,7 +5,7 @@ import {V2Amount} from './../V2Amounts.js';
 import {
   MetadataParam,
   OtherString,
-  RangeQueryParam,
+  LegacyV2DateTimeRangeQueryParam,
   Metadata,
 } from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
@@ -609,7 +609,9 @@ export namespace V2 {
       /**
        * Filter OutboundPayments by their creation time.
        */
-      created?: RangeQueryParam;
+      created?:
+        | OutboundPaymentListParams.Created
+        | LegacyV2DateTimeRangeQueryParam;
 
       /**
        * The maximum number of results to return.
@@ -628,6 +630,32 @@ export namespace V2 {
     }
 
     export namespace OutboundPaymentListParams {
+      export interface Created {
+        /**
+         * Filter for objects created after the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         */
+        gt?: string;
+
+        /**
+         * Filter for objects created on or after the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         */
+        gte?: string;
+
+        /**
+         * Filter for objects created before the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         */
+        lt?: string;
+
+        /**
+         * Filter for objects created on or before the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         */
+        lte?: string;
+      }
+
       export type Status =
         | 'canceled'
         | 'failed'
