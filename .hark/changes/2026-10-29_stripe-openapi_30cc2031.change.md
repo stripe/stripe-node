@@ -3,6 +3,7 @@ title: Update generated code
 pr_url: https://github.com/stripe/stripe-node/pull/2893
 semver_level: minor
 is_stripe_api_change: true
+released_in_version: 23.1.0
 ---
 
 * Add support for new resources `V2.Core.Vault.GbBankAccount`, `V2.Core.Vault.UsBankAccount`, `V2.MoneyManagement.Adjustment`, `V2.MoneyManagement.FinancialAccount`, `V2.MoneyManagement.FinancialAddressCreditSimulation`, `V2.MoneyManagement.FinancialAddress`, `V2.MoneyManagement.InboundTransfer`, `V2.MoneyManagement.OutboundPayment`, `V2.MoneyManagement.OutboundSetupIntent`, `V2.MoneyManagement.PayoutIntent`, `V2.MoneyManagement.PayoutMethod`, `V2.MoneyManagement.PayoutMethodsBankAccountSpec`, `V2.MoneyManagement.ReceivedCredit`, `V2.MoneyManagement.RecipientVerification`, `V2.MoneyManagement.TransactionEntry`, and `V2.MoneyManagement.Transaction`
