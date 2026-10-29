@@ -58,7 +58,6 @@ import {
   ShippingAddressParam,
   JapanAddressParam,
   RangeQueryParam,
-  LegacyV2DateTimeRangeQueryParam,
   PaginationParams,
   Emptyable,
   Decimal,
@@ -2703,7 +2702,6 @@ export declare namespace Stripe {
     ShippingAddressParam,
     JapanAddressParam,
     RangeQueryParam,
-    LegacyV2DateTimeRangeQueryParam,
     PaginationParams,
     Emptyable,
   };

@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {LegacyV2DateTimeRangeQueryParam, OtherString} from '../../../shared.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ReceivedCreditResource extends StripeResource {
@@ -365,9 +365,7 @@ export namespace V2 {
       /**
        * Hash of options for filtering on creation time.
        */
-      created?:
-        | ReceivedCreditListParams.Created
-        | LegacyV2DateTimeRangeQueryParam;
+      created?: ReceivedCreditListParams.Created;
 
       /**
        * The page limit.
@@ -380,26 +378,34 @@ export namespace V2 {
         /**
          * Filter for objects created after the specified timestamp.
          * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
          */
-        gt?: string;
+        gt?: string | number;
 
         /**
          * Filter for objects created on or after the specified timestamp.
          * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
          */
-        gte?: string;
+        gte?: string | number;
 
         /**
          * Filter for objects created before the specified timestamp.
          * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
          */
-        lt?: string;
+        lt?: string | number;
 
         /**
          * Filter for objects created on or before the specified timestamp.
          * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
          */
-        lte?: string;
+        lte?: string | number;
       }
     }
   }

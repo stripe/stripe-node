@@ -2,12 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {
-  MetadataParam,
-  LegacyV2DateTimeRangeQueryParam,
-  Metadata,
-  OtherString,
-} from '../../../shared.js';
+import {MetadataParam, Metadata, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class TransactionResource extends StripeResource {
@@ -331,7 +326,7 @@ export namespace V2 {
       /**
        * Filter for Transactions created within a specified time range.
        */
-      created?: TransactionListParams.Created | LegacyV2DateTimeRangeQueryParam;
+      created?: TransactionListParams.Created;
 
       /**
        * Filter for Transactions belonging to a specific FinancialAccount. This filter only supports filtering by the FinancialAccount's ID.
@@ -355,23 +350,31 @@ export namespace V2 {
       export interface Created {
         /**
          * Filter for objects created after the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
          */
-        gt?: string;
+        gt?: string | number;
 
         /**
          * Filter for objects created at or after the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
          */
-        gte?: string;
+        gte?: string | number;
 
         /**
          * Filter for objects created before the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
          */
-        lt?: string;
+        lt?: string | number;
 
         /**
          * Filter for objects created at or before the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
          */
-        lte?: string;
+        lte?: string | number;
       }
     }
   }

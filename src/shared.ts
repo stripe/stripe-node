@@ -155,12 +155,6 @@ export interface RangeQueryParam {
 }
 
 /**
- * @deprecated Numeric timestamps are not accepted by V2 date-time filters.
- * Use RFC 3339 strings instead.
- */
-export type LegacyV2DateTimeRangeQueryParam = RangeQueryParam;
-
-/**
  * @docs https://stripe.com/docs/api/pagination
  */
 export interface PaginationParams {

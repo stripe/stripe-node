@@ -1,11 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {
-  LegacyV2DateTimeRangeQueryParam,
-  Decimal,
-  OtherString,
-} from '../../../shared.js';
+import {Decimal, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class EventResource extends StripeResource {
@@ -164,7 +160,7 @@ export namespace V2 {
       /**
        * Set of filters to query events within a range of `created` timestamps.
        */
-      created?: EventListParams.Created | LegacyV2DateTimeRangeQueryParam;
+      created?: EventListParams.Created;
 
       /**
        * The page size.
@@ -186,23 +182,31 @@ export namespace V2 {
       export interface Created {
         /**
          * Filter for events created after the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
          */
-        gt?: string;
+        gt?: string | number;
 
         /**
          * Filter for events created at or after the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
          */
-        gte?: string;
+        gte?: string | number;
 
         /**
          * Filter for events created before the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
          */
-        lt?: string;
+        lt?: string | number;
 
         /**
          * Filter for events created at or before the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
          */
-        lte?: string;
+        lte?: string | number;
       }
     }
   }
