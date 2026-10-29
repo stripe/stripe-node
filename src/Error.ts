@@ -74,10 +74,46 @@ export const generateV2Error = (
     case 'idempotency_error':
       return new StripeIdempotencyError(rawStripeError);
     // switchCases: The beginning of the section generated from our OpenAPI spec
+    case 'already_canceled':
+      return new AlreadyCanceledError(rawStripeError);
+    case 'blocked_by_stripe':
+      return new BlockedByStripeError(rawStripeError);
+    case 'cannot_proceed':
+      return new CannotProceedError(rawStripeError);
+    case 'capability_not_enabled':
+      return new CapabilityNotEnabledError(rawStripeError);
+    case 'controlled_by_alternate_resource':
+      return new ControlledByAlternateResourceError(rawStripeError);
+    case 'feature_not_enabled':
+      return new FeatureNotEnabledError(rawStripeError);
+    case 'financial_account_not_open':
+      return new FinancialAccountNotOpenError(rawStripeError);
+    case 'fx_quote_needs_refresh':
+      return new FxQuoteNeedsRefreshError(rawStripeError);
+    case 'insufficient_funds':
+      return new InsufficientFundsError(rawStripeError);
+    case 'invalid_payment_method':
+      return new InvalidPaymentMethodError(rawStripeError);
+    case 'invalid_payout_method':
+      return new InvalidPayoutMethodError(rawStripeError);
+    case 'invalid_vaulted_credential':
+      return new InvalidVaultedCredentialError(rawStripeError);
+    case 'not_cancelable':
+      return new NotCancelableError(rawStripeError);
+    case 'quota_exceeded':
+      return new QuotaExceededError(rawStripeError);
     case 'rate_limit':
       return new RateLimitError(rawStripeError);
+    case 'recipient_not_notifiable':
+      return new RecipientNotNotifiableError(rawStripeError);
     case 'temporary_session_expired':
       return new TemporarySessionExpiredError(rawStripeError);
+    case 'verification_attempt_failed':
+      return new VerificationAttemptFailedError(rawStripeError);
+    case 'verification_expired':
+      return new VerificationExpiredError(rawStripeError);
+    case 'verification_not_initiated':
+      return new VerificationNotInitiatedError(rawStripeError);
     // switchCases: The end of the section generated from our OpenAPI spec
   }
 
@@ -384,14 +420,157 @@ export class StripeUnsupportedResponseTypeError extends StripeOAuthError {
 }
 
 // classDefinitions: The beginning of the section generated from our OpenAPI spec
+export class AlreadyCanceledError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'AlreadyCanceledError');
+  }
+}
+export class BlockedByStripeError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'BlockedByStripeError');
+  }
+}
+export class CannotProceedError extends StripeError {
+  reason: string;
+  constructor(rawStripeError: StripeRawError) {
+    super(rawStripeError, 'CannotProceedError');
+    // @ts-ignore
+    this.reason = this.raw.reason;
+  }
+}
+export class CapabilityNotEnabledError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'CapabilityNotEnabledError');
+  }
+}
+export class ControlledByAlternateResourceError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'ControlledByAlternateResourceError');
+  }
+}
+export class FeatureNotEnabledError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'FeatureNotEnabledError');
+  }
+}
+export class FinancialAccountNotOpenError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'FinancialAccountNotOpenError');
+  }
+}
+export class FxQuoteNeedsRefreshError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'FxQuoteNeedsRefreshError');
+  }
+}
+export class InsufficientFundsError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'InsufficientFundsError');
+  }
+}
+export class InvalidPaymentMethodError extends StripeError {
+  invalid_param: InvalidPaymentMethodError.InvalidParam;
+  constructor(rawStripeError: StripeRawError) {
+    super(rawStripeError, 'InvalidPaymentMethodError');
+    // @ts-ignore
+    this.invalid_param = this.raw.invalid_param;
+  }
+}
+export namespace InvalidPaymentMethodError {
+  export type InvalidParam =
+    | 'account_number'
+    | 'currency'
+    | 'fedwire_routing_number'
+    | 'routing_number';
+}
+export class InvalidPayoutMethodError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'InvalidPayoutMethodError');
+  }
+}
+export class InvalidVaultedCredentialError extends StripeError {
+  invalid_param: InvalidVaultedCredentialError.InvalidParam;
+  constructor(rawStripeError: StripeRawError) {
+    super(rawStripeError, 'InvalidVaultedCredentialError');
+    // @ts-ignore
+    this.invalid_param = this.raw.invalid_param;
+  }
+}
+export namespace InvalidVaultedCredentialError {
+  export type InvalidParam =
+    | 'account_number'
+    | 'currency'
+    | 'iban'
+    | 'sort_code';
+}
+export class NotCancelableError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'NotCancelableError');
+  }
+}
+export class QuotaExceededError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'QuotaExceededError');
+  }
+}
 export class RateLimitError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'RateLimitError');
+  }
+}
+export class RecipientNotNotifiableError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'RecipientNotNotifiableError');
   }
 }
 export class TemporarySessionExpiredError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'TemporarySessionExpiredError');
   }
+}
+export class VerificationAttemptFailedError extends StripeError {
+  verification_status: VerificationAttemptFailedError.VerificationStatus;
+  constructor(rawStripeError: StripeRawError) {
+    super(rawStripeError, 'VerificationAttemptFailedError');
+    // @ts-ignore
+    this.verification_status = this.raw.verification_status;
+  }
+}
+export namespace VerificationAttemptFailedError {
+  export type VerificationStatus =
+    | 'awaiting_verification'
+    | 'unverified'
+    | 'verification_failed'
+    | 'verified';
+}
+export class VerificationExpiredError extends StripeError {
+  verification_status: VerificationExpiredError.VerificationStatus;
+  constructor(rawStripeError: StripeRawError) {
+    super(rawStripeError, 'VerificationExpiredError');
+    // @ts-ignore
+    this.verification_status = this.raw.verification_status;
+  }
+}
+export namespace VerificationExpiredError {
+  export type VerificationStatus =
+    | 'awaiting_verification'
+    | 'unverified'
+    | 'verification_failed'
+    | 'verified';
+}
+export class VerificationNotInitiatedError extends StripeError {
+  verification_status: VerificationNotInitiatedError.VerificationStatus;
+  constructor(rawStripeError: StripeRawError) {
+    super(rawStripeError, 'VerificationNotInitiatedError');
+    // @ts-ignore
+    this.verification_status = this.raw.verification_status;
+  }
+}
+export namespace VerificationNotInitiatedError {
+  export type VerificationStatus =
+    | 'awaiting_verification'
+    | 'unverified'
+    | 'verification_failed'
+    | 'verified';
 }
 // classDefinitions: The end of the section generated from our OpenAPI spec

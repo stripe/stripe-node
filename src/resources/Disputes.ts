@@ -125,6 +125,11 @@ export interface Dispute {
   evidence_details: Dispute.EvidenceDetails;
 
   /**
+   * Intended submission method for the dispute.
+   */
+  intended_submission_method: Dispute.IntendedSubmissionMethod | null;
+
+  /**
    * If true, it's still possible to refund the disputed payment. After the payment has been fully refunded, no further funds are withdrawn from your Stripe account as a result of this dispute.
    */
   is_charge_refundable: boolean;
@@ -157,7 +162,7 @@ export interface Dispute {
   reason: string;
 
   /**
-   * The current status of a dispute. Possible values include:`warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `won`, `lost`, or `prevented`.
+   * The current status of a dispute. Possible values include:`warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `appeal_needs_response`, `appeal_under_review`, `won`, `lost`, or `prevented`.
    */
   status: Dispute.Status;
 }
@@ -173,6 +178,11 @@ export namespace Dispute {
      * Any server or activity logs showing proof that the customer accessed or downloaded the purchased digital product. This information should include IP addresses, corresponding timestamps, and any detailed recorded activity.
      */
     access_activity_log: string | null;
+
+    /**
+     * Appeal evidence submitted during the appeal stage.
+     */
+    appeal?: Evidence.Appeal | null;
 
     /**
      * The billing address provided by the customer.
@@ -329,7 +339,18 @@ export namespace Dispute {
      * The number of times evidence has been submitted. Typically, you may only submit evidence once.
      */
     submission_count: number;
+
+    /**
+     * Whether the dispute was submitted manually, with Smart Disputes, or not submitted.
+     */
+    submission_method: EvidenceDetails.SubmissionMethod;
   }
+
+  export type IntendedSubmissionMethod =
+    | 'manual'
+    | 'prefer_manual'
+    | 'prefer_smart_disputes'
+    | 'smart_disputes';
 
   export interface PaymentMethodDetails {
     amazon_pay?: PaymentMethodDetails.AmazonPay;
@@ -347,6 +368,8 @@ export namespace Dispute {
   }
 
   export type Status =
+    | 'appeal_needs_response'
+    | 'appeal_under_review'
     | 'lost'
     | 'needs_response'
     | 'prevented'
@@ -358,12 +381,30 @@ export namespace Dispute {
     | OtherString;
 
   export namespace Evidence {
+    export interface Appeal {
+      card?: Appeal.Card;
+    }
+
     export interface EnhancedEvidence {
       mastercard_compliance?: EnhancedEvidence.MastercardCompliance;
 
       visa_compelling_evidence_3?: EnhancedEvidence.VisaCompellingEvidence3;
 
       visa_compliance?: EnhancedEvidence.VisaCompliance;
+    }
+
+    export namespace Appeal {
+      export interface Card {
+        /**
+         * The reason for filing the appeal.
+         */
+        reason_for_filing?: string;
+
+        /**
+         * One or more document IDs returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `dispute_evidence` to support the appeal.
+         */
+        supporting_files?: Array<string>;
+      }
     }
 
     export namespace EnhancedEvidence {
@@ -498,6 +539,12 @@ export namespace Dispute {
 
       visa_compliance?: EnhancedEligibility.VisaCompliance;
     }
+
+    export type SubmissionMethod =
+      | 'manual'
+      | 'not_submitted'
+      | 'smart_disputes'
+      | OtherString;
 
     export namespace EnhancedEligibility {
       export interface MastercardCompliance {
@@ -651,6 +698,11 @@ export interface DisputeUpdateParams {
   expand?: Array<string>;
 
   /**
+   * Intended submission method for the dispute.
+   */
+  intended_submission_method?: DisputeUpdateParams.IntendedSubmissionMethod;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
@@ -666,6 +718,11 @@ export namespace DisputeUpdateParams {
      * Any server or activity logs showing proof that the customer accessed or downloaded the purchased digital product. This information should include IP addresses, corresponding timestamps, and any detailed recorded activity. Has a maximum character count of 20,000.
      */
     access_activity_log?: string;
+
+    /**
+     * Evidence to submit when appealing a dispute.
+     */
+    appeal?: Emptyable<Evidence.Appeal>;
 
     /**
      * The billing address provided by the customer.
@@ -803,7 +860,20 @@ export namespace DisputeUpdateParams {
     uncategorized_text?: string;
   }
 
+  export type IntendedSubmissionMethod =
+    | 'manual'
+    | 'prefer_manual'
+    | 'prefer_smart_disputes'
+    | 'smart_disputes';
+
   export namespace Evidence {
+    export interface Appeal {
+      /**
+       * Evidence for a card dispute appeal.
+       */
+      card?: Emptyable<Appeal.Card>;
+    }
+
     export interface EnhancedEvidence {
       /**
        * Evidence provided for Mastercard compliance evidence submission.
@@ -819,6 +889,20 @@ export namespace DisputeUpdateParams {
        * Evidence provided for Visa compliance evidence submission.
        */
       visa_compliance?: EnhancedEvidence.VisaCompliance;
+    }
+
+    export namespace Appeal {
+      export interface Card {
+        /**
+         * An explanation of the reason for filing the appeal.
+         */
+        reason_for_filing?: Emptyable<string>;
+
+        /**
+         * One or more document IDs returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `dispute_evidence` to support the appeal.
+         */
+        supporting_files?: Emptyable<Array<string>>;
+      }
     }
 
     export namespace EnhancedEvidence {

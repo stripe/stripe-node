@@ -169,7 +169,7 @@ export interface Payout {
   failure_balance_transaction: string | BalanceTransaction | null;
 
   /**
-   * Error code that provides a reason for a payout failure, if available. View our [list of failure codes](https://docs.stripe.com/api#payout_failures).
+   * Error code that provides a reason for a payout failure, if available.
    */
   failure_code: string | null;
 

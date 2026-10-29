@@ -856,6 +856,11 @@ export namespace PaymentAttemptRecord {
       network_transaction_id: string | null;
 
       /**
+       * The transaction type that was passed for an off-session, Merchant-Initiated transaction, one of `recurring` or `unscheduled`.
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage | null;
+
+      /**
        * Populated if this transaction used 3D Secure authentication.
        */
       three_d_secure: Card.ThreeDSecure | null;
@@ -1937,6 +1942,12 @@ export namespace PaymentAttemptRecord {
         used: boolean;
       }
 
+      export type StoredCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export interface ThreeDSecure {
         /**
          * For authenticated transactions: Indicates how the issuing bank authenticated the customer.
@@ -2208,6 +2219,7 @@ export namespace PaymentAttemptRecord {
         | OtherString;
 
       export type TokenCurrency =
+        | 'ousd'
         | 'phantom_cash'
         | 'usdc'
         | 'usdg'

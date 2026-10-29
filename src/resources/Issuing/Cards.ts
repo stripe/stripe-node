@@ -260,6 +260,11 @@ export namespace Card {
     customs: Shipping.Customs | null;
 
     /**
+     * The time the card was reported as delivered. Null for undelivered or untracked shipments, or if Stripe has not recorded a delivery time.
+     */
+    delivered_at?: number | null;
+
+    /**
      * A unix timestamp representing a best estimate of when the card will be delivered.
      */
     eta: number | null;
@@ -283,6 +288,11 @@ export namespace Card {
      * Shipment service, such as `standard` or `express`.
      */
     service: Shipping.Service;
+
+    /**
+     * The time the card was reported as shipped. Null if Stripe has not recorded a shipment time.
+     */
+    shipped_at?: number | null;
 
     /**
      * The delivery status of the card.
@@ -2622,6 +2632,11 @@ export namespace Issuing {
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+
+    /**
+     * The new financial account ID the card will be associated with. This field allows a card to be reassigned to a different financial account.
+     */
+    financial_account?: string;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
