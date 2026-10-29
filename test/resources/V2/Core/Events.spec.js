@@ -123,6 +123,19 @@ describe('V2 Core Events Resource', () => {
       });
     });
 
+    it('Sends RFC 3339 date-time range filters', () => {
+      stripe.v2.core.events.list({
+        created: {gte: '2026-10-28T00:00:00Z'},
+      });
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v2/core/events?created[gte]=2026-10-28T00%3A00%3A00Z',
+        headers: {},
+        data: null,
+        settings: {},
+      });
+    });
+
     it('Returns v2 list response shape with next_page_url and previous_page_url', async () => {
       const mockStripe = testUtils.createMockClient([
         {

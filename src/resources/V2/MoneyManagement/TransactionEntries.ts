@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {RangeQueryParam, OtherString} from '../../../shared.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class TransactionEntryResource extends StripeResource {
@@ -210,7 +210,7 @@ export namespace V2 {
       /**
        * Filter for TransactionEntries created within a specified time range.
        */
-      created?: RangeQueryParam;
+      created?: TransactionEntryListParams.Created;
 
       /**
        * The page limit.
@@ -222,6 +222,38 @@ export namespace V2 {
        * filtering by a Transaction ID, which appears in each TransactionEntry's `transaction` field.
        */
       transaction?: string;
+    }
+
+    export namespace TransactionEntryListParams {
+      export interface Created {
+        /**
+         * Filter for objects created after the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gt?: string | number;
+
+        /**
+         * Filter for objects created at or after the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gte?: string | number;
+
+        /**
+         * Filter for objects created before the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lt?: string | number;
+
+        /**
+         * Filter for objects created at or before the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lte?: string | number;
+      }
     }
   }
 }
