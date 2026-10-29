@@ -1,0 +1,310 @@
+// File generated from our OpenAPI spec
+
+import {StripeResource} from '../../../StripeResource.js';
+import {V2Amount} from './../V2Amounts.js';
+import {RangeQueryParam, OtherString} from '../../../shared.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
+
+export class InboundTransferResource extends StripeResource {
+  /**
+   * Retrieves a list of InboundTransfers.
+   */
+  list(
+    params?: V2.MoneyManagement.InboundTransferListParams,
+    options?: RequestOptions
+  ): V2ListPromise<InboundTransfer> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/inbound_transfers',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
+  }
+  /**
+   * Creates an InboundTransfer to pull funds from a bank account into a financial account. Per-transfer and rolling weekly limits vary by account and payment rail. See [transfer limits](https://docs.stripe.com/treasury/add-funds#transfer-limits).
+   * @throws Stripe.BlockedByStripeError
+   */
+  create(
+    params: V2.MoneyManagement.InboundTransferCreateParams,
+    options?: RequestOptions
+  ): Promise<Response<InboundTransfer>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/inbound_transfers',
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Retrieve an InboundTransfer by ID.
+   */
+  retrieve(
+    id: string,
+    params?: V2.MoneyManagement.InboundTransferRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<InboundTransfer>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/inbound_transfers/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+}
+export interface InboundTransfer {
+  /**
+   * Unique identifier for the InboundTransfer.
+   */
+  id: string;
+
+  /**
+   * String representing the object's type. Objects of the same type share the same value of the object field.
+   */
+  object: 'v2.money_management.inbound_transfer';
+
+  /**
+   * The amount in specified currency that will land in the FinancialAccount balance.
+   */
+  amount: V2Amount;
+
+  /**
+   * Creation time of the InboundTransfer. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+   */
+  created: string;
+
+  /**
+   * A freeform text field provided by user, containing metadata.
+   */
+  description: string;
+
+  /**
+   * A nested object containing information about the origin of the InboundTransfer.
+   */
+  from: InboundTransfer.From;
+
+  /**
+   * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+   */
+  livemode: boolean;
+
+  /**
+   * A nested object containing information about the destination of the InboundTransfer.
+   */
+  to: InboundTransfer.To;
+
+  /**
+   * A list of history objects, representing changes in the state of the InboundTransfer. The most recent entry's type indicates the current status of the InboundTransfer.
+   */
+  transfer_history: Array<InboundTransfer.TransferHistory>;
+}
+export namespace InboundTransfer {
+  export interface From {
+    /**
+     * The amount in specified currency that was debited from the Payment Method.
+     */
+    debited: V2Amount;
+
+    /**
+     * The bank account credential used to fund the InboundTransfer (for example, a US bank account), not a Payments API `pm_` PaymentMethod.
+     */
+    payment_method: From.PaymentMethod;
+  }
+
+  export interface To {
+    /**
+     * The amount by which the FinancialAccount balance is credited.
+     */
+    credited: V2Amount;
+
+    /**
+     * The FinancialAccount that funds will land in.
+     */
+    financial_account: string;
+  }
+
+  export interface TransferHistory {
+    /**
+     * The InboundTransfer failed. See `failure_reason` for more details.
+     */
+    bank_debit_failed?: TransferHistory.BankDebitFailed;
+
+    /**
+     * The InboundTransfer was submitted to the scheme for processing. The debit is still in progress and can later succeed or fail.
+     */
+    bank_debit_processing?: TransferHistory.BankDebitProcessing;
+
+    /**
+     * The InboundTransfer was created and is waiting to be submitted to the scheme for processing.
+     */
+    bank_debit_queued?: TransferHistory.BankDebitQueued;
+
+    /**
+     * The InboundTransfer was returned. The original transaction has been reversed.
+     */
+    bank_debit_returned?: TransferHistory.BankDebitReturned;
+
+    /**
+     * The InboundTransfer succeeded. Funds might not yet be available; check the associated Transaction for availability.
+     */
+    bank_debit_succeeded?: TransferHistory.BankDebitSucceeded;
+
+    /**
+     * Creation time of the HistoryEntry in RFC 3339 format and UTC.
+     */
+    created: string;
+
+    /**
+     * Effective at time of the HistoryEntry in RFC 3339 format and UTC.
+     */
+    effective_at: string;
+
+    /**
+     * A unique ID for the HistoryEntry.
+     */
+    id: string;
+
+    /**
+     * Open Enum. The type of the HistoryEntry.
+     */
+    type: TransferHistory.Type;
+  }
+
+  export namespace From {
+    export interface PaymentMethod {
+      /**
+       * The type of PaymentMethod used to create the InboundTransfer. Clients should tolerate future values.
+       */
+      type: string;
+
+      /**
+       * The destination US bank account identifier. eg "usba_***".
+       */
+      us_bank_account?: string;
+    }
+  }
+
+  export namespace TransferHistory {
+    export interface BankDebitFailed {
+      /**
+       * Open Enum. The return reason for the failed InboundTransfer.
+       */
+      failure_reason: BankDebitFailed.FailureReason;
+    }
+
+    export interface BankDebitProcessing {}
+
+    export interface BankDebitQueued {}
+
+    export interface BankDebitReturned {
+      /**
+       * Open Enum. The return reason for the returned InboundTransfer.
+       */
+      return_reason: BankDebitReturned.ReturnReason;
+    }
+
+    export interface BankDebitSucceeded {}
+
+    export type Type =
+      | 'bank_debit_failed'
+      | 'bank_debit_processing'
+      | 'bank_debit_queued'
+      | 'bank_debit_returned'
+      | 'bank_debit_succeeded'
+      | OtherString;
+
+    export namespace BankDebitFailed {
+      export type FailureReason =
+        | 'bank_account_closed'
+        | 'bank_account_not_found'
+        | 'bank_debit_could_not_be_processed'
+        | 'bank_debit_not_authorized'
+        | 'insufficient_funds'
+        | OtherString;
+    }
+
+    export namespace BankDebitReturned {
+      export type ReturnReason =
+        | 'bank_account_closed'
+        | 'bank_account_not_found'
+        | 'bank_debit_could_not_be_processed'
+        | 'bank_debit_not_authorized'
+        | 'insufficient_funds'
+        | OtherString;
+    }
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface InboundTransferCreateParams {
+      /**
+       * The amount and currency to credit to the FinancialAccount.
+       */
+      amount: V2Amount;
+
+      /**
+       * The verified bank account credential to debit for this InboundTransfer.
+       */
+      from: InboundTransferCreateParams.From;
+
+      /**
+       * The FinancialAccount and currency to credit with the transferred funds.
+       */
+      to: InboundTransferCreateParams.To;
+
+      /**
+       * An optional, freeform description field intended to store metadata.
+       */
+      description?: string;
+    }
+
+    export namespace InboundTransferCreateParams {
+      export interface From {
+        /**
+         * An optional currency field used to specify which currency is debited from the Payment Method.
+         * Since many Payment Methods support only one currency, this field is optional.
+         */
+        currency?: string;
+
+        /**
+         * ID of the verified bank account credential to debit for this InboundTransfer (for example, `usba_`), not a Payments API `pm_` PaymentMethod.
+         */
+        payment_method: string;
+      }
+
+      export interface To {
+        /**
+         * The currency to credit to the FinancialAccount.
+         */
+        currency: string;
+
+        /**
+         * The FinancialAccount that receives the funds.
+         */
+        financial_account: string;
+      }
+    }
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface InboundTransferRetrieveParams {}
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface InboundTransferListParams {
+      /**
+       * Hash of options for filtering on creation time.
+       */
+      created?: RangeQueryParam;
+
+      /**
+       * The page limit.
+       */
+      limit?: number;
+    }
+  }
+}

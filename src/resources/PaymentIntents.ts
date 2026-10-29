@@ -1422,11 +1422,13 @@ export namespace PaymentIntent {
       | 'shipping_calculation_failed'
       | 'siret_invalid'
       | 'sku_inactive'
+      | 'smart_disputes_not_available'
       | 'state_unsupported'
       | 'status_transition_invalid'
       | 'storer_capability_missing'
       | 'storer_capability_not_active'
       | 'stripe_tax_inactive'
+      | 'subscription_update_trial_after_billing_cycle_anchor'
       | 'tax_id_invalid'
       | 'tax_id_prohibited'
       | 'taxes_calculation_failed'
@@ -1438,6 +1440,8 @@ export namespace PaymentIntent {
       | 'terminal_reader_offline'
       | 'terminal_reader_timeout'
       | 'testmode_charges_only'
+      | 'three_d_secure_authentication_not_supported'
+      | 'three_d_secure_authentication_upstream_error'
       | 'tls_version_unsupported'
       | 'token_already_used'
       | 'token_card_network_invalid'
@@ -2500,6 +2504,11 @@ export namespace PaymentIntent {
       require_cvc_recollection?: boolean;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -2519,6 +2528,11 @@ export namespace PaymentIntent {
        * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
        */
       statement_descriptor_suffix_kanji?: string;
+
+      /**
+       * Selected usage to indicate the transaction type of the off-session payment.
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage;
     }
 
     export interface CardPresent {
@@ -2970,12 +2984,12 @@ export namespace PaymentIntent {
       amount_includes_iof?: Pix.AmountIncludesIof;
 
       /**
-       * The number of seconds (between 10 and 1209600) after which Pix payment will expire.
+       * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If neither expiration option is supplied, defaults to 14400 seconds (4 hours). Mutually exclusive with `expires_at`.
        */
       expires_after_seconds: number | null;
 
       /**
-       * The timestamp at which the Pix expires.
+       * The absolute Unix timestamp at which the Pix expires. When supplied as an input, it must be between 60 and 1209600 seconds from the current time at validation, inclusive. If neither expiration option is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually exclusive with `expires_after_seconds`.
        */
       expires_at: number | null;
 
@@ -3506,10 +3520,22 @@ export namespace PaymentIntent {
         | 'challenge'
         | OtherString;
 
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export type SetupFutureUsage =
         | 'none'
         | 'off_session'
         | 'on_session'
+        | OtherString;
+
+      export type StoredCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
         | OtherString;
 
       export namespace Installments {
@@ -4122,7 +4148,7 @@ export interface PaymentIntentCreateParams {
   payment_details?: PaymentIntentCreateParams.PaymentDetails;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://docs.stripe.com/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
+   * The ID of a PaymentMethod to attach to this PaymentIntent.
    *
    * If you don't provide the `payment_method` parameter or the `source` parameter with `confirm=true`, `source` automatically populates with `customer.default_source` to improve migration for users of the Charges API. We recommend that you explicitly provide the `payment_method` moving forward.
    * If the payment method is attached to a Customer, you must also provide the ID of that Customer as the [customer](https://docs.stripe.com/api#create_payment_intent-customer) parameter of this PaymentIntent.
@@ -6263,6 +6289,11 @@ export namespace PaymentIntentCreateParams {
       require_cvc_recollection?: boolean;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -6284,6 +6315,17 @@ export namespace PaymentIntentCreateParams {
        * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
        */
       statement_descriptor_suffix_kanji?: Emptyable<string>;
+
+      /**
+       * Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
+       *
+       *  When making an off session payment with a previously saved card (that was saved with a SetupIntent or with a PaymentIntent with `setup_future_usage`), set this parameter to indicate the type of transaction.
+       *
+       *  You can set this parameter at any time before or during PaymentIntent confirmation, and confirm this PaymentIntent with `off_session=true`.
+       *
+       *  Note that this parameter is currently unsupported with the `setup_future_usage` parameter.
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -6846,12 +6888,12 @@ export namespace PaymentIntentCreateParams {
       amount_includes_iof?: Pix.AmountIncludesIof;
 
       /**
-       * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+       * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If neither expiration option is supplied, defaults to 14400 seconds (4 hours). Mutually exclusive with `expires_at`.
        */
       expires_after_seconds?: number;
 
       /**
-       * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+       * The absolute Unix timestamp at which the Pix expires, between 60 and 1209600 seconds from the current time. If neither expiration option is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually exclusive with `expires_after_seconds`.
        */
       expires_at?: number;
 
@@ -7435,10 +7477,22 @@ export namespace PaymentIntentCreateParams {
         | 'challenge'
         | OtherString;
 
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export type SetupFutureUsage =
         | 'none'
         | 'off_session'
         | 'on_session'
+        | OtherString;
+
+      export type StoredCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
         | OtherString;
 
       export interface ThreeDSecure {
@@ -8280,7 +8334,7 @@ export interface PaymentIntentUpdateParams {
   payment_details?: Emptyable<PaymentIntentUpdateParams.PaymentDetails>;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://docs.stripe.com/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent. To unset this field to null, pass in an empty string.
+   * The ID of a PaymentMethod to attach to this PaymentIntent. To unset this field to null, pass in an empty string.
    */
   payment_method?: string;
 
@@ -10306,6 +10360,11 @@ export namespace PaymentIntentUpdateParams {
       require_cvc_recollection?: boolean;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -10327,6 +10386,17 @@ export namespace PaymentIntentUpdateParams {
        * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
        */
       statement_descriptor_suffix_kanji?: Emptyable<string>;
+
+      /**
+       * Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
+       *
+       *  When making an off session payment with a previously saved card (that was saved with a SetupIntent or with a PaymentIntent with `setup_future_usage`), set this parameter to indicate the type of transaction.
+       *
+       *  You can set this parameter at any time before or during PaymentIntent confirmation, and confirm this PaymentIntent with `off_session=true`.
+       *
+       *  Note that this parameter is currently unsupported with the `setup_future_usage` parameter.
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -10889,12 +10959,12 @@ export namespace PaymentIntentUpdateParams {
       amount_includes_iof?: Pix.AmountIncludesIof;
 
       /**
-       * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+       * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If neither expiration option is supplied, defaults to 14400 seconds (4 hours). Mutually exclusive with `expires_at`.
        */
       expires_after_seconds?: number;
 
       /**
-       * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+       * The absolute Unix timestamp at which the Pix expires, between 60 and 1209600 seconds from the current time. If neither expiration option is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually exclusive with `expires_after_seconds`.
        */
       expires_at?: number;
 
@@ -11478,10 +11548,22 @@ export namespace PaymentIntentUpdateParams {
         | 'challenge'
         | OtherString;
 
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export type SetupFutureUsage =
         | 'none'
         | 'off_session'
         | 'on_session'
+        | OtherString;
+
+      export type StoredCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
         | OtherString;
 
       export interface ThreeDSecure {
@@ -12669,7 +12751,7 @@ export interface PaymentIntentConfirmParams {
   payment_details?: Emptyable<PaymentIntentConfirmParams.PaymentDetails>;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://docs.stripe.com/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
+   * The ID of a PaymentMethod to attach to this PaymentIntent.
    * If the payment method is attached to a Customer, it must match the [customer](https://docs.stripe.com/api#create_payment_intent-customer) that is set on this PaymentIntent.
    */
   payment_method?: string;
@@ -14727,6 +14809,11 @@ export namespace PaymentIntentConfirmParams {
       require_cvc_recollection?: boolean;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -14748,6 +14835,17 @@ export namespace PaymentIntentConfirmParams {
        * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
        */
       statement_descriptor_suffix_kanji?: Emptyable<string>;
+
+      /**
+       * Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
+       *
+       *  When making an off session payment with a previously saved card (that was saved with a SetupIntent or with a PaymentIntent with `setup_future_usage`), set this parameter to indicate the type of transaction.
+       *
+       *  You can set this parameter at any time before or during PaymentIntent confirmation, and confirm this PaymentIntent with `off_session=true`.
+       *
+       *  Note that this parameter is currently unsupported with the `setup_future_usage` parameter.
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -15310,12 +15408,12 @@ export namespace PaymentIntentConfirmParams {
       amount_includes_iof?: Pix.AmountIncludesIof;
 
       /**
-       * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+       * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If neither expiration option is supplied, defaults to 14400 seconds (4 hours). Mutually exclusive with `expires_at`.
        */
       expires_after_seconds?: number;
 
       /**
-       * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+       * The absolute Unix timestamp at which the Pix expires, between 60 and 1209600 seconds from the current time. If neither expiration option is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually exclusive with `expires_after_seconds`.
        */
       expires_at?: number;
 
@@ -15899,10 +15997,22 @@ export namespace PaymentIntentConfirmParams {
         | 'challenge'
         | OtherString;
 
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export type SetupFutureUsage =
         | 'none'
         | 'off_session'
         | 'on_session'
+        | OtherString;
+
+      export type StoredCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
         | OtherString;
 
       export interface ThreeDSecure {

@@ -122,11 +122,15 @@ export interface Configuration {
 
   offline?: Configuration.Offline;
 
+  reader_security?: Configuration.ReaderSecurity;
+
   reboot_window?: Configuration.RebootWindow;
 
   stripe_s700?: Configuration.StripeS700;
 
   stripe_s710?: Configuration.StripeS710;
+
+  stripe_t600?: Configuration.StripeT600;
 
   tipping?: Configuration.Tipping;
 
@@ -187,6 +191,13 @@ export namespace Configuration {
     enabled: boolean | null;
   }
 
+  export interface ReaderSecurity {
+    /**
+     * Passcode used to access a reader's admin menu.
+     */
+    admin_menu_passcode: string;
+  }
+
   export interface RebootWindow {
     /**
      * Integer between 0 to 23 that represents the end hour of the reboot time window. The value must be different than the start_hour.
@@ -207,6 +218,13 @@ export namespace Configuration {
   }
 
   export interface StripeS710 {
+    /**
+     * A File ID representing an image to display on the reader
+     */
+    splashscreen?: string | File;
+  }
+
+  export interface StripeT600 {
     /**
      * A File ID representing an image to display on the reader
      */
@@ -766,6 +784,11 @@ export namespace Terminal {
     offline?: Emptyable<ConfigurationCreateParams.Offline>;
 
     /**
+     * Configurations for reader security settings.
+     */
+    reader_security?: Emptyable<ConfigurationCreateParams.ReaderSecurity>;
+
+    /**
      * Reboot time settings for readers. that support customized reboot time configuration.
      */
     reboot_window?: ConfigurationCreateParams.RebootWindow;
@@ -779,6 +802,11 @@ export namespace Terminal {
      * An object containing device type specific settings for Stripe S710 readers.
      */
     stripe_s710?: ConfigurationCreateParams.StripeS710;
+
+    /**
+     * An object containing device type specific settings for Stripe T600 readers.
+     */
+    stripe_t600?: ConfigurationCreateParams.StripeT600;
 
     /**
      * Tipping configurations for readers that support on-reader tips.
@@ -845,6 +873,13 @@ export namespace Terminal {
       enabled: boolean;
     }
 
+    export interface ReaderSecurity {
+      /**
+       * Passcode used to access a reader's admin menu.
+       */
+      admin_menu_passcode?: Emptyable<string>;
+    }
+
     export interface RebootWindow {
       /**
        * Integer between 0 to 23 that represents the end hour of the reboot time window. The value must be different than the start_hour.
@@ -865,6 +900,13 @@ export namespace Terminal {
     }
 
     export interface StripeS710 {
+      /**
+       * A File ID representing an image you want to display on the reader.
+       */
+      splashscreen?: Emptyable<string>;
+    }
+
+    export interface StripeT600 {
       /**
        * A File ID representing an image you want to display on the reader.
        */
@@ -1505,6 +1547,11 @@ export namespace Terminal {
     offline?: Emptyable<ConfigurationUpdateParams.Offline>;
 
     /**
+     * Configurations for reader security settings.
+     */
+    reader_security?: Emptyable<ConfigurationUpdateParams.ReaderSecurity>;
+
+    /**
      * Reboot time settings for readers. that support customized reboot time configuration.
      */
     reboot_window?: Emptyable<ConfigurationUpdateParams.RebootWindow>;
@@ -1518,6 +1565,11 @@ export namespace Terminal {
      * An object containing device type specific settings for Stripe S710 readers.
      */
     stripe_s710?: Emptyable<ConfigurationUpdateParams.StripeS710>;
+
+    /**
+     * An object containing device type specific settings for Stripe T600 readers.
+     */
+    stripe_t600?: Emptyable<ConfigurationUpdateParams.StripeT600>;
 
     /**
      * Tipping configurations for readers that support on-reader tips.
@@ -1584,6 +1636,13 @@ export namespace Terminal {
       enabled: boolean;
     }
 
+    export interface ReaderSecurity {
+      /**
+       * Passcode used to access a reader's admin menu.
+       */
+      admin_menu_passcode?: Emptyable<string>;
+    }
+
     export interface RebootWindow {
       /**
        * Integer between 0 to 23 that represents the end hour of the reboot time window. The value must be different than the start_hour.
@@ -1604,6 +1663,13 @@ export namespace Terminal {
     }
 
     export interface StripeS710 {
+      /**
+       * A File ID representing an image you want to display on the reader.
+       */
+      splashscreen?: Emptyable<string>;
+    }
+
+    export interface StripeT600 {
       /**
        * A File ID representing an image you want to display on the reader.
        */
