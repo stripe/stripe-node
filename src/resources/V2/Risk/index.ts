@@ -1,21 +1,20 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../../stripe.core.js';
-import {V2 as V2Namespace0, Inquiry, InquiryResource} from './Inquiries.js';
+import {V2 as V2Namespace0, Form, FormResource} from './Forms.js';
 
-export {Inquiry} from './Inquiries.js';
+export {Form} from './Forms.js';
 
 export class Risk {
-  inquiries: InquiryResource;
+  forms: FormResource;
 
   constructor(private readonly stripe: Stripe) {
-    this.inquiries = new InquiryResource(stripe);
+    this.forms = new FormResource(stripe);
   }
 }
 
 export declare namespace Risk {
-  export import InquiryListParams = V2Namespace0.Risk.InquiryListParams;
-  export import InquiryRetrieveParams = V2Namespace0.Risk.InquiryRetrieveParams;
-  export import InquiryUpdateParams = V2Namespace0.Risk.InquiryUpdateParams;
-  export {Inquiry, InquiryResource};
+  export import FormRetrieveParams = V2Namespace0.Risk.FormRetrieveParams;
+  export import FormUpdateParams = V2Namespace0.Risk.FormUpdateParams;
+  export {Form, FormResource};
 }

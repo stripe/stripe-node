@@ -59,7 +59,6 @@ export class OutboundSetupIntentResource extends StripeResource {
   }
   /**
    * Update an OutboundSetupIntent object.
-   * @throws Stripe.QuotaExceededError
    * @throws Stripe.BlockedByStripeError
    * @throws Stripe.InvalidPayoutMethodError
    * @throws Stripe.ControlledByAlternateResourceError
@@ -123,7 +122,7 @@ export interface OutboundSetupIntent {
   /**
    * Use the PayoutMethods API to list and interact with PayoutMethod objects.
    */
-  payout_method: PayoutMethod;
+  payout_method?: PayoutMethod;
 
   /**
    * Closed Enum. Status of the outbound setup intent.

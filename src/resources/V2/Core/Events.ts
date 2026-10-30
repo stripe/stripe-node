@@ -380,31 +380,57 @@ export type Event =
   | V1CreditNoteVoidedEvent
   | V1CustomerCreatedEvent
   | V1CustomerDeletedEvent
+  | V1CustomerDiscountSourceChangedEvent
+  | V1CustomerSubscriptionActiveEvent
+  | V1CustomerSubscriptionCancelAtChangedEvent
   | V1CustomerSubscriptionCreatedEvent
+  | V1CustomerSubscriptionDefaultPaymentMethodChangedEvent
   | V1CustomerSubscriptionDeletedEvent
+  | V1CustomerSubscriptionIncompleteEvent
+  | V1CustomerSubscriptionIncompleteExpiredEvent
+  | V1CustomerSubscriptionItemAddedEvent
+  | V1CustomerSubscriptionItemPriceChangedEvent
+  | V1CustomerSubscriptionItemQuantityChangedEvent
+  | V1CustomerSubscriptionItemRemovedEvent
+  | V1CustomerSubscriptionItemTaxRatesChangedEvent
+  | V1CustomerSubscriptionPastDueEvent
   | V1CustomerSubscriptionPausedEvent
   | V1CustomerSubscriptionPendingUpdateAppliedEvent
   | V1CustomerSubscriptionPendingUpdateExpiredEvent
   | V1CustomerSubscriptionResumedEvent
   | V1CustomerSubscriptionTrialWillEndEvent
+  | V1CustomerSubscriptionTrialingEvent
+  | V1CustomerSubscriptionUnpaidEvent
   | V1CustomerSubscriptionUpdatedEvent
   | V1CustomerTaxIdCreatedEvent
   | V1CustomerTaxIdDeletedEvent
   | V1CustomerTaxIdUpdatedEvent
   | V1CustomerUpdatedEvent
   | V1CustomerCashBalanceTransactionCreatedEvent
+  | V1EntitlementsActiveEntitlementSummaryEntitlementAddedEvent
+  | V1EntitlementsActiveEntitlementSummaryEntitlementRemovedEvent
   | V1EntitlementsActiveEntitlementSummaryUpdatedEvent
   | V1FileCreatedEvent
   | V1FinancialConnectionsAccountAccountNumbersUpdatedEvent
+  | V1FinancialConnectionsAccountBalanceRefreshFailedEvent
+  | V1FinancialConnectionsAccountBalanceRefreshSucceededEvent
   | V1FinancialConnectionsAccountCreatedEvent
   | V1FinancialConnectionsAccountDeactivatedEvent
   | V1FinancialConnectionsAccountDisconnectedEvent
   | V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent
+  | V1FinancialConnectionsAccountInferredBalancesRefreshFailedEvent
+  | V1FinancialConnectionsAccountInferredBalancesRefreshSucceededEvent
+  | V1FinancialConnectionsAccountOwnershipRefreshFailedEvent
+  | V1FinancialConnectionsAccountOwnershipRefreshSucceededEvent
   | V1FinancialConnectionsAccountReactivatedEvent
   | V1FinancialConnectionsAccountRefreshedBalanceEvent
   | V1FinancialConnectionsAccountRefreshedOwnershipEvent
   | V1FinancialConnectionsAccountRefreshedTransactionsEvent
+  | V1FinancialConnectionsAccountRiskIntelligenceRefreshFailedEvent
+  | V1FinancialConnectionsAccountRiskIntelligenceRefreshSucceededEvent
   | V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent
+  | V1FinancialConnectionsAccountTransactionsRefreshFailedEvent
+  | V1FinancialConnectionsAccountTransactionsRefreshSucceededEvent
   | V1FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent
   | V1FinancialConnectionsAccountUpcomingDeactivationEvent
   | V1IdentityVerificationSessionCanceledEvent
@@ -415,8 +441,14 @@ export type Event =
   | V1IdentityVerificationSessionVerifiedEvent
   | V1InvoiceCreatedEvent
   | V1InvoiceDeletedEvent
+  | V1InvoiceDiscountAddedEvent
+  | V1InvoiceDiscountRemovedEvent
   | V1InvoiceFinalizationFailedEvent
   | V1InvoiceFinalizedEvent
+  | V1InvoiceLineItemAddedEvent
+  | V1InvoiceLineItemPricingChangedEvent
+  | V1InvoiceLineItemQuantityChangedEvent
+  | V1InvoiceLineItemRemovedEvent
   | V1InvoiceMarkedUncollectibleEvent
   | V1InvoiceOverdueEvent
   | V1InvoiceOverpaidEvent
@@ -430,9 +462,14 @@ export type Event =
   | V1InvoiceUpdatedEvent
   | V1InvoiceVoidedEvent
   | V1InvoiceWillBeDueEvent
+  | V1InvoicePaymentCanceledEvent
+  | V1InvoicePaymentOpenEvent
   | V1InvoicePaymentPaidEvent
+  | V1InvoiceitemAmountChangedEvent
   | V1InvoiceitemCreatedEvent
   | V1InvoiceitemDeletedEvent
+  | V1InvoiceitemDiscountAddedEvent
+  | V1InvoiceitemDiscountRemovedEvent
   | V1IssuingAuthorizationCreatedEvent
   | V1IssuingAuthorizationRequestEvent
   | V1IssuingAuthorizationUpdatedEvent
@@ -482,13 +519,22 @@ export type Event =
   | V1PlanCreatedEvent
   | V1PlanDeletedEvent
   | V1PlanUpdatedEvent
+  | V1PriceActivatedEvent
   | V1PriceCreatedEvent
+  | V1PriceDeactivatedEvent
   | V1PriceDeletedEvent
+  | V1PriceLookupKeyChangedEvent
+  | V1PriceTaxBehaviorChangedEvent
   | V1PriceUpdatedEvent
+  | V1ProductActivatedEvent
   | V1ProductCreatedEvent
+  | V1ProductDeactivatedEvent
+  | V1ProductDefaultPriceChangedEvent
   | V1ProductDeletedEvent
+  | V1ProductTaxCodeChangedEvent
   | V1ProductUpdatedEvent
   | V1PromotionCodeCreatedEvent
+  | V1PromotionCodeFullyRedeemedEvent
   | V1PromotionCodeUpdatedEvent
   | V1QuoteAcceptedEvent
   | V1QuoteCanceledEvent
@@ -516,6 +562,11 @@ export type Event =
   | V1SubscriptionScheduleCompletedEvent
   | V1SubscriptionScheduleCreatedEvent
   | V1SubscriptionScheduleExpiringEvent
+  | V1SubscriptionSchedulePhaseAddedEvent
+  | V1SubscriptionSchedulePhaseDefaultTaxRatesChangedEvent
+  | V1SubscriptionSchedulePhaseEndDateChangedEvent
+  | V1SubscriptionSchedulePhaseRemovedEvent
+  | V1SubscriptionSchedulePhaseTrialEndChangedEvent
   | V1SubscriptionScheduleReleasedEvent
   | V1SubscriptionScheduleUpdatedEvent
   | V1TaxSettingsUpdatedEvent
@@ -549,6 +600,9 @@ export type Event =
   | V2BillingContractCreatedEvent
   | V2BillingContractEndedEvent
   | V2BillingContractUpdatedEvent
+  | V2BillingContractTermCreatedEvent
+  | V2BillingContractTermDeletedEvent
+  | V2BillingContractTermUpdatedEvent
   | V2BillingLicenseFeeCreatedEvent
   | V2BillingLicenseFeeUpdatedEvent
   | V2BillingLicenseFeeVersionCreatedEvent
@@ -708,6 +762,22 @@ export type Event =
   | V2MoneyManagementFinancialAccountStatementRestatedEvent
   | V2MoneyManagementFinancialAddressActivatedEvent
   | V2MoneyManagementFinancialAddressFailedEvent
+  | V2MoneyManagementFundingIntentCanceledEvent
+  | V2MoneyManagementFundingIntentCreatedEvent
+  | V2MoneyManagementFundingIntentProcessingEvent
+  | V2MoneyManagementFundingIntentRequiresActionEvent
+  | V2MoneyManagementFundingIntentRequiresConfirmationEvent
+  | V2MoneyManagementFundingIntentSucceededEvent
+  | V2MoneyManagementFundingIntentUpdatedEvent
+  | V2MoneyManagementFundingIntentValidatingEvent
+  | V2MoneyManagementInboundFundingAvailableEvent
+  | V2MoneyManagementInboundFundingCheckFailedEvent
+  | V2MoneyManagementInboundFundingCheckProcessingEvent
+  | V2MoneyManagementInboundFundingCheckQueuedEvent
+  | V2MoneyManagementInboundFundingCheckReturnedEvent
+  | V2MoneyManagementInboundFundingCheckSucceededEvent
+  | V2MoneyManagementInboundFundingCreatedEvent
+  | V2MoneyManagementInboundFundingUpdatedEvent
   | V2MoneyManagementInboundTransferAvailableEvent
   | V2MoneyManagementInboundTransferBankDebitFailedEvent
   | V2MoneyManagementInboundTransferBankDebitProcessingEvent
@@ -735,9 +805,11 @@ export type Event =
   | V2MoneyManagementOutboundTransferUpdatedEvent
   | V2MoneyManagementPayoutIntentCanceledEvent
   | V2MoneyManagementPayoutIntentCreatedEvent
+  | V2MoneyManagementPayoutIntentPendingEvent
   | V2MoneyManagementPayoutIntentPostedEvent
   | V2MoneyManagementPayoutIntentProcessingEvent
   | V2MoneyManagementPayoutIntentRequiresActionEvent
+  | V2MoneyManagementPayoutIntentUpdatedEvent
   | V2MoneyManagementPayoutMethodCreatedEvent
   | V2MoneyManagementPayoutMethodUpdatedEvent
   | V2MoneyManagementReceivedCreditAvailableEvent
@@ -758,6 +830,8 @@ export type Event =
   | V2MoneyManagementReceivedDebitMandateUpdatedEvent
   | V2MoneyManagementRecipientVerificationCreatedEvent
   | V2MoneyManagementRecipientVerificationUpdatedEvent
+  | V2MoneyManagementRewardProgramRewardEarnedEvent
+  | V2MoneyManagementRewardProgramRewardReversedEvent
   | V2MoneyManagementTransactionCreatedEvent
   | V2MoneyManagementTransactionUpdatedEvent
   | V2OrchestratedCommerceAgreementConfirmedEvent
@@ -766,8 +840,6 @@ export type Event =
   | V2OrchestratedCommerceAgreementTerminatedEvent
   | V2PaymentsOffSessionPaymentAttemptFailedEvent
   | V2PaymentsOffSessionPaymentAttemptStartedEvent
-  | V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
-  | V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
   | V2PaymentsOffSessionPaymentCanceledEvent
   | V2PaymentsOffSessionPaymentCreatedEvent
   | V2PaymentsOffSessionPaymentFailedEvent
@@ -857,31 +929,57 @@ export type EventNotification =
   | V1CreditNoteVoidedEventNotification
   | V1CustomerCreatedEventNotification
   | V1CustomerDeletedEventNotification
+  | V1CustomerDiscountSourceChangedEventNotification
+  | V1CustomerSubscriptionActiveEventNotification
+  | V1CustomerSubscriptionCancelAtChangedEventNotification
   | V1CustomerSubscriptionCreatedEventNotification
+  | V1CustomerSubscriptionDefaultPaymentMethodChangedEventNotification
   | V1CustomerSubscriptionDeletedEventNotification
+  | V1CustomerSubscriptionIncompleteEventNotification
+  | V1CustomerSubscriptionIncompleteExpiredEventNotification
+  | V1CustomerSubscriptionItemAddedEventNotification
+  | V1CustomerSubscriptionItemPriceChangedEventNotification
+  | V1CustomerSubscriptionItemQuantityChangedEventNotification
+  | V1CustomerSubscriptionItemRemovedEventNotification
+  | V1CustomerSubscriptionItemTaxRatesChangedEventNotification
+  | V1CustomerSubscriptionPastDueEventNotification
   | V1CustomerSubscriptionPausedEventNotification
   | V1CustomerSubscriptionPendingUpdateAppliedEventNotification
   | V1CustomerSubscriptionPendingUpdateExpiredEventNotification
   | V1CustomerSubscriptionResumedEventNotification
   | V1CustomerSubscriptionTrialWillEndEventNotification
+  | V1CustomerSubscriptionTrialingEventNotification
+  | V1CustomerSubscriptionUnpaidEventNotification
   | V1CustomerSubscriptionUpdatedEventNotification
   | V1CustomerTaxIdCreatedEventNotification
   | V1CustomerTaxIdDeletedEventNotification
   | V1CustomerTaxIdUpdatedEventNotification
   | V1CustomerUpdatedEventNotification
   | V1CustomerCashBalanceTransactionCreatedEventNotification
+  | V1EntitlementsActiveEntitlementSummaryEntitlementAddedEventNotification
+  | V1EntitlementsActiveEntitlementSummaryEntitlementRemovedEventNotification
   | V1EntitlementsActiveEntitlementSummaryUpdatedEventNotification
   | V1FileCreatedEventNotification
   | V1FinancialConnectionsAccountAccountNumbersUpdatedEventNotification
+  | V1FinancialConnectionsAccountBalanceRefreshFailedEventNotification
+  | V1FinancialConnectionsAccountBalanceRefreshSucceededEventNotification
   | V1FinancialConnectionsAccountCreatedEventNotification
   | V1FinancialConnectionsAccountDeactivatedEventNotification
   | V1FinancialConnectionsAccountDisconnectedEventNotification
   | V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEventNotification
+  | V1FinancialConnectionsAccountInferredBalancesRefreshFailedEventNotification
+  | V1FinancialConnectionsAccountInferredBalancesRefreshSucceededEventNotification
+  | V1FinancialConnectionsAccountOwnershipRefreshFailedEventNotification
+  | V1FinancialConnectionsAccountOwnershipRefreshSucceededEventNotification
   | V1FinancialConnectionsAccountReactivatedEventNotification
   | V1FinancialConnectionsAccountRefreshedBalanceEventNotification
   | V1FinancialConnectionsAccountRefreshedOwnershipEventNotification
   | V1FinancialConnectionsAccountRefreshedTransactionsEventNotification
+  | V1FinancialConnectionsAccountRiskIntelligenceRefreshFailedEventNotification
+  | V1FinancialConnectionsAccountRiskIntelligenceRefreshSucceededEventNotification
   | V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEventNotification
+  | V1FinancialConnectionsAccountTransactionsRefreshFailedEventNotification
+  | V1FinancialConnectionsAccountTransactionsRefreshSucceededEventNotification
   | V1FinancialConnectionsAccountUpcomingAccountNumberExpiryEventNotification
   | V1FinancialConnectionsAccountUpcomingDeactivationEventNotification
   | V1IdentityVerificationSessionCanceledEventNotification
@@ -892,8 +990,14 @@ export type EventNotification =
   | V1IdentityVerificationSessionVerifiedEventNotification
   | V1InvoiceCreatedEventNotification
   | V1InvoiceDeletedEventNotification
+  | V1InvoiceDiscountAddedEventNotification
+  | V1InvoiceDiscountRemovedEventNotification
   | V1InvoiceFinalizationFailedEventNotification
   | V1InvoiceFinalizedEventNotification
+  | V1InvoiceLineItemAddedEventNotification
+  | V1InvoiceLineItemPricingChangedEventNotification
+  | V1InvoiceLineItemQuantityChangedEventNotification
+  | V1InvoiceLineItemRemovedEventNotification
   | V1InvoiceMarkedUncollectibleEventNotification
   | V1InvoiceOverdueEventNotification
   | V1InvoiceOverpaidEventNotification
@@ -907,9 +1011,14 @@ export type EventNotification =
   | V1InvoiceUpdatedEventNotification
   | V1InvoiceVoidedEventNotification
   | V1InvoiceWillBeDueEventNotification
+  | V1InvoicePaymentCanceledEventNotification
+  | V1InvoicePaymentOpenEventNotification
   | V1InvoicePaymentPaidEventNotification
+  | V1InvoiceitemAmountChangedEventNotification
   | V1InvoiceitemCreatedEventNotification
   | V1InvoiceitemDeletedEventNotification
+  | V1InvoiceitemDiscountAddedEventNotification
+  | V1InvoiceitemDiscountRemovedEventNotification
   | V1IssuingAuthorizationCreatedEventNotification
   | V1IssuingAuthorizationRequestEventNotification
   | V1IssuingAuthorizationUpdatedEventNotification
@@ -959,13 +1068,22 @@ export type EventNotification =
   | V1PlanCreatedEventNotification
   | V1PlanDeletedEventNotification
   | V1PlanUpdatedEventNotification
+  | V1PriceActivatedEventNotification
   | V1PriceCreatedEventNotification
+  | V1PriceDeactivatedEventNotification
   | V1PriceDeletedEventNotification
+  | V1PriceLookupKeyChangedEventNotification
+  | V1PriceTaxBehaviorChangedEventNotification
   | V1PriceUpdatedEventNotification
+  | V1ProductActivatedEventNotification
   | V1ProductCreatedEventNotification
+  | V1ProductDeactivatedEventNotification
+  | V1ProductDefaultPriceChangedEventNotification
   | V1ProductDeletedEventNotification
+  | V1ProductTaxCodeChangedEventNotification
   | V1ProductUpdatedEventNotification
   | V1PromotionCodeCreatedEventNotification
+  | V1PromotionCodeFullyRedeemedEventNotification
   | V1PromotionCodeUpdatedEventNotification
   | V1QuoteAcceptedEventNotification
   | V1QuoteCanceledEventNotification
@@ -993,6 +1111,11 @@ export type EventNotification =
   | V1SubscriptionScheduleCompletedEventNotification
   | V1SubscriptionScheduleCreatedEventNotification
   | V1SubscriptionScheduleExpiringEventNotification
+  | V1SubscriptionSchedulePhaseAddedEventNotification
+  | V1SubscriptionSchedulePhaseDefaultTaxRatesChangedEventNotification
+  | V1SubscriptionSchedulePhaseEndDateChangedEventNotification
+  | V1SubscriptionSchedulePhaseRemovedEventNotification
+  | V1SubscriptionSchedulePhaseTrialEndChangedEventNotification
   | V1SubscriptionScheduleReleasedEventNotification
   | V1SubscriptionScheduleUpdatedEventNotification
   | V1TaxSettingsUpdatedEventNotification
@@ -1026,6 +1149,9 @@ export type EventNotification =
   | V2BillingContractCreatedEventNotification
   | V2BillingContractEndedEventNotification
   | V2BillingContractUpdatedEventNotification
+  | V2BillingContractTermCreatedEventNotification
+  | V2BillingContractTermDeletedEventNotification
+  | V2BillingContractTermUpdatedEventNotification
   | V2BillingLicenseFeeCreatedEventNotification
   | V2BillingLicenseFeeUpdatedEventNotification
   | V2BillingLicenseFeeVersionCreatedEventNotification
@@ -1185,6 +1311,22 @@ export type EventNotification =
   | V2MoneyManagementFinancialAccountStatementRestatedEventNotification
   | V2MoneyManagementFinancialAddressActivatedEventNotification
   | V2MoneyManagementFinancialAddressFailedEventNotification
+  | V2MoneyManagementFundingIntentCanceledEventNotification
+  | V2MoneyManagementFundingIntentCreatedEventNotification
+  | V2MoneyManagementFundingIntentProcessingEventNotification
+  | V2MoneyManagementFundingIntentRequiresActionEventNotification
+  | V2MoneyManagementFundingIntentRequiresConfirmationEventNotification
+  | V2MoneyManagementFundingIntentSucceededEventNotification
+  | V2MoneyManagementFundingIntentUpdatedEventNotification
+  | V2MoneyManagementFundingIntentValidatingEventNotification
+  | V2MoneyManagementInboundFundingAvailableEventNotification
+  | V2MoneyManagementInboundFundingCheckFailedEventNotification
+  | V2MoneyManagementInboundFundingCheckProcessingEventNotification
+  | V2MoneyManagementInboundFundingCheckQueuedEventNotification
+  | V2MoneyManagementInboundFundingCheckReturnedEventNotification
+  | V2MoneyManagementInboundFundingCheckSucceededEventNotification
+  | V2MoneyManagementInboundFundingCreatedEventNotification
+  | V2MoneyManagementInboundFundingUpdatedEventNotification
   | V2MoneyManagementInboundTransferAvailableEventNotification
   | V2MoneyManagementInboundTransferBankDebitFailedEventNotification
   | V2MoneyManagementInboundTransferBankDebitProcessingEventNotification
@@ -1212,9 +1354,11 @@ export type EventNotification =
   | V2MoneyManagementOutboundTransferUpdatedEventNotification
   | V2MoneyManagementPayoutIntentCanceledEventNotification
   | V2MoneyManagementPayoutIntentCreatedEventNotification
+  | V2MoneyManagementPayoutIntentPendingEventNotification
   | V2MoneyManagementPayoutIntentPostedEventNotification
   | V2MoneyManagementPayoutIntentProcessingEventNotification
   | V2MoneyManagementPayoutIntentRequiresActionEventNotification
+  | V2MoneyManagementPayoutIntentUpdatedEventNotification
   | V2MoneyManagementPayoutMethodCreatedEventNotification
   | V2MoneyManagementPayoutMethodUpdatedEventNotification
   | V2MoneyManagementReceivedCreditAvailableEventNotification
@@ -1235,6 +1379,8 @@ export type EventNotification =
   | V2MoneyManagementReceivedDebitMandateUpdatedEventNotification
   | V2MoneyManagementRecipientVerificationCreatedEventNotification
   | V2MoneyManagementRecipientVerificationUpdatedEventNotification
+  | V2MoneyManagementRewardProgramRewardEarnedEventNotification
+  | V2MoneyManagementRewardProgramRewardReversedEventNotification
   | V2MoneyManagementTransactionCreatedEventNotification
   | V2MoneyManagementTransactionUpdatedEventNotification
   | V2OrchestratedCommerceAgreementConfirmedEventNotification
@@ -1243,8 +1389,6 @@ export type EventNotification =
   | V2OrchestratedCommerceAgreementTerminatedEventNotification
   | V2PaymentsOffSessionPaymentAttemptFailedEventNotification
   | V2PaymentsOffSessionPaymentAttemptStartedEventNotification
-  | V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEventNotification
-  | V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEventNotification
   | V2PaymentsOffSessionPaymentCanceledEventNotification
   | V2PaymentsOffSessionPaymentCreatedEventNotification
   | V2PaymentsOffSessionPaymentFailedEventNotification
@@ -2730,6 +2874,58 @@ export interface V1CustomerDeletedEventNotification
 }
 
 /**
+ * Occurs whenever the source of a customer's discount changes.
+ */
+export interface V1CustomerDiscountSourceChangedEvent extends EventBase {
+  type: 'v1.customer.discount.source_changed';
+}
+export interface V1CustomerDiscountSourceChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.discount.source_changed';
+  fetchEvent(): Promise<V1CustomerDiscountSourceChangedEvent>;
+}
+
+/**
+ * Occurs whenever a subscription's status becomes active.
+ */
+export interface V1CustomerSubscriptionActiveEvent extends EventBase {
+  type: 'v1.customer.subscription.active';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionActiveEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.active';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionActiveEvent>;
+}
+
+/**
+ * Occurs whenever a subscription's scheduled cancellation date changes.
+ */
+export interface V1CustomerSubscriptionCancelAtChangedEvent extends EventBase {
+  type: 'v1.customer.subscription.cancel_at_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionCancelAtChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.cancel_at_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionCancelAtChangedEvent>;
+}
+
+/**
  * Occurs whenever a customer is signed up for a new plan.
  */
 export interface V1CustomerSubscriptionCreatedEvent extends EventBase {
@@ -2750,6 +2946,27 @@ export interface V1CustomerSubscriptionCreatedEventNotification
 }
 
 /**
+ * Occurs whenever a subscription's default payment method changes.
+ */
+export interface V1CustomerSubscriptionDefaultPaymentMethodChangedEvent
+  extends EventBase {
+  type: 'v1.customer.subscription.default_payment_method_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionDefaultPaymentMethodChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.default_payment_method_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionDefaultPaymentMethodChangedEvent>;
+}
+
+/**
  * Occurs whenever a customer's subscription ends.
  */
 export interface V1CustomerSubscriptionDeletedEvent extends EventBase {
@@ -2767,6 +2984,169 @@ export interface V1CustomerSubscriptionDeletedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1Subscription>;
   fetchEvent(): Promise<V1CustomerSubscriptionDeletedEvent>;
+}
+
+/**
+ * Occurs whenever a subscription's status becomes incomplete.
+ */
+export interface V1CustomerSubscriptionIncompleteEvent extends EventBase {
+  type: 'v1.customer.subscription.incomplete';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionIncompleteEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.incomplete';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionIncompleteEvent>;
+}
+
+/**
+ * Occurs whenever a subscription's status becomes incomplete_expired.
+ */
+export interface V1CustomerSubscriptionIncompleteExpiredEvent
+  extends EventBase {
+  type: 'v1.customer.subscription.incomplete_expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionIncompleteExpiredEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.incomplete_expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionIncompleteExpiredEvent>;
+}
+
+/**
+ * Occurs whenever an item is added to a subscription.
+ */
+export interface V1CustomerSubscriptionItemAddedEvent extends EventBase {
+  type: 'v1.customer.subscription.item_added';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionItemAddedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.item_added';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionItemAddedEvent>;
+}
+
+/**
+ * Occurs whenever the price of a subscription item changes.
+ */
+export interface V1CustomerSubscriptionItemPriceChangedEvent extends EventBase {
+  type: 'v1.customer.subscription.item_price_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionItemPriceChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.item_price_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionItemPriceChangedEvent>;
+}
+
+/**
+ * Occurs whenever the quantity of a subscription item changes.
+ */
+export interface V1CustomerSubscriptionItemQuantityChangedEvent
+  extends EventBase {
+  type: 'v1.customer.subscription.item_quantity_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionItemQuantityChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.item_quantity_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionItemQuantityChangedEvent>;
+}
+
+/**
+ * Occurs whenever an item is removed from a subscription.
+ */
+export interface V1CustomerSubscriptionItemRemovedEvent extends EventBase {
+  type: 'v1.customer.subscription.item_removed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionItemRemovedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.item_removed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionItemRemovedEvent>;
+}
+
+/**
+ * Occurs whenever the tax rates of a subscription item change.
+ */
+export interface V1CustomerSubscriptionItemTaxRatesChangedEvent
+  extends EventBase {
+  type: 'v1.customer.subscription.item_tax_rates_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionItemTaxRatesChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.item_tax_rates_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionItemTaxRatesChangedEvent>;
+}
+
+/**
+ * Occurs whenever a subscription's status becomes past_due.
+ */
+export interface V1CustomerSubscriptionPastDueEvent extends EventBase {
+  type: 'v1.customer.subscription.past_due';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionPastDueEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.past_due';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionPastDueEvent>;
 }
 
 /**
@@ -2869,6 +3249,46 @@ export interface V1CustomerSubscriptionTrialWillEndEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1Subscription>;
   fetchEvent(): Promise<V1CustomerSubscriptionTrialWillEndEvent>;
+}
+
+/**
+ * Occurs whenever a subscription's status becomes trialing.
+ */
+export interface V1CustomerSubscriptionTrialingEvent extends EventBase {
+  type: 'v1.customer.subscription.trialing';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionTrialingEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.trialing';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionTrialingEvent>;
+}
+
+/**
+ * Occurs whenever a subscription's status becomes unpaid.
+ */
+export interface V1CustomerSubscriptionUnpaidEvent extends EventBase {
+  type: 'v1.customer.subscription.unpaid';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+}
+export interface V1CustomerSubscriptionUnpaidEventNotification
+  extends EventNotificationBase {
+  type: 'v1.customer.subscription.unpaid';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Subscription>;
+  fetchEvent(): Promise<V1CustomerSubscriptionUnpaidEvent>;
 }
 
 /**
@@ -2993,6 +3413,36 @@ export interface V1CustomerCashBalanceTransactionCreatedEventNotification
 }
 
 /**
+ * Occurs when an entitlement is added to a customer's active entitlement summary.
+ */
+export interface V1EntitlementsActiveEntitlementSummaryEntitlementAddedEvent
+  extends EventBase {
+  type: 'v1.entitlements.active_entitlement_summary.entitlement_added';
+}
+export interface V1EntitlementsActiveEntitlementSummaryEntitlementAddedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.entitlements.active_entitlement_summary.entitlement_added';
+  fetchEvent(): Promise<
+    V1EntitlementsActiveEntitlementSummaryEntitlementAddedEvent
+  >;
+}
+
+/**
+ * Occurs when an entitlement is removed from a customer's active entitlement summary.
+ */
+export interface V1EntitlementsActiveEntitlementSummaryEntitlementRemovedEvent
+  extends EventBase {
+  type: 'v1.entitlements.active_entitlement_summary.entitlement_removed';
+}
+export interface V1EntitlementsActiveEntitlementSummaryEntitlementRemovedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.entitlements.active_entitlement_summary.entitlement_removed';
+  fetchEvent(): Promise<
+    V1EntitlementsActiveEntitlementSummaryEntitlementRemovedEvent
+  >;
+}
+
+/**
  * Occurs whenever a customer's entitlements change.
  */
 export interface V1EntitlementsActiveEntitlementSummaryUpdatedEvent
@@ -3044,6 +3494,50 @@ export interface V1FinancialConnectionsAccountAccountNumbersUpdatedEventNotifica
   fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
   fetchEvent(): Promise<
     V1FinancialConnectionsAccountAccountNumbersUpdatedEvent
+  >;
+}
+
+/**
+ * Occurs when a balance refresh on a Financial Connections account fails.
+ */
+export interface V1FinancialConnectionsAccountBalanceRefreshFailedEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.balance_refresh_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountBalanceRefreshFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.balance_refresh_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<V1FinancialConnectionsAccountBalanceRefreshFailedEvent>;
+}
+
+/**
+ * Occurs when a balance refresh on a Financial Connections account completes successfully.
+ */
+export interface V1FinancialConnectionsAccountBalanceRefreshSucceededEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.balance_refresh_succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountBalanceRefreshSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.balance_refresh_succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountBalanceRefreshSucceededEvent
   >;
 }
 
@@ -3129,6 +3623,98 @@ export interface V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEve
   fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
   fetchEvent(): Promise<
     V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent
+  >;
+}
+
+/**
+ * Occurs when an inferred-balances refresh on a Financial Connections account fails.
+ */
+export interface V1FinancialConnectionsAccountInferredBalancesRefreshFailedEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.inferred_balances_refresh_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountInferredBalancesRefreshFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.inferred_balances_refresh_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountInferredBalancesRefreshFailedEvent
+  >;
+}
+
+/**
+ * Occurs when an inferred-balances refresh on a Financial Connections account completes successfully.
+ */
+export interface V1FinancialConnectionsAccountInferredBalancesRefreshSucceededEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.inferred_balances_refresh_succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountInferredBalancesRefreshSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.inferred_balances_refresh_succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountInferredBalancesRefreshSucceededEvent
+  >;
+}
+
+/**
+ * Occurs when an ownership refresh on a Financial Connections account fails.
+ */
+export interface V1FinancialConnectionsAccountOwnershipRefreshFailedEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.ownership_refresh_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountOwnershipRefreshFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.ownership_refresh_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountOwnershipRefreshFailedEvent
+  >;
+}
+
+/**
+ * Occurs when an ownership refresh on a Financial Connections account completes successfully.
+ */
+export interface V1FinancialConnectionsAccountOwnershipRefreshSucceededEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.ownership_refresh_succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountOwnershipRefreshSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.ownership_refresh_succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountOwnershipRefreshSucceededEvent
   >;
 }
 
@@ -3219,6 +3805,52 @@ export interface V1FinancialConnectionsAccountRefreshedTransactionsEventNotifica
 }
 
 /**
+ * Occurs when a risk-intelligence refresh on a Financial Connections account fails.
+ */
+export interface V1FinancialConnectionsAccountRiskIntelligenceRefreshFailedEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.risk_intelligence_refresh_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountRiskIntelligenceRefreshFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.risk_intelligence_refresh_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountRiskIntelligenceRefreshFailedEvent
+  >;
+}
+
+/**
+ * Occurs when a risk-intelligence refresh on a Financial Connections account completes successfully.
+ */
+export interface V1FinancialConnectionsAccountRiskIntelligenceRefreshSucceededEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.risk_intelligence_refresh_succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountRiskIntelligenceRefreshSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.risk_intelligence_refresh_succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountRiskIntelligenceRefreshSucceededEvent
+  >;
+}
+
+/**
  * Occurs when the supported_payment_method_types array on a Financial Connections account changes.
  */
 export interface V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent
@@ -3238,6 +3870,52 @@ export interface V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdated
   fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
   fetchEvent(): Promise<
     V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent
+  >;
+}
+
+/**
+ * Occurs when a transactions refresh on a Financial Connections account fails.
+ */
+export interface V1FinancialConnectionsAccountTransactionsRefreshFailedEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.transactions_refresh_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountTransactionsRefreshFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.transactions_refresh_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountTransactionsRefreshFailedEvent
+  >;
+}
+
+/**
+ * Occurs when a transactions refresh on a Financial Connections account completes successfully.
+ */
+export interface V1FinancialConnectionsAccountTransactionsRefreshSucceededEvent
+  extends EventBase {
+  type: 'v1.financial_connections.account.transactions_refresh_succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+}
+export interface V1FinancialConnectionsAccountTransactionsRefreshSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v1.financial_connections.account.transactions_refresh_succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1FinancialConnections.Account>;
+  fetchEvent(): Promise<
+    V1FinancialConnectionsAccountTransactionsRefreshSucceededEvent
   >;
 }
 
@@ -3448,6 +4126,46 @@ export interface V1InvoiceDeletedEventNotification
 }
 
 /**
+ * Occurs when a discount is added to an invoice.
+ */
+export interface V1InvoiceDiscountAddedEvent extends EventBase {
+  type: 'v1.invoice.discount_added';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+}
+export interface V1InvoiceDiscountAddedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.invoice.discount_added';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+  fetchEvent(): Promise<V1InvoiceDiscountAddedEvent>;
+}
+
+/**
+ * Occurs when a discount is removed from an invoice.
+ */
+export interface V1InvoiceDiscountRemovedEvent extends EventBase {
+  type: 'v1.invoice.discount_removed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+}
+export interface V1InvoiceDiscountRemovedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.invoice.discount_removed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+  fetchEvent(): Promise<V1InvoiceDiscountRemovedEvent>;
+}
+
+/**
  * Occurs whenever a draft invoice cannot be finalized. See the invoice’s [last finalization error](https://docs.stripe.com/api/invoices/object#invoice_object-last_finalization_error) for details.
  */
 export interface V1InvoiceFinalizationFailedEvent extends EventBase {
@@ -3485,6 +4203,86 @@ export interface V1InvoiceFinalizedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1Invoice>;
   fetchEvent(): Promise<V1InvoiceFinalizedEvent>;
+}
+
+/**
+ * Occurs whenever a line item is added to a draft invoice.
+ */
+export interface V1InvoiceLineItemAddedEvent extends EventBase {
+  type: 'v1.invoice.line_item_added';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+}
+export interface V1InvoiceLineItemAddedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.invoice.line_item_added';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+  fetchEvent(): Promise<V1InvoiceLineItemAddedEvent>;
+}
+
+/**
+ * Occurs when an invoice line item's pricing changes.
+ */
+export interface V1InvoiceLineItemPricingChangedEvent extends EventBase {
+  type: 'v1.invoice.line_item_pricing_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+}
+export interface V1InvoiceLineItemPricingChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.invoice.line_item_pricing_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+  fetchEvent(): Promise<V1InvoiceLineItemPricingChangedEvent>;
+}
+
+/**
+ * Occurs when an invoice line item's quantity changes.
+ */
+export interface V1InvoiceLineItemQuantityChangedEvent extends EventBase {
+  type: 'v1.invoice.line_item_quantity_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+}
+export interface V1InvoiceLineItemQuantityChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.invoice.line_item_quantity_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+  fetchEvent(): Promise<V1InvoiceLineItemQuantityChangedEvent>;
+}
+
+/**
+ * Occurs whenever a line item is removed from a draft invoice.
+ */
+export interface V1InvoiceLineItemRemovedEvent extends EventBase {
+  type: 'v1.invoice.line_item_removed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+}
+export interface V1InvoiceLineItemRemovedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.invoice.line_item_removed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Invoice>;
+  fetchEvent(): Promise<V1InvoiceLineItemRemovedEvent>;
 }
 
 /**
@@ -3754,6 +4552,46 @@ export interface V1InvoiceWillBeDueEventNotification
 }
 
 /**
+ * Occurs whenever an invoice payment is canceled.
+ */
+export interface V1InvoicePaymentCanceledEvent extends EventBase {
+  type: 'v1.invoice_payment.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1InvoicePayment>;
+}
+export interface V1InvoicePaymentCanceledEventNotification
+  extends EventNotificationBase {
+  type: 'v1.invoice_payment.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1InvoicePayment>;
+  fetchEvent(): Promise<V1InvoicePaymentCanceledEvent>;
+}
+
+/**
+ * Occurs whenever an invoice payment record is created in open status.
+ */
+export interface V1InvoicePaymentOpenEvent extends EventBase {
+  type: 'v1.invoice_payment.open';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1InvoicePayment>;
+}
+export interface V1InvoicePaymentOpenEventNotification
+  extends EventNotificationBase {
+  type: 'v1.invoice_payment.open';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1InvoicePayment>;
+  fetchEvent(): Promise<V1InvoicePaymentOpenEvent>;
+}
+
+/**
  * Occurs when an InvoicePayment is successfully paid.
  */
 export interface V1InvoicePaymentPaidEvent extends EventBase {
@@ -3771,6 +4609,26 @@ export interface V1InvoicePaymentPaidEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1InvoicePayment>;
   fetchEvent(): Promise<V1InvoicePaymentPaidEvent>;
+}
+
+/**
+ * Occurs when an invoice item's amount changes.
+ */
+export interface V1InvoiceitemAmountChangedEvent extends EventBase {
+  type: 'v1.invoiceitem.amount_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1InvoiceItem>;
+}
+export interface V1InvoiceitemAmountChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.invoiceitem.amount_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1InvoiceItem>;
+  fetchEvent(): Promise<V1InvoiceitemAmountChangedEvent>;
 }
 
 /**
@@ -3811,6 +4669,46 @@ export interface V1InvoiceitemDeletedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1InvoiceItem>;
   fetchEvent(): Promise<V1InvoiceitemDeletedEvent>;
+}
+
+/**
+ * Occurs when a discount is added to an invoice item.
+ */
+export interface V1InvoiceitemDiscountAddedEvent extends EventBase {
+  type: 'v1.invoiceitem.discount_added';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1InvoiceItem>;
+}
+export interface V1InvoiceitemDiscountAddedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.invoiceitem.discount_added';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1InvoiceItem>;
+  fetchEvent(): Promise<V1InvoiceitemDiscountAddedEvent>;
+}
+
+/**
+ * Occurs when a discount is removed from an invoice item.
+ */
+export interface V1InvoiceitemDiscountRemovedEvent extends EventBase {
+  type: 'v1.invoiceitem.discount_removed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1InvoiceItem>;
+}
+export interface V1InvoiceitemDiscountRemovedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.invoiceitem.discount_removed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1InvoiceItem>;
+  fetchEvent(): Promise<V1InvoiceitemDiscountRemovedEvent>;
 }
 
 /**
@@ -4792,6 +5690,26 @@ export interface V1PlanUpdatedEventNotification extends EventNotificationBase {
 }
 
 /**
+ * Occurs whenever a price is activated.
+ */
+export interface V1PriceActivatedEvent extends EventBase {
+  type: 'v1.price.activated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Price>;
+}
+export interface V1PriceActivatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.price.activated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Price>;
+  fetchEvent(): Promise<V1PriceActivatedEvent>;
+}
+
+/**
  * Occurs whenever a price is created.
  */
 export interface V1PriceCreatedEvent extends EventBase {
@@ -4808,6 +5726,26 @@ export interface V1PriceCreatedEventNotification extends EventNotificationBase {
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1Price>;
   fetchEvent(): Promise<V1PriceCreatedEvent>;
+}
+
+/**
+ * Occurs whenever a price is deactivated.
+ */
+export interface V1PriceDeactivatedEvent extends EventBase {
+  type: 'v1.price.deactivated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Price>;
+}
+export interface V1PriceDeactivatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.price.deactivated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Price>;
+  fetchEvent(): Promise<V1PriceDeactivatedEvent>;
 }
 
 /**
@@ -4830,6 +5768,46 @@ export interface V1PriceDeletedEventNotification extends EventNotificationBase {
 }
 
 /**
+ * Occurs whenever a price's lookup key changes.
+ */
+export interface V1PriceLookupKeyChangedEvent extends EventBase {
+  type: 'v1.price.lookup_key_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Price>;
+}
+export interface V1PriceLookupKeyChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.price.lookup_key_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Price>;
+  fetchEvent(): Promise<V1PriceLookupKeyChangedEvent>;
+}
+
+/**
+ * Occurs whenever a price's tax behavior changes.
+ */
+export interface V1PriceTaxBehaviorChangedEvent extends EventBase {
+  type: 'v1.price.tax_behavior_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Price>;
+}
+export interface V1PriceTaxBehaviorChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.price.tax_behavior_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Price>;
+  fetchEvent(): Promise<V1PriceTaxBehaviorChangedEvent>;
+}
+
+/**
  * Occurs whenever a price is updated.
  */
 export interface V1PriceUpdatedEvent extends EventBase {
@@ -4846,6 +5824,26 @@ export interface V1PriceUpdatedEventNotification extends EventNotificationBase {
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1Price>;
   fetchEvent(): Promise<V1PriceUpdatedEvent>;
+}
+
+/**
+ * Occurs whenever a product is activated.
+ */
+export interface V1ProductActivatedEvent extends EventBase {
+  type: 'v1.product.activated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Product>;
+}
+export interface V1ProductActivatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.product.activated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Product>;
+  fetchEvent(): Promise<V1ProductActivatedEvent>;
 }
 
 /**
@@ -4869,6 +5867,46 @@ export interface V1ProductCreatedEventNotification
 }
 
 /**
+ * Occurs whenever a product is deactivated.
+ */
+export interface V1ProductDeactivatedEvent extends EventBase {
+  type: 'v1.product.deactivated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Product>;
+}
+export interface V1ProductDeactivatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.product.deactivated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Product>;
+  fetchEvent(): Promise<V1ProductDeactivatedEvent>;
+}
+
+/**
+ * Occurs whenever a product's default price changes.
+ */
+export interface V1ProductDefaultPriceChangedEvent extends EventBase {
+  type: 'v1.product.default_price_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Product>;
+}
+export interface V1ProductDefaultPriceChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.product.default_price_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Product>;
+  fetchEvent(): Promise<V1ProductDefaultPriceChangedEvent>;
+}
+
+/**
  * Occurs whenever a product is deleted.
  */
 export interface V1ProductDeletedEvent extends EventBase {
@@ -4886,6 +5924,26 @@ export interface V1ProductDeletedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1Product>;
   fetchEvent(): Promise<V1ProductDeletedEvent>;
+}
+
+/**
+ * Occurs whenever a product's tax code changes.
+ */
+export interface V1ProductTaxCodeChangedEvent extends EventBase {
+  type: 'v1.product.tax_code_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Product>;
+}
+export interface V1ProductTaxCodeChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.product.tax_code_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Product>;
+  fetchEvent(): Promise<V1ProductTaxCodeChangedEvent>;
 }
 
 /**
@@ -4926,6 +5984,26 @@ export interface V1PromotionCodeCreatedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1PromotionCode>;
   fetchEvent(): Promise<V1PromotionCodeCreatedEvent>;
+}
+
+/**
+ * Occurs whenever a promotion code is fully redeemed.
+ */
+export interface V1PromotionCodeFullyRedeemedEvent extends EventBase {
+  type: 'v1.promotion_code.fully_redeemed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1PromotionCode>;
+}
+export interface V1PromotionCodeFullyRedeemedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.promotion_code.fully_redeemed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1PromotionCode>;
+  fetchEvent(): Promise<V1PromotionCodeFullyRedeemedEvent>;
 }
 
 /**
@@ -5461,6 +6539,109 @@ export interface V1SubscriptionScheduleExpiringEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1SubscriptionSchedule>;
   fetchEvent(): Promise<V1SubscriptionScheduleExpiringEvent>;
+}
+
+/**
+ * Occurs whenever a phase is added to a subscription schedule.
+ */
+export interface V1SubscriptionSchedulePhaseAddedEvent extends EventBase {
+  type: 'v1.subscription_schedule.phase_added';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1SubscriptionSchedule>;
+}
+export interface V1SubscriptionSchedulePhaseAddedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.subscription_schedule.phase_added';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1SubscriptionSchedule>;
+  fetchEvent(): Promise<V1SubscriptionSchedulePhaseAddedEvent>;
+}
+
+/**
+ * Occurs whenever a subscription schedule phase's default tax rates change.
+ */
+export interface V1SubscriptionSchedulePhaseDefaultTaxRatesChangedEvent
+  extends EventBase {
+  type: 'v1.subscription_schedule.phase_default_tax_rates_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1SubscriptionSchedule>;
+}
+export interface V1SubscriptionSchedulePhaseDefaultTaxRatesChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.subscription_schedule.phase_default_tax_rates_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1SubscriptionSchedule>;
+  fetchEvent(): Promise<V1SubscriptionSchedulePhaseDefaultTaxRatesChangedEvent>;
+}
+
+/**
+ * Occurs whenever a subscription schedule phase's end date changes.
+ */
+export interface V1SubscriptionSchedulePhaseEndDateChangedEvent
+  extends EventBase {
+  type: 'v1.subscription_schedule.phase_end_date_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1SubscriptionSchedule>;
+}
+export interface V1SubscriptionSchedulePhaseEndDateChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.subscription_schedule.phase_end_date_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1SubscriptionSchedule>;
+  fetchEvent(): Promise<V1SubscriptionSchedulePhaseEndDateChangedEvent>;
+}
+
+/**
+ * Occurs whenever a phase is removed from a subscription schedule.
+ */
+export interface V1SubscriptionSchedulePhaseRemovedEvent extends EventBase {
+  type: 'v1.subscription_schedule.phase_removed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1SubscriptionSchedule>;
+}
+export interface V1SubscriptionSchedulePhaseRemovedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.subscription_schedule.phase_removed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1SubscriptionSchedule>;
+  fetchEvent(): Promise<V1SubscriptionSchedulePhaseRemovedEvent>;
+}
+
+/**
+ * Occurs whenever a subscription schedule phase's trial end changes.
+ */
+export interface V1SubscriptionSchedulePhaseTrialEndChangedEvent
+  extends EventBase {
+  type: 'v1.subscription_schedule.phase_trial_end_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1SubscriptionSchedule>;
+}
+export interface V1SubscriptionSchedulePhaseTrialEndChangedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.subscription_schedule.phase_trial_end_changed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1SubscriptionSchedule>;
+  fetchEvent(): Promise<V1SubscriptionSchedulePhaseTrialEndChangedEvent>;
 }
 
 /**
@@ -6141,6 +7322,99 @@ export interface V2BillingContractUpdatedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Billing.Contract>;
   fetchEvent(): Promise<V2BillingContractUpdatedEvent>;
+}
+
+/**
+ * Occurs when a Contract Term is created.
+ */
+export interface V2BillingContractTermCreatedEvent extends EventBase {
+  type: 'v2.billing.contract_term.created';
+  // Retrieves data specific to this event.
+  data: V2BillingContractTermCreatedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+}
+export interface V2BillingContractTermCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract_term.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+  fetchEvent(): Promise<V2BillingContractTermCreatedEvent>;
+}
+
+export namespace V2BillingContractTermCreatedEvent {
+  export interface Data {
+    /**
+     * The Contract containing this term.
+     */
+    contract: string;
+  }
+}
+
+/**
+ * Occurs when a Contract Term is removed before it starts.
+ */
+export interface V2BillingContractTermDeletedEvent extends EventBase {
+  type: 'v2.billing.contract_term.deleted';
+  // Retrieves data specific to this event.
+  data: V2BillingContractTermDeletedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+}
+export interface V2BillingContractTermDeletedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract_term.deleted';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+  fetchEvent(): Promise<V2BillingContractTermDeletedEvent>;
+}
+
+export namespace V2BillingContractTermDeletedEvent {
+  export interface Data {
+    /**
+     * The Contract containing this term.
+     */
+    contract: string;
+  }
+}
+
+/**
+ * Occurs when a Contract Term is updated.
+ */
+export interface V2BillingContractTermUpdatedEvent extends EventBase {
+  type: 'v2.billing.contract_term.updated';
+  // Retrieves data specific to this event.
+  data: V2BillingContractTermUpdatedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+}
+export interface V2BillingContractTermUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract_term.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+  fetchEvent(): Promise<V2BillingContractTermUpdatedEvent>;
+}
+
+export namespace V2BillingContractTermUpdatedEvent {
+  export interface Data {
+    /**
+     * The Contract containing this term.
+     */
+    contract: string;
+  }
 }
 
 /**
@@ -7307,6 +8581,7 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'acss_debit_payments'
       | 'affirm_payments'
       | 'afterpay_clearpay_payments'
+      | 'alipay_payments'
       | 'alma_payments'
       | 'amazon_pay_payments'
       | 'au_becs_debit_payments'
@@ -7344,12 +8619,14 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'revolut_pay_payments'
       | 'samsung_pay_payments'
       | 'satispay_payments'
+      | 'scalapay_payments'
       | 'sepa_bank_transfer_payments'
       | 'sepa_debit_payments'
       | 'sequra_payments'
       | 'sunbit_payments'
       | 'swish_payments'
       | 'twint_payments'
+      | 'upi_payments'
       | 'us_bank_transfer_payments'
       | 'vipps_payments'
       | 'zip_payments'
@@ -7443,6 +8720,7 @@ export namespace V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatus
       | 'consumer_storage.inbound.usdc'
       | 'consumer_storage.outbound.usd'
       | 'consumer_storage.outbound.usdc'
+      | 'inbound_fundings.paper_checks'
       | 'inbound_transfers.bank_accounts'
       | 'outbound_payments.bank_accounts'
       | 'outbound_payments.cards'
@@ -7562,6 +8840,7 @@ export namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpd
       | 'bank_accounts.local'
       | 'bank_accounts.npp'
       | 'bank_accounts.rtp'
+      | 'bank_accounts.sepa'
       | 'bank_accounts.sepa_credit'
       | 'bank_accounts.sepa_instant'
       | 'bank_accounts.swift'
@@ -8374,6 +9653,11 @@ export namespace V2CoreHealthApiErrorFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -8421,6 +9705,8 @@ export namespace V2CoreHealthApiErrorFiringEvent {
        */
       top_impacted_accounts?: Array<Impact.TopImpactedAccount>;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | OtherString;
@@ -8482,6 +9768,11 @@ export namespace V2CoreHealthApiErrorResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -8529,6 +9820,8 @@ export namespace V2CoreHealthApiErrorResolvedEvent {
        */
       top_impacted_accounts?: Array<Impact.TopImpactedAccount>;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | OtherString;
@@ -8585,6 +9878,11 @@ export namespace V2CoreHealthApiLatencyFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -8627,6 +9925,8 @@ export namespace V2CoreHealthApiLatencyFiringEvent {
        */
       top_impacted_accounts?: Array<Impact.TopImpactedAccount>;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | OtherString;
@@ -8688,6 +9988,11 @@ export namespace V2CoreHealthApiLatencyResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -8730,6 +10035,8 @@ export namespace V2CoreHealthApiLatencyResolvedEvent {
        */
       top_impacted_accounts?: Array<Impact.TopImpactedAccount>;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | OtherString;
@@ -8787,6 +10094,11 @@ export namespace V2CoreHealthAuthorizationRateDropFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -8824,6 +10136,8 @@ export namespace V2CoreHealthAuthorizationRateDropFiringEvent {
        */
       previous_percentage: Decimal;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type ChargeType = 'money_moving' | 'validation' | OtherString;
@@ -8962,6 +10276,11 @@ export namespace V2CoreHealthAuthorizationRateDropResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -8999,6 +10318,8 @@ export namespace V2CoreHealthAuthorizationRateDropResolvedEvent {
        */
       previous_percentage: Decimal;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type ChargeType = 'money_moving' | 'validation' | OtherString;
@@ -9131,6 +10452,11 @@ export namespace V2CoreHealthElementsErrorFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -9153,6 +10479,8 @@ export namespace V2CoreHealthElementsErrorFiringEvent {
        */
       impacted_sessions: number;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type ElementType = 'expressCheckout' | 'payment' | OtherString;
@@ -9197,6 +10525,11 @@ export namespace V2CoreHealthElementsErrorResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -9219,6 +10552,8 @@ export namespace V2CoreHealthElementsErrorResolvedEvent {
        */
       impacted_sessions: number;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type ElementType = 'expressCheckout' | 'payment' | OtherString;
@@ -9345,6 +10680,11 @@ export namespace V2CoreHealthFraudRateIncreasedEvent {
     resolved_at?: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -9372,6 +10712,8 @@ export namespace V2CoreHealthFraudRateIncreasedEvent {
        */
       realized_fraud_amount: V2Amount;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type AttackType = 'spike' | 'sustained_attack' | OtherString;
@@ -9411,6 +10753,11 @@ export namespace V2CoreHealthInvoiceCountDroppedFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -9438,6 +10785,8 @@ export namespace V2CoreHealthInvoiceCountDroppedFiringEvent {
        */
       time_window: string;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
   }
 }
 
@@ -9479,6 +10828,11 @@ export namespace V2CoreHealthInvoiceCountDroppedResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -9506,6 +10860,8 @@ export namespace V2CoreHealthInvoiceCountDroppedResolvedEvent {
        */
       time_window: string;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
   }
 }
 
@@ -9544,6 +10900,11 @@ export namespace V2CoreHealthIssuingAuthorizationRequestErrorsFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -9576,6 +10937,8 @@ export namespace V2CoreHealthIssuingAuthorizationRequestErrorsFiringEvent {
        */
       declined_impacted_requests?: number;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
   }
 }
 
@@ -9619,6 +10982,11 @@ export namespace V2CoreHealthIssuingAuthorizationRequestErrorsResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -9651,6 +11019,8 @@ export namespace V2CoreHealthIssuingAuthorizationRequestErrorsResolvedEvent {
        */
       declined_impacted_requests?: number;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
   }
 }
 
@@ -9689,6 +11059,11 @@ export namespace V2CoreHealthIssuingAuthorizationRequestTimeoutFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -9721,6 +11096,8 @@ export namespace V2CoreHealthIssuingAuthorizationRequestTimeoutFiringEvent {
        */
       declined_impacted_requests?: number;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
   }
 }
 
@@ -9764,6 +11141,11 @@ export namespace V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -9796,6 +11178,8 @@ export namespace V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEvent {
        */
       declined_impacted_requests?: number;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
   }
 }
 
@@ -9832,6 +11216,11 @@ export namespace V2CoreHealthMeterEventSummariesDelayedFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -9849,6 +11238,8 @@ export namespace V2CoreHealthMeterEventSummariesDelayedFiringEvent {
        */
       ingestion_method?: Impact.IngestionMethod;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type IngestionMethod = 'import_sets' | OtherString;
@@ -9894,6 +11285,11 @@ export namespace V2CoreHealthMeterEventSummariesDelayedResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -9911,6 +11307,8 @@ export namespace V2CoreHealthMeterEventSummariesDelayedResolvedEvent {
        */
       ingestion_method?: Impact.IngestionMethod;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type IngestionMethod = 'import_sets' | OtherString;
@@ -9951,6 +11349,11 @@ export namespace V2CoreHealthMetronomeNotificationLatencyFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -9968,6 +11371,8 @@ export namespace V2CoreHealthMetronomeNotificationLatencyFiringEvent {
        */
       pipeline: Impact.Pipeline;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type Pipeline =
@@ -10018,6 +11423,11 @@ export namespace V2CoreHealthMetronomeNotificationLatencyResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -10035,6 +11445,8 @@ export namespace V2CoreHealthMetronomeNotificationLatencyResolvedEvent {
        */
       pipeline: Impact.Pipeline;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type Pipeline =
@@ -10079,6 +11491,11 @@ export namespace V2CoreHealthPaymentMethodErrorFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -10116,6 +11533,8 @@ export namespace V2CoreHealthPaymentMethodErrorFiringEvent {
        */
       top_impacted_accounts?: Array<Impact.TopImpactedAccount>;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type PaymentMethodType =
@@ -10247,6 +11666,11 @@ export namespace V2CoreHealthPaymentMethodErrorResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -10284,6 +11708,8 @@ export namespace V2CoreHealthPaymentMethodErrorResolvedEvent {
        */
       top_impacted_accounts?: Array<Impact.TopImpactedAccount>;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export type PaymentMethodType =
@@ -10410,6 +11836,11 @@ export namespace V2CoreHealthSepaDebitDelayedFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -10432,6 +11863,8 @@ export namespace V2CoreHealthSepaDebitDelayedFiringEvent {
        */
       impacted_payments_percentage: Decimal;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
   }
 }
 
@@ -10472,6 +11905,11 @@ export namespace V2CoreHealthSepaDebitDelayedResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -10494,6 +11932,8 @@ export namespace V2CoreHealthSepaDebitDelayedResolvedEvent {
        */
       impacted_payments_percentage: Decimal;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
   }
 }
 
@@ -10529,6 +11969,11 @@ export namespace V2CoreHealthTrafficVolumeDropFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -10561,6 +12006,8 @@ export namespace V2CoreHealthTrafficVolumeDropFiringEvent {
        */
       time_window: string;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
   }
 }
 
@@ -10601,6 +12048,11 @@ export namespace V2CoreHealthTrafficVolumeDropResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -10633,6 +12085,8 @@ export namespace V2CoreHealthTrafficVolumeDropResolvedEvent {
        */
       time_window: string;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
   }
 }
 
@@ -10668,6 +12122,11 @@ export namespace V2CoreHealthWebhookLatencyFiringEvent {
     impact: Data.Impact;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -10685,6 +12144,8 @@ export namespace V2CoreHealthWebhookLatencyFiringEvent {
        */
       impacted_requests: number;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
   }
 }
 
@@ -10725,6 +12186,11 @@ export namespace V2CoreHealthWebhookLatencyResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * The time when impact on the user experience was first detected.
      */
     started_at: string;
@@ -10742,6 +12208,8 @@ export namespace V2CoreHealthWebhookLatencyResolvedEvent {
        */
       impacted_requests: number;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
   }
 }
 
@@ -11855,6 +13323,350 @@ export interface V2MoneyManagementFinancialAddressFailedEventNotification
 }
 
 /**
+ * Occurs when a FundingIntent transitions into the canceled state.
+ */
+export interface V2MoneyManagementFundingIntentCanceledEvent extends EventBase {
+  type: 'v2.money_management.funding_intent.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+}
+export interface V2MoneyManagementFundingIntentCanceledEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.funding_intent.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+  fetchEvent(): Promise<V2MoneyManagementFundingIntentCanceledEvent>;
+}
+
+/**
+ * Occurs when a FundingIntent is created.
+ */
+export interface V2MoneyManagementFundingIntentCreatedEvent extends EventBase {
+  type: 'v2.money_management.funding_intent.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+}
+export interface V2MoneyManagementFundingIntentCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.funding_intent.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+  fetchEvent(): Promise<V2MoneyManagementFundingIntentCreatedEvent>;
+}
+
+/**
+ * Occurs when a FundingIntent transitions into the processing state.
+ */
+export interface V2MoneyManagementFundingIntentProcessingEvent
+  extends EventBase {
+  type: 'v2.money_management.funding_intent.processing';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+}
+export interface V2MoneyManagementFundingIntentProcessingEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.funding_intent.processing';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+  fetchEvent(): Promise<V2MoneyManagementFundingIntentProcessingEvent>;
+}
+
+/**
+ * Occurs when a FundingIntent transitions into the requires_action state.
+ */
+export interface V2MoneyManagementFundingIntentRequiresActionEvent
+  extends EventBase {
+  type: 'v2.money_management.funding_intent.requires_action';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+}
+export interface V2MoneyManagementFundingIntentRequiresActionEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.funding_intent.requires_action';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+  fetchEvent(): Promise<V2MoneyManagementFundingIntentRequiresActionEvent>;
+}
+
+/**
+ * Occurs when a FundingIntent transitions into the requires_confirmation state.
+ */
+export interface V2MoneyManagementFundingIntentRequiresConfirmationEvent
+  extends EventBase {
+  type: 'v2.money_management.funding_intent.requires_confirmation';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+}
+export interface V2MoneyManagementFundingIntentRequiresConfirmationEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.funding_intent.requires_confirmation';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+  fetchEvent(): Promise<
+    V2MoneyManagementFundingIntentRequiresConfirmationEvent
+  >;
+}
+
+/**
+ * Occurs when a FundingIntent transitions into the succeeded state.
+ */
+export interface V2MoneyManagementFundingIntentSucceededEvent
+  extends EventBase {
+  type: 'v2.money_management.funding_intent.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+}
+export interface V2MoneyManagementFundingIntentSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.funding_intent.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+  fetchEvent(): Promise<V2MoneyManagementFundingIntentSucceededEvent>;
+}
+
+/**
+ * Occurs when a FundingIntent is updated.
+ */
+export interface V2MoneyManagementFundingIntentUpdatedEvent extends EventBase {
+  type: 'v2.money_management.funding_intent.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+}
+export interface V2MoneyManagementFundingIntentUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.funding_intent.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+  fetchEvent(): Promise<V2MoneyManagementFundingIntentUpdatedEvent>;
+}
+
+/**
+ * Occurs when a FundingIntent transitions into the validating state.
+ */
+export interface V2MoneyManagementFundingIntentValidatingEvent
+  extends EventBase {
+  type: 'v2.money_management.funding_intent.validating';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+}
+export interface V2MoneyManagementFundingIntentValidatingEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.funding_intent.validating';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FundingIntent>;
+  fetchEvent(): Promise<V2MoneyManagementFundingIntentValidatingEvent>;
+}
+
+/**
+ * Occurs when the funds for an InboundFunding become available.
+ */
+export interface V2MoneyManagementInboundFundingAvailableEvent
+  extends EventBase {
+  type: 'v2.money_management.inbound_funding.available';
+  // Retrieves data specific to this event.
+  data: V2MoneyManagementInboundFundingAvailableEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+}
+export interface V2MoneyManagementInboundFundingAvailableEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_funding.available';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+  fetchEvent(): Promise<V2MoneyManagementInboundFundingAvailableEvent>;
+}
+
+export namespace V2MoneyManagementInboundFundingAvailableEvent {
+  export interface Data {
+    /**
+     * The transaction ID of the inbound funding.
+     */
+    transaction_id: string;
+  }
+}
+
+/**
+ * Occurs when an InboundFunding transitions into the failed state.
+ */
+export interface V2MoneyManagementInboundFundingCheckFailedEvent
+  extends EventBase {
+  type: 'v2.money_management.inbound_funding.check_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+}
+export interface V2MoneyManagementInboundFundingCheckFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_funding.check_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+  fetchEvent(): Promise<V2MoneyManagementInboundFundingCheckFailedEvent>;
+}
+
+/**
+ * Occurs when an InboundFunding transitions into the processing state.
+ */
+export interface V2MoneyManagementInboundFundingCheckProcessingEvent
+  extends EventBase {
+  type: 'v2.money_management.inbound_funding.check_processing';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+}
+export interface V2MoneyManagementInboundFundingCheckProcessingEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_funding.check_processing';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+  fetchEvent(): Promise<V2MoneyManagementInboundFundingCheckProcessingEvent>;
+}
+
+/**
+ * Occurs when an InboundFunding is created in the queued state.
+ */
+export interface V2MoneyManagementInboundFundingCheckQueuedEvent
+  extends EventBase {
+  type: 'v2.money_management.inbound_funding.check_queued';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+}
+export interface V2MoneyManagementInboundFundingCheckQueuedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_funding.check_queued';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+  fetchEvent(): Promise<V2MoneyManagementInboundFundingCheckQueuedEvent>;
+}
+
+/**
+ * Occurs when an InboundFunding transitions into the returned state.
+ */
+export interface V2MoneyManagementInboundFundingCheckReturnedEvent
+  extends EventBase {
+  type: 'v2.money_management.inbound_funding.check_returned';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+}
+export interface V2MoneyManagementInboundFundingCheckReturnedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_funding.check_returned';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+  fetchEvent(): Promise<V2MoneyManagementInboundFundingCheckReturnedEvent>;
+}
+
+/**
+ * Occurs when an InboundFunding transitions into the succeeded state.
+ */
+export interface V2MoneyManagementInboundFundingCheckSucceededEvent
+  extends EventBase {
+  type: 'v2.money_management.inbound_funding.check_succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+}
+export interface V2MoneyManagementInboundFundingCheckSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_funding.check_succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+  fetchEvent(): Promise<V2MoneyManagementInboundFundingCheckSucceededEvent>;
+}
+
+/**
+ * Occurs when an InboundFunding is created.
+ */
+export interface V2MoneyManagementInboundFundingCreatedEvent extends EventBase {
+  type: 'v2.money_management.inbound_funding.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+}
+export interface V2MoneyManagementInboundFundingCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_funding.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+  fetchEvent(): Promise<V2MoneyManagementInboundFundingCreatedEvent>;
+}
+
+/**
+ * Occurs when an InboundFunding is updated.
+ */
+export interface V2MoneyManagementInboundFundingUpdatedEvent extends EventBase {
+  type: 'v2.money_management.inbound_funding.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+}
+export interface V2MoneyManagementInboundFundingUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.inbound_funding.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.InboundFunding>;
+  fetchEvent(): Promise<V2MoneyManagementInboundFundingUpdatedEvent>;
+}
+
+/**
  * Occurs when an InboundTransfer's funds are made available.
  */
 export interface V2MoneyManagementInboundTransferAvailableEvent
@@ -12434,6 +14246,26 @@ export interface V2MoneyManagementPayoutIntentCreatedEventNotification
 }
 
 /**
+ * Occurs when a PayoutIntent transitions into the pending state.
+ */
+export interface V2MoneyManagementPayoutIntentPendingEvent extends EventBase {
+  type: 'v2.money_management.payout_intent.pending';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+}
+export interface V2MoneyManagementPayoutIntentPendingEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.payout_intent.pending';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+  fetchEvent(): Promise<V2MoneyManagementPayoutIntentPendingEvent>;
+}
+
+/**
  * Occurs when a PayoutIntent transitions into the posted state.
  */
 export interface V2MoneyManagementPayoutIntentPostedEvent extends EventBase {
@@ -12493,6 +14325,26 @@ export interface V2MoneyManagementPayoutIntentRequiresActionEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
   fetchEvent(): Promise<V2MoneyManagementPayoutIntentRequiresActionEvent>;
+}
+
+/**
+ * Occurs when a PayoutIntent is updated.
+ */
+export interface V2MoneyManagementPayoutIntentUpdatedEvent extends EventBase {
+  type: 'v2.money_management.payout_intent.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+}
+export interface V2MoneyManagementPayoutIntentUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.payout_intent.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.PayoutIntent>;
+  fetchEvent(): Promise<V2MoneyManagementPayoutIntentUpdatedEvent>;
 }
 
 /**
@@ -12921,6 +14773,185 @@ export interface V2MoneyManagementRecipientVerificationUpdatedEventNotification
 }
 
 /**
+ * Occurs when a reward program produces a reward for a connected account. Credit `reward.amount` to
+ * the account. Use the event ID as the idempotency key.
+ */
+export interface V2MoneyManagementRewardProgramRewardEarnedEvent
+  extends EventBase {
+  type: 'v2.money_management.reward_program.reward_earned';
+  // Retrieves data specific to this event.
+  data: V2MoneyManagementRewardProgramRewardEarnedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.RewardProgram>;
+}
+export interface V2MoneyManagementRewardProgramRewardEarnedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.reward_program.reward_earned';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.RewardProgram>;
+  fetchEvent(): Promise<V2MoneyManagementRewardProgramRewardEarnedEvent>;
+}
+
+export namespace V2MoneyManagementRewardProgramRewardEarnedEvent {
+  export interface Data {
+    /**
+     * The connected account that earned the reward.
+     */
+    account: string;
+
+    /**
+     * Issuing card spend details for the reward.
+     */
+    card_spend?: Data.CardSpend;
+
+    /**
+     * The reward to credit to the connected account.
+     */
+    reward: Data.Reward;
+  }
+
+  export namespace Data {
+    export interface CardSpend {
+      /**
+       * The Issuing cardholder whose spend earned the reward.
+       */
+      cardholder?: string;
+
+      /**
+       * The Issuing transaction that earned the reward. Present when the reward is calculated from a
+       * single Issuing transaction.
+       */
+      issuing_transaction?: string;
+    }
+
+    export interface Reward {
+      /**
+       * The reward amount. Always positive; the event type determines whether to credit or debit the
+       * connected account.
+       */
+      amount: V2Amount;
+
+      /**
+       * The period over which the reward was earned. Present when the reward is calculated over an
+       * earning period rather than from a single Issuing transaction.
+       */
+      earning_period?: Reward.EarningPeriod;
+    }
+
+    export namespace Reward {
+      export interface EarningPeriod {
+        /**
+         * End of the earning period, exclusive.
+         */
+        end: string;
+
+        /**
+         * Start of the earning period, inclusive.
+         */
+        start: string;
+      }
+    }
+  }
+}
+
+/**
+ * Occurs when a previously earned reward is reversed, for example because the card transaction was
+ * refunded or disputed. Debit `reward.amount` from the connected account. Use the event ID as the
+ * idempotency key.
+ */
+export interface V2MoneyManagementRewardProgramRewardReversedEvent
+  extends EventBase {
+  type: 'v2.money_management.reward_program.reward_reversed';
+  // Retrieves data specific to this event.
+  data: V2MoneyManagementRewardProgramRewardReversedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.RewardProgram>;
+}
+export interface V2MoneyManagementRewardProgramRewardReversedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.reward_program.reward_reversed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.RewardProgram>;
+  fetchEvent(): Promise<V2MoneyManagementRewardProgramRewardReversedEvent>;
+}
+
+export namespace V2MoneyManagementRewardProgramRewardReversedEvent {
+  export interface Data {
+    /**
+     * The connected account whose reward is reversed.
+     */
+    account: string;
+
+    /**
+     * Issuing card spend details for the reversal.
+     */
+    card_spend?: Data.CardSpend;
+
+    /**
+     * The reward to debit from the connected account.
+     */
+    reward: Data.Reward;
+  }
+
+  export namespace Data {
+    export interface CardSpend {
+      /**
+       * The Issuing cardholder whose spend earned the original reward.
+       */
+      cardholder?: string;
+
+      /**
+       * The Issuing transaction that reversed the reward. Present when the reversal is calculated from a
+       * single Issuing transaction.
+       */
+      issuing_transaction?: string;
+
+      /**
+       * The Issuing transaction that earned the original reward. Present when the reversal is calculated
+       * from a single Issuing transaction and Stripe can associate it with the original transaction.
+       */
+      original_transaction?: string;
+    }
+
+    export interface Reward {
+      /**
+       * The reward amount. Always positive; the event type determines whether to credit or debit the
+       * connected account.
+       */
+      amount: V2Amount;
+
+      /**
+       * The period over which the reward was earned. Present when the reward is calculated over an
+       * earning period rather than from a single Issuing transaction.
+       */
+      earning_period?: Reward.EarningPeriod;
+    }
+
+    export namespace Reward {
+      export interface EarningPeriod {
+        /**
+         * End of the earning period, exclusive.
+         */
+        end: string;
+
+        /**
+         * Start of the earning period, inclusive.
+         */
+        start: string;
+      }
+    }
+  }
+}
+
+/**
  * Occurs when a Transaction is created.
  */
 export interface V2MoneyManagementTransactionCreatedEvent extends EventBase {
@@ -13314,55 +15345,6 @@ export interface V2PaymentsOffSessionPaymentAttemptStartedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
   fetchEvent(): Promise<V2PaymentsOffSessionPaymentAttemptStartedEvent>;
-}
-
-/**
- * Sent after a failed authorization if there are still retries available on the OffSessionPayment.
- * This event has been renamed this to attempt_failed, but we are keeping this around for backwards compatibility.
- */
-export interface V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
-  extends EventBase {
-  type: 'v2.payments.off_session_payment.authorization_attempt_failed';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
-}
-export interface V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEventNotification
-  extends EventNotificationBase {
-  type: 'v2.payments.off_session_payment.authorization_attempt_failed';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
-  fetchEvent(): Promise<
-    V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
-  >;
-}
-
-/**
- * Sent when our internal scheduling system kicks off an attempt at authorization, whether it's a
- * retry or an initial authorization.
- * This event has been renamed this to attempt_failed, but we are keeping this around for backwards compatibility.
- */
-export interface V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
-  extends EventBase {
-  type: 'v2.payments.off_session_payment.authorization_attempt_started';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
-}
-export interface V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEventNotification
-  extends EventNotificationBase {
-  type: 'v2.payments.off_session_payment.authorization_attempt_started';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
-  fetchEvent(): Promise<
-    V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
-  >;
 }
 
 /**
@@ -14099,31 +16081,57 @@ export declare namespace Events {
     V1CreditNoteVoidedEvent,
     V1CustomerCreatedEvent,
     V1CustomerDeletedEvent,
+    V1CustomerDiscountSourceChangedEvent,
+    V1CustomerSubscriptionActiveEvent,
+    V1CustomerSubscriptionCancelAtChangedEvent,
     V1CustomerSubscriptionCreatedEvent,
+    V1CustomerSubscriptionDefaultPaymentMethodChangedEvent,
     V1CustomerSubscriptionDeletedEvent,
+    V1CustomerSubscriptionIncompleteEvent,
+    V1CustomerSubscriptionIncompleteExpiredEvent,
+    V1CustomerSubscriptionItemAddedEvent,
+    V1CustomerSubscriptionItemPriceChangedEvent,
+    V1CustomerSubscriptionItemQuantityChangedEvent,
+    V1CustomerSubscriptionItemRemovedEvent,
+    V1CustomerSubscriptionItemTaxRatesChangedEvent,
+    V1CustomerSubscriptionPastDueEvent,
     V1CustomerSubscriptionPausedEvent,
     V1CustomerSubscriptionPendingUpdateAppliedEvent,
     V1CustomerSubscriptionPendingUpdateExpiredEvent,
     V1CustomerSubscriptionResumedEvent,
     V1CustomerSubscriptionTrialWillEndEvent,
+    V1CustomerSubscriptionTrialingEvent,
+    V1CustomerSubscriptionUnpaidEvent,
     V1CustomerSubscriptionUpdatedEvent,
     V1CustomerTaxIdCreatedEvent,
     V1CustomerTaxIdDeletedEvent,
     V1CustomerTaxIdUpdatedEvent,
     V1CustomerUpdatedEvent,
     V1CustomerCashBalanceTransactionCreatedEvent,
+    V1EntitlementsActiveEntitlementSummaryEntitlementAddedEvent,
+    V1EntitlementsActiveEntitlementSummaryEntitlementRemovedEvent,
     V1EntitlementsActiveEntitlementSummaryUpdatedEvent,
     V1FileCreatedEvent,
     V1FinancialConnectionsAccountAccountNumbersUpdatedEvent,
+    V1FinancialConnectionsAccountBalanceRefreshFailedEvent,
+    V1FinancialConnectionsAccountBalanceRefreshSucceededEvent,
     V1FinancialConnectionsAccountCreatedEvent,
     V1FinancialConnectionsAccountDeactivatedEvent,
     V1FinancialConnectionsAccountDisconnectedEvent,
     V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEvent,
+    V1FinancialConnectionsAccountInferredBalancesRefreshFailedEvent,
+    V1FinancialConnectionsAccountInferredBalancesRefreshSucceededEvent,
+    V1FinancialConnectionsAccountOwnershipRefreshFailedEvent,
+    V1FinancialConnectionsAccountOwnershipRefreshSucceededEvent,
     V1FinancialConnectionsAccountReactivatedEvent,
     V1FinancialConnectionsAccountRefreshedBalanceEvent,
     V1FinancialConnectionsAccountRefreshedOwnershipEvent,
     V1FinancialConnectionsAccountRefreshedTransactionsEvent,
+    V1FinancialConnectionsAccountRiskIntelligenceRefreshFailedEvent,
+    V1FinancialConnectionsAccountRiskIntelligenceRefreshSucceededEvent,
     V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEvent,
+    V1FinancialConnectionsAccountTransactionsRefreshFailedEvent,
+    V1FinancialConnectionsAccountTransactionsRefreshSucceededEvent,
     V1FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent,
     V1FinancialConnectionsAccountUpcomingDeactivationEvent,
     V1IdentityVerificationSessionCanceledEvent,
@@ -14134,8 +16142,14 @@ export declare namespace Events {
     V1IdentityVerificationSessionVerifiedEvent,
     V1InvoiceCreatedEvent,
     V1InvoiceDeletedEvent,
+    V1InvoiceDiscountAddedEvent,
+    V1InvoiceDiscountRemovedEvent,
     V1InvoiceFinalizationFailedEvent,
     V1InvoiceFinalizedEvent,
+    V1InvoiceLineItemAddedEvent,
+    V1InvoiceLineItemPricingChangedEvent,
+    V1InvoiceLineItemQuantityChangedEvent,
+    V1InvoiceLineItemRemovedEvent,
     V1InvoiceMarkedUncollectibleEvent,
     V1InvoiceOverdueEvent,
     V1InvoiceOverpaidEvent,
@@ -14149,9 +16163,14 @@ export declare namespace Events {
     V1InvoiceUpdatedEvent,
     V1InvoiceVoidedEvent,
     V1InvoiceWillBeDueEvent,
+    V1InvoicePaymentCanceledEvent,
+    V1InvoicePaymentOpenEvent,
     V1InvoicePaymentPaidEvent,
+    V1InvoiceitemAmountChangedEvent,
     V1InvoiceitemCreatedEvent,
     V1InvoiceitemDeletedEvent,
+    V1InvoiceitemDiscountAddedEvent,
+    V1InvoiceitemDiscountRemovedEvent,
     V1IssuingAuthorizationCreatedEvent,
     V1IssuingAuthorizationRequestEvent,
     V1IssuingAuthorizationUpdatedEvent,
@@ -14201,13 +16220,22 @@ export declare namespace Events {
     V1PlanCreatedEvent,
     V1PlanDeletedEvent,
     V1PlanUpdatedEvent,
+    V1PriceActivatedEvent,
     V1PriceCreatedEvent,
+    V1PriceDeactivatedEvent,
     V1PriceDeletedEvent,
+    V1PriceLookupKeyChangedEvent,
+    V1PriceTaxBehaviorChangedEvent,
     V1PriceUpdatedEvent,
+    V1ProductActivatedEvent,
     V1ProductCreatedEvent,
+    V1ProductDeactivatedEvent,
+    V1ProductDefaultPriceChangedEvent,
     V1ProductDeletedEvent,
+    V1ProductTaxCodeChangedEvent,
     V1ProductUpdatedEvent,
     V1PromotionCodeCreatedEvent,
+    V1PromotionCodeFullyRedeemedEvent,
     V1PromotionCodeUpdatedEvent,
     V1QuoteAcceptedEvent,
     V1QuoteCanceledEvent,
@@ -14235,6 +16263,11 @@ export declare namespace Events {
     V1SubscriptionScheduleCompletedEvent,
     V1SubscriptionScheduleCreatedEvent,
     V1SubscriptionScheduleExpiringEvent,
+    V1SubscriptionSchedulePhaseAddedEvent,
+    V1SubscriptionSchedulePhaseDefaultTaxRatesChangedEvent,
+    V1SubscriptionSchedulePhaseEndDateChangedEvent,
+    V1SubscriptionSchedulePhaseRemovedEvent,
+    V1SubscriptionSchedulePhaseTrialEndChangedEvent,
     V1SubscriptionScheduleReleasedEvent,
     V1SubscriptionScheduleUpdatedEvent,
     V1TaxSettingsUpdatedEvent,
@@ -14268,6 +16301,9 @@ export declare namespace Events {
     V2BillingContractCreatedEvent,
     V2BillingContractEndedEvent,
     V2BillingContractUpdatedEvent,
+    V2BillingContractTermCreatedEvent,
+    V2BillingContractTermDeletedEvent,
+    V2BillingContractTermUpdatedEvent,
     V2BillingLicenseFeeCreatedEvent,
     V2BillingLicenseFeeUpdatedEvent,
     V2BillingLicenseFeeVersionCreatedEvent,
@@ -14427,6 +16463,22 @@ export declare namespace Events {
     V2MoneyManagementFinancialAccountStatementRestatedEvent,
     V2MoneyManagementFinancialAddressActivatedEvent,
     V2MoneyManagementFinancialAddressFailedEvent,
+    V2MoneyManagementFundingIntentCanceledEvent,
+    V2MoneyManagementFundingIntentCreatedEvent,
+    V2MoneyManagementFundingIntentProcessingEvent,
+    V2MoneyManagementFundingIntentRequiresActionEvent,
+    V2MoneyManagementFundingIntentRequiresConfirmationEvent,
+    V2MoneyManagementFundingIntentSucceededEvent,
+    V2MoneyManagementFundingIntentUpdatedEvent,
+    V2MoneyManagementFundingIntentValidatingEvent,
+    V2MoneyManagementInboundFundingAvailableEvent,
+    V2MoneyManagementInboundFundingCheckFailedEvent,
+    V2MoneyManagementInboundFundingCheckProcessingEvent,
+    V2MoneyManagementInboundFundingCheckQueuedEvent,
+    V2MoneyManagementInboundFundingCheckReturnedEvent,
+    V2MoneyManagementInboundFundingCheckSucceededEvent,
+    V2MoneyManagementInboundFundingCreatedEvent,
+    V2MoneyManagementInboundFundingUpdatedEvent,
     V2MoneyManagementInboundTransferAvailableEvent,
     V2MoneyManagementInboundTransferBankDebitFailedEvent,
     V2MoneyManagementInboundTransferBankDebitProcessingEvent,
@@ -14454,9 +16506,11 @@ export declare namespace Events {
     V2MoneyManagementOutboundTransferUpdatedEvent,
     V2MoneyManagementPayoutIntentCanceledEvent,
     V2MoneyManagementPayoutIntentCreatedEvent,
+    V2MoneyManagementPayoutIntentPendingEvent,
     V2MoneyManagementPayoutIntentPostedEvent,
     V2MoneyManagementPayoutIntentProcessingEvent,
     V2MoneyManagementPayoutIntentRequiresActionEvent,
+    V2MoneyManagementPayoutIntentUpdatedEvent,
     V2MoneyManagementPayoutMethodCreatedEvent,
     V2MoneyManagementPayoutMethodUpdatedEvent,
     V2MoneyManagementReceivedCreditAvailableEvent,
@@ -14477,6 +16531,8 @@ export declare namespace Events {
     V2MoneyManagementReceivedDebitMandateUpdatedEvent,
     V2MoneyManagementRecipientVerificationCreatedEvent,
     V2MoneyManagementRecipientVerificationUpdatedEvent,
+    V2MoneyManagementRewardProgramRewardEarnedEvent,
+    V2MoneyManagementRewardProgramRewardReversedEvent,
     V2MoneyManagementTransactionCreatedEvent,
     V2MoneyManagementTransactionUpdatedEvent,
     V2OrchestratedCommerceAgreementConfirmedEvent,
@@ -14485,8 +16541,6 @@ export declare namespace Events {
     V2OrchestratedCommerceAgreementTerminatedEvent,
     V2PaymentsOffSessionPaymentAttemptFailedEvent,
     V2PaymentsOffSessionPaymentAttemptStartedEvent,
-    V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent,
-    V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent,
     V2PaymentsOffSessionPaymentCanceledEvent,
     V2PaymentsOffSessionPaymentCreatedEvent,
     V2PaymentsOffSessionPaymentFailedEvent,
@@ -14574,31 +16628,57 @@ export declare namespace Events {
     V1CreditNoteVoidedEventNotification,
     V1CustomerCreatedEventNotification,
     V1CustomerDeletedEventNotification,
+    V1CustomerDiscountSourceChangedEventNotification,
+    V1CustomerSubscriptionActiveEventNotification,
+    V1CustomerSubscriptionCancelAtChangedEventNotification,
     V1CustomerSubscriptionCreatedEventNotification,
+    V1CustomerSubscriptionDefaultPaymentMethodChangedEventNotification,
     V1CustomerSubscriptionDeletedEventNotification,
+    V1CustomerSubscriptionIncompleteEventNotification,
+    V1CustomerSubscriptionIncompleteExpiredEventNotification,
+    V1CustomerSubscriptionItemAddedEventNotification,
+    V1CustomerSubscriptionItemPriceChangedEventNotification,
+    V1CustomerSubscriptionItemQuantityChangedEventNotification,
+    V1CustomerSubscriptionItemRemovedEventNotification,
+    V1CustomerSubscriptionItemTaxRatesChangedEventNotification,
+    V1CustomerSubscriptionPastDueEventNotification,
     V1CustomerSubscriptionPausedEventNotification,
     V1CustomerSubscriptionPendingUpdateAppliedEventNotification,
     V1CustomerSubscriptionPendingUpdateExpiredEventNotification,
     V1CustomerSubscriptionResumedEventNotification,
     V1CustomerSubscriptionTrialWillEndEventNotification,
+    V1CustomerSubscriptionTrialingEventNotification,
+    V1CustomerSubscriptionUnpaidEventNotification,
     V1CustomerSubscriptionUpdatedEventNotification,
     V1CustomerTaxIdCreatedEventNotification,
     V1CustomerTaxIdDeletedEventNotification,
     V1CustomerTaxIdUpdatedEventNotification,
     V1CustomerUpdatedEventNotification,
     V1CustomerCashBalanceTransactionCreatedEventNotification,
+    V1EntitlementsActiveEntitlementSummaryEntitlementAddedEventNotification,
+    V1EntitlementsActiveEntitlementSummaryEntitlementRemovedEventNotification,
     V1EntitlementsActiveEntitlementSummaryUpdatedEventNotification,
     V1FileCreatedEventNotification,
     V1FinancialConnectionsAccountAccountNumbersUpdatedEventNotification,
+    V1FinancialConnectionsAccountBalanceRefreshFailedEventNotification,
+    V1FinancialConnectionsAccountBalanceRefreshSucceededEventNotification,
     V1FinancialConnectionsAccountCreatedEventNotification,
     V1FinancialConnectionsAccountDeactivatedEventNotification,
     V1FinancialConnectionsAccountDisconnectedEventNotification,
     V1FinancialConnectionsAccountExpectedDeactivationDateUpdatedEventNotification,
+    V1FinancialConnectionsAccountInferredBalancesRefreshFailedEventNotification,
+    V1FinancialConnectionsAccountInferredBalancesRefreshSucceededEventNotification,
+    V1FinancialConnectionsAccountOwnershipRefreshFailedEventNotification,
+    V1FinancialConnectionsAccountOwnershipRefreshSucceededEventNotification,
     V1FinancialConnectionsAccountReactivatedEventNotification,
     V1FinancialConnectionsAccountRefreshedBalanceEventNotification,
     V1FinancialConnectionsAccountRefreshedOwnershipEventNotification,
     V1FinancialConnectionsAccountRefreshedTransactionsEventNotification,
+    V1FinancialConnectionsAccountRiskIntelligenceRefreshFailedEventNotification,
+    V1FinancialConnectionsAccountRiskIntelligenceRefreshSucceededEventNotification,
     V1FinancialConnectionsAccountSupportedPaymentMethodTypesUpdatedEventNotification,
+    V1FinancialConnectionsAccountTransactionsRefreshFailedEventNotification,
+    V1FinancialConnectionsAccountTransactionsRefreshSucceededEventNotification,
     V1FinancialConnectionsAccountUpcomingAccountNumberExpiryEventNotification,
     V1FinancialConnectionsAccountUpcomingDeactivationEventNotification,
     V1IdentityVerificationSessionCanceledEventNotification,
@@ -14609,8 +16689,14 @@ export declare namespace Events {
     V1IdentityVerificationSessionVerifiedEventNotification,
     V1InvoiceCreatedEventNotification,
     V1InvoiceDeletedEventNotification,
+    V1InvoiceDiscountAddedEventNotification,
+    V1InvoiceDiscountRemovedEventNotification,
     V1InvoiceFinalizationFailedEventNotification,
     V1InvoiceFinalizedEventNotification,
+    V1InvoiceLineItemAddedEventNotification,
+    V1InvoiceLineItemPricingChangedEventNotification,
+    V1InvoiceLineItemQuantityChangedEventNotification,
+    V1InvoiceLineItemRemovedEventNotification,
     V1InvoiceMarkedUncollectibleEventNotification,
     V1InvoiceOverdueEventNotification,
     V1InvoiceOverpaidEventNotification,
@@ -14624,9 +16710,14 @@ export declare namespace Events {
     V1InvoiceUpdatedEventNotification,
     V1InvoiceVoidedEventNotification,
     V1InvoiceWillBeDueEventNotification,
+    V1InvoicePaymentCanceledEventNotification,
+    V1InvoicePaymentOpenEventNotification,
     V1InvoicePaymentPaidEventNotification,
+    V1InvoiceitemAmountChangedEventNotification,
     V1InvoiceitemCreatedEventNotification,
     V1InvoiceitemDeletedEventNotification,
+    V1InvoiceitemDiscountAddedEventNotification,
+    V1InvoiceitemDiscountRemovedEventNotification,
     V1IssuingAuthorizationCreatedEventNotification,
     V1IssuingAuthorizationRequestEventNotification,
     V1IssuingAuthorizationUpdatedEventNotification,
@@ -14676,13 +16767,22 @@ export declare namespace Events {
     V1PlanCreatedEventNotification,
     V1PlanDeletedEventNotification,
     V1PlanUpdatedEventNotification,
+    V1PriceActivatedEventNotification,
     V1PriceCreatedEventNotification,
+    V1PriceDeactivatedEventNotification,
     V1PriceDeletedEventNotification,
+    V1PriceLookupKeyChangedEventNotification,
+    V1PriceTaxBehaviorChangedEventNotification,
     V1PriceUpdatedEventNotification,
+    V1ProductActivatedEventNotification,
     V1ProductCreatedEventNotification,
+    V1ProductDeactivatedEventNotification,
+    V1ProductDefaultPriceChangedEventNotification,
     V1ProductDeletedEventNotification,
+    V1ProductTaxCodeChangedEventNotification,
     V1ProductUpdatedEventNotification,
     V1PromotionCodeCreatedEventNotification,
+    V1PromotionCodeFullyRedeemedEventNotification,
     V1PromotionCodeUpdatedEventNotification,
     V1QuoteAcceptedEventNotification,
     V1QuoteCanceledEventNotification,
@@ -14710,6 +16810,11 @@ export declare namespace Events {
     V1SubscriptionScheduleCompletedEventNotification,
     V1SubscriptionScheduleCreatedEventNotification,
     V1SubscriptionScheduleExpiringEventNotification,
+    V1SubscriptionSchedulePhaseAddedEventNotification,
+    V1SubscriptionSchedulePhaseDefaultTaxRatesChangedEventNotification,
+    V1SubscriptionSchedulePhaseEndDateChangedEventNotification,
+    V1SubscriptionSchedulePhaseRemovedEventNotification,
+    V1SubscriptionSchedulePhaseTrialEndChangedEventNotification,
     V1SubscriptionScheduleReleasedEventNotification,
     V1SubscriptionScheduleUpdatedEventNotification,
     V1TaxSettingsUpdatedEventNotification,
@@ -14743,6 +16848,9 @@ export declare namespace Events {
     V2BillingContractCreatedEventNotification,
     V2BillingContractEndedEventNotification,
     V2BillingContractUpdatedEventNotification,
+    V2BillingContractTermCreatedEventNotification,
+    V2BillingContractTermDeletedEventNotification,
+    V2BillingContractTermUpdatedEventNotification,
     V2BillingLicenseFeeCreatedEventNotification,
     V2BillingLicenseFeeUpdatedEventNotification,
     V2BillingLicenseFeeVersionCreatedEventNotification,
@@ -14902,6 +17010,22 @@ export declare namespace Events {
     V2MoneyManagementFinancialAccountStatementRestatedEventNotification,
     V2MoneyManagementFinancialAddressActivatedEventNotification,
     V2MoneyManagementFinancialAddressFailedEventNotification,
+    V2MoneyManagementFundingIntentCanceledEventNotification,
+    V2MoneyManagementFundingIntentCreatedEventNotification,
+    V2MoneyManagementFundingIntentProcessingEventNotification,
+    V2MoneyManagementFundingIntentRequiresActionEventNotification,
+    V2MoneyManagementFundingIntentRequiresConfirmationEventNotification,
+    V2MoneyManagementFundingIntentSucceededEventNotification,
+    V2MoneyManagementFundingIntentUpdatedEventNotification,
+    V2MoneyManagementFundingIntentValidatingEventNotification,
+    V2MoneyManagementInboundFundingAvailableEventNotification,
+    V2MoneyManagementInboundFundingCheckFailedEventNotification,
+    V2MoneyManagementInboundFundingCheckProcessingEventNotification,
+    V2MoneyManagementInboundFundingCheckQueuedEventNotification,
+    V2MoneyManagementInboundFundingCheckReturnedEventNotification,
+    V2MoneyManagementInboundFundingCheckSucceededEventNotification,
+    V2MoneyManagementInboundFundingCreatedEventNotification,
+    V2MoneyManagementInboundFundingUpdatedEventNotification,
     V2MoneyManagementInboundTransferAvailableEventNotification,
     V2MoneyManagementInboundTransferBankDebitFailedEventNotification,
     V2MoneyManagementInboundTransferBankDebitProcessingEventNotification,
@@ -14929,9 +17053,11 @@ export declare namespace Events {
     V2MoneyManagementOutboundTransferUpdatedEventNotification,
     V2MoneyManagementPayoutIntentCanceledEventNotification,
     V2MoneyManagementPayoutIntentCreatedEventNotification,
+    V2MoneyManagementPayoutIntentPendingEventNotification,
     V2MoneyManagementPayoutIntentPostedEventNotification,
     V2MoneyManagementPayoutIntentProcessingEventNotification,
     V2MoneyManagementPayoutIntentRequiresActionEventNotification,
+    V2MoneyManagementPayoutIntentUpdatedEventNotification,
     V2MoneyManagementPayoutMethodCreatedEventNotification,
     V2MoneyManagementPayoutMethodUpdatedEventNotification,
     V2MoneyManagementReceivedCreditAvailableEventNotification,
@@ -14952,6 +17078,8 @@ export declare namespace Events {
     V2MoneyManagementReceivedDebitMandateUpdatedEventNotification,
     V2MoneyManagementRecipientVerificationCreatedEventNotification,
     V2MoneyManagementRecipientVerificationUpdatedEventNotification,
+    V2MoneyManagementRewardProgramRewardEarnedEventNotification,
+    V2MoneyManagementRewardProgramRewardReversedEventNotification,
     V2MoneyManagementTransactionCreatedEventNotification,
     V2MoneyManagementTransactionUpdatedEventNotification,
     V2OrchestratedCommerceAgreementConfirmedEventNotification,
@@ -14960,8 +17088,6 @@ export declare namespace Events {
     V2OrchestratedCommerceAgreementTerminatedEventNotification,
     V2PaymentsOffSessionPaymentAttemptFailedEventNotification,
     V2PaymentsOffSessionPaymentAttemptStartedEventNotification,
-    V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEventNotification,
-    V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEventNotification,
     V2PaymentsOffSessionPaymentCanceledEventNotification,
     V2PaymentsOffSessionPaymentCreatedEventNotification,
     V2PaymentsOffSessionPaymentFailedEventNotification,

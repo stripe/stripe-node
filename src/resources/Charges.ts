@@ -609,6 +609,8 @@ export namespace Charge {
 
     tamara?: PaymentMethodDetails.Tamara;
 
+    toss_pay?: PaymentMethodDetails.TossPay;
+
     twint?: PaymentMethodDetails.Twint;
 
     /**
@@ -1161,7 +1163,7 @@ export namespace Charge {
       setup_credential_usage?: Card.SetupCredentialUsage;
 
       /**
-       * The payment_method_options.card.stored_credential_usage value that was passed for an off session, merchant-initiated transaction, one of `recurring`, `unscheduled`, `on_session`, or `installment`
+       * The payment_method_options.card.stored_credential_usage value that was passed for an off session, merchant-initiated transaction.
        */
       stored_credential_usage?: Card.StoredCredentialUsage;
 
@@ -1941,7 +1943,12 @@ export namespace Charge {
       verified_name?: string | null;
     }
 
-    export interface Paypay {}
+    export interface Paypay {
+      /**
+       * ID of the multi-use Mandate created by, or used to make, this PayPay payment.
+       */
+      mandate?: string;
+    }
 
     export interface Payto {
       /**
@@ -2197,6 +2204,13 @@ export namespace Charge {
        * The Tamara transaction ID associated with this payment.
        */
       transaction_id: string | null;
+    }
+
+    export interface TossPay {
+      /**
+       * The buyer identifier provided by NICE for this Toss Pay account, when available.
+       */
+      buyer_id: string | null;
     }
 
     export interface Twint {

@@ -30,7 +30,8 @@ export class QueryRunResource extends StripeResource {
     }) as any;
   }
   /**
-   * Retrieves the status and results of a previously created `QueryRun`.
+   * Retrieves the status and results of a previously created `QueryRun`. Returns a `404` error
+   * if the `QueryRun` doesn't exist or its retention period has ended.
    */
   retrieve(
     id: string,
@@ -128,7 +129,7 @@ export namespace QueryRun {
 
   export interface Query {
     /**
-     * Ad-hoc SQL to execute.
+     * Ad-hoc SQL to execute. The maximum length is 100,000 characters.
      */
     sql?: string;
   }
@@ -158,10 +159,10 @@ export namespace QueryRun {
 
   export interface ResultOptions {
     /**
-     * If set, the generated result file is compressed into a ZIP archive before
-     * it is stored. This applies only to downloadable file results.
+     * The compression applied to the generated result file. Defaults to `none`. This applies
+     * only to downloadable file results.
      */
-    compress_file?: boolean;
+    compression?: ResultOptions.Compression;
   }
 
   export type Status =
@@ -186,6 +187,11 @@ export namespace QueryRun {
      * Error message with additional details about the failure.
      */
     message?: string;
+
+    /**
+     * Errors found in the submitted SQL. Populated when the failure was caused by invalid SQL.
+     */
+    query_errors: Array<StatusDetails.QueryError>;
   }
 
   export namespace Result {
@@ -317,12 +323,30 @@ export namespace QueryRun {
     }
   }
 
+  export namespace ResultOptions {
+    export type Compression = 'none' | 'zip' | OtherString;
+  }
+
   export namespace StatusDetails {
     export type Code =
+      | 'execution_failed'
       | 'file_size_above_limit'
       | 'internal_error'
       | 'query_run_invalid_sql'
+      | 'resource_limit_exceeded'
       | OtherString;
+
+    export interface QueryError {
+      /**
+       * A human-readable description of the error.
+       */
+      message: string;
+
+      /**
+       * A short identifier categorizing the type of error.
+       */
+      type: string;
+    }
   }
 }
 export namespace V2 {
@@ -344,6 +368,14 @@ export namespace V2 {
       query: QueryRunCreateParams.Query;
 
       /**
+       * Named bind parameters for the query. Keys are parameter names referenced in
+       * the SQL (without any prefix). Omit this field for a non-parameterized query.
+       * Values are strings, integers, or booleans. Fractional numbers, timestamps,
+       * and dates should be passed as strings.
+       */
+      parameters?: QueryRunCreateParams.Parameters;
+
+      /**
        * Optional settings that customize the generated result file.
        */
       result_options?: QueryRunCreateParams.ResultOptions;
@@ -356,17 +388,25 @@ export namespace V2 {
 
       export interface Query {
         /**
-         * Ad-hoc SQL to execute.
+         * Ad-hoc SQL to execute. The maximum length is 100,000 characters.
          */
         sql?: string;
       }
 
+      export type Parameters = {
+        [key: string]: unknown;
+      };
+
       export interface ResultOptions {
         /**
-         * If set, the generated result file is compressed into a ZIP archive before
-         * it is stored. This applies only to downloadable file results.
+         * The compression applied to the generated result file. Defaults to `none`. This applies
+         * only to downloadable file results.
          */
-        compress_file?: boolean;
+        compression?: ResultOptions.Compression;
+      }
+
+      export namespace ResultOptions {
+        export type Compression = 'none' | 'zip' | OtherString;
       }
     }
   }
@@ -380,7 +420,7 @@ export namespace V2 {
       include?: Array<QueryRunRetrieveParams.Include>;
 
       /**
-       * The maximum number of inline `QueryRun` result rows to return. Defaults to 10. Maximum is 1000.
+       * The maximum number of inline `QueryRun` result rows to return. Defaults to 100. Maximum is 1000.
        */
       limit?: number;
 

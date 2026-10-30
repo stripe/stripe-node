@@ -385,11 +385,6 @@ export namespace ActivityLog {
 
     export interface UserAccess {
       /**
-       * Authentication details for the user access action.
-       */
-      authentication: UserAccess.Authentication;
-
-      /**
        * Dashboard client details for the user access action.
        */
       dashboard_client?: UserAccess.DashboardClient;
@@ -413,11 +408,6 @@ export namespace ActivityLog {
        * Roles associated with the user access action.
        */
       roles: Array<string>;
-
-      /**
-       * Session fingerprint for the user access action.
-       */
-      session_fingerprint: string;
 
       /**
        * Surface where the user access action started.
@@ -564,38 +554,11 @@ export namespace ActivityLog {
     }
 
     export namespace UserAccess {
-      export interface Authentication {
-        /**
-         * Primary authentication factor.
-         */
-        primary_factor: Authentication.PrimaryFactor;
-
-        /**
-         * Secondary authentication factors.
-         */
-        secondary_factors: Array<Authentication.SecondaryFactor>;
-      }
-
       export interface DashboardClient {
         /**
-         * Browser used for the user access action.
+         * User-Agent header for the user access action.
          */
-        browser: string;
-
-        /**
-         * Browser version used for the user access action.
-         */
-        browser_version: string;
-
-        /**
-         * Device type used for the user access action.
-         */
-        device_type: string;
-
-        /**
-         * Operating system used for the user access action.
-         */
-        os: string;
+        user_agent: string;
       }
 
       export interface Network {
@@ -622,11 +585,6 @@ export namespace ActivityLog {
 
       export interface Risk {
         /**
-         * Risk level for the user access action.
-         */
-        level: Risk.Level;
-
-        /**
          * Risk signals for the user access action.
          */
         signals: Array<Risk.Signal>;
@@ -634,65 +592,7 @@ export namespace ActivityLog {
 
       export type Surface = 'dashboard' | 'express' | OtherString;
 
-      export namespace Authentication {
-        export interface PrimaryFactor {
-          /**
-           * SSO provider for the authentication factor.
-           */
-          sso_provider?: string;
-
-          /**
-           * Type of authentication factor.
-           */
-          type: PrimaryFactor.Type;
-        }
-
-        export interface SecondaryFactor {
-          /**
-           * SSO provider for the authentication factor.
-           */
-          sso_provider?: string;
-
-          /**
-           * Type of authentication factor.
-           */
-          type: SecondaryFactor.Type;
-        }
-
-        export namespace PrimaryFactor {
-          export type Type =
-            | 'backup_code'
-            | 'email_code'
-            | 'oauth'
-            | 'passkey'
-            | 'password'
-            | 'phone_code'
-            | 'saml'
-            | 'sms'
-            | 'totp'
-            | 'web_authn'
-            | OtherString;
-        }
-
-        export namespace SecondaryFactor {
-          export type Type =
-            | 'backup_code'
-            | 'email_code'
-            | 'oauth'
-            | 'passkey'
-            | 'password'
-            | 'phone_code'
-            | 'saml'
-            | 'sms'
-            | 'totp'
-            | 'web_authn'
-            | OtherString;
-        }
-      }
-
       export namespace Risk {
-        export type Level = 'high' | 'low' | 'medium' | OtherString;
-
         export interface Signal {
           /**
            * The user access action used a novel device.

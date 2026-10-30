@@ -57,7 +57,7 @@ export class AccountSignalResource extends StripeResource {
                     kind: 'object',
                     fields: {score: {kind: 'decimal_string'}},
                   },
-                  user_merchant_fit: {
+                  user_affinity: {
                     kind: 'object',
                     fields: {score: {kind: 'decimal_string'}},
                   },
@@ -120,7 +120,7 @@ export class AccountSignalResource extends StripeResource {
               kind: 'object',
               fields: {score: {kind: 'decimal_string'}},
             },
-            user_merchant_fit: {
+            user_affinity: {
               kind: 'object',
               fields: {score: {kind: 'decimal_string'}},
             },
@@ -206,9 +206,9 @@ export interface AccountSignal {
   user_account_sharing?: AccountSignal.UserAccountSharing;
 
   /**
-   * Data for the user-merchant fit signal. Present only when type is user_merchant_fit.
+   * Data for the user affinity signal. Present only when type is user_affinity.
    */
-  user_merchant_fit?: AccountSignal.UserMerchantFit;
+  user_affinity?: AccountSignal.UserAffinity;
 
   /**
    * Data for the user multi-accounting signal. Present only when type is user_multi_accounting.
@@ -236,6 +236,11 @@ export namespace AccountSignal {
   }
 
   export interface CustomerRisk {
+    /**
+     * Supplementary contextual data for the signal, including indicators. Absent when no indicators are available.
+     */
+    additional_details?: CustomerRisk.AdditionalDetails;
+
     /**
      * Categorical assessment of the customer's risk of fraudulent or abusive activity.
      */
@@ -310,7 +315,7 @@ export namespace AccountSignal {
     | 'merchant_delinquency'
     | 'payment_delinquency_exposure'
     | 'user_account_sharing'
-    | 'user_merchant_fit'
+    | 'user_affinity'
     | 'user_multi_accounting'
     | OtherString;
 
@@ -327,14 +332,14 @@ export namespace AccountSignal {
     score?: Decimal;
   }
 
-  export interface UserMerchantFit {
+  export interface UserAffinity {
     /**
-     * Categorical assessment of the user-merchant fit.
+     * Categorical assessment of the user affinity.
      */
-    fit_level: UserMerchantFit.FitLevel;
+    level: UserAffinity.Level;
 
     /**
-     * The specific fit score for the user, between 0.00 and 100.00. Absent when fit_level is unknown.
+     * The specific affinity score for the user, between 0.00 and 100.00. Absent when level is unknown.
      */
     score?: Decimal;
   }
@@ -362,12 +367,48 @@ export namespace AccountSignal {
   }
 
   export namespace CustomerRisk {
+    export interface AdditionalDetails {
+      /**
+       * Indicators providing risk context. Not all indicators directly contribute to the overall risk level.
+       */
+      indicators: Array<AdditionalDetails.Indicator>;
+    }
+
     export type RiskLevel =
       | 'elevated'
       | 'highest'
       | 'low'
       | 'normal'
       | 'unknown';
+
+    export namespace AdditionalDetails {
+      export interface Indicator {
+        /**
+         * The name of the customer risk indicator.
+         */
+        indicator: Indicator.Indicator;
+      }
+
+      export namespace Indicator {
+        export type Indicator =
+          | 'card_testing_on_stripe'
+          | 'customer_recently_created'
+          | 'disposable_email_use_on_stripe'
+          | 'distributed_fraud_on_stripe'
+          | 'high_distinct_card_count_on_stripe'
+          | 'high_distinct_email_count_on_stripe'
+          | 'high_distinct_ip_count_on_stripe'
+          | 'high_distinct_phone_count_on_stripe'
+          | 'high_fraudulent_dispute_count_on_stripe'
+          | 'high_name_verification_failure_count_on_stripe'
+          | 'high_refund_count_on_stripe'
+          | 'low_auth_rate_on_stripe'
+          | 'new_identity_on_stripe'
+          | 'proxy_ip_usage_on_stripe'
+          | 'shared_browser_fingerprint_many_customers'
+          | 'shared_card_many_customers';
+      }
+    }
   }
 
   export namespace FraudulentMerchant {
@@ -550,8 +591,8 @@ export namespace AccountSignal {
       | 'unknown';
   }
 
-  export namespace UserMerchantFit {
-    export type FitLevel =
+  export namespace UserAffinity {
+    export type Level =
       | 'standard'
       | 'strong'
       | 'unknown'
@@ -602,7 +643,7 @@ export namespace V2 {
         | 'merchant_delinquency'
         | 'payment_delinquency_exposure'
         | 'user_account_sharing'
-        | 'user_merchant_fit'
+        | 'user_affinity'
         | 'user_multi_accounting'
         | OtherString;
 

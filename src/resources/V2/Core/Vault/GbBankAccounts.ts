@@ -73,6 +73,22 @@ export class GbBankAccountResource extends StripeResource {
       options
     ) as any;
   }
+  /**
+   * Unarchive a GBBankAccount object.
+   * @throws Stripe.ControlledByAlternateResourceError
+   */
+  unarchive(
+    id: string,
+    params?: V2.Core.Vault.GbBankAccountUnarchiveParams,
+    options?: RequestOptions
+  ): Promise<Response<GbBankAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/vault/gb_bank_accounts/${encodeURIComponent(id)}/unarchive`,
+      params,
+      options
+    ) as any;
+  }
 }
 export interface GbBankAccount {
   /**
@@ -119,6 +135,12 @@ export interface GbBankAccount {
   created: string;
 
   /**
+   * Uniquely identifies this particular bank account. You can use this attribute to check whether two
+   * recipients who've signed up with you are using the same bank account, for example.
+   */
+  fingerprint?: string;
+
+  /**
    * The last 4 digits of the account number or IBAN.
    */
   last4: string;
@@ -156,7 +178,7 @@ export namespace GbBankAccount {
     type: AlternativeReference.Type;
   }
 
-  export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
+  export type BankAccountType = 'checking' | 'savings';
 
   export interface ConfirmationOfPayee {
     /**
@@ -287,7 +309,7 @@ export namespace V2 {
       }
 
       export namespace GbBankAccountCreateParams {
-        export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
+        export type BankAccountType = 'checking' | 'savings';
 
         export interface ConfirmationOfPayee {
           /**
@@ -337,6 +359,13 @@ export namespace V2 {
   export namespace Core {
     export namespace Vault {
       export interface GbBankAccountArchiveParams {}
+    }
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export namespace Vault {
+      export interface GbBankAccountUnarchiveParams {}
     }
   }
 }

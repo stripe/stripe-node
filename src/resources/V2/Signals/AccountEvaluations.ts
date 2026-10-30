@@ -28,7 +28,7 @@ export class AccountEvaluationResource extends StripeResource {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
                 },
-                user_merchant_fit: {
+                user_affinity: {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
                 },
@@ -67,7 +67,7 @@ export class AccountEvaluationResource extends StripeResource {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
                 },
-                user_merchant_fit: {
+                user_affinity: {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
                 },
@@ -171,9 +171,9 @@ export namespace AccountEvaluation {
     user_account_sharing?: EvaluatedSignals.UserAccountSharing;
 
     /**
-     * User-merchant fit result for the evaluation, when available.
+     * User affinity result for the evaluation, when available.
      */
-    user_merchant_fit?: EvaluatedSignals.UserMerchantFit;
+    user_affinity?: EvaluatedSignals.UserAffinity;
 
     /**
      * User multi-accounting result for the evaluation, when available.
@@ -185,7 +185,7 @@ export namespace AccountEvaluation {
     | 'account_takeover'
     | 'fraudulent_website'
     | 'user_account_sharing'
-    | 'user_merchant_fit'
+    | 'user_affinity'
     | 'user_multi_accounting'
     | OtherString;
 
@@ -193,7 +193,7 @@ export namespace AccountEvaluation {
     | 'account_takeover'
     | 'fraudulent_website'
     | 'user_account_sharing'
-    | 'user_merchant_fit'
+    | 'user_affinity'
     | 'user_multi_accounting'
     | OtherString;
 
@@ -322,24 +322,24 @@ export namespace AccountEvaluation {
       signal?: string;
     }
 
-    export interface UserMerchantFit {
+    export interface UserAffinity {
       /**
        * Timestamp at which the signal was evaluated.
        */
       evaluated_at?: string;
 
       /**
-       * Categorical assessment of the user-merchant fit.
+       * Categorical assessment of the user affinity.
        */
-      fit_level: UserMerchantFit.FitLevel;
+      level: UserAffinity.Level;
 
       /**
-       * The specific fit score for the user, between 0.00 and 100.00. Absent when fit_level is unknown.
+       * The specific affinity score for the user, between 0.00 and 100.00. Absent when level is unknown.
        */
       score?: Decimal;
 
       /**
-       * The account signal ID containing the full user-merchant fit signal result.
+       * The account signal ID containing the full user affinity signal result.
        */
       signal?: string;
     }
@@ -393,8 +393,8 @@ export namespace AccountEvaluation {
         | 'unknown';
     }
 
-    export namespace UserMerchantFit {
-      export type FitLevel =
+    export namespace UserAffinity {
+      export type Level =
         | 'standard'
         | 'strong'
         | 'unknown'
@@ -453,7 +453,7 @@ export namespace V2 {
         | 'account_takeover'
         | 'fraudulent_website'
         | 'user_account_sharing'
-        | 'user_merchant_fit'
+        | 'user_affinity'
         | 'user_multi_accounting'
         | OtherString;
 
@@ -576,6 +576,7 @@ export namespace V2 {
             | 'account_takeover_mitigation'
             | 'account_takeover_report'
             | 'credential_change'
+            | 'custom_marketing_action'
             | 'login_attempt'
             | 'login_decision'
             | 'mfa_addition'

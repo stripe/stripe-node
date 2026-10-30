@@ -409,6 +409,11 @@ export namespace TestHelpers {
       tamara?: PaymentMethodData.Tamara;
 
       /**
+       * If this is a `toss_pay` PaymentMethod, this hash contains details about the Toss Pay payment method.
+       */
+      toss_pay?: PaymentMethodData.TossPay;
+
+      /**
        * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
        */
       twint?: PaymentMethodData.Twint;
@@ -784,6 +789,8 @@ export namespace TestHelpers {
 
       export interface Tamara {}
 
+      export interface TossPay {}
+
       export interface Twint {}
 
       export type Type =
@@ -849,6 +856,7 @@ export namespace TestHelpers {
         | 'sunbit'
         | 'swish'
         | 'tamara'
+        | 'toss_pay'
         | 'twint'
         | 'upi'
         | 'us_bank_account'
@@ -879,6 +887,11 @@ export namespace TestHelpers {
          * Account type: checkings or savings. Defaults to checking if omitted.
          */
         account_type?: UsBankAccount.AccountType;
+
+        /**
+         * An external token used to create a payment method.
+         */
+        external_token?: UsBankAccount.ExternalToken;
 
         /**
          * The ID of a Financial Connections Account to use as a payment method.
@@ -968,6 +981,7 @@ export namespace TestHelpers {
           | 'bni'
           | 'bri'
           | 'cimb'
+          | 'mandiri'
           | 'permata'
           | OtherString;
       }
@@ -1113,6 +1127,22 @@ export namespace TestHelpers {
         export type AccountHolderType = 'company' | 'individual' | OtherString;
 
         export type AccountType = 'checking' | 'savings' | OtherString;
+
+        export interface ExternalToken {
+          /**
+           * The Plaid processor token to use for this bank account.
+           */
+          plaid_processor_token?: string;
+
+          /**
+           * The type of external token.
+           */
+          type: ExternalToken.Type;
+        }
+
+        export namespace ExternalToken {
+          export type Type = 'plaid_processor_token' | OtherString;
+        }
       }
     }
 

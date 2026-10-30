@@ -345,6 +345,8 @@ export interface PaymentMethod {
 
   tamara?: PaymentMethod.Tamara;
 
+  toss_pay?: PaymentMethod.TossPay;
+
   twint?: PaymentMethod.Twint;
 
   /**
@@ -1115,6 +1117,13 @@ export namespace PaymentMethod {
 
   export interface Tamara {}
 
+  export interface TossPay {
+    /**
+     * The buyer identifier provided by NICE for this Toss Pay account, when available.
+     */
+    buyer_id: string | null;
+  }
+
   export interface Twint {}
 
   export type Type =
@@ -1184,6 +1193,7 @@ export namespace PaymentMethod {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -2467,6 +2477,11 @@ export interface PaymentMethodCreateParams {
   tamara?: PaymentMethodCreateParams.Tamara;
 
   /**
+   * If this is a `toss_pay` PaymentMethod, this hash contains details about the Toss Pay payment method.
+   */
+  toss_pay?: PaymentMethodCreateParams.TossPay;
+
+  /**
    * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
    */
   twint?: PaymentMethodCreateParams.Twint;
@@ -2854,6 +2869,8 @@ export namespace PaymentMethodCreateParams {
 
   export interface Tamara {}
 
+  export interface TossPay {}
+
   export interface Twint {}
 
   export type Type =
@@ -2921,6 +2938,7 @@ export namespace PaymentMethodCreateParams {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -2951,6 +2969,11 @@ export namespace PaymentMethodCreateParams {
      * Account type: checkings or savings. Defaults to checking if omitted.
      */
     account_type?: UsBankAccount.AccountType;
+
+    /**
+     * An external token used to create a payment method.
+     */
+    external_token?: UsBankAccount.ExternalToken;
 
     /**
      * The ID of a Financial Connections Account to use as a payment method.
@@ -3052,7 +3075,14 @@ export namespace PaymentMethodCreateParams {
   }
 
   export namespace IdBankTransfer {
-    export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata' | OtherString;
+    export type Bank =
+      | 'bca'
+      | 'bni'
+      | 'bri'
+      | 'cimb'
+      | 'mandiri'
+      | 'permata'
+      | OtherString;
   }
 
   export namespace Ideal {
@@ -3189,6 +3219,22 @@ export namespace PaymentMethodCreateParams {
     export type AccountHolderType = 'company' | 'individual' | OtherString;
 
     export type AccountType = 'checking' | 'savings' | OtherString;
+
+    export interface ExternalToken {
+      /**
+       * The Plaid processor token to use for this bank account.
+       */
+      plaid_processor_token?: string;
+
+      /**
+       * The type of external token.
+       */
+      type: ExternalToken.Type;
+    }
+
+    export namespace ExternalToken {
+      export type Type = 'plaid_processor_token' | OtherString;
+    }
   }
 }
 export interface PaymentMethodRetrieveParams {
@@ -3429,6 +3475,7 @@ export namespace PaymentMethodListParams {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'

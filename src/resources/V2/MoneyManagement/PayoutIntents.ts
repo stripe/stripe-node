@@ -25,8 +25,9 @@ export class PayoutIntentResource extends StripeResource {
   }
   /**
    * Creates a PayoutIntent.
-   * @throws Stripe.FeatureNotEnabledError
+   * @throws Stripe.CapabilityNotEnabledError
    * @throws Stripe.RecipientNotNotifiableError
+   * @throws Stripe.FeatureNotEnabledError
    */
   create(
     params: V2.MoneyManagement.PayoutIntentCreateParams,
@@ -55,9 +56,10 @@ export class PayoutIntentResource extends StripeResource {
     ) as any;
   }
   /**
-   * Updates a PayoutIntent. Only pending or requires_action PayoutIntents that are editable can be updated.
-   * @throws Stripe.FeatureNotEnabledError
+   * Updates an editable PayoutIntent in the `pending` or `requires_action` state.
+   * @throws Stripe.CapabilityNotEnabledError
    * @throws Stripe.RecipientNotNotifiableError
+   * @throws Stripe.FeatureNotEnabledError
    */
   update(
     id: string,
@@ -72,7 +74,7 @@ export class PayoutIntentResource extends StripeResource {
     ) as any;
   }
   /**
-   * Cancels a PayoutIntent. Only pending PayoutIntents, processing PayoutIntents with cancelable OutboundPayment/Transfer, or requires_action PayoutIntents can be canceled.
+   * Cancels a PayoutIntent in the `pending` or `requires_action` state, or a `processing` PayoutIntent with a cancelable OutboundPayment.
    * @throws Stripe.NotCancelableError
    */
   cancel(
@@ -88,7 +90,7 @@ export class PayoutIntentResource extends StripeResource {
     ) as any;
   }
   /**
-   * Confirms a PayoutIntent that is in the requires_action state, transitioning it to pending.
+   * Confirms a PayoutIntent in the `requires_action` state, transitioning it to `pending`.
    * @throws Stripe.FxQuoteNeedsRefreshError
    */
   confirm(
@@ -104,16 +106,35 @@ export class PayoutIntentResource extends StripeResource {
     ) as any;
   }
   /**
-   * Refreshes FX quote for a PayoutIntent.
+   * Refreshes the FX quote for a PayoutIntent.
    */
-  fxQuote(
+  refreshFxQuote(
     id: string,
-    params?: V2.MoneyManagement.PayoutIntentFxQuoteParams,
+    params?: V2.MoneyManagement.PayoutIntentRefreshFxQuoteParams,
     options?: RequestOptions
   ): Promise<Response<PayoutIntent>> {
     return this._makeRequest(
       'POST',
-      `/v2/money_management/payout_intents/${encodeURIComponent(id)}/fx_quote`,
+      `/v2/money_management/payout_intents/${encodeURIComponent(
+        id
+      )}/refresh_fx_quote`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Refreshes the recipient verification for a PayoutIntent.
+   */
+  refreshRecipientVerification(
+    id: string,
+    params?: V2.MoneyManagement.PayoutIntentRefreshRecipientVerificationParams,
+    options?: RequestOptions
+  ): Promise<Response<PayoutIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/payout_intents/${encodeURIComponent(
+        id
+      )}/refresh_recipient_verification`,
       params,
       options
     ) as any;
@@ -136,7 +157,8 @@ export interface PayoutIntent {
   amount: V2Amount;
 
   /**
-   * Controls whether the intent requires explicit confirmation before transitioning to pending.
+   * Controls whether the PayoutIntent requires explicit confirmation before transitioning to `pending`.
+   * Even when `automatic`, regulatory requirements may require confirmation. See [Send money with Global Payouts](https://docs.stripe.com/global-payouts/send-money) for details.
    */
   confirmation_method: PayoutIntent.ConfirmationMethod;
 
@@ -169,7 +191,7 @@ export interface PayoutIntent {
   /**
    * Details about the latest payout associated with this PayoutIntent.
    */
-  latest_payout: PayoutIntent.LatestPayout;
+  latest_payout?: PayoutIntent.LatestPayout;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -182,17 +204,22 @@ export interface PayoutIntent {
   metadata?: Metadata;
 
   /**
-   * Next action required for a PayoutIntent in the requires_action state. Populated when status is requires_action.
+   * Next action required for a PayoutIntent in the `requires_action` state. Populated when `status` is `requires_action`.
    */
   next_action?: PayoutIntent.NextAction;
 
   /**
-   * Details about the OutboundPayment notification settings for recipient. Only applicable to OutboundPayment.
+   * Recipient notification settings for the PayoutIntent. Only applicable when the PayoutIntent creates an OutboundPayment.
    */
   recipient_notification?: PayoutIntent.RecipientNotification;
 
   /**
-   * Scheduling options for the payout. If this is nil, we assume immediate execution.
+   * Recipient verification details for this PayoutIntent.
+   */
+  recipient_verification?: PayoutIntent.RecipientVerification;
+
+  /**
+   * Scheduling options for the payout. If omitted, the payout is scheduled for immediate execution.
    */
   schedule_options?: PayoutIntent.ScheduleOptions;
 
@@ -202,7 +229,7 @@ export interface PayoutIntent {
   statement_descriptor?: string;
 
   /**
-   * Open Enum. Current status of the PayoutIntent: `pending`, `processing`, `posted`, `canceled`, `requires_action`.
+   * Current status of the PayoutIntent.
    */
   status: PayoutIntent.Status;
 
@@ -226,7 +253,7 @@ export namespace PayoutIntent {
     amount: V2Amount;
 
     /**
-     * Details about the network and options associated with this fee. Present when type is network_fee.
+     * Details about the network and options associated with this fee. Present when `type` is `network_fee`.
      */
     network_fee_details?: EstimatedFee.NetworkFeeDetails;
 
@@ -275,7 +302,7 @@ export namespace PayoutIntent {
     lock_status: FxQuote.LockStatus;
 
     /**
-     * Key: source currency. Value: exchange rate from source currency to to_currency.
+     * Maps each source currency to its exchange rate into `to_currency`.
      */
     rates: {
       [key: string]: FxQuote.Rates;
@@ -306,12 +333,12 @@ export namespace PayoutIntent {
 
   export interface NextAction {
     /**
-     * Details about a confirmation required. Populated when type is confirm.
+     * Details about a confirmation required. Populated when `type` is `confirm`.
      */
     confirm?: NextAction.Confirm;
 
     /**
-     * Details about a failure that requires user action. Populated when type is handle_failure.
+     * Details about a failure that requires user action. Populated when `type` is `handle_failure`.
      */
     handle_failure?: NextAction.HandleFailure;
 
@@ -324,9 +351,21 @@ export namespace PayoutIntent {
   export interface RecipientNotification {
     /**
      * Closed Enum. Configuration option to enable or disable notifications to recipients.
-     * Do not send notifications when setting is NONE. Default to account setting when setting is CONFIGURED or not set.
+     * Do not send notifications when `setting` is `none`. Use the account setting when `setting` is `configured` or omitted.
      */
     setting: RecipientNotification.Setting;
+  }
+
+  export interface RecipientVerification {
+    /**
+     * Closed Enum. The recipient-verification provider's match result.
+     */
+    match_result: RecipientVerification.MatchResult;
+
+    /**
+     * Details associated with the match result.
+     */
+    match_result_details: RecipientVerification.MatchResultDetails;
   }
 
   export interface ScheduleOptions {
@@ -382,7 +421,7 @@ export namespace PayoutIntent {
     currency?: string;
 
     /**
-     * The payout method ID. Optional for OutboundPayment if recipient has default payment method. Required for OutboundTransfer.
+     * The payout method ID for the PayoutIntent. Optional when the PayoutIntent creates an OutboundPayment and the recipient has a default payout method. Required when the PayoutIntent creates an OutboundTransfer.
      */
     payout_method?: string;
 
@@ -392,7 +431,7 @@ export namespace PayoutIntent {
     payout_method_options?: To.PayoutMethodOptions;
 
     /**
-     * The recipient ID. Only relevant for OutboundPayment.
+     * The recipient ID for the PayoutIntent.
      */
     recipient?: string;
   }
@@ -479,8 +518,8 @@ export namespace PayoutIntent {
 
     export interface Rates {
       /**
-       * The exchange rate going from_currency -> to_currency, represented as a decimal string
-       * (e.g., "1.1520") to preserve the full precision of the rate.
+       * The exchange rate from the source currency to `to_currency`, represented as a decimal string
+       * (for example, `1.1520`) to preserve the full precision of the rate.
        */
       exchange_rate: string;
     }
@@ -492,6 +531,11 @@ export namespace PayoutIntent {
 
   export namespace NextAction {
     export interface Confirm {
+      /**
+       * The PayoutIntent fields that must be reviewed before confirmation.
+       */
+      fields_to_review?: Array<Confirm.FieldsToReview>;
+
       /**
        * Open Enum. The reason the PayoutIntent requires confirmation.
        */
@@ -508,6 +552,12 @@ export namespace PayoutIntent {
     export type Type = 'confirm' | 'handle_failure' | OtherString;
 
     export namespace Confirm {
+      export type FieldsToReview =
+        | 'estimated_fees'
+        | 'fx_quote'
+        | 'recipient_verification'
+        | OtherString;
+
       export type Reason =
         | 'automatically_required'
         | 'manually_requested'
@@ -518,7 +568,6 @@ export namespace PayoutIntent {
       export type FailureReason =
         | 'account_not_configured_as_recipient'
         | 'currency_not_supported_for_financial_account_balance'
-        | 'currency_required'
         | 'feature_not_active_for_recipient'
         | 'fx_rate_drift_exceeded_after_review'
         | 'insufficient_funds'
@@ -533,11 +582,13 @@ export namespace PayoutIntent {
         | 'payout_method_holder_address_incorrect'
         | 'payout_method_holder_details_incorrect'
         | 'payout_method_holder_name_incorrect'
+        | 'payout_method_invalid'
         | 'payout_method_invalid_account_number'
         | 'payout_method_restricted'
         | 'payout_method_unsupported'
         | 'payout_method_usage_frequency_limit_exceeded'
         | 'recalled'
+        | 'recipient_capability_not_active'
         | 'review_rejected'
         | 'to_destination_invalid'
         | 'unknown_failure'
@@ -547,6 +598,47 @@ export namespace PayoutIntent {
 
   export namespace RecipientNotification {
     export type Setting = 'configured' | 'none';
+  }
+
+  export namespace RecipientVerification {
+    export type MatchResult =
+      | 'close_match'
+      | 'match'
+      | 'no_match'
+      | 'unavailable';
+
+    export interface MatchResultDetails {
+      /**
+       * The business type returned by the recipient-verification provider.
+       */
+      matched_business_type?: MatchResultDetails.MatchedBusinessType;
+
+      /**
+       * The account name returned by the recipient-verification provider.
+       */
+      matched_name?: string;
+
+      /**
+       * A message describing the match result.
+       */
+      message: string;
+
+      /**
+       * The business type provided for recipient verification.
+       */
+      provided_business_type?: MatchResultDetails.ProvidedBusinessType;
+
+      /**
+       * The name associated with the provided recipient.
+       */
+      provided_name: string;
+    }
+
+    export namespace MatchResultDetails {
+      export type MatchedBusinessType = 'business' | 'personal';
+
+      export type ProvidedBusinessType = 'business' | 'personal';
+    }
   }
 
   export namespace To {
@@ -567,7 +659,7 @@ export namespace PayoutIntent {
         /**
          * The preferred networks to use for this PayoutIntent.
          */
-        preferred_networks: Array<BankAccount.PreferredNetwork>;
+        preferred_networks?: Array<BankAccount.PreferredNetwork>;
       }
 
       export namespace BankAccount {
@@ -586,6 +678,7 @@ export namespace PayoutIntent {
           | 'fps'
           | 'npp'
           | 'rtp'
+          | 'sepa'
           | 'sepa_credit'
           | 'sepa_instant'
           | 'swift'
@@ -638,7 +731,7 @@ export namespace V2 {
       to: PayoutIntentCreateParams.To;
 
       /**
-       * Controls whether the intent requires explicit confirmation before transitioning to pending. Defaults to automatic.
+       * Controls whether the PayoutIntent requires explicit confirmation before transitioning to `pending`. Defaults to `automatic`, but regulatory requirements may still require confirmation. See [Send money with Global Payouts](https://docs.stripe.com/global-payouts/send-money) for details.
        */
       confirmation_method?: PayoutIntentCreateParams.ConfirmationMethod;
 
@@ -653,12 +746,12 @@ export namespace V2 {
       metadata?: MetadataParam;
 
       /**
-       * Details about the OutboundPayment notification settings for recipient. Only applicable to OutboundPayment.
+       * Recipient notification settings for the PayoutIntent. Only applicable when the PayoutIntent creates an OutboundPayment.
        */
       recipient_notification?: PayoutIntentCreateParams.RecipientNotification;
 
       /**
-       * Scheduling options for the payout. If this is nil, we assume immediate execution.
+       * Scheduling options for the payout. If omitted, the payout is scheduled for immediate execution.
        */
       schedule_options?: PayoutIntentCreateParams.ScheduleOptions;
 
@@ -688,7 +781,7 @@ export namespace V2 {
         currency?: string;
 
         /**
-         * The payout method ID. Optional for OutboundPayment if recipient has default payment method. Required for OutboundTransfer.
+         * The payout method ID for the PayoutIntent. Optional when the PayoutIntent creates an OutboundPayment and the recipient has a default payout method. Required when the PayoutIntent creates an OutboundTransfer.
          */
         payout_method?: string;
 
@@ -698,7 +791,7 @@ export namespace V2 {
         payout_method_options?: To.PayoutMethodOptions;
 
         /**
-         * The recipient ID. Only relevant for OutboundPayment.
+         * The recipient ID for the PayoutIntent.
          */
         recipient?: string;
       }
@@ -708,7 +801,7 @@ export namespace V2 {
       export interface RecipientNotification {
         /**
          * Closed Enum. Configuration option to enable or disable notifications to recipients.
-         * Do not send notifications when setting is NONE. Default to account setting when setting is CONFIGURED or not set.
+         * Do not send notifications when `setting` is `none`. Use the account setting when `setting` is `configured` or omitted.
          */
         setting: RecipientNotification.Setting;
       }
@@ -742,7 +835,7 @@ export namespace V2 {
             /**
              * The preferred networks to use for this PayoutIntent.
              */
-            preferred_networks: Array<BankAccount.PreferredNetwork>;
+            preferred_networks?: Array<BankAccount.PreferredNetwork>;
           }
 
           export namespace BankAccount {
@@ -761,6 +854,7 @@ export namespace V2 {
               | 'fps'
               | 'npp'
               | 'rtp'
+              | 'sepa'
               | 'sepa_credit'
               | 'sepa_instant'
               | 'swift'
@@ -805,19 +899,9 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface PayoutIntentUpdateParams {
       /**
-       * The monetary amount to be sent.
-       */
-      amount?: V2Amount;
-
-      /**
        * An arbitrary string attached to the PayoutIntent. Often useful for displaying to users.
        */
       description?: string;
-
-      /**
-       * From which FinancialAccount to pull funds.
-       */
-      from?: PayoutIntentUpdateParams.From;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -825,12 +909,12 @@ export namespace V2 {
       metadata?: MetadataParam;
 
       /**
-       * Details about the OutboundPayment notification settings for recipient. Only applicable to OutboundPayment.
+       * Recipient notification settings for the PayoutIntent. Only applicable when the PayoutIntent creates an OutboundPayment.
        */
       recipient_notification?: PayoutIntentUpdateParams.RecipientNotification;
 
       /**
-       * Scheduling options for the payout. If this is nil, we assume immediate execution.
+       * Scheduling options for the payout. If omitted, the payout is scheduled for immediate execution.
        */
       schedule_options?: PayoutIntentUpdateParams.ScheduleOptions;
 
@@ -846,22 +930,10 @@ export namespace V2 {
     }
 
     export namespace PayoutIntentUpdateParams {
-      export interface From {
-        /**
-         * The currency of the financial account.
-         */
-        currency: string;
-
-        /**
-         * The FinancialAccount that funds are pulled from.
-         */
-        financial_account: string;
-      }
-
       export interface RecipientNotification {
         /**
          * Closed Enum. Configuration option to enable or disable notifications to recipients.
-         * Do not send notifications when setting is NONE. Default to account setting when setting is CONFIGURED or not set.
+         * Do not send notifications when `setting` is `none`. Use the account setting when `setting` is `configured` or omitted.
          */
         setting: RecipientNotification.Setting;
       }
@@ -880,7 +952,7 @@ export namespace V2 {
         currency?: string;
 
         /**
-         * The payout method ID. Optional for OutboundPayment if recipient has default payment method. Required for OutboundTransfer.
+         * The payout method ID for the PayoutIntent. Optional when the PayoutIntent creates an OutboundPayment and the recipient has a default payout method. Required when the PayoutIntent creates an OutboundTransfer.
          */
         payout_method?: string;
 
@@ -890,7 +962,7 @@ export namespace V2 {
         payout_method_options?: To.PayoutMethodOptions;
 
         /**
-         * The recipient ID. Only relevant for OutboundPayment.
+         * The recipient ID for the PayoutIntent.
          */
         recipient?: string;
       }
@@ -917,7 +989,7 @@ export namespace V2 {
             /**
              * The preferred networks to use for this PayoutIntent.
              */
-            preferred_networks: Array<BankAccount.PreferredNetwork>;
+            preferred_networks?: Array<BankAccount.PreferredNetwork>;
           }
 
           export namespace BankAccount {
@@ -936,6 +1008,7 @@ export namespace V2 {
               | 'fps'
               | 'npp'
               | 'rtp'
+              | 'sepa'
               | 'sepa_credit'
               | 'sepa_instant'
               | 'swift'
@@ -993,6 +1066,11 @@ export namespace V2 {
 }
 export namespace V2 {
   export namespace MoneyManagement {
-    export interface PayoutIntentFxQuoteParams {}
+    export interface PayoutIntentRefreshFxQuoteParams {}
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface PayoutIntentRefreshRecipientVerificationParams {}
   }
 }

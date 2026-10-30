@@ -1177,6 +1177,8 @@ export namespace Account {
      */
     phone?: string | null;
 
+    physical_address?: Address;
+
     principal_place_of_business?: Address;
 
     registration_date?: Company.RegistrationDate;
@@ -3405,6 +3407,11 @@ export namespace AccountCreateParams {
     us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
     /**
+     * The wero_payments capability.
+     */
+    wero_payments?: Capabilities.WeroPayments;
+
+    /**
      * The zip_payments capability.
      */
     zip_payments?: Capabilities.ZipPayments;
@@ -3490,6 +3497,11 @@ export namespace AccountCreateParams {
      * The company's phone number (used for verification).
      */
     phone?: string;
+
+    /**
+     * A location where the business has a meaningful physical operating presence.
+     */
+    physical_address?: AddressParam;
 
     /**
      * The primary location where the business conducts operations.
@@ -3606,6 +3618,11 @@ export namespace AccountCreateParams {
      * One or more documents that demonstrate proof of address.
      */
     proof_of_address?: Documents.ProofOfAddress;
+
+    /**
+     * One or more documents that demonstrate proof of business presence.
+     */
+    proof_of_business_presence?: Documents.ProofOfBusinessPresence;
 
     /**
      * One or more documents that demonstrate proof of ultimate beneficial ownership.
@@ -4504,6 +4521,13 @@ export namespace AccountCreateParams {
       requested?: boolean;
     }
 
+    export interface WeroPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface ZipPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -4761,6 +4785,13 @@ export namespace AccountCreateParams {
     }
 
     export interface ProofOfAddress {
+      /**
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
+       */
+      files?: Array<string>;
+    }
+
+    export interface ProofOfBusinessPresence {
       /**
        * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
@@ -5868,6 +5899,11 @@ export namespace AccountUpdateParams {
     us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
     /**
+     * The wero_payments capability.
+     */
+    wero_payments?: Capabilities.WeroPayments;
+
+    /**
      * The zip_payments capability.
      */
     zip_payments?: Capabilities.ZipPayments;
@@ -5955,6 +5991,11 @@ export namespace AccountUpdateParams {
     phone?: string;
 
     /**
+     * A location where the business has a meaningful physical operating presence.
+     */
+    physical_address?: AddressParam;
+
+    /**
      * The primary location where the business conducts operations.
      */
     principal_place_of_business?: AddressParam;
@@ -6034,6 +6075,11 @@ export namespace AccountUpdateParams {
      * One or more documents that demonstrate proof of address.
      */
     proof_of_address?: Documents.ProofOfAddress;
+
+    /**
+     * One or more documents that demonstrate proof of business presence.
+     */
+    proof_of_business_presence?: Documents.ProofOfBusinessPresence;
 
     /**
      * One or more documents showing the company's proof of registration with the national business registry.
@@ -6979,6 +7025,13 @@ export namespace AccountUpdateParams {
       requested?: boolean;
     }
 
+    export interface WeroPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface ZipPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -7171,6 +7224,13 @@ export namespace AccountUpdateParams {
     }
 
     export interface ProofOfAddress {
+      /**
+       * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
+       */
+      files?: Array<string>;
+    }
+
+    export interface ProofOfBusinessPresence {
       /**
        * One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a `purpose` value of `account_requirement`.
        */
