@@ -161,6 +161,13 @@ export interface Resource {
   catalog?: Resource.Catalog;
 
   /**
+   * Names of the provider-issued configuration entries available for this resource. This is null
+   * unless explicitly included on RetrieveResource and the resource is complete with an available,
+   * unexpired configuration. Values are never exposed through this field.
+   */
+  configuration?: Resource.Configuration;
+
+  /**
    * Time at which the resource was created.
    */
   created: string;
@@ -213,6 +220,14 @@ export interface Resource {
 }
 export namespace Resource {
   export type Catalog = 'dev' | 'prod' | 'testing';
+
+  export interface Configuration {
+    /**
+     * Exact top-level configuration key names, unique and sorted in ascending lexicographic order.
+     * This array is present and empty when the available configuration has no entries.
+     */
+    key_names: Array<string>;
+  }
 
   export type Environment = 'dev' | 'prod';
 
@@ -297,7 +312,14 @@ export namespace V2 {
 }
 export namespace V2 {
   export namespace Provisioning {
-    export interface ResourceRetrieveParams {}
+    export interface ResourceRetrieveParams {
+      /**
+       * Additional fields to include in the response. Requesting configuration only populates names
+       * for a complete Resource with an available, unexpired configuration. Missing configuration is
+       * returned as null; authorization, dependency, malformed-data, and limit failures remain errors.
+       */
+      include?: Array<'configuration'>;
+    }
   }
 }
 export namespace V2 {

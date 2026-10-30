@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 
 export class RecipientVerificationResource extends StripeResource {
@@ -34,7 +35,7 @@ export class RecipientVerificationResource extends StripeResource {
     ) as any;
   }
   /**
-   * Acknowledges an existing RecipientVerification. Only RecipientVerification awaiting acknowledgement can be acknowledged.
+   * Acknowledges an existing RecipientVerification in the `awaiting_acknowledgement` state.
    */
   acknowledge(
     id: string,
@@ -63,9 +64,9 @@ export interface RecipientVerification {
   object: 'v2.money_management.recipient_verification';
 
   /**
-   * The OBP/OBT ID that consumed this verification, present if one is successfully created.
+   * The resource that consumed this verification.
    */
-  consumed_by?: string;
+  consumed_by?: RecipientVerification.ConsumedBy;
 
   /**
    * Time at which the RecipientVerification was created.
@@ -74,10 +75,10 @@ export interface RecipientVerification {
   created: string;
 
   /**
-   * Time at which the RecipientVerification expires, 5 minutes after the creation.
+   * Time at which the RecipientVerification expires, 5 minutes after the creation. Only applicable for Verification of Payee (VoP) verifications.
    * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
    */
-  expires_at: string;
+  expires_at?: string;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -95,7 +96,17 @@ export interface RecipientVerification {
   match_result_details: RecipientVerification.MatchResultDetails;
 
   /**
-   * Closed Enum. Current status of the RecipientVerification: `verified`, `consumed`, `expired`, `awaiting_acknowledgement`, `acknowledged`.
+   * ID of the payout method that was verified.
+   */
+  payout_method: string;
+
+  /**
+   * ID of the recipient account. Omitted for same-entity payouts.
+   */
+  recipient?: string;
+
+  /**
+   * Current status of the recipient verification.
    */
   status: RecipientVerification.Status;
 
@@ -103,8 +114,30 @@ export interface RecipientVerification {
    * Hash containing timestamps of when the object transitioned to a particular status.
    */
   status_transitions?: RecipientVerification.StatusTransitions;
+
+  /**
+   * Open Enum. The type of verification performed: `verification_of_payee`, `confirmation_of_payee`.
+   */
+  verification_type: RecipientVerification.VerificationType;
 }
 export namespace RecipientVerification {
+  export interface ConsumedBy {
+    /**
+     * The ID of the OutboundPayment that consumed the RecipientVerification.
+     */
+    outbound_payment?: string;
+
+    /**
+     * The ID of the OutboundTransfer that consumed the RecipientVerification.
+     */
+    outbound_transfer?: string;
+
+    /**
+     * The type of resource that consumed the RecipientVerification.
+     */
+    type: ConsumedBy.Type;
+  }
+
   export type MatchResult =
     | 'close_match'
     | 'match'
@@ -112,6 +145,11 @@ export namespace RecipientVerification {
     | 'unavailable';
 
   export interface MatchResultDetails {
+    /**
+     * The business type matched by the provider. Only present for Confirmation of Payee (CoP) verifications.
+     */
+    matched_business_type?: MatchResultDetails.MatchedBusinessType;
+
     /**
      * The account name associated with the bank account as provided by the VoP provider, only present if there is a match or close match.
      */
@@ -121,6 +159,11 @@ export namespace RecipientVerification {
      * A message describing the match result.
      */
     message: string;
+
+    /**
+     * The business type provided by the user. Only present for Confirmation of Payee (CoP) verifications.
+     */
+    provided_business_type?: MatchResultDetails.ProvidedBusinessType;
 
     /**
      * The name associated with the provided recipient.
@@ -148,6 +191,21 @@ export namespace RecipientVerification {
      */
     consumed_at?: string;
   }
+
+  export type VerificationType =
+    | 'confirmation_of_payee'
+    | 'verification_of_payee'
+    | OtherString;
+
+  export namespace ConsumedBy {
+    export type Type = 'outbound_payment' | 'outbound_transfer' | OtherString;
+  }
+
+  export namespace MatchResultDetails {
+    export type MatchedBusinessType = 'business' | 'personal';
+
+    export type ProvidedBusinessType = 'business' | 'personal';
+  }
 }
 export namespace V2 {
   export namespace MoneyManagement {
@@ -158,7 +216,7 @@ export namespace V2 {
       payout_method: string;
 
       /**
-       * ID of the recipient account. Required if the recipient distinct from the sender. Leave empty if the recipient and sender are the same entity (i.e. for me-to-me payouts).
+       * ID of the recipient account. Required if the recipient is different from the sender. Omit for payouts to your own account.
        */
       recipient?: string;
     }

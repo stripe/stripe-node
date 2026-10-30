@@ -78,6 +78,7 @@ export type RawErrorType =
   | 'already_exists'
   | 'blocked_by_stripe'
   | 'cannot_proceed'
+  | 'capability_not_enabled'
   | 'controlled_by_alternate_resource'
   | 'feature_not_enabled'
   | 'financial_account_not_open'

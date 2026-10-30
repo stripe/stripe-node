@@ -92,7 +92,7 @@ export interface FinancialAddress {
    */
   livemode: boolean;
 
-  settlement_currency?: string;
+  settlement_currency: string;
 
   /**
    * Closed Enum. The status of the FinancialAddress.
@@ -119,7 +119,8 @@ export namespace FinancialAddress {
     clabe?: BankAccount.Clabe;
 
     /**
-     * The country of the bank account.
+     * The country of the bank account. Always included in the response, but null while the bank
+     * account is pending and its country is not yet known.
      */
     country?: string;
 
@@ -178,19 +179,19 @@ export namespace FinancialAddress {
   export namespace BankAccount {
     export interface Aba {
       /**
-       * The address of the account holder.
-       */
-      account_holder_address?: JapanAddress;
-
-      /**
        * The name of the account holder.
        */
       account_holder_name?: string;
 
       /**
-       * The full account number.
+       * The full account number. Empty while the bank account is pending allocation.
        */
-      account_number?: string;
+      account_number: string;
+
+      /**
+       * The address of the account holder.
+       */
+      address?: JapanAddress;
 
       /**
        * The name of the bank.
@@ -201,11 +202,6 @@ export namespace FinancialAddress {
        * The SWIFT/BIC code.
        */
       bic?: string;
-
-      /**
-       * The last four digits of the account number.
-       */
-      last4: string;
 
       /**
        * The ABA routing number.
@@ -264,19 +260,14 @@ export namespace FinancialAddress {
       bic: string;
 
       /**
-       * The country of the bank account.
+       * The full IBAN. Empty while the bank account is pending allocation.
        */
-      country: string;
+      iban: string;
 
       /**
-       * The full IBAN.
+       * The payment reference for this bank account.
        */
-      iban?: string;
-
-      /**
-       * The last four digits of the IBAN.
-       */
-      last4: string;
+      reference?: string;
     }
 
     export interface Nip {
@@ -320,9 +311,9 @@ export namespace FinancialAddress {
       account_holder_name: string;
 
       /**
-       * The full account number.
+       * The full account number. Empty while the bank account is pending allocation.
        */
-      account_number?: string;
+      account_number: string;
 
       /**
        * The SWIFT/BIC code.
@@ -333,11 +324,6 @@ export namespace FinancialAddress {
        * The full IBAN.
        */
       iban?: string;
-
-      /**
-       * The last four digits of the account number.
-       */
-      last4: string;
 
       /**
        * The sort code.
@@ -415,8 +401,14 @@ export namespace V2 {
        */
       bank_account?: FinancialAddressCreateParams.BankAccount;
 
+      /**
+       * Properties for creating a crypto wallet FinancialAddress. Requires `settlement_currency`.
+       */
       crypto_wallet?: FinancialAddressCreateParams.CryptoWallet;
 
+      /**
+       * Open Enum. The currency the FinancialAddress settles into the FinancialAccount. Optional for `bank_account`, where it defaults to `bank_account.currency`; required for all other types.
+       */
       settlement_currency?: string;
     }
 
@@ -425,12 +417,12 @@ export namespace V2 {
 
       export interface BankAccount {
         /**
-         * The country for the bank account. Used to select the appropriate rails (e.g. for SEPA).
+         * The country where Stripe provisions the bank account. Each currency supports the country listed in its description. If omitted, Stripe selects that country.
          */
         country?: string;
 
         /**
-         * The currency of the bank account to provision.
+         * The currency of the bank account to provision. Some currencies require preview or rollout access, as configured for your account.
          */
         currency: BankAccount.Currency;
       }
@@ -451,6 +443,7 @@ export namespace V2 {
           | 'gbp'
           | 'mxn'
           | 'ngn'
+          | 'pln'
           | 'usd'
           | OtherString;
       }

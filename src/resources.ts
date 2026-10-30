@@ -6,6 +6,7 @@ import {AccountEvaluationResource as RadarAccountEvaluations} from './resources/
 import {AccountEvaluationResource as V2CoreAccountEvaluations} from './resources/V2/Core/AccountEvaluations.js';
 import {AccountEvaluationResource as V2SignalsAccountEvaluations} from './resources/V2/Signals/AccountEvaluations.js';
 import {AccountLinkResource as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
+import {AccountSessionResource as V2CoreAccountSessions} from './resources/V2/Core/AccountSessions.js';
 import {AccountSignalResource as V2SignalsAccountSignals} from './resources/V2/Signals/AccountSignals.js';
 import {AccountTokenResource as V2CoreAccountTokens} from './resources/V2/Core/AccountTokens.js';
 import {AccountResource as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
@@ -76,18 +77,20 @@ import {FinancingSummaryResource as CapitalFinancingSummary} from './resources/C
 import {FinancingTransactionResource as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions.js';
 import {FormResource as RiskForms} from './resources/Risk/Forms.js';
 import {FormResource as TaxForms} from './resources/Tax/Forms.js';
+import {FormResource as V2RiskForms} from './resources/V2/Risk/Forms.js';
 import {FraudLiabilityDebitResource as IssuingFraudLiabilityDebits} from './resources/Issuing/FraudLiabilityDebits.js';
+import {FundingIntentResource as V2MoneyManagementFundingIntents} from './resources/V2/MoneyManagement/FundingIntents.js';
 import {FundingSessionResource as V2MoneyManagementFundingSessions} from './resources/V2/MoneyManagement/FundingSessions.js';
 import {GbBankAccountResource as V2CoreVaultGbBankAccounts} from './resources/V2/Core/Vault/GbBankAccounts.js';
 import {GrantedTokenResource as SharedPaymentGrantedTokens} from './resources/SharedPayment/GrantedTokens.js';
 import {GrantedTokenResource as TestHelpersSharedPaymentGrantedTokens} from './resources/TestHelpers/SharedPayment/GrantedTokens.js';
 import {HoldResource as ReserveHolds} from './resources/Reserve/Holds.js';
 import {ImportResource as V2CommerceProductCatalogImports} from './resources/V2/Commerce/ProductCatalog/Imports.js';
+import {InboundFundingResource as V2MoneyManagementInboundFundings} from './resources/V2/MoneyManagement/InboundFundings.js';
 import {InboundTransferMandateResource as V2MoneyManagementInboundTransferMandates} from './resources/V2/MoneyManagement/InboundTransferMandates.js';
 import {InboundTransferResource as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransferResource as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {InboundTransferResource as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
-import {InquiryResource as V2RiskInquiries} from './resources/V2/Risk/Inquiries.js';
 import {InstallResource as AppsInstalls} from './resources/Apps/Installs.js';
 import {InstitutionResource as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
 import {IntegrationConfigurationResource as V2TaxIntegrationConfigurations} from './resources/V2/Tax/IntegrationConfigurations.js';
@@ -179,6 +182,8 @@ import {ReportResource as V2ReportingReports} from './resources/V2/Reporting/Rep
 import {RequestedSessionResource as DelegatedCheckoutRequestedSessions} from './resources/DelegatedCheckout/RequestedSessions.js';
 import {RequestResource as ForwardingRequests} from './resources/Forwarding/Requests.js';
 import {ResourceResource as V2ProvisioningResources} from './resources/V2/Provisioning/Resources.js';
+import {RewardProgramEnrollmentResource as V2MoneyManagementRewardProgramEnrollments} from './resources/V2/MoneyManagement/RewardProgramEnrollments.js';
+import {RewardProgramResource as V2MoneyManagementRewardPrograms} from './resources/V2/MoneyManagement/RewardPrograms.js';
 import {ScheduledQueryRunResource as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns.js';
 import {SchemaResource as V2DataSchemas} from './resources/V2/Data/Schemas.js';
 import {SecretResource as AppsSecrets} from './resources/Apps/Secrets.js';
@@ -486,6 +491,7 @@ export const V2 = resourceNamespace('v2', {
   Core: resourceNamespace('core', {
     AccountEvaluations: V2CoreAccountEvaluations,
     AccountLinks: V2CoreAccountLinks,
+    AccountSessions: V2CoreAccountSessions,
     AccountTokens: V2CoreAccountTokens,
     Accounts: V2CoreAccounts,
     ApprovalRequests: V2CoreApprovalRequests,
@@ -531,7 +537,9 @@ export const V2 = resourceNamespace('v2', {
     EarnedCredits: V2MoneyManagementEarnedCredits,
     FinancialAccounts: V2MoneyManagementFinancialAccounts,
     FinancialAddresses: V2MoneyManagementFinancialAddresses,
+    FundingIntents: V2MoneyManagementFundingIntents,
     FundingSessions: V2MoneyManagementFundingSessions,
+    InboundFundings: V2MoneyManagementInboundFundings,
     InboundTransferMandates: V2MoneyManagementInboundTransferMandates,
     InboundTransfers: V2MoneyManagementInboundTransfers,
     OutboundPaymentQuotes: V2MoneyManagementOutboundPaymentQuotes,
@@ -545,6 +553,8 @@ export const V2 = resourceNamespace('v2', {
     ReceivedDebitMandates: V2MoneyManagementReceivedDebitMandates,
     ReceivedDebits: V2MoneyManagementReceivedDebits,
     RecipientVerifications: V2MoneyManagementRecipientVerifications,
+    RewardProgramEnrollments: V2MoneyManagementRewardProgramEnrollments,
+    RewardPrograms: V2MoneyManagementRewardPrograms,
     TestHelpers: V2MoneyManagementTestHelpers,
     TransactionEntries: V2MoneyManagementTransactionEntries,
     Transactions: V2MoneyManagementTransactions,
@@ -576,7 +586,7 @@ export const V2 = resourceNamespace('v2', {
     ReportRuns: V2ReportingReportRuns,
     Reports: V2ReportingReports,
   }),
-  Risk: resourceNamespace('risk', {Inquiries: V2RiskInquiries}),
+  Risk: resourceNamespace('risk', {Forms: V2RiskForms}),
   Signals: resourceNamespace('signals', {
     AccountActivities: V2SignalsAccountActivities,
     AccountEvaluations: V2SignalsAccountEvaluations,

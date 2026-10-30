@@ -235,7 +235,7 @@ export interface OffSessionPayment {
 
   /**
    * Status of this OffSessionPayment, one of `pending`, `pending_retry`, `processing`,
-   * `failed`, `canceled`, `requires_capture`, or `succeeded`.
+   * `failed`, `canceled`, or `succeeded`.
    */
   status: OffSessionPayment.Status;
 
@@ -354,7 +354,6 @@ export namespace OffSessionPayment {
     | 'pending'
     | 'pending_retry'
     | 'processing'
-    | 'requires_capture'
     | 'succeeded'
     | OtherString;
 

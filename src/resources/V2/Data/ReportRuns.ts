@@ -33,6 +33,7 @@ export class ReportRunResource extends StripeResource {
   /**
    * Fetches the current state and details of a previously created `ReportRun`. If the
    * `ReportRun` has succeeded, the endpoint provides details for how to retrieve the results.
+   * Returns a `404` error if the `ReportRun` doesn't exist or its retention period has ended.
    */
   retrieve(
     id: string,
@@ -79,6 +80,11 @@ export interface ReportRun {
   created: string;
 
   /**
+   * The file format of the result.
+   */
+  format: ReportRun.Format;
+
+  /**
    * Whether the `ReportRun` was executed in live mode.
    */
   livemode: boolean;
@@ -114,8 +120,8 @@ export interface ReportRun {
   result_options?: ReportRun.ResultOptions;
 
   /**
-   * The fully-resolved SQL that was executed. Only present when requested via
-   * `include[0]=sql`.
+   * The fully-resolved SQL that was executed, or an explanatory message when the SQL cannot be
+   * exposed. Only present when requested via `include[0]=sql`.
    */
   sql?: string;
 
@@ -130,6 +136,8 @@ export interface ReportRun {
   status_details?: ReportRun.StatusDetails;
 }
 export namespace ReportRun {
+  export type Format = 'csv' | OtherString;
+
   export type Parameters = {
     [key: string]: unknown;
   };
@@ -159,10 +167,10 @@ export namespace ReportRun {
 
   export interface ResultOptions {
     /**
-     * If set, the generated result file is compressed into a ZIP archive before
-     * it is stored. This applies only to downloadable file results.
+     * The compression applied to the generated result file. Defaults to `none`. This applies
+     * only to downloadable file results.
      */
-    compress_file?: boolean;
+    compression?: ResultOptions.Compression;
   }
 
   export type Status =
@@ -187,6 +195,11 @@ export namespace ReportRun {
      * Error message with additional details about the failure.
      */
     message?: string;
+
+    /**
+     * Errors found in the submitted SQL. Populated when the failure was caused by invalid SQL.
+     */
+    query_errors: Array<StatusDetails.QueryError>;
   }
 
   export namespace Result {
@@ -318,12 +331,30 @@ export namespace ReportRun {
     }
   }
 
+  export namespace ResultOptions {
+    export type Compression = 'none' | 'zip' | OtherString;
+  }
+
   export namespace StatusDetails {
     export type Code =
+      | 'execution_failed'
       | 'file_size_above_limit'
       | 'internal_error'
       | 'query_run_invalid_sql'
+      | 'resource_limit_exceeded'
       | OtherString;
+
+    export interface QueryError {
+      /**
+       * A human-readable description of the error.
+       */
+      message: string;
+
+      /**
+       * A short identifier categorizing the type of error.
+       */
+      type: string;
+    }
   }
 }
 export namespace V2 {
@@ -372,10 +403,14 @@ export namespace V2 {
 
       export interface ResultOptions {
         /**
-         * If set, the generated result file is compressed into a ZIP archive before
-         * it is stored. This applies only to downloadable file results.
+         * The compression applied to the generated result file. Defaults to `none`. This applies
+         * only to downloadable file results.
          */
-        compress_file?: boolean;
+        compression?: ResultOptions.Compression;
+      }
+
+      export namespace ResultOptions {
+        export type Compression = 'none' | 'zip' | OtherString;
       }
     }
   }
@@ -389,7 +424,7 @@ export namespace V2 {
       include?: Array<ReportRunRetrieveParams.Include>;
 
       /**
-       * The maximum number of inline `ReportRun` result rows to return. Defaults to 10. Maximum is 1000.
+       * The maximum number of inline `ReportRun` result rows to return. Defaults to 100. Maximum is 1000.
        */
       limit?: number;
 

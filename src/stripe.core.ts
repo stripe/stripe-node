@@ -3455,6 +3455,9 @@ export declare namespace Stripe {
     export type CannotProceedError = InstanceType<
       typeof _Error.CannotProceedError
     >;
+    export type CapabilityNotEnabledError = InstanceType<
+      typeof _Error.CapabilityNotEnabledError
+    >;
     export type ControlledByAlternateResourceError = InstanceType<
       typeof _Error.ControlledByAlternateResourceError
     >;

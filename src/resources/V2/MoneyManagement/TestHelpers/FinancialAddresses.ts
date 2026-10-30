@@ -89,10 +89,11 @@ export namespace V2 {
           | 'acss'
           | 'bre_b'
           | 'chaps'
+          | 'fedwire'
           | 'fps'
           | 'pix'
           | 'rtp'
-          | 'sepa_credit_transfer'
+          | 'sepa'
           | 'swift'
           | 'wire'
           | OtherString;

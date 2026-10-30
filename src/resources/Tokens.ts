@@ -554,6 +554,11 @@ export namespace TokenCreateParams {
       phone?: string;
 
       /**
+       * A location where the business has a meaningful physical operating presence.
+       */
+      physical_address?: AddressParam;
+
+      /**
        * The primary location where the business conducts operations.
        */
       principal_place_of_business?: AddressParam;

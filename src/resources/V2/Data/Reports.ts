@@ -72,6 +72,13 @@ export interface Report {
   parameters?: {
     [key: string]: Report.Parameters;
   };
+
+  /**
+   * The most recent time through which data is available for this report, not the time the
+   * report definition was updated. Unset if the report has no data-availability policy, or if no
+   * freshness watermark is available yet.
+   */
+  refreshed_at?: string;
 }
 export namespace Report {
   export interface Parameters {

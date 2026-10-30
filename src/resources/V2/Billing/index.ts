@@ -81,6 +81,8 @@ import {
   ServiceActionResource,
 } from './ServiceActions.js';
 import {ContractPricingLineQuantityChange} from './ContractPricingLineQuantityChanges.js';
+import {ContractTerm} from './ContractTerms.js';
+import {ContractTermQuantityChange} from './ContractTermQuantityChanges.js';
 import {BillSettingVersion} from './BillSettingVersions.js';
 import {CadenceSpendModifier} from './CadenceSpendModifiers.js';
 import {CollectionSettingVersion} from './CollectionSettingVersions.js';
@@ -112,6 +114,8 @@ export {RateCard} from './RateCards.js';
 export {RateCardSubscription} from './RateCardSubscriptions.js';
 export {ServiceAction} from './ServiceActions.js';
 export {ContractPricingLineQuantityChange} from './ContractPricingLineQuantityChanges.js';
+export {ContractTerm} from './ContractTerms.js';
+export {ContractTermQuantityChange} from './ContractTermQuantityChanges.js';
 export {BillSettingVersion} from './BillSettingVersions.js';
 export {CadenceSpendModifier} from './CadenceSpendModifiers.js';
 export {CollectionSettingVersion} from './CollectionSettingVersions.js';
@@ -265,6 +269,8 @@ export declare namespace Billing {
   export import ServiceActionUpdateParams = V2Namespace19.Billing.ServiceActionUpdateParams;
   export {ServiceAction, ServiceActionResource};
   export {ContractPricingLineQuantityChange};
+  export {ContractTerm};
+  export {ContractTermQuantityChange};
   export {BillSettingVersion};
   export {CadenceSpendModifier};
   export {CollectionSettingVersion};

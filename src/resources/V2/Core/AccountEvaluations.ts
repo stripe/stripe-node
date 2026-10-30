@@ -78,7 +78,7 @@ export namespace AccountEvaluation {
     | 'account_takeover'
     | 'fraudulent_website'
     | 'user_account_sharing'
-    | 'user_merchant_fit'
+    | 'user_affinity'
     | 'user_multi_accounting'
     | OtherString;
 
@@ -150,7 +150,7 @@ export namespace V2 {
         | 'account_takeover'
         | 'fraudulent_website'
         | 'user_account_sharing'
-        | 'user_merchant_fit'
+        | 'user_affinity'
         | 'user_multi_accounting'
         | OtherString;
 

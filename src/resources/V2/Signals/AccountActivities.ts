@@ -111,6 +111,11 @@ export interface AccountActivity {
   credential_change?: AccountActivity.CredentialChange;
 
   /**
+   * Details for the custom marketing action. Present only when type is custom_marketing_action.
+   */
+  custom_marketing_action?: AccountActivity.CustomMarketingAction;
+
+  /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
    */
   livemode: boolean;
@@ -154,6 +159,12 @@ export interface AccountActivity {
    * Details for the registration decision. Present only when type is registration_decision.
    */
   registration_decision?: AccountActivity.RegistrationDecision;
+
+  /**
+   * The AccountSignal that prompted this activity, when applicable. This historical reference
+   * may coexist with account_evaluation and remains present after the signal expires.
+   */
+  triggering_signal?: string;
 
   /**
    * The type of activity.
@@ -220,6 +231,25 @@ export namespace AccountActivity {
     credential_type: CredentialChange.CredentialType;
   }
 
+  export interface CustomMarketingAction {
+    /**
+     * A description of the action.
+     */
+    description: string;
+
+    /**
+     * The outcome of the action.
+     */
+    outcome: CustomMarketingAction.Outcome;
+
+    /**
+     * Additional user-defined properties of the action.
+     */
+    properties: {
+      [key: string]: string;
+    };
+  }
+
   export interface LoginAttempt {
     /**
      * Client details captured for the attempt.
@@ -228,6 +258,11 @@ export namespace AccountActivity {
   }
 
   export interface LoginDecision {
+    /**
+     * Multi-factor authentication challenges performed during the login process.
+     */
+    mfa_challenges?: Array<LoginDecision.MfaChallenge>;
+
     /**
      * The action the merchant took following the evaluation.
      */
@@ -270,6 +305,7 @@ export namespace AccountActivity {
     | 'account_takeover_mitigation'
     | 'account_takeover_report'
     | 'credential_change'
+    | 'custom_marketing_action'
     | 'login_attempt'
     | 'login_decision'
     | 'mfa_addition'
@@ -377,6 +413,10 @@ export namespace AccountActivity {
       | OtherString;
   }
 
+  export namespace CustomMarketingAction {
+    export type Outcome = 'failed' | 'succeeded' | OtherString;
+  }
+
   export namespace LoginAttempt {
     export interface ClientDetails {
       /**
@@ -411,7 +451,31 @@ export namespace AccountActivity {
   }
 
   export namespace LoginDecision {
+    export interface MfaChallenge {
+      /**
+       * The authentication method used for the challenge.
+       */
+      mfa_type: MfaChallenge.MfaType;
+
+      /**
+       * The outcome of the authentication challenge.
+       */
+      status: MfaChallenge.Status;
+    }
+
     export type Status = 'allowed' | 'blocked' | 'restricted';
+
+    export namespace MfaChallenge {
+      export type MfaType =
+        | 'authenticator_app'
+        | 'email'
+        | 'hardware_key'
+        | 'other'
+        | 'sms'
+        | OtherString;
+
+      export type Status = 'failed' | 'other' | 'succeeded' | OtherString;
+    }
   }
 
   export namespace MfaAddition {
@@ -523,6 +587,11 @@ export namespace V2 {
       credential_change?: AccountActivityCreateParams.CredentialChange;
 
       /**
+       * Details for the custom marketing action. Provide only when type is custom_marketing_action.
+       */
+      custom_marketing_action?: AccountActivityCreateParams.CustomMarketingAction;
+
+      /**
        * Details for the login attempt. Provide only when type is login_attempt.
        */
       login_attempt?: AccountActivityCreateParams.LoginAttempt;
@@ -561,6 +630,13 @@ export namespace V2 {
        * Details for the registration decision. Provide only when type is registration_decision.
        */
       registration_decision?: AccountActivityCreateParams.RegistrationDecision;
+
+      /**
+       * An accessible AccountSignal that prompted this activity. The signal must be within its
+       * 90-day retrieval window and match the existing account or customer in account_details.
+       * Inline data is unsupported. May be supplied together with account_evaluation.
+       */
+      triggering_signal?: string;
     }
 
     export namespace AccountActivityCreateParams {
@@ -572,6 +648,7 @@ export namespace V2 {
         | 'account_takeover_mitigation'
         | 'account_takeover_report'
         | 'credential_change'
+        | 'custom_marketing_action'
         | 'login_attempt'
         | 'login_decision'
         | 'mfa_addition'
@@ -639,6 +716,25 @@ export namespace V2 {
         credential_type: CredentialChange.CredentialType;
       }
 
+      export interface CustomMarketingAction {
+        /**
+         * A description of the action, between 1 and 100 characters.
+         */
+        description: string;
+
+        /**
+         * The outcome of the action.
+         */
+        outcome: CustomMarketingAction.Outcome;
+
+        /**
+         * Additional user-defined properties of the action.
+         */
+        properties: {
+          [key: string]: string;
+        };
+      }
+
       export interface LoginAttempt {
         /**
          * Client details captured for the attempt.
@@ -647,6 +743,11 @@ export namespace V2 {
       }
 
       export interface LoginDecision {
+        /**
+         * Multi-factor authentication challenges performed during the login process.
+         */
+        mfa_challenges?: Array<LoginDecision.MfaChallenge>;
+
         /**
          * The action the merchant took following the evaluation.
          */
@@ -780,6 +881,10 @@ export namespace V2 {
           | OtherString;
       }
 
+      export namespace CustomMarketingAction {
+        export type Outcome = 'failed' | 'succeeded' | OtherString;
+      }
+
       export namespace LoginAttempt {
         export interface ClientDetails {
           /**
@@ -814,7 +919,31 @@ export namespace V2 {
       }
 
       export namespace LoginDecision {
+        export interface MfaChallenge {
+          /**
+           * The authentication method used for the challenge.
+           */
+          mfa_type: MfaChallenge.MfaType;
+
+          /**
+           * The outcome of the authentication challenge.
+           */
+          status: MfaChallenge.Status;
+        }
+
         export type Status = 'allowed' | 'blocked' | 'restricted';
+
+        export namespace MfaChallenge {
+          export type MfaType =
+            | 'authenticator_app'
+            | 'email'
+            | 'hardware_key'
+            | 'other'
+            | 'sms'
+            | OtherString;
+
+          export type Status = 'failed' | 'other' | 'succeeded' | OtherString;
+        }
       }
 
       export namespace MfaAddition {

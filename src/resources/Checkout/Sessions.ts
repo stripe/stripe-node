@@ -1358,6 +1358,8 @@ export interface Session {
    */
   approval_method?: Session.ApprovalMethod | null;
 
+  automatic_pass_through_fee?: Session.AutomaticPassThroughFee;
+
   automatic_surcharge?: Session.AutomaticSurcharge;
 
   automatic_tax: Session.AutomaticTax;
@@ -1726,6 +1728,33 @@ export namespace Session {
   }
 
   export type ApprovalMethod = 'auto' | 'manual' | OtherString;
+
+  export interface AutomaticPassThroughFee {
+    /**
+     * Whether the fee is calculated on the amount due before or after tax.
+     */
+    calculation_basis: AutomaticPassThroughFee.CalculationBasis | null;
+
+    /**
+     * Indicates whether a pass-through fee is calculated and added to this session.
+     */
+    enabled: boolean;
+
+    /**
+     * The provider that performed this session's latest pass-through fee calculation.
+     */
+    provider: string | null;
+
+    /**
+     * The status of the most recent pass-through fee calculation for this session.
+     */
+    status?: AutomaticPassThroughFee.Status;
+
+    /**
+     * The type of fee calculated for this session.
+     */
+    type: AutomaticPassThroughFee.Type | null;
+  }
 
   export interface AutomaticSurcharge {
     /**
@@ -2096,6 +2125,7 @@ export namespace Session {
     | 'fil'
     | 'fr'
     | 'fr-CA'
+    | 'hi-IN'
     | 'hr'
     | 'hu'
     | 'id'
@@ -2132,7 +2162,7 @@ export namespace Session {
   }
 
   export interface MarketingAttribution {
-    ad_conversion: MarketingAttribution.AdConversion;
+    ad_conversion?: MarketingAttribution.AdConversion;
 
     /**
      * The advertising platform's click identifier.
@@ -2277,6 +2307,8 @@ export namespace Session {
     paynow?: PaymentMethodOptions.Paynow;
 
     paypal?: PaymentMethodOptions.Paypal;
+
+    paypay?: PaymentMethodOptions.Paypay;
 
     payto?: PaymentMethodOptions.Payto;
 
@@ -2590,6 +2622,21 @@ export namespace Session {
     }
   }
 
+  export namespace AutomaticPassThroughFee {
+    export type CalculationBasis =
+      | 'total_after_tax'
+      | 'total_before_tax'
+      | OtherString;
+
+    export type Status =
+      | 'complete'
+      | 'failed'
+      | 'not_applicable'
+      | 'requires_input';
+
+    export type Type = 'convenience_fee' | 'service_fee' | OtherString;
+  }
+
   export namespace AutomaticSurcharge {
     export type CalculationBasis =
       | 'total_after_tax'
@@ -2770,7 +2817,7 @@ export namespace Session {
 
     export interface TaxId {
       /**
-       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `au_acn`, `nz_bn`, `pt_nif`, `cz_dic`, `fr_siret`, `fr_siren`, `fr_spi`, `sm_coe`, `tt_vat`, `tt_bir`, `mu_vat`, `mz_nuit`, `au_wpn`, `md_cf`, `is_kt`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
+       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `au_acn`, `nz_bn`, `pt_nif`, `cz_dic`, `fr_siret`, `fr_siren`, `fr_spi`, `sm_coe`, `tt_vat`, `tt_bir`, `mu_vat`, `mz_nuit`, `au_wpn`, `md_cf`, `is_kt`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, `gh_tin`, `bw_vat`, `ci_vat`, or `unknown`
        */
       type: TaxId.Type;
 
@@ -2805,6 +2852,7 @@ export namespace Session {
         | 'br_cnpj'
         | 'br_cpf'
         | 'bs_tin'
+        | 'bw_vat'
         | 'by_tin'
         | 'ca_bn'
         | 'ca_gst_hst'
@@ -2815,6 +2863,7 @@ export namespace Session {
         | 'cd_nif'
         | 'ch_uid'
         | 'ch_vat'
+        | 'ci_vat'
         | 'cl_tin'
         | 'cm_niu'
         | 'cn_tin'
@@ -2836,6 +2885,7 @@ export namespace Session {
         | 'fr_spi'
         | 'gb_vat'
         | 'ge_vat'
+        | 'gh_tin'
         | 'gi_tin'
         | 'gn_nif'
         | 'hk_br'
@@ -3139,7 +3189,7 @@ export namespace Session {
 
     export interface TaxId {
       /**
-       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `au_acn`, `nz_bn`, `pt_nif`, `cz_dic`, `fr_siret`, `fr_siren`, `fr_spi`, `sm_coe`, `tt_vat`, `tt_bir`, `mu_vat`, `mz_nuit`, `au_wpn`, `md_cf`, `is_kt`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
+       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `au_acn`, `nz_bn`, `pt_nif`, `cz_dic`, `fr_siret`, `fr_siren`, `fr_spi`, `sm_coe`, `tt_vat`, `tt_bir`, `mu_vat`, `mz_nuit`, `au_wpn`, `md_cf`, `is_kt`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, `gh_tin`, `bw_vat`, `ci_vat`, or `unknown`
        */
       type: TaxId.Type;
 
@@ -3174,6 +3224,7 @@ export namespace Session {
         | 'br_cnpj'
         | 'br_cpf'
         | 'bs_tin'
+        | 'bw_vat'
         | 'by_tin'
         | 'ca_bn'
         | 'ca_gst_hst'
@@ -3184,6 +3235,7 @@ export namespace Session {
         | 'cd_nif'
         | 'ch_uid'
         | 'ch_vat'
+        | 'ci_vat'
         | 'cl_tin'
         | 'cm_niu'
         | 'cn_tin'
@@ -3205,6 +3257,7 @@ export namespace Session {
         | 'fr_spi'
         | 'gb_vat'
         | 'ge_vat'
+        | 'gh_tin'
         | 'gi_tin'
         | 'gn_nif'
         | 'hk_br'
@@ -3805,6 +3858,11 @@ export namespace Session {
     export namespace Subscription {
       export interface Item {
         /**
+         * The adjustable quantity settings for this subscription item.
+         */
+        adjustable_quantity?: Item.AdjustableQuantity | null;
+
+        /**
          * The trial offer applied to this subscription item.
          */
         current_trial: Item.CurrentTrial | null;
@@ -3845,6 +3903,23 @@ export namespace Session {
       }
 
       export namespace Item {
+        export interface AdjustableQuantity {
+          /**
+           * Whether the quantity is adjustable.
+           */
+          enabled: boolean;
+
+          /**
+           * The maximum quantity the customer can purchase.
+           */
+          maximum: number | null;
+
+          /**
+           * The minimum quantity the customer can purchase.
+           */
+          minimum: number | null;
+        }
+
         export interface CurrentTrial {
           /**
            * The ID of the trial offer applied to this subscription item.
@@ -4523,6 +4598,13 @@ export namespace Session {
        * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
        */
       subsellers?: Array<string>;
+    }
+
+    export interface Paypay {
+      /**
+       * A reference to the merchant subscription this payment corresponds to.
+       */
+      subscription_reference?: string | null;
     }
 
     export interface Payto {
@@ -5852,6 +5934,11 @@ export namespace Checkout {
     approval_method?: SessionCreateParams.ApprovalMethod;
 
     /**
+     * Settings for calculating and adding a pass-through fee (a convenience or service fee) to this session.
+     */
+    automatic_pass_through_fee?: SessionCreateParams.AutomaticPassThroughFee;
+
+    /**
      * Settings for automatic surcharge calculation for this session.
      */
     automatic_surcharge?: SessionCreateParams.AutomaticSurcharge;
@@ -6254,6 +6341,7 @@ export namespace Checkout {
       | 'sequra'
       | 'shopeepay'
       | 'sofort'
+      | 'stripe_balance'
       | 'sunbit'
       | 'swish'
       | 'twint'
@@ -6264,6 +6352,23 @@ export namespace Checkout {
       | OtherString;
 
     export type ApprovalMethod = 'auto' | 'manual' | OtherString;
+
+    export interface AutomaticPassThroughFee {
+      /**
+       * Whether the fee is calculated on the amount due before or after tax. Required when `enabled` is `true`.
+       */
+      calculation_basis?: AutomaticPassThroughFee.CalculationBasis;
+
+      /**
+       * Set to `true` to calculate a pass-through fee using the customer's payment method details and location.
+       */
+      enabled: boolean;
+
+      /**
+       * The type of fee to calculate. Required when `enabled` is `true`.
+       */
+      type?: AutomaticPassThroughFee.Type;
+    }
 
     export interface AutomaticSurcharge {
       /**
@@ -6524,6 +6629,7 @@ export namespace Checkout {
       | 'sequra'
       | 'shopeepay'
       | 'sofort'
+      | 'stripe_balance'
       | 'sunbit'
       | 'swish'
       | 'twint'
@@ -6610,6 +6716,7 @@ export namespace Checkout {
       | 'fil'
       | 'fr'
       | 'fr-CA'
+      | 'hi-IN'
       | 'hr'
       | 'hu'
       | 'id'
@@ -6649,7 +6756,7 @@ export namespace Checkout {
       /**
        * Information used when sending conversions to an advertising platform.
        */
-      ad_conversion: MarketingAttribution.AdConversion;
+      ad_conversion?: MarketingAttribution.AdConversion;
 
       /**
        * The advertising platform's click identifier.
@@ -7000,6 +7107,11 @@ export namespace Checkout {
        * contains details about the PayPal payment method options.
        */
       paypal?: PaymentMethodOptions.Paypal;
+
+      /**
+       * contains details about the PayPay payment method options.
+       */
+      paypay?: PaymentMethodOptions.Paypay;
 
       /**
        * contains details about the PayTo payment method options.
@@ -7382,6 +7494,15 @@ export namespace Checkout {
          */
         enabled: boolean;
       }
+    }
+
+    export namespace AutomaticPassThroughFee {
+      export type CalculationBasis =
+        | 'total_after_tax'
+        | 'total_before_tax'
+        | OtherString;
+
+      export type Type = 'convenience_fee' | 'service_fee' | OtherString;
     }
 
     export namespace AutomaticSurcharge {
@@ -8153,17 +8274,17 @@ export namespace Checkout {
           adjustable_quantity?: Item.AdjustableQuantity;
 
           /**
-           * The trial offer to apply to this subscription item.
+           * The [Trial Offer](https://docs.stripe.com/api/product-catalog/trial-offer?api-version=2026-03-25.preview) to apply to this subscription item. One of `price`, `price_data` or `current_trial` is required.
            */
           current_trial?: Item.CurrentTrial;
 
           /**
-           * The ID of the [Price](https://docs.stripe.com/api/prices). One of `price` or `price_data` is required.
+           * The ID of the [Price](https://docs.stripe.com/api/prices). One of `price`, `price_data` or `current_trial` is required.
            */
           price?: string;
 
           /**
-           * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
+           * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price`, `price_data` or `current_trial` is required.
            */
           price_data?: Item.PriceData;
 
@@ -8235,7 +8356,7 @@ export namespace Checkout {
 
           export interface CurrentTrial {
             /**
-             * The ID of the trial offer to apply to the subscription item.
+             * The ID of the [Trial Offer](https://docs.stripe.com/api/product-catalog/trial-offer?api-version=2026-03-25.preview).
              */
             trial_offer: string;
           }
@@ -9309,6 +9430,13 @@ export namespace Checkout {
          * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
          */
         subsellers?: Array<string>;
+      }
+
+      export interface Paypay {
+        /**
+         * The merchant's subscription identifier for this off-session charge.
+         */
+        subscription_reference?: string;
       }
 
       export interface Payto {
@@ -10716,6 +10844,26 @@ export namespace Checkout {
 
       export interface InvoiceSettings {
         /**
+         * The account tax IDs associated with the subscription. Will be set on invoices generated by the subscription.
+         */
+        account_tax_ids?: Emptyable<Array<string>>;
+
+        /**
+         * A list of up to 4 custom fields to be displayed on the invoice.
+         */
+        custom_fields?: Emptyable<Array<InvoiceSettings.CustomField>>;
+
+        /**
+         * An arbitrary string attached to the object. Often useful for displaying to users.
+         */
+        description?: string;
+
+        /**
+         * Footer to be displayed on the invoice.
+         */
+        footer?: string;
+
+        /**
          * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
          */
         issuer?: InvoiceSettings.Issuer;
@@ -10776,6 +10924,18 @@ export namespace Checkout {
       }
 
       export namespace InvoiceSettings {
+        export interface CustomField {
+          /**
+           * The name of the custom field. This may be up to 40 characters.
+           */
+          name: string;
+
+          /**
+           * The value of the custom field. This may be up to 140 characters.
+           */
+          value: string;
+        }
+
         export interface Issuer {
           /**
            * The connected account being referenced when `type` is `account`.

@@ -389,7 +389,7 @@ export interface SubscriptionSchedule {
   /**
    * The pause schedules for this subscription schedule.
    */
-  pause_schedules?: Array<SubscriptionSchedule.PauseSchedule>;
+  pause_schedules: Array<SubscriptionSchedule.PauseSchedule>;
 
   /**
    * Configuration for the subscription schedule's phases.
