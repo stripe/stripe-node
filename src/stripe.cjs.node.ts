@@ -28650,6 +28650,7 @@ declare namespace StripeConstructor {
           export type BalanceReport = Stripe_.V2.Core.AccountSessionCreateParams.Components.BalanceReport;
           export type Balances = Stripe_.V2.Core.AccountSessionCreateParams.Components.Balances;
           export type Bills = Stripe_.V2.Core.AccountSessionCreateParams.Components.Bills;
+          export type BusinessProfileManagement = Stripe_.V2.Core.AccountSessionCreateParams.Components.BusinessProfileManagement;
           export type CapitalFinancing = Stripe_.V2.Core.AccountSessionCreateParams.Components.CapitalFinancing;
           export type CapitalFinancingApplication = Stripe_.V2.Core.AccountSessionCreateParams.Components.CapitalFinancingApplication;
           export type CapitalFinancingPromotion = Stripe_.V2.Core.AccountSessionCreateParams.Components.CapitalFinancingPromotion;
@@ -28713,6 +28714,7 @@ declare namespace StripeConstructor {
           export type BalanceReport = Stripe_.V2.Core.AccountSession.Components.BalanceReport;
           export type Balances = Stripe_.V2.Core.AccountSession.Components.Balances;
           export type Bills = Stripe_.V2.Core.AccountSession.Components.Bills;
+          export type BusinessProfileManagement = Stripe_.V2.Core.AccountSession.Components.BusinessProfileManagement;
           export type CapitalFinancing = Stripe_.V2.Core.AccountSession.Components.CapitalFinancing;
           export type CapitalFinancingApplication = Stripe_.V2.Core.AccountSession.Components.CapitalFinancingApplication;
           export type CapitalFinancingPromotion = Stripe_.V2.Core.AccountSession.Components.CapitalFinancingPromotion;
@@ -28787,6 +28789,9 @@ declare namespace StripeConstructor {
               export type DisableStripeUserAuthentication = Stripe_.V2.Core.AccountSession.Components.Bills.Scopes.DisableStripeUserAuthentication;
               export type ManageBills = Stripe_.V2.Core.AccountSession.Components.Bills.Scopes.ManageBills;
             }
+          }
+          export namespace BusinessProfileManagement {
+            export type Scopes = Stripe_.V2.Core.AccountSession.Components.BusinessProfileManagement.Scopes;
           }
           export namespace CapitalFinancing {
             export type Scopes = Stripe_.V2.Core.AccountSession.Components.CapitalFinancing.Scopes;
