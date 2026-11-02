@@ -19,6 +19,15 @@ export class BatchJobResource extends StripeResource {
           status_details: {
             kind: 'object',
             fields: {
+              batch_failed: {
+                kind: 'object',
+                fields: {
+                  partial_output_file: {
+                    kind: 'object',
+                    fields: {size: {kind: 'int64_string'}},
+                  },
+                },
+              },
               canceled: {
                 kind: 'object',
                 fields: {
@@ -100,6 +109,15 @@ export class BatchJobResource extends StripeResource {
             status_details: {
               kind: 'object',
               fields: {
+                batch_failed: {
+                  kind: 'object',
+                  fields: {
+                    partial_output_file: {
+                      kind: 'object',
+                      fields: {size: {kind: 'int64_string'}},
+                    },
+                  },
+                },
                 canceled: {
                   kind: 'object',
                   fields: {
@@ -182,6 +200,15 @@ export class BatchJobResource extends StripeResource {
             status_details: {
               kind: 'object',
               fields: {
+                batch_failed: {
+                  kind: 'object',
+                  fields: {
+                    partial_output_file: {
+                      kind: 'object',
+                      fields: {size: {kind: 'int64_string'}},
+                    },
+                  },
+                },
                 canceled: {
                   kind: 'object',
                   fields: {
@@ -347,6 +374,11 @@ export namespace BatchJob {
        * Details about the `batch_job` failure.
        */
       error: string;
+
+      /**
+       * The partial output file details, containing everything processed before the `batch_job` failed. Absent for jobs that failed before producing any output.
+       */
+      partial_output_file?: BatchFailed.PartialOutputFile;
     }
 
     export interface Canceled {
@@ -442,6 +474,39 @@ export namespace BatchJob {
        * The total number of records that were successfully processed.
        */
       success_count: bigint;
+    }
+
+    export namespace BatchFailed {
+      export interface PartialOutputFile {
+        /**
+         * The content type of the file.
+         */
+        content_type: string;
+
+        /**
+         * A pre-signed URL that allows secure, time-limited access to download the file.
+         */
+        download_url: PartialOutputFile.DownloadUrl;
+
+        /**
+         * The total size of the file in bytes.
+         */
+        size: bigint;
+      }
+
+      export namespace PartialOutputFile {
+        export interface DownloadUrl {
+          /**
+           * The time that the URL expires.
+           */
+          expires_at?: string;
+
+          /**
+           * The URL that can be used for accessing the file.
+           */
+          url: string;
+        }
+      }
     }
 
     export namespace Canceled {

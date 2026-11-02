@@ -510,6 +510,10 @@ export function parsePayload(
   return JSON.parse(raw) as Record<string, unknown>;
 }
 
+export function isBlankWebhookSecret(secret: string): boolean {
+  return !secret || /^[ \t\r\n\f\v]*$/.test(secret);
+}
+
 export function maybeExtractFromCloudProviderEnvelope(
   payload: string | Uint8Array
 ): Record<string, unknown> {

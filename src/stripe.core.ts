@@ -851,6 +851,7 @@ import {ProductCatalog} from './resources/ProductCatalog/index.js';
 import {Radar} from './resources/Radar/index.js';
 import {Reporting} from './resources/Reporting/index.js';
 import {Reserve} from './resources/Reserve/index.js';
+import {Risk} from './resources/Risk/index.js';
 import {SharedPayment} from './resources/SharedPayment/index.js';
 import {Sigma} from './resources/Sigma/index.js';
 import {Tax} from './resources/Tax/index.js';
@@ -1244,7 +1245,7 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 export class Stripe {
-  static PACKAGE_VERSION = '23.1.0-alpha.3';
+  static PACKAGE_VERSION = '23.2.0-alpha.1';
   static API_VERSION: typeof ApiVersion = ApiVersion;
   /**
    * The major API version that this SDK uses. Objects retrieved using the same
@@ -1390,6 +1391,7 @@ export class Stripe {
   radar: Radar;
   reporting: Reporting;
   reserve: Reserve;
+  risk: Risk;
   sharedPayment: SharedPayment;
   sigma: Sigma;
   tax: Tax;
@@ -1657,6 +1659,7 @@ export class Stripe {
     this.radar = new Radar(this);
     this.reporting = new Reporting(this);
     this.reserve = new Reserve(this);
+    this.risk = new Risk(this);
     this.sharedPayment = new SharedPayment(this);
     this.sigma = new Sigma(this);
     this.tax = new Tax(this);
@@ -2991,6 +2994,7 @@ export declare namespace Stripe {
   export {Radar};
   export {Reporting};
   export {Reserve};
+  export {Risk};
   export {SharedPayment};
   export {Sigma};
   export {Tax};
@@ -3450,6 +3454,9 @@ export declare namespace Stripe {
     >;
     export type CannotProceedError = InstanceType<
       typeof _Error.CannotProceedError
+    >;
+    export type CapabilityNotEnabledError = InstanceType<
+      typeof _Error.CapabilityNotEnabledError
     >;
     export type ControlledByAlternateResourceError = InstanceType<
       typeof _Error.ControlledByAlternateResourceError

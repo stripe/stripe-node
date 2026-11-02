@@ -6,6 +6,7 @@ import {
   getTestServerStripe,
   FAKE_API_KEY,
 } from './testUtils.js';
+import {WebPlatformFunctions} from '../src/platform/WebPlatformFunctions.js';
 
 const DUMMY_WEBHOOK_SECRET = 'whsec_test_secret';
 
@@ -71,6 +72,26 @@ describe('StripeEventNotificationHandler', () => {
   });
 
   describe('handler registration and routing', () => {
+    it('verifies notifications with an asynchronous crypto provider', async () => {
+      const webStripe = getSpyableStripe({});
+      (webStripe as any)._platformFunctions = new WebPlatformFunctions();
+      const handler = webStripe.notificationHandler(
+        DUMMY_WEBHOOK_SECRET,
+        async () => {}
+      );
+      let handled = false;
+      handler.on('v1.billing.meter.error_report_triggered', async () => {
+        handled = true;
+      });
+
+      await handler.handle(
+        v1BillingMeterPayload,
+        generateHeader(v1BillingMeterPayload)
+      );
+
+      expect(handled).to.be.true;
+    });
+
     it('should route event to registered handler', async () => {
       let callbackCalled = false;
       let receivedEvent: any = null;
@@ -709,6 +730,57 @@ describe('StripeEventNotificationHandler', () => {
 
       expect(errorThrown).to.be.true;
     });
+
+    it('should reject blank webhook secrets', () => {
+      const blankSecrets = [
+        '',
+        ' ',
+        '\t',
+        '\r',
+        '\n',
+        '\f',
+        '\v',
+        ' \t\r\n\f\v',
+      ];
+
+      for (const secret of blankSecrets) {
+        expect(() => {
+          stripe.notificationHandler(secret, async () => {});
+        }).to.throw('webhookSecret must be a non-empty string');
+      }
+    });
+
+    it('should preserve surrounding whitespace in the webhook secret', async () => {
+      const secret = ` \t${DUMMY_WEBHOOK_SECRET}\r\n`;
+      let fallbackCalled = false;
+      const handler = stripe.notificationHandler(secret, async () => {
+        fallbackCalled = true;
+      });
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload: v1BillingMeterPayload,
+        secret,
+      });
+
+      await handler.handle(v1BillingMeterPayload, header);
+
+      expect(fallbackCalled).to.be.true;
+    });
+
+    it('should accept a non-breaking-space-only webhook secret', async () => {
+      const secret = '\u00a0';
+      let fallbackCalled = false;
+      const handler = stripe.notificationHandler(secret, async () => {
+        fallbackCalled = true;
+      });
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload: v1BillingMeterPayload,
+        secret,
+      });
+
+      await handler.handle(v1BillingMeterPayload, header);
+
+      expect(fallbackCalled).to.be.true;
+    });
   });
 
   describe('registeredEventTypes', () => {
@@ -925,12 +997,6 @@ describe('StripeEventNotificationHandlerWithoutVerification', () => {
     );
     expect(typeof handler.on).to.equal('function');
     expect(typeof handler.handle).to.equal('function');
-  });
-
-  it('should throw when constructing the original handler with an empty webhookSecret', () => {
-    expect(() => {
-      stripe.notificationHandler('', async () => {});
-    }).to.throw(/webhookSecret must be a non-empty string/);
   });
 
   describe('preHandle', () => {

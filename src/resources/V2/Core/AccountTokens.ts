@@ -788,6 +788,11 @@ export namespace V2 {
             proof_of_address?: Documents.ProofOfAddress;
 
             /**
+             * One or more documents that demonstrate proof of business presence.
+             */
+            proof_of_business_presence?: Documents.ProofOfBusinessPresence;
+
+            /**
              * One or more documents that demonstrate proof of ultimate beneficial ownership.
              */
             proof_of_registration?: Documents.ProofOfRegistration;
@@ -896,13 +901,14 @@ export namespace V2 {
           export namespace AdditionalAddress {
             export type Purpose =
               | 'administrative'
+              | 'physical'
               | 'principal_place_of_business';
           }
 
           export namespace Documents {
             export interface BankAccountOwnershipVerification {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -914,7 +920,7 @@ export namespace V2 {
 
             export interface CompanyLicense {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -926,7 +932,7 @@ export namespace V2 {
 
             export interface CompanyMemorandumOfAssociation {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -938,7 +944,7 @@ export namespace V2 {
 
             export interface CompanyMinisterialDecree {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -950,7 +956,7 @@ export namespace V2 {
 
             export interface CompanyRegistrationVerification {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -962,7 +968,7 @@ export namespace V2 {
 
             export interface CompanyTaxIdVerification {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -974,7 +980,7 @@ export namespace V2 {
 
             export interface PrimaryVerification {
               /**
-               * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+               * The [file upload](https://docs.stripe.com/api/files/create) tokens referring to each side of the document.
                */
               front_back: PrimaryVerification.FrontBack;
 
@@ -986,7 +992,7 @@ export namespace V2 {
 
             export interface ProofOfAddress {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -996,9 +1002,21 @@ export namespace V2 {
               type: ProofOfAddress.Type;
             }
 
+            export interface ProofOfBusinessPresence {
+              /**
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
+               */
+              files: Array<string>;
+
+              /**
+               * The format of the document. Currently supports `files` only.
+               */
+              type: ProofOfBusinessPresence.Type;
+            }
+
             export interface ProofOfRegistration {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -1015,7 +1033,7 @@ export namespace V2 {
 
             export interface ProofOfUltimateBeneficialOwnership {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -1057,12 +1075,12 @@ export namespace V2 {
             export namespace PrimaryVerification {
               export interface FrontBack {
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 back?: string;
 
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front?: string;
               }
@@ -1071,6 +1089,10 @@ export namespace V2 {
             }
 
             export namespace ProofOfAddress {
+              export type Type = 'files' | OtherString;
+            }
+
+            export namespace ProofOfBusinessPresence {
               export type Type = 'files' | OtherString;
             }
 
@@ -1559,7 +1581,7 @@ export namespace V2 {
           export namespace Documents {
             export interface CompanyAuthorization {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -1571,7 +1593,7 @@ export namespace V2 {
 
             export interface Passport {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -1583,7 +1605,7 @@ export namespace V2 {
 
             export interface PrimaryVerification {
               /**
-               * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+               * The [file upload](https://docs.stripe.com/api/files/create) tokens referring to each side of the document.
                */
               front_back: PrimaryVerification.FrontBack;
 
@@ -1595,7 +1617,7 @@ export namespace V2 {
 
             export interface SecondaryVerification {
               /**
-               * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+               * The [file upload](https://docs.stripe.com/api/files/create) tokens referring to each side of the document.
                */
               front_back: SecondaryVerification.FrontBack;
 
@@ -1607,7 +1629,7 @@ export namespace V2 {
 
             export interface Visa {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -1628,12 +1650,12 @@ export namespace V2 {
             export namespace PrimaryVerification {
               export interface FrontBack {
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 back?: string;
 
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front?: string;
               }
@@ -1644,12 +1666,12 @@ export namespace V2 {
             export namespace SecondaryVerification {
               export interface FrontBack {
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 back?: string;
 
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front?: string;
               }

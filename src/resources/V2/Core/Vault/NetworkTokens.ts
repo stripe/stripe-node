@@ -6,7 +6,7 @@ import {RequestOptions, Response} from '../../../../lib.js';
 
 export class NetworkTokenResource extends StripeResource {
   /**
-   * Create or Return a Network Token Using Raw Card Data.
+   * Creates a Network Token from raw card data.
    * @throws Stripe.CannotProceedError
    * @throws Stripe.BlockedByStripeError
    * @throws Stripe.MerchantNotGatedError
@@ -23,7 +23,7 @@ export class NetworkTokenResource extends StripeResource {
     ) as any;
   }
   /**
-   * Creates or returns a Network Token from an existing card reference.
+   * Creates a Network Token from an existing card reference.
    * @throws Stripe.CannotProceedError
    * @throws Stripe.BlockedByStripeError
    */
@@ -58,6 +58,7 @@ export class NetworkTokenResource extends StripeResource {
    * The cryptogram is returned only in this response and is never persisted.
    * @throws Stripe.RateLimitError
    * @throws Stripe.CannotProceedError
+   * @throws Stripe.MerchantNotGatedError
    */
   generateCryptogram(
     id: string,
@@ -266,7 +267,7 @@ export namespace V2 {
       }
 
       export namespace NetworkTokenGenerateCryptogramParams {
-        export type Type = 'token_cryptogram' | OtherString;
+        export type Type = 'dynamic_cvc' | 'token_cryptogram' | OtherString;
       }
     }
   }

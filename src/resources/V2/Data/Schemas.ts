@@ -146,6 +146,11 @@ export namespace Schema {
        * The identifier of the referenced schema.
        */
       schema: string;
+
+      /**
+       * The name of the referenced schema.
+       */
+      schema_name: string;
     }
 
     export interface ForeignKeysTo {
@@ -158,6 +163,11 @@ export namespace Schema {
        * The identifier of the referenced schema.
        */
       schema: string;
+
+      /**
+       * The name of the referenced schema.
+       */
+      schema_name: string;
     }
 
     export type Type =

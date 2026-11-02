@@ -1424,6 +1424,11 @@ export interface Customer {
   livemode: boolean;
 
   /**
+   * Advertising attribution information for this customer.
+   */
+  marketing_attributions?: Array<Customer.MarketingAttribution>;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata;
@@ -1524,6 +1529,50 @@ export namespace Customer {
     rendering_options: InvoiceSettings.RenderingOptions | null;
   }
 
+  export interface MarketingAttribution {
+    ad_conversion?: MarketingAttribution.AdConversion;
+
+    /**
+     * The advertising platform's click identifier.
+     */
+    click_id: string | null;
+
+    /**
+     * The Unix timestamp when the advertising interaction occurred.
+     */
+    occurred_at: number | null;
+
+    /**
+     * The advertising group ID from the `utm_adgroup` parameter.
+     */
+    utm_adgroup: string | null;
+
+    /**
+     * The advertising content identifier from the `utm_content` parameter.
+     */
+    utm_content: string | null;
+
+    /**
+     * The advertising campaign ID from the `utm_id` parameter.
+     */
+    utm_id: string | null;
+
+    /**
+     * The marketing medium from the `utm_medium` parameter.
+     */
+    utm_medium: string | null;
+
+    /**
+     * The referral source from the `utm_source` parameter.
+     */
+    utm_source: string | null;
+
+    /**
+     * The paid search term from the `utm_term` parameter.
+     */
+    utm_term: string | null;
+  }
+
   export interface Redaction {
     /**
      * Indicates whether this object and its related objects have been redacted or not.
@@ -1602,6 +1651,15 @@ export namespace Customer {
        * ID of the invoice rendering template to be used for this customer's invoices. If set, the template will be used on all invoices for this customer unless a template is set directly on the invoice.
        */
       template: string | null;
+    }
+  }
+
+  export namespace MarketingAttribution {
+    export interface AdConversion {
+      /**
+       * Whether the customer consented to sending conversion data to an advertising platform.
+       */
+      consent_collected: boolean;
     }
   }
 
@@ -1703,6 +1761,11 @@ export interface CustomerCreateParams {
   invoice_settings?: CustomerCreateParams.InvoiceSettings;
 
   /**
+   * Advertising attribution information for this customer. Only one attribution is supported.
+   */
+  marketing_attributions?: Array<CustomerCreateParams.MarketingAttribution>;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
@@ -1789,6 +1852,53 @@ export namespace CustomerCreateParams {
     rendering_options?: Emptyable<InvoiceSettings.RenderingOptions>;
   }
 
+  export interface MarketingAttribution {
+    /**
+     * Information used when sending conversions to an advertising platform.
+     */
+    ad_conversion?: MarketingAttribution.AdConversion;
+
+    /**
+     * The advertising platform's click identifier.
+     */
+    click_id?: string;
+
+    /**
+     * The Unix timestamp when the advertising interaction occurred.
+     */
+    occurred_at?: number;
+
+    /**
+     * The advertising group ID from the `utm_adgroup` parameter.
+     */
+    utm_adgroup?: string;
+
+    /**
+     * The advertising content identifier from the `utm_content` parameter.
+     */
+    utm_content?: string;
+
+    /**
+     * The advertising campaign ID from the `utm_id` parameter.
+     */
+    utm_id?: string;
+
+    /**
+     * The marketing medium from the `utm_medium` parameter.
+     */
+    utm_medium?: string;
+
+    /**
+     * The referral source from the `utm_source` parameter.
+     */
+    utm_source?: string;
+
+    /**
+     * The paid search term from the `utm_term` parameter.
+     */
+    utm_term?: string;
+  }
+
   export interface Shipping {
     /**
      * Customer shipping address.
@@ -1822,7 +1932,7 @@ export namespace CustomerCreateParams {
 
   export interface TaxIdDatum {
     /**
-     * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
+     * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_acn`, `au_arn`, `au_wpn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `bw_vat`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `ci_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `cz_dic`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `fr_siren`, `fr_siret`, `fr_spi`, `gb_vat`, `ge_vat`, `gh_tin`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_kt`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_cf`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mu_vat`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `mz_nuit`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_bn`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `pt_nif`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sm_coe`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tt_bir`, `tt_vat`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
      */
     type: TaxIdDatum.Type;
 
@@ -1882,6 +1992,15 @@ export namespace CustomerCreateParams {
     }
   }
 
+  export namespace MarketingAttribution {
+    export interface AdConversion {
+      /**
+       * Whether the customer consented to sending conversion data to an advertising platform.
+       */
+      consent_collected: boolean;
+    }
+  }
+
   export namespace Tax {
     export type ValidateLocation = 'deferred' | 'immediately' | OtherString;
   }
@@ -1895,7 +2014,9 @@ export namespace CustomerCreateParams {
       | 'ao_tin'
       | 'ar_cuit'
       | 'au_abn'
+      | 'au_acn'
       | 'au_arn'
+      | 'au_wpn'
       | 'aw_tin'
       | 'az_tin'
       | 'ba_tin'
@@ -1909,6 +2030,7 @@ export namespace CustomerCreateParams {
       | 'br_cnpj'
       | 'br_cpf'
       | 'bs_tin'
+      | 'bw_vat'
       | 'by_tin'
       | 'ca_bn'
       | 'ca_gst_hst'
@@ -1919,12 +2041,14 @@ export namespace CustomerCreateParams {
       | 'cd_nif'
       | 'ch_uid'
       | 'ch_vat'
+      | 'ci_vat'
       | 'cl_tin'
       | 'cm_niu'
       | 'cn_tin'
       | 'co_nit'
       | 'cr_tin'
       | 'cv_nif'
+      | 'cz_dic'
       | 'de_stn'
       | 'do_rcn'
       | 'ec_ruc'
@@ -1934,8 +2058,12 @@ export namespace CustomerCreateParams {
       | 'eu_oss_vat'
       | 'eu_vat'
       | 'fo_vat'
+      | 'fr_siren'
+      | 'fr_siret'
+      | 'fr_spi'
       | 'gb_vat'
       | 'ge_vat'
+      | 'gh_tin'
       | 'gi_tin'
       | 'gn_nif'
       | 'hk_br'
@@ -1945,6 +2073,7 @@ export namespace CustomerCreateParams {
       | 'id_npwp'
       | 'il_vat'
       | 'in_gst'
+      | 'is_kt'
       | 'is_vat'
       | 'it_cf'
       | 'jp_cn'
@@ -1960,23 +2089,28 @@ export namespace CustomerCreateParams {
       | 'li_vat'
       | 'lk_vat'
       | 'ma_vat'
+      | 'md_cf'
       | 'md_vat'
       | 'me_pib'
       | 'mk_vat'
       | 'mr_nif'
+      | 'mu_vat'
       | 'mx_rfc'
       | 'my_frp'
       | 'my_itn'
       | 'my_sst'
+      | 'mz_nuit'
       | 'ng_tin'
       | 'no_vat'
       | 'no_voec'
       | 'np_pan'
+      | 'nz_bn'
       | 'nz_gst'
       | 'om_vat'
       | 'pe_ruc'
       | 'ph_tin'
       | 'pl_nip'
+      | 'pt_nif'
       | 'py_ruc'
       | 'ro_tin'
       | 'rs_pib'
@@ -1986,12 +2120,15 @@ export namespace CustomerCreateParams {
       | 'sg_gst'
       | 'sg_uen'
       | 'si_tin'
+      | 'sm_coe'
       | 'sn_ninea'
       | 'sr_fin'
       | 'sv_nit'
       | 'th_vat'
       | 'tj_tin'
       | 'tr_tin'
+      | 'tt_bir'
+      | 'tt_vat'
       | 'tw_vat'
       | 'tz_vat'
       | 'ua_vat'
@@ -2458,7 +2595,7 @@ export namespace CustomerCreateTaxExemptionParams {
 }
 export interface CustomerCreateTaxIdParams {
   /**
-   * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
+   * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_acn`, `au_arn`, `au_wpn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `bw_vat`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `ci_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `cz_dic`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `fr_siren`, `fr_siret`, `fr_spi`, `gb_vat`, `ge_vat`, `gh_tin`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `ic_nif`, `id_npwp`, `il_vat`, `in_gst`, `is_kt`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_cf`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mu_vat`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `mz_nuit`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_bn`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `pt_nif`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sm_coe`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tt_bir`, `tt_vat`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
    */
   type: CustomerCreateTaxIdParams.Type;
 
@@ -2481,7 +2618,9 @@ export namespace CustomerCreateTaxIdParams {
     | 'ao_tin'
     | 'ar_cuit'
     | 'au_abn'
+    | 'au_acn'
     | 'au_arn'
+    | 'au_wpn'
     | 'aw_tin'
     | 'az_tin'
     | 'ba_tin'
@@ -2495,6 +2634,7 @@ export namespace CustomerCreateTaxIdParams {
     | 'br_cnpj'
     | 'br_cpf'
     | 'bs_tin'
+    | 'bw_vat'
     | 'by_tin'
     | 'ca_bn'
     | 'ca_gst_hst'
@@ -2505,12 +2645,14 @@ export namespace CustomerCreateTaxIdParams {
     | 'cd_nif'
     | 'ch_uid'
     | 'ch_vat'
+    | 'ci_vat'
     | 'cl_tin'
     | 'cm_niu'
     | 'cn_tin'
     | 'co_nit'
     | 'cr_tin'
     | 'cv_nif'
+    | 'cz_dic'
     | 'de_stn'
     | 'do_rcn'
     | 'ec_ruc'
@@ -2520,8 +2662,12 @@ export namespace CustomerCreateTaxIdParams {
     | 'eu_oss_vat'
     | 'eu_vat'
     | 'fo_vat'
+    | 'fr_siren'
+    | 'fr_siret'
+    | 'fr_spi'
     | 'gb_vat'
     | 'ge_vat'
+    | 'gh_tin'
     | 'gi_tin'
     | 'gn_nif'
     | 'hk_br'
@@ -2531,6 +2677,7 @@ export namespace CustomerCreateTaxIdParams {
     | 'id_npwp'
     | 'il_vat'
     | 'in_gst'
+    | 'is_kt'
     | 'is_vat'
     | 'it_cf'
     | 'jp_cn'
@@ -2546,23 +2693,28 @@ export namespace CustomerCreateTaxIdParams {
     | 'li_vat'
     | 'lk_vat'
     | 'ma_vat'
+    | 'md_cf'
     | 'md_vat'
     | 'me_pib'
     | 'mk_vat'
     | 'mr_nif'
+    | 'mu_vat'
     | 'mx_rfc'
     | 'my_frp'
     | 'my_itn'
     | 'my_sst'
+    | 'mz_nuit'
     | 'ng_tin'
     | 'no_vat'
     | 'no_voec'
     | 'np_pan'
+    | 'nz_bn'
     | 'nz_gst'
     | 'om_vat'
     | 'pe_ruc'
     | 'ph_tin'
     | 'pl_nip'
+    | 'pt_nif'
     | 'py_ruc'
     | 'ro_tin'
     | 'rs_pib'
@@ -2572,12 +2724,15 @@ export namespace CustomerCreateTaxIdParams {
     | 'sg_gst'
     | 'sg_uen'
     | 'si_tin'
+    | 'sm_coe'
     | 'sn_ninea'
     | 'sr_fin'
     | 'sv_nit'
     | 'th_vat'
     | 'tj_tin'
     | 'tr_tin'
+    | 'tt_bir'
+    | 'tt_vat'
     | 'tw_vat'
     | 'tz_vat'
     | 'ua_vat'
@@ -2714,6 +2869,7 @@ export namespace CustomerListPaymentMethodsParams {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'

@@ -653,6 +653,11 @@ export namespace Alert {
       billing_cadence: string | null;
 
       /**
+       * Filter by billing group ID.
+       */
+      billing_group: string | null;
+
+      /**
        * Filter by pricing plan ID.
        */
       pricing_plan: string | null;
@@ -997,6 +1002,11 @@ export namespace Billing {
         billing_cadence?: string;
 
         /**
+         * Filter by billing group ID.
+         */
+        billing_group?: string;
+
+        /**
          * Filter by pricing plan ID.
          */
         pricing_plan?: string;
@@ -1149,7 +1159,12 @@ export namespace Billing {
     action?: AlertListNotificationsParams.Action;
 
     /**
-     * Filter results to only include notifications for the given billing cadence.
+     * Filter results to only include notifications for the given billing group.
+     */
+    billing_group?: string;
+
+    /**
+     * Filter results to only include notifications for the given cadence.
      */
     cadence?: string;
 

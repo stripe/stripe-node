@@ -554,6 +554,11 @@ export namespace Treasury {
         account_type?: UsBankAccount.AccountType;
 
         /**
+         * An external token used to create a payment method.
+         */
+        external_token?: UsBankAccount.ExternalToken;
+
+        /**
          * The ID of a Financial Connections Account to use as a payment method.
          */
         financial_connections_account?: string;
@@ -568,6 +573,22 @@ export namespace Treasury {
         export type AccountHolderType = 'company' | 'individual' | OtherString;
 
         export type AccountType = 'checking' | 'savings' | OtherString;
+
+        export interface ExternalToken {
+          /**
+           * The Plaid processor token to use for this bank account.
+           */
+          plaid_processor_token?: string;
+
+          /**
+           * The type of external token.
+           */
+          type: ExternalToken.Type;
+        }
+
+        export namespace ExternalToken {
+          export type Type = 'plaid_processor_token' | OtherString;
+        }
       }
     }
 

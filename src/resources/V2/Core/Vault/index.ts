@@ -38,6 +38,7 @@ export declare namespace Vault {
   export import GbBankAccountCreateParams = V2Namespace0.Core.Vault.GbBankAccountCreateParams;
   export import GbBankAccountRetrieveParams = V2Namespace0.Core.Vault.GbBankAccountRetrieveParams;
   export import GbBankAccountArchiveParams = V2Namespace0.Core.Vault.GbBankAccountArchiveParams;
+  export import GbBankAccountUnarchiveParams = V2Namespace0.Core.Vault.GbBankAccountUnarchiveParams;
   export {GbBankAccount, GbBankAccountResource};
   export import NetworkTokenCreateParams = V2Namespace1.Core.Vault.NetworkTokenCreateParams;
   export import NetworkTokenCreateFromCredentialParams = V2Namespace1.Core.Vault.NetworkTokenCreateFromCredentialParams;
@@ -51,5 +52,6 @@ export declare namespace Vault {
   export import UsBankAccountArchiveParams = V2Namespace2.Core.Vault.UsBankAccountArchiveParams;
   export import UsBankAccountConfirmMicrodepositsParams = V2Namespace2.Core.Vault.UsBankAccountConfirmMicrodepositsParams;
   export import UsBankAccountSendMicrodepositsParams = V2Namespace2.Core.Vault.UsBankAccountSendMicrodepositsParams;
+  export import UsBankAccountUnarchiveParams = V2Namespace2.Core.Vault.UsBankAccountUnarchiveParams;
   export {UsBankAccount, UsBankAccountResource};
 }

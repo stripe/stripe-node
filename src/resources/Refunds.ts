@@ -372,7 +372,17 @@ export namespace Refund {
   export namespace DestinationDetails {
     export interface Affirm {}
 
-    export interface AfterpayClearpay {}
+    export interface AfterpayClearpay {
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
+    }
 
     export interface Alipay {}
 
@@ -498,7 +508,17 @@ export namespace Refund {
       reference_status: string | null;
     }
 
-    export interface Klarna {}
+    export interface Klarna {
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
+    }
 
     export interface MbWay {
       /**
@@ -557,6 +577,16 @@ export namespace Refund {
        * For refunds declined by the network, a decline code provided by the network which indicates the reason the refund failed.
        */
       network_decline_code: string | null;
+
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
     }
 
     export interface Pix {}
@@ -693,6 +723,16 @@ export interface RefundCreateParams {
   payment_intent?: string;
 
   /**
+   * Used to create the PaymentMethod that will receive the refund.
+   */
+  payment_method_data?: RefundCreateParams.PaymentMethodData;
+
+  /**
+   * Payment method-specific options for the refund.
+   */
+  payment_method_options?: RefundCreateParams.PaymentMethodOptions;
+
+  /**
    * The identifier of the PaymentRecord to refund.
    */
   payment_record?: string;
@@ -715,11 +755,127 @@ export interface RefundCreateParams {
   reverse_transfer?: boolean;
 }
 export namespace RefundCreateParams {
+  export interface PaymentMethodData {
+    /**
+     * The gift card to receive the refund.
+     */
+    gift_card?: PaymentMethodData.GiftCard;
+
+    /**
+     * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
+     */
+    type: PaymentMethodData.Type;
+  }
+
+  export interface PaymentMethodOptions {
+    /**
+     * Gift card refund options.
+     */
+    gift_card?: Emptyable<PaymentMethodOptions.GiftCard>;
+  }
+
   export type Reason =
     | 'duplicate'
     | 'fraudulent'
     | 'requested_by_customer'
     | OtherString;
+
+  export namespace PaymentMethodData {
+    export interface GiftCard {
+      /**
+       * The ID of the gift card to receive the refund.
+       */
+      gift_card: string;
+    }
+
+    export type Type =
+      | 'acss_debit'
+      | 'affirm'
+      | 'afterpay_clearpay'
+      | 'alipay'
+      | 'alma'
+      | 'amazon_pay'
+      | 'au_becs_debit'
+      | 'bacs_debit'
+      | 'bancontact'
+      | 'billie'
+      | 'bizum'
+      | 'blik'
+      | 'boleto'
+      | 'card'
+      | 'carecredit'
+      | 'cashapp'
+      | 'crypto'
+      | 'custom'
+      | 'customer_balance'
+      | 'eps'
+      | 'fpx'
+      | 'getflex'
+      | 'gift_card'
+      | 'giropay'
+      | 'gopay'
+      | 'grabpay'
+      | 'id_bank_transfer'
+      | 'ideal'
+      | 'kakao_pay'
+      | 'klarna'
+      | 'konbini'
+      | 'kr_card'
+      | 'link'
+      | 'mb_way'
+      | 'mobilepay'
+      | 'multibanco'
+      | 'naver_pay'
+      | 'nz_bank_account'
+      | 'oxxo'
+      | 'p24'
+      | 'pay_by_bank'
+      | 'payco'
+      | 'paynow'
+      | 'paypal'
+      | 'paypay'
+      | 'payto'
+      | 'pix'
+      | 'promptpay'
+      | 'qris'
+      | 'rakuten_pay'
+      | 'rechnung'
+      | 'revolut_pay'
+      | 'samsung_pay'
+      | 'satispay'
+      | 'scalapay'
+      | 'sepa_debit'
+      | 'sequra'
+      | 'sezzle'
+      | 'shopeepay'
+      | 'sofort'
+      | 'stripe_balance'
+      | 'sunbit'
+      | 'swish'
+      | 'tamara'
+      | 'toss_pay'
+      | 'twint'
+      | 'upi'
+      | 'us_bank_account'
+      | 'vipps'
+      | 'wechat_pay'
+      | 'wero'
+      | 'zip'
+      | OtherString;
+  }
+
+  export namespace PaymentMethodOptions {
+    export interface GiftCard {
+      /**
+       * The type of gift card operation to perform for the refund.
+       */
+      operation_type?: GiftCard.OperationType;
+    }
+
+    export namespace GiftCard {
+      export type OperationType = 'activation' | 'reload';
+    }
+  }
 }
 export interface RefundRetrieveParams {
   /**

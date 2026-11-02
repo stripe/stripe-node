@@ -264,6 +264,12 @@ export namespace PayoutMethod {
     financial_connections_account?: string;
 
     /**
+     * Uniquely identifies this particular bank account. You can use this attribute to check whether two
+     * recipients who've signed up with you are using the same bank account, for example.
+     */
+    fingerprint?: string;
+
+    /**
      * The last 4 digits of the account number.
      */
     last4: string;

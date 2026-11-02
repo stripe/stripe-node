@@ -17,6 +17,8 @@ type RequestTimeout = {
   guard: <T>(promise: Promise<T>) => Promise<T>;
   /** Disarms the timeout; call once the body is read or handed off. */
   release: () => void;
+  /** Aborts a response discarded before its body is read, when supported. */
+  abort?: () => void;
 };
 
 const NOOP_REQUEST_TIMEOUT: RequestTimeout = {
@@ -147,6 +149,7 @@ export class FetchHttpClient extends HttpClient
         // interrupts the body read.
         guard: (promise) => promise.catch(normalizeAbortError),
         release,
+        abort: () => abort.abort(),
       };
 
       try {
@@ -226,6 +229,20 @@ export class FetchHttpClientResponse extends HttpClientResponse
 
   getRawResponse(): Response {
     return this._res;
+  }
+
+  dispose(): void {
+    this._requestTimeout.release();
+    this._requestTimeout.abort?.();
+    const body = this._res.body as
+      | (ReadableStream<Uint8Array> & {destroy?: () => void})
+      | null;
+    if (body && typeof body.cancel === 'function' && !body.locked) {
+      body.cancel().catch(() => {});
+    } else if (body && typeof body.destroy === 'function') {
+      // node-fetch exposes a Node Readable instead of a Web ReadableStream.
+      body.destroy();
+    }
   }
 
   toStream(

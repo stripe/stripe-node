@@ -406,6 +406,7 @@ export namespace SetupIntent {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'toss_pay'
     | 'touch_n_go'
     | 'truemoney'
     | 'twint'
@@ -501,6 +502,7 @@ export namespace SetupIntent {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -924,11 +926,13 @@ export namespace SetupIntent {
       | 'shipping_calculation_failed'
       | 'siret_invalid'
       | 'sku_inactive'
+      | 'smart_disputes_not_available'
       | 'state_unsupported'
       | 'status_transition_invalid'
       | 'storer_capability_missing'
       | 'storer_capability_not_active'
       | 'stripe_tax_inactive'
+      | 'subscription_update_trial_after_billing_cycle_anchor'
       | 'tax_id_invalid'
       | 'tax_id_prohibited'
       | 'taxes_calculation_failed'
@@ -941,6 +945,8 @@ export namespace SetupIntent {
       | 'terminal_reader_offline'
       | 'terminal_reader_timeout'
       | 'testmode_charges_only'
+      | 'three_d_secure_authentication_not_supported'
+      | 'three_d_secure_authentication_upstream_error'
       | 'tls_version_unsupported'
       | 'token_already_used'
       | 'token_card_network_invalid'
@@ -1902,6 +1908,7 @@ export namespace SetupIntentCreateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'toss_pay'
     | 'touch_n_go'
     | 'truemoney'
     | 'twint'
@@ -1991,6 +1998,7 @@ export namespace SetupIntentCreateParams {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -2348,6 +2356,11 @@ export namespace SetupIntentCreateParams {
      * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
      */
     tamara?: PaymentMethodData.Tamara;
+
+    /**
+     * If this is a `toss_pay` PaymentMethod, this hash contains details about the Toss Pay payment method.
+     */
+    toss_pay?: PaymentMethodData.TossPay;
 
     /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
@@ -2853,6 +2866,8 @@ export namespace SetupIntentCreateParams {
 
     export interface Tamara {}
 
+    export interface TossPay {}
+
     export interface Twint {}
 
     export type Type =
@@ -2918,6 +2933,7 @@ export namespace SetupIntentCreateParams {
       | 'sunbit'
       | 'swish'
       | 'tamara'
+      | 'toss_pay'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -2948,6 +2964,11 @@ export namespace SetupIntentCreateParams {
        * Account type: checkings or savings. Defaults to checking if omitted.
        */
       account_type?: UsBankAccount.AccountType;
+
+      /**
+       * An external token used to create a payment method.
+       */
+      external_token?: UsBankAccount.ExternalToken;
 
       /**
        * The ID of a Financial Connections Account to use as a payment method.
@@ -3037,6 +3058,7 @@ export namespace SetupIntentCreateParams {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
@@ -3182,6 +3204,22 @@ export namespace SetupIntentCreateParams {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface ExternalToken {
+        /**
+         * The Plaid processor token to use for this bank account.
+         */
+        plaid_processor_token?: string;
+
+        /**
+         * The type of external token.
+         */
+        type: ExternalToken.Type;
+      }
+
+      export namespace ExternalToken {
+        export type Type = 'plaid_processor_token' | OtherString;
+      }
     }
   }
 
@@ -4277,6 +4315,7 @@ export namespace SetupIntentUpdateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'toss_pay'
     | 'touch_n_go'
     | 'truemoney'
     | 'twint'
@@ -4352,6 +4391,7 @@ export namespace SetupIntentUpdateParams {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -4702,6 +4742,11 @@ export namespace SetupIntentUpdateParams {
      * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
      */
     tamara?: PaymentMethodData.Tamara;
+
+    /**
+     * If this is a `toss_pay` PaymentMethod, this hash contains details about the Toss Pay payment method.
+     */
+    toss_pay?: PaymentMethodData.TossPay;
 
     /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
@@ -5147,6 +5192,8 @@ export namespace SetupIntentUpdateParams {
 
     export interface Tamara {}
 
+    export interface TossPay {}
+
     export interface Twint {}
 
     export type Type =
@@ -5212,6 +5259,7 @@ export namespace SetupIntentUpdateParams {
       | 'sunbit'
       | 'swish'
       | 'tamara'
+      | 'toss_pay'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -5242,6 +5290,11 @@ export namespace SetupIntentUpdateParams {
        * Account type: checkings or savings. Defaults to checking if omitted.
        */
       account_type?: UsBankAccount.AccountType;
+
+      /**
+       * An external token used to create a payment method.
+       */
+      external_token?: UsBankAccount.ExternalToken;
 
       /**
        * The ID of a Financial Connections Account to use as a payment method.
@@ -5331,6 +5384,7 @@ export namespace SetupIntentUpdateParams {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
@@ -5476,6 +5530,22 @@ export namespace SetupIntentUpdateParams {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface ExternalToken {
+        /**
+         * The Plaid processor token to use for this bank account.
+         */
+        plaid_processor_token?: string;
+
+        /**
+         * The type of external token.
+         */
+        type: ExternalToken.Type;
+      }
+
+      export namespace ExternalToken {
+        export type Type = 'plaid_processor_token' | OtherString;
+      }
     }
   }
 
@@ -6582,6 +6652,7 @@ export namespace SetupIntentConfirmParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'toss_pay'
     | 'touch_n_go'
     | 'truemoney'
     | 'twint'
@@ -6941,6 +7012,11 @@ export namespace SetupIntentConfirmParams {
      * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
      */
     tamara?: PaymentMethodData.Tamara;
+
+    /**
+     * If this is a `toss_pay` PaymentMethod, this hash contains details about the Toss Pay payment method.
+     */
+    toss_pay?: PaymentMethodData.TossPay;
 
     /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
@@ -7428,6 +7504,8 @@ export namespace SetupIntentConfirmParams {
 
     export interface Tamara {}
 
+    export interface TossPay {}
+
     export interface Twint {}
 
     export type Type =
@@ -7493,6 +7571,7 @@ export namespace SetupIntentConfirmParams {
       | 'sunbit'
       | 'swish'
       | 'tamara'
+      | 'toss_pay'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -7523,6 +7602,11 @@ export namespace SetupIntentConfirmParams {
        * Account type: checkings or savings. Defaults to checking if omitted.
        */
       account_type?: UsBankAccount.AccountType;
+
+      /**
+       * An external token used to create a payment method.
+       */
+      external_token?: UsBankAccount.ExternalToken;
 
       /**
        * The ID of a Financial Connections Account to use as a payment method.
@@ -7612,6 +7696,7 @@ export namespace SetupIntentConfirmParams {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
@@ -7757,6 +7842,22 @@ export namespace SetupIntentConfirmParams {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface ExternalToken {
+        /**
+         * The Plaid processor token to use for this bank account.
+         */
+        plaid_processor_token?: string;
+
+        /**
+         * The type of external token.
+         */
+        type: ExternalToken.Type;
+      }
+
+      export namespace ExternalToken {
+        export type Type = 'plaid_processor_token' | OtherString;
+      }
     }
   }
 

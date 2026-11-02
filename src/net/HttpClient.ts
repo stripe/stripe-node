@@ -22,6 +22,8 @@ export interface HttpClientResponseInterface {
   getRawResponse: () => unknown;
   toStream: (streamCompleteCallback: () => void) => unknown;
   toJSON: () => Promise<any>;
+  /** Releases resources when a response is discarded before its body is read. */
+  dispose?: () => void;
 }
 
 /**

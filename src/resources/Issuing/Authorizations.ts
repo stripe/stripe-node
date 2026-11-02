@@ -1258,6 +1258,11 @@ export interface Authorization {
   pos_condition?: Authorization.PosCondition | null;
 
   /**
+   * Details about the authorization specific to product eligibility inquiries. This field is only populated for `product_eligibility_inquiry` type authorizations.
+   */
+  product_eligibility_inquiry?: Authorization.ProductEligibilityInquiry | null;
+
+  /**
    * Redaction status of this authorization. If the authorization is not redacted, this field will be null.
    */
   redaction?: Authorization.Redaction | null;
@@ -1293,6 +1298,11 @@ export interface Authorization {
    * [Treasury](https://docs.stripe.com/api/treasury) details related to this authorization if it was created on a [FinancialAccount](https://docs.stripe.com/api/treasury/financial_accounts).
    */
   treasury?: Authorization.Treasury | null;
+
+  /**
+   * The type of the authorization, whether it is for a payment or another type.
+   */
+  type?: Authorization.Type;
 
   verification_data: Authorization.VerificationData;
 
@@ -1683,6 +1693,18 @@ export namespace Authorization {
     | 'pin_entered'
     | 'recurring_or_moto';
 
+  export interface ProductEligibilityInquiry {
+    /**
+     * The anticipated amount that merchants can send before a payment authorization, in the smallest currency unit.
+     */
+    anticipated_amount: number | null;
+
+    /**
+     * The currency of the anticipated amount that merchants can send before a payment authorization.
+     */
+    anticipated_currency: string | null;
+  }
+
   export interface Redaction {
     /**
      * Indicates whether this object and its related objects have been redacted or not.
@@ -1831,6 +1853,12 @@ export namespace Authorization {
      */
     transaction: string | null;
   }
+
+  export type Type =
+    | 'balance_inquiry'
+    | 'payment'
+    | 'product_eligibility_inquiry'
+    | OtherString;
 
   export interface VerificationData {
     /**

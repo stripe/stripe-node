@@ -26,6 +26,7 @@ export class OutboundTransferResource extends StripeResource {
   /**
    * Creates an OutboundTransfer.
    * @throws Stripe.InsufficientFundsError
+   * @throws Stripe.CapabilityNotEnabledError
    * @throws Stripe.FeatureNotEnabledError
    */
   create(
@@ -266,7 +267,7 @@ export namespace OutboundTransfer {
     /**
      * Possible values are `pending`, `supported`, and `unsupported`. Initially set to `pending`, it changes to
      * `supported` when the recipient bank provides a trace ID, or `unsupported` if the recipient bank doesn't support it.
-     * Note that this status may not align with the OutboundPayment or OutboundTransfer status and can remain `pending`
+     * This status may not align with the OutboundPayment or OutboundTransfer status and can remain `pending`
      * even after the payment or transfer is posted.
      */
     status: TraceId.Status;
@@ -375,6 +376,7 @@ export namespace OutboundTransfer {
           | 'fps'
           | 'npp'
           | 'rtp'
+          | 'sepa'
           | 'sepa_credit'
           | 'sepa_instant'
           | 'swift'
@@ -524,6 +526,7 @@ export namespace V2 {
               | 'fps'
               | 'npp'
               | 'rtp'
+              | 'sepa'
               | 'sepa_credit'
               | 'sepa_instant'
               | 'swift'

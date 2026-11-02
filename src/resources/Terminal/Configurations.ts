@@ -130,6 +130,8 @@ export interface Configuration {
 
   stripe_s710?: Configuration.StripeS710;
 
+  stripe_t600?: Configuration.StripeT600;
+
   tipping?: Configuration.Tipping;
 
   verifone_m425?: Configuration.VerifoneM425;
@@ -216,6 +218,13 @@ export namespace Configuration {
   }
 
   export interface StripeS710 {
+    /**
+     * A File ID representing an image to display on the reader
+     */
+    splashscreen?: string | File;
+  }
+
+  export interface StripeT600 {
     /**
      * A File ID representing an image to display on the reader
      */
@@ -795,6 +804,11 @@ export namespace Terminal {
     stripe_s710?: ConfigurationCreateParams.StripeS710;
 
     /**
+     * An object containing device type specific settings for Stripe T600 readers.
+     */
+    stripe_t600?: ConfigurationCreateParams.StripeT600;
+
+    /**
      * Tipping configurations for readers that support on-reader tips.
      */
     tipping?: Emptyable<ConfigurationCreateParams.Tipping>;
@@ -886,6 +900,13 @@ export namespace Terminal {
     }
 
     export interface StripeS710 {
+      /**
+       * A File ID representing an image you want to display on the reader.
+       */
+      splashscreen?: Emptyable<string>;
+    }
+
+    export interface StripeT600 {
       /**
        * A File ID representing an image you want to display on the reader.
        */
@@ -1546,6 +1567,11 @@ export namespace Terminal {
     stripe_s710?: Emptyable<ConfigurationUpdateParams.StripeS710>;
 
     /**
+     * An object containing device type specific settings for Stripe T600 readers.
+     */
+    stripe_t600?: Emptyable<ConfigurationUpdateParams.StripeT600>;
+
+    /**
      * Tipping configurations for readers that support on-reader tips.
      */
     tipping?: Emptyable<ConfigurationUpdateParams.Tipping>;
@@ -1637,6 +1663,13 @@ export namespace Terminal {
     }
 
     export interface StripeS710 {
+      /**
+       * A File ID representing an image you want to display on the reader.
+       */
+      splashscreen?: Emptyable<string>;
+    }
+
+    export interface StripeT600 {
       /**
        * A File ID representing an image you want to display on the reader.
        */

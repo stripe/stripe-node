@@ -84,6 +84,11 @@ export namespace AlertTriggered {
     billing_cadence: string | null;
 
     /**
+     * The billing group ID, populated when type is `billing_group`
+     */
+    billing_group: string | null;
+
+    /**
      * The pricing plan subscription ID, populated when type is `pricing_plan_subscription`
      */
     pricing_plan_subscription: string | null;

@@ -8,6 +8,7 @@ import {RequestOptions, Response} from '../../../lib.js';
 export class OutboundPaymentQuoteResource extends StripeResource {
   /**
    * Creates an OutboundPaymentQuote usable in an OutboundPayment.
+   * @throws Stripe.CapabilityNotEnabledError
    * @throws Stripe.FeatureNotEnabledError
    */
   create(
@@ -301,7 +302,7 @@ export namespace OutboundPaymentQuote {
         /**
          * The preferred networks to use for this OutboundPayment.
          */
-        preferred_networks: Array<BankAccount.PreferredNetwork>;
+        preferred_networks?: Array<BankAccount.PreferredNetwork>;
       }
 
       export namespace BankAccount {
@@ -320,6 +321,7 @@ export namespace OutboundPaymentQuote {
           | 'fps'
           | 'npp'
           | 'rtp'
+          | 'sepa'
           | 'sepa_credit'
           | 'sepa_instant'
           | 'swift'
@@ -458,7 +460,7 @@ export namespace V2 {
             /**
              * The preferred networks to use for this OutboundPayment.
              */
-            preferred_networks: Array<BankAccount.PreferredNetwork>;
+            preferred_networks?: Array<BankAccount.PreferredNetwork>;
           }
 
           export namespace BankAccount {
@@ -477,6 +479,7 @@ export namespace V2 {
               | 'fps'
               | 'npp'
               | 'rtp'
+              | 'sepa'
               | 'sepa_credit'
               | 'sepa_instant'
               | 'swift'

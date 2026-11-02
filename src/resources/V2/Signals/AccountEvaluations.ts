@@ -28,7 +28,7 @@ export class AccountEvaluationResource extends StripeResource {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
                 },
-                user_merchant_fit: {
+                user_affinity: {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
                 },
@@ -67,7 +67,7 @@ export class AccountEvaluationResource extends StripeResource {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
                 },
-                user_merchant_fit: {
+                user_affinity: {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
                 },
@@ -156,6 +156,11 @@ export namespace AccountEvaluation {
 
   export interface EvaluatedSignals {
     /**
+     * Synchronous account takeover result for the evaluation, when requested.
+     */
+    account_takeover?: EvaluatedSignals.AccountTakeover;
+
+    /**
      * Fraudulent website result for the evaluation, when available.
      */
     fraudulent_website?: EvaluatedSignals.FraudulentWebsite;
@@ -166,9 +171,9 @@ export namespace AccountEvaluation {
     user_account_sharing?: EvaluatedSignals.UserAccountSharing;
 
     /**
-     * User-merchant fit result for the evaluation, when available.
+     * User affinity result for the evaluation, when available.
      */
-    user_merchant_fit?: EvaluatedSignals.UserMerchantFit;
+    user_affinity?: EvaluatedSignals.UserAffinity;
 
     /**
      * User multi-accounting result for the evaluation, when available.
@@ -177,16 +182,18 @@ export namespace AccountEvaluation {
   }
 
   export type PendingSignal =
+    | 'account_takeover'
     | 'fraudulent_website'
     | 'user_account_sharing'
-    | 'user_merchant_fit'
+    | 'user_affinity'
     | 'user_multi_accounting'
     | OtherString;
 
   export type RequestedSignal =
+    | 'account_takeover'
     | 'fraudulent_website'
     | 'user_account_sharing'
-    | 'user_merchant_fit'
+    | 'user_affinity'
     | 'user_multi_accounting'
     | OtherString;
 
@@ -254,6 +261,23 @@ export namespace AccountEvaluation {
   }
 
   export namespace EvaluatedSignals {
+    export interface AccountTakeover {
+      /**
+       * Timestamp at which the signal was evaluated.
+       */
+      evaluated_at?: string;
+
+      /**
+       * Categorical assessment of the account takeover risk.
+       */
+      risk_level: AccountTakeover.RiskLevel;
+
+      /**
+       * The account signal ID containing the full account takeover signal result.
+       */
+      signal?: string;
+    }
+
     export interface FraudulentWebsite {
       /**
        * Human-readable details about the fraudulent website evaluation, when available.
@@ -298,24 +322,24 @@ export namespace AccountEvaluation {
       signal?: string;
     }
 
-    export interface UserMerchantFit {
+    export interface UserAffinity {
       /**
        * Timestamp at which the signal was evaluated.
        */
       evaluated_at?: string;
 
       /**
-       * Categorical assessment of the user-merchant fit.
+       * Categorical assessment of the user affinity.
        */
-      fit_level: UserMerchantFit.FitLevel;
+      level: UserAffinity.Level;
 
       /**
-       * The specific fit score for the user, between 0.00 and 100.00. Absent when fit_level is unknown.
+       * The specific affinity score for the user, between 0.00 and 100.00. Absent when level is unknown.
        */
       score?: Decimal;
 
       /**
-       * The account signal ID containing the full user-merchant fit signal result.
+       * The account signal ID containing the full user affinity signal result.
        */
       signal?: string;
     }
@@ -342,6 +366,15 @@ export namespace AccountEvaluation {
       signal?: string;
     }
 
+    export namespace AccountTakeover {
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'unknown';
+    }
+
     export namespace FraudulentWebsite {
       export type RiskLevel =
         | 'elevated'
@@ -360,8 +393,8 @@ export namespace AccountEvaluation {
         | 'unknown';
     }
 
-    export namespace UserMerchantFit {
-      export type FitLevel =
+    export namespace UserAffinity {
+      export type Level =
         | 'standard'
         | 'strong'
         | 'unknown'
@@ -417,9 +450,10 @@ export namespace V2 {
       }
 
       export type RequestedSignal =
+        | 'account_takeover'
         | 'fraudulent_website'
         | 'user_account_sharing'
-        | 'user_merchant_fit'
+        | 'user_affinity'
         | 'user_multi_accounting'
         | OtherString;
 
@@ -438,9 +472,34 @@ export namespace V2 {
       export namespace AccountActivityDetails {
         export interface Data {
           /**
+           * Required when type is account_takeover_confirmation. Requires an existing customer or account with a customer configuration.
+           */
+          account_takeover_confirmation?: Data.AccountTakeoverConfirmation;
+
+          /**
+           * Required when type is account_takeover_report. Requires an existing customer or account with a customer configuration.
+           */
+          account_takeover_report?: Data.AccountTakeoverReport;
+
+          /**
+           * Required when type is credential_change. Requires an existing customer or account with a customer configuration.
+           */
+          credential_change?: Data.CredentialChange;
+
+          /**
            * Details for the login attempt. Provide only when type is login_attempt.
            */
           login_attempt?: Data.LoginAttempt;
+
+          /**
+           * Required when type is mfa_addition. Requires an existing customer or account with a customer configuration.
+           */
+          mfa_addition?: Data.MfaAddition;
+
+          /**
+           * Required when type is mfa_removal. Requires an existing customer or account with a customer configuration.
+           */
+          mfa_removal?: Data.MfaRemoval;
 
           /**
            * Timestamp at which the activity occurred. Defaults to the created time if not provided.
@@ -453,17 +512,53 @@ export namespace V2 {
           registration_attempt?: Data.RegistrationAttempt;
 
           /**
-           * The type of activity. Must be registration_attempt or login_attempt.
+           * The type of activity. Supports registration_attempt, login_attempt, mfa_addition, mfa_removal,
+           * credential_change, account_takeover_report, account_takeover_confirmation, or account_takeover_mitigation.
            */
           type: Data.Type;
         }
 
         export namespace Data {
+          export interface AccountTakeoverConfirmation {
+            /**
+             * The type of credential involved in the confirmed takeover.
+             */
+            credential_type: AccountTakeoverConfirmation.CredentialType;
+          }
+
+          export interface AccountTakeoverReport {
+            /**
+             * The type of credential involved in the reported takeover.
+             */
+            credential_type: AccountTakeoverReport.CredentialType;
+          }
+
+          export interface CredentialChange {
+            /**
+             * The type of credential that changed.
+             */
+            credential_type: CredentialChange.CredentialType;
+          }
+
           export interface LoginAttempt {
             /**
              * Client details captured for the attempt.
              */
             client_details: LoginAttempt.ClientDetails;
+          }
+
+          export interface MfaAddition {
+            /**
+             * The authentication method added to the account.
+             */
+            mfa_type: MfaAddition.MfaType;
+          }
+
+          export interface MfaRemoval {
+            /**
+             * The authentication method removed from the account.
+             */
+            mfa_type: MfaRemoval.MfaType;
           }
 
           export interface RegistrationAttempt {
@@ -477,11 +572,42 @@ export namespace V2 {
             | 'account_restricted'
             | 'account_reviewed'
             | 'account_suspended'
+            | 'account_takeover_confirmation'
+            | 'account_takeover_mitigation'
+            | 'account_takeover_report'
+            | 'credential_change'
+            | 'custom_marketing_action'
             | 'login_attempt'
             | 'login_decision'
+            | 'mfa_addition'
+            | 'mfa_removal'
             | 'registration_attempt'
             | 'registration_decision'
             | OtherString;
+
+          export namespace AccountTakeoverConfirmation {
+            export type CredentialType =
+              | 'api_key'
+              | 'login_password'
+              | 'other'
+              | OtherString;
+          }
+
+          export namespace AccountTakeoverReport {
+            export type CredentialType =
+              | 'api_key'
+              | 'login_password'
+              | 'other'
+              | OtherString;
+          }
+
+          export namespace CredentialChange {
+            export type CredentialType =
+              | 'api_key'
+              | 'login_password'
+              | 'other'
+              | OtherString;
+          }
 
           export namespace LoginAttempt {
             export interface ClientDetails {
@@ -514,6 +640,26 @@ export namespace V2 {
                 user_agent?: string;
               }
             }
+          }
+
+          export namespace MfaAddition {
+            export type MfaType =
+              | 'authenticator_app'
+              | 'email'
+              | 'hardware_key'
+              | 'other'
+              | 'sms'
+              | OtherString;
+          }
+
+          export namespace MfaRemoval {
+            export type MfaType =
+              | 'authenticator_app'
+              | 'email'
+              | 'hardware_key'
+              | 'other'
+              | 'sms'
+              | OtherString;
           }
 
           export namespace RegistrationAttempt {

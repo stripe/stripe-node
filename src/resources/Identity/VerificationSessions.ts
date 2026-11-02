@@ -301,7 +301,6 @@ export namespace VerificationSession {
 
   export type Type =
     | 'document'
-    | 'email'
     | 'id_number'
     | 'verification_flow'
     | OtherString;
@@ -597,7 +596,7 @@ export namespace Identity {
       person: string;
     }
 
-    export type Type = 'document' | 'email' | 'id_number' | OtherString;
+    export type Type = 'document' | 'id_number' | OtherString;
 
     export interface UserConsent {
       /**
@@ -715,7 +714,7 @@ export namespace Identity {
       phone?: string;
     }
 
-    export type Type = 'document' | 'email' | 'id_number' | OtherString;
+    export type Type = 'document' | 'id_number' | OtherString;
 
     export interface UserConsent {
       /**

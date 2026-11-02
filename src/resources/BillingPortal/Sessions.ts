@@ -116,7 +116,7 @@ export namespace Session {
     /**
      * Configuration when `flow.type=subscription_pause`.
      */
-    subscription_pause?: Flow.SubscriptionPause | null;
+    subscription_pause: Flow.SubscriptionPause | null;
 
     /**
      * Configuration when `flow.type=subscription_update`.

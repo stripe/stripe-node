@@ -83,6 +83,8 @@ export const generateV2Error = (
       return new BlockedByStripeError(rawStripeError);
     case 'cannot_proceed':
       return new CannotProceedError(rawStripeError);
+    case 'capability_not_enabled':
+      return new CapabilityNotEnabledError(rawStripeError);
     case 'controlled_by_alternate_resource':
       return new ControlledByAlternateResourceError(rawStripeError);
     case 'feature_not_enabled':
@@ -467,6 +469,11 @@ export class CannotProceedError extends StripeError {
     super(rawStripeError, 'CannotProceedError');
     // @ts-ignore
     this.reason = this.raw.reason;
+  }
+}
+export class CapabilityNotEnabledError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'CapabilityNotEnabledError');
   }
 }
 export class ControlledByAlternateResourceError extends StripeError {

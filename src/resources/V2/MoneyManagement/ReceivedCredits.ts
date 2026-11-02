@@ -51,12 +51,12 @@ export interface ReceivedCredit {
   object: 'v2.money_management.received_credit';
 
   /**
-   * The amount and currency of the ReceivedCredit.
+   * The amount and currency credited to the FinancialAccount.
    */
   amount: V2Amount;
 
   /**
-   * The amount and currency of the ReceivedCredit that was received.
+   * The amount and currency Stripe received from the external source, before any conversion or fees.
    */
   amount_received: V2Amount;
 
@@ -176,29 +176,14 @@ export namespace ReceivedCredit {
 
   export interface BankTransfer {
     /**
-     * Deprecated. Use `originating_bank_account.cpa` instead.
-     */
-    ca_bank_account?: BankTransfer.CaBankAccount;
-
-    /**
-     * Deprecated. Use `originating_bank_account.iban` instead.
-     */
-    eu_bank_account?: BankTransfer.EuBankAccount;
-
-    /**
      * Financial Address on which funds for ReceivedCredit were received.
      */
     financial_address: string;
 
     /**
-     * Deprecated. Use `originating_bank_account.sort_code` instead.
+     * The money transmission network used to send funds for this ReceivedCredit.
      */
-    gb_bank_account?: BankTransfer.GbBankAccount;
-
-    /**
-     * Deprecated. Use `originating_bank_account.clabe` instead.
-     */
-    mx_bank_account?: BankTransfer.MxBankAccount;
+    network: BankTransfer.Network;
 
     /**
      * Network-level detail for the transfer that created this ReceivedCredit. Present only for ACH.
@@ -211,19 +196,9 @@ export namespace ReceivedCredit {
     originating_bank_account: BankTransfer.OriginatingBankAccount;
 
     /**
-     * Deprecated. Use `originating_bank_account.iban` instead.
-     */
-    sepa_bank_account?: BankTransfer.SepaBankAccount;
-
-    /**
      * Freeform string set by originator of the external ReceivedCredit.
      */
     statement_descriptor?: string;
-
-    /**
-     * Deprecated. Use `originating_bank_account.aba` instead.
-     */
-    us_bank_account?: BankTransfer.UsBankAccount;
   }
 
   export interface CardSpend {
@@ -359,104 +334,21 @@ export namespace ReceivedCredit {
   }
 
   export namespace BankTransfer {
-    export interface CaBankAccount {
-      /**
-       * The account holder name of the bank account the transfer was received from.
-       */
-      account_holder_name?: string;
-
-      /**
-       * The bank name the transfer was received from.
-       */
-      bank_name?: string;
-
-      /**
-       * The last 4 digits of the account number that originated the transfer.
-       * Depending on the bank, this may instead be the last 4 digits of the return account number.
-       */
-      last4?: string;
-
-      /**
-       * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-       */
-      network: CaBankAccount.Network;
-    }
-
-    export interface EuBankAccount {
-      /**
-       * The account holder name of the bank account the transfer was received from.
-       */
-      account_holder_name?: string;
-
-      /**
-       * The bank name the transfer was received from.
-       */
-      bank_name?: string;
-
-      /**
-       * The bic of the account that originated the transfer.
-       */
-      bic?: string;
-
-      /**
-       * The last 4 digits of the account number that originated the transfer.
-       */
-      last4?: string;
-
-      /**
-       * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-       */
-      network: EuBankAccount.Network;
-    }
-
-    export interface GbBankAccount {
-      /**
-       * The bank name the transfer was received from.
-       */
-      account_holder_name?: string;
-
-      /**
-       * The bank name the transfer was received from.
-       */
-      bank_name?: string;
-
-      /**
-       * The last 4 digits of the account number that originated the transfer.
-       */
-      last4?: string;
-
-      /**
-       * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-       */
-      network: GbBankAccount.Network;
-
-      /**
-       * The sort code of the account that originated the transfer.
-       */
-      sort_code?: string;
-    }
-
-    export interface MxBankAccount {
-      /**
-       * The account holder name of the bank account the transfer was received from.
-       */
-      account_holder_name?: string;
-
-      /**
-       * The bank name the transfer was received from.
-       */
-      bank_name?: string;
-
-      /**
-       * The last 4 digits of the account number that originated the transfer.
-       */
-      last4?: string;
-
-      /**
-       * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-       */
-      network: MxBankAccount.Network;
-    }
+    export type Network =
+      | 'ach'
+      | 'acss'
+      | 'bre_b'
+      | 'chaps'
+      | 'fedwire'
+      | 'fps'
+      | 'nip'
+      | 'pix'
+      | 'rtp'
+      | 'sepa'
+      | 'sepa_instant'
+      | 'spei'
+      | 'swift'
+      | OtherString;
 
     export interface NetworkDetails {
       /**
@@ -510,81 +402,6 @@ export namespace ReceivedCredit {
        * Open Enum. The type of bank transfer that originated this ReceivedCredit.
        */
       type: OriginatingBankAccount.Type;
-    }
-
-    export interface SepaBankAccount {
-      /**
-       * The account holder name of the bank account the transfer was received from.
-       */
-      account_holder_name?: string;
-
-      /**
-       * The bank name the transfer was received from.
-       */
-      bank_name?: string;
-
-      /**
-       * The BIC of the SEPA account.
-       */
-      bic?: string;
-
-      /**
-       * The origination country of the bank transfer.
-       */
-      country?: string;
-
-      /**
-       * The IBAN that originated the transfer.
-       */
-      iban?: string;
-
-      /**
-       * The money transmission network used to send funds for this ReceivedCredit.
-       */
-      network: SepaBankAccount.Network;
-    }
-
-    export interface UsBankAccount {
-      /**
-       * The name of the account holder that sent the payment.
-       */
-      account_holder_name?: string;
-
-      /**
-       * The bank name the transfer was received from.
-       */
-      bank_name?: string;
-
-      /**
-       * The last 4 digits of the account number that originated the transfer.
-       */
-      last4?: string;
-
-      /**
-       * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-       */
-      network: UsBankAccount.Network;
-
-      /**
-       * The routing number of the account that originated the transfer.
-       */
-      routing_number?: string;
-    }
-
-    export namespace CaBankAccount {
-      export type Network = 'acss' | 'swift' | OtherString;
-    }
-
-    export namespace EuBankAccount {
-      export type Network = 'sepa' | OtherString;
-    }
-
-    export namespace GbBankAccount {
-      export type Network = 'chaps' | 'fps' | 'swift' | OtherString;
-    }
-
-    export namespace MxBankAccount {
-      export type Network = 'spei' | OtherString;
     }
 
     export namespace NetworkDetails {
@@ -667,11 +484,6 @@ export namespace ReceivedCredit {
         last4?: string;
 
         /**
-         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-         */
-        network: Aba.Network;
-
-        /**
          * The routing number of the account that originated the transfer.
          */
         routing_number?: string;
@@ -687,11 +499,6 @@ export namespace ReceivedCredit {
          * The last 4 digits of the account number that originated the transfer.
          */
         last4?: string;
-
-        /**
-         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-         */
-        network: BreB.Network;
       }
 
       export interface Clabe {
@@ -714,11 +521,6 @@ export namespace ReceivedCredit {
          * The last 4 digits of the account number that originated the transfer.
          */
         last4?: string;
-
-        /**
-         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-         */
-        network: Clabe.Network;
       }
 
       export interface Cpa {
@@ -741,11 +543,6 @@ export namespace ReceivedCredit {
          * The last 4 digits of the account number that originated the transfer.
          */
         last4?: string;
-
-        /**
-         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-         */
-        network: Cpa.Network;
       }
 
       export interface Iban {
@@ -773,11 +570,6 @@ export namespace ReceivedCredit {
          * The IBAN that originated the transfer.
          */
         iban?: string;
-
-        /**
-         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-         */
-        network: Iban.Network;
       }
 
       export interface Nip {
@@ -800,11 +592,6 @@ export namespace ReceivedCredit {
          * The last 4 digits of the account number that originated the transfer.
          */
         last4?: string;
-
-        /**
-         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-         */
-        network: Nip.Network;
       }
 
       export interface Pix {
@@ -822,11 +609,6 @@ export namespace ReceivedCredit {
          * The Pix BR code of the account that originated the transfer.
          */
         br_code?: string;
-
-        /**
-         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-         */
-        network: Pix.Network;
       }
 
       export interface SortCode {
@@ -851,11 +633,6 @@ export namespace ReceivedCredit {
         last4?: string;
 
         /**
-         * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-         */
-        network: SortCode.Network;
-
-        /**
          * The sort code of the account that originated the transfer.
          */
         sort_code?: string;
@@ -870,56 +647,6 @@ export namespace ReceivedCredit {
         | 'nip'
         | 'pix'
         | 'sort_code'
-        | OtherString;
-
-      export namespace Aba {
-        export type Network =
-          | 'ach'
-          | 'rtp'
-          | 'swift'
-          | 'us_domestic_wire'
-          | OtherString;
-      }
-
-      export namespace BreB {
-        export type Network = 'bre_b' | OtherString;
-      }
-
-      export namespace Clabe {
-        export type Network = 'spei' | OtherString;
-      }
-
-      export namespace Cpa {
-        export type Network = 'acss' | 'swift' | OtherString;
-      }
-
-      export namespace Iban {
-        export type Network = 'sepa_credit_transfer' | 'swift' | OtherString;
-      }
-
-      export namespace Nip {
-        export type Network = 'nip' | OtherString;
-      }
-
-      export namespace Pix {
-        export type Network = 'pix' | OtherString;
-      }
-
-      export namespace SortCode {
-        export type Network = 'chaps' | 'fps' | 'swift' | OtherString;
-      }
-    }
-
-    export namespace SepaBankAccount {
-      export type Network = 'sepa_credit_transfer' | 'swift' | OtherString;
-    }
-
-    export namespace UsBankAccount {
-      export type Network =
-        | 'ach'
-        | 'rtp'
-        | 'swift'
-        | 'us_domestic_wire'
         | OtherString;
     }
   }

@@ -53,6 +53,11 @@ export interface IntegrationConfiguration {
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
    */
   livemode: boolean;
+
+  /**
+   * Configuration for Subscriptions automatic tax behavior.
+   */
+  subscriptions: IntegrationConfiguration.Subscriptions;
 }
 export namespace IntegrationConfiguration {
   export interface CheckoutSessions {
@@ -69,11 +74,22 @@ export namespace IntegrationConfiguration {
     automatic_tax_default_value: Invoices.AutomaticTaxDefaultValue;
   }
 
+  export interface Subscriptions {
+    /**
+     * Controls the default value of automatic_tax[enabled] on new Subscriptions.
+     */
+    automatic_tax_default_value: Subscriptions.AutomaticTaxDefaultValue;
+  }
+
   export namespace CheckoutSessions {
     export type AutomaticTaxDefaultValue = 'disabled' | 'enabled_when_possible';
   }
 
   export namespace Invoices {
+    export type AutomaticTaxDefaultValue = 'disabled' | 'enabled_when_possible';
+  }
+
+  export namespace Subscriptions {
     export type AutomaticTaxDefaultValue = 'disabled' | 'enabled_when_possible';
   }
 }
@@ -94,6 +110,11 @@ export namespace V2 {
        * Configuration for standalone Invoices automatic tax behavior.
        */
       invoices?: IntegrationConfigurationUpdateParams.Invoices;
+
+      /**
+       * Configuration for Subscriptions automatic tax behavior.
+       */
+      subscriptions?: IntegrationConfigurationUpdateParams.Subscriptions;
     }
 
     export namespace IntegrationConfigurationUpdateParams {
@@ -111,6 +132,13 @@ export namespace V2 {
         automatic_tax_default_value: Invoices.AutomaticTaxDefaultValue;
       }
 
+      export interface Subscriptions {
+        /**
+         * Controls the default value of automatic_tax[enabled] on new Subscriptions.
+         */
+        automatic_tax_default_value: Subscriptions.AutomaticTaxDefaultValue;
+      }
+
       export namespace CheckoutSessions {
         export type AutomaticTaxDefaultValue =
           | 'disabled'
@@ -118,6 +146,12 @@ export namespace V2 {
       }
 
       export namespace Invoices {
+        export type AutomaticTaxDefaultValue =
+          | 'disabled'
+          | 'enabled_when_possible';
+      }
+
+      export namespace Subscriptions {
         export type AutomaticTaxDefaultValue =
           | 'disabled'
           | 'enabled_when_possible';

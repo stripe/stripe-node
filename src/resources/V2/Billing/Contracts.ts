@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
+import {ContractTerm} from './ContractTerms.js';
 import {
   MetadataParam,
   OtherString,
@@ -11,13 +12,16 @@ import {
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {DeletedObject} from './../../V2/DeletedObject.js';
 import {PricingLineResource} from './Contracts/PricingLines.js';
+import {TermResource} from './Contracts/Terms.js';
 import {Stripe} from '../../../stripe.core.js';
 export class ContractResource extends StripeResource {
   pricingLines: PricingLineResource;
+  terms: TermResource;
 
   constructor(private readonly stripe: Stripe) {
     super(stripe);
     this.pricingLines = new PricingLineResource(stripe);
+    this.terms = new TermResource(stripe);
   }
   /**
    * List contracts.
@@ -54,6 +58,38 @@ export class ContractResource extends StripeResource {
                                 },
                               },
                             },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                terms: {
+                  kind: 'object',
+                  fields: {
+                    data: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          pricing_override: {
+                            kind: 'object',
+                            fields: {
+                              multiply: {
+                                kind: 'object',
+                                fields: {factor: {kind: 'decimal_string'}},
+                              },
+                              overwrite: {
+                                kind: 'object',
+                                fields: {
+                                  unit_amount_decimal: {kind: 'decimal_string'},
+                                },
+                              },
+                            },
+                          },
+                          recurring_price: {
+                            kind: 'object',
+                            fields: {quantity: {kind: 'decimal_string'}},
                           },
                         },
                       },
@@ -128,6 +164,31 @@ export class ContractResource extends StripeResource {
               },
             },
           },
+          terms: {
+            kind: 'array',
+            element: {
+              kind: 'object',
+              fields: {
+                pricing_override: {
+                  kind: 'object',
+                  fields: {
+                    multiply: {
+                      kind: 'object',
+                      fields: {factor: {kind: 'decimal_string'}},
+                    },
+                    overwrite: {
+                      kind: 'object',
+                      fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+                recurring_price: {
+                  kind: 'object',
+                  fields: {quantity: {kind: 'decimal_string'}},
+                },
+              },
+            },
+          },
         },
       },
       responseSchema: {
@@ -149,6 +210,38 @@ export class ContractResource extends StripeResource {
                           fields: {current_quantity: {kind: 'decimal_string'}},
                         },
                       },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          terms: {
+            kind: 'object',
+            fields: {
+              data: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    pricing_override: {
+                      kind: 'object',
+                      fields: {
+                        multiply: {
+                          kind: 'object',
+                          fields: {factor: {kind: 'decimal_string'}},
+                        },
+                        overwrite: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {kind: 'decimal_string'},
+                          },
+                        },
+                      },
+                    },
+                    recurring_price: {
+                      kind: 'object',
+                      fields: {quantity: {kind: 'decimal_string'}},
                     },
                   },
                 },
@@ -216,6 +309,38 @@ export class ContractResource extends StripeResource {
                 },
               },
             },
+            terms: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing_override: {
+                        kind: 'object',
+                        fields: {
+                          multiply: {
+                            kind: 'object',
+                            fields: {factor: {kind: 'decimal_string'}},
+                          },
+                          overwrite: {
+                            kind: 'object',
+                            fields: {
+                              unit_amount_decimal: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                      recurring_price: {
+                        kind: 'object',
+                        fields: {quantity: {kind: 'decimal_string'}},
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
         },
       }
@@ -241,6 +366,47 @@ export class ContractResource extends StripeResource {
         requestSchema: {
           kind: 'object',
           fields: {
+            actions: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  add_term: {
+                    kind: 'object',
+                    fields: {
+                      pricing_override: {
+                        kind: 'object',
+                        fields: {
+                          multiply: {
+                            kind: 'object',
+                            fields: {factor: {kind: 'decimal_string'}},
+                          },
+                          overwrite: {
+                            kind: 'object',
+                            fields: {
+                              unit_amount_decimal: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                      recurring_price: {
+                        kind: 'object',
+                        fields: {quantity: {kind: 'decimal_string'}},
+                      },
+                    },
+                  },
+                  update_term: {
+                    kind: 'object',
+                    fields: {
+                      recurring_price: {
+                        kind: 'object',
+                        fields: {quantity: {kind: 'decimal_string'}},
+                      },
+                    },
+                  },
+                },
+              },
+            },
             pricing_line_actions: {
               kind: 'array',
               element: {
@@ -357,6 +523,38 @@ export class ContractResource extends StripeResource {
                 },
               },
             },
+            terms: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing_override: {
+                        kind: 'object',
+                        fields: {
+                          multiply: {
+                            kind: 'object',
+                            fields: {factor: {kind: 'decimal_string'}},
+                          },
+                          overwrite: {
+                            kind: 'object',
+                            fields: {
+                              unit_amount_decimal: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                      recurring_price: {
+                        kind: 'object',
+                        fields: {quantity: {kind: 'decimal_string'}},
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
         },
       }
@@ -404,6 +602,38 @@ export class ContractResource extends StripeResource {
                 },
               },
             },
+            terms: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing_override: {
+                        kind: 'object',
+                        fields: {
+                          multiply: {
+                            kind: 'object',
+                            fields: {factor: {kind: 'decimal_string'}},
+                          },
+                          overwrite: {
+                            kind: 'object',
+                            fields: {
+                              unit_amount_decimal: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                      recurring_price: {
+                        kind: 'object',
+                        fields: {quantity: {kind: 'decimal_string'}},
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
         },
       }
@@ -445,6 +675,38 @@ export class ContractResource extends StripeResource {
                             },
                           },
                         },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            terms: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing_override: {
+                        kind: 'object',
+                        fields: {
+                          multiply: {
+                            kind: 'object',
+                            fields: {factor: {kind: 'decimal_string'}},
+                          },
+                          overwrite: {
+                            kind: 'object',
+                            fields: {
+                              unit_amount_decimal: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                      recurring_price: {
+                        kind: 'object',
+                        fields: {quantity: {kind: 'decimal_string'}},
                       },
                     },
                   },
@@ -542,6 +804,11 @@ export interface Contract {
    * Historical timestamps of when the contract transitioned into each status.
    */
   status_transitions?: Contract.StatusTransitions;
+
+  /**
+   * All terms in display order. Only populated when `terms` is included.
+   */
+  terms?: Contract.Terms;
 }
 export namespace Contract {
   export interface BillingCycleAnchor {
@@ -635,6 +902,13 @@ export namespace Contract {
      * The timestamp when the contract ended.
      */
     ended_at?: string;
+  }
+
+  export interface Terms {
+    /**
+     * All terms in display order.
+     */
+    data: Array<ContractTerm>;
   }
 
   export namespace BillingSettings {
@@ -1076,6 +1350,11 @@ export namespace V2 {
        * A list of pricing overrides to create with the contract.
        */
       pricing_overrides?: Array<ContractCreateParams.PricingOverride>;
+
+      /**
+       * Terms to create. Cannot be combined with pricing_lines, pricing_overrides, or one_time_fees.
+       */
+      terms?: Array<ContractCreateParams.Term>;
     }
 
     export namespace ContractCreateParams {
@@ -1118,6 +1397,7 @@ export namespace V2 {
         | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides'
+        | 'terms'
         | OtherString;
 
       export interface OneTimeFee {
@@ -1209,6 +1489,38 @@ export namespace V2 {
          * The type of pricing override.
          */
         type: PricingOverride.Type;
+      }
+
+      export interface Term {
+        /**
+         * Required when type is ad_hoc_product.
+         */
+        ad_hoc_product?: Term.AdHocProduct;
+
+        /**
+         * Lookup key unique across all term types on the contract.
+         */
+        lookup_key?: string;
+
+        /**
+         * Set of key-value pairs attached to the term.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * Required when type is pricing_override.
+         */
+        pricing_override?: Term.PricingOverride;
+
+        /**
+         * Required when type is recurring_price.
+         */
+        recurring_price?: Term.RecurringPrice;
+
+        /**
+         * The term type. Production types require exactly one matching payload.
+         */
+        type: Term.Type;
       }
 
       export namespace BillingCycleAnchor {
@@ -1601,6 +1913,306 @@ export namespace V2 {
           export type Type = 'timestamp' | OtherString;
         }
       }
+
+      export namespace Term {
+        export interface AdHocProduct {
+          /**
+           * Explicit bill dates and amounts.
+           */
+          bill_schedule: AdHocProduct.BillSchedule;
+
+          /**
+           * The V1 Product being billed.
+           */
+          product: string;
+
+          /**
+           * Informational service period, independent of bill dates.
+           */
+          service_period?: AdHocProduct.ServicePeriod;
+        }
+
+        export interface PricingOverride {
+          /**
+           * Optional criteria selecting recurring or ad_hoc_product terms. If omitted, the override applies to all recurring and ad_hoc_product terms.
+           */
+          criteria?: Array<PricingOverride.Criterion>;
+
+          /**
+           * The exclusive end. Omitted means open-ended.
+           */
+          ends_at?: PricingOverride.EndsAt;
+
+          /**
+           * Required when type is multiply.
+           */
+          multiply?: PricingOverride.Multiply;
+
+          /**
+           * Required when type is overwrite.
+           */
+          overwrite?: PricingOverride.Overwrite;
+
+          /**
+           * Lower numbers win; defaults to 50.
+           */
+          priority?: number;
+
+          /**
+           * The inclusive start of the validity window.
+           */
+          starts_at: PricingOverride.StartsAt;
+
+          /**
+           * The pricing operation. Exactly one matching pricing payload is required.
+           */
+          type: PricingOverride.Type;
+        }
+
+        export interface RecurringPrice {
+          /**
+           * The exclusive end. Omitted means open-ended.
+           */
+          ends_at?: RecurringPrice.EndsAt;
+
+          /**
+           * The V1 recurring Price.
+           */
+          price: string;
+
+          /**
+           * Initial licensed quantity. Defaults to 1; must be omitted for metered Prices.
+           */
+          quantity?: Decimal;
+
+          /**
+           * The inclusive start of the term.
+           */
+          starts_at: RecurringPrice.StartsAt;
+        }
+
+        export type Type =
+          | 'ad_hoc_product'
+          | 'pricing_override'
+          | 'recurring_price'
+          | OtherString;
+
+        export namespace AdHocProduct {
+          export interface BillSchedule {
+            /**
+             * Between one and ten installments. Empty schedules are allowed only on update.
+             */
+            custom?: Array<BillSchedule.Custom>;
+
+            /**
+             * The type of schedule.
+             */
+            type: BillSchedule.Type;
+          }
+
+          export interface ServicePeriod {
+            /**
+             * The finite exclusive end; must be after starts_at. Never is not supported.
+             */
+            ends_at: ServicePeriod.EndsAt;
+
+            /**
+             * The finite inclusive start of the service period.
+             */
+            starts_at: ServicePeriod.StartsAt;
+          }
+
+          export namespace BillSchedule {
+            export interface Custom {
+              /**
+               * Non-negative amount with an explicit currency that must match the contract's currency.
+               */
+              amount: V2Amount;
+
+              /**
+               * A finite bill date. Resolved once per request, including on idempotent retries.
+               */
+              bill_at: Custom.BillAt;
+            }
+
+            export type Type = 'custom' | OtherString;
+
+            export namespace Custom {
+              export interface BillAt {
+                /**
+                 * The timestamp at which the entry should be billed. Required if `type` is `timestamp`.
+                 */
+                timestamp?: string;
+
+                /**
+                 * The type of the bill_at.
+                 */
+                type: BillAt.Type;
+              }
+
+              export namespace BillAt {
+                export type Type = 'now' | 'timestamp' | OtherString;
+              }
+            }
+          }
+
+          export namespace ServicePeriod {
+            export interface EndsAt {
+              /**
+               * The timestamp when the item starts. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the starts_at.
+               */
+              type: EndsAt.Type;
+            }
+
+            export interface StartsAt {
+              /**
+               * The timestamp when the item starts. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the starts_at.
+               */
+              type: StartsAt.Type;
+            }
+
+            export namespace EndsAt {
+              export type Type = 'timestamp' | OtherString;
+            }
+
+            export namespace StartsAt {
+              export type Type = 'timestamp' | OtherString;
+            }
+          }
+        }
+
+        export namespace PricingOverride {
+          export interface Criterion {
+            /**
+             * Term selectors. Each ID or lookup key resolves to one fixed term ID.
+             * Omitted or empty selects all charge-bearing terms. Override terms cannot be targets.
+             */
+            terms?: Array<Criterion.Term>;
+
+            /**
+             * Whether to include or exclude the selected recurring or ad_hoc_product terms.
+             */
+            type: Criterion.Type;
+          }
+
+          export interface EndsAt {
+            /**
+             * The timestamp when the item ends. Required if `type` is `timestamp`.
+             */
+            timestamp?: string;
+
+            /**
+             * The type of the ends_at.
+             */
+            type: EndsAt.Type;
+          }
+
+          export interface Multiply {
+            /**
+             * The multiplier, for example 0.85 for a 15% discount.
+             */
+            factor: Decimal;
+          }
+
+          export interface Overwrite {
+            /**
+             * The replacement per-unit amount in minor currency units.
+             */
+            unit_amount_decimal?: Decimal;
+          }
+
+          export interface StartsAt {
+            /**
+             * The timestamp when the item starts. Required if `type` is `timestamp`.
+             */
+            timestamp?: string;
+
+            /**
+             * The type of the starts_at.
+             */
+            type: StartsAt.Type;
+          }
+
+          export type Type = 'multiply' | 'overwrite' | OtherString;
+
+          export namespace Criterion {
+            export interface Term {
+              /**
+               * Select this term by its stable ID.
+               */
+              id?: string;
+
+              /**
+               * Select this term by its unique lookup key.
+               */
+              lookup_key?: string;
+
+              /**
+               * Whether the selector uses a term ID or lookup key.
+               */
+              type: Term.Type;
+            }
+
+            export type Type = 'exclude' | 'include' | OtherString;
+
+            export namespace Term {
+              export type Type = 'id' | 'lookup_key';
+            }
+          }
+
+          export namespace EndsAt {
+            export type Type = 'never' | 'timestamp' | OtherString;
+          }
+
+          export namespace StartsAt {
+            export type Type = 'timestamp' | OtherString;
+          }
+        }
+
+        export namespace RecurringPrice {
+          export interface EndsAt {
+            /**
+             * The timestamp when the item ends. Required if `type` is `timestamp`.
+             */
+            timestamp?: string;
+
+            /**
+             * The type of the ends_at.
+             */
+            type: EndsAt.Type;
+          }
+
+          export interface StartsAt {
+            /**
+             * The timestamp when the item starts. Required if `type` is `timestamp`.
+             */
+            timestamp?: string;
+
+            /**
+             * The type of the starts_at.
+             */
+            type: StartsAt.Type;
+          }
+
+          export namespace EndsAt {
+            export type Type = 'never' | 'timestamp' | OtherString;
+          }
+
+          export namespace StartsAt {
+            export type Type = 'timestamp' | OtherString;
+          }
+        }
+      }
     }
   }
 }
@@ -1619,6 +2231,7 @@ export namespace V2 {
         | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides'
+        | 'terms'
         | OtherString;
     }
   }
@@ -1626,6 +2239,11 @@ export namespace V2 {
 export namespace V2 {
   export namespace Billing {
     export interface ContractUpdateParams {
+      /**
+       * Apply all actions atomically. Cannot be combined with the legacy child action arrays.
+       */
+      actions?: Array<ContractUpdateParams.Action>;
+
       /**
        * The billing settings to update on the contract.
        */
@@ -1660,6 +2278,28 @@ export namespace V2 {
     }
 
     export namespace ContractUpdateParams {
+      export interface Action {
+        /**
+         * Prepend a term, preserving relative order among additions in this request.
+         */
+        add_term?: Action.AddTerm;
+
+        /**
+         * Remove a term that has not started.
+         */
+        remove_term?: Action.RemoveTerm;
+
+        /**
+         * The action type. Exactly one matching payload is required.
+         */
+        type: Action.Type;
+
+        /**
+         * Edit a term without changing its display position.
+         */
+        update_term?: Action.UpdateTerm;
+      }
+
       export interface BillingSettings {
         /**
          * The bill settings to update (tax calculation type and/or invoice time until due).
@@ -1682,6 +2322,7 @@ export namespace V2 {
         | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides'
+        | 'terms'
         | OtherString;
 
       export interface OneTimeFeeAction {
@@ -1748,6 +2389,630 @@ export namespace V2 {
          * Update a pricing override.
          */
         update?: PricingOverrideAction.Update;
+      }
+
+      export namespace Action {
+        export interface AddTerm {
+          /**
+           * Required when type is ad_hoc_product.
+           */
+          ad_hoc_product?: AddTerm.AdHocProduct;
+
+          /**
+           * Lookup key unique across all term types on the contract.
+           */
+          lookup_key?: string;
+
+          /**
+           * Set of key-value pairs attached to the term.
+           */
+          metadata?: MetadataParam;
+
+          /**
+           * Required when type is pricing_override.
+           */
+          pricing_override?: AddTerm.PricingOverride;
+
+          /**
+           * Required when type is recurring_price.
+           */
+          recurring_price?: AddTerm.RecurringPrice;
+
+          /**
+           * The term type. Production types require exactly one matching payload.
+           */
+          type: AddTerm.Type;
+        }
+
+        export interface RemoveTerm {
+          /**
+           * Select a term by ID or its unique lookup key.
+           */
+          term: RemoveTerm.Term;
+        }
+
+        export type Type =
+          | 'add_term'
+          | 'remove_term'
+          | 'update_term'
+          | OtherString;
+
+        export interface UpdateTerm {
+          /**
+           * Must match the existing term's type.
+           */
+          ad_hoc_product?: UpdateTerm.AdHocProduct;
+
+          /**
+           * Metadata changes to apply immediately.
+           */
+          metadata?: MetadataParam;
+
+          /**
+           * Only validity dates can change; pricing, criteria, and priority are immutable.
+           */
+          pricing_override?: UpdateTerm.PricingOverride;
+
+          /**
+           * Must match the existing term's type.
+           */
+          recurring_price?: UpdateTerm.RecurringPrice;
+
+          /**
+           * Select a term by ID or its unique lookup key.
+           */
+          term: UpdateTerm.Term;
+        }
+
+        export namespace AddTerm {
+          export interface AdHocProduct {
+            /**
+             * Explicit bill dates and amounts.
+             */
+            bill_schedule: AdHocProduct.BillSchedule;
+
+            /**
+             * The V1 Product being billed.
+             */
+            product: string;
+
+            /**
+             * Informational service period, independent of bill dates.
+             */
+            service_period?: AdHocProduct.ServicePeriod;
+          }
+
+          export interface PricingOverride {
+            /**
+             * Optional criteria selecting recurring or ad_hoc_product terms. If omitted, the override applies to all recurring and ad_hoc_product terms.
+             */
+            criteria?: Array<PricingOverride.Criterion>;
+
+            /**
+             * The exclusive end. Omitted means open-ended.
+             */
+            ends_at?: PricingOverride.EndsAt;
+
+            /**
+             * Required when type is multiply.
+             */
+            multiply?: PricingOverride.Multiply;
+
+            /**
+             * Required when type is overwrite.
+             */
+            overwrite?: PricingOverride.Overwrite;
+
+            /**
+             * Lower numbers win; defaults to 50.
+             */
+            priority?: number;
+
+            /**
+             * The inclusive start of the validity window.
+             */
+            starts_at: PricingOverride.StartsAt;
+
+            /**
+             * The pricing operation. Exactly one matching pricing payload is required.
+             */
+            type: PricingOverride.Type;
+          }
+
+          export interface RecurringPrice {
+            /**
+             * The exclusive end. Omitted means open-ended.
+             */
+            ends_at?: RecurringPrice.EndsAt;
+
+            /**
+             * The V1 recurring Price.
+             */
+            price: string;
+
+            /**
+             * Initial licensed quantity. Defaults to 1; must be omitted for metered Prices.
+             */
+            quantity?: Decimal;
+
+            /**
+             * The inclusive start of the term.
+             */
+            starts_at: RecurringPrice.StartsAt;
+          }
+
+          export type Type =
+            | 'ad_hoc_product'
+            | 'pricing_override'
+            | 'recurring_price'
+            | OtherString;
+
+          export namespace AdHocProduct {
+            export interface BillSchedule {
+              /**
+               * Between one and ten installments. Empty schedules are allowed only on update.
+               */
+              custom?: Array<BillSchedule.Custom>;
+
+              /**
+               * The type of schedule.
+               */
+              type: BillSchedule.Type;
+            }
+
+            export interface ServicePeriod {
+              /**
+               * The finite exclusive end; must be after starts_at. Never is not supported.
+               */
+              ends_at: ServicePeriod.EndsAt;
+
+              /**
+               * The finite inclusive start of the service period.
+               */
+              starts_at: ServicePeriod.StartsAt;
+            }
+
+            export namespace BillSchedule {
+              export interface Custom {
+                /**
+                 * Non-negative amount with an explicit currency that must match the contract's currency.
+                 */
+                amount: V2Amount;
+
+                /**
+                 * A finite bill date. Resolved once per request, including on idempotent retries.
+                 */
+                bill_at: Custom.BillAt;
+              }
+
+              export type Type = 'custom' | OtherString;
+
+              export namespace Custom {
+                export interface BillAt {
+                  /**
+                   * The timestamp at which the entry should be billed. Required if `type` is `timestamp`.
+                   */
+                  timestamp?: string;
+
+                  /**
+                   * The type of the bill_at.
+                   */
+                  type: BillAt.Type;
+                }
+
+                export namespace BillAt {
+                  export type Type = 'now' | 'timestamp' | OtherString;
+                }
+              }
+            }
+
+            export namespace ServicePeriod {
+              export interface EndsAt {
+                /**
+                 * The timestamp when the item starts. Required if `type` is `timestamp`.
+                 */
+                timestamp?: string;
+
+                /**
+                 * The type of the starts_at.
+                 */
+                type: EndsAt.Type;
+              }
+
+              export interface StartsAt {
+                /**
+                 * The timestamp when the item starts. Required if `type` is `timestamp`.
+                 */
+                timestamp?: string;
+
+                /**
+                 * The type of the starts_at.
+                 */
+                type: StartsAt.Type;
+              }
+
+              export namespace EndsAt {
+                export type Type = 'timestamp' | OtherString;
+              }
+
+              export namespace StartsAt {
+                export type Type = 'timestamp' | OtherString;
+              }
+            }
+          }
+
+          export namespace PricingOverride {
+            export interface Criterion {
+              /**
+               * Term selectors. Each ID or lookup key resolves to one fixed term ID.
+               * Omitted or empty selects all charge-bearing terms. Override terms cannot be targets.
+               */
+              terms?: Array<Criterion.Term>;
+
+              /**
+               * Whether to include or exclude the selected recurring or ad_hoc_product terms.
+               */
+              type: Criterion.Type;
+            }
+
+            export interface EndsAt {
+              /**
+               * The timestamp when the item ends. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the ends_at.
+               */
+              type: EndsAt.Type;
+            }
+
+            export interface Multiply {
+              /**
+               * The multiplier, for example 0.85 for a 15% discount.
+               */
+              factor: Decimal;
+            }
+
+            export interface Overwrite {
+              /**
+               * The replacement per-unit amount in minor currency units.
+               */
+              unit_amount_decimal?: Decimal;
+            }
+
+            export interface StartsAt {
+              /**
+               * The timestamp when the item starts. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the starts_at.
+               */
+              type: StartsAt.Type;
+            }
+
+            export type Type = 'multiply' | 'overwrite' | OtherString;
+
+            export namespace Criterion {
+              export interface Term {
+                /**
+                 * Select this term by its stable ID.
+                 */
+                id?: string;
+
+                /**
+                 * Select this term by its unique lookup key.
+                 */
+                lookup_key?: string;
+
+                /**
+                 * Whether the selector uses a term ID or lookup key.
+                 */
+                type: Term.Type;
+              }
+
+              export type Type = 'exclude' | 'include' | OtherString;
+
+              export namespace Term {
+                export type Type = 'id' | 'lookup_key';
+              }
+            }
+
+            export namespace EndsAt {
+              export type Type = 'never' | 'timestamp' | OtherString;
+            }
+
+            export namespace StartsAt {
+              export type Type = 'timestamp' | OtherString;
+            }
+          }
+
+          export namespace RecurringPrice {
+            export interface EndsAt {
+              /**
+               * The timestamp when the item ends. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the ends_at.
+               */
+              type: EndsAt.Type;
+            }
+
+            export interface StartsAt {
+              /**
+               * The timestamp when the item starts. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the starts_at.
+               */
+              type: StartsAt.Type;
+            }
+
+            export namespace EndsAt {
+              export type Type = 'never' | 'timestamp' | OtherString;
+            }
+
+            export namespace StartsAt {
+              export type Type = 'timestamp' | OtherString;
+            }
+          }
+        }
+
+        export namespace RemoveTerm {
+          export interface Term {
+            /**
+             * Select this term by its stable ID.
+             */
+            id?: string;
+
+            /**
+             * Select this term by its unique lookup key.
+             */
+            lookup_key?: string;
+
+            /**
+             * Whether the selector uses a term ID or lookup key.
+             */
+            type: Term.Type;
+          }
+
+          export namespace Term {
+            export type Type = 'id' | 'lookup_key';
+          }
+        }
+
+        export namespace UpdateTerm {
+          export interface AdHocProduct {
+            /**
+             * Replace remaining unbilled installments. Billed entries remain immutable.
+             */
+            bill_schedule?: AdHocProduct.BillSchedule;
+
+            /**
+             * Informational service period; cannot change historical billing.
+             */
+            service_period?: AdHocProduct.ServicePeriod;
+          }
+
+          export interface PricingOverride {
+            /**
+             * Omission leaves the end unchanged; never requests an open end.
+             */
+            ends_at?: PricingOverride.EndsAt;
+
+            /**
+             * Can change only before the override starts. Accepts timestamp or now.
+             */
+            starts_at?: PricingOverride.StartsAt;
+          }
+
+          export interface RecurringPrice {
+            /**
+             * Omission leaves the end unchanged; never requests an open end.
+             */
+            ends_at?: RecurringPrice.EndsAt;
+
+            /**
+             * Update an active term's licensed quantity at the contract's current clock time,
+             * or an unstarted term's initial quantity, preserving its ID. Ended terms cannot change quantity.
+             */
+            quantity?: Decimal;
+
+            /**
+             * Reschedule an unstarted term in place.
+             */
+            starts_at?: RecurringPrice.StartsAt;
+          }
+
+          export interface Term {
+            /**
+             * Select this term by its stable ID.
+             */
+            id?: string;
+
+            /**
+             * Select this term by its unique lookup key.
+             */
+            lookup_key?: string;
+
+            /**
+             * Whether the selector uses a term ID or lookup key.
+             */
+            type: Term.Type;
+          }
+
+          export namespace AdHocProduct {
+            export interface BillSchedule {
+              /**
+               * Full replacement of up to ten unbilled installments. An explicit empty array cancels all of them.
+               */
+              custom?: Array<BillSchedule.Custom>;
+
+              /**
+               * The type of schedule.
+               */
+              type: BillSchedule.Type;
+            }
+
+            export interface ServicePeriod {
+              /**
+               * The finite exclusive end; must be after starts_at. Never is not supported.
+               */
+              ends_at: ServicePeriod.EndsAt;
+
+              /**
+               * The finite inclusive start of the service period.
+               */
+              starts_at: ServicePeriod.StartsAt;
+            }
+
+            export namespace BillSchedule {
+              export interface Custom {
+                /**
+                 * Non-negative amount with an explicit currency that must match the contract's currency.
+                 */
+                amount: V2Amount;
+
+                /**
+                 * A finite bill date. Resolved once per request, including on idempotent retries.
+                 */
+                bill_at: Custom.BillAt;
+              }
+
+              export type Type = 'custom' | OtherString;
+
+              export namespace Custom {
+                export interface BillAt {
+                  /**
+                   * The timestamp at which the entry should be billed. Required if `type` is `timestamp`.
+                   */
+                  timestamp?: string;
+
+                  /**
+                   * The type of the bill_at.
+                   */
+                  type: BillAt.Type;
+                }
+
+                export namespace BillAt {
+                  export type Type = 'now' | 'timestamp' | OtherString;
+                }
+              }
+            }
+
+            export namespace ServicePeriod {
+              export interface EndsAt {
+                /**
+                 * The timestamp when the item starts. Required if `type` is `timestamp`.
+                 */
+                timestamp?: string;
+
+                /**
+                 * The type of the starts_at.
+                 */
+                type: EndsAt.Type;
+              }
+
+              export interface StartsAt {
+                /**
+                 * The timestamp when the item starts. Required if `type` is `timestamp`.
+                 */
+                timestamp?: string;
+
+                /**
+                 * The type of the starts_at.
+                 */
+                type: StartsAt.Type;
+              }
+
+              export namespace EndsAt {
+                export type Type = 'timestamp' | OtherString;
+              }
+
+              export namespace StartsAt {
+                export type Type = 'timestamp' | OtherString;
+              }
+            }
+          }
+
+          export namespace PricingOverride {
+            export interface EndsAt {
+              /**
+               * The timestamp when the item ends. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the ends_at.
+               */
+              type: EndsAt.Type;
+            }
+
+            export interface StartsAt {
+              /**
+               * The timestamp when the item starts. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the starts_at.
+               */
+              type: StartsAt.Type;
+            }
+
+            export namespace EndsAt {
+              export type Type = 'never' | 'timestamp' | OtherString;
+            }
+
+            export namespace StartsAt {
+              export type Type = 'timestamp' | OtherString;
+            }
+          }
+
+          export namespace RecurringPrice {
+            export interface EndsAt {
+              /**
+               * The timestamp when the item ends. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the ends_at.
+               */
+              type: EndsAt.Type;
+            }
+
+            export interface StartsAt {
+              /**
+               * The timestamp when the item starts. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the starts_at.
+               */
+              type: StartsAt.Type;
+            }
+
+            export namespace EndsAt {
+              export type Type = 'never' | 'timestamp' | OtherString;
+            }
+
+            export namespace StartsAt {
+              export type Type = 'timestamp' | OtherString;
+            }
+          }
+
+          export namespace Term {
+            export type Type = 'id' | 'lookup_key';
+          }
+        }
       }
 
       export namespace BillingSettings {
@@ -2678,6 +3943,7 @@ export namespace V2 {
         | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides'
+        | 'terms'
         | OtherString;
     }
   }
@@ -2702,6 +3968,7 @@ export namespace V2 {
         | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides'
+        | 'terms'
         | OtherString;
     }
   }
@@ -2724,6 +3991,11 @@ export namespace V2 {
        * Top-level proration behavior for the cancellation. Defaults to `prorated` if not set.
        */
       proration_behavior?: ContractCancelParams.ProrationBehavior;
+
+      /**
+       * Per-term proration overrides. Cannot be combined with cancel_pricing_lines.
+       */
+      terms?: Array<ContractCancelParams.Term>;
     }
 
     export namespace ContractCancelParams {
@@ -2750,12 +4022,50 @@ export namespace V2 {
         | 'one_time_fees'
         | 'pricing_lines'
         | 'pricing_overrides'
+        | 'terms'
         | OtherString;
 
       export type ProrationBehavior = 'none' | 'prorated' | OtherString;
 
+      export interface Term {
+        /**
+         * Falls back to the contract cancellation's top-level proration behavior.
+         */
+        proration_behavior?: Term.ProrationBehavior;
+
+        /**
+         * Select a term by ID or its unique lookup key.
+         */
+        term: Term.Term;
+      }
+
       export namespace CancelPricingLine {
         export type ProrationBehavior = 'none' | 'prorated' | OtherString;
+      }
+
+      export namespace Term {
+        export type ProrationBehavior = 'none' | 'prorated' | OtherString;
+
+        export interface Term {
+          /**
+           * Select this term by its stable ID.
+           */
+          id?: string;
+
+          /**
+           * Select this term by its unique lookup key.
+           */
+          lookup_key?: string;
+
+          /**
+           * Whether the selector uses a term ID or lookup key.
+           */
+          type: Term.Type;
+        }
+
+        export namespace Term {
+          export type Type = 'id' | 'lookup_key';
+        }
       }
     }
   }

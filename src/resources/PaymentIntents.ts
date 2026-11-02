@@ -801,6 +801,7 @@ export namespace PaymentIntent {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'toss_pay'
     | 'touch_n_go'
     | 'truemoney'
     | 'twint'
@@ -937,6 +938,7 @@ export namespace PaymentIntent {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -1311,6 +1313,8 @@ export namespace PaymentIntent {
     sunbit?: PaymentMethodOptions.Sunbit;
 
     swish?: PaymentMethodOptions.Swish;
+
+    toss_pay?: PaymentMethodOptions.TossPay;
 
     twint?: PaymentMethodOptions.Twint;
 
@@ -1797,11 +1801,13 @@ export namespace PaymentIntent {
       | 'shipping_calculation_failed'
       | 'siret_invalid'
       | 'sku_inactive'
+      | 'smart_disputes_not_available'
       | 'state_unsupported'
       | 'status_transition_invalid'
       | 'storer_capability_missing'
       | 'storer_capability_not_active'
       | 'stripe_tax_inactive'
+      | 'subscription_update_trial_after_billing_cycle_anchor'
       | 'tax_id_invalid'
       | 'tax_id_prohibited'
       | 'taxes_calculation_failed'
@@ -1814,6 +1820,8 @@ export namespace PaymentIntent {
       | 'terminal_reader_offline'
       | 'terminal_reader_timeout'
       | 'testmode_charges_only'
+      | 'three_d_secure_authentication_not_supported'
+      | 'three_d_secure_authentication_upstream_error'
       | 'tls_version_unsupported'
       | 'token_already_used'
       | 'token_card_network_invalid'
@@ -4196,6 +4204,11 @@ export namespace PaymentIntent {
 
     export namespace MoneyServices {
       export interface AccountFunding {
+        /**
+         * The merchant of record for this account funding transaction.
+         */
+        merchant_of_record?: AccountFunding.MerchantOfRecord;
+
         sender_account?: string;
 
         sender_details?: AccountFunding.SenderDetails;
@@ -4233,6 +4246,8 @@ export namespace PaymentIntent {
         | OtherString;
 
       export namespace AccountFunding {
+        export type MerchantOfRecord = 'stripe' | OtherString;
+
         export interface SenderDetails {
           address?: SenderDetails.Address;
 
@@ -5579,6 +5594,19 @@ export namespace PaymentIntent {
       setup_future_usage?: 'none';
     }
 
+    export interface TossPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: TossPay.SetupFutureUsage;
+    }
+
     export interface Twint {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -6697,6 +6725,10 @@ export namespace PaymentIntent {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
+    export namespace TossPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Twint {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -7214,6 +7246,7 @@ export namespace PaymentIntentCreateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'toss_pay'
     | 'touch_n_go'
     | 'truemoney'
     | 'twint'
@@ -7354,6 +7387,7 @@ export namespace PaymentIntentCreateParams {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -7796,6 +7830,11 @@ export namespace PaymentIntentCreateParams {
     tamara?: PaymentMethodData.Tamara;
 
     /**
+     * If this is a `toss_pay` PaymentMethod, this hash contains details about the Toss Pay payment method.
+     */
+    toss_pay?: PaymentMethodData.TossPay;
+
+    /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
      */
     twint?: PaymentMethodData.Twint;
@@ -8146,6 +8185,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
      */
     swish?: Emptyable<PaymentMethodOptions.Swish>;
+
+    /**
+     * If this is a `toss_pay` PaymentMethod, this sub-hash contains details about the Toss Pay payment method options.
+     */
+    toss_pay?: Emptyable<PaymentMethodOptions.TossPay>;
 
     /**
      * If this is a `twint` PaymentMethod, this sub-hash contains details about the TWINT payment method options.
@@ -10879,6 +10923,11 @@ export namespace PaymentIntentCreateParams {
     export namespace MoneyServices {
       export interface AccountFunding {
         /**
+         * The merchant of record for this account funding transaction. Can only be set when creating a PaymentIntent.
+         */
+        merchant_of_record?: AccountFunding.MerchantOfRecord;
+
+        /**
          * Inline identity details for the sender of this account funding transaction.
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
@@ -10927,6 +10976,8 @@ export namespace PaymentIntentCreateParams {
         | OtherString;
 
       export namespace AccountFunding {
+        export type MerchantOfRecord = 'stripe' | OtherString;
+
         export interface SenderDetails {
           /**
            * Address.
@@ -11339,6 +11390,8 @@ export namespace PaymentIntentCreateParams {
 
     export interface Tamara {}
 
+    export interface TossPay {}
+
     export interface Twint {}
 
     export type Type =
@@ -11404,6 +11457,7 @@ export namespace PaymentIntentCreateParams {
       | 'sunbit'
       | 'swish'
       | 'tamara'
+      | 'toss_pay'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -11434,6 +11488,11 @@ export namespace PaymentIntentCreateParams {
        * Account type: checkings or savings. Defaults to checking if omitted.
        */
       account_type?: UsBankAccount.AccountType;
+
+      /**
+       * An external token used to create a payment method.
+       */
+      external_token?: UsBankAccount.ExternalToken;
 
       /**
        * The ID of a Financial Connections Account to use as a payment method.
@@ -11523,6 +11582,7 @@ export namespace PaymentIntentCreateParams {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
@@ -11668,6 +11728,22 @@ export namespace PaymentIntentCreateParams {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface ExternalToken {
+        /**
+         * The Plaid processor token to use for this bank account.
+         */
+        plaid_processor_token?: string;
+
+        /**
+         * The type of external token.
+         */
+        type: ExternalToken.Type;
+      }
+
+      export namespace ExternalToken {
+        export type Type = 'plaid_processor_token' | OtherString;
+      }
     }
   }
 
@@ -13154,6 +13230,19 @@ export namespace PaymentIntentCreateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: 'none';
+    }
+
+    export interface TossPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<TossPay.SetupFutureUsage>;
     }
 
     export interface Twint {
@@ -15743,6 +15832,10 @@ export namespace PaymentIntentCreateParams {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
+    export namespace TossPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Twint {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -16227,6 +16320,7 @@ export namespace PaymentIntentUpdateParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'toss_pay'
     | 'touch_n_go'
     | 'truemoney'
     | 'twint'
@@ -16351,6 +16445,7 @@ export namespace PaymentIntentUpdateParams {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -16791,6 +16886,11 @@ export namespace PaymentIntentUpdateParams {
     tamara?: PaymentMethodData.Tamara;
 
     /**
+     * If this is a `toss_pay` PaymentMethod, this hash contains details about the Toss Pay payment method.
+     */
+    toss_pay?: PaymentMethodData.TossPay;
+
+    /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
      */
     twint?: PaymentMethodData.Twint;
@@ -17141,6 +17241,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
      */
     swish?: Emptyable<PaymentMethodOptions.Swish>;
+
+    /**
+     * If this is a `toss_pay` PaymentMethod, this sub-hash contains details about the Toss Pay payment method options.
+     */
+    toss_pay?: Emptyable<PaymentMethodOptions.TossPay>;
 
     /**
      * If this is a `twint` PaymentMethod, this sub-hash contains details about the TWINT payment method options.
@@ -19816,6 +19921,11 @@ export namespace PaymentIntentUpdateParams {
     export namespace MoneyServices {
       export interface AccountFunding {
         /**
+         * The merchant of record for this account funding transaction. Can only be set when creating a PaymentIntent.
+         */
+        merchant_of_record?: AccountFunding.MerchantOfRecord;
+
+        /**
          * Inline identity details for the sender of this account funding transaction.
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
@@ -19864,6 +19974,8 @@ export namespace PaymentIntentUpdateParams {
         | OtherString;
 
       export namespace AccountFunding {
+        export type MerchantOfRecord = 'stripe' | OtherString;
+
         export interface SenderDetails {
           /**
            * Address.
@@ -20276,6 +20388,8 @@ export namespace PaymentIntentUpdateParams {
 
     export interface Tamara {}
 
+    export interface TossPay {}
+
     export interface Twint {}
 
     export type Type =
@@ -20341,6 +20455,7 @@ export namespace PaymentIntentUpdateParams {
       | 'sunbit'
       | 'swish'
       | 'tamara'
+      | 'toss_pay'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -20371,6 +20486,11 @@ export namespace PaymentIntentUpdateParams {
        * Account type: checkings or savings. Defaults to checking if omitted.
        */
       account_type?: UsBankAccount.AccountType;
+
+      /**
+       * An external token used to create a payment method.
+       */
+      external_token?: UsBankAccount.ExternalToken;
 
       /**
        * The ID of a Financial Connections Account to use as a payment method.
@@ -20460,6 +20580,7 @@ export namespace PaymentIntentUpdateParams {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
@@ -20605,6 +20726,22 @@ export namespace PaymentIntentUpdateParams {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface ExternalToken {
+        /**
+         * The Plaid processor token to use for this bank account.
+         */
+        plaid_processor_token?: string;
+
+        /**
+         * The type of external token.
+         */
+        type: ExternalToken.Type;
+      }
+
+      export namespace ExternalToken {
+        export type Type = 'plaid_processor_token' | OtherString;
+      }
     }
   }
 
@@ -22091,6 +22228,19 @@ export namespace PaymentIntentUpdateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: 'none';
+    }
+
+    export interface TossPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<TossPay.SetupFutureUsage>;
     }
 
     export interface Twint {
@@ -24677,6 +24827,10 @@ export namespace PaymentIntentUpdateParams {
         stripe_balance_debit_agreement?: string;
       }
 
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
+    export namespace TossPay {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
@@ -27913,6 +28067,7 @@ export namespace PaymentIntentConfirmParams {
     | 'swish'
     | 'tamara'
     | 'test_pay'
+    | 'toss_pay'
     | 'touch_n_go'
     | 'truemoney'
     | 'twint'
@@ -28037,6 +28192,7 @@ export namespace PaymentIntentConfirmParams {
     | 'sunbit'
     | 'swish'
     | 'tamara'
+    | 'toss_pay'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -28479,6 +28635,11 @@ export namespace PaymentIntentConfirmParams {
     tamara?: PaymentMethodData.Tamara;
 
     /**
+     * If this is a `toss_pay` PaymentMethod, this hash contains details about the Toss Pay payment method.
+     */
+    toss_pay?: PaymentMethodData.TossPay;
+
+    /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
      */
     twint?: PaymentMethodData.Twint;
@@ -28829,6 +28990,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
      */
     swish?: Emptyable<PaymentMethodOptions.Swish>;
+
+    /**
+     * If this is a `toss_pay` PaymentMethod, this sub-hash contains details about the Toss Pay payment method options.
+     */
+    toss_pay?: Emptyable<PaymentMethodOptions.TossPay>;
 
     /**
      * If this is a `twint` PaymentMethod, this sub-hash contains details about the TWINT payment method options.
@@ -31508,6 +31674,11 @@ export namespace PaymentIntentConfirmParams {
     export namespace MoneyServices {
       export interface AccountFunding {
         /**
+         * The merchant of record for this account funding transaction. Can only be set when creating a PaymentIntent.
+         */
+        merchant_of_record?: AccountFunding.MerchantOfRecord;
+
+        /**
          * Inline identity details for the sender of this account funding transaction.
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
@@ -31556,6 +31727,8 @@ export namespace PaymentIntentConfirmParams {
         | OtherString;
 
       export namespace AccountFunding {
+        export type MerchantOfRecord = 'stripe' | OtherString;
+
         export interface SenderDetails {
           /**
            * Address.
@@ -31968,6 +32141,8 @@ export namespace PaymentIntentConfirmParams {
 
     export interface Tamara {}
 
+    export interface TossPay {}
+
     export interface Twint {}
 
     export type Type =
@@ -32033,6 +32208,7 @@ export namespace PaymentIntentConfirmParams {
       | 'sunbit'
       | 'swish'
       | 'tamara'
+      | 'toss_pay'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -32063,6 +32239,11 @@ export namespace PaymentIntentConfirmParams {
        * Account type: checkings or savings. Defaults to checking if omitted.
        */
       account_type?: UsBankAccount.AccountType;
+
+      /**
+       * An external token used to create a payment method.
+       */
+      external_token?: UsBankAccount.ExternalToken;
 
       /**
        * The ID of a Financial Connections Account to use as a payment method.
@@ -32152,6 +32333,7 @@ export namespace PaymentIntentConfirmParams {
         | 'bni'
         | 'bri'
         | 'cimb'
+        | 'mandiri'
         | 'permata'
         | OtherString;
     }
@@ -32297,6 +32479,22 @@ export namespace PaymentIntentConfirmParams {
       export type AccountHolderType = 'company' | 'individual' | OtherString;
 
       export type AccountType = 'checking' | 'savings' | OtherString;
+
+      export interface ExternalToken {
+        /**
+         * The Plaid processor token to use for this bank account.
+         */
+        plaid_processor_token?: string;
+
+        /**
+         * The type of external token.
+         */
+        type: ExternalToken.Type;
+      }
+
+      export namespace ExternalToken {
+        export type Type = 'plaid_processor_token' | OtherString;
+      }
     }
   }
 
@@ -33783,6 +33981,19 @@ export namespace PaymentIntentConfirmParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: 'none';
+    }
+
+    export interface TossPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<TossPay.SetupFutureUsage>;
     }
 
     export interface Twint {
@@ -36369,6 +36580,10 @@ export namespace PaymentIntentConfirmParams {
         stripe_balance_debit_agreement?: string;
       }
 
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
+    export namespace TossPay {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 

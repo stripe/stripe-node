@@ -204,11 +204,6 @@ export namespace VerificationReport {
     address_match_confidence?: Email.AddressMatchConfidence;
 
     /**
-     * Additional email verification details
-     */
-    details?: Email.Details;
-
-    /**
      * Two-letter country code of the email domain's country.
      */
     domain_country?: string;
@@ -378,7 +373,6 @@ export namespace VerificationReport {
 
   export type Type =
     | 'document'
-    | 'email'
     | 'id_number'
     | 'verification_flow'
     | OtherString;
@@ -474,23 +468,6 @@ export namespace VerificationReport {
       | 'normal'
       | 'unknown'
       | OtherString;
-
-    export interface Details {
-      /**
-       * Number of days from the time when the email domain was first observed to the time of verification.
-       */
-      days_since_domain_creation?: number;
-
-      /**
-       * Number of days from the time when the email address was first observed to the time of verification.
-       */
-      days_since_ownership_started?: number;
-
-      /**
-       * Two-letter ISO 3166-1 alpha-2 country code of the email domain's country.
-       */
-      domain_country?: string;
-    }
 
     export type EmailExistsConfidence =
       | 'highest'
@@ -966,6 +943,6 @@ export namespace Identity {
   }
 
   export namespace VerificationReportListParams {
-    export type Type = 'document' | 'email' | 'id_number' | OtherString;
+    export type Type = 'document' | 'id_number' | OtherString;
   }
 }

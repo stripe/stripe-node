@@ -117,6 +117,7 @@ export class UsBankAccountResource extends StripeResource {
   /**
    * Send microdeposits in order to verify your US Bank Account so it is eligible to transfer funds. This will start the verification process and you must Confirm Microdeposits to successfully verify your US Bank Account.
    * @throws Stripe.ControlledByAlternateResourceError
+   * @throws Stripe.CannotProceedError
    */
   sendMicrodeposits(
     id: string,
@@ -128,6 +129,22 @@ export class UsBankAccountResource extends StripeResource {
       `/v2/core/vault/us_bank_accounts/${encodeURIComponent(
         id
       )}/send_microdeposits`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Unarchive a USBankAccount object.
+   * @throws Stripe.ControlledByAlternateResourceError
+   */
+  unarchive(
+    id: string,
+    params?: V2.Core.Vault.UsBankAccountUnarchiveParams,
+    options?: RequestOptions
+  ): Promise<Response<UsBankAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/vault/us_bank_accounts/${encodeURIComponent(id)}/unarchive`,
       params,
       options
     ) as any;
@@ -170,6 +187,11 @@ export interface UsBankAccount {
   created: string;
 
   /**
+   * Same as `fingerprint`, but uniquely identifies the bank account using its `fedwire_routing_number` instead of its `routing_number`.
+   */
+  fedwire_fingerprint?: string;
+
+  /**
    * The fedwire routing number of the bank account.
    */
   fedwire_routing_number?: string;
@@ -178,6 +200,12 @@ export interface UsBankAccount {
    * The ID of the Financial Connections Account used to create the bank account.
    */
   financial_connections_account?: string;
+
+  /**
+   * Uniquely identifies this particular bank account. You can use this attribute to check whether two
+   * recipients who've signed up with you are using the same bank account, for example.
+   */
+  fingerprint?: string;
 
   /**
    * The last 4 digits of the account number.
@@ -339,9 +367,17 @@ export namespace V2 {
         limit?: number;
 
         /**
-         * Optionally filter by verification status. Mutually exclusive with `unverified`, `verified`, `awaiting_verification`, and `verification_failed`.
+         * Closed Enum. Optionally filter by verification status.
          */
-        verification_status?: string;
+        verification_status?: UsBankAccountListParams.VerificationStatus;
+      }
+
+      export namespace UsBankAccountListParams {
+        export type VerificationStatus =
+          | 'awaiting_verification'
+          | 'unverified'
+          | 'verification_failed'
+          | 'verified';
       }
     }
   }
@@ -374,6 +410,13 @@ export namespace V2 {
   export namespace Core {
     export namespace Vault {
       export interface UsBankAccountSendMicrodepositsParams {}
+    }
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export namespace Vault {
+      export interface UsBankAccountUnarchiveParams {}
     }
   }
 }

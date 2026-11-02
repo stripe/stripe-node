@@ -39,7 +39,12 @@ export interface AlertNotification {
   alert_type: AlertNotification.AlertType;
 
   /**
-   * The billing cadence associated with this notification. Only present for spend threshold alerts grouped by billing cadence.
+   * The billing group associated with this notification. Only present for spend threshold alerts grouped by billing group.
+   */
+  billing_group: string | null;
+
+  /**
+   * The cadence associated with this notification. Only present for spend threshold alerts grouped by cadence.
    */
   cadence: string | null;
 
@@ -59,7 +64,7 @@ export interface AlertNotification {
   customer: string;
 
   /**
-   * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
+   * The value is `true` for objects in live mode and `false` for objects in a sandbox. For accounts that still have access to legacy test mode, the value is also `false` for objects in that mode.
    */
   livemode: boolean;
 
