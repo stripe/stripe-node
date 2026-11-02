@@ -203,7 +203,10 @@ export class RequestSender {
       this._emitStripeNotice(headers);
       const requestId = this._getRequestId(headers);
       const statusCode = res.getStatusCode();
-      let clientError: ClientRequestError | undefined;
+      const outcome: RequestOutcome = {
+        request_id: requestId,
+        http_status: statusCode,
+      };
 
       const responseEvent = this._makeResponseEvent(
         requestEvent,
@@ -220,7 +223,7 @@ export class RequestSender {
             }
 
             if (jsonResponse.error) {
-              clientError = 'api_error';
+              outcome.error = 'api_error';
               const isOAuth = typeof jsonResponse.error === 'string';
 
               if (isOAuth) {
@@ -258,7 +261,7 @@ export class RequestSender {
             }
 
             if (e instanceof HttpClientResponseBodyError) {
-              clientError = RequestSender._classifyConnectionError(e);
+              outcome.error = RequestSender._classifyConnectionError(e);
               throw RequestSender._generateConnectionError(
                 e,
                 timeout,
@@ -267,7 +270,7 @@ export class RequestSender {
               );
             }
 
-            clientError = 'invalid_response';
+            outcome.error = 'invalid_response';
             throw new StripeAPIError({
               message: 'Invalid JSON received from the Stripe API',
               exception: e,
@@ -279,11 +282,7 @@ export class RequestSender {
           (jsonResponse) => {
             this._stripe._emitter.emit('response', responseEvent);
 
-            this._recordRequestMetrics(
-              {request_id: requestId, http_status: statusCode},
-              responseEvent.elapsed,
-              usage
-            );
+            this._recordRequestMetrics(outcome, responseEvent.elapsed, usage);
 
             // Expose raw response object.
             const rawResponse = res.getRawResponse();
@@ -311,11 +310,7 @@ export class RequestSender {
           (e) => {
             this._stripe._emitter.emit('response', responseEvent);
             this._recordRequestMetrics(
-              {
-                request_id: requestId,
-                http_status: statusCode,
-                error: clientError,
-              },
+              outcome,
               Date.now() - requestEvent.request_start_time,
               usage
             );
@@ -586,38 +581,35 @@ export class RequestSender {
     requestDurationMs: number,
     usage: Array<string>
   ): void {
-    if (this._stripe.getTelemetryEnabled()) {
-      if (
-        this._stripe._prevRequestMetrics.length > this._maxBufferedRequestMetric
-      ) {
-        this._stripe._platformFunctions.emitWarning(
-          'Request metrics buffer is full, dropping telemetry message.'
-        );
-      } else {
-        let telemetryId: string;
-        try {
-          telemetryId = this._stripe._platformFunctions.uuid4();
-        } catch {
-          // Telemetry must not change the result of the API request.
-          return;
-        }
-        const m: RequestOutcome & {
-          request_duration_ms: number;
-          telemetry_id: string;
-          usage?: Array<string>;
-        } = removeNullish({
-          request_id: outcome.request_id || undefined,
-          http_status: outcome.http_status,
-          error: outcome.error,
-          request_duration_ms: requestDurationMs,
-          telemetry_id: telemetryId,
-        });
-        if (usage && usage.length > 0) {
-          m.usage = usage;
-        }
-        this._stripe._prevRequestMetrics.push(m);
-      }
+    if (!this._stripe.getTelemetryEnabled()) {
+      return;
     }
+    if (
+      this._stripe._prevRequestMetrics.length > this._maxBufferedRequestMetric
+    ) {
+      this._stripe._platformFunctions.emitWarning(
+        'Request metrics buffer is full, dropping telemetry message.'
+      );
+      return;
+    }
+
+    let telemetryId: string;
+    try {
+      telemetryId = this._stripe._platformFunctions.uuid4();
+    } catch {
+      // Telemetry must not change the result of the API request.
+      return;
+    }
+    this._stripe._prevRequestMetrics.push(
+      removeNullish({
+        request_id: outcome.request_id || undefined,
+        http_status: outcome.http_status,
+        error: outcome.error,
+        request_duration_ms: requestDurationMs,
+        telemetry_id: telemetryId,
+        usage: usage && usage.length > 0 ? usage : undefined,
+      })
+    );
   }
 
   _rawRequest(

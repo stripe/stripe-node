@@ -4,7 +4,6 @@ import http = require('http');
 import {expect} from 'chai';
 import {FAKE_API_KEY} from './testUtils.js';
 import {StripeResource} from '../src/StripeResource.js';
-import {RequestSender} from '../src/RequestSender.js';
 import {
   HttpClient,
   HttpClientResponse,
@@ -230,16 +229,7 @@ describe('Client Telemetry', () => {
         for await (const chunk of stream) body += chunk;
       } else {
         expect(stream).to.be.instanceOf(ReadableStream);
-        const reader = stream.getReader();
-        const decoder = new TextDecoder();
-        const read = async () => {
-          const {done, value} = await reader.read();
-          if (!done) {
-            body += decoder.decode(value);
-            await read();
-          }
-        };
-        await read();
+        body = await new Response(stream).text();
       }
       expect(body).to.equal('firstlast');
       expect(client._prevRequestMetrics).to.have.length(1);
@@ -285,47 +275,6 @@ describe('Client Telemetry', () => {
       );
     });
   }
-
-  it('records only the final attempt and reuses the carried sample on retries', async () => {
-    const transmitted = [];
-    let attempt = 0;
-    const client = createClient({
-      maxNetworkRetries: 1,
-      httpClient: {
-        getClientName: () => 'test',
-        makeRequest: (...args) => {
-          transmitted.push(args[4]['X-Stripe-Client-Telemetry']);
-          attempt += 1;
-          if (attempt === 1 || attempt === 2 || attempt === 4) {
-            return Promise.reject(HttpClient.makeTimeoutError());
-          }
-          const response = new HttpClientResponse(200, {});
-          response.toJSON = () => Promise.resolve({});
-          response.getRawResponse = () => ({});
-          return Promise.resolve(response);
-        },
-      },
-    });
-    client._requestSender._getSleepTimeInMS = () => 0;
-    await client.balance.retrieve().catch(() => {});
-    expect(attempt).to.equal(2);
-    expect(client._prevRequestMetrics).to.have.length(1);
-    const failed = client._prevRequestMetrics[0];
-    expectSample(failed, {error: 'timeout'});
-    await client.balance.retrieve();
-    expectSample(client._prevRequestMetrics[0], {http_status: 200});
-    const success = client._prevRequestMetrics[0];
-    await client.balance.retrieve();
-    expect(transmitted[3]).to.equal(transmitted[4]);
-    expect(JSON.parse(transmitted[2]).last_request_metrics).to.deep.equal(
-      failed
-    );
-    expect(JSON.parse(transmitted[3]).last_request_metrics).to.deep.equal(
-      success
-    );
-    expect(client._prevRequestMetrics).to.have.length(1);
-    expect(client._prevRequestMetrics[0].error).to.equal(undefined);
-  });
 
   for (const recovered of [false, true]) {
     it(`preserves an ID-less failure across the mandatory closed-connection retry (${
@@ -401,17 +350,19 @@ describe('Client Telemetry', () => {
   }
 
   for (const failed of [false, true]) {
-    it(`measures only the final attempt duration on ${
+    it(`preserves carried telemetry and final-attempt duration on ${
       failed ? 'failure' : 'success'
     }`, async () => {
       const originalNow = Date.now;
       let now = 100;
+      const transmitted = [];
       let attempts = 0;
       const client = createClient({
         maxNetworkRetries: 1,
         httpClient: {
           getClientName: () => 'test',
-          makeRequest: () => {
+          makeRequest: (...args) => {
+            transmitted.push(args[4]['X-Stripe-Client-Telemetry']);
             attempts += 1;
             now += attempts === 1 ? 50 : 7;
             if (attempts === 1 || failed)
@@ -423,6 +374,8 @@ describe('Client Telemetry', () => {
           },
         },
       });
+      client._requestSender._recordRequestMetrics({http_status: 200}, 5, []);
+      const previous = client._prevRequestMetrics[0];
       client._requestSender._getSleepTimeInMS = () => {
         now += 1000;
         return 0;
@@ -439,6 +392,17 @@ describe('Client Telemetry', () => {
         expect(attempts).to.equal(2);
         expect(client._prevRequestMetrics).to.have.length(1);
         expect(client._prevRequestMetrics[0].request_duration_ms).to.equal(7);
+        expectSample(
+          client._prevRequestMetrics[0],
+          failed ? {error: 'timeout'} : {http_status: 200}
+        );
+        expect(client._prevRequestMetrics[0].error).to.equal(
+          failed ? 'timeout' : undefined
+        );
+        expect(transmitted[0]).to.equal(transmitted[1]);
+        expect(JSON.parse(transmitted[0]).last_request_metrics).to.deep.equal(
+          previous
+        );
       } finally {
         Date.now = originalNow;
       }
@@ -462,7 +426,7 @@ describe('Client Telemetry', () => {
 
   it('keeps distinct sample identities and drops samples when UUID generation fails', async () => {
     const client = createClient();
-    const sender = new RequestSender(client, 10);
+    const sender = client._requestSender;
     sender._recordRequestMetrics({error: 'timeout'}, 1, []);
     sender._recordRequestMetrics({error: 'timeout'}, 1, []);
     expect(client._prevRequestMetrics[0].telemetry_id).not.to.equal(
@@ -473,8 +437,6 @@ describe('Client Telemetry', () => {
       throw new Error('random unavailable');
     };
     try {
-      sender._recordRequestMetrics({http_status: 200}, 1, []);
-      expect(client._prevRequestMetrics).to.have.length(2);
       const response = new HttpClientResponse(200, {});
       response.toJSON = () => Promise.resolve({});
       response.getRawResponse = () => ({});
