@@ -70,9 +70,12 @@ function createWebhooksTestSuite(stripe) {
     });
 
     it('should correctly construct a webhook header', async () => {
+      // Pin the timestamp so both calls sign the same payload to avoid rare flakiness
+      const timestamp = Math.floor(Date.now() / 1000);
       const header = await stripe.webhooks.generateTestHeaderStringAsync({
         payload: EVENT_PAYLOAD_STRING,
         secret: SECRET,
+        timestamp,
       });
 
       expect(header).to.not.be.undefined;
@@ -81,6 +84,7 @@ function createWebhooksTestSuite(stripe) {
         stripe.webhooks.generateTestHeaderString({
           payload: EVENT_PAYLOAD_STRING,
           secret: SECRET,
+          timestamp,
         })
       );
     });
