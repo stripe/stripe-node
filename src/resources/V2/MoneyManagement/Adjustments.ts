@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {RangeQueryParam, OtherString} from '../../../shared.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class AdjustmentResource extends StripeResource {
@@ -150,12 +150,48 @@ export namespace V2 {
       /**
        * Filter for Adjustments by their creation time using `gt`, `gte`, `lt`, or `lte`.
        */
-      created?: RangeQueryParam;
+      created?: AdjustmentListParams.Created;
 
       /**
        * The page limit.
        */
       limit?: number;
+    }
+
+    export namespace AdjustmentListParams {
+      export interface Created {
+        /**
+         * Filter for Adjustments created after the specified timestamp.
+         * The timestamp must be in RFC 3339 format, for example `2022-09-18T13:22:00Z`.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gt?: string | number;
+
+        /**
+         * Filter for Adjustments created on or after the specified timestamp.
+         * The timestamp must be in RFC 3339 format, for example `2022-09-18T13:22:00Z`.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gte?: string | number;
+
+        /**
+         * Filter for Adjustments created before the specified timestamp.
+         * The timestamp must be in RFC 3339 format, for example `2022-09-18T13:22:00Z`.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lt?: string | number;
+
+        /**
+         * Filter for Adjustments created on or before the specified timestamp.
+         * The timestamp must be in RFC 3339 format, for example `2022-09-18T13:22:00Z`.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lte?: string | number;
+      }
     }
   }
 }
