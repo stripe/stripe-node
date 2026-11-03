@@ -4,6 +4,11 @@ import {expect} from 'chai';
 import {StripeSignatureVerificationError} from '../src/Error.js';
 import {FakeCryptoProvider, getSpyableStripe} from './testUtils.js';
 import {CryptoProviderOnlySupportsAsyncError} from '../src/crypto/CryptoProvider.js';
+import {createWebhooks} from '../src/Webhooks.js';
+import {WebPlatformFunctions} from '../src/platform/WebPlatformFunctions.js';
+import {SubtleCryptoProvider} from '../src/crypto/SubtleCryptoProvider.js';
+import {NodeCryptoProvider} from '../src/crypto/NodeCryptoProvider.js';
+import {webcrypto} from 'crypto';
 
 const EVENT_PAYLOAD = {
   id: 'evt_test_webhook',
@@ -30,6 +35,20 @@ describe('Webhooks on Stripe instance', () => {
 });
 
 function createWebhooksTestSuite(stripe) {
+  const generateHeader = (metadata, opts = {}) => {
+    let header = stripe.webhooks.generateTestHeaderString({
+      payload: EVENT_PAYLOAD_STRING,
+      secret: SECRET,
+      ...opts,
+    });
+    for (const [key, value] of Object.entries(metadata)) {
+      if (value !== null) {
+        header += `,${key}=${value}`;
+      }
+    }
+    return header;
+  };
+
   describe('.generateTestHeaderString', () => {
     it('should throw when no opts are passed', () => {
       expect(() => {
@@ -309,13 +328,180 @@ function createWebhooksTestSuite(stripe) {
         );
       });
 
+      it('should diagnose signing secret mismatches', async () => {
+        const maskedSecret = 'whsec_****************************1q84';
+        const secret = 'whsec_abcdefghijklmnopqrstuvwxyz';
+        const cases = [
+          // A mismatched secret links to the supplied destination.
+          [secret, maskedSecret, 'we_example', 'wxyz', '/we_example'],
+          // A missing destination uses the bare Dashboard URL.
+          [secret, maskedSecret, null, 'wxyz', ''],
+          // A matching suffix is not enough if the lengths differ.
+          ['short1q84', maskedSecret, null, '1q84', ''],
+          // A mostly unmasked value still reveals only the last four secret characters.
+          [secret, 'whsec_*bcdefghijklmnopqrstuvwxyZ', null, 'wxyz', ''],
+          // A secret shorter than four characters is shown in full.
+          ['abc', '*', null, 'abc', ''],
+        ];
+        await Promise.all(
+          cases.map(
+            async ([
+              suppliedSecret,
+              masked,
+              destination,
+              suffix,
+              dashboardPath,
+            ]) => {
+              const header = generateHeader(
+                {secret: masked, destination, payload: '00000000'},
+                {signature: 'bad_signature'}
+              );
+              const expected = `Webhook signature verification failed. This request may not have originated from Stripe.
+
+The signing secret you provided is ${suppliedSecret.length} characters long and ends in \`${suffix}\`. However, the signing secret for this destination is ${masked.length} characters long and looks like \`${masked}\`. Ensure you're using the signing secret for this destination, as shown on the Dashboard: https://dashboard.stripe.com/webhooks${dashboardPath}
+
+Learn more: https://docs.stripe.com/webhooks/signature`;
+              const error = await verifyHeaderFn(
+                EVENT_PAYLOAD_STRING,
+                header,
+                suppliedSecret
+              ).catch((e) => e);
+              expect(error).to.be.instanceOf(StripeSignatureVerificationError);
+              expect(error.message).to.equal(expected);
+            }
+          )
+        );
+      });
+
+      it('should diagnose changes to the raw request body', async () => {
+        // User supplies the original body with an extra trailing space.
+        const payload = EVENT_PAYLOAD_STRING + ' ';
+        const expected = `Webhook signature verification failed.
+
+The request body you passed to this function differs from the request body sent by Stripe to this webhook destination.
+The SHA-256 hash of the body should end in \`141b998e\`. However, the SHA-256 hash of the body you provided ends in \`73baa202\`.
+
+Make sure your code does not reformat or otherwise alter the raw HTTP request body before passing it to this function.
+
+Learn more: https://docs.stripe.com/webhooks/signature`;
+        const header = generateHeader({
+          secret: 'whsec_*******cret',
+          payload: '141B998E',
+        });
+        const error = await verifyHeaderFn(
+          Buffer.from(payload),
+          header,
+          SECRET
+        ).catch((e) => e);
+        expect(error).to.be.instanceOf(StripeSignatureVerificationError);
+        expect(error.message).to.equal(expected);
+      });
+
+      const genericMessage =
+        'No signatures found matching the expected signature for payload. ' +
+        'Are you passing the raw request body you received from Stripe?\n' +
+        'If a webhook request is being forwarded by a third-party tool, ' +
+        'ensure that the exact request body, including JSON formatting and new line style, is preserved.\n' +
+        '\nLearn more about webhook signing and explore webhook integration examples for various frameworks at ' +
+        'https://docs.stripe.com/webhooks/signature\n';
+
+      it('should retain the generic error for matching metadata and compare only the final four secret characters', async () => {
+        const cases = [
+          [{secret: 'whsec_*******cret', payload: '141b998e'}, SECRET],
+          [{secret: 'other_*******cret', payload: '141b998e'}, SECRET],
+          [
+            {secret: 'whsec_*bcdefghijklmnopqrstuvwxyz'},
+            'whsec_abcdefghijklmnopqrstuvwxyz',
+          ],
+          [{secret: '*'}, '*'],
+        ];
+        await Promise.all(
+          cases.map(async ([metadata, secret]) => {
+            const header = generateHeader(metadata, {
+              signature: 'bad_signature',
+            });
+            const error = await verifyHeaderFn(
+              EVENT_PAYLOAD_STRING,
+              header,
+              secret
+            ).catch((e) => e);
+            expect(error.message).to.equal(genericMessage);
+          })
+        );
+      });
+
+      it('should retain the generic error for unusable secret metadata', async () => {
+        await Promise.all(
+          ['unmasked', '*'.repeat(101), ',secret=whsec_*******abcd'].map(
+            async (secret) => {
+              const header = generateHeader(
+                {secret, payload: '141b998e'},
+                {signature: 'bad_signature'}
+              );
+              const error = await verifyHeaderFn(
+                EVENT_PAYLOAD_STRING,
+                header,
+                SECRET
+              ).catch((e) => e);
+              expect(error.message).to.equal(genericMessage);
+            }
+          )
+        );
+      });
+
+      it('should retain the generic error for unusable payload metadata', async () => {
+        await Promise.all(
+          [
+            '1234567',
+            '123456789',
+            'not-hex!',
+            'a'.repeat(101),
+            ',payload=00000000',
+          ].map(async (payload) => {
+            const header = generateHeader(
+              {secret: 'whsec_*******cret', payload},
+              {signature: 'bad_signature'}
+            );
+            const error = await verifyHeaderFn(
+              EVENT_PAYLOAD_STRING,
+              header,
+              SECRET
+            ).catch((e) => e);
+            expect(error.message).to.equal(genericMessage);
+          })
+        );
+      });
+
+      it('should ignore conflicting debug metadata when a signature is valid', async () => {
+        const header = generateHeader({
+          secret: '*abcd',
+          destination: '\ud800',
+          payload: '00000000',
+        });
+        const cryptoProvider = new NodeCryptoProvider();
+        const failHash = () => {
+          throw new Error('Valid signatures must not hash diagnostic payloads');
+        };
+        cryptoProvider.computeSHA256 = failHash;
+        cryptoProvider.computeSHA256Async = failHash;
+        expect(
+          await verifyHeaderFn(
+            EVENT_PAYLOAD_STRING,
+            header,
+            SECRET,
+            undefined,
+            cryptoProvider
+          )
+        ).to.equal(true);
+      });
+
       it('should raise a SignatureVerificationError when the timestamp is not within the tolerance of the provided timestamp', async () => {
         const receivedAt = 20000000;
-        const header = stripe.webhooks.generateTestHeaderString({
-          timestamp: receivedAt / 1000 - 15,
-          payload: EVENT_PAYLOAD_STRING,
-          secret: SECRET,
-        });
+        // Conflicting metadata must not replace a timestamp error.
+        const header = generateHeader(
+          {secret: '*abcd', payload: '00000000'},
+          {timestamp: receivedAt / 1000 - 15}
+        );
 
         await expect(
           verifyHeaderFn(
@@ -454,9 +640,10 @@ function createWebhooksTestSuite(stripe) {
       });
 
       it('should raise a SignatureVerificationError when payload is of an unknown type', async () => {
-        const header = stripe.webhooks.generateTestHeaderString({
-          payload: EVENT_PAYLOAD_STRING,
-          secret: SECRET,
+        // Conflicting metadata must not replace a payload-type error.
+        const header = generateHeader({
+          secret: '*abcd',
+          payload: '00000000',
         });
 
         await expect(verifyHeaderFn({}, header, SECRET)).to.be.rejectedWith(
@@ -601,6 +788,112 @@ function createWebhooksTestSuite(stripe) {
       stripe.webhooks.signature.verifyHeaderAsync(...args)
     )
   );
+
+  describe('diagnostics across crypto providers', () => {
+    const webhooks = createWebhooks(new WebPlatformFunctions());
+
+    it('should diagnose payload changes using NodeCryptoProvider on a web platform', () => {
+      const header = generateHeader({payload: '141b998e'});
+      expect(() =>
+        webhooks.signature.verifyHeader(
+          EVENT_PAYLOAD_STRING + ' ',
+          header,
+          SECRET,
+          undefined,
+          new NodeCryptoProvider()
+        )
+      ).to.throw('the body you provided ends in `73baa202`');
+    });
+
+    it('should diagnose payload changes using SubtleCryptoProvider', async () => {
+      const header = generateHeader({payload: '141b998e'});
+      const provider = new SubtleCryptoProvider(webcrypto.subtle);
+      await expect(
+        webhooks.signature.verifyHeaderAsync(
+          EVENT_PAYLOAD_STRING + ' ',
+          header,
+          SECRET,
+          undefined,
+          provider
+        )
+      ).to.be.rejectedWith('the body you provided ends in `73baa202`');
+    });
+
+    it('should retain the signature error if a custom provider cannot hash payloads', async () => {
+      const header = generateHeader(
+        {payload: '00000000'},
+        {signature: 'bad_signature'}
+      );
+      expect(() =>
+        webhooks.signature.verifyHeader(
+          EVENT_PAYLOAD_STRING,
+          header,
+          SECRET,
+          undefined,
+          new FakeCryptoProvider()
+        )
+      ).to.throw(
+        StripeSignatureVerificationError,
+        'No signatures found matching the expected signature for payload'
+      );
+      await Promise.all(
+        [
+          new FakeCryptoProvider(),
+          Object.assign(new FakeCryptoProvider(), {
+            computeSHA256Async: () =>
+              Promise.reject(new Error('Hash unavailable')),
+          }),
+          Object.assign(new FakeCryptoProvider(), {
+            computeSHA256Async: () => Promise.resolve(null),
+          }),
+        ].map(async (provider) => {
+          await expect(
+            webhooks.signature.verifyHeaderAsync(
+              EVENT_PAYLOAD_STRING,
+              header,
+              SECRET,
+              undefined,
+              provider
+            )
+          ).to.be.rejectedWith(
+            StripeSignatureVerificationError,
+            'No signatures found matching the expected signature for payload'
+          );
+        })
+      );
+    });
+
+    it('should diagnose secret mismatches without hashing support', async () => {
+      const header = generateHeader(
+        {secret: '*abcd', payload: '00000000'},
+        {signature: 'bad_signature'}
+      );
+      expect(() =>
+        webhooks.signature.verifyHeader(
+          EVENT_PAYLOAD_STRING,
+          header,
+          SECRET,
+          undefined,
+          new FakeCryptoProvider()
+        )
+      ).to.throw(
+        StripeSignatureVerificationError,
+        'The signing secret you provided is 17 characters long and ends in `cret`'
+      );
+      await expect(
+        webhooks.signature.verifyHeaderAsync(
+          EVENT_PAYLOAD_STRING,
+          header,
+          SECRET,
+          undefined,
+          new FakeCryptoProvider()
+        )
+      ).to.be.rejectedWith(
+        StripeSignatureVerificationError,
+        'The signing secret you provided is 17 characters long and ends in `cret`'
+      );
+    });
+  });
 
   describe('optional parameter defaults', () => {
     describe('.generateTestHeaderString with optional params', () => {

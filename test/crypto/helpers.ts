@@ -44,6 +44,17 @@ export const createCryptoProviderTestSuite = (
           });
         }
       });
+
+      describe('computeSHA256', () => {
+        it('computes the hash', () => {
+          const hash = cryptoProvider.computeSHA256(
+            new Uint8Array([1, 2, 3, 4, 5])
+          );
+          expect(Buffer.from(hash).toString('base64')).to.equal(
+            'dPgf4WfZm0y0HW0MzagieMrunz4vJdXlo5Nv89zsYNA='
+          );
+        });
+      });
     }
 
     describe('computeHMACSignatureAsync', () => {
