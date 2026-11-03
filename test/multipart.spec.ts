@@ -131,6 +131,23 @@ function testMultipart(platformFunctions: PlatformFunctions): void {
       });
     });
 
+    it('encodes undefined, null, and Date values consistently', async () => {
+      const {body} = await generate({
+        file,
+        file_link_data: {
+          omitted: undefined,
+          empty: null,
+          date: new Date('2009-02-13T23:31:30Z'),
+        },
+      });
+
+      expect(body).to.not.contain('name="file_link_data[omitted]"');
+      expect(body).to.contain('name="file_link_data[empty]"\r\n\r\n\r\n');
+      expect(body).to.contain(
+        'name="file_link_data[date]"\r\n\r\n1234567890\r\n'
+      );
+    });
+
     it('leaves a value carrying a guessed delimiter inert', async () => {
       // The value below is a complete forged part terminated by an epilogue
       // marker. Values cannot be sanitized — the file bytes *are* the document —
