@@ -342,7 +342,7 @@ export class RequestSender {
     requestId?: string
   ): StripeConnectionError {
     const isTimeoutError =
-      !!error.code && error.code === HttpClient.TIMEOUT_ERROR_CODE;
+      RequestSender._classifyConnectionError(error) === 'timeout';
 
     return new StripeConnectionError({
       message: isTimeoutError
