@@ -309,6 +309,7 @@ export class RequestSender {
           },
           (e) => {
             this._stripe._emitter.emit('response', responseEvent);
+            outcome.error = outcome.error || 'invalid_response';
             this._recordRequestMetrics(
               outcome,
               Date.now() - requestEvent.request_start_time,
