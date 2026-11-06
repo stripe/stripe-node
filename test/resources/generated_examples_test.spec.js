@@ -6922,16 +6922,34 @@ describe('Generated tests', function() {
     expect(metricQueryResult).not.to.be.null;
   });
 
-  it('test_v2_data_operation_post', async function() {
+  it('test_v2_data_operation_search_post_required', async function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
         path: '/v2/data/operations/search',
         response:
-          '{"object":"v2.data.search_result_list","data":[{"description":"description","execution_spec":{"execution_url":"execution_url","http_method":"GET","id":"obj_123"},"id":"obj_123","name":"name","object_type":"object_type","reference_url":"reference_url","refreshed_at":"1970-01-01T11:25:45.896Z","relevance_score":"1104594632"}],"livemode":true}',
+          '{"object":"v2.data.search_result_list","context":{"business_concepts":[{"definition":"definition","term":"term"}],"domain":"domain","guidance":"guidance"},"data":[{"description":"description","execution_spec":{"execution_url":"execution_url","http_method":"GET","id":"obj_123"},"extended_description":"extended_description","id":"obj_123","name":"name","object_type":"object_type","reference_url":"reference_url","refreshed_at":"1970-01-01T11:25:45.896Z","relevance_score":"1104594632"}],"livemode":true,"next_page_url":"next_page_url","previous_page_url":"previous_page_url"}',
       },
     ]);
     const searchResultList = await stripe.v2.data.operations.search({
+      query: 'query',
+    });
+    expect(searchResultList).not.to.be.null;
+  });
+
+  it('test_v2_data_operation_search_post_all', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/data/operations/search',
+        response:
+          '{"object":"v2.data.search_result_list","context":{"business_concepts":[{"definition":"definition","term":"term"}],"domain":"domain","guidance":"guidance"},"data":[{"description":"description","execution_spec":{"execution_url":"execution_url","http_method":"GET","id":"obj_123"},"extended_description":"extended_description","id":"obj_123","name":"name","object_type":"object_type","reference_url":"reference_url","refreshed_at":"1970-01-01T11:25:45.896Z","relevance_score":"1104594632"}],"livemode":true,"next_page_url":"next_page_url","previous_page_url":"previous_page_url"}',
+      },
+    ]);
+    const searchResultList = await stripe.v2.data.operations.search({
+      catalogs: ['schemas'],
+      limit: 102976443,
+      page: 'page',
       query: 'query',
     });
     expect(searchResultList).not.to.be.null;
@@ -10113,13 +10131,32 @@ describe('Generated tests', function() {
     expect(manualRule).not.to.be.null;
   });
 
-  it('test_v2_tax_operation_post', async function() {
+  it('test_v2_tax_operation_resolve_address_post_required', async function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
         path: '/v2/tax/operations/resolve_address',
         response:
-          '{"object":"v2.tax.operations_resolve_address_result","address":{},"livemode":true,"precision":"none","precision_details":{"issues":[{"code":"required_for_improved_precision","field":"country"}]}}',
+          '{"object":"v2.tax.operations_resolve_address_result","address":{"city":"city","country":"country","line1":"line1","postal_code":"postal_code","state":"state"},"livemode":true,"precision":"none","precision_details":{"issues":[{"code":"required_for_improved_precision","field":"country"}]}}',
+      },
+    ]);
+    const operationsResolveAddressResult = await stripe.v2.tax.operations.resolveAddress(
+      {
+        address: {
+          country: 'country',
+        },
+      }
+    );
+    expect(operationsResolveAddressResult).not.to.be.null;
+  });
+
+  it('test_v2_tax_operation_resolve_address_post_all', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/tax/operations/resolve_address',
+        response:
+          '{"object":"v2.tax.operations_resolve_address_result","address":{"city":"city","country":"country","line1":"line1","postal_code":"postal_code","state":"state"},"livemode":true,"precision":"none","precision_details":{"issues":[{"code":"required_for_improved_precision","field":"country"}]}}',
       },
     ]);
     const operationsResolveAddressResult = await stripe.v2.tax.operations.resolveAddress(

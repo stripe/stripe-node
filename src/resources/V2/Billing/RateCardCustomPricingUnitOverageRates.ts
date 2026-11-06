@@ -2,7 +2,6 @@
 
 import {OneTimeItem} from './OneTimeItems.js';
 import {Metadata} from '../../../shared.js';
-import {RequestOptions} from '../../../lib.js';
 export interface RateCardCustomPricingUnitOverageRate {
   /**
    * Unique identifier for the object.

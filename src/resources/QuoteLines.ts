@@ -6,7 +6,6 @@ import {PromotionCode} from './PromotionCodes.js';
 import {Price, DeletedPrice} from './Prices.js';
 import {TaxRate} from './TaxRates.js';
 import {OtherString, Metadata} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface QuoteLine {
   /**
    * Unique identifier for the object.

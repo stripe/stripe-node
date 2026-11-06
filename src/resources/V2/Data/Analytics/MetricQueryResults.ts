@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec
 
-import {RequestOptions} from '../../../../lib.js';
 export interface MetricQueryResult {
   /**
    * The unique identifier of this metric query result.

@@ -2,7 +2,6 @@
 
 import {V2Amount} from './../V2Amounts.js';
 import {Metadata, OtherString, Decimal} from '../../../shared.js';
-import {RequestOptions} from '../../../lib.js';
 export interface ContractTerm {
   /**
    * The stable ID of the term.

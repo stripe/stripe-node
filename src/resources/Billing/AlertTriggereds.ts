@@ -2,7 +2,6 @@
 
 import {Alert} from './Alerts.js';
 import {Decimal, OtherString} from '../../shared.js';
-import {RequestOptions} from '../../lib.js';
 export interface AlertTriggered {
   /**
    * String representing the object's type. Objects of the same type share the same value.

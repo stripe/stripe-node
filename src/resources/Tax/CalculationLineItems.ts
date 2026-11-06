@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {Metadata, Address, OtherString} from '../../shared.js';
-import {RequestOptions} from '../../lib.js';
 export interface CalculationLineItem {
   /**
    * Unique identifier for the object.

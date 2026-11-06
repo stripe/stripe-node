@@ -2,12 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {
-  MetadataParam,
-  OtherString,
-  RangeQueryParam,
-  Metadata,
-} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FundingIntentResource extends StripeResource {
@@ -787,12 +782,44 @@ export namespace V2 {
       /**
        * Filters the results by their creation time.
        */
-      created?: RangeQueryParam;
+      created?: FundingIntentListParams.Created;
 
       /**
        * The maximum number of results to return.
        */
       limit?: number;
+    }
+
+    export namespace FundingIntentListParams {
+      export interface Created {
+        /**
+         * Return FundingIntents created after this timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gt?: string | number;
+
+        /**
+         * Return FundingIntents created at or after this timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gte?: string | number;
+
+        /**
+         * Return FundingIntents created before this timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lt?: string | number;
+
+        /**
+         * Return FundingIntents created at or before this timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lte?: string | number;
+      }
     }
   }
 }

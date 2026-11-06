@@ -5,7 +5,6 @@ import {Customer} from './Customers.js';
 import {Invoice} from './Invoices.js';
 import * as Checkout from './Checkout/index.js';
 import {Metadata, OtherString} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface CustomerBalanceTransaction {
   /**
    * Unique identifier for the object.
