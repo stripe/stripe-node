@@ -1,5 +1,6 @@
 ---
 title: Fix account scoping for event notification fetch helpers
+pr_url: https://github.com/stripe/stripe-node/pull/2924
 semver_level: patch
 ---
 
