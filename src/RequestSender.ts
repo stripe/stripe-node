@@ -43,6 +43,18 @@ import {
 
 export type HttpClientResponseError = {code: string};
 
+type ClientRequestError =
+  | 'timeout'
+  | 'connection_error'
+  | 'invalid_response'
+  | 'api_error';
+
+interface RequestOutcome {
+  request_id?: string;
+  http_status?: number;
+  error?: ClientRequestError;
+}
+
 const STRIPE_NOTICE_SUPPRESSION_MESSAGE =
   'To suppress Stripe notices in test and sandbox environments, set the STRIPE_SUPPRESS_NOTICES environment variable to true.';
 
@@ -153,7 +165,10 @@ export class RequestSender {
         );
         this._stripe._emitter.emit('response', responseEvent);
         this._recordRequestMetrics(
-          this._getRequestId(headers),
+          {
+            request_id: this._getRequestId(headers),
+            http_status: res.getStatusCode(),
+          },
           responseEvent.elapsed,
           usage
         );
@@ -188,6 +203,10 @@ export class RequestSender {
       this._emitStripeNotice(headers);
       const requestId = this._getRequestId(headers);
       const statusCode = res.getStatusCode();
+      const outcome: RequestOutcome = {
+        request_id: requestId,
+        http_status: statusCode,
+      };
 
       const responseEvent = this._makeResponseEvent(
         requestEvent,
@@ -204,6 +223,7 @@ export class RequestSender {
             }
 
             if (jsonResponse.error) {
+              outcome.error = 'api_error';
               const isOAuth = typeof jsonResponse.error === 'string';
 
               if (isOAuth) {
@@ -241,6 +261,7 @@ export class RequestSender {
             }
 
             if (e instanceof HttpClientResponseBodyError) {
+              outcome.error = RequestSender._classifyConnectionError(e);
               throw RequestSender._generateConnectionError(
                 e,
                 timeout,
@@ -249,6 +270,7 @@ export class RequestSender {
               );
             }
 
+            outcome.error = 'invalid_response';
             throw new StripeAPIError({
               message: 'Invalid JSON received from the Stripe API',
               exception: e,
@@ -260,7 +282,7 @@ export class RequestSender {
           (jsonResponse) => {
             this._stripe._emitter.emit('response', responseEvent);
 
-            this._recordRequestMetrics(requestId, responseEvent.elapsed, usage);
+            this._recordRequestMetrics(outcome, responseEvent.elapsed, usage);
 
             // Expose raw response object.
             const rawResponse = res.getRawResponse();
@@ -287,10 +309,24 @@ export class RequestSender {
           },
           (e) => {
             this._stripe._emitter.emit('response', responseEvent);
+            outcome.error = outcome.error || 'invalid_response';
+            this._recordRequestMetrics(
+              outcome,
+              Date.now() - requestEvent.request_start_time,
+              usage
+            );
             callback(e, null);
           }
         );
     };
+  }
+
+  private static _classifyConnectionError(error: {
+    code?: string;
+  }): ClientRequestError {
+    return error.code === HttpClient.TIMEOUT_ERROR_CODE
+      ? 'timeout'
+      : 'connection_error';
   }
 
   static _generateConnectionErrorMessage(requestRetries: number): string {
@@ -307,7 +343,7 @@ export class RequestSender {
     requestId?: string
   ): StripeConnectionError {
     const isTimeoutError =
-      !!error.code && error.code === HttpClient.TIMEOUT_ERROR_CODE;
+      RequestSender._classifyConnectionError(error) === 'timeout';
 
     return new StripeConnectionError({
       message: isTimeoutError
@@ -542,32 +578,39 @@ export class RequestSender {
   }
 
   _recordRequestMetrics(
-    requestId: string,
+    outcome: RequestOutcome,
     requestDurationMs: number,
     usage: Array<string>
   ): void {
-    if (this._stripe.getTelemetryEnabled() && requestId) {
-      if (
-        this._stripe._prevRequestMetrics.length > this._maxBufferedRequestMetric
-      ) {
-        this._stripe._platformFunctions.emitWarning(
-          'Request metrics buffer is full, dropping telemetry message.'
-        );
-      } else {
-        const m: {
-          request_id: string;
-          request_duration_ms: number;
-          usage?: Array<string>;
-        } = {
-          request_id: requestId,
-          request_duration_ms: requestDurationMs,
-        };
-        if (usage && usage.length > 0) {
-          m.usage = usage;
-        }
-        this._stripe._prevRequestMetrics.push(m);
-      }
+    if (!this._stripe.getTelemetryEnabled()) {
+      return;
     }
+    if (
+      this._stripe._prevRequestMetrics.length > this._maxBufferedRequestMetric
+    ) {
+      this._stripe._platformFunctions.emitWarning(
+        'Request metrics buffer is full, dropping telemetry message.'
+      );
+      return;
+    }
+
+    let telemetryId: string;
+    try {
+      telemetryId = this._stripe._platformFunctions.uuid4();
+    } catch {
+      // Telemetry must not change the result of the API request.
+      return;
+    }
+    this._stripe._prevRequestMetrics.push(
+      removeNullish({
+        request_id: outcome.request_id || undefined,
+        http_status: outcome.http_status,
+        error: outcome.error,
+        request_duration_ms: requestDurationMs,
+        telemetry_id: telemetryId,
+        usage: usage && usage.length > 0 ? usage : undefined,
+      })
+    );
   }
 
   _rawRequest(
@@ -704,20 +747,24 @@ export class RequestSender {
 
       authenticator(request)
         .then(() => {
-          const req = this._stripe
-            .getApiField('httpClient')
-            .makeRequest(
-              request.host,
-              request.port,
-              request.path,
-              request.method,
-              request.headers,
-              request.body,
-              request.protocol,
-              timeout
-            );
-
           const requestStartTime = Date.now();
+          let req: Promise<HttpClientResponseInterface>;
+          try {
+            req = this._stripe
+              .getApiField('httpClient')
+              .makeRequest(
+                request.host,
+                request.port,
+                request.path,
+                request.method,
+                request.headers,
+                request.body,
+                request.protocol,
+                timeout
+              );
+          } catch (error) {
+            req = Promise.reject(error);
+          }
 
           const requestEvent: RequestEvent = removeNullish({
             api_version: apiVersion,
@@ -786,6 +833,11 @@ export class RequestSender {
                     requestRetries
                   );
                 } else {
+                  this._recordRequestMetrics(
+                    {error: RequestSender._classifyConnectionError(error)},
+                    Date.now() - requestStartTime,
+                    usage
+                  );
                   return callback(
                     RequestSender._generateConnectionError(
                       error,
