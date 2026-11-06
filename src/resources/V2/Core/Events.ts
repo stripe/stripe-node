@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {OtherString, RangeQueryParam, Decimal} from '../../../shared.js';
+import {OtherString, Decimal} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class EventResource extends StripeResource {
@@ -232,7 +232,7 @@ export namespace V2 {
       /**
        * Set of filters to query events within a range of `created` timestamps.
        */
-      created?: RangeQueryParam;
+      created?: EventListParams.Created;
 
       /**
        * Additional fields to include in the response.
@@ -256,6 +256,36 @@ export namespace V2 {
     }
 
     export namespace EventListParams {
+      export interface Created {
+        /**
+         * Filter for events created after the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gt?: string | number;
+
+        /**
+         * Filter for events created at or after the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gte?: string | number;
+
+        /**
+         * Filter for events created before the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lt?: string | number;
+
+        /**
+         * Filter for events created at or before the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lte?: string | number;
+      }
+
       export type Include = 'reason.request.client' | OtherString;
     }
   }

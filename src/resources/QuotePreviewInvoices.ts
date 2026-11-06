@@ -19,7 +19,7 @@ import {ShippingRate} from './ShippingRates.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import * as Billing from './Billing/index.js';
 import {Address, Metadata, OtherString} from '../shared.js';
-import {RequestOptions, ApiList} from '../lib.js';
+import {ApiList} from '../lib.js';
 export interface QuotePreviewInvoice {
   /**
    * Unique identifier for the object. For preview invoices created using the [create preview](https://stripe.com/docs/api/invoices/create_preview) endpoint, this id will be prefixed with `upcoming_in`.

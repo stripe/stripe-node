@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {Metadata} from '../../../shared.js';
-import {RequestOptions} from '../../../lib.js';
 export interface PricingPlanComponent {
   /**
    * Unique identifier for the object.

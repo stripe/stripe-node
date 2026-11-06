@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {Decimal, OtherString} from '../../../shared.js';
-import {RequestOptions} from '../../../lib.js';
 export interface RewardProgramRule {
   /**
    * Unique identifier for the RewardProgramRule.

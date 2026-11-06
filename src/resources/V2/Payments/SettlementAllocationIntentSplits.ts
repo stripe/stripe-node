@@ -2,7 +2,6 @@
 
 import {V2Amount} from './../V2Amounts.js';
 import {Metadata, OtherString} from '../../../shared.js';
-import {RequestOptions} from '../../../lib.js';
 export interface SettlementAllocationIntentSplit {
   /**
    * Unique identifier for the SettlementAllocationIntentSplit.

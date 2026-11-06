@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec
 
-import {RequestOptions} from '../lib.js';
 export interface Profile {
   /**
    * Unique identifier for the Stripe profile.

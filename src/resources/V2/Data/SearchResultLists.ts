@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {OtherString, Decimal} from '../../../shared.js';
-import {RequestOptions} from '../../../lib.js';
 export interface SearchResultList {
   /**
    * String representing the object's type. Objects of the same type share the same value of the object field.

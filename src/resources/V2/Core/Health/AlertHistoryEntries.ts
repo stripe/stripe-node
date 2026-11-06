@@ -2,7 +2,6 @@
 
 import {V2Amount} from './../../V2Amounts.js';
 import {Decimal, OtherString} from '../../../../shared.js';
-import {RequestOptions} from '../../../../lib.js';
 export interface AlertHistoryEntry {
   /**
    * Unique identifier for the alert history entry.

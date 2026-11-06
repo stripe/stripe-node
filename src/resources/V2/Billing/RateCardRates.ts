@@ -3,7 +3,6 @@
 import {MeteredItem} from './MeteredItems.js';
 import {CustomPricingUnit} from './CustomPricingUnits.js';
 import {Metadata, Decimal} from '../../../shared.js';
-import {RequestOptions} from '../../../lib.js';
 export interface RateCardRate {
   /**
    * Unique identifier for the object.

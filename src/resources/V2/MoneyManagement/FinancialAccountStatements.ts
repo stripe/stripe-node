@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {V2Amount} from './../V2Amounts.js';
-import {RequestOptions} from '../../../lib.js';
 export interface FinancialAccountStatement {
   /**
    * Unique identifier for the statement.

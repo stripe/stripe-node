@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec
 
-import {RequestOptions} from '../../../lib.js';
 export interface Provider {
   /**
    * Unique identifier for the provider.
