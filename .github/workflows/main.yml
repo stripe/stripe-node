@@ -29,23 +29,10 @@ jobs:
       contents: read
 
     steps:
-      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-
-      - name: Setup node
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: '22'
-          # Disable automatic dependency caching to reduce cache poisoning risk
-          package-manager-cache: false
-
-      - name: Verify Linting
-        run: just lint-check
-
-      - name: Verify Formatting
-        run: just format-check
+      - uses: ./.github/actions/static-checks
 
   test:
     name: Test (${{ matrix.node }}, ${{ matrix.os }})
@@ -53,6 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Keep in sync with the test matrix in canary.yml.
         os:
           - 'ubuntu-24.04'
         node:
@@ -74,40 +62,12 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Read OpenAPI version
-        id: openapi
-        shell: bash
-        run: echo "version=$(< OPENAPI_VERSION)" >> "$GITHUB_OUTPUT"
-
-      - name: Setup node
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: ./.github/actions/test
         with:
           node-version: ${{ matrix.node }}
-          # Disable automatic dependency caching to reduce cache poisoning risk
-          package-manager-cache: false
-
-      - name: Print Node.js version
-        run: node -v
-
-      # used for one of the integration tests
-      - name: Setup Deno
-        uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
-        with:
-          deno-version: v1.x
-
-      - name: Print Deno version
-        run: deno -V
-
-      - uses: stripe/openapi/actions/stripe-mock@master
-        with:
-          openapi_version: ${{ steps.openapi.outputs.version }}
-
-      - name: Test
-        run: just ci-test
 
   # Validates every companion package in packages/ on each push and PR. This is
   # separate from the `test` job because the companion packages have their own

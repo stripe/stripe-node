@@ -232,7 +232,7 @@ export namespace V2 {
       /**
        * Set of filters to query events within a range of `created` timestamps.
        */
-      created?: RangeQueryParam;
+      created?: EventListParams.Created;
 
       /**
        * Additional fields to include in the response.
