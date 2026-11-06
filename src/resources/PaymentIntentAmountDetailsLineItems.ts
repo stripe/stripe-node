@@ -97,6 +97,10 @@ export namespace PaymentIntentAmountDetailsLineItem {
 
     export interface CardPresent {
       commodity_code: string | null;
+
+      ev_charging?: CardPresent.EvCharging;
+
+      fleet_data?: CardPresent.FleetData;
     }
 
     export interface Klarna {
@@ -127,6 +131,62 @@ export namespace PaymentIntentAmountDetailsLineItem {
     }
 
     export namespace Card {
+      export interface EvCharging {
+        /**
+         * The carbon footprint avoided by the charging session, in grams of CO2.
+         */
+        carbon_footprint_avoided_grams_co2?: number;
+
+        /**
+         * The time the charging session ended, measured in seconds since the Unix epoch.
+         */
+        charging_ended_at?: number;
+
+        /**
+         * The power output capacity of the charging station, in kilowatts (kW).
+         */
+        charging_power_output_capacity_kw?: number;
+
+        /**
+         * The time the charging session started, measured in seconds since the Unix epoch.
+         */
+        charging_started_at?: number;
+
+        /**
+         * The type of connector used for the charging session.
+         */
+        connector_type?: string;
+
+        /**
+         * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+         */
+        estimated_range_added?: number;
+
+        /**
+         * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+         */
+        estimated_range_left?: number;
+
+        /**
+         * The maximum power dispensed during the charging session, in kilowatts (kW).
+         */
+        maximum_power_dispensed_kw?: number;
+      }
+
+      export interface FleetData {
+        /**
+         * The type of product being purchased at this line item.
+         */
+        product_type?: string;
+
+        /**
+         * The type of service received at the acceptor location.
+         */
+        service_type?: string;
+      }
+    }
+
+    export namespace CardPresent {
       export interface EvCharging {
         /**
          * The carbon footprint avoided by the charging session, in grams of CO2.

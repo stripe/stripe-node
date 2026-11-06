@@ -80,7 +80,7 @@ export interface PaymentEvaluation {
   payment_details?: PaymentEvaluation.PaymentDetails;
 
   /**
-   * Recommended action based on the score of the `fraudulent_payment` signal. Possible values are `block`, `continue` and `request_three_d_secure`.
+   * Recommended action for this payment based on its evaluated signals and rules.
    */
   recommended_action: PaymentEvaluation.RecommendedAction;
 
@@ -238,6 +238,7 @@ export namespace PaymentEvaluation {
   export type RecommendedAction =
     | 'block'
     | 'continue'
+    | 'continue_with_manual_review'
     | 'request_three_d_secure'
     | 'reroute'
     | OtherString;
@@ -259,6 +260,11 @@ export namespace PaymentEvaluation {
      * A payment evaluation signal with evaluated_at, risk_level, and score fields.
      */
     bank_initiated_return?: Signals.BankInitiatedReturn;
+
+    /**
+     * The likelihood that this `PaymentEvaluation` is part of a card testing attack.
+     */
+    card_testing?: Signals.CardTesting | null;
 
     /**
      * The likelihood that this `PaymentEvaluation` results in an early fraud warning.
@@ -602,6 +608,11 @@ export namespace PaymentEvaluation {
       money_movement_type: MoneyMovementDetails.MoneyMovementType;
 
       /**
+       * Describes SEPA debit money movement details.
+       */
+      sepa_debit?: MoneyMovementDetails.SepaDebit | null;
+
+      /**
        * Describes US bank account money movement details.
        */
       us_bank_account?: MoneyMovementDetails.UsBankAccount | null;
@@ -654,7 +665,18 @@ export namespace PaymentEvaluation {
         payment_type: Card.PaymentType | null;
       }
 
-      export type MoneyMovementType = 'card' | 'us_bank_account' | OtherString;
+      export type MoneyMovementType =
+        | 'card'
+        | 'sepa_debit'
+        | 'us_bank_account'
+        | OtherString;
+
+      export interface SepaDebit {
+        /**
+         * Creditor identifier used for the intended debit.
+         */
+        creditor_id: string | null;
+      }
 
       export interface UsBankAccount {
         /**
@@ -757,6 +779,23 @@ export namespace PaymentEvaluation {
       score: number | null;
     }
 
+    export interface CardTesting {
+      /**
+       * The time when this signal was evaluated.
+       */
+      evaluated_at: number;
+
+      /**
+       * Risk level of this signal, based on the score.
+       */
+      risk_level: CardTesting.RiskLevel;
+
+      /**
+       * Numeric score for this signal, returned with two decimal places. Possible values for evaluated payments are between 0 and 100, where higher scores indicate a higher likelihood of the signal being true.
+       */
+      score: number | null;
+    }
+
     export interface EarlyFraudWarning {
       /**
        * The time when this signal was evaluated.
@@ -809,6 +848,17 @@ export namespace PaymentEvaluation {
     }
 
     export namespace BankInitiatedReturn {
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'not_assessed'
+        | 'unknown'
+        | OtherString;
+    }
+
+    export namespace CardTesting {
       export type RiskLevel =
         | 'elevated'
         | 'highest'
@@ -1004,6 +1054,11 @@ export namespace Radar {
         money_movement_type: MoneyMovementDetails.MoneyMovementType;
 
         /**
+         * Describes SEPA debit money movement details.
+         */
+        sepa_debit?: MoneyMovementDetails.SepaDebit;
+
+        /**
          * Describes US bank account money movement details.
          */
         us_bank_account?: MoneyMovementDetails.UsBankAccount;
@@ -1058,8 +1113,16 @@ export namespace Radar {
 
         export type MoneyMovementType =
           | 'card'
+          | 'sepa_debit'
           | 'us_bank_account'
           | OtherString;
+
+        export interface SepaDebit {
+          /**
+           * Supply the SEPA Creditor Identifier configured for the intended debit with your selected processor. Obtain it from your processor's SEPA configuration API or onboarding/support information. Do not supply a statement descriptor, IBAN, processor merchant-account ID, or mandate reference. If the creditor identifier is unknown, omit it.
+           */
+          creditor_id?: string;
+        }
 
         export interface UsBankAccount {
           /**

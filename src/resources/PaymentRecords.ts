@@ -274,6 +274,11 @@ export interface PaymentRecord {
   description: string | null;
 
   /**
+   * Summary information about disputes associated with this Payment Record.
+   */
+  dispute_details?: PaymentRecord.DisputeDetails | null;
+
+  /**
    * ID of the latest Payment Attempt Record attached to this Payment Record.
    */
   latest_payment_attempt_record: string | null;
@@ -417,12 +422,30 @@ export namespace PaymentRecord {
 
   export type CustomerPresence = 'off_session' | 'on_session' | OtherString;
 
+  export interface DisputeDetails {
+    /**
+     * Total amounts reinstated across all disputes, keyed by currency, with each value containing the total for that currency. Withdrawals are not subtracted from these totals.
+     */
+    reinstated: {
+      [key: string]: DisputeDetails.Reinstated;
+    };
+
+    /**
+     * Total amounts withdrawn across all disputes, keyed by currency, with each value containing the total for that currency. Reinstatements are not subtracted from these totals.
+     */
+    withdrawn: {
+      [key: string]: DisputeDetails.Withdrawn;
+    };
+  }
+
   export interface PaymentMethodDetails {
     ach_credit_transfer?: PaymentMethodDetails.AchCreditTransfer;
 
     ach_debit?: PaymentMethodDetails.AchDebit;
 
     acss_debit?: PaymentMethodDetails.AcssDebit;
+
+    aeon_pay?: PaymentMethodDetails.AeonPay;
 
     affirm?: PaymentMethodDetails.Affirm;
 
@@ -435,6 +458,8 @@ export namespace PaymentRecord {
     amazon_pay?: PaymentMethodDetails.AmazonPay;
 
     au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
+
+    au_pay?: PaymentMethodDetails.AuPay;
 
     bacs_debit?: PaymentMethodDetails.BacsDebit;
 
@@ -475,6 +500,8 @@ export namespace PaymentRecord {
 
     customer_balance?: PaymentMethodDetails.CustomerBalance;
 
+    dbarai?: PaymentMethodDetails.Dbarai;
+
     eps?: PaymentMethodDetails.Eps;
 
     fpx?: PaymentMethodDetails.Fpx;
@@ -506,6 +533,8 @@ export namespace PaymentRecord {
     link?: PaymentMethodDetails.Link;
 
     mb_way?: PaymentMethodDetails.MbWay;
+
+    merpay?: PaymentMethodDetails.Merpay;
 
     mobilepay?: PaymentMethodDetails.Mobilepay;
 
@@ -648,6 +677,32 @@ export namespace PaymentRecord {
     phone: string | null;
   }
 
+  export namespace DisputeDetails {
+    export interface Reinstated {
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      /**
+       * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+       */
+      value: number;
+    }
+
+    export interface Withdrawn {
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      /**
+       * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+       */
+      value: number;
+    }
+  }
+
   export namespace PaymentMethodDetails {
     export interface AchCreditTransfer {
       /**
@@ -740,6 +795,8 @@ export namespace PaymentRecord {
       transit_number: string | null;
     }
 
+    export interface AeonPay {}
+
     export interface Affirm {
       /**
        * ID of the location that this reader is assigned to.
@@ -830,6 +887,8 @@ export namespace PaymentRecord {
        */
       mandate?: string;
     }
+
+    export interface AuPay {}
 
     export interface BacsDebit {
       /**
@@ -1132,6 +1191,8 @@ export namespace PaymentRecord {
        */
       fingerprint: string | null;
 
+      fleet?: CardPresent.Fleet;
+
       /**
        * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
        */
@@ -1291,6 +1352,8 @@ export namespace PaymentRecord {
     }
 
     export interface CustomerBalance {}
+
+    export interface Dbarai {}
 
     export interface Eps {
       /**
@@ -1656,6 +1719,8 @@ export namespace PaymentRecord {
 
     export interface MbWay {}
 
+    export interface Merpay {}
+
     export interface Mobilepay {
       /**
        * Internal card details
@@ -1852,6 +1917,11 @@ export namespace PaymentRecord {
     }
 
     export interface Paypay {
+      /**
+       * Uniquely identifies this particular PayPay account. You can use this attribute to check whether two PayPay accounts are the same.
+       */
+      fingerprint?: string;
+
       /**
        * ID of the multi-use Mandate created by, or used to make, this PayPay payment.
        */
@@ -2517,6 +2587,13 @@ export namespace PaymentRecord {
     }
 
     export namespace CardPresent {
+      export interface Fleet {
+        /**
+         * Fleet prompts and values collected for this transaction.
+         */
+        transaction_data: Array<Fleet.TransactionDatum>;
+      }
+
       export interface Multicapture {
         /**
          * Indicates whether or not multiple captures are supported.
@@ -2603,6 +2680,49 @@ export namespace PaymentRecord {
          * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
          */
         type: Wallet.Type;
+      }
+
+      export namespace Fleet {
+        export interface TransactionDatum {
+          /**
+           * The prompt that the Terminal SDK displays to collect this Fleet value.
+           */
+          prompt: TransactionDatum.Prompt;
+
+          /**
+           * Whether the collected value is printed on the receipt.
+           */
+          receipt_behavior: TransactionDatum.ReceiptBehavior;
+
+          /**
+           * The value collected for this Fleet prompt.
+           */
+          value: string;
+        }
+
+        export namespace TransactionDatum {
+          export type Prompt =
+            | 'additional_fleet_data_1'
+            | 'additional_fleet_data_2'
+            | 'driver_id'
+            | 'employee_number'
+            | 'entered_data_alphanumeric'
+            | 'entered_data_numeric'
+            | 'generic_id'
+            | 'invoice_number'
+            | 'odometer'
+            | 'postal_code'
+            | 'reefer_hours'
+            | 'replacement_car'
+            | 'trailer_number'
+            | 'trip_number'
+            | 'unit_number'
+            | 'vehicle_id'
+            | 'vehicle_tag'
+            | 'work_order';
+
+          export type ReceiptBehavior = 'omit' | 'print';
+        }
       }
 
       export namespace Multicapture {
@@ -4214,7 +4334,7 @@ export namespace PaymentRecordReportPaymentAttemptGuaranteedParams {
     /**
      * The type of the payment method details. An additional hash is included on the payment_method_details with a name matching this value. It contains additional information specific to the type.
      */
-    type: 'card';
+    type: PaymentMethodDetails.Type;
   }
 
   export interface ProcessorDetails {
@@ -4236,6 +4356,8 @@ export namespace PaymentRecordReportPaymentAttemptGuaranteedParams {
        */
       checks?: Card.Checks;
     }
+
+    export type Type = 'card' | 'us_bank_account' | OtherString;
 
     export namespace Card {
       export interface Checks {

@@ -34,6 +34,7 @@ import {CalculationResource as TaxCalculations} from './resources/Tax/Calculatio
 import {CardholderResource as IssuingCardholders} from './resources/Issuing/Cardholders.js';
 import {CardResource as IssuingCards} from './resources/Issuing/Cards.js';
 import {CardResource as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/Cards.js';
+import {CertificateResource as TaxCertificates} from './resources/Tax/Certificates.js';
 import {ClaimableSandboxResource as V2CoreClaimableSandboxes} from './resources/V2/Core/ClaimableSandboxes.js';
 import {CollectionSettingResource as V2BillingCollectionSettings} from './resources/V2/Billing/CollectionSettings.js';
 import {ConfigurationResource as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
@@ -114,6 +115,7 @@ import {MeterResource as BillingMeters} from './resources/Billing/Meters.js';
 import {MetricQueryResource as V2DataAnalyticsMetricQuery} from './resources/V2/Data/Analytics/MetricQuery.js';
 import {MoneyManagementResource as V2TestHelpersMoneyManagement} from './resources/V2/TestHelpers/MoneyManagement.js';
 import {NetworkTokenResource as V2CoreVaultNetworkTokens} from './resources/V2/Core/Vault/NetworkTokens.js';
+import {ObjectDefinitionResource as V2ExtendObjectDefinitions} from './resources/V2/Extend/ObjectDefinitions.js';
 import {OffSessionPaymentResource as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {OnboardingLinkResource as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
 import {OneTimeItemResource as V2BillingOneTimeItems} from './resources/V2/Billing/OneTimeItems.js';
@@ -401,6 +403,7 @@ export const Sigma = resourceNamespace('sigma', {
 export const Tax = resourceNamespace('tax', {
   Associations: TaxAssociations,
   Calculations: TaxCalculations,
+  Certificates: TaxCertificates,
   Forms: TaxForms,
   Locations: TaxLocations,
   Registrations: TaxRegistrations,
@@ -523,6 +526,7 @@ export const V2 = resourceNamespace('v2', {
     }),
   }),
   Extend: resourceNamespace('extend', {
+    ObjectDefinitions: V2ExtendObjectDefinitions,
     WorkflowRuns: V2ExtendWorkflowRuns,
     Workflows: V2ExtendWorkflows,
   }),

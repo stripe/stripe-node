@@ -2558,6 +2558,16 @@ export interface CustomerCreateTaxExemptionParams {
   expiration_date?: string;
 
   /**
+   * The reason the customer is exempt. Required when `us.tax_code_group` is `saas`.
+   */
+  reason?: CustomerCreateTaxExemptionParams.Reason;
+
+  /**
+   * Additional details about the exemption reason.
+   */
+  reason_details?: CustomerCreateTaxExemptionParams.ReasonDetails;
+
+  /**
    * US-specific exemption details. Required when country is US; must be absent otherwise.
    */
   us?: CustomerCreateTaxExemptionParams.Us;
@@ -2582,15 +2592,46 @@ export namespace CustomerCreateTaxExemptionParams {
     state: string;
   }
 
+  export type Reason =
+    | 'direct_pay_permit'
+    | 'legacy_contract'
+    | 'other'
+    | OtherString;
+
+  export interface ReasonDetails {
+    /**
+     * Details for the `other` exemption reason.
+     */
+    other?: ReasonDetails.Other;
+  }
+
   export interface Us {
     /**
      * Two-letter US state code (ISO 3166-2).
      */
     state: string;
+
+    /**
+     * The group of tax codes this exemption applies to. Defaults to `all`. `saas` is only available when `state` is `CA`.
+     */
+    tax_code_group?: Us.TaxCodeGroup;
   }
 
   export namespace Ca {
     export type TaxType = 'gst_hst' | 'pst' | 'qst' | 'rst' | OtherString;
+  }
+
+  export namespace ReasonDetails {
+    export interface Other {
+      /**
+       * A free-text description of the exemption reason. Maximum 5000 characters.
+       */
+      reason_text: string;
+    }
+  }
+
+  export namespace Us {
+    export type TaxCodeGroup = 'all' | 'saas' | OtherString;
   }
 }
 export interface CustomerCreateTaxIdParams {
@@ -2806,12 +2847,14 @@ export namespace CustomerListPaymentMethodsParams {
 
   export type Type =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -2824,6 +2867,7 @@ export namespace CustomerListPaymentMethodsParams {
     | 'crypto'
     | 'custom'
     | 'customer_balance'
+    | 'dbarai'
     | 'eps'
     | 'fpx'
     | 'getflex'
@@ -2839,6 +2883,7 @@ export namespace CustomerListPaymentMethodsParams {
     | 'kr_card'
     | 'link'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'multibanco'
     | 'naver_pay'

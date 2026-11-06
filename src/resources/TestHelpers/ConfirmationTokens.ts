@@ -74,6 +74,11 @@ export namespace TestHelpers {
       acss_debit?: PaymentMethodData.AcssDebit;
 
       /**
+       * If this is a `aeon_pay` PaymentMethod, this hash contains details about the AEON Pay payment method.
+       */
+      aeon_pay?: PaymentMethodData.AeonPay;
+
+      /**
        * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
        */
       affirm?: PaymentMethodData.Affirm;
@@ -107,6 +112,11 @@ export namespace TestHelpers {
        * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
        */
       au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+      /**
+       * If this is a `au_pay` PaymentMethod, this hash contains details about the au PAY payment method.
+       */
+      au_pay?: PaymentMethodData.AuPay;
 
       /**
        * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
@@ -162,6 +172,11 @@ export namespace TestHelpers {
        * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
        */
       customer_balance?: PaymentMethodData.CustomerBalance;
+
+      /**
+       * If this is a `dbarai` PaymentMethod, this hash contains details about the d-Barai payment method.
+       */
+      dbarai?: PaymentMethodData.Dbarai;
 
       /**
        * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
@@ -242,6 +257,11 @@ export namespace TestHelpers {
        * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
        */
       mb_way?: PaymentMethodData.MbWay;
+
+      /**
+       * If this is a `merpay` PaymentMethod, this hash contains details about the Merpay payment method.
+       */
+      merpay?: PaymentMethodData.Merpay;
 
       /**
        * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -493,6 +513,8 @@ export namespace TestHelpers {
         transit_number: string;
       }
 
+      export interface AeonPay {}
+
       export interface Affirm {}
 
       export interface AfterpayClearpay {}
@@ -520,6 +542,8 @@ export namespace TestHelpers {
          */
         bsb_number: string;
       }
+
+      export interface AuPay {}
 
       export interface BacsDebit {
         /**
@@ -582,6 +606,8 @@ export namespace TestHelpers {
       export interface Crypto {}
 
       export interface CustomerBalance {}
+
+      export interface Dbarai {}
 
       export interface Eps {
         /**
@@ -649,6 +675,8 @@ export namespace TestHelpers {
       export interface Link {}
 
       export interface MbWay {}
+
+      export interface Merpay {}
 
       export interface Mobilepay {}
 
@@ -795,12 +823,14 @@ export namespace TestHelpers {
 
       export type Type =
         | 'acss_debit'
+        | 'aeon_pay'
         | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
         | 'alma'
         | 'amazon_pay'
         | 'au_becs_debit'
+        | 'au_pay'
         | 'bacs_debit'
         | 'bancontact'
         | 'billie'
@@ -811,6 +841,7 @@ export namespace TestHelpers {
         | 'cashapp'
         | 'crypto'
         | 'customer_balance'
+        | 'dbarai'
         | 'eps'
         | 'fpx'
         | 'getflex'
@@ -826,6 +857,7 @@ export namespace TestHelpers {
         | 'kr_card'
         | 'link'
         | 'mb_way'
+        | 'merpay'
         | 'mobilepay'
         | 'multibanco'
         | 'naver_pay'

@@ -3113,7 +3113,12 @@ export namespace Invoice {
         expires_after_seconds?: number;
       }
 
-      export interface SepaDebit {}
+      export interface SepaDebit {
+        /**
+         * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+         */
+        target_date?: string;
+      }
 
       export interface Upi {
         mandate_options?: Upi.MandateOptions;
@@ -3162,6 +3167,7 @@ export namespace Invoice {
       export namespace BacsDebit {
         export type VerificationMethod =
           | 'automatic'
+          | 'instant'
           | 'payer_name_verification'
           | OtherString;
       }
@@ -4203,7 +4209,12 @@ export namespace InvoiceCreateParams {
         expires_after_seconds?: number;
       }
 
-      export interface SepaDebit {}
+      export interface SepaDebit {
+        /**
+         * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+         */
+        target_date?: string;
+      }
 
       export interface Upi {
         /**
@@ -4258,6 +4269,7 @@ export namespace InvoiceCreateParams {
       export namespace BacsDebit {
         export type VerificationMethod =
           | 'automatic'
+          | 'instant'
           | 'payer_name_verification'
           | OtherString;
       }
@@ -5311,7 +5323,12 @@ export namespace InvoiceUpdateParams {
         expires_after_seconds?: number;
       }
 
-      export interface SepaDebit {}
+      export interface SepaDebit {
+        /**
+         * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+         */
+        target_date?: string;
+      }
 
       export interface Upi {
         /**
@@ -5366,6 +5383,7 @@ export namespace InvoiceUpdateParams {
       export namespace BacsDebit {
         export type VerificationMethod =
           | 'automatic'
+          | 'instant'
           | 'payer_name_verification'
           | OtherString;
       }

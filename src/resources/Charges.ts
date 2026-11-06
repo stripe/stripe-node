@@ -472,6 +472,8 @@ export namespace Charge {
 
     acss_debit?: PaymentMethodDetails.AcssDebit;
 
+    aeon_pay?: PaymentMethodDetails.AeonPay;
+
     affirm?: PaymentMethodDetails.Affirm;
 
     afterpay_clearpay?: PaymentMethodDetails.AfterpayClearpay;
@@ -483,6 +485,8 @@ export namespace Charge {
     amazon_pay?: PaymentMethodDetails.AmazonPay;
 
     au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
+
+    au_pay?: PaymentMethodDetails.AuPay;
 
     bacs_debit?: PaymentMethodDetails.BacsDebit;
 
@@ -507,6 +511,8 @@ export namespace Charge {
     crypto?: PaymentMethodDetails.Crypto;
 
     customer_balance?: PaymentMethodDetails.CustomerBalance;
+
+    dbarai?: PaymentMethodDetails.Dbarai;
 
     eps?: PaymentMethodDetails.Eps;
 
@@ -539,6 +545,8 @@ export namespace Charge {
     link?: PaymentMethodDetails.Link;
 
     mb_way?: PaymentMethodDetails.MbWay;
+
+    merpay?: PaymentMethodDetails.Merpay;
 
     mobilepay?: PaymentMethodDetails.Mobilepay;
 
@@ -811,6 +819,8 @@ export namespace Charge {
       transit_number: string | null;
     }
 
+    export interface AeonPay {}
+
     export interface Affirm {
       /**
        * ID of the location that this reader is assigned to.
@@ -901,6 +911,8 @@ export namespace Charge {
        */
       mandate?: string;
     }
+
+    export interface AuPay {}
 
     export interface BacsDebit {
       /**
@@ -1241,6 +1253,8 @@ export namespace Charge {
        */
       fingerprint: string | null;
 
+      fleet?: CardPresent.Fleet;
+
       /**
        * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
        */
@@ -1388,6 +1402,8 @@ export namespace Charge {
     }
 
     export interface CustomerBalance {}
+
+    export interface Dbarai {}
 
     export interface Eps {
       /**
@@ -1754,9 +1770,16 @@ export namespace Charge {
        * The [funding source group code](https://docs.stripe.com/payments/link/link-payment-methods) applied to this Link payment at confirmation time.
        */
       funding_source_group?: string;
+
+      /**
+       * Details about the funding sources used for this Link payment.
+       */
+      funding_sources?: Array<Link.FundingSource>;
     }
 
     export interface MbWay {}
+
+    export interface Merpay {}
 
     export interface Mobilepay {
       /**
@@ -1944,6 +1967,11 @@ export namespace Charge {
     }
 
     export interface Paypay {
+      /**
+       * Uniquely identifies this particular PayPay account. You can use this attribute to check whether two PayPay accounts are the same.
+       */
+      fingerprint: string | null;
+
       /**
        * ID of the multi-use Mandate created by, or used to make, this PayPay payment.
        */
@@ -2692,6 +2720,11 @@ export namespace Charge {
            * The [funding source group code](https://docs.stripe.com/payments/link/link-payment-methods) applied to this Link payment at confirmation time.
            */
           funding_source_group: string | null;
+
+          /**
+           * Details about the funding sources used for this Link payment.
+           */
+          funding_sources?: Array<Link.FundingSource>;
         }
 
         export interface Masterpass {
@@ -2749,10 +2782,262 @@ export namespace Charge {
            */
           shipping_address: Address | null;
         }
+
+        export namespace Link {
+          export interface FundingSource {
+            card: FundingSource.Card;
+
+            /**
+             * The type of funding source used for this Link payment.
+             */
+            type: FundingSource.Type;
+          }
+
+          export namespace FundingSource {
+            export interface Card {
+              /**
+               * The authorized amount.
+               */
+              amount_authorized: number | null;
+
+              /**
+               * Authorization code on the charge.
+               */
+              authorization_code: string | null;
+
+              /**
+               * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
+               */
+              brand: string | null;
+
+              /**
+               * Check results by Card networks on Card address and CVC at time of payment.
+               */
+              checks: Card.Checks | null;
+
+              /**
+               * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+               */
+              country: string | null;
+
+              /**
+               * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
+               */
+              description?: string | null;
+
+              /**
+               * The Electronic Commerce Indicator (ECI) returned by the card network in the authorization response. Indicates the level of authentication used. Only populated for Visa and Mastercard transactions. This is the network's final ECI and can differ from the request value. An authenticated ECI alone doesn't determine liability shift.
+               */
+              electronic_commerce_indicator: string | null;
+
+              /**
+               * Two-digit number representing the card's expiration month.
+               */
+              exp_month: number;
+
+              /**
+               * Four-digit number representing the card's expiration year.
+               */
+              exp_year: number;
+
+              /**
+               * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
+               *
+               * *As of May 1, 2021, card fingerprint in India for Connect changed to allow two fingerprints for the same card---one for India and one for the rest of the world.*
+               */
+              fingerprint?: string | null;
+
+              /**
+               * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+               */
+              funding: string | null;
+
+              /**
+               * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
+               */
+              iin?: string | null;
+
+              /**
+               * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
+               */
+              issuer?: string | null;
+
+              /**
+               * The last four digits of the card.
+               */
+              last4: string | null;
+
+              /**
+               * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               */
+              network: string | null;
+
+              /**
+               * If this card has network token credentials, this contains the details of the network token credentials.
+               */
+              network_token?: Card.NetworkToken | null;
+
+              /**
+               * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
+               */
+              network_transaction_id: string | null;
+
+              /**
+               * Status of a card based on the card issuer.
+               */
+              regulated_status: Card.RegulatedStatus | null;
+
+              /**
+               * Populated if this transaction used 3D Secure authentication.
+               */
+              three_d_secure: Card.ThreeDSecure | null;
+
+              /**
+               * Transaction Link ID (TLID) is a unique identifier for a transaction. This is used by some card networks, such as Mastercard, for transaction linking, in addition to Network Transaction IDs. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
+               */
+              transaction_link_id: string | null;
+            }
+
+            export type Type = 'card' | OtherString;
+
+            export namespace Card {
+              export interface Checks {
+                /**
+                 * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+                 */
+                address_line1_check: string | null;
+
+                /**
+                 * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+                 */
+                address_postal_code_check: string | null;
+
+                /**
+                 * If a CVC was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+                 */
+                cvc_check: string | null;
+              }
+
+              export interface NetworkToken {
+                /**
+                 * Indicates if Stripe used a network token, either user provided or Stripe managed when processing the transaction.
+                 */
+                used: boolean;
+              }
+
+              export type RegulatedStatus =
+                | 'regulated'
+                | 'unregulated'
+                | OtherString;
+
+              export interface ThreeDSecure {
+                /**
+                 * For authenticated transactions: how the customer was authenticated by
+                 * the issuing bank.
+                 */
+                authentication_flow: ThreeDSecure.AuthenticationFlow | null;
+
+                /**
+                 * The Electronic Commerce Indicator (ECI). A protocol-level field
+                 * indicating what degree of authentication was performed.
+                 */
+                electronic_commerce_indicator: ThreeDSecure.ElectronicCommerceIndicator | null;
+
+                /**
+                 * The exemption requested via 3DS and accepted by the issuer at authentication time.
+                 */
+                exemption_indicator: ThreeDSecure.ExemptionIndicator | null;
+
+                /**
+                 * Whether Stripe requested the value of `exemption_indicator` in the transaction. This will depend on
+                 * the outcome of Stripe's internal risk assessment.
+                 */
+                exemption_indicator_applied?: boolean;
+
+                /**
+                 * Indicates the outcome of 3D Secure authentication.
+                 */
+                result: ThreeDSecure.Result | null;
+
+                /**
+                 * Additional information about why 3D Secure succeeded or failed based
+                 * on the `result`.
+                 */
+                result_reason: ThreeDSecure.ResultReason | null;
+
+                /**
+                 * The 3D Secure 1 XID or 3D Secure 2 Directory Server Transaction ID
+                 * (dsTransId) for this payment.
+                 */
+                transaction_id: string | null;
+
+                /**
+                 * The version of 3D Secure that was used.
+                 */
+                version: ThreeDSecure.Version | null;
+              }
+
+              export namespace ThreeDSecure {
+                export type AuthenticationFlow =
+                  | 'challenge'
+                  | 'frictionless'
+                  | OtherString;
+
+                export type ElectronicCommerceIndicator =
+                  | '01'
+                  | '02'
+                  | '05'
+                  | '06'
+                  | '07'
+                  | OtherString;
+
+                export type ExemptionIndicator =
+                  | 'low_risk'
+                  | 'none'
+                  | OtherString;
+
+                export type Result =
+                  | 'attempt_acknowledged'
+                  | 'authenticated'
+                  | 'data_share_only'
+                  | 'exempted'
+                  | 'failed'
+                  | 'not_supported'
+                  | 'processing_error'
+                  | OtherString;
+
+                export type ResultReason =
+                  | 'abandoned'
+                  | 'bypassed'
+                  | 'canceled'
+                  | 'card_not_enrolled'
+                  | 'network_not_supported'
+                  | 'protocol_error'
+                  | 'rejected'
+                  | OtherString;
+
+                export type Version =
+                  | '1.0.2'
+                  | '2.1.0'
+                  | '2.2.0'
+                  | '2.3.0'
+                  | '2.3.1'
+                  | OtherString;
+              }
+            }
+          }
+        }
       }
     }
 
     export namespace CardPresent {
+      export interface Fleet {
+        /**
+         * Fleet prompts and values collected for this transaction.
+         */
+        transaction_data: Array<Fleet.TransactionDatum>;
+      }
+
       export interface Multicapture {
         /**
          * Indicates whether or not multiple captures are supported.
@@ -2839,6 +3124,49 @@ export namespace Charge {
          * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
          */
         type: Wallet.Type;
+      }
+
+      export namespace Fleet {
+        export interface TransactionDatum {
+          /**
+           * The prompt that the Terminal SDK displays to collect this Fleet value.
+           */
+          prompt: TransactionDatum.Prompt;
+
+          /**
+           * Whether the collected value is printed on the receipt.
+           */
+          receipt_behavior: TransactionDatum.ReceiptBehavior;
+
+          /**
+           * The value collected for this Fleet prompt.
+           */
+          value: string;
+        }
+
+        export namespace TransactionDatum {
+          export type Prompt =
+            | 'additional_fleet_data_1'
+            | 'additional_fleet_data_2'
+            | 'driver_id'
+            | 'employee_number'
+            | 'entered_data_alphanumeric'
+            | 'entered_data_numeric'
+            | 'generic_id'
+            | 'invoice_number'
+            | 'odometer'
+            | 'postal_code'
+            | 'reefer_hours'
+            | 'replacement_car'
+            | 'trailer_number'
+            | 'trip_number'
+            | 'unit_number'
+            | 'vehicle_id'
+            | 'vehicle_tag'
+            | 'work_order';
+
+          export type ReceiptBehavior = 'omit' | 'print';
+        }
       }
 
       export namespace Multicapture {
@@ -3156,6 +3484,248 @@ export namespace Charge {
         | 'tossbank'
         | 'woori'
         | OtherString;
+    }
+
+    export namespace Link {
+      export interface FundingSource {
+        card: FundingSource.Card;
+
+        /**
+         * The type of funding source used for this Link payment.
+         */
+        type: FundingSource.Type;
+      }
+
+      export namespace FundingSource {
+        export interface Card {
+          /**
+           * The authorized amount.
+           */
+          amount_authorized: number | null;
+
+          /**
+           * Authorization code on the charge.
+           */
+          authorization_code: string | null;
+
+          /**
+           * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
+           */
+          brand: string | null;
+
+          /**
+           * Check results by Card networks on Card address and CVC at time of payment.
+           */
+          checks: Card.Checks | null;
+
+          /**
+           * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+           */
+          country: string | null;
+
+          /**
+           * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
+           */
+          description?: string | null;
+
+          /**
+           * The Electronic Commerce Indicator (ECI) returned by the card network in the authorization response. Indicates the level of authentication used. Only populated for Visa and Mastercard transactions. This is the network's final ECI and can differ from the request value. An authenticated ECI alone doesn't determine liability shift.
+           */
+          electronic_commerce_indicator: string | null;
+
+          /**
+           * Two-digit number representing the card's expiration month.
+           */
+          exp_month: number;
+
+          /**
+           * Four-digit number representing the card's expiration year.
+           */
+          exp_year: number;
+
+          /**
+           * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
+           *
+           * *As of May 1, 2021, card fingerprint in India for Connect changed to allow two fingerprints for the same card---one for India and one for the rest of the world.*
+           */
+          fingerprint?: string | null;
+
+          /**
+           * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+           */
+          funding: string | null;
+
+          /**
+           * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
+           */
+          iin?: string | null;
+
+          /**
+           * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
+           */
+          issuer?: string | null;
+
+          /**
+           * The last four digits of the card.
+           */
+          last4: string | null;
+
+          /**
+           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           */
+          network: string | null;
+
+          /**
+           * If this card has network token credentials, this contains the details of the network token credentials.
+           */
+          network_token?: Card.NetworkToken | null;
+
+          /**
+           * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
+           */
+          network_transaction_id: string | null;
+
+          /**
+           * Status of a card based on the card issuer.
+           */
+          regulated_status: Card.RegulatedStatus | null;
+
+          /**
+           * Populated if this transaction used 3D Secure authentication.
+           */
+          three_d_secure: Card.ThreeDSecure | null;
+
+          /**
+           * Transaction Link ID (TLID) is a unique identifier for a transaction. This is used by some card networks, such as Mastercard, for transaction linking, in addition to Network Transaction IDs. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
+           */
+          transaction_link_id: string | null;
+        }
+
+        export type Type = 'card' | OtherString;
+
+        export namespace Card {
+          export interface Checks {
+            /**
+             * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+             */
+            address_line1_check: string | null;
+
+            /**
+             * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+             */
+            address_postal_code_check: string | null;
+
+            /**
+             * If a CVC was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+             */
+            cvc_check: string | null;
+          }
+
+          export interface NetworkToken {
+            /**
+             * Indicates if Stripe used a network token, either user provided or Stripe managed when processing the transaction.
+             */
+            used: boolean;
+          }
+
+          export type RegulatedStatus =
+            | 'regulated'
+            | 'unregulated'
+            | OtherString;
+
+          export interface ThreeDSecure {
+            /**
+             * For authenticated transactions: how the customer was authenticated by
+             * the issuing bank.
+             */
+            authentication_flow: ThreeDSecure.AuthenticationFlow | null;
+
+            /**
+             * The Electronic Commerce Indicator (ECI). A protocol-level field
+             * indicating what degree of authentication was performed.
+             */
+            electronic_commerce_indicator: ThreeDSecure.ElectronicCommerceIndicator | null;
+
+            /**
+             * The exemption requested via 3DS and accepted by the issuer at authentication time.
+             */
+            exemption_indicator: ThreeDSecure.ExemptionIndicator | null;
+
+            /**
+             * Whether Stripe requested the value of `exemption_indicator` in the transaction. This will depend on
+             * the outcome of Stripe's internal risk assessment.
+             */
+            exemption_indicator_applied?: boolean;
+
+            /**
+             * Indicates the outcome of 3D Secure authentication.
+             */
+            result: ThreeDSecure.Result | null;
+
+            /**
+             * Additional information about why 3D Secure succeeded or failed based
+             * on the `result`.
+             */
+            result_reason: ThreeDSecure.ResultReason | null;
+
+            /**
+             * The 3D Secure 1 XID or 3D Secure 2 Directory Server Transaction ID
+             * (dsTransId) for this payment.
+             */
+            transaction_id: string | null;
+
+            /**
+             * The version of 3D Secure that was used.
+             */
+            version: ThreeDSecure.Version | null;
+          }
+
+          export namespace ThreeDSecure {
+            export type AuthenticationFlow =
+              | 'challenge'
+              | 'frictionless'
+              | OtherString;
+
+            export type ElectronicCommerceIndicator =
+              | '01'
+              | '02'
+              | '05'
+              | '06'
+              | '07'
+              | OtherString;
+
+            export type ExemptionIndicator = 'low_risk' | 'none' | OtherString;
+
+            export type Result =
+              | 'attempt_acknowledged'
+              | 'authenticated'
+              | 'data_share_only'
+              | 'exempted'
+              | 'failed'
+              | 'not_supported'
+              | 'processing_error'
+              | OtherString;
+
+            export type ResultReason =
+              | 'abandoned'
+              | 'bypassed'
+              | 'canceled'
+              | 'card_not_enrolled'
+              | 'network_not_supported'
+              | 'protocol_error'
+              | 'rejected'
+              | OtherString;
+
+            export type Version =
+              | '1.0.2'
+              | '2.1.0'
+              | '2.2.0'
+              | '2.3.0'
+              | '2.3.1'
+              | OtherString;
+          }
+        }
+      }
     }
 
     export namespace Mobilepay {

@@ -121,6 +121,8 @@ export namespace ConfirmationToken {
   export interface PaymentMethodPreview {
     acss_debit?: PaymentMethodPreview.AcssDebit;
 
+    aeon_pay?: PaymentMethodPreview.AeonPay;
+
     affirm?: PaymentMethodPreview.Affirm;
 
     afterpay_clearpay?: PaymentMethodPreview.AfterpayClearpay;
@@ -137,6 +139,8 @@ export namespace ConfirmationToken {
     amazon_pay?: PaymentMethodPreview.AmazonPay;
 
     au_becs_debit?: PaymentMethodPreview.AuBecsDebit;
+
+    au_pay?: PaymentMethodPreview.AuPay;
 
     bacs_debit?: PaymentMethodPreview.BacsDebit;
 
@@ -171,6 +175,8 @@ export namespace ConfirmationToken {
 
     customer_balance?: PaymentMethodPreview.CustomerBalance;
 
+    dbarai?: PaymentMethodPreview.Dbarai;
+
     eps?: PaymentMethodPreview.Eps;
 
     fpx?: PaymentMethodPreview.Fpx;
@@ -202,6 +208,8 @@ export namespace ConfirmationToken {
     link?: PaymentMethodPreview.Link;
 
     mb_way?: PaymentMethodPreview.MbWay;
+
+    merpay?: PaymentMethodPreview.Merpay;
 
     mobilepay?: PaymentMethodPreview.Mobilepay;
 
@@ -408,6 +416,8 @@ export namespace ConfirmationToken {
       transit_number: string | null;
     }
 
+    export interface AeonPay {}
+
     export interface Affirm {}
 
     export interface AfterpayClearpay {}
@@ -440,6 +450,8 @@ export namespace ConfirmationToken {
        */
       last4: string | null;
     }
+
+    export interface AuPay {}
 
     export interface BacsDebit {
       /**
@@ -705,6 +717,8 @@ export namespace ConfirmationToken {
 
     export interface CustomerBalance {}
 
+    export interface Dbarai {}
+
     export interface Eps {
       /**
        * The customer's bank. Should be one of `arzte_und_apotheker_bank`, `austrian_anadi_bank_ag`, `bank_austria`, `bankhaus_carl_spangler`, `bankhaus_schelhammer_und_schattera_ag`, `bawag_psk_ag`, `bks_bank_ag`, `brull_kallmus_bank_ag`, `btv_vier_lander_bank`, `capital_bank_grawe_gruppe_ag`, `deutsche_bank_ag`, `dolomitenbank`, `easybank_ag`, `erste_bank_und_sparkassen`, `hypo_alpeadriabank_international_ag`, `hypo_noe_lb_fur_niederosterreich_u_wien`, `hypo_oberosterreich_salzburg_steiermark`, `hypo_tirol_bank_ag`, `hypo_vorarlberg_bank_ag`, `hypo_bank_burgenland_aktiengesellschaft`, `marchfelder_bank`, `oberbank_ag`, `raiffeisen_bankengruppe_osterreich`, `schoellerbank_ag`, `sparda_bank_wien`, `volksbank_gruppe`, `volkskreditbank_ag`, or `vr_bank_braunau`.
@@ -892,6 +906,8 @@ export namespace ConfirmationToken {
     }
 
     export interface MbWay {}
+
+    export interface Merpay {}
 
     export interface Mobilepay {}
 
@@ -1098,12 +1114,14 @@ export namespace ConfirmationToken {
 
     export type Type =
       | 'acss_debit'
+      | 'aeon_pay'
       | 'affirm'
       | 'afterpay_clearpay'
       | 'alipay'
       | 'alma'
       | 'amazon_pay'
       | 'au_becs_debit'
+      | 'au_pay'
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
@@ -1117,6 +1135,7 @@ export namespace ConfirmationToken {
       | 'crypto'
       | 'custom'
       | 'customer_balance'
+      | 'dbarai'
       | 'eps'
       | 'fpx'
       | 'getflex'
@@ -1133,6 +1152,7 @@ export namespace ConfirmationToken {
       | 'kr_card'
       | 'link'
       | 'mb_way'
+      | 'merpay'
       | 'mobilepay'
       | 'multibanco'
       | 'naver_pay'
@@ -1400,6 +1420,8 @@ export namespace ConfirmationToken {
              */
             fingerprint: string | null;
 
+            fleet?: CardPresent.Fleet;
+
             /**
              * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
              */
@@ -1496,6 +1518,13 @@ export namespace ConfirmationToken {
           }
 
           export namespace CardPresent {
+            export interface Fleet {
+              /**
+               * Fleet prompts and values collected for this transaction.
+               */
+              transaction_data: Array<Fleet.TransactionDatum>;
+            }
+
             export interface Multicapture {
               /**
                * Indicates whether or not multiple captures are supported.
@@ -1582,6 +1611,49 @@ export namespace ConfirmationToken {
                * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
                */
               type: Wallet.Type;
+            }
+
+            export namespace Fleet {
+              export interface TransactionDatum {
+                /**
+                 * The prompt that the Terminal SDK displays to collect this Fleet value.
+                 */
+                prompt: TransactionDatum.Prompt;
+
+                /**
+                 * Whether the collected value is printed on the receipt.
+                 */
+                receipt_behavior: TransactionDatum.ReceiptBehavior;
+
+                /**
+                 * The value collected for this Fleet prompt.
+                 */
+                value: string;
+              }
+
+              export namespace TransactionDatum {
+                export type Prompt =
+                  | 'additional_fleet_data_1'
+                  | 'additional_fleet_data_2'
+                  | 'driver_id'
+                  | 'employee_number'
+                  | 'entered_data_alphanumeric'
+                  | 'entered_data_numeric'
+                  | 'generic_id'
+                  | 'invoice_number'
+                  | 'odometer'
+                  | 'postal_code'
+                  | 'reefer_hours'
+                  | 'replacement_car'
+                  | 'trailer_number'
+                  | 'trip_number'
+                  | 'unit_number'
+                  | 'vehicle_id'
+                  | 'vehicle_tag'
+                  | 'work_order';
+
+                export type ReceiptBehavior = 'omit' | 'print';
+              }
             }
 
             export namespace Multicapture {

@@ -709,12 +709,14 @@ export namespace PaymentIntent {
 
   export type AllowedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -731,6 +733,7 @@ export namespace PaymentIntent {
     | 'click_to_pay'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'demo_pay'
     | 'duitnow'
     | 'dummy_auth_push'
@@ -757,6 +760,7 @@ export namespace PaymentIntent {
     | 'kriya'
     | 'link'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'momo'
     | 'mondu'
@@ -877,12 +881,14 @@ export namespace PaymentIntent {
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -894,6 +900,7 @@ export namespace PaymentIntent {
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'eps'
     | 'fpx'
     | 'getflex'
@@ -908,6 +915,7 @@ export namespace PaymentIntent {
     | 'konbini'
     | 'kr_card'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'multibanco'
     | 'naver_pay'
@@ -2139,7 +2147,7 @@ export namespace PaymentIntent {
 
     export interface VerifyWithMicrodeposits {
       /**
-       * The timestamp when the microdeposits are expected to land.
+       * The timestamp when the microdeposits are expected to land. Null for instant microdeposits.
        */
       arrival_date: number;
 
@@ -4534,6 +4542,8 @@ export namespace PaymentIntent {
     }
 
     export interface BacsDebit {
+      financial_connections?: BacsDebit.FinancialConnections;
+
       mandate_options?: BacsDebit.MandateOptions;
 
       /**
@@ -4654,6 +4664,8 @@ export namespace PaymentIntent {
        */
       network: Card.Network | null;
 
+      payment_details?: Card.PaymentDetails;
+
       /**
        * Indicates whether Stripe may synchronously request a real-time card account update for this confirmation. `if_available` allows the update; `never` opts out. Defaults to `if_available` and is omitted from the response unless explicitly set on this confirmation. This does not affect batch Card Account Updater.
        */
@@ -4759,6 +4771,8 @@ export namespace PaymentIntent {
        * Fleet prompting data for this payment.
        */
       fleet?: CardPresent.Fleet | null;
+
+      payment_details?: CardPresent.PaymentDetails;
 
       /**
        * Request ability to capture this payment beyond the standard [authorization validity window](https://docs.stripe.com/terminal/features/extended-authorizations#authorization-validity)
@@ -5789,6 +5803,10 @@ export namespace PaymentIntent {
     }
 
     export namespace BacsDebit {
+      export interface FinancialConnections {
+        return_url?: string;
+      }
+
       export interface MandateOptions {
         /**
          * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
@@ -5804,6 +5822,7 @@ export namespace PaymentIntent {
 
       export type VerificationMethod =
         | 'automatic'
+        | 'instant'
         | 'payer_name_verification'
         | OtherString;
     }
@@ -5988,6 +6007,10 @@ export namespace PaymentIntent {
         | 'visa'
         | OtherString;
 
+      export interface PaymentDetails {
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export type RequestCardAccountUpdate = 'if_available' | 'never';
 
       export type RequestDecrementalAuthorization =
@@ -6118,6 +6141,30 @@ export namespace PaymentIntent {
           | OtherString;
       }
 
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {
+            /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+          }
+
+          export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin'
+              | OtherString;
+          }
+        }
+      }
+
       export namespace StatementDetails {
         export interface Address {
           /**
@@ -6215,6 +6262,10 @@ export namespace PaymentIntent {
         transaction_data: Array<Fleet.TransactionDatum>;
       }
 
+      export interface PaymentDetails {
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export type RequestMulticapture = 'if_available' | 'never' | OtherString;
 
       export type RequestReauthorization =
@@ -6278,6 +6329,30 @@ export namespace PaymentIntent {
             | 'work_order';
 
           export type ReceiptBehavior = 'omit' | 'print';
+        }
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {
+            /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+          }
+
+          export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin'
+              | OtherString;
+          }
         }
       }
 
@@ -6539,11 +6614,7 @@ export namespace PaymentIntent {
     }
 
     export namespace Paypay {
-      export type SetupFutureUsage =
-        | 'none'
-        | 'off_session'
-        | 'on_session'
-        | OtherString;
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Payto {
@@ -7154,12 +7225,14 @@ export namespace PaymentIntentCreateParams {
 
   export type AllowedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -7176,6 +7249,7 @@ export namespace PaymentIntentCreateParams {
     | 'click_to_pay'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'demo_pay'
     | 'duitnow'
     | 'dummy_auth_push'
@@ -7202,6 +7276,7 @@ export namespace PaymentIntentCreateParams {
     | 'kriya'
     | 'link'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'momo'
     | 'mondu'
@@ -7326,12 +7401,14 @@ export namespace PaymentIntentCreateParams {
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -7343,6 +7420,7 @@ export namespace PaymentIntentCreateParams {
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'eps'
     | 'fpx'
     | 'getflex'
@@ -7357,6 +7435,7 @@ export namespace PaymentIntentCreateParams {
     | 'konbini'
     | 'kr_card'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'multibanco'
     | 'naver_pay'
@@ -7495,6 +7574,11 @@ export namespace PaymentIntentCreateParams {
     acss_debit?: PaymentMethodData.AcssDebit;
 
     /**
+     * If this is a `aeon_pay` PaymentMethod, this hash contains details about the AEON Pay payment method.
+     */
+    aeon_pay?: PaymentMethodData.AeonPay;
+
+    /**
      * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
      */
     affirm?: PaymentMethodData.Affirm;
@@ -7528,6 +7612,11 @@ export namespace PaymentIntentCreateParams {
      * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
      */
     au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+    /**
+     * If this is a `au_pay` PaymentMethod, this hash contains details about the au PAY payment method.
+     */
+    au_pay?: PaymentMethodData.AuPay;
 
     /**
      * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
@@ -7583,6 +7672,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
      */
     customer_balance?: PaymentMethodData.CustomerBalance;
+
+    /**
+     * If this is a `dbarai` PaymentMethod, this hash contains details about the d-Barai payment method.
+     */
+    dbarai?: PaymentMethodData.Dbarai;
 
     /**
      * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
@@ -7663,6 +7757,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
      */
     mb_way?: PaymentMethodData.MbWay;
+
+    /**
+     * If this is a `merpay` PaymentMethod, this hash contains details about the Merpay payment method.
+     */
+    merpay?: PaymentMethodData.Merpay;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -8470,6 +8569,16 @@ export namespace PaymentIntentCreateParams {
            * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
            */
           commodity_code?: string;
+
+          /**
+           * EV charging data for this line item.
+           */
+          ev_charging?: CardPresent.EvCharging;
+
+          /**
+           * Fleet data for this line item.
+           */
+          fleet_data?: CardPresent.FleetData;
         }
 
         export interface Klarna {
@@ -8512,6 +8621,257 @@ export namespace PaymentIntentCreateParams {
         }
 
         export namespace Card {
+          export interface EvCharging {
+            /**
+             * The carbon footprint avoided by the charging session, in grams of CO2.
+             */
+            carbon_footprint_avoided_grams_co2?: number;
+
+            /**
+             * The time the charging session ended, measured in seconds since the Unix epoch.
+             */
+            charging_ended_at: number;
+
+            /**
+             * The power output capacity of the charging station, in kilowatts (kW).
+             */
+            charging_power_output_capacity_kw: number;
+
+            /**
+             * The time the charging session started, measured in seconds since the Unix epoch.
+             */
+            charging_started_at: number;
+
+            /**
+             * The type of connector used for the charging session.
+             */
+            connector_type: EvCharging.ConnectorType;
+
+            /**
+             * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+             */
+            estimated_range_added?: number;
+
+            /**
+             * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+             */
+            estimated_range_left?: number;
+
+            /**
+             * The maximum power dispensed during the charging session, in kilowatts (kW).
+             */
+            maximum_power_dispensed_kw: number;
+          }
+
+          export interface FleetData {
+            /**
+             * The type of product being purchased at this line item.
+             */
+            product_type: FleetData.ProductType;
+
+            /**
+             * The type of service received at the acceptor location.
+             */
+            service_type?: FleetData.ServiceType;
+          }
+
+          export namespace EvCharging {
+            export type ConnectorType =
+              | 'ac_gb_t'
+              | 'ac_j1772'
+              | 'ac_mennekes'
+              | 'dc_ccs1'
+              | 'dc_ccs2'
+              | 'dc_chademo'
+              | 'dc_gb_t'
+              | 'dc_mcs'
+              | 'nacs'
+              | OtherString;
+          }
+
+          export namespace FleetData {
+            export type ProductType =
+              | 'additive_dosage'
+              | 'additized_diesel_2'
+              | 'additized_diesel_3'
+              | 'air_conditioning_service'
+              | 'air_filter'
+              | 'alcohol'
+              | 'antifreeze'
+              | 'automotive_merchandise'
+              | 'aviation_fuel_premium'
+              | 'aviation_fuel_regular'
+              | 'batteries'
+              | 'biodiesel_b1'
+              | 'biodiesel_b10'
+              | 'biodiesel_b100'
+              | 'biodiesel_b11'
+              | 'biodiesel_b15'
+              | 'biodiesel_b2'
+              | 'biodiesel_b20'
+              | 'biodiesel_b5'
+              | 'biodiesel_b75'
+              | 'biodiesel_b99'
+              | 'blended_diesel_1_and_2'
+              | 'body_work'
+              | 'brake_fluid'
+              | 'brake_service'
+              | 'car_care_detailing'
+              | 'car_wash'
+              | 'compressed_natural_gas'
+              | 'def_at_pump'
+              | 'deli'
+              | 'e85'
+              | 'engine_service'
+              | 'ethanol_e16_to_e84'
+              | 'ev_battery_exchanges'
+              | 'ev_charging_fee'
+              | 'evc_level_1'
+              | 'evc_level_2'
+              | 'evc_level_3'
+              | 'evc_level_4'
+              | 'evc_level_5'
+              | 'exhaust_service'
+              | 'federal_tire_excise_tax'
+              | 'food_service'
+              | 'fuel_additive_treatment'
+              | 'fuel_system'
+              | 'green_gasoline_mid_plus'
+              | 'green_gasoline_premium_super'
+              | 'green_gasoline_regular'
+              | 'grocery'
+              | 'heating_oil'
+              | 'hoses'
+              | 'hydrogen_h35'
+              | 'hydrogen_h70'
+              | 'inspection'
+              | 'kerosene_low_sulfur'
+              | 'kerosene_low_sulfur_non_taxable'
+              | 'kerosene_ultra_low_sulfur'
+              | 'kerosene_ultra_low_sulfur_non_taxable'
+              | 'labor'
+              | 'lamps'
+              | 'liquid_natural_gas'
+              | 'liquid_propane_gas'
+              | 'lodging'
+              | 'low_octane_unleaded'
+              | 'lube'
+              | 'marine_diesel'
+              | 'marine_fuel'
+              | 'marine_fuel_1'
+              | 'marine_fuel_2'
+              | 'marine_fuel_3'
+              | 'marine_fuel_4'
+              | 'marine_fuel_5'
+              | 'marine_other'
+              | 'merchandise'
+              | 'mid_plus'
+              | 'mid_plus_2'
+              | 'mid_plus_2_10'
+              | 'mid_plus_2_e15'
+              | 'mid_plus_2_reformulated'
+              | 'mid_plus_e10'
+              | 'mid_plus_e15'
+              | 'mid_plus_ethanol'
+              | 'mid_plus_reformulated'
+              | 'miscellaneous_aviation_products_services'
+              | 'miscellaneous_fuel'
+              | 'miscellaneous_marine_products_services'
+              | 'miscellaneous_vehicle_products_services'
+              | 'motor_oil'
+              | 'off_road_b1'
+              | 'off_road_b10'
+              | 'off_road_b100'
+              | 'off_road_b11'
+              | 'off_road_b15'
+              | 'off_road_b2'
+              | 'off_road_b20'
+              | 'off_road_b5'
+              | 'off_road_b75'
+              | 'off_road_b99'
+              | 'off_road_biodiesel'
+              | 'off_road_diesel_1'
+              | 'off_road_diesel_2'
+              | 'off_road_mid_plus'
+              | 'off_road_mid_plus_2'
+              | 'off_road_premium_diesel_1'
+              | 'off_road_premium_diesel_2'
+              | 'off_road_premium_super'
+              | 'off_road_premium_super_2'
+              | 'off_road_regular'
+              | 'off_road_renewable_diesel_b6_to_b20'
+              | 'off_road_renewable_diesel_r95'
+              | 'oil_change'
+              | 'oil_filter'
+              | 'other_lubricants'
+              | 'packaged_beverage'
+              | 'premium_diesel'
+              | 'premium_diesel_2'
+              | 'premium_diesel_b20_plus'
+              | 'premium_diesel_under_b20'
+              | 'premium_super'
+              | 'premium_super_2'
+              | 'premium_super_2_10'
+              | 'premium_super_2_e15'
+              | 'premium_super_2_reformulated'
+              | 'premium_super_e10'
+              | 'premium_super_e15'
+              | 'premium_super_ethanol'
+              | 'premium_super_reformulated'
+              | 'preventative_maintenance'
+              | 'racing_fuel'
+              | 'recreational_fuel_90_octane'
+              | 'regular'
+              | 'regular_diesel'
+              | 'regular_diesel_2'
+              | 'regular_e10'
+              | 'regular_e15'
+              | 'regular_ethanol'
+              | 'regular_reformulated'
+              | 'renewable_diesel_b6_to_b20'
+              | 'renewable_diesel_r95'
+              | 'repairs'
+              | 'road_service'
+              | 'rv_dump_fee'
+              | 'scales'
+              | 'self_service_car_wash'
+              | 'service_package'
+              | 'shower'
+              | 'store_service'
+              | 'synthetic_oil'
+              | 'tire_related'
+              | 'tire_repair'
+              | 'tire_rotation'
+              | 'tires'
+              | 'tobacco'
+              | 'toll_payments'
+              | 'towing'
+              | 'trailer_wash'
+              | 'transmission_service'
+              | 'truck_tank_cleaning'
+              | 'vehicle_accessories'
+              | 'vehicle_glass'
+              | 'vehicle_parking'
+              | 'vehicle_parts'
+              | 'vehicle_prep'
+              | 'vehicle_rental'
+              | 'vehicle_work_order'
+              | 'wash_out'
+              | 'washer_fluid'
+              | 'white_gas'
+              | 'wipers'
+              | OtherString;
+
+            export type ServiceType =
+              | 'full_service'
+              | 'high_speed_diesel'
+              | 'non_fuel_only'
+              | 'self_service'
+              | OtherString;
+          }
+        }
+
+        export namespace CardPresent {
           export interface EvCharging {
             /**
              * The carbon footprint avoided by the charging session, in grams of CO2.
@@ -11094,6 +11454,8 @@ export namespace PaymentIntentCreateParams {
       transit_number: string;
     }
 
+    export interface AeonPay {}
+
     export interface Affirm {}
 
     export interface AfterpayClearpay {}
@@ -11121,6 +11483,8 @@ export namespace PaymentIntentCreateParams {
        */
       bsb_number: string;
     }
+
+    export interface AuPay {}
 
     export interface BacsDebit {
       /**
@@ -11183,6 +11547,8 @@ export namespace PaymentIntentCreateParams {
     export interface Crypto {}
 
     export interface CustomerBalance {}
+
+    export interface Dbarai {}
 
     export interface Eps {
       /**
@@ -11250,6 +11616,8 @@ export namespace PaymentIntentCreateParams {
     export interface Link {}
 
     export interface MbWay {}
+
+    export interface Merpay {}
 
     export interface Mobilepay {}
 
@@ -11396,12 +11764,14 @@ export namespace PaymentIntentCreateParams {
 
     export type Type =
       | 'acss_debit'
+      | 'aeon_pay'
       | 'affirm'
       | 'afterpay_clearpay'
       | 'alipay'
       | 'alma'
       | 'amazon_pay'
       | 'au_becs_debit'
+      | 'au_pay'
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
@@ -11412,6 +11782,7 @@ export namespace PaymentIntentCreateParams {
       | 'cashapp'
       | 'crypto'
       | 'customer_balance'
+      | 'dbarai'
       | 'eps'
       | 'fpx'
       | 'getflex'
@@ -11427,6 +11798,7 @@ export namespace PaymentIntentCreateParams {
       | 'kr_card'
       | 'link'
       | 'mb_way'
+      | 'merpay'
       | 'mobilepay'
       | 'multibanco'
       | 'naver_pay'
@@ -11906,6 +12278,11 @@ export namespace PaymentIntentCreateParams {
     }
 
     export interface BacsDebit {
+      /**
+       * Additional fields for Financial Connections session creation.
+       */
+      financial_connections?: BacsDebit.FinancialConnections;
+
       /**
        * Additional fields for Mandate creation
        */
@@ -13453,6 +13830,13 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace BacsDebit {
+      export interface FinancialConnections {
+        /**
+         * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+         */
+        return_url?: string;
+      }
+
       export interface MandateOptions {
         /**
          * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
@@ -13468,6 +13852,7 @@ export namespace PaymentIntentCreateParams {
 
       export type VerificationMethod =
         | 'automatic'
+        | 'instant'
         | 'payer_name_verification'
         | OtherString;
     }
@@ -15646,11 +16031,7 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace Paypay {
-      export type SetupFutureUsage =
-        | 'none'
-        | 'off_session'
-        | 'on_session'
-        | OtherString;
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Payto {
@@ -16228,12 +16609,14 @@ export namespace PaymentIntentUpdateParams {
 
   export type AllowedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -16250,6 +16633,7 @@ export namespace PaymentIntentUpdateParams {
     | 'click_to_pay'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'demo_pay'
     | 'duitnow'
     | 'dummy_auth_push'
@@ -16276,6 +16660,7 @@ export namespace PaymentIntentUpdateParams {
     | 'kriya'
     | 'link'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'momo'
     | 'mondu'
@@ -16384,12 +16769,14 @@ export namespace PaymentIntentUpdateParams {
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -16401,6 +16788,7 @@ export namespace PaymentIntentUpdateParams {
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'eps'
     | 'fpx'
     | 'getflex'
@@ -16415,6 +16803,7 @@ export namespace PaymentIntentUpdateParams {
     | 'konbini'
     | 'kr_card'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'multibanco'
     | 'naver_pay'
@@ -16551,6 +16940,11 @@ export namespace PaymentIntentUpdateParams {
     acss_debit?: PaymentMethodData.AcssDebit;
 
     /**
+     * If this is a `aeon_pay` PaymentMethod, this hash contains details about the AEON Pay payment method.
+     */
+    aeon_pay?: PaymentMethodData.AeonPay;
+
+    /**
      * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
      */
     affirm?: PaymentMethodData.Affirm;
@@ -16584,6 +16978,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
      */
     au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+    /**
+     * If this is a `au_pay` PaymentMethod, this hash contains details about the au PAY payment method.
+     */
+    au_pay?: PaymentMethodData.AuPay;
 
     /**
      * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
@@ -16639,6 +17038,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
      */
     customer_balance?: PaymentMethodData.CustomerBalance;
+
+    /**
+     * If this is a `dbarai` PaymentMethod, this hash contains details about the d-Barai payment method.
+     */
+    dbarai?: PaymentMethodData.Dbarai;
 
     /**
      * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
@@ -16719,6 +17123,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
      */
     mb_way?: PaymentMethodData.MbWay;
+
+    /**
+     * If this is a `merpay` PaymentMethod, this hash contains details about the Merpay payment method.
+     */
+    merpay?: PaymentMethodData.Merpay;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -17486,6 +17895,16 @@ export namespace PaymentIntentUpdateParams {
            * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
            */
           commodity_code?: string;
+
+          /**
+           * EV charging data for this line item.
+           */
+          ev_charging?: CardPresent.EvCharging;
+
+          /**
+           * Fleet data for this line item.
+           */
+          fleet_data?: CardPresent.FleetData;
         }
 
         export interface Klarna {
@@ -17528,6 +17947,257 @@ export namespace PaymentIntentUpdateParams {
         }
 
         export namespace Card {
+          export interface EvCharging {
+            /**
+             * The carbon footprint avoided by the charging session, in grams of CO2.
+             */
+            carbon_footprint_avoided_grams_co2?: number;
+
+            /**
+             * The time the charging session ended, measured in seconds since the Unix epoch.
+             */
+            charging_ended_at: number;
+
+            /**
+             * The power output capacity of the charging station, in kilowatts (kW).
+             */
+            charging_power_output_capacity_kw: number;
+
+            /**
+             * The time the charging session started, measured in seconds since the Unix epoch.
+             */
+            charging_started_at: number;
+
+            /**
+             * The type of connector used for the charging session.
+             */
+            connector_type: EvCharging.ConnectorType;
+
+            /**
+             * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+             */
+            estimated_range_added?: number;
+
+            /**
+             * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+             */
+            estimated_range_left?: number;
+
+            /**
+             * The maximum power dispensed during the charging session, in kilowatts (kW).
+             */
+            maximum_power_dispensed_kw: number;
+          }
+
+          export interface FleetData {
+            /**
+             * The type of product being purchased at this line item.
+             */
+            product_type: FleetData.ProductType;
+
+            /**
+             * The type of service received at the acceptor location.
+             */
+            service_type?: FleetData.ServiceType;
+          }
+
+          export namespace EvCharging {
+            export type ConnectorType =
+              | 'ac_gb_t'
+              | 'ac_j1772'
+              | 'ac_mennekes'
+              | 'dc_ccs1'
+              | 'dc_ccs2'
+              | 'dc_chademo'
+              | 'dc_gb_t'
+              | 'dc_mcs'
+              | 'nacs'
+              | OtherString;
+          }
+
+          export namespace FleetData {
+            export type ProductType =
+              | 'additive_dosage'
+              | 'additized_diesel_2'
+              | 'additized_diesel_3'
+              | 'air_conditioning_service'
+              | 'air_filter'
+              | 'alcohol'
+              | 'antifreeze'
+              | 'automotive_merchandise'
+              | 'aviation_fuel_premium'
+              | 'aviation_fuel_regular'
+              | 'batteries'
+              | 'biodiesel_b1'
+              | 'biodiesel_b10'
+              | 'biodiesel_b100'
+              | 'biodiesel_b11'
+              | 'biodiesel_b15'
+              | 'biodiesel_b2'
+              | 'biodiesel_b20'
+              | 'biodiesel_b5'
+              | 'biodiesel_b75'
+              | 'biodiesel_b99'
+              | 'blended_diesel_1_and_2'
+              | 'body_work'
+              | 'brake_fluid'
+              | 'brake_service'
+              | 'car_care_detailing'
+              | 'car_wash'
+              | 'compressed_natural_gas'
+              | 'def_at_pump'
+              | 'deli'
+              | 'e85'
+              | 'engine_service'
+              | 'ethanol_e16_to_e84'
+              | 'ev_battery_exchanges'
+              | 'ev_charging_fee'
+              | 'evc_level_1'
+              | 'evc_level_2'
+              | 'evc_level_3'
+              | 'evc_level_4'
+              | 'evc_level_5'
+              | 'exhaust_service'
+              | 'federal_tire_excise_tax'
+              | 'food_service'
+              | 'fuel_additive_treatment'
+              | 'fuel_system'
+              | 'green_gasoline_mid_plus'
+              | 'green_gasoline_premium_super'
+              | 'green_gasoline_regular'
+              | 'grocery'
+              | 'heating_oil'
+              | 'hoses'
+              | 'hydrogen_h35'
+              | 'hydrogen_h70'
+              | 'inspection'
+              | 'kerosene_low_sulfur'
+              | 'kerosene_low_sulfur_non_taxable'
+              | 'kerosene_ultra_low_sulfur'
+              | 'kerosene_ultra_low_sulfur_non_taxable'
+              | 'labor'
+              | 'lamps'
+              | 'liquid_natural_gas'
+              | 'liquid_propane_gas'
+              | 'lodging'
+              | 'low_octane_unleaded'
+              | 'lube'
+              | 'marine_diesel'
+              | 'marine_fuel'
+              | 'marine_fuel_1'
+              | 'marine_fuel_2'
+              | 'marine_fuel_3'
+              | 'marine_fuel_4'
+              | 'marine_fuel_5'
+              | 'marine_other'
+              | 'merchandise'
+              | 'mid_plus'
+              | 'mid_plus_2'
+              | 'mid_plus_2_10'
+              | 'mid_plus_2_e15'
+              | 'mid_plus_2_reformulated'
+              | 'mid_plus_e10'
+              | 'mid_plus_e15'
+              | 'mid_plus_ethanol'
+              | 'mid_plus_reformulated'
+              | 'miscellaneous_aviation_products_services'
+              | 'miscellaneous_fuel'
+              | 'miscellaneous_marine_products_services'
+              | 'miscellaneous_vehicle_products_services'
+              | 'motor_oil'
+              | 'off_road_b1'
+              | 'off_road_b10'
+              | 'off_road_b100'
+              | 'off_road_b11'
+              | 'off_road_b15'
+              | 'off_road_b2'
+              | 'off_road_b20'
+              | 'off_road_b5'
+              | 'off_road_b75'
+              | 'off_road_b99'
+              | 'off_road_biodiesel'
+              | 'off_road_diesel_1'
+              | 'off_road_diesel_2'
+              | 'off_road_mid_plus'
+              | 'off_road_mid_plus_2'
+              | 'off_road_premium_diesel_1'
+              | 'off_road_premium_diesel_2'
+              | 'off_road_premium_super'
+              | 'off_road_premium_super_2'
+              | 'off_road_regular'
+              | 'off_road_renewable_diesel_b6_to_b20'
+              | 'off_road_renewable_diesel_r95'
+              | 'oil_change'
+              | 'oil_filter'
+              | 'other_lubricants'
+              | 'packaged_beverage'
+              | 'premium_diesel'
+              | 'premium_diesel_2'
+              | 'premium_diesel_b20_plus'
+              | 'premium_diesel_under_b20'
+              | 'premium_super'
+              | 'premium_super_2'
+              | 'premium_super_2_10'
+              | 'premium_super_2_e15'
+              | 'premium_super_2_reformulated'
+              | 'premium_super_e10'
+              | 'premium_super_e15'
+              | 'premium_super_ethanol'
+              | 'premium_super_reformulated'
+              | 'preventative_maintenance'
+              | 'racing_fuel'
+              | 'recreational_fuel_90_octane'
+              | 'regular'
+              | 'regular_diesel'
+              | 'regular_diesel_2'
+              | 'regular_e10'
+              | 'regular_e15'
+              | 'regular_ethanol'
+              | 'regular_reformulated'
+              | 'renewable_diesel_b6_to_b20'
+              | 'renewable_diesel_r95'
+              | 'repairs'
+              | 'road_service'
+              | 'rv_dump_fee'
+              | 'scales'
+              | 'self_service_car_wash'
+              | 'service_package'
+              | 'shower'
+              | 'store_service'
+              | 'synthetic_oil'
+              | 'tire_related'
+              | 'tire_repair'
+              | 'tire_rotation'
+              | 'tires'
+              | 'tobacco'
+              | 'toll_payments'
+              | 'towing'
+              | 'trailer_wash'
+              | 'transmission_service'
+              | 'truck_tank_cleaning'
+              | 'vehicle_accessories'
+              | 'vehicle_glass'
+              | 'vehicle_parking'
+              | 'vehicle_parts'
+              | 'vehicle_prep'
+              | 'vehicle_rental'
+              | 'vehicle_work_order'
+              | 'wash_out'
+              | 'washer_fluid'
+              | 'white_gas'
+              | 'wipers'
+              | OtherString;
+
+            export type ServiceType =
+              | 'full_service'
+              | 'high_speed_diesel'
+              | 'non_fuel_only'
+              | 'self_service'
+              | OtherString;
+          }
+        }
+
+        export namespace CardPresent {
           export interface EvCharging {
             /**
              * The carbon footprint avoided by the charging session, in grams of CO2.
@@ -20092,6 +20762,8 @@ export namespace PaymentIntentUpdateParams {
       transit_number: string;
     }
 
+    export interface AeonPay {}
+
     export interface Affirm {}
 
     export interface AfterpayClearpay {}
@@ -20119,6 +20791,8 @@ export namespace PaymentIntentUpdateParams {
        */
       bsb_number: string;
     }
+
+    export interface AuPay {}
 
     export interface BacsDebit {
       /**
@@ -20181,6 +20855,8 @@ export namespace PaymentIntentUpdateParams {
     export interface Crypto {}
 
     export interface CustomerBalance {}
+
+    export interface Dbarai {}
 
     export interface Eps {
       /**
@@ -20248,6 +20924,8 @@ export namespace PaymentIntentUpdateParams {
     export interface Link {}
 
     export interface MbWay {}
+
+    export interface Merpay {}
 
     export interface Mobilepay {}
 
@@ -20394,12 +21072,14 @@ export namespace PaymentIntentUpdateParams {
 
     export type Type =
       | 'acss_debit'
+      | 'aeon_pay'
       | 'affirm'
       | 'afterpay_clearpay'
       | 'alipay'
       | 'alma'
       | 'amazon_pay'
       | 'au_becs_debit'
+      | 'au_pay'
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
@@ -20410,6 +21090,7 @@ export namespace PaymentIntentUpdateParams {
       | 'cashapp'
       | 'crypto'
       | 'customer_balance'
+      | 'dbarai'
       | 'eps'
       | 'fpx'
       | 'getflex'
@@ -20425,6 +21106,7 @@ export namespace PaymentIntentUpdateParams {
       | 'kr_card'
       | 'link'
       | 'mb_way'
+      | 'merpay'
       | 'mobilepay'
       | 'multibanco'
       | 'naver_pay'
@@ -20904,6 +21586,11 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export interface BacsDebit {
+      /**
+       * Additional fields for Financial Connections session creation.
+       */
+      financial_connections?: BacsDebit.FinancialConnections;
+
       /**
        * Additional fields for Mandate creation
        */
@@ -22451,6 +23138,13 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace BacsDebit {
+      export interface FinancialConnections {
+        /**
+         * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+         */
+        return_url?: string;
+      }
+
       export interface MandateOptions {
         /**
          * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
@@ -22466,6 +23160,7 @@ export namespace PaymentIntentUpdateParams {
 
       export type VerificationMethod =
         | 'automatic'
+        | 'instant'
         | 'payer_name_verification'
         | OtherString;
     }
@@ -24644,11 +25339,7 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace Paypay {
-      export type SetupFutureUsage =
-        | 'none'
-        | 'off_session'
-        | 'on_session'
-        | OtherString;
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Payto {
@@ -25438,6 +26129,16 @@ export namespace PaymentIntentCaptureParams {
            * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
            */
           commodity_code?: string;
+
+          /**
+           * EV charging data for this line item.
+           */
+          ev_charging?: CardPresent.EvCharging;
+
+          /**
+           * Fleet data for this line item.
+           */
+          fleet_data?: CardPresent.FleetData;
         }
 
         export interface Klarna {
@@ -25480,6 +26181,257 @@ export namespace PaymentIntentCaptureParams {
         }
 
         export namespace Card {
+          export interface EvCharging {
+            /**
+             * The carbon footprint avoided by the charging session, in grams of CO2.
+             */
+            carbon_footprint_avoided_grams_co2?: number;
+
+            /**
+             * The time the charging session ended, measured in seconds since the Unix epoch.
+             */
+            charging_ended_at: number;
+
+            /**
+             * The power output capacity of the charging station, in kilowatts (kW).
+             */
+            charging_power_output_capacity_kw: number;
+
+            /**
+             * The time the charging session started, measured in seconds since the Unix epoch.
+             */
+            charging_started_at: number;
+
+            /**
+             * The type of connector used for the charging session.
+             */
+            connector_type: EvCharging.ConnectorType;
+
+            /**
+             * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+             */
+            estimated_range_added?: number;
+
+            /**
+             * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+             */
+            estimated_range_left?: number;
+
+            /**
+             * The maximum power dispensed during the charging session, in kilowatts (kW).
+             */
+            maximum_power_dispensed_kw: number;
+          }
+
+          export interface FleetData {
+            /**
+             * The type of product being purchased at this line item.
+             */
+            product_type: FleetData.ProductType;
+
+            /**
+             * The type of service received at the acceptor location.
+             */
+            service_type?: FleetData.ServiceType;
+          }
+
+          export namespace EvCharging {
+            export type ConnectorType =
+              | 'ac_gb_t'
+              | 'ac_j1772'
+              | 'ac_mennekes'
+              | 'dc_ccs1'
+              | 'dc_ccs2'
+              | 'dc_chademo'
+              | 'dc_gb_t'
+              | 'dc_mcs'
+              | 'nacs'
+              | OtherString;
+          }
+
+          export namespace FleetData {
+            export type ProductType =
+              | 'additive_dosage'
+              | 'additized_diesel_2'
+              | 'additized_diesel_3'
+              | 'air_conditioning_service'
+              | 'air_filter'
+              | 'alcohol'
+              | 'antifreeze'
+              | 'automotive_merchandise'
+              | 'aviation_fuel_premium'
+              | 'aviation_fuel_regular'
+              | 'batteries'
+              | 'biodiesel_b1'
+              | 'biodiesel_b10'
+              | 'biodiesel_b100'
+              | 'biodiesel_b11'
+              | 'biodiesel_b15'
+              | 'biodiesel_b2'
+              | 'biodiesel_b20'
+              | 'biodiesel_b5'
+              | 'biodiesel_b75'
+              | 'biodiesel_b99'
+              | 'blended_diesel_1_and_2'
+              | 'body_work'
+              | 'brake_fluid'
+              | 'brake_service'
+              | 'car_care_detailing'
+              | 'car_wash'
+              | 'compressed_natural_gas'
+              | 'def_at_pump'
+              | 'deli'
+              | 'e85'
+              | 'engine_service'
+              | 'ethanol_e16_to_e84'
+              | 'ev_battery_exchanges'
+              | 'ev_charging_fee'
+              | 'evc_level_1'
+              | 'evc_level_2'
+              | 'evc_level_3'
+              | 'evc_level_4'
+              | 'evc_level_5'
+              | 'exhaust_service'
+              | 'federal_tire_excise_tax'
+              | 'food_service'
+              | 'fuel_additive_treatment'
+              | 'fuel_system'
+              | 'green_gasoline_mid_plus'
+              | 'green_gasoline_premium_super'
+              | 'green_gasoline_regular'
+              | 'grocery'
+              | 'heating_oil'
+              | 'hoses'
+              | 'hydrogen_h35'
+              | 'hydrogen_h70'
+              | 'inspection'
+              | 'kerosene_low_sulfur'
+              | 'kerosene_low_sulfur_non_taxable'
+              | 'kerosene_ultra_low_sulfur'
+              | 'kerosene_ultra_low_sulfur_non_taxable'
+              | 'labor'
+              | 'lamps'
+              | 'liquid_natural_gas'
+              | 'liquid_propane_gas'
+              | 'lodging'
+              | 'low_octane_unleaded'
+              | 'lube'
+              | 'marine_diesel'
+              | 'marine_fuel'
+              | 'marine_fuel_1'
+              | 'marine_fuel_2'
+              | 'marine_fuel_3'
+              | 'marine_fuel_4'
+              | 'marine_fuel_5'
+              | 'marine_other'
+              | 'merchandise'
+              | 'mid_plus'
+              | 'mid_plus_2'
+              | 'mid_plus_2_10'
+              | 'mid_plus_2_e15'
+              | 'mid_plus_2_reformulated'
+              | 'mid_plus_e10'
+              | 'mid_plus_e15'
+              | 'mid_plus_ethanol'
+              | 'mid_plus_reformulated'
+              | 'miscellaneous_aviation_products_services'
+              | 'miscellaneous_fuel'
+              | 'miscellaneous_marine_products_services'
+              | 'miscellaneous_vehicle_products_services'
+              | 'motor_oil'
+              | 'off_road_b1'
+              | 'off_road_b10'
+              | 'off_road_b100'
+              | 'off_road_b11'
+              | 'off_road_b15'
+              | 'off_road_b2'
+              | 'off_road_b20'
+              | 'off_road_b5'
+              | 'off_road_b75'
+              | 'off_road_b99'
+              | 'off_road_biodiesel'
+              | 'off_road_diesel_1'
+              | 'off_road_diesel_2'
+              | 'off_road_mid_plus'
+              | 'off_road_mid_plus_2'
+              | 'off_road_premium_diesel_1'
+              | 'off_road_premium_diesel_2'
+              | 'off_road_premium_super'
+              | 'off_road_premium_super_2'
+              | 'off_road_regular'
+              | 'off_road_renewable_diesel_b6_to_b20'
+              | 'off_road_renewable_diesel_r95'
+              | 'oil_change'
+              | 'oil_filter'
+              | 'other_lubricants'
+              | 'packaged_beverage'
+              | 'premium_diesel'
+              | 'premium_diesel_2'
+              | 'premium_diesel_b20_plus'
+              | 'premium_diesel_under_b20'
+              | 'premium_super'
+              | 'premium_super_2'
+              | 'premium_super_2_10'
+              | 'premium_super_2_e15'
+              | 'premium_super_2_reformulated'
+              | 'premium_super_e10'
+              | 'premium_super_e15'
+              | 'premium_super_ethanol'
+              | 'premium_super_reformulated'
+              | 'preventative_maintenance'
+              | 'racing_fuel'
+              | 'recreational_fuel_90_octane'
+              | 'regular'
+              | 'regular_diesel'
+              | 'regular_diesel_2'
+              | 'regular_e10'
+              | 'regular_e15'
+              | 'regular_ethanol'
+              | 'regular_reformulated'
+              | 'renewable_diesel_b6_to_b20'
+              | 'renewable_diesel_r95'
+              | 'repairs'
+              | 'road_service'
+              | 'rv_dump_fee'
+              | 'scales'
+              | 'self_service_car_wash'
+              | 'service_package'
+              | 'shower'
+              | 'store_service'
+              | 'synthetic_oil'
+              | 'tire_related'
+              | 'tire_repair'
+              | 'tire_rotation'
+              | 'tires'
+              | 'tobacco'
+              | 'toll_payments'
+              | 'towing'
+              | 'trailer_wash'
+              | 'transmission_service'
+              | 'truck_tank_cleaning'
+              | 'vehicle_accessories'
+              | 'vehicle_glass'
+              | 'vehicle_parking'
+              | 'vehicle_parts'
+              | 'vehicle_prep'
+              | 'vehicle_rental'
+              | 'vehicle_work_order'
+              | 'wash_out'
+              | 'washer_fluid'
+              | 'white_gas'
+              | 'wipers'
+              | OtherString;
+
+            export type ServiceType =
+              | 'full_service'
+              | 'high_speed_diesel'
+              | 'non_fuel_only'
+              | 'self_service'
+              | OtherString;
+          }
+        }
+
+        export namespace CardPresent {
           export interface EvCharging {
             /**
              * The carbon footprint avoided by the charging session, in grams of CO2.
@@ -27975,12 +28927,14 @@ export namespace PaymentIntentConfirmParams {
 
   export type AllowedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -27997,6 +28951,7 @@ export namespace PaymentIntentConfirmParams {
     | 'click_to_pay'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'demo_pay'
     | 'duitnow'
     | 'dummy_auth_push'
@@ -28023,6 +28978,7 @@ export namespace PaymentIntentConfirmParams {
     | 'kriya'
     | 'link'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'momo'
     | 'mondu'
@@ -28131,12 +29087,14 @@ export namespace PaymentIntentConfirmParams {
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -28148,6 +29106,7 @@ export namespace PaymentIntentConfirmParams {
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'eps'
     | 'fpx'
     | 'getflex'
@@ -28162,6 +29121,7 @@ export namespace PaymentIntentConfirmParams {
     | 'konbini'
     | 'kr_card'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'multibanco'
     | 'naver_pay'
@@ -28300,6 +29260,11 @@ export namespace PaymentIntentConfirmParams {
     acss_debit?: PaymentMethodData.AcssDebit;
 
     /**
+     * If this is a `aeon_pay` PaymentMethod, this hash contains details about the AEON Pay payment method.
+     */
+    aeon_pay?: PaymentMethodData.AeonPay;
+
+    /**
      * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
      */
     affirm?: PaymentMethodData.Affirm;
@@ -28333,6 +29298,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
      */
     au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+    /**
+     * If this is a `au_pay` PaymentMethod, this hash contains details about the au PAY payment method.
+     */
+    au_pay?: PaymentMethodData.AuPay;
 
     /**
      * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
@@ -28388,6 +29358,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
      */
     customer_balance?: PaymentMethodData.CustomerBalance;
+
+    /**
+     * If this is a `dbarai` PaymentMethod, this hash contains details about the d-Barai payment method.
+     */
+    dbarai?: PaymentMethodData.Dbarai;
 
     /**
      * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
@@ -28468,6 +29443,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
      */
     mb_way?: PaymentMethodData.MbWay;
+
+    /**
+     * If this is a `merpay` PaymentMethod, this hash contains details about the Merpay payment method.
+     */
+    merpay?: PaymentMethodData.Merpay;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -29225,6 +30205,16 @@ export namespace PaymentIntentConfirmParams {
            * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
            */
           commodity_code?: string;
+
+          /**
+           * EV charging data for this line item.
+           */
+          ev_charging?: CardPresent.EvCharging;
+
+          /**
+           * Fleet data for this line item.
+           */
+          fleet_data?: CardPresent.FleetData;
         }
 
         export interface Klarna {
@@ -29267,6 +30257,257 @@ export namespace PaymentIntentConfirmParams {
         }
 
         export namespace Card {
+          export interface EvCharging {
+            /**
+             * The carbon footprint avoided by the charging session, in grams of CO2.
+             */
+            carbon_footprint_avoided_grams_co2?: number;
+
+            /**
+             * The time the charging session ended, measured in seconds since the Unix epoch.
+             */
+            charging_ended_at: number;
+
+            /**
+             * The power output capacity of the charging station, in kilowatts (kW).
+             */
+            charging_power_output_capacity_kw: number;
+
+            /**
+             * The time the charging session started, measured in seconds since the Unix epoch.
+             */
+            charging_started_at: number;
+
+            /**
+             * The type of connector used for the charging session.
+             */
+            connector_type: EvCharging.ConnectorType;
+
+            /**
+             * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+             */
+            estimated_range_added?: number;
+
+            /**
+             * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+             */
+            estimated_range_left?: number;
+
+            /**
+             * The maximum power dispensed during the charging session, in kilowatts (kW).
+             */
+            maximum_power_dispensed_kw: number;
+          }
+
+          export interface FleetData {
+            /**
+             * The type of product being purchased at this line item.
+             */
+            product_type: FleetData.ProductType;
+
+            /**
+             * The type of service received at the acceptor location.
+             */
+            service_type?: FleetData.ServiceType;
+          }
+
+          export namespace EvCharging {
+            export type ConnectorType =
+              | 'ac_gb_t'
+              | 'ac_j1772'
+              | 'ac_mennekes'
+              | 'dc_ccs1'
+              | 'dc_ccs2'
+              | 'dc_chademo'
+              | 'dc_gb_t'
+              | 'dc_mcs'
+              | 'nacs'
+              | OtherString;
+          }
+
+          export namespace FleetData {
+            export type ProductType =
+              | 'additive_dosage'
+              | 'additized_diesel_2'
+              | 'additized_diesel_3'
+              | 'air_conditioning_service'
+              | 'air_filter'
+              | 'alcohol'
+              | 'antifreeze'
+              | 'automotive_merchandise'
+              | 'aviation_fuel_premium'
+              | 'aviation_fuel_regular'
+              | 'batteries'
+              | 'biodiesel_b1'
+              | 'biodiesel_b10'
+              | 'biodiesel_b100'
+              | 'biodiesel_b11'
+              | 'biodiesel_b15'
+              | 'biodiesel_b2'
+              | 'biodiesel_b20'
+              | 'biodiesel_b5'
+              | 'biodiesel_b75'
+              | 'biodiesel_b99'
+              | 'blended_diesel_1_and_2'
+              | 'body_work'
+              | 'brake_fluid'
+              | 'brake_service'
+              | 'car_care_detailing'
+              | 'car_wash'
+              | 'compressed_natural_gas'
+              | 'def_at_pump'
+              | 'deli'
+              | 'e85'
+              | 'engine_service'
+              | 'ethanol_e16_to_e84'
+              | 'ev_battery_exchanges'
+              | 'ev_charging_fee'
+              | 'evc_level_1'
+              | 'evc_level_2'
+              | 'evc_level_3'
+              | 'evc_level_4'
+              | 'evc_level_5'
+              | 'exhaust_service'
+              | 'federal_tire_excise_tax'
+              | 'food_service'
+              | 'fuel_additive_treatment'
+              | 'fuel_system'
+              | 'green_gasoline_mid_plus'
+              | 'green_gasoline_premium_super'
+              | 'green_gasoline_regular'
+              | 'grocery'
+              | 'heating_oil'
+              | 'hoses'
+              | 'hydrogen_h35'
+              | 'hydrogen_h70'
+              | 'inspection'
+              | 'kerosene_low_sulfur'
+              | 'kerosene_low_sulfur_non_taxable'
+              | 'kerosene_ultra_low_sulfur'
+              | 'kerosene_ultra_low_sulfur_non_taxable'
+              | 'labor'
+              | 'lamps'
+              | 'liquid_natural_gas'
+              | 'liquid_propane_gas'
+              | 'lodging'
+              | 'low_octane_unleaded'
+              | 'lube'
+              | 'marine_diesel'
+              | 'marine_fuel'
+              | 'marine_fuel_1'
+              | 'marine_fuel_2'
+              | 'marine_fuel_3'
+              | 'marine_fuel_4'
+              | 'marine_fuel_5'
+              | 'marine_other'
+              | 'merchandise'
+              | 'mid_plus'
+              | 'mid_plus_2'
+              | 'mid_plus_2_10'
+              | 'mid_plus_2_e15'
+              | 'mid_plus_2_reformulated'
+              | 'mid_plus_e10'
+              | 'mid_plus_e15'
+              | 'mid_plus_ethanol'
+              | 'mid_plus_reformulated'
+              | 'miscellaneous_aviation_products_services'
+              | 'miscellaneous_fuel'
+              | 'miscellaneous_marine_products_services'
+              | 'miscellaneous_vehicle_products_services'
+              | 'motor_oil'
+              | 'off_road_b1'
+              | 'off_road_b10'
+              | 'off_road_b100'
+              | 'off_road_b11'
+              | 'off_road_b15'
+              | 'off_road_b2'
+              | 'off_road_b20'
+              | 'off_road_b5'
+              | 'off_road_b75'
+              | 'off_road_b99'
+              | 'off_road_biodiesel'
+              | 'off_road_diesel_1'
+              | 'off_road_diesel_2'
+              | 'off_road_mid_plus'
+              | 'off_road_mid_plus_2'
+              | 'off_road_premium_diesel_1'
+              | 'off_road_premium_diesel_2'
+              | 'off_road_premium_super'
+              | 'off_road_premium_super_2'
+              | 'off_road_regular'
+              | 'off_road_renewable_diesel_b6_to_b20'
+              | 'off_road_renewable_diesel_r95'
+              | 'oil_change'
+              | 'oil_filter'
+              | 'other_lubricants'
+              | 'packaged_beverage'
+              | 'premium_diesel'
+              | 'premium_diesel_2'
+              | 'premium_diesel_b20_plus'
+              | 'premium_diesel_under_b20'
+              | 'premium_super'
+              | 'premium_super_2'
+              | 'premium_super_2_10'
+              | 'premium_super_2_e15'
+              | 'premium_super_2_reformulated'
+              | 'premium_super_e10'
+              | 'premium_super_e15'
+              | 'premium_super_ethanol'
+              | 'premium_super_reformulated'
+              | 'preventative_maintenance'
+              | 'racing_fuel'
+              | 'recreational_fuel_90_octane'
+              | 'regular'
+              | 'regular_diesel'
+              | 'regular_diesel_2'
+              | 'regular_e10'
+              | 'regular_e15'
+              | 'regular_ethanol'
+              | 'regular_reformulated'
+              | 'renewable_diesel_b6_to_b20'
+              | 'renewable_diesel_r95'
+              | 'repairs'
+              | 'road_service'
+              | 'rv_dump_fee'
+              | 'scales'
+              | 'self_service_car_wash'
+              | 'service_package'
+              | 'shower'
+              | 'store_service'
+              | 'synthetic_oil'
+              | 'tire_related'
+              | 'tire_repair'
+              | 'tire_rotation'
+              | 'tires'
+              | 'tobacco'
+              | 'toll_payments'
+              | 'towing'
+              | 'trailer_wash'
+              | 'transmission_service'
+              | 'truck_tank_cleaning'
+              | 'vehicle_accessories'
+              | 'vehicle_glass'
+              | 'vehicle_parking'
+              | 'vehicle_parts'
+              | 'vehicle_prep'
+              | 'vehicle_rental'
+              | 'vehicle_work_order'
+              | 'wash_out'
+              | 'washer_fluid'
+              | 'white_gas'
+              | 'wipers'
+              | OtherString;
+
+            export type ServiceType =
+              | 'full_service'
+              | 'high_speed_diesel'
+              | 'non_fuel_only'
+              | 'self_service'
+              | OtherString;
+          }
+        }
+
+        export namespace CardPresent {
           export interface EvCharging {
             /**
              * The carbon footprint avoided by the charging session, in grams of CO2.
@@ -31845,6 +33086,8 @@ export namespace PaymentIntentConfirmParams {
       transit_number: string;
     }
 
+    export interface AeonPay {}
+
     export interface Affirm {}
 
     export interface AfterpayClearpay {}
@@ -31872,6 +33115,8 @@ export namespace PaymentIntentConfirmParams {
        */
       bsb_number: string;
     }
+
+    export interface AuPay {}
 
     export interface BacsDebit {
       /**
@@ -31934,6 +33179,8 @@ export namespace PaymentIntentConfirmParams {
     export interface Crypto {}
 
     export interface CustomerBalance {}
+
+    export interface Dbarai {}
 
     export interface Eps {
       /**
@@ -32001,6 +33248,8 @@ export namespace PaymentIntentConfirmParams {
     export interface Link {}
 
     export interface MbWay {}
+
+    export interface Merpay {}
 
     export interface Mobilepay {}
 
@@ -32147,12 +33396,14 @@ export namespace PaymentIntentConfirmParams {
 
     export type Type =
       | 'acss_debit'
+      | 'aeon_pay'
       | 'affirm'
       | 'afterpay_clearpay'
       | 'alipay'
       | 'alma'
       | 'amazon_pay'
       | 'au_becs_debit'
+      | 'au_pay'
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
@@ -32163,6 +33414,7 @@ export namespace PaymentIntentConfirmParams {
       | 'cashapp'
       | 'crypto'
       | 'customer_balance'
+      | 'dbarai'
       | 'eps'
       | 'fpx'
       | 'getflex'
@@ -32178,6 +33430,7 @@ export namespace PaymentIntentConfirmParams {
       | 'kr_card'
       | 'link'
       | 'mb_way'
+      | 'merpay'
       | 'mobilepay'
       | 'multibanco'
       | 'naver_pay'
@@ -32657,6 +33910,11 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export interface BacsDebit {
+      /**
+       * Additional fields for Financial Connections session creation.
+       */
+      financial_connections?: BacsDebit.FinancialConnections;
+
       /**
        * Additional fields for Mandate creation
        */
@@ -34204,6 +35462,13 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace BacsDebit {
+      export interface FinancialConnections {
+        /**
+         * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+         */
+        return_url?: string;
+      }
+
       export interface MandateOptions {
         /**
          * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
@@ -34219,6 +35484,7 @@ export namespace PaymentIntentConfirmParams {
 
       export type VerificationMethod =
         | 'automatic'
+        | 'instant'
         | 'payer_name_verification'
         | OtherString;
     }
@@ -36397,11 +37663,7 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace Paypay {
-      export type SetupFutureUsage =
-        | 'none'
-        | 'off_session'
-        | 'on_session'
-        | OtherString;
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Payto {
@@ -37060,6 +38322,16 @@ export namespace PaymentIntentDecrementAuthorizationParams {
            * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
            */
           commodity_code?: string;
+
+          /**
+           * EV charging data for this line item.
+           */
+          ev_charging?: CardPresent.EvCharging;
+
+          /**
+           * Fleet data for this line item.
+           */
+          fleet_data?: CardPresent.FleetData;
         }
 
         export interface Klarna {
@@ -37102,6 +38374,257 @@ export namespace PaymentIntentDecrementAuthorizationParams {
         }
 
         export namespace Card {
+          export interface EvCharging {
+            /**
+             * The carbon footprint avoided by the charging session, in grams of CO2.
+             */
+            carbon_footprint_avoided_grams_co2?: number;
+
+            /**
+             * The time the charging session ended, measured in seconds since the Unix epoch.
+             */
+            charging_ended_at: number;
+
+            /**
+             * The power output capacity of the charging station, in kilowatts (kW).
+             */
+            charging_power_output_capacity_kw: number;
+
+            /**
+             * The time the charging session started, measured in seconds since the Unix epoch.
+             */
+            charging_started_at: number;
+
+            /**
+             * The type of connector used for the charging session.
+             */
+            connector_type: EvCharging.ConnectorType;
+
+            /**
+             * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+             */
+            estimated_range_added?: number;
+
+            /**
+             * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+             */
+            estimated_range_left?: number;
+
+            /**
+             * The maximum power dispensed during the charging session, in kilowatts (kW).
+             */
+            maximum_power_dispensed_kw: number;
+          }
+
+          export interface FleetData {
+            /**
+             * The type of product being purchased at this line item.
+             */
+            product_type: FleetData.ProductType;
+
+            /**
+             * The type of service received at the acceptor location.
+             */
+            service_type?: FleetData.ServiceType;
+          }
+
+          export namespace EvCharging {
+            export type ConnectorType =
+              | 'ac_gb_t'
+              | 'ac_j1772'
+              | 'ac_mennekes'
+              | 'dc_ccs1'
+              | 'dc_ccs2'
+              | 'dc_chademo'
+              | 'dc_gb_t'
+              | 'dc_mcs'
+              | 'nacs'
+              | OtherString;
+          }
+
+          export namespace FleetData {
+            export type ProductType =
+              | 'additive_dosage'
+              | 'additized_diesel_2'
+              | 'additized_diesel_3'
+              | 'air_conditioning_service'
+              | 'air_filter'
+              | 'alcohol'
+              | 'antifreeze'
+              | 'automotive_merchandise'
+              | 'aviation_fuel_premium'
+              | 'aviation_fuel_regular'
+              | 'batteries'
+              | 'biodiesel_b1'
+              | 'biodiesel_b10'
+              | 'biodiesel_b100'
+              | 'biodiesel_b11'
+              | 'biodiesel_b15'
+              | 'biodiesel_b2'
+              | 'biodiesel_b20'
+              | 'biodiesel_b5'
+              | 'biodiesel_b75'
+              | 'biodiesel_b99'
+              | 'blended_diesel_1_and_2'
+              | 'body_work'
+              | 'brake_fluid'
+              | 'brake_service'
+              | 'car_care_detailing'
+              | 'car_wash'
+              | 'compressed_natural_gas'
+              | 'def_at_pump'
+              | 'deli'
+              | 'e85'
+              | 'engine_service'
+              | 'ethanol_e16_to_e84'
+              | 'ev_battery_exchanges'
+              | 'ev_charging_fee'
+              | 'evc_level_1'
+              | 'evc_level_2'
+              | 'evc_level_3'
+              | 'evc_level_4'
+              | 'evc_level_5'
+              | 'exhaust_service'
+              | 'federal_tire_excise_tax'
+              | 'food_service'
+              | 'fuel_additive_treatment'
+              | 'fuel_system'
+              | 'green_gasoline_mid_plus'
+              | 'green_gasoline_premium_super'
+              | 'green_gasoline_regular'
+              | 'grocery'
+              | 'heating_oil'
+              | 'hoses'
+              | 'hydrogen_h35'
+              | 'hydrogen_h70'
+              | 'inspection'
+              | 'kerosene_low_sulfur'
+              | 'kerosene_low_sulfur_non_taxable'
+              | 'kerosene_ultra_low_sulfur'
+              | 'kerosene_ultra_low_sulfur_non_taxable'
+              | 'labor'
+              | 'lamps'
+              | 'liquid_natural_gas'
+              | 'liquid_propane_gas'
+              | 'lodging'
+              | 'low_octane_unleaded'
+              | 'lube'
+              | 'marine_diesel'
+              | 'marine_fuel'
+              | 'marine_fuel_1'
+              | 'marine_fuel_2'
+              | 'marine_fuel_3'
+              | 'marine_fuel_4'
+              | 'marine_fuel_5'
+              | 'marine_other'
+              | 'merchandise'
+              | 'mid_plus'
+              | 'mid_plus_2'
+              | 'mid_plus_2_10'
+              | 'mid_plus_2_e15'
+              | 'mid_plus_2_reformulated'
+              | 'mid_plus_e10'
+              | 'mid_plus_e15'
+              | 'mid_plus_ethanol'
+              | 'mid_plus_reformulated'
+              | 'miscellaneous_aviation_products_services'
+              | 'miscellaneous_fuel'
+              | 'miscellaneous_marine_products_services'
+              | 'miscellaneous_vehicle_products_services'
+              | 'motor_oil'
+              | 'off_road_b1'
+              | 'off_road_b10'
+              | 'off_road_b100'
+              | 'off_road_b11'
+              | 'off_road_b15'
+              | 'off_road_b2'
+              | 'off_road_b20'
+              | 'off_road_b5'
+              | 'off_road_b75'
+              | 'off_road_b99'
+              | 'off_road_biodiesel'
+              | 'off_road_diesel_1'
+              | 'off_road_diesel_2'
+              | 'off_road_mid_plus'
+              | 'off_road_mid_plus_2'
+              | 'off_road_premium_diesel_1'
+              | 'off_road_premium_diesel_2'
+              | 'off_road_premium_super'
+              | 'off_road_premium_super_2'
+              | 'off_road_regular'
+              | 'off_road_renewable_diesel_b6_to_b20'
+              | 'off_road_renewable_diesel_r95'
+              | 'oil_change'
+              | 'oil_filter'
+              | 'other_lubricants'
+              | 'packaged_beverage'
+              | 'premium_diesel'
+              | 'premium_diesel_2'
+              | 'premium_diesel_b20_plus'
+              | 'premium_diesel_under_b20'
+              | 'premium_super'
+              | 'premium_super_2'
+              | 'premium_super_2_10'
+              | 'premium_super_2_e15'
+              | 'premium_super_2_reformulated'
+              | 'premium_super_e10'
+              | 'premium_super_e15'
+              | 'premium_super_ethanol'
+              | 'premium_super_reformulated'
+              | 'preventative_maintenance'
+              | 'racing_fuel'
+              | 'recreational_fuel_90_octane'
+              | 'regular'
+              | 'regular_diesel'
+              | 'regular_diesel_2'
+              | 'regular_e10'
+              | 'regular_e15'
+              | 'regular_ethanol'
+              | 'regular_reformulated'
+              | 'renewable_diesel_b6_to_b20'
+              | 'renewable_diesel_r95'
+              | 'repairs'
+              | 'road_service'
+              | 'rv_dump_fee'
+              | 'scales'
+              | 'self_service_car_wash'
+              | 'service_package'
+              | 'shower'
+              | 'store_service'
+              | 'synthetic_oil'
+              | 'tire_related'
+              | 'tire_repair'
+              | 'tire_rotation'
+              | 'tires'
+              | 'tobacco'
+              | 'toll_payments'
+              | 'towing'
+              | 'trailer_wash'
+              | 'transmission_service'
+              | 'truck_tank_cleaning'
+              | 'vehicle_accessories'
+              | 'vehicle_glass'
+              | 'vehicle_parking'
+              | 'vehicle_parts'
+              | 'vehicle_prep'
+              | 'vehicle_rental'
+              | 'vehicle_work_order'
+              | 'wash_out'
+              | 'washer_fluid'
+              | 'white_gas'
+              | 'wipers'
+              | OtherString;
+
+            export type ServiceType =
+              | 'full_service'
+              | 'high_speed_diesel'
+              | 'non_fuel_only'
+              | 'self_service'
+              | OtherString;
+          }
+        }
+
+        export namespace CardPresent {
           export interface EvCharging {
             /**
              * The carbon footprint avoided by the charging session, in grams of CO2.
@@ -37684,6 +39207,16 @@ export namespace PaymentIntentIncrementAuthorizationParams {
            * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
            */
           commodity_code?: string;
+
+          /**
+           * EV charging data for this line item.
+           */
+          ev_charging?: CardPresent.EvCharging;
+
+          /**
+           * Fleet data for this line item.
+           */
+          fleet_data?: CardPresent.FleetData;
         }
 
         export interface Klarna {
@@ -37726,6 +39259,257 @@ export namespace PaymentIntentIncrementAuthorizationParams {
         }
 
         export namespace Card {
+          export interface EvCharging {
+            /**
+             * The carbon footprint avoided by the charging session, in grams of CO2.
+             */
+            carbon_footprint_avoided_grams_co2?: number;
+
+            /**
+             * The time the charging session ended, measured in seconds since the Unix epoch.
+             */
+            charging_ended_at: number;
+
+            /**
+             * The power output capacity of the charging station, in kilowatts (kW).
+             */
+            charging_power_output_capacity_kw: number;
+
+            /**
+             * The time the charging session started, measured in seconds since the Unix epoch.
+             */
+            charging_started_at: number;
+
+            /**
+             * The type of connector used for the charging session.
+             */
+            connector_type: EvCharging.ConnectorType;
+
+            /**
+             * The estimated distance in kilometers or miles added to the vehicle during the charging session.
+             */
+            estimated_range_added?: number;
+
+            /**
+             * The estimated distance in kilometers or miles remaining in the vehicle after the charging session.
+             */
+            estimated_range_left?: number;
+
+            /**
+             * The maximum power dispensed during the charging session, in kilowatts (kW).
+             */
+            maximum_power_dispensed_kw: number;
+          }
+
+          export interface FleetData {
+            /**
+             * The type of product being purchased at this line item.
+             */
+            product_type: FleetData.ProductType;
+
+            /**
+             * The type of service received at the acceptor location.
+             */
+            service_type?: FleetData.ServiceType;
+          }
+
+          export namespace EvCharging {
+            export type ConnectorType =
+              | 'ac_gb_t'
+              | 'ac_j1772'
+              | 'ac_mennekes'
+              | 'dc_ccs1'
+              | 'dc_ccs2'
+              | 'dc_chademo'
+              | 'dc_gb_t'
+              | 'dc_mcs'
+              | 'nacs'
+              | OtherString;
+          }
+
+          export namespace FleetData {
+            export type ProductType =
+              | 'additive_dosage'
+              | 'additized_diesel_2'
+              | 'additized_diesel_3'
+              | 'air_conditioning_service'
+              | 'air_filter'
+              | 'alcohol'
+              | 'antifreeze'
+              | 'automotive_merchandise'
+              | 'aviation_fuel_premium'
+              | 'aviation_fuel_regular'
+              | 'batteries'
+              | 'biodiesel_b1'
+              | 'biodiesel_b10'
+              | 'biodiesel_b100'
+              | 'biodiesel_b11'
+              | 'biodiesel_b15'
+              | 'biodiesel_b2'
+              | 'biodiesel_b20'
+              | 'biodiesel_b5'
+              | 'biodiesel_b75'
+              | 'biodiesel_b99'
+              | 'blended_diesel_1_and_2'
+              | 'body_work'
+              | 'brake_fluid'
+              | 'brake_service'
+              | 'car_care_detailing'
+              | 'car_wash'
+              | 'compressed_natural_gas'
+              | 'def_at_pump'
+              | 'deli'
+              | 'e85'
+              | 'engine_service'
+              | 'ethanol_e16_to_e84'
+              | 'ev_battery_exchanges'
+              | 'ev_charging_fee'
+              | 'evc_level_1'
+              | 'evc_level_2'
+              | 'evc_level_3'
+              | 'evc_level_4'
+              | 'evc_level_5'
+              | 'exhaust_service'
+              | 'federal_tire_excise_tax'
+              | 'food_service'
+              | 'fuel_additive_treatment'
+              | 'fuel_system'
+              | 'green_gasoline_mid_plus'
+              | 'green_gasoline_premium_super'
+              | 'green_gasoline_regular'
+              | 'grocery'
+              | 'heating_oil'
+              | 'hoses'
+              | 'hydrogen_h35'
+              | 'hydrogen_h70'
+              | 'inspection'
+              | 'kerosene_low_sulfur'
+              | 'kerosene_low_sulfur_non_taxable'
+              | 'kerosene_ultra_low_sulfur'
+              | 'kerosene_ultra_low_sulfur_non_taxable'
+              | 'labor'
+              | 'lamps'
+              | 'liquid_natural_gas'
+              | 'liquid_propane_gas'
+              | 'lodging'
+              | 'low_octane_unleaded'
+              | 'lube'
+              | 'marine_diesel'
+              | 'marine_fuel'
+              | 'marine_fuel_1'
+              | 'marine_fuel_2'
+              | 'marine_fuel_3'
+              | 'marine_fuel_4'
+              | 'marine_fuel_5'
+              | 'marine_other'
+              | 'merchandise'
+              | 'mid_plus'
+              | 'mid_plus_2'
+              | 'mid_plus_2_10'
+              | 'mid_plus_2_e15'
+              | 'mid_plus_2_reformulated'
+              | 'mid_plus_e10'
+              | 'mid_plus_e15'
+              | 'mid_plus_ethanol'
+              | 'mid_plus_reformulated'
+              | 'miscellaneous_aviation_products_services'
+              | 'miscellaneous_fuel'
+              | 'miscellaneous_marine_products_services'
+              | 'miscellaneous_vehicle_products_services'
+              | 'motor_oil'
+              | 'off_road_b1'
+              | 'off_road_b10'
+              | 'off_road_b100'
+              | 'off_road_b11'
+              | 'off_road_b15'
+              | 'off_road_b2'
+              | 'off_road_b20'
+              | 'off_road_b5'
+              | 'off_road_b75'
+              | 'off_road_b99'
+              | 'off_road_biodiesel'
+              | 'off_road_diesel_1'
+              | 'off_road_diesel_2'
+              | 'off_road_mid_plus'
+              | 'off_road_mid_plus_2'
+              | 'off_road_premium_diesel_1'
+              | 'off_road_premium_diesel_2'
+              | 'off_road_premium_super'
+              | 'off_road_premium_super_2'
+              | 'off_road_regular'
+              | 'off_road_renewable_diesel_b6_to_b20'
+              | 'off_road_renewable_diesel_r95'
+              | 'oil_change'
+              | 'oil_filter'
+              | 'other_lubricants'
+              | 'packaged_beverage'
+              | 'premium_diesel'
+              | 'premium_diesel_2'
+              | 'premium_diesel_b20_plus'
+              | 'premium_diesel_under_b20'
+              | 'premium_super'
+              | 'premium_super_2'
+              | 'premium_super_2_10'
+              | 'premium_super_2_e15'
+              | 'premium_super_2_reformulated'
+              | 'premium_super_e10'
+              | 'premium_super_e15'
+              | 'premium_super_ethanol'
+              | 'premium_super_reformulated'
+              | 'preventative_maintenance'
+              | 'racing_fuel'
+              | 'recreational_fuel_90_octane'
+              | 'regular'
+              | 'regular_diesel'
+              | 'regular_diesel_2'
+              | 'regular_e10'
+              | 'regular_e15'
+              | 'regular_ethanol'
+              | 'regular_reformulated'
+              | 'renewable_diesel_b6_to_b20'
+              | 'renewable_diesel_r95'
+              | 'repairs'
+              | 'road_service'
+              | 'rv_dump_fee'
+              | 'scales'
+              | 'self_service_car_wash'
+              | 'service_package'
+              | 'shower'
+              | 'store_service'
+              | 'synthetic_oil'
+              | 'tire_related'
+              | 'tire_repair'
+              | 'tire_rotation'
+              | 'tires'
+              | 'tobacco'
+              | 'toll_payments'
+              | 'towing'
+              | 'trailer_wash'
+              | 'transmission_service'
+              | 'truck_tank_cleaning'
+              | 'vehicle_accessories'
+              | 'vehicle_glass'
+              | 'vehicle_parking'
+              | 'vehicle_parts'
+              | 'vehicle_prep'
+              | 'vehicle_rental'
+              | 'vehicle_work_order'
+              | 'wash_out'
+              | 'washer_fluid'
+              | 'white_gas'
+              | 'wipers'
+              | OtherString;
+
+            export type ServiceType =
+              | 'full_service'
+              | 'high_speed_diesel'
+              | 'non_fuel_only'
+              | 'self_service'
+              | OtherString;
+          }
+        }
+
+        export namespace CardPresent {
           export interface EvCharging {
             /**
              * The carbon footprint avoided by the charging session, in grams of CO2.

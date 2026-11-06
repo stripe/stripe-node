@@ -105,6 +105,11 @@ export namespace AccountSession {
     bills: Components.Bills;
 
     /**
+     * Settings for the Business Profile Management embedded component.
+     */
+    business_profile_management: Components.BusinessProfileManagement;
+
+    /**
      * Settings for the Capital Financing embedded component.
      */
     capital_financing: Components.CapitalFinancing;
@@ -355,6 +360,18 @@ export namespace AccountSession {
        * The scopes available to this embedded component.
        */
       scopes: Bills.Scopes;
+    }
+
+    export interface BusinessProfileManagement {
+      /**
+       * Whether this embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * The scopes available to this embedded component.
+       */
+      scopes: BusinessProfileManagement.Scopes;
     }
 
     export interface CapitalFinancing {
@@ -864,6 +881,10 @@ export namespace AccountSession {
 
         export type ManageBills = 'disabled' | 'enabled';
       }
+    }
+
+    export namespace BusinessProfileManagement {
+      export interface Scopes {}
     }
 
     export namespace CapitalFinancing {
@@ -1449,6 +1470,11 @@ export namespace V2 {
         bills?: Components.Bills;
 
         /**
+         * Settings for the Business Profile Management embedded component.
+         */
+        business_profile_management?: Components.BusinessProfileManagement;
+
+        /**
          * Settings for the Capital Financing embedded component.
          */
         capital_financing?: Components.CapitalFinancing;
@@ -1747,6 +1773,13 @@ export namespace V2 {
         }
 
         export interface Bills {
+          /**
+           * Whether this embedded component is enabled.
+           */
+          enabled: boolean;
+        }
+
+        export interface BusinessProfileManagement {
           /**
            * Whether this embedded component is enabled.
            */
