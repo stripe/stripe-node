@@ -2328,6 +2328,8 @@ export namespace Session {
 
     sofort?: PaymentMethodOptions.Sofort;
 
+    stripe_balance?: PaymentMethodOptions.StripeBalance;
+
     sunbit?: PaymentMethodOptions.Sunbit;
 
     swish?: PaymentMethodOptions.Swish;
@@ -4602,6 +4604,17 @@ export namespace Session {
 
     export interface Paypay {
       /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Paypay.SetupFutureUsage;
+
+      /**
        * A reference to the merchant subscription this payment corresponds to.
        */
       subscription_reference?: string | null;
@@ -4735,6 +4748,19 @@ export namespace Session {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: 'none';
+    }
+
+    export interface StripeBalance {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: StripeBalance.SetupFutureUsage;
     }
 
     export interface Sunbit {
@@ -4889,7 +4915,11 @@ export namespace Session {
           | 'sporadic'
           | OtherString;
 
-        export type TransactionType = 'business' | 'personal' | OtherString;
+        export type TransactionType =
+          | 'business'
+          | 'buyer_choice'
+          | 'personal'
+          | OtherString;
       }
     }
 
@@ -4917,6 +4947,7 @@ export namespace Session {
 
       export type VerificationMethod =
         | 'automatic'
+        | 'instant'
         | 'payer_name_verification'
         | OtherString;
     }
@@ -5152,6 +5183,10 @@ export namespace Session {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
+    export namespace Paypay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Payto {
       export interface MandateOptions {
         /**
@@ -5301,6 +5336,10 @@ export namespace Session {
         | 'off_session'
         | 'on_session'
         | OtherString;
+    }
+
+    export namespace StripeBalance {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Twint {
@@ -5988,6 +6027,13 @@ export namespace Checkout {
     custom_fields?: Array<SessionCreateParams.CustomField>;
 
     /**
+     * Options keyed by custom payment method type IDs (e.g., `cpmt_123`). Each ID must belong to your account and be included in `custom_payment_method_types`. Only available in `payment` mode.
+     */
+    custom_payment_method_options?: {
+      [key: string]: SessionCreateParams.CustomPaymentMethodOptions;
+    };
+
+    /**
      * A list of custom payment methods (e.g., `cpmt_123`) this Checkout Session can accept.
      *
      * You can add custom payment methods to your account through the dashboard under Settings > Custom Payment Methods.
@@ -6344,6 +6390,7 @@ export namespace Checkout {
       | 'stripe_balance'
       | 'sunbit'
       | 'swish'
+      | 'tamara'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -6514,6 +6561,13 @@ export namespace Checkout {
       type: CustomField.Type;
     }
 
+    export interface CustomPaymentMethodOptions {
+      /**
+       * Use `off_session` to set up this custom payment method for future payments when the customer is absent. Use `none` to disable setup for future usage.
+       */
+      setup_future_usage?: CustomPaymentMethodOptions.SetupFutureUsage;
+    }
+
     export interface CustomText {
       /**
        * Custom text that should be displayed after the payment confirmation button.
@@ -6632,6 +6686,7 @@ export namespace Checkout {
       | 'stripe_balance'
       | 'sunbit'
       | 'swish'
+      | 'tamara'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -7157,6 +7212,11 @@ export namespace Checkout {
        * contains details about the Sofort payment method options.
        */
       sofort?: PaymentMethodOptions.Sofort;
+
+      /**
+       * contains details about the Stripe Balance payment method options.
+       */
+      stripe_balance?: PaymentMethodOptions.StripeBalance;
 
       /**
        * contains details about the Sunbit payment method options.
@@ -7757,6 +7817,10 @@ export namespace Checkout {
           value: string;
         }
       }
+    }
+
+    export namespace CustomPaymentMethodOptions {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace CustomText {
@@ -9434,6 +9498,17 @@ export namespace Checkout {
 
       export interface Paypay {
         /**
+         * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+         *
+         * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+         *
+         * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+         *
+         * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+         */
+        setup_future_usage?: Paypay.SetupFutureUsage;
+
+        /**
          * The merchant's subscription identifier for this off-session charge.
          */
         subscription_reference?: string;
@@ -9576,6 +9651,19 @@ export namespace Checkout {
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
         setup_future_usage?: 'none';
+      }
+
+      export interface StripeBalance {
+        /**
+         * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+         *
+         * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+         *
+         * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+         *
+         * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+         */
+        setup_future_usage?: StripeBalance.SetupFutureUsage;
       }
 
       export interface Sunbit {
@@ -9729,7 +9817,11 @@ export namespace Checkout {
             | 'sporadic'
             | OtherString;
 
-          export type TransactionType = 'business' | 'personal' | OtherString;
+          export type TransactionType =
+            | 'business'
+            | 'buyer_choice'
+            | 'personal'
+            | OtherString;
         }
       }
 
@@ -9757,6 +9849,7 @@ export namespace Checkout {
 
         export type VerificationMethod =
           | 'automatic'
+          | 'instant'
           | 'payer_name_verification'
           | OtherString;
       }
@@ -10076,6 +10169,10 @@ export namespace Checkout {
         export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
       }
 
+      export namespace Paypay {
+        export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+      }
+
       export namespace Payto {
         export interface MandateOptions {
           /**
@@ -10225,6 +10322,10 @@ export namespace Checkout {
           | 'off_session'
           | 'on_session'
           | OtherString;
+      }
+
+      export namespace StripeBalance {
+        export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
       }
 
       export namespace Twint {

@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {FormCorrection} from './FormCorrections.js';
 import {Account} from './../Accounts.js';
-import {PaginationParams, OtherString} from '../../shared.js';
+import {AddressParam, PaginationParams, OtherString} from '../../shared.js';
 import {
   RequestOptions,
   ApiListPromise,
@@ -33,6 +34,21 @@ export class FormResource extends StripeResource {
     return this._makeRequest(
       'GET',
       `/v1/tax/forms/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Creates a correction for a filed tax form. Supply either payee details or numerical values for the tax form type. Created correction forms are not filed automatically.
+   */
+  create(
+    id: string,
+    params?: Tax.FormCreateParams,
+    options?: RequestOptions
+  ): Promise<Response<FormCorrection>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/tax/forms/${encodeURIComponent(id)}/corrections`,
       params,
       options
     ) as any;
@@ -723,6 +739,448 @@ export namespace Form {
        * The effective amount in the form's currency, as a decimal string.
        */
       volume_decimal?: string;
+    }
+  }
+}
+export namespace Tax {
+  export interface FormCreateParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Replacement payee details. Cannot be combined with numerical correction fields. Omitted fields remain unchanged.
+     */
+    payee_details?: FormCreateParams.PayeeDetails;
+
+    /**
+     * Whether a second TIN notice was received. Supported for K and MISC forms only; cannot be supplied without a substantive correction.
+     */
+    second_tin_notice?: boolean;
+
+    /**
+     * Replacement numerical values for a 1099-K. Supply only the group matching the original form. Omitted fields remain unchanged.
+     */
+    us_1099_k?: FormCreateParams.Us1099K;
+
+    /**
+     * Replacement numerical values for a 1099-MISC. Supply only the group matching the original form. Omitted fields remain unchanged.
+     */
+    us_1099_misc?: FormCreateParams.Us1099Misc;
+
+    /**
+     * Replacement numerical values for a 1099-NEC. Supply only the group matching the original form. Omitted fields remain unchanged.
+     */
+    us_1099_nec?: FormCreateParams.Us1099Nec;
+  }
+
+  export namespace FormCreateParams {
+    export interface PayeeDetails {
+      /**
+       * The payee's replacement address fields. Omitted fields remain unchanged.
+       */
+      address?: AddressParam;
+
+      /**
+       * The payee's merchant category code.
+       */
+      merchant_category_code?: string;
+
+      /**
+       * The first line of the payee's name.
+       */
+      name_line_1?: string;
+
+      /**
+       * The second line of the payee's name. An empty string clears this field.
+       */
+      name_line_2?: string;
+
+      /**
+       * The payee's US taxpayer identification number.
+       */
+      tax_id_number?: string;
+
+      /**
+       * The payee's Treasury tipped occupation code, where supported by the reporting year and form type.
+       */
+      treasury_tipped_occupation_code?: string;
+    }
+
+    export interface Us1099K {
+      /**
+       * Replacement card-not-present transaction amount.
+       */
+      card_not_present_transactions?: Us1099K.CardNotPresentTransactions;
+
+      /**
+       * Replacement cash tips, where supported by the reporting year.
+       */
+      cash_tips?: Us1099K.CashTips;
+
+      /**
+       * Replacement federal income tax withheld.
+       */
+      federal_income_tax_withheld?: Us1099K.FederalIncomeTaxWithheld;
+
+      /**
+       * Replacement amounts for all twelve months, from January through December.
+       */
+      monthly_volumes?: Array<Us1099K.MonthlyVolume>;
+
+      /**
+       * Replacement payment transaction count.
+       */
+      payment_transactions_count?: Us1099K.PaymentTransactionsCount;
+
+      /**
+       * Replacement state income tax withheld.
+       */
+      state_income_tax_withheld?: Us1099K.StateIncomeTaxWithheld;
+    }
+
+    export interface Us1099Misc {
+      /**
+       * Replacement cash tips, where supported by the reporting year.
+       */
+      cash_tips?: Us1099Misc.CashTips;
+
+      /**
+       * Replacement crop insurance proceeds.
+       */
+      crop_insurance_proceeds?: Us1099Misc.CropInsuranceProceeds;
+
+      /**
+       * Replacement direct-sales-for-resale indicator.
+       */
+      direct_sales_for_resale?: boolean;
+
+      /**
+       * Replacement excess golden parachute payments, where supported by the reporting year.
+       */
+      excess_golden_parachute_payments?: Us1099Misc.ExcessGoldenParachutePayments;
+
+      /**
+       * Replacement FATCA filing requirement; cannot be supplied without a substantive correction.
+       */
+      fatca_filing_required?: boolean;
+
+      /**
+       * Replacement federal income tax withheld.
+       */
+      federal_income_tax_withheld?: Us1099Misc.FederalIncomeTaxWithheld;
+
+      /**
+       * Replacement fish purchased for resale.
+       */
+      fish_purchased_for_resale?: Us1099Misc.FishPurchasedForResale;
+
+      /**
+       * Replacement fishing boat proceeds.
+       */
+      fishing_boat_proceeds?: Us1099Misc.FishingBoatProceeds;
+
+      /**
+       * Replacement gross proceeds paid to an attorney.
+       */
+      gross_proceeds_paid_to_an_attorney?: Us1099Misc.GrossProceedsPaidToAnAttorney;
+
+      /**
+       * Replacement medical and health care payments.
+       */
+      medical_and_health_care_payments?: Us1099Misc.MedicalAndHealthCarePayments;
+
+      /**
+       * Replacement nonqualified deferred compensation.
+       */
+      nonqualified_deferred_compensation?: Us1099Misc.NonqualifiedDeferredCompensation;
+
+      /**
+       * Replacement other income.
+       */
+      other_income?: Us1099Misc.OtherIncome;
+
+      /**
+       * Replacement overtime compensation, where supported by the reporting year.
+       */
+      overtime_compensation?: Us1099Misc.OvertimeCompensation;
+
+      /**
+       * Replacement rents.
+       */
+      rents?: Us1099Misc.Rents;
+
+      /**
+       * Replacement royalties.
+       */
+      royalties?: Us1099Misc.Royalties;
+
+      /**
+       * Replacement section 409A deferrals.
+       */
+      section_409a_deferrals?: Us1099Misc.Section409aDeferrals;
+
+      /**
+       * Replacement state income.
+       */
+      state_income?: Us1099Misc.StateIncome;
+
+      /**
+       * Replacement state tax withheld.
+       */
+      state_tax_withheld?: Us1099Misc.StateTaxWithheld;
+
+      /**
+       * Replacement substitute payments.
+       */
+      substitute_payments?: Us1099Misc.SubstitutePayments;
+    }
+
+    export interface Us1099Nec {
+      /**
+       * Replacement cash tips, where supported by the reporting year.
+       */
+      cash_tips?: Us1099Nec.CashTips;
+
+      /**
+       * Replacement direct-sales indicator.
+       */
+      direct_sales_indicator?: boolean;
+
+      /**
+       * Replacement federal income tax withheld.
+       */
+      federal_income_tax_withheld?: Us1099Nec.FederalIncomeTaxWithheld;
+
+      /**
+       * Replacement nonemployee compensation.
+       */
+      nonemployee_compensation?: Us1099Nec.NonemployeeCompensation;
+
+      /**
+       * Replacement overtime compensation, where supported by the reporting year.
+       */
+      overtime_compensation?: Us1099Nec.OvertimeCompensation;
+
+      /**
+       * Replacement state income.
+       */
+      state_income?: Us1099Nec.StateIncome;
+
+      /**
+       * Replacement state tax withheld.
+       */
+      state_tax_withheld?: Us1099Nec.StateTaxWithheld;
+    }
+
+    export namespace Us1099K {
+      export interface CardNotPresentTransactions {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface CashTips {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface FederalIncomeTaxWithheld {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface MonthlyVolume {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface PaymentTransactionsCount {
+        /**
+         * The replacement non-negative transaction count.
+         */
+        count: number;
+      }
+
+      export interface StateIncomeTaxWithheld {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+    }
+
+    export namespace Us1099Misc {
+      export interface CashTips {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface CropInsuranceProceeds {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface ExcessGoldenParachutePayments {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface FederalIncomeTaxWithheld {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface FishPurchasedForResale {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface FishingBoatProceeds {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface GrossProceedsPaidToAnAttorney {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface MedicalAndHealthCarePayments {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface NonqualifiedDeferredCompensation {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface OtherIncome {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface OvertimeCompensation {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface Rents {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface Royalties {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface Section409aDeferrals {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface StateIncome {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface StateTaxWithheld {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface SubstitutePayments {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+    }
+
+    export namespace Us1099Nec {
+      export interface CashTips {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface FederalIncomeTaxWithheld {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface NonemployeeCompensation {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface OvertimeCompensation {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface StateIncome {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
+
+      export interface StateTaxWithheld {
+        /**
+         * The replacement amount in major currency units, with at most two decimal places. Must be non-negative.
+         */
+        volume_decimal: string;
+      }
     }
   }
 }

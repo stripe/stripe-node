@@ -166,6 +166,8 @@ export interface PaymentMethod {
 
   acss_debit?: PaymentMethod.AcssDebit;
 
+  aeon_pay?: PaymentMethod.AeonPay;
+
   affirm?: PaymentMethod.Affirm;
 
   afterpay_clearpay?: PaymentMethod.AfterpayClearpay;
@@ -182,6 +184,8 @@ export interface PaymentMethod {
   amazon_pay?: PaymentMethod.AmazonPay;
 
   au_becs_debit?: PaymentMethod.AuBecsDebit;
+
+  au_pay?: PaymentMethod.AuPay;
 
   bacs_debit?: PaymentMethod.BacsDebit;
 
@@ -222,6 +226,8 @@ export interface PaymentMethod {
   customer_account: string | null;
 
   customer_balance?: PaymentMethod.CustomerBalance;
+
+  dbarai?: PaymentMethod.Dbarai;
 
   eps?: PaymentMethod.Eps;
 
@@ -264,6 +270,8 @@ export interface PaymentMethod {
   livemode: boolean;
 
   mb_way?: PaymentMethod.MbWay;
+
+  merpay?: PaymentMethod.Merpay;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -397,6 +405,8 @@ export namespace PaymentMethod {
     transit_number: string | null;
   }
 
+  export interface AeonPay {}
+
   export interface Affirm {}
 
   export interface AfterpayClearpay {}
@@ -429,6 +439,8 @@ export namespace PaymentMethod {
      */
     last4: string | null;
   }
+
+  export interface AuPay {}
 
   export interface BacsDebit {
     /**
@@ -721,6 +733,8 @@ export namespace PaymentMethod {
 
   export interface CustomerBalance {}
 
+  export interface Dbarai {}
+
   export interface Eps {
     /**
      * The customer's bank. Should be one of `arzte_und_apotheker_bank`, `austrian_anadi_bank_ag`, `bank_austria`, `bankhaus_carl_spangler`, `bankhaus_schelhammer_und_schattera_ag`, `bawag_psk_ag`, `bks_bank_ag`, `brull_kallmus_bank_ag`, `btv_vier_lander_bank`, `capital_bank_grawe_gruppe_ag`, `deutsche_bank_ag`, `dolomitenbank`, `easybank_ag`, `erste_bank_und_sparkassen`, `hypo_alpeadriabank_international_ag`, `hypo_noe_lb_fur_niederosterreich_u_wien`, `hypo_oberosterreich_salzburg_steiermark`, `hypo_tirol_bank_ag`, `hypo_vorarlberg_bank_ag`, `hypo_bank_burgenland_aktiengesellschaft`, `marchfelder_bank`, `oberbank_ag`, `raiffeisen_bankengruppe_osterreich`, `schoellerbank_ag`, `sparda_bank_wien`, `volksbank_gruppe`, `volkskreditbank_ag`, or `vr_bank_braunau`.
@@ -908,6 +922,8 @@ export namespace PaymentMethod {
   }
 
   export interface MbWay {}
+
+  export interface Merpay {}
 
   export interface Mobilepay {}
 
@@ -1128,12 +1144,14 @@ export namespace PaymentMethod {
 
   export type Type =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -1147,6 +1165,7 @@ export namespace PaymentMethod {
     | 'crypto'
     | 'custom'
     | 'customer_balance'
+    | 'dbarai'
     | 'eps'
     | 'fpx'
     | 'getflex'
@@ -1163,6 +1182,7 @@ export namespace PaymentMethod {
     | 'kr_card'
     | 'link'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'multibanco'
     | 'naver_pay'
@@ -1430,6 +1450,8 @@ export namespace PaymentMethod {
            */
           fingerprint: string | null;
 
+          fleet?: CardPresent.Fleet;
+
           /**
            * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
            */
@@ -1526,6 +1548,13 @@ export namespace PaymentMethod {
         }
 
         export namespace CardPresent {
+          export interface Fleet {
+            /**
+             * Fleet prompts and values collected for this transaction.
+             */
+            transaction_data: Array<Fleet.TransactionDatum>;
+          }
+
           export interface Multicapture {
             /**
              * Indicates whether or not multiple captures are supported.
@@ -1612,6 +1641,49 @@ export namespace PaymentMethod {
              * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
              */
             type: Wallet.Type;
+          }
+
+          export namespace Fleet {
+            export interface TransactionDatum {
+              /**
+               * The prompt that the Terminal SDK displays to collect this Fleet value.
+               */
+              prompt: TransactionDatum.Prompt;
+
+              /**
+               * Whether the collected value is printed on the receipt.
+               */
+              receipt_behavior: TransactionDatum.ReceiptBehavior;
+
+              /**
+               * The value collected for this Fleet prompt.
+               */
+              value: string;
+            }
+
+            export namespace TransactionDatum {
+              export type Prompt =
+                | 'additional_fleet_data_1'
+                | 'additional_fleet_data_2'
+                | 'driver_id'
+                | 'employee_number'
+                | 'entered_data_alphanumeric'
+                | 'entered_data_numeric'
+                | 'generic_id'
+                | 'invoice_number'
+                | 'odometer'
+                | 'postal_code'
+                | 'reefer_hours'
+                | 'replacement_car'
+                | 'trailer_number'
+                | 'trip_number'
+                | 'unit_number'
+                | 'vehicle_id'
+                | 'vehicle_tag'
+                | 'work_order';
+
+              export type ReceiptBehavior = 'omit' | 'print';
+            }
           }
 
           export namespace Multicapture {
@@ -2122,6 +2194,11 @@ export interface PaymentMethodCreateParams {
   acss_debit?: PaymentMethodCreateParams.AcssDebit;
 
   /**
+   * If this is a `aeon_pay` PaymentMethod, this hash contains details about the AEON Pay payment method.
+   */
+  aeon_pay?: PaymentMethodCreateParams.AeonPay;
+
+  /**
    * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
    */
   affirm?: PaymentMethodCreateParams.Affirm;
@@ -2155,6 +2232,11 @@ export interface PaymentMethodCreateParams {
    * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
    */
   au_becs_debit?: PaymentMethodCreateParams.AuBecsDebit;
+
+  /**
+   * If this is a `au_pay` PaymentMethod, this hash contains details about the au PAY payment method.
+   */
+  au_pay?: PaymentMethodCreateParams.AuPay;
 
   /**
    * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
@@ -2225,6 +2307,11 @@ export interface PaymentMethodCreateParams {
    * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
    */
   customer_balance?: PaymentMethodCreateParams.CustomerBalance;
+
+  /**
+   * If this is a `dbarai` PaymentMethod, this hash contains details about the d-Barai payment method.
+   */
+  dbarai?: PaymentMethodCreateParams.Dbarai;
 
   /**
    * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
@@ -2310,6 +2397,11 @@ export interface PaymentMethodCreateParams {
    * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
    */
   mb_way?: PaymentMethodCreateParams.MbWay;
+
+  /**
+   * If this is a `merpay` PaymentMethod, this hash contains details about the Merpay payment method.
+   */
+  merpay?: PaymentMethodCreateParams.Merpay;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -2534,6 +2626,8 @@ export namespace PaymentMethodCreateParams {
     transit_number: string;
   }
 
+  export interface AeonPay {}
+
   export interface Affirm {}
 
   export interface AfterpayClearpay {}
@@ -2561,6 +2655,8 @@ export namespace PaymentMethodCreateParams {
      */
     bsb_number: string;
   }
+
+  export interface AuPay {}
 
   export interface BacsDebit {
     /**
@@ -2663,6 +2759,8 @@ export namespace PaymentMethodCreateParams {
 
   export interface CustomerBalance {}
 
+  export interface Dbarai {}
+
   export interface Eps {
     /**
      * The customer's bank.
@@ -2729,6 +2827,8 @@ export namespace PaymentMethodCreateParams {
   export interface Link {}
 
   export interface MbWay {}
+
+  export interface Merpay {}
 
   export interface Mobilepay {}
 
@@ -2875,12 +2975,14 @@ export namespace PaymentMethodCreateParams {
 
   export type Type =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -2893,6 +2995,7 @@ export namespace PaymentMethodCreateParams {
     | 'crypto'
     | 'custom'
     | 'customer_balance'
+    | 'dbarai'
     | 'eps'
     | 'fpx'
     | 'getflex'
@@ -2908,6 +3011,7 @@ export namespace PaymentMethodCreateParams {
     | 'kr_card'
     | 'link'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'multibanco'
     | 'naver_pay'
@@ -3412,12 +3516,14 @@ export namespace PaymentMethodListParams {
 
   export type Type =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -3430,6 +3536,7 @@ export namespace PaymentMethodListParams {
     | 'crypto'
     | 'custom'
     | 'customer_balance'
+    | 'dbarai'
     | 'eps'
     | 'fpx'
     | 'getflex'
@@ -3445,6 +3552,7 @@ export namespace PaymentMethodListParams {
     | 'kr_card'
     | 'link'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'multibanco'
     | 'naver_pay'

@@ -1418,7 +1418,7 @@ export interface Subscription {
   automatic_tax: Subscription.AutomaticTax;
 
   /**
-   * The Billing Cadence which controls the timing of recurring invoice generation for this subscription.If unset, the subscription will bill according to its own configured schedule and create its own invoices.If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
+   * The Billing Cadence which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
    */
   billing_cadence?: string;
 
@@ -1431,6 +1431,11 @@ export interface Subscription {
    * The fixed values used to calculate the `billing_cycle_anchor`.
    */
   billing_cycle_anchor_config: Subscription.BillingCycleAnchorConfig | null;
+
+  /**
+   * The Billing Group which controls the timing of recurring invoice generation for this subscription.If unset, the subscription will bill according to its own configured schedule and create its own invoices.If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
+   */
+  billing_group?: string;
 
   /**
    * The billing mode of the subscription.
@@ -2468,6 +2473,7 @@ export namespace Subscription {
       export namespace BacsDebit {
         export type VerificationMethod =
           | 'automatic'
+          | 'instant'
           | 'payer_name_verification'
           | OtherString;
       }
@@ -2899,6 +2905,11 @@ export interface SubscriptionCreateParams {
    * Mutually exclusive with billing_cycle_anchor and only valid with monthly and yearly price intervals. When provided, the billing_cycle_anchor is set to the next occurrence of the day_of_month at the hour, minute, and second UTC.
    */
   billing_cycle_anchor_config?: SubscriptionCreateParams.BillingCycleAnchorConfig;
+
+  /**
+   * The Billing Group which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
+   */
+  billing_group?: string;
 
   /**
    * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
@@ -4297,6 +4308,7 @@ export namespace SubscriptionCreateParams {
       export namespace BacsDebit {
         export type VerificationMethod =
           | 'automatic'
+          | 'instant'
           | 'payer_name_verification'
           | OtherString;
       }
@@ -4676,6 +4688,11 @@ export interface SubscriptionUpdateParams {
    * Controls how the subscription's billing cycle anchor changes. Set `type` to `now` to reset the billing cycle anchor to the current time (in UTC), or `unchanged` to preserve it. For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
    */
   billing_cycle_anchor?: SubscriptionUpdateParams.BillingCycleAnchor;
+
+  /**
+   * The Billing Group which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
+   */
+  billing_group?: string;
 
   /**
    * An array of billing schedules, which allow you to bill customers in advance for multiple service periods. Requires flexible billing mode and API version 2026-05-27.dahlia or later. Learn more about [prebilling](https://docs.stripe.com/billing/subscriptions/prebilling).
@@ -6077,6 +6094,7 @@ export namespace SubscriptionUpdateParams {
       export namespace BacsDebit {
         export type VerificationMethod =
           | 'automatic'
+          | 'instant'
           | 'payer_name_verification'
           | OtherString;
       }
@@ -6432,9 +6450,14 @@ export interface SubscriptionListParams extends PaginationParams {
   automatic_tax?: SubscriptionListParams.AutomaticTax;
 
   /**
-   * Filter for subscriptions that have the specified billing cadence.
+   * The Billing Cadence which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
    */
   billing_cadence?: string;
+
+  /**
+   * Filter for subscriptions that have the specified billing group.
+   */
+  billing_group?: string;
 
   /**
    * The collection method of the subscriptions to retrieve. Either `charge_automatically` or `send_invoice`.

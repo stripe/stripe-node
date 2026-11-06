@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {OtherString} from '../shared.js';
 export interface CustomerTaxExemption {
   /**
    * Unique identifier for the object.
@@ -50,6 +51,16 @@ export interface CustomerTaxExemption {
    */
   livemode: boolean;
 
+  /**
+   * The reason the customer is exempt.
+   */
+  reason?: CustomerTaxExemption.Reason | null;
+
+  /**
+   * Additional details about the exemption reason.
+   */
+  reason_details?: CustomerTaxExemption.ReasonDetails | null;
+
   us?: CustomerTaxExemption.Us;
 }
 export interface DeletedCustomerTaxExemption {
@@ -88,10 +99,38 @@ export namespace CustomerTaxExemption {
     state?: string;
   }
 
+  export type Reason =
+    | 'direct_pay_permit'
+    | 'legacy_contract'
+    | 'other'
+    | OtherString;
+
+  export interface ReasonDetails {
+    other?: ReasonDetails.Other;
+  }
+
   export interface Us {
     /**
      * Two-letter US state code (ISO 3166-2).
      */
     state: string;
+
+    /**
+     * The group of tax codes this exemption applies to. Exemptions created without one have `all`.
+     */
+    tax_code_group?: Us.TaxCodeGroup;
+  }
+
+  export namespace ReasonDetails {
+    export interface Other {
+      /**
+       * A free-text description of the exemption reason.
+       */
+      reason_text?: string;
+    }
+  }
+
+  export namespace Us {
+    export type TaxCodeGroup = 'all' | 'saas' | OtherString;
   }
 }

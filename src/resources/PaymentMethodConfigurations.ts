@@ -206,6 +206,8 @@ export interface PaymentMethodConfiguration {
 
   qris?: PaymentMethodConfiguration.Qris;
 
+  rakuten_pay?: PaymentMethodConfiguration.RakutenPay;
+
   revolut_pay?: PaymentMethodConfiguration.RevolutPay;
 
   samsung_pay?: PaymentMethodConfiguration.SamsungPay;
@@ -678,6 +680,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: Qris.DisplayPreference;
+  }
+
+  export interface RakutenPay {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: RakutenPay.DisplayPreference;
   }
 
   export interface RevolutPay {
@@ -2049,6 +2060,31 @@ export namespace PaymentMethodConfiguration {
     }
   }
 
+  export namespace RakutenPay {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace RevolutPay {
     export interface DisplayPreference {
       /**
@@ -2721,6 +2757,11 @@ export interface PaymentMethodConfigurationCreateParams {
   qris?: PaymentMethodConfigurationCreateParams.Qris;
 
   /**
+   * Rakuten Pay is a single-use payment method that requires customers to authenticate their payment. Customers pay by being redirected from your website or app, authorizing the payment with Rakuten Pay, then returning to your website or app. You get immediate notification of whether the payment succeeded or failed.
+   */
+  rakuten_pay?: PaymentMethodConfigurationCreateParams.RakutenPay;
+
+  /**
    * Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut Pay uses the customer's stored balance or cards to fund the payment, and offers the option for non-Revolut customers to save their details after their first purchase.
    */
   revolut_pay?: PaymentMethodConfigurationCreateParams.RevolutPay;
@@ -3156,6 +3197,13 @@ export namespace PaymentMethodConfigurationCreateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: Qris.DisplayPreference;
+  }
+
+  export interface RakutenPay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: RakutenPay.DisplayPreference;
   }
 
   export interface RevolutPay {
@@ -3921,6 +3969,19 @@ export namespace PaymentMethodConfigurationCreateParams {
   }
 
   export namespace Qris {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace RakutenPay {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
@@ -4419,6 +4480,11 @@ export interface PaymentMethodConfigurationUpdateParams {
   qris?: PaymentMethodConfigurationUpdateParams.Qris;
 
   /**
+   * Rakuten Pay is a single-use payment method that requires customers to authenticate their payment. Customers pay by being redirected from your website or app, authorizing the payment with Rakuten Pay, then returning to your website or app. You get immediate notification of whether the payment succeeded or failed.
+   */
+  rakuten_pay?: PaymentMethodConfigurationUpdateParams.RakutenPay;
+
+  /**
    * Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut Pay uses the customer's stored balance or cards to fund the payment, and offers the option for non-Revolut customers to save their details after their first purchase.
    */
   revolut_pay?: PaymentMethodConfigurationUpdateParams.RevolutPay;
@@ -4854,6 +4920,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: Qris.DisplayPreference;
+  }
+
+  export interface RakutenPay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: RakutenPay.DisplayPreference;
   }
 
   export interface RevolutPay {
@@ -5619,6 +5692,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 
   export namespace Qris {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace RakutenPay {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.

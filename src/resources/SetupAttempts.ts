@@ -526,7 +526,12 @@ export namespace SetupAttempt {
 
     export interface Paypal {}
 
-    export interface Paypay {}
+    export interface Paypay {
+      /**
+       * Uniquely identifies this particular PayPay account. You can use this attribute to check whether two PayPay accounts are the same.
+       */
+      fingerprint?: string | null;
+    }
 
     export interface Payto {}
 

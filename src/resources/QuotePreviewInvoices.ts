@@ -1794,6 +1794,7 @@ export namespace QuotePreviewInvoice {
       export namespace BacsDebit {
         export type VerificationMethod =
           | 'automatic'
+          | 'instant'
           | 'payer_name_verification'
           | OtherString;
       }

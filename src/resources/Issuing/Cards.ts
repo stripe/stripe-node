@@ -325,7 +325,7 @@ export namespace Card {
     /**
      * The time the card was reported as delivered. Null for undelivered or untracked shipments, or if Stripe has not recorded a delivery time.
      */
-    delivered_at?: number | null;
+    delivered_at: number | null;
 
     /**
      * A unix timestamp representing a best estimate of when the card will be delivered.
@@ -355,7 +355,7 @@ export namespace Card {
     /**
      * The time the card was reported as shipped. Null if Stripe has not recorded a shipment time.
      */
-    shipped_at?: number | null;
+    shipped_at: number | null;
 
     /**
      * The delivery status of the card.

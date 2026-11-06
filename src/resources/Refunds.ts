@@ -222,6 +222,11 @@ export interface Refund {
   payment_method: string | PaymentMethod | null;
 
   /**
+   * ID of the PaymentRecord associated with the payment that has been refunded.
+   */
+  payment_record?: string;
+
+  /**
    * Provides the reason for why the refund is pending. Possible values are: `processing`, `insufficient_funds`, or `charge_pending`.
    */
   pending_reason?: Refund.PendingReason;
@@ -266,6 +271,8 @@ export namespace Refund {
     amazon_pay?: DestinationDetails.AmazonPay;
 
     au_bank_transfer?: DestinationDetails.AuBankTransfer;
+
+    bizum?: DestinationDetails.Bizum;
 
     blik?: DestinationDetails.Blik;
 
@@ -327,6 +334,8 @@ export namespace Refund {
      * The type of transaction-specific details of the payment method used in the refund (e.g., `card`). An additional hash is included on `destination_details` with a name matching this value. It contains information specific to the refund transaction.
      */
     type: string;
+
+    upi?: DestinationDetails.Upi;
 
     us_bank_transfer?: DestinationDetails.UsBankTransfer;
 
@@ -391,6 +400,18 @@ export namespace Refund {
     export interface AmazonPay {}
 
     export interface AuBankTransfer {}
+
+    export interface Bizum {
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
+    }
 
     export interface Blik {
       /**
@@ -628,6 +649,18 @@ export namespace Refund {
 
     export interface Twint {}
 
+    export interface Upi {
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
+    }
+
     export interface UsBankTransfer {
       /**
        * The reference assigned to the refund.
@@ -723,6 +756,11 @@ export interface RefundCreateParams {
   payment_intent?: string;
 
   /**
+   * The ID of a PaymentMethod that will receive the refund.
+   */
+  payment_method?: string;
+
+  /**
    * Used to create the PaymentMethod that will receive the refund.
    */
   payment_method_data?: RefundCreateParams.PaymentMethodData;
@@ -790,12 +828,14 @@ export namespace RefundCreateParams {
 
     export type Type =
       | 'acss_debit'
+      | 'aeon_pay'
       | 'affirm'
       | 'afterpay_clearpay'
       | 'alipay'
       | 'alma'
       | 'amazon_pay'
       | 'au_becs_debit'
+      | 'au_pay'
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
@@ -808,6 +848,7 @@ export namespace RefundCreateParams {
       | 'crypto'
       | 'custom'
       | 'customer_balance'
+      | 'dbarai'
       | 'eps'
       | 'fpx'
       | 'getflex'
@@ -823,6 +864,7 @@ export namespace RefundCreateParams {
       | 'kr_card'
       | 'link'
       | 'mb_way'
+      | 'merpay'
       | 'mobilepay'
       | 'multibanco'
       | 'naver_pay'

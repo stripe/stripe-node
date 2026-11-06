@@ -288,6 +288,11 @@ export interface SetupIntent {
   payment_method_types: Array<string>;
 
   /**
+   * Options to configure Radar.
+   */
+  radar_options?: SetupIntent.RadarOptions | null;
+
+  /**
    * Redaction status of this SetupIntent. If the SetupIntent isn't redacted, this field is null.
    */
   redaction?: SetupIntent.Redaction | null;
@@ -314,12 +319,14 @@ export interface SetupIntent {
 export namespace SetupIntent {
   export type AllowedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -336,6 +343,7 @@ export namespace SetupIntent {
     | 'click_to_pay'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'demo_pay'
     | 'duitnow'
     | 'dummy_auth_push'
@@ -362,6 +370,7 @@ export namespace SetupIntent {
     | 'kriya'
     | 'link'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'momo'
     | 'mondu'
@@ -441,12 +450,14 @@ export namespace SetupIntent {
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -458,6 +469,7 @@ export namespace SetupIntent {
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'eps'
     | 'fpx'
     | 'getflex'
@@ -472,6 +484,7 @@ export namespace SetupIntent {
     | 'konbini'
     | 'kr_card'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'multibanco'
     | 'naver_pay'
@@ -709,6 +722,18 @@ export namespace SetupIntent {
     upi?: PaymentMethodOptions.Upi;
 
     us_bank_account?: PaymentMethodOptions.UsBankAccount;
+  }
+
+  export interface RadarOptions {
+    /**
+     * The value you provided for whether this transaction starts a free trial. This is null if you haven't explicitly set it.
+     */
+    is_free_trial_transaction?: boolean | null;
+
+    /**
+     * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+     */
+    session?: string;
   }
 
   export interface Redaction {
@@ -1037,7 +1062,7 @@ export namespace SetupIntent {
 
     export interface VerifyWithMicrodeposits {
       /**
-       * The timestamp when the microdeposits are expected to land.
+       * The timestamp when the microdeposits are expected to land. Null for instant microdeposits.
        */
       arrival_date: number;
 
@@ -1285,6 +1310,7 @@ export namespace SetupIntent {
 
       export type VerificationMethod =
         | 'automatic'
+        | 'instant'
         | 'payer_name_verification'
         | OtherString;
     }
@@ -1787,6 +1813,11 @@ export interface SetupIntentCreateParams {
   payment_method_options?: SetupIntentCreateParams.PaymentMethodOptions;
 
   /**
+   * Options to configure Radar.
+   */
+  radar_options?: SetupIntentCreateParams.RadarOptions;
+
+  /**
    * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. To redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter can only be used with [`confirm=true`](https://docs.stripe.com/api/setup_intents/create#create_setup_intent-confirm).
    */
   return_url?: string;
@@ -1816,12 +1847,14 @@ export interface SetupIntentCreateParams {
 export namespace SetupIntentCreateParams {
   export type AllowedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -1838,6 +1871,7 @@ export namespace SetupIntentCreateParams {
     | 'click_to_pay'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'demo_pay'
     | 'duitnow'
     | 'dummy_auth_push'
@@ -1864,6 +1898,7 @@ export namespace SetupIntentCreateParams {
     | 'kriya'
     | 'link'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'momo'
     | 'mondu'
@@ -1937,12 +1972,14 @@ export namespace SetupIntentCreateParams {
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -1954,6 +1991,7 @@ export namespace SetupIntentCreateParams {
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'eps'
     | 'fpx'
     | 'getflex'
@@ -1968,6 +2006,7 @@ export namespace SetupIntentCreateParams {
     | 'konbini'
     | 'kr_card'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'multibanco'
     | 'naver_pay'
@@ -2023,6 +2062,11 @@ export namespace SetupIntentCreateParams {
     acss_debit?: PaymentMethodData.AcssDebit;
 
     /**
+     * If this is a `aeon_pay` PaymentMethod, this hash contains details about the AEON Pay payment method.
+     */
+    aeon_pay?: PaymentMethodData.AeonPay;
+
+    /**
      * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
      */
     affirm?: PaymentMethodData.Affirm;
@@ -2056,6 +2100,11 @@ export namespace SetupIntentCreateParams {
      * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
      */
     au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+    /**
+     * If this is a `au_pay` PaymentMethod, this hash contains details about the au PAY payment method.
+     */
+    au_pay?: PaymentMethodData.AuPay;
 
     /**
      * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
@@ -2111,6 +2160,11 @@ export namespace SetupIntentCreateParams {
      * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
      */
     customer_balance?: PaymentMethodData.CustomerBalance;
+
+    /**
+     * If this is a `dbarai` PaymentMethod, this hash contains details about the d-Barai payment method.
+     */
+    dbarai?: PaymentMethodData.Dbarai;
 
     /**
      * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
@@ -2191,6 +2245,11 @@ export namespace SetupIntentCreateParams {
      * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
      */
     mb_way?: PaymentMethodData.MbWay;
+
+    /**
+     * If this is a `merpay` PaymentMethod, this hash contains details about the Merpay payment method.
+     */
+    merpay?: PaymentMethodData.Merpay;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -2480,6 +2539,18 @@ export namespace SetupIntentCreateParams {
     us_bank_account?: PaymentMethodOptions.UsBankAccount;
   }
 
+  export interface RadarOptions {
+    /**
+     * Whether this transaction starts a free trial. Set to `true` for a free trial or `false` otherwise. If omitted, retains the previously set value. If never set, Stripe uses Billing or metadata to determine trial status.
+     */
+    is_free_trial_transaction?: boolean;
+
+    /**
+     * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+     */
+    session?: string;
+  }
+
   export interface SetupDetails {
     /**
      * Benefit details for this SetupIntent
@@ -2570,6 +2641,8 @@ export namespace SetupIntentCreateParams {
       transit_number: string;
     }
 
+    export interface AeonPay {}
+
     export interface Affirm {}
 
     export interface AfterpayClearpay {}
@@ -2597,6 +2670,8 @@ export namespace SetupIntentCreateParams {
        */
       bsb_number: string;
     }
+
+    export interface AuPay {}
 
     export interface BacsDebit {
       /**
@@ -2659,6 +2734,8 @@ export namespace SetupIntentCreateParams {
     export interface Crypto {}
 
     export interface CustomerBalance {}
+
+    export interface Dbarai {}
 
     export interface Eps {
       /**
@@ -2726,6 +2803,8 @@ export namespace SetupIntentCreateParams {
     export interface Link {}
 
     export interface MbWay {}
+
+    export interface Merpay {}
 
     export interface Mobilepay {}
 
@@ -2872,12 +2951,14 @@ export namespace SetupIntentCreateParams {
 
     export type Type =
       | 'acss_debit'
+      | 'aeon_pay'
       | 'affirm'
       | 'afterpay_clearpay'
       | 'alipay'
       | 'alma'
       | 'amazon_pay'
       | 'au_becs_debit'
+      | 'au_pay'
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
@@ -2888,6 +2969,7 @@ export namespace SetupIntentCreateParams {
       | 'cashapp'
       | 'crypto'
       | 'customer_balance'
+      | 'dbarai'
       | 'eps'
       | 'fpx'
       | 'getflex'
@@ -2903,6 +2985,7 @@ export namespace SetupIntentCreateParams {
       | 'kr_card'
       | 'link'
       | 'mb_way'
+      | 'merpay'
       | 'mobilepay'
       | 'multibanco'
       | 'naver_pay'
@@ -3467,6 +3550,7 @@ export namespace SetupIntentCreateParams {
 
       export type VerificationMethod =
         | 'automatic'
+        | 'instant'
         | 'payer_name_verification'
         | OtherString;
     }
@@ -4223,12 +4307,14 @@ export interface SetupIntentUpdateParams {
 export namespace SetupIntentUpdateParams {
   export type AllowedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -4245,6 +4331,7 @@ export namespace SetupIntentUpdateParams {
     | 'click_to_pay'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'demo_pay'
     | 'duitnow'
     | 'dummy_auth_push'
@@ -4271,6 +4358,7 @@ export namespace SetupIntentUpdateParams {
     | 'kriya'
     | 'link'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'momo'
     | 'mondu'
@@ -4330,12 +4418,14 @@ export namespace SetupIntentUpdateParams {
 
   export type ExcludedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -4347,6 +4437,7 @@ export namespace SetupIntentUpdateParams {
     | 'cashapp'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'eps'
     | 'fpx'
     | 'getflex'
@@ -4361,6 +4452,7 @@ export namespace SetupIntentUpdateParams {
     | 'konbini'
     | 'kr_card'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'multibanco'
     | 'naver_pay'
@@ -4409,6 +4501,11 @@ export namespace SetupIntentUpdateParams {
     acss_debit?: PaymentMethodData.AcssDebit;
 
     /**
+     * If this is a `aeon_pay` PaymentMethod, this hash contains details about the AEON Pay payment method.
+     */
+    aeon_pay?: PaymentMethodData.AeonPay;
+
+    /**
      * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
      */
     affirm?: PaymentMethodData.Affirm;
@@ -4442,6 +4539,11 @@ export namespace SetupIntentUpdateParams {
      * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
      */
     au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+    /**
+     * If this is a `au_pay` PaymentMethod, this hash contains details about the au PAY payment method.
+     */
+    au_pay?: PaymentMethodData.AuPay;
 
     /**
      * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
@@ -4497,6 +4599,11 @@ export namespace SetupIntentUpdateParams {
      * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
      */
     customer_balance?: PaymentMethodData.CustomerBalance;
+
+    /**
+     * If this is a `dbarai` PaymentMethod, this hash contains details about the d-Barai payment method.
+     */
+    dbarai?: PaymentMethodData.Dbarai;
 
     /**
      * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
@@ -4577,6 +4684,11 @@ export namespace SetupIntentUpdateParams {
      * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
      */
     mb_way?: PaymentMethodData.MbWay;
+
+    /**
+     * If this is a `merpay` PaymentMethod, this hash contains details about the Merpay payment method.
+     */
+    merpay?: PaymentMethodData.Merpay;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -4896,6 +5008,8 @@ export namespace SetupIntentUpdateParams {
       transit_number: string;
     }
 
+    export interface AeonPay {}
+
     export interface Affirm {}
 
     export interface AfterpayClearpay {}
@@ -4923,6 +5037,8 @@ export namespace SetupIntentUpdateParams {
        */
       bsb_number: string;
     }
+
+    export interface AuPay {}
 
     export interface BacsDebit {
       /**
@@ -4985,6 +5101,8 @@ export namespace SetupIntentUpdateParams {
     export interface Crypto {}
 
     export interface CustomerBalance {}
+
+    export interface Dbarai {}
 
     export interface Eps {
       /**
@@ -5052,6 +5170,8 @@ export namespace SetupIntentUpdateParams {
     export interface Link {}
 
     export interface MbWay {}
+
+    export interface Merpay {}
 
     export interface Mobilepay {}
 
@@ -5198,12 +5318,14 @@ export namespace SetupIntentUpdateParams {
 
     export type Type =
       | 'acss_debit'
+      | 'aeon_pay'
       | 'affirm'
       | 'afterpay_clearpay'
       | 'alipay'
       | 'alma'
       | 'amazon_pay'
       | 'au_becs_debit'
+      | 'au_pay'
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
@@ -5214,6 +5336,7 @@ export namespace SetupIntentUpdateParams {
       | 'cashapp'
       | 'crypto'
       | 'customer_balance'
+      | 'dbarai'
       | 'eps'
       | 'fpx'
       | 'getflex'
@@ -5229,6 +5352,7 @@ export namespace SetupIntentUpdateParams {
       | 'kr_card'
       | 'link'
       | 'mb_way'
+      | 'merpay'
       | 'mobilepay'
       | 'multibanco'
       | 'naver_pay'
@@ -5793,6 +5917,7 @@ export namespace SetupIntentUpdateParams {
 
       export type VerificationMethod =
         | 'automatic'
+        | 'instant'
         | 'payer_name_verification'
         | OtherString;
     }
@@ -6541,6 +6666,11 @@ export interface SetupIntentConfirmParams {
   payment_method_options?: SetupIntentConfirmParams.PaymentMethodOptions;
 
   /**
+   * Options to configure Radar.
+   */
+  radar_options?: SetupIntentConfirmParams.RadarOptions;
+
+  /**
    * The URL to redirect your customer back to after they authenticate on the payment method's app or site.
    * If you'd prefer to redirect to a mobile application, you can alternatively supply an application URI scheme.
    * This parameter is only used for cards and other redirect-based payment methods.
@@ -6560,12 +6690,14 @@ export interface SetupIntentConfirmParams {
 export namespace SetupIntentConfirmParams {
   export type AllowedPaymentMethodType =
     | 'acss_debit'
+    | 'aeon_pay'
     | 'affirm'
     | 'afterpay_clearpay'
     | 'alipay'
     | 'alma'
     | 'amazon_pay'
     | 'au_becs_debit'
+    | 'au_pay'
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
@@ -6582,6 +6714,7 @@ export namespace SetupIntentConfirmParams {
     | 'click_to_pay'
     | 'crypto'
     | 'customer_balance'
+    | 'dbarai'
     | 'demo_pay'
     | 'duitnow'
     | 'dummy_auth_push'
@@ -6608,6 +6741,7 @@ export namespace SetupIntentConfirmParams {
     | 'kriya'
     | 'link'
     | 'mb_way'
+    | 'merpay'
     | 'mobilepay'
     | 'momo'
     | 'mondu'
@@ -6679,6 +6813,11 @@ export namespace SetupIntentConfirmParams {
     acss_debit?: PaymentMethodData.AcssDebit;
 
     /**
+     * If this is a `aeon_pay` PaymentMethod, this hash contains details about the AEON Pay payment method.
+     */
+    aeon_pay?: PaymentMethodData.AeonPay;
+
+    /**
      * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
      */
     affirm?: PaymentMethodData.Affirm;
@@ -6712,6 +6851,11 @@ export namespace SetupIntentConfirmParams {
      * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
      */
     au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+    /**
+     * If this is a `au_pay` PaymentMethod, this hash contains details about the au PAY payment method.
+     */
+    au_pay?: PaymentMethodData.AuPay;
 
     /**
      * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
@@ -6767,6 +6911,11 @@ export namespace SetupIntentConfirmParams {
      * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
      */
     customer_balance?: PaymentMethodData.CustomerBalance;
+
+    /**
+     * If this is a `dbarai` PaymentMethod, this hash contains details about the d-Barai payment method.
+     */
+    dbarai?: PaymentMethodData.Dbarai;
 
     /**
      * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
@@ -6847,6 +6996,11 @@ export namespace SetupIntentConfirmParams {
      * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
      */
     mb_way?: PaymentMethodData.MbWay;
+
+    /**
+     * If this is a `merpay` PaymentMethod, this hash contains details about the Merpay payment method.
+     */
+    merpay?: PaymentMethodData.Merpay;
 
     /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -7136,6 +7290,18 @@ export namespace SetupIntentConfirmParams {
     us_bank_account?: PaymentMethodOptions.UsBankAccount;
   }
 
+  export interface RadarOptions {
+    /**
+     * Whether this transaction starts a free trial. Set to `true` for a free trial or `false` otherwise. If omitted, retains the previously set value. If never set, Stripe uses Billing or metadata to determine trial status.
+     */
+    is_free_trial_transaction?: boolean;
+
+    /**
+     * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+     */
+    session?: string;
+  }
+
   export interface SetupDetails {
     /**
      * Benefit details for this SetupIntent
@@ -7208,6 +7374,8 @@ export namespace SetupIntentConfirmParams {
       transit_number: string;
     }
 
+    export interface AeonPay {}
+
     export interface Affirm {}
 
     export interface AfterpayClearpay {}
@@ -7235,6 +7403,8 @@ export namespace SetupIntentConfirmParams {
        */
       bsb_number: string;
     }
+
+    export interface AuPay {}
 
     export interface BacsDebit {
       /**
@@ -7297,6 +7467,8 @@ export namespace SetupIntentConfirmParams {
     export interface Crypto {}
 
     export interface CustomerBalance {}
+
+    export interface Dbarai {}
 
     export interface Eps {
       /**
@@ -7364,6 +7536,8 @@ export namespace SetupIntentConfirmParams {
     export interface Link {}
 
     export interface MbWay {}
+
+    export interface Merpay {}
 
     export interface Mobilepay {}
 
@@ -7510,12 +7684,14 @@ export namespace SetupIntentConfirmParams {
 
     export type Type =
       | 'acss_debit'
+      | 'aeon_pay'
       | 'affirm'
       | 'afterpay_clearpay'
       | 'alipay'
       | 'alma'
       | 'amazon_pay'
       | 'au_becs_debit'
+      | 'au_pay'
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
@@ -7526,6 +7702,7 @@ export namespace SetupIntentConfirmParams {
       | 'cashapp'
       | 'crypto'
       | 'customer_balance'
+      | 'dbarai'
       | 'eps'
       | 'fpx'
       | 'getflex'
@@ -7541,6 +7718,7 @@ export namespace SetupIntentConfirmParams {
       | 'kr_card'
       | 'link'
       | 'mb_way'
+      | 'merpay'
       | 'mobilepay'
       | 'multibanco'
       | 'naver_pay'
@@ -8105,6 +8283,7 @@ export namespace SetupIntentConfirmParams {
 
       export type VerificationMethod =
         | 'automatic'
+        | 'instant'
         | 'payer_name_verification'
         | OtherString;
     }

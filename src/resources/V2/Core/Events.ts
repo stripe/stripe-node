@@ -763,6 +763,8 @@ export type Event =
   | V2DataReportingQueryRunSucceededEvent
   | V2DataReportingQueryRunUpdatedEvent
   | V2ExtendExtensionRunFailedEvent
+  | V2ExtendObjectDefinitionCreatedEvent
+  | V2ExtendObjectDefinitionVersionCreatedEvent
   | V2ExtendWorkflowRunFailedEvent
   | V2ExtendWorkflowRunStartedEvent
   | V2ExtendWorkflowRunSucceededEvent
@@ -1312,6 +1314,8 @@ export type EventNotification =
   | V2DataReportingQueryRunSucceededEventNotification
   | V2DataReportingQueryRunUpdatedEventNotification
   | V2ExtendExtensionRunFailedEventNotification
+  | V2ExtendObjectDefinitionCreatedEventNotification
+  | V2ExtendObjectDefinitionVersionCreatedEventNotification
   | V2ExtendWorkflowRunFailedEventNotification
   | V2ExtendWorkflowRunStartedEventNotification
   | V2ExtendWorkflowRunSucceededEventNotification
@@ -12659,6 +12663,78 @@ export namespace V2ExtendExtensionRunFailedEvent {
 }
 
 /**
+ * Occurs when an object definition is created.
+ */
+export interface V2ExtendObjectDefinitionCreatedEvent extends EventBase {
+  type: 'v2.extend.object_definition.created';
+  // Retrieves data specific to this event.
+  data: V2ExtendObjectDefinitionCreatedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Extend.ObjectDefinition>;
+}
+export interface V2ExtendObjectDefinitionCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.extend.object_definition.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Extend.ObjectDefinition>;
+  fetchEvent(): Promise<V2ExtendObjectDefinitionCreatedEvent>;
+}
+
+export namespace V2ExtendObjectDefinitionCreatedEvent {
+  export interface Data {
+    /**
+     * The singular API name of the object definition.
+     */
+    api_name_singular: string;
+  }
+}
+
+/**
+ * Occurs when an object definition version is created.
+ */
+export interface V2ExtendObjectDefinitionVersionCreatedEvent extends EventBase {
+  type: 'v2.extend.object_definition_version.created';
+  // Retrieves data specific to this event.
+  data: V2ExtendObjectDefinitionVersionCreatedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Extend.ObjectDefinitionVersion>;
+}
+export interface V2ExtendObjectDefinitionVersionCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.extend.object_definition_version.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Extend.ObjectDefinitionVersion>;
+  fetchEvent(): Promise<V2ExtendObjectDefinitionVersionCreatedEvent>;
+}
+
+export namespace V2ExtendObjectDefinitionVersionCreatedEvent {
+  export interface Data {
+    /**
+     * The singular API name of the object definition.
+     */
+    api_name_singular: string;
+
+    /**
+     * The ID of the parent object definition.
+     */
+    object_definition: string;
+
+    /**
+     * The semantic version of the created object definition version, in `major.minor.patch` format.
+     */
+    version: string;
+  }
+}
+
+/**
  * Occurs when a Workflow Run fails.
  */
 export interface V2ExtendWorkflowRunFailedEvent extends EventBase {
@@ -16464,6 +16540,8 @@ export declare namespace Events {
     V2DataReportingQueryRunSucceededEvent,
     V2DataReportingQueryRunUpdatedEvent,
     V2ExtendExtensionRunFailedEvent,
+    V2ExtendObjectDefinitionCreatedEvent,
+    V2ExtendObjectDefinitionVersionCreatedEvent,
     V2ExtendWorkflowRunFailedEvent,
     V2ExtendWorkflowRunStartedEvent,
     V2ExtendWorkflowRunSucceededEvent,
@@ -17011,6 +17089,8 @@ export declare namespace Events {
     V2DataReportingQueryRunSucceededEventNotification,
     V2DataReportingQueryRunUpdatedEventNotification,
     V2ExtendExtensionRunFailedEventNotification,
+    V2ExtendObjectDefinitionCreatedEventNotification,
+    V2ExtendObjectDefinitionVersionCreatedEventNotification,
     V2ExtendWorkflowRunFailedEventNotification,
     V2ExtendWorkflowRunStartedEventNotification,
     V2ExtendWorkflowRunSucceededEventNotification,

@@ -444,6 +444,8 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.data.reporting.query_run.succeeded',
   'v2.data.reporting.query_run.updated',
   'v2.extend.extension_run.failed',
+  'v2.extend.object_definition.created',
+  'v2.extend.object_definition_version.created',
   'v2.extend.workflow_run.failed',
   'v2.extend.workflow_run.started',
   'v2.extend.workflow_run.succeeded',
