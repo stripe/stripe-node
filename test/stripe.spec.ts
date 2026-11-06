@@ -1016,6 +1016,103 @@ describe('Stripe Module', function() {
       );
     });
 
+    it('should drop the client default stripeAccount when fetching the event, even if contexts differ', (done) => {
+      return getTestServerStripe(
+        {stripeAccount: 'acct_default'},
+        (req, res) => {
+          if (
+            req.url === '/v2/core/events/evt_123' &&
+            req.headers['stripe-context'] === 'acct_event' &&
+            req.headers['stripe-account'] == null
+          ) {
+            res.write(JSON.stringify({id: 'evt_123', data: 'hello'}));
+          } else {
+            res.writeHead(404);
+            res.write(JSON.stringify({error: 'not found'}));
+          }
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          const jsonPayload = {
+            id: 'evt_123',
+            type: 'account.created',
+            context: 'acct_event',
+          };
+
+          try {
+            const payload = JSON.stringify(jsonPayload);
+            const header = stripe.webhooks.generateTestHeaderString({
+              payload,
+              secret,
+            });
+
+            const event = stripe.parseEventNotification(
+              payload,
+              header,
+              secret
+            );
+
+            const pulled = await event.fetchEvent();
+            expect(pulled.data).to.equal('hello');
+
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should not inherit the client default stripeContext for a platform-owned event', (done) => {
+      return getTestServerStripe(
+        {stripeContext: 'ctx_default'},
+        (req, res) => {
+          if (
+            req.url === '/v2/core/events/evt_123' &&
+            req.headers['stripe-context'] == null
+          ) {
+            res.write(JSON.stringify({id: 'evt_123', data: 'hello'}));
+          } else {
+            res.writeHead(404);
+            res.write(JSON.stringify({error: 'not found'}));
+          }
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          const jsonPayload = {
+            id: 'evt_123',
+            type: 'account.created',
+          };
+
+          try {
+            const payload = JSON.stringify(jsonPayload);
+            const header = stripe.webhooks.generateTestHeaderString({
+              payload,
+              secret,
+            });
+
+            const event = stripe.parseEventNotification(
+              payload,
+              header,
+              secret
+            );
+            expect(event.context).to.be.undefined;
+
+            const pulled = await event.fetchEvent();
+            expect(pulled.data).to.equal('hello');
+
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
     it('should parse webhook with a functioning fetchRelatedObject method', (done) => {
       let telemetryHeader;
       let shouldStayOpen = true;
@@ -1131,6 +1228,111 @@ describe('Stripe Module', function() {
             const relatedObj = await event.fetchRelatedObject();
 
             expect(relatedObj.id).to.equal('obj_123');
+            expect(relatedObj.data).to.equal('some data');
+
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should drop the client default stripeAccount when fetching the related object, even if contexts differ', (done) => {
+      getTestServerStripe(
+        {stripeAccount: 'acct_default'},
+        (req, res) => {
+          if (
+            req.url === '/api/whatever/obj_123' &&
+            req.headers['stripe-context'] === 'acct_event' &&
+            req.headers['stripe-account'] == null
+          ) {
+            res.write(JSON.stringify({id: 'obj_123', data: 'some data'}));
+          } else {
+            res.writeHead(404);
+            res.write(JSON.stringify({error: 'not found'}));
+          }
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          const jsonPayload = {
+            id: 'evt_123',
+            type: 'account.created',
+            context: 'acct_event',
+            related_object: {
+              id: '123',
+              url: `/api/whatever/obj_123`,
+            },
+          };
+
+          try {
+            const payload = JSON.stringify(jsonPayload);
+            const header = stripe.webhooks.generateTestHeaderString({
+              payload,
+              secret,
+            });
+
+            const event = stripe.parseEventNotification(
+              payload,
+              header,
+              secret
+            );
+
+            const relatedObj = await event.fetchRelatedObject();
+            expect(relatedObj.data).to.equal('some data');
+
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should not inherit the client default stripeContext when fetching the related object of a platform-owned event', (done) => {
+      getTestServerStripe(
+        {stripeContext: 'ctx_default'},
+        (req, res) => {
+          if (
+            req.url === '/api/whatever/obj_123' &&
+            req.headers['stripe-context'] == null
+          ) {
+            res.write(JSON.stringify({id: 'obj_123', data: 'some data'}));
+          } else {
+            res.writeHead(404);
+            res.write(JSON.stringify({error: 'not found'}));
+          }
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          const jsonPayload = {
+            id: 'evt_123',
+            type: 'account.created',
+            related_object: {
+              id: '123',
+              url: `/api/whatever/obj_123`,
+            },
+          };
+
+          try {
+            const payload = JSON.stringify(jsonPayload);
+            const header = stripe.webhooks.generateTestHeaderString({
+              payload,
+              secret,
+            });
+
+            const event = stripe.parseEventNotification(
+              payload,
+              header,
+              secret
+            );
+            expect(event.context).to.be.undefined;
+
+            const relatedObj = await event.fetchRelatedObject();
             expect(relatedObj.data).to.equal('some data');
 
             closeServer();
@@ -1335,6 +1537,103 @@ describe('Stripe Module', function() {
       );
     });
 
+    it('should drop the client default stripeAccount when fetching the event, even if contexts differ', (done) => {
+      return getTestServerStripe(
+        {stripeAccount: 'acct_default'},
+        (req, res) => {
+          if (
+            req.url === '/v2/core/events/evt_123' &&
+            req.headers['stripe-context'] === 'acct_event' &&
+            req.headers['stripe-account'] == null
+          ) {
+            res.write(JSON.stringify({id: 'evt_123', data: 'hello'}));
+          } else {
+            res.writeHead(404);
+            res.write(JSON.stringify({error: 'not found'}));
+          }
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          const jsonPayload = {
+            id: 'evt_123',
+            type: 'account.created',
+            context: 'acct_event',
+          };
+
+          try {
+            const payload = JSON.stringify(jsonPayload);
+            const header = await stripe.webhooks.generateTestHeaderStringAsync({
+              payload,
+              secret,
+            });
+
+            const event = await stripe.parseEventNotificationAsync(
+              payload,
+              header,
+              secret
+            );
+
+            const pulled = await event.fetchEvent();
+            expect(pulled.data).to.equal('hello');
+
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should not inherit the client default stripeContext for a platform-owned event', (done) => {
+      return getTestServerStripe(
+        {stripeContext: 'ctx_default'},
+        (req, res) => {
+          if (
+            req.url === '/v2/core/events/evt_123' &&
+            req.headers['stripe-context'] == null
+          ) {
+            res.write(JSON.stringify({id: 'evt_123', data: 'hello'}));
+          } else {
+            res.writeHead(404);
+            res.write(JSON.stringify({error: 'not found'}));
+          }
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          const jsonPayload = {
+            id: 'evt_123',
+            type: 'account.created',
+          };
+
+          try {
+            const payload = JSON.stringify(jsonPayload);
+            const header = await stripe.webhooks.generateTestHeaderStringAsync({
+              payload,
+              secret,
+            });
+
+            const event = await stripe.parseEventNotificationAsync(
+              payload,
+              header,
+              secret
+            );
+            expect(event.context).to.be.undefined;
+
+            const pulled = await event.fetchEvent();
+            expect(pulled.data).to.equal('hello');
+
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
     it('should parse webhook with a functioning fetchRelatedObject method', (done) => {
       let telemetryHeader;
       let shouldStayOpen = true;
@@ -1450,6 +1749,111 @@ describe('Stripe Module', function() {
             const relatedObj = await event.fetchRelatedObject();
 
             expect(relatedObj.id).to.equal('obj_123');
+            expect(relatedObj.data).to.equal('some data');
+
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should drop the client default stripeAccount when fetching the related object, even if contexts differ', (done) => {
+      getTestServerStripe(
+        {stripeAccount: 'acct_default'},
+        (req, res) => {
+          if (
+            req.url === '/api/whatever/obj_123' &&
+            req.headers['stripe-context'] === 'acct_event' &&
+            req.headers['stripe-account'] == null
+          ) {
+            res.write(JSON.stringify({id: 'obj_123', data: 'some data'}));
+          } else {
+            res.writeHead(404);
+            res.write(JSON.stringify({error: 'not found'}));
+          }
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          const jsonPayload = {
+            id: 'evt_123',
+            type: 'account.created',
+            context: 'acct_event',
+            related_object: {
+              id: '123',
+              url: `/api/whatever/obj_123`,
+            },
+          };
+
+          try {
+            const payload = JSON.stringify(jsonPayload);
+            const header = await stripe.webhooks.generateTestHeaderStringAsync({
+              payload,
+              secret,
+            });
+
+            const event = await stripe.parseEventNotificationAsync(
+              payload,
+              header,
+              secret
+            );
+
+            const relatedObj = await event.fetchRelatedObject();
+            expect(relatedObj.data).to.equal('some data');
+
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should not inherit the client default stripeContext when fetching the related object of a platform-owned event', (done) => {
+      getTestServerStripe(
+        {stripeContext: 'ctx_default'},
+        (req, res) => {
+          if (
+            req.url === '/api/whatever/obj_123' &&
+            req.headers['stripe-context'] == null
+          ) {
+            res.write(JSON.stringify({id: 'obj_123', data: 'some data'}));
+          } else {
+            res.writeHead(404);
+            res.write(JSON.stringify({error: 'not found'}));
+          }
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          const jsonPayload = {
+            id: 'evt_123',
+            type: 'account.created',
+            related_object: {
+              id: '123',
+              url: `/api/whatever/obj_123`,
+            },
+          };
+
+          try {
+            const payload = JSON.stringify(jsonPayload);
+            const header = await stripe.webhooks.generateTestHeaderStringAsync({
+              payload,
+              secret,
+            });
+
+            const event = await stripe.parseEventNotificationAsync(
+              payload,
+              header,
+              secret
+            );
+            expect(event.context).to.be.undefined;
+
+            const relatedObj = await event.fetchRelatedObject();
             expect(relatedObj.data).to.equal('some data');
 
             closeServer();
