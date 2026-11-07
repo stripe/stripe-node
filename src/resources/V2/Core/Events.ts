@@ -60,13 +60,23 @@ export class EventResource extends StripeResource {
     }
     return {
       ...pulledEvent,
-      fetchRelatedObject: (): Promise<null | any> =>
-        this._makeRequest('GET', pulledEvent.related_object.url, undefined, {
-          stripeContext: pulledEvent.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${pulledEvent.id}`,
-          },
-        }),
+      fetchRelatedObject: (): Promise<null | any> => {
+        // Issue the request through a client scoped to this event's own
+        // context, built lazily here (not eagerly per list item) since most
+        // fetchRelatedObject() calls are never invoked.
+        const eventClient = this._stripe.withStripeContext(pulledEvent.context);
+        return eventClient._requestSender._rawRequest(
+          'GET',
+          pulledEvent.related_object.url,
+          undefined,
+          {
+            stripeContext: pulledEvent.context,
+            headers: {
+              'Stripe-Request-Trigger': `event=${pulledEvent.id}`,
+            },
+          }
+        );
+      },
     };
   }
 }
