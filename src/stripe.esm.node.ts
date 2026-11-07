@@ -1632,9 +1632,7 @@ export class Stripe {
     }
 
     parsed.fetchEvent = (): Promise<unknown> => {
-      // Issue the request through a client scoped to this event's own context, rather than
-      // `this`, so the parent client's configured `stripeAccount`/`stripeContext` defaults
-      // (which may differ from or conflict with this event's context) aren't applied.
+      // Issue the request through a client scoped to this event's own context.
       const eventClient = this.withStripeContext(parsed.context as any);
       return eventClient._requestSender._rawRequest(
         'GET',
