@@ -3,7 +3,6 @@
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {ApplicationFee} from './ApplicationFees.js';
 import {Metadata} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface FeeRefund {
   /**
    * Unique identifier for the object.

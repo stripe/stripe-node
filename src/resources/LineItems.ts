@@ -4,7 +4,6 @@ import {Discount as _Discount} from './Discounts.js';
 import {Price} from './Prices.js';
 import {TaxRate} from './TaxRates.js';
 import {Metadata, OtherString} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface LineItem {
   /**
    * Unique identifier for the object.
