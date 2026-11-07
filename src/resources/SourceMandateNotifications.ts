@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {Source} from './Sources.js';
-import {RequestOptions} from '../lib.js';
 export interface SourceMandateNotification {
   /**
    * Unique identifier for the object.
