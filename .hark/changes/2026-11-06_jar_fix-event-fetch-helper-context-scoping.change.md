@@ -5,3 +5,4 @@ semver_level: patch
 ---
 
 - Updates `fetchEvent` to call `withStripeContext` before issuing API call to fetch the event.
+- Updates `addFetchRelatedObjectIfNeeded` (used by `events.retrieve()`/`list()`) the same way.
