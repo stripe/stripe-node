@@ -673,7 +673,9 @@ export function createWebhooks(
       return null;
     }
     try {
-      // Reject strings containing unpaired UTF-16 surrogates.
+    // Reject unpaired UTF-16 surrogates. 
+    // Use isWellFormed() once supported runtimes and TypeScript typings allow it.
+
       encodeURIComponent(value);
       return value.trim() || null;
     } catch {
