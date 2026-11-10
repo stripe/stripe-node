@@ -655,9 +655,7 @@ export function createWebhooks(
         !Object.prototype.hasOwnProperty.call(metadata, key)
       ) {
         const value = separator === -1 ? null : item.slice(separator + 1);
-        // Ignore overly long, potentially attacker-provided metadata values
-        metadata[key] =
-          value !== null && value.length <= 100 ? value.trim() || null : null;
+        metadata[key] = getSafeMetadataValue(value);
       }
     }
     if (metadata.payload) {
@@ -668,6 +666,19 @@ export function createWebhooks(
           : null;
     }
     return metadata;
+  }
+
+  function getSafeMetadataValue(value: string | null): string | null {
+    if (value === null || value.length > 100) {
+      return null;
+    }
+    try {
+      // Reject strings containing unpaired UTF-16 surrogates.
+      encodeURIComponent(value);
+      return value.trim() || null;
+    } catch {
+      return null;
+    }
   }
 
   function parseHeader(

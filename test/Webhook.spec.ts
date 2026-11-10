@@ -336,6 +336,10 @@ function createWebhooksTestSuite(stripe) {
           [secret, maskedSecret, 'we_example', 'wxyz', '/we_example'],
           // A missing destination uses the bare Dashboard URL.
           [secret, maskedSecret, null, 'wxyz', ''],
+          // Unpaired surrogates are ignored, including a later duplicate destination.
+          [secret, maskedSecret, '\ud800', 'wxyz', ''],
+          [secret, maskedSecret, '\udfff', 'wxyz', ''],
+          [secret, maskedSecret, '\ud800,destination=we_example', 'wxyz', ''],
           // A matching suffix is not enough if the lengths differ.
           ['short1q84', maskedSecret, null, '1q84', ''],
           // A mostly unmasked value still reveals only the last four secret characters.
