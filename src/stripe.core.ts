@@ -876,6 +876,13 @@ import {
   TestHelpersTestClockDeletedEvent,
   TestHelpersTestClockInternalFailureEvent,
   TestHelpersTestClockReadyEvent,
+  ThreeDSecureAuthenticationCanceledEvent,
+  ThreeDSecureAuthenticationChallengeStartedEvent,
+  ThreeDSecureAuthenticationErroredEvent,
+  ThreeDSecureAuthenticationFailedEvent,
+  ThreeDSecureAuthenticationRequiresChallengeEvent,
+  ThreeDSecureAuthenticationRequiresSubmissionEvent,
+  ThreeDSecureAuthenticationSucceededEvent,
   TopupCanceledEvent,
   TopupCreatedEvent,
   TopupFailedEvent,
@@ -976,7 +983,7 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 export class Stripe {
-  static PACKAGE_VERSION = '23.0.1';
+  static PACKAGE_VERSION = '23.1.0';
   static API_VERSION: typeof ApiVersion = ApiVersion;
   /**
    * The major API version that this SDK uses. Objects retrieved using the same
@@ -1647,7 +1654,9 @@ export class Stripe {
     }
 
     parsed.fetchEvent = (): Promise<unknown> => {
-      return this._requestSender._rawRequest(
+      // Issue the request through a client scoped to this event's own context.
+      const eventClient = this.withStripeContext(parsed.context as any);
+      return eventClient._requestSender._rawRequest(
         'GET',
         // `id` comes from the notification body, so encode it the way the
         // generated resources do -- otherwise it can inject path or query segments.
@@ -1668,7 +1677,9 @@ export class Stripe {
         return Promise.resolve(null);
       }
 
-      return this._requestSender._rawRequest(
+      // See the comment in `fetchEvent` above.
+      const eventClient = this.withStripeContext(parsed.context as any);
+      return eventClient._requestSender._rawRequest(
         'GET',
         (parsed.related_object as any).url,
         undefined,
@@ -2618,6 +2629,13 @@ export declare namespace Stripe {
     TestHelpersTestClockDeletedEvent,
     TestHelpersTestClockInternalFailureEvent,
     TestHelpersTestClockReadyEvent,
+    ThreeDSecureAuthenticationCanceledEvent,
+    ThreeDSecureAuthenticationChallengeStartedEvent,
+    ThreeDSecureAuthenticationErroredEvent,
+    ThreeDSecureAuthenticationFailedEvent,
+    ThreeDSecureAuthenticationRequiresChallengeEvent,
+    ThreeDSecureAuthenticationRequiresSubmissionEvent,
+    ThreeDSecureAuthenticationSucceededEvent,
     TopupCanceledEvent,
     TopupCreatedEvent,
     TopupFailedEvent,
@@ -2770,9 +2788,63 @@ export declare namespace Stripe {
     export type StripeUnsupportedResponseTypeError = InstanceType<
       typeof _Error.StripeUnsupportedResponseTypeError
     >;
+    export type AlreadyCanceledError = InstanceType<
+      typeof _Error.AlreadyCanceledError
+    >;
+    export type BlockedByStripeError = InstanceType<
+      typeof _Error.BlockedByStripeError
+    >;
+    export type CannotProceedError = InstanceType<
+      typeof _Error.CannotProceedError
+    >;
+    export type CapabilityNotEnabledError = InstanceType<
+      typeof _Error.CapabilityNotEnabledError
+    >;
+    export type ControlledByAlternateResourceError = InstanceType<
+      typeof _Error.ControlledByAlternateResourceError
+    >;
+    export type FeatureNotEnabledError = InstanceType<
+      typeof _Error.FeatureNotEnabledError
+    >;
+    export type FinancialAccountNotOpenError = InstanceType<
+      typeof _Error.FinancialAccountNotOpenError
+    >;
+    export type FxQuoteNeedsRefreshError = InstanceType<
+      typeof _Error.FxQuoteNeedsRefreshError
+    >;
+    export type InsufficientFundsError = InstanceType<
+      typeof _Error.InsufficientFundsError
+    >;
+    export type InvalidPaymentMethodError = InstanceType<
+      typeof _Error.InvalidPaymentMethodError
+    >;
+    export type InvalidPayoutMethodError = InstanceType<
+      typeof _Error.InvalidPayoutMethodError
+    >;
+    export type InvalidVaultedCredentialError = InstanceType<
+      typeof _Error.InvalidVaultedCredentialError
+    >;
+    export type NotCancelableError = InstanceType<
+      typeof _Error.NotCancelableError
+    >;
+    export type QuotaExceededError = InstanceType<
+      typeof _Error.QuotaExceededError
+    >;
     export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
+    export type RecipientNotNotifiableError = InstanceType<
+      typeof _Error.RecipientNotNotifiableError
+    >;
     export type TemporarySessionExpiredError = InstanceType<
       typeof _Error.TemporarySessionExpiredError
+    >;
+    export type VerificationAttemptFailedError = InstanceType<
+      typeof _Error.VerificationAttemptFailedError
+    >;
+    export type VerificationExpiredError = InstanceType<
+      typeof _Error.VerificationExpiredError
+    >;
+    export type VerificationNotInitiatedError = InstanceType<
+      typeof _Error.VerificationNotInitiatedError
     >;
   }
   // ErrorTypeNamespaces: The end of the section generated from our OpenAPI spec

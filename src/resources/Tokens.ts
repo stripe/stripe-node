@@ -66,6 +66,8 @@ export interface Token {
    * later. You can also store multiple debit cards on a recipient in order to
    * transfer to those cards later.
    *
+   * This API is deprecated. Use the [PaymentMethods API](https://docs.stripe.com/api/payment_methods) instead.
+   *
    * Related guide: [Card payments with Sources](https://docs.stripe.com/sources/cards)
    */
   card?: Card;
@@ -518,6 +520,11 @@ export namespace TokenCreateParams {
        * The company's phone number (used for verification).
        */
       phone?: string;
+
+      /**
+       * A location where the business has a meaningful physical operating presence.
+       */
+      physical_address?: AddressParam;
 
       /**
        * The primary location where the business conducts operations.

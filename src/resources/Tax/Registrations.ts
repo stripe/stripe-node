@@ -142,6 +142,8 @@ export namespace Registration {
 
     bs?: CountryOptions.Bs;
 
+    bw?: CountryOptions.Bw;
+
     by?: CountryOptions.By;
 
     ca?: CountryOptions.Ca;
@@ -149,6 +151,8 @@ export namespace Registration {
     cd?: CountryOptions.Cd;
 
     ch?: CountryOptions.Ch;
+
+    ci?: CountryOptions.Ci;
 
     cl?: CountryOptions.Cl;
 
@@ -185,6 +189,8 @@ export namespace Registration {
     gb?: CountryOptions.Gb;
 
     ge?: CountryOptions.Ge;
+
+    gh?: CountryOptions.Gh;
 
     gn?: CountryOptions.Gn;
 
@@ -237,6 +243,8 @@ export namespace Registration {
     mr?: CountryOptions.Mr;
 
     mt?: CountryOptions.Mt;
+
+    mu?: CountryOptions.Mu;
 
     mx?: CountryOptions.Mx;
 
@@ -443,6 +451,13 @@ export namespace Registration {
       type: 'standard';
     }
 
+    export interface Bw {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
     export interface By {
       /**
        * Type of registration in `country`.
@@ -473,6 +488,13 @@ export namespace Registration {
        * Type of registration in `country`.
        */
       type: 'standard';
+    }
+
+    export interface Ci {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
     }
 
     export interface Cl {
@@ -613,6 +635,13 @@ export namespace Registration {
     }
 
     export interface Ge {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Gh {
       /**
        * Type of registration in `country`.
        */
@@ -819,6 +848,13 @@ export namespace Registration {
        * Type of registration in an EU country.
        */
       type: Mt.Type;
+    }
+
+    export interface Mu {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
     }
 
     export interface Mx {
@@ -1080,6 +1116,8 @@ export namespace Registration {
        * Type of registration in the US.
        */
       type: Us.Type;
+
+      utility_users_tax?: Us.UtilityUsersTax;
     }
 
     export interface Uy {
@@ -2014,6 +2052,7 @@ export namespace Registration {
       export type Type =
         | 'admissions_tax'
         | 'attendance_tax'
+        | 'digital_excise_tax'
         | 'entertainment_tax'
         | 'gross_receipts_tax'
         | 'hospitality_tax'
@@ -2027,7 +2066,15 @@ export namespace Registration {
         | 'state_retail_delivery_fee'
         | 'state_sales_tax'
         | 'tourism_tax'
+        | 'utility_users_tax'
         | OtherString;
+
+      export interface UtilityUsersTax {
+        /**
+         * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=utility_users_tax#registration-types) representing the local jurisdiction.
+         */
+        jurisdiction: string;
+      }
 
       export namespace StateSalesTax {
         export interface Election {
@@ -2169,6 +2216,11 @@ export namespace Tax {
       bs?: CountryOptions.Bs;
 
       /**
+       * Options for the registration in BW.
+       */
+      bw?: CountryOptions.Bw;
+
+      /**
        * Options for the registration in BY.
        */
       by?: CountryOptions.By;
@@ -2187,6 +2239,11 @@ export namespace Tax {
        * Options for the registration in CH.
        */
       ch?: CountryOptions.Ch;
+
+      /**
+       * Options for the registration in CI.
+       */
+      ci?: CountryOptions.Ci;
 
       /**
        * Options for the registration in CL.
@@ -2277,6 +2334,11 @@ export namespace Tax {
        * Options for the registration in GE.
        */
       ge?: CountryOptions.Ge;
+
+      /**
+       * Options for the registration in GH.
+       */
+      gh?: CountryOptions.Gh;
 
       /**
        * Options for the registration in GN.
@@ -2407,6 +2469,11 @@ export namespace Tax {
        * Options for the registration in MT.
        */
       mt?: CountryOptions.Mt;
+
+      /**
+       * Options for the registration in MU.
+       */
+      mu?: CountryOptions.Mu;
 
       /**
        * Options for the registration in MX.
@@ -2779,6 +2846,13 @@ export namespace Tax {
         type: 'standard';
       }
 
+      export interface Bw {
+        /**
+         * Type of registration to be created in `country`.
+         */
+        type: 'simplified';
+      }
+
       export interface By {
         /**
          * Type of registration to be created in `country`.
@@ -2820,6 +2894,13 @@ export namespace Tax {
          * Type of registration to be created in `country`.
          */
         type: 'standard';
+      }
+
+      export interface Ci {
+        /**
+         * Type of registration to be created in `country`.
+         */
+        type: 'simplified';
       }
 
       export interface Cl {
@@ -2992,6 +3073,13 @@ export namespace Tax {
       }
 
       export interface Ge {
+        /**
+         * Type of registration to be created in `country`.
+         */
+        type: 'simplified';
+      }
+
+      export interface Gh {
         /**
          * Type of registration to be created in `country`.
          */
@@ -3253,6 +3341,13 @@ export namespace Tax {
          * Type of registration to be created in an EU country.
          */
         type: Mt.Type;
+      }
+
+      export interface Mu {
+        /**
+         * Type of registration to be created in `country`.
+         */
+        type: 'simplified';
       }
 
       export interface Mx {
@@ -3598,6 +3693,11 @@ export namespace Tax {
          * Type of registration to be created in the US.
          */
         type: Us.Type;
+
+        /**
+         * Options for the utility users tax registration.
+         */
+        utility_users_tax?: Us.UtilityUsersTax;
       }
 
       export interface Uy {
@@ -4851,6 +4951,7 @@ export namespace Tax {
         export type Type =
           | 'admissions_tax'
           | 'attendance_tax'
+          | 'digital_excise_tax'
           | 'entertainment_tax'
           | 'gross_receipts_tax'
           | 'hospitality_tax'
@@ -4864,12 +4965,20 @@ export namespace Tax {
           | 'state_retail_delivery_fee'
           | 'state_sales_tax'
           | 'tourism_tax'
+          | 'utility_users_tax'
           | OtherString;
+
+        export interface UtilityUsersTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=utility_users_tax#registration-types).
+           */
+          jurisdiction: string;
+        }
 
         export namespace StateSalesTax {
           export interface Election {
             /**
-             * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction. Supported FIPS codes are: `003` (Allegheny County) and `60000` (Philadelphia City).
+             * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
              */
             jurisdiction?: string;
 

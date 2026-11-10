@@ -1,0 +1,262 @@
+// File generated from our OpenAPI spec
+
+import {StripeResource} from '../../../StripeResource.js';
+import {OtherString, JapanAddress} from '../../../shared.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
+
+export class FinancialAddressResource extends StripeResource {
+  /**
+   * List all FinancialAddresses for a FinancialAccount (V2 shape).
+   */
+  list(
+    params?: V2.MoneyManagement.FinancialAddressListParams,
+    options?: RequestOptions
+  ): V2ListPromise<FinancialAddress> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/financial_addresses',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
+  }
+  /**
+   * Create a new FinancialAddress for a FinancialAccount (V2 shape).
+   * @throws Stripe.FinancialAccountNotOpenError
+   * @throws Stripe.FeatureNotEnabledError
+   */
+  create(
+    params: V2.MoneyManagement.FinancialAddressCreateParams,
+    options?: RequestOptions
+  ): Promise<Response<FinancialAddress>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/financial_addresses',
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Retrieve a FinancialAddress (V2 shape).
+   */
+  retrieve(
+    id: string,
+    params?: V2.MoneyManagement.FinancialAddressRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<FinancialAddress>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/financial_addresses/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+}
+export interface FinancialAddress {
+  /**
+   * The ID of the FinancialAddress.
+   */
+  id: string;
+
+  /**
+   * String representing the object's type. Objects of the same type share the same value of the object field.
+   */
+  object: 'v2.money_management.financial_address';
+
+  /**
+   * Bank account details for this FinancialAddress.
+   */
+  bank_account?: FinancialAddress.BankAccount;
+
+  /**
+   * The creation timestamp of the FinancialAddress.
+   */
+  created: string;
+
+  /**
+   * The ID of the FinancialAccount this FinancialAddress corresponds to.
+   */
+  financial_account: string;
+
+  /**
+   * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+   */
+  livemode: boolean;
+
+  settlement_currency: string;
+
+  /**
+   * Closed Enum. The status of the FinancialAddress.
+   */
+  status: FinancialAddress.Status;
+
+  /**
+   * Open Enum. The type of FinancialAddress.
+   */
+  type: FinancialAddress.Type;
+}
+export namespace FinancialAddress {
+  export interface BankAccount {
+    /**
+     * ABA bank account details (US).
+     */
+    aba?: BankAccount.Aba;
+
+    /**
+     * The country of the bank account. Always included in the response, but null while the bank
+     * account is pending and its country is not yet known.
+     */
+    country?: string;
+
+    /**
+     * Open Enum. The currency of the bank account.
+     */
+    currency: string;
+
+    /**
+     * IBAN bank account details.
+     */
+    iban?: BankAccount.Iban;
+
+    /**
+     * Sort code bank account details (UK).
+     */
+    sort_code?: BankAccount.SortCode;
+
+    /**
+     * Open Enum. The type of bank account details.
+     */
+    type: BankAccount.Type;
+  }
+
+  export type Status = 'active' | 'archived' | 'failed' | 'pending';
+
+  export type Type = 'bank_account' | OtherString;
+
+  export namespace BankAccount {
+    export interface Aba {
+      /**
+       * The name of the account holder.
+       */
+      account_holder_name?: string;
+
+      /**
+       * The full account number. Empty while the bank account is pending allocation.
+       */
+      account_number: string;
+
+      /**
+       * The address of the account holder.
+       */
+      address?: JapanAddress;
+
+      /**
+       * The name of the bank.
+       */
+      bank_name?: string;
+
+      /**
+       * The ABA routing number.
+       */
+      routing_number: string;
+    }
+
+    export interface Iban {
+      /**
+       * The name of the account holder.
+       */
+      account_holder_name: string;
+
+      /**
+       * The name of the bank.
+       */
+      bank_name: string;
+
+      /**
+       * The full IBAN. Empty while the bank account is pending allocation.
+       */
+      iban: string;
+    }
+
+    export interface SortCode {
+      /**
+       * The name of the account holder.
+       */
+      account_holder_name: string;
+
+      /**
+       * The full account number. Empty while the bank account is pending allocation.
+       */
+      account_number: string;
+
+      /**
+       * The sort code.
+       */
+      sort_code: string;
+    }
+
+    export type Type = 'aba' | 'iban' | 'sort_code' | OtherString;
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface FinancialAddressCreateParams {
+      /**
+       * The ID of the FinancialAccount the new FinancialAddress should be associated with.
+       */
+      financial_account: string;
+
+      /**
+       * The type of FinancialAddress to create. Must agree with which branch of financial_address_type_properties is set.
+       */
+      type: FinancialAddressCreateParams.Type;
+
+      /**
+       * Properties for creating a bank account FinancialAddress.
+       */
+      bank_account?: FinancialAddressCreateParams.BankAccount;
+    }
+
+    export namespace FinancialAddressCreateParams {
+      export type Type = 'bank_account' | OtherString;
+
+      export interface BankAccount {
+        /**
+         * The country for the bank account. Used to select the appropriate rails (e.g. for SEPA).
+         */
+        country?: string;
+
+        /**
+         * The currency of the bank account to provision. Available currencies depend on your account's enabled features and rollout access; `eur` requires the Financial Address Global Payouts EU preview.
+         */
+        currency: BankAccount.Currency;
+      }
+
+      export namespace BankAccount {
+        export type Currency = 'eur' | 'gbp' | 'usd' | OtherString;
+      }
+    }
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface FinancialAddressRetrieveParams {}
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface FinancialAddressListParams {
+      /**
+       * The ID of the FinancialAccount for which FinancialAddresses are to be returned.
+       */
+      financial_account?: string;
+
+      /**
+       * The page limit.
+       */
+      limit?: number;
+    }
+  }
+}

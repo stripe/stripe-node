@@ -195,7 +195,7 @@ export interface EventDestination {
   name: string;
 
   /**
-   * For snapshot events only, the Stripe API version used to render event objects. Thin events are not pinned to an API version.
+   * For snapshot events only, the Stripe API version used to render event objects. You can't change this value after you create the event destination. Thin events are not pinned to an API version.
    */
   snapshot_api_version?: string;
 

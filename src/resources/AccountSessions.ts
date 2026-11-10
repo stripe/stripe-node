@@ -93,9 +93,15 @@ export namespace AccountSession {
 
     payouts_list: Components.PayoutsList;
 
+    reporting_chart: Components.ReportingChart;
+
     tax_registrations: Components.TaxRegistrations;
 
     tax_settings: Components.TaxSettings;
+
+    terminal_hardware_orders: Components.TerminalHardwareOrders;
+
+    terminal_hardware_shop: Components.TerminalHardwareShop;
   }
 
   export namespace Components {
@@ -279,6 +285,15 @@ export namespace AccountSession {
       features: PayoutsList.Features;
     }
 
+    export interface ReportingChart {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: ReportingChart.Features;
+    }
+
     export interface TaxRegistrations {
       /**
        * Whether the embedded component is enabled.
@@ -295,6 +310,24 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: TaxSettings.Features;
+    }
+
+    export interface TerminalHardwareOrders {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: TerminalHardwareOrders.Features;
+    }
+
+    export interface TerminalHardwareShop {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: TerminalHardwareShop.Features;
     }
 
     export namespace AccountManagement {
@@ -642,11 +675,23 @@ export namespace AccountSession {
       export interface Features {}
     }
 
+    export namespace ReportingChart {
+      export interface Features {}
+    }
+
     export namespace TaxRegistrations {
       export interface Features {}
     }
 
     export namespace TaxSettings {
+      export interface Features {}
+    }
+
+    export namespace TerminalHardwareOrders {
+      export interface Features {}
+    }
+
+    export namespace TerminalHardwareShop {
       export interface Features {}
     }
   }
@@ -770,6 +815,11 @@ export namespace AccountSessionCreateParams {
     payouts_list?: Components.PayoutsList;
 
     /**
+     * Configuration for the [reporting chart](https://docs.stripe.com/connect/supported-embedded-components/reporting-chart/) embedded component.
+     */
+    reporting_chart?: Components.ReportingChart;
+
+    /**
      * Configuration for the [tax registrations](https://docs.stripe.com/connect/supported-embedded-components/tax-registrations/) embedded component.
      */
     tax_registrations?: Components.TaxRegistrations;
@@ -778,6 +828,16 @@ export namespace AccountSessionCreateParams {
      * Configuration for the [tax settings](https://docs.stripe.com/connect/supported-embedded-components/tax-settings/) embedded component.
      */
     tax_settings?: Components.TaxSettings;
+
+    /**
+     * Configuration for the [Terminal hardware orders](https://docs.stripe.com/connect/supported-embedded-components/terminal-hardware-orders/) embedded component.
+     */
+    terminal_hardware_orders?: Components.TerminalHardwareOrders;
+
+    /**
+     * Configuration for the [Terminal hardware shop](https://docs.stripe.com/connect/supported-embedded-components/terminal-hardware-shop/) embedded component.
+     */
+    terminal_hardware_shop?: Components.TerminalHardwareShop;
   }
 
   export namespace Components {
@@ -1021,6 +1081,18 @@ export namespace AccountSessionCreateParams {
       features?: PayoutsList.Features;
     }
 
+    export interface ReportingChart {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: ReportingChart.Features;
+    }
+
     export interface TaxRegistrations {
       /**
        * Whether the embedded component is enabled.
@@ -1043,6 +1115,30 @@ export namespace AccountSessionCreateParams {
        * An empty list, because this embedded component has no features.
        */
       features?: TaxSettings.Features;
+    }
+
+    export interface TerminalHardwareOrders {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: TerminalHardwareOrders.Features;
+    }
+
+    export interface TerminalHardwareShop {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: TerminalHardwareShop.Features;
     }
 
     export namespace AccountManagement {
@@ -1390,11 +1486,23 @@ export namespace AccountSessionCreateParams {
       export interface Features {}
     }
 
+    export namespace ReportingChart {
+      export interface Features {}
+    }
+
     export namespace TaxRegistrations {
       export interface Features {}
     }
 
     export namespace TaxSettings {
+      export interface Features {}
+    }
+
+    export namespace TerminalHardwareOrders {
+      export interface Features {}
+    }
+
+    export namespace TerminalHardwareShop {
       export interface Features {}
     }
   }

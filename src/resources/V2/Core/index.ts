@@ -27,6 +27,7 @@ import {
 } from './EventDestinations.js';
 import {AccountPersonToken} from './AccountPersonTokens.js';
 import {AccountPerson} from './AccountPersons.js';
+import {Vault} from './Vault/index.js';
 
 export {Account} from './Accounts.js';
 export {AccountLink} from './AccountLinks.js';
@@ -42,6 +43,7 @@ export class Core {
   accountTokens: AccountTokenResource;
   events: EventResource;
   eventDestinations: EventDestinationResource;
+  vault: Vault;
 
   constructor(private readonly stripe: Stripe) {
     this.accounts = new AccountResource(stripe);
@@ -49,6 +51,7 @@ export class Core {
     this.accountTokens = new AccountTokenResource(stripe);
     this.events = new EventResource(stripe);
     this.eventDestinations = new EventDestinationResource(stripe);
+    this.vault = new Vault(stripe);
   }
 }
 
@@ -78,4 +81,5 @@ export declare namespace Core {
   export {EventDestination, EventDestinationResource};
   export {AccountPersonToken};
   export {AccountPerson};
+  export {Vault};
 }

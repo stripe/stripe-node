@@ -33,6 +33,11 @@ export interface Session {
   object: 'billing_portal.session';
 
   /**
+   * Behavior after the portal session expires.
+   */
+  after_expiration?: Session.AfterExpiration | null;
+
+  /**
    * The configuration used by this session, describing the features available.
    */
   configuration: string | Configuration;
@@ -83,6 +88,18 @@ export interface Session {
   url: string;
 }
 export namespace Session {
+  export interface AfterExpiration {
+    /**
+     * Configuration for authenticating the customer after the session expires.
+     */
+    customer_login: AfterExpiration.CustomerLogin | null;
+
+    /**
+     * The behavior to apply when the session expires.
+     */
+    type: AfterExpiration.Type;
+  }
+
   export interface Flow {
     after_completion: Flow.AfterCompletion;
 
@@ -95,6 +112,11 @@ export namespace Session {
      * Configuration when `flow.type=subscription_cancel`.
      */
     subscription_cancel: Flow.SubscriptionCancel | null;
+
+    /**
+     * Configuration when `flow.type=subscription_pause`.
+     */
+    subscription_pause: Flow.SubscriptionPause | null;
 
     /**
      * Configuration when `flow.type=subscription_update`.
@@ -162,6 +184,17 @@ export namespace Session {
     | 'zh-TW'
     | OtherString;
 
+  export namespace AfterExpiration {
+    export interface CustomerLogin {
+      /**
+       * The time after which the customer can no longer recover this session.
+       */
+      expires_at: number | null;
+    }
+
+    export type Type = 'customer_login' | OtherString;
+  }
+
   export namespace Flow {
     export interface AfterCompletion {
       /**
@@ -194,6 +227,13 @@ export namespace Session {
       subscription: string;
     }
 
+    export interface SubscriptionPause {
+      /**
+       * The ID of the subscription to be paused.
+       */
+      subscription: string;
+    }
+
     export interface SubscriptionUpdate {
       /**
        * The ID of the subscription to be updated.
@@ -222,6 +262,7 @@ export namespace Session {
       | 'customer_update'
       | 'payment_method_update'
       | 'subscription_cancel'
+      | 'subscription_pause'
       | 'subscription_update'
       | 'subscription_update_confirm'
       | OtherString;
@@ -306,6 +347,11 @@ export namespace Session {
 export namespace BillingPortal {
   export interface SessionCreateParams {
     /**
+     * Behavior after the portal session expires.
+     */
+    after_expiration?: SessionCreateParams.AfterExpiration;
+
+    /**
      * The ID of an existing [configuration](https://docs.stripe.com/api/customer_portal/configurations) to use for this session, describing its functionality and features. If not specified, the session uses the default configuration.
      */
     configuration?: string;
@@ -347,6 +393,18 @@ export namespace BillingPortal {
   }
 
   export namespace SessionCreateParams {
+    export interface AfterExpiration {
+      /**
+       * Configuration for authenticating the customer after the session expires.
+       */
+      customer_login?: AfterExpiration.CustomerLogin;
+
+      /**
+       * The behavior to apply when the session expires.
+       */
+      type: AfterExpiration.Type;
+    }
+
     export interface FlowData {
       /**
        * Behavior after the flow is completed.
@@ -357,6 +415,11 @@ export namespace BillingPortal {
        * Configuration when `flow_data.type=subscription_cancel`.
        */
       subscription_cancel?: FlowData.SubscriptionCancel;
+
+      /**
+       * Configuration when `flow_data.type=subscription_pause`.
+       */
+      subscription_pause?: FlowData.SubscriptionPause;
 
       /**
        * Configuration when `flow_data.type=subscription_update`.
@@ -424,6 +487,17 @@ export namespace BillingPortal {
       | 'zh-TW'
       | OtherString;
 
+    export namespace AfterExpiration {
+      export interface CustomerLogin {
+        /**
+         * The Unix timestamp after which the customer can no longer recover this session. Leave unset to allow recovery without a deadline.
+         */
+        expires_at?: number;
+      }
+
+      export type Type = 'customer_login' | OtherString;
+    }
+
     export namespace FlowData {
       export interface AfterCompletion {
         /**
@@ -450,6 +524,13 @@ export namespace BillingPortal {
 
         /**
          * The ID of the subscription to be canceled.
+         */
+        subscription: string;
+      }
+
+      export interface SubscriptionPause {
+        /**
+         * The ID of the subscription to be paused.
          */
         subscription: string;
       }
@@ -482,6 +563,7 @@ export namespace BillingPortal {
         | 'customer_update'
         | 'payment_method_update'
         | 'subscription_cancel'
+        | 'subscription_pause'
         | 'subscription_update'
         | 'subscription_update_confirm'
         | OtherString;

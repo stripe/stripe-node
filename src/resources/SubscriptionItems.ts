@@ -569,10 +569,19 @@ export namespace SubscriptionItem {
   }
 
   export interface CurrentTrial {
+    /**
+     * The time the current trial ends.
+     */
     end_date: number;
 
+    /**
+     * The time the current trial started.
+     */
     start_date: number;
 
+    /**
+     * The Trial Offer ID applied to the subscription item.
+     */
     trial_offer: string;
   }
 }

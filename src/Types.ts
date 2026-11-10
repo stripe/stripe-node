@@ -72,8 +72,26 @@ export type RawErrorType =
   | 'invalid_scope'
   | 'unsupported_grant_type'
   | 'unsupported_response_type'
+  | 'already_canceled'
+  | 'blocked_by_stripe'
+  | 'cannot_proceed'
+  | 'capability_not_enabled'
+  | 'controlled_by_alternate_resource'
+  | 'feature_not_enabled'
+  | 'financial_account_not_open'
+  | 'fx_quote_needs_refresh'
+  | 'insufficient_funds'
+  | 'invalid_payment_method'
+  | 'invalid_payout_method'
+  | 'invalid_vaulted_credential'
+  | 'not_cancelable'
+  | 'quota_exceeded'
   | 'rate_limit'
-  | 'temporary_session_expired';
+  | 'recipient_not_notifiable'
+  | 'temporary_session_expired'
+  | 'verification_attempt_failed'
+  | 'verification_expired'
+  | 'verification_not_initiated';
 // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 export type RequestArgs = Array<any>;
 export type StripeRequest = {
