@@ -48,7 +48,7 @@ describe('Client Telemetry', () => {
 
   const expectSample = (sample, expected) => {
     expect(sample).to.include(expected);
-    expect(sample.telemetry_id).to.match(UUID);
+    expect(sample.request_metric_id).to.match(UUID);
     expect(sample.request_duration_ms).to.be.a('number');
     expect(Number.isFinite(sample.request_duration_ms)).to.equal(true);
     expect(sample.request_duration_ms).to.be.at.least(0);
@@ -139,7 +139,7 @@ describe('Client Telemetry', () => {
           expect(sample).to.have.all.keys([
             'http_status',
             'request_duration_ms',
-            'telemetry_id',
+            'request_metric_id',
             ...(scenario.error ? ['error'] : []),
             ...(scenario.requestId ? ['request_id'] : []),
           ]);
@@ -429,8 +429,8 @@ describe('Client Telemetry', () => {
     const sender = client._requestSender;
     sender._recordRequestMetrics({error: 'timeout'}, 1, []);
     sender._recordRequestMetrics({error: 'timeout'}, 1, []);
-    expect(client._prevRequestMetrics[0].telemetry_id).not.to.equal(
-      client._prevRequestMetrics[1].telemetry_id
+    expect(client._prevRequestMetrics[0].request_metric_id).not.to.equal(
+      client._prevRequestMetrics[1].request_metric_id
     );
     const original = client._platformFunctions.uuid4;
     client._platformFunctions.uuid4 = () => {

@@ -594,9 +594,9 @@ export class RequestSender {
       return;
     }
 
-    let telemetryId: string;
+    let requestMetricId: string;
     try {
-      telemetryId = this._stripe._platformFunctions.uuid4();
+      requestMetricId = this._stripe._platformFunctions.uuid4();
     } catch {
       // Telemetry must not change the result of the API request.
       return;
@@ -607,7 +607,7 @@ export class RequestSender {
         http_status: outcome.http_status,
         error: outcome.error,
         request_duration_ms: requestDurationMs,
-        telemetry_id: telemetryId,
+        request_metric_id: requestMetricId,
         usage: usage && usage.length > 0 ? usage : undefined,
       })
     );
