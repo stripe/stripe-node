@@ -567,6 +567,9 @@ export namespace PayoutIntent {
     export namespace HandleFailure {
       export type FailureReason =
         | 'account_not_configured_as_recipient'
+        | 'check_attachment_too_large'
+        | 'check_expired'
+        | 'check_undeliverable'
         | 'currency_not_supported_for_financial_account_balance'
         | 'feature_not_active_for_recipient'
         | 'fx_rate_drift_exceeded_after_review'
@@ -647,6 +650,11 @@ export namespace PayoutIntent {
        * Options for bank account payout methods.
        */
       bank_account?: PayoutMethodOptions.BankAccount;
+
+      /**
+       * Options for check send payout methods.
+       */
+      check_send?: PayoutMethodOptions.CheckSend;
     }
 
     export namespace PayoutMethodOptions {
@@ -660,6 +668,28 @@ export namespace PayoutIntent {
          * The preferred networks to use for this PayoutIntent.
          */
         preferred_networks?: Array<BankAccount.PreferredNetwork>;
+      }
+
+      export interface CheckSend {
+        /**
+         * The ID of a file to include as an attachment with the check.
+         */
+        attachment_file?: string;
+
+        /**
+         * Memo printed on the memo field of the check.
+         */
+        memo?: string;
+
+        /**
+         * Open Enum. Shipping speed of the check. Defaults to standard.
+         */
+        shipping_speed?: CheckSend.ShippingSpeed;
+
+        /**
+         * Signature printed on the check.
+         */
+        signature: string;
       }
 
       export namespace BankAccount {
@@ -708,6 +738,10 @@ export namespace PayoutIntent {
             export type TransactionPurpose = 'payroll' | OtherString;
           }
         }
+      }
+
+      export namespace CheckSend {
+        export type ShippingSpeed = 'priority' | 'standard' | OtherString;
       }
     }
   }
@@ -823,6 +857,11 @@ export namespace V2 {
            * Options for bank account payout methods.
            */
           bank_account?: PayoutMethodOptions.BankAccount;
+
+          /**
+           * Options for check send payout methods.
+           */
+          check_send?: PayoutMethodOptions.CheckSend;
         }
 
         export namespace PayoutMethodOptions {
@@ -836,6 +875,28 @@ export namespace V2 {
              * The preferred networks to use for this PayoutIntent.
              */
             preferred_networks?: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export interface CheckSend {
+            /**
+             * The ID of a file to include as an attachment with the check.
+             */
+            attachment_file?: string;
+
+            /**
+             * Memo printed on the memo field of the check.
+             */
+            memo?: string;
+
+            /**
+             * Open Enum. Shipping speed of the check. Defaults to standard.
+             */
+            shipping_speed?: CheckSend.ShippingSpeed;
+
+            /**
+             * Signature printed on the check.
+             */
+            signature: string;
           }
 
           export namespace BankAccount {
@@ -884,6 +945,10 @@ export namespace V2 {
                 export type TransactionPurpose = 'payroll' | OtherString;
               }
             }
+          }
+
+          export namespace CheckSend {
+            export type ShippingSpeed = 'priority' | 'standard' | OtherString;
           }
         }
       }
@@ -977,6 +1042,11 @@ export namespace V2 {
            * Options for bank account payout methods.
            */
           bank_account?: PayoutMethodOptions.BankAccount;
+
+          /**
+           * Options for check send payout methods.
+           */
+          check_send?: PayoutMethodOptions.CheckSend;
         }
 
         export namespace PayoutMethodOptions {
@@ -990,6 +1060,28 @@ export namespace V2 {
              * The preferred networks to use for this PayoutIntent.
              */
             preferred_networks?: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export interface CheckSend {
+            /**
+             * The ID of a file to include as an attachment with the check.
+             */
+            attachment_file?: string;
+
+            /**
+             * Memo printed on the memo field of the check.
+             */
+            memo?: string;
+
+            /**
+             * Open Enum. Shipping speed of the check. Defaults to standard.
+             */
+            shipping_speed?: CheckSend.ShippingSpeed;
+
+            /**
+             * Signature printed on the check.
+             */
+            signature: string;
           }
 
           export namespace BankAccount {
@@ -1038,6 +1130,10 @@ export namespace V2 {
                 export type TransactionPurpose = 'payroll' | OtherString;
               }
             }
+          }
+
+          export namespace CheckSend {
+            export type ShippingSpeed = 'priority' | 'standard' | OtherString;
           }
         }
       }

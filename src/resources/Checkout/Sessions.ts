@@ -216,6 +216,8 @@ export class SessionResource extends StripeResource {
   }
   /**
    * Creates a Checkout Session object.
+   *
+   * Validate requests on your server and protect your application's Session-creation endpoint with access controls and limits on repeated creation. See [Protect your Session-creation endpoint](https://docs.stripe.com/payments/accept-a-payment?payment-ui=elements&api-integration=checkout#protect-session-creation).
    */
   create(
     params?: Checkout.SessionCreateParams,
@@ -6246,6 +6248,11 @@ export namespace Checkout {
      * before using this feature. Learn more about [collecting phone numbers with Checkout](https://docs.stripe.com/payments/checkout/phone-numbers).
      */
     phone_number_collection?: SessionCreateParams.PhoneNumberCollection;
+
+    /**
+     * Token used to resolve the presentment currency for this Checkout Session.
+     */
+    pricing_token?: string;
 
     /**
      * This parameter applies to `ui_mode: embedded_page`. Learn more about the [redirect behavior](https://docs.stripe.com/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.

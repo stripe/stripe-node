@@ -85,7 +85,7 @@ export interface BalanceTransaction {
   description: string | null;
 
   /**
-   * If applicable, this transaction uses an exchange rate. If money converts from currency A to currency B, then the `amount` in currency A, multiplied by the `exchange_rate`, equals the `amount` in currency B. For example, if you charge a customer 10.00 EUR, the PaymentIntent's `amount` is `1000` and `currency` is `eur`. If this converts to 12.34 USD in your Stripe account, the BalanceTransaction's `amount` is `1234`, its `currency` is `usd`, and the `exchange_rate` is `1.234`.
+   * The exchange rate used for this transaction, if applicable. Multiplying the source `amount` by the `exchange_rate` gives the destination `amount`, both in their currencies' smallest units. For example, `1000` EUR cents converts to `1234` USD cents at `1.234`. For a zero-decimal currency such as JPY, `1000` JPY converts to `640` USD cents (6.40 USD) at `0.64`, equivalent to `0.0064` USD per JPY. For JPY to USD, the API multiplier is 100 times the whole-unit rate because JPY amounts use yen and USD amounts use cents.
    */
   exchange_rate: number | null;
 

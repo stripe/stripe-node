@@ -90,24 +90,47 @@ describe('V2 Core Events Resource', () => {
       expect(event.fetchRelatedObject).ok;
     });
 
-    it('Can call fetchRelatedObject', async () => {
-      const mockStripe = testUtils.createMockClient([
-        {
-          method: 'GET',
-          path: '/v2/core/events/ll_123',
-          response: v2EventPayloadWithRelatedObject,
+    // Uses getTestServerStripe (a real local HTTP server) rather than
+    // createMockClient, because fetchRelatedObject() issues its request
+    // through a separate client built by withStripeContext() -- that new
+    // client doesn't inherit a _requestSender swapped onto the original
+    // instance, so createMockClient-style instance-level mocking can't see
+    // the second request.
+    it('Can call fetchRelatedObject', (done) => {
+      testUtils.getTestServerStripe(
+        {},
+        (req, res) => {
+          if (req.url === '/v2/core/events/ll_123') {
+            res.write(v2EventPayloadWithRelatedObject);
+            res.end();
+            return {shouldStayOpen: true};
+          } else if (req.url === '/v1/things/obj_123') {
+            res.write('{"id": "obj_123"}');
+          } else {
+            res.writeHead(404);
+            res.write(JSON.stringify({error: 'not found'}));
+          }
+          res.end();
         },
-        {
-          method: 'GET',
-          path: '/v1/things/obj_123',
-          response: '{"id": "obj_123"}',
-        },
-      ]);
-      const event = await mockStripe.v2.core.events.retrieve('ll_123');
-      expect(event).ok;
-      expect(event.fetchRelatedObject).ok;
-      const obj = await event.fetchRelatedObject();
-      expect(obj.id).to.equal('obj_123');
+        async (err, mockStripe, closeServer) => {
+          if (err) {
+            return done(err);
+          }
+
+          try {
+            const event = await mockStripe.v2.core.events.retrieve('ll_123');
+            expect(event).ok;
+            expect(event.fetchRelatedObject).ok;
+            const obj = await event.fetchRelatedObject();
+            expect(obj.id).to.equal('obj_123');
+
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
     });
   });
 

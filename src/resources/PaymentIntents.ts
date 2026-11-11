@@ -1139,6 +1139,8 @@ export namespace PaymentIntent {
     wechat_pay_redirect_to_android_app?: NextAction.WechatPayRedirectToAndroidApp;
 
     wechat_pay_redirect_to_ios_app?: NextAction.WechatPayRedirectToIosApp;
+
+    wechat_pay_redirect_to_mini_program?: NextAction.WechatPayRedirectToMiniProgram;
   }
 
   export interface PaymentDetails {
@@ -2238,6 +2240,38 @@ export namespace PaymentIntent {
        * An universal link that redirect to WeChat Pay app
        */
       native_url: string;
+    }
+
+    export interface WechatPayRedirectToMiniProgram {
+      /**
+       * Mini Program ID registered on WeChat Open Platform
+       */
+      app_id: string;
+
+      /**
+       * Random string
+       */
+      nonce_str: string;
+
+      /**
+       * Unique trading ID assigned by WeChat Pay
+       */
+      prepay_id: string;
+
+      /**
+       * Signature
+       */
+      sign: string;
+
+      /**
+       * Signature type
+       */
+      sign_type: string;
+
+      /**
+       * Current time in epoch format
+       */
+      timestamp: string;
     }
 
     export namespace CashappHandleRedirectOrDisplayQrCode {

@@ -2033,7 +2033,9 @@ export class Stripe {
     }
 
     parsed.fetchEvent = (): Promise<unknown> => {
-      return this._requestSender._rawRequest(
+      // Issue the request through a client scoped to this event's own context.
+      const eventClient = this.withStripeContext(parsed.context as any);
+      return eventClient._requestSender._rawRequest(
         'GET',
         // `id` comes from the notification body, so encode it the way the
         // generated resources do -- otherwise it can inject path or query segments.
@@ -2054,7 +2056,9 @@ export class Stripe {
         return Promise.resolve(null);
       }
 
-      return this._requestSender._rawRequest(
+      // See the comment in `fetchEvent` above.
+      const eventClient = this.withStripeContext(parsed.context as any);
+      return eventClient._requestSender._rawRequest(
         'GET',
         (parsed.related_object as any).url,
         undefined,

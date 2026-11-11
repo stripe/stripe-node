@@ -60,13 +60,23 @@ export class EventResource extends StripeResource {
     }
     return {
       ...pulledEvent,
-      fetchRelatedObject: (): Promise<null | any> =>
-        this._makeRequest('GET', pulledEvent.related_object.url, undefined, {
-          stripeContext: pulledEvent.context,
-          headers: {
-            'Stripe-Request-Trigger': `event=${pulledEvent.id}`,
-          },
-        }),
+      fetchRelatedObject: (): Promise<null | any> => {
+        // Issue the request through a client scoped to this event's own
+        // context, built lazily here (not eagerly per list item) since most
+        // fetchRelatedObject() calls are never invoked.
+        const eventClient = this._stripe.withStripeContext(pulledEvent.context);
+        return eventClient._requestSender._rawRequest(
+          'GET',
+          pulledEvent.related_object.url,
+          undefined,
+          {
+            stripeContext: pulledEvent.context,
+            headers: {
+              'Stripe-Request-Trigger': `event=${pulledEvent.id}`,
+            },
+          }
+        );
+      },
     };
   }
 }
@@ -864,6 +874,11 @@ export type Event =
   | V2MoneyManagementRecipientVerificationUpdatedEvent
   | V2MoneyManagementRewardProgramRewardEarnedEvent
   | V2MoneyManagementRewardProgramRewardReversedEvent
+  | V2MoneyManagementSpendingMandateCanceledEvent
+  | V2MoneyManagementSpendingMandateCreatedEvent
+  | V2MoneyManagementSpendingMandateExpiredEvent
+  | V2MoneyManagementSpendingMandatePendingCancellationEvent
+  | V2MoneyManagementSpendingMandateUpdatedEvent
   | V2MoneyManagementTransactionCreatedEvent
   | V2MoneyManagementTransactionUpdatedEvent
   | V2OrchestratedCommerceAgreementConfirmedEvent
@@ -1415,6 +1430,11 @@ export type EventNotification =
   | V2MoneyManagementRecipientVerificationUpdatedEventNotification
   | V2MoneyManagementRewardProgramRewardEarnedEventNotification
   | V2MoneyManagementRewardProgramRewardReversedEventNotification
+  | V2MoneyManagementSpendingMandateCanceledEventNotification
+  | V2MoneyManagementSpendingMandateCreatedEventNotification
+  | V2MoneyManagementSpendingMandateExpiredEventNotification
+  | V2MoneyManagementSpendingMandatePendingCancellationEventNotification
+  | V2MoneyManagementSpendingMandateUpdatedEventNotification
   | V2MoneyManagementTransactionCreatedEventNotification
   | V2MoneyManagementTransactionUpdatedEventNotification
   | V2OrchestratedCommerceAgreementConfirmedEventNotification
@@ -8380,7 +8400,7 @@ export interface V2CommerceProductCatalogImportsSucceededWithErrorsEventNotifica
 }
 
 /**
- * This event occurs when an account is closed.
+ * Occurs when an Account is closed.
  */
 export interface V2CoreAccountClosedEvent extends EventBase {
   type: 'v2.core.account.closed';
@@ -8915,7 +8935,7 @@ export interface V2CoreAccountIncludingConfigurationRecipientUpdatedEventNotific
 }
 
 /**
- * This event occurs when account defaults are created or updated.
+ * Occurs when an Account's defaults are created or updated.
  */
 export interface V2CoreAccountIncludingDefaultsUpdatedEvent extends EventBase {
   type: 'v2.core.account[defaults].updated';
@@ -14730,6 +14750,7 @@ export interface V2MoneyManagementReceivedDebitUpdatedEventNotification
 }
 
 /**
+ * Deprecated: Use v2.money_management.spending_mandate.canceled instead.
  * Occurs when a ReceivedDebitMandate is successfully canceled.
  */
 export interface V2MoneyManagementReceivedDebitMandateCanceledEvent
@@ -14751,6 +14772,7 @@ export interface V2MoneyManagementReceivedDebitMandateCanceledEventNotification
 }
 
 /**
+ * Deprecated: Use v2.money_management.spending_mandate.created instead.
  * Occurs when a ReceivedDebitMandate is created by an external party.
  */
 export interface V2MoneyManagementReceivedDebitMandateCreatedEvent
@@ -14772,6 +14794,7 @@ export interface V2MoneyManagementReceivedDebitMandateCreatedEventNotification
 }
 
 /**
+ * Deprecated: Use v2.money_management.spending_mandate.expired instead.
  * Occurs when a ReceivedDebitMandate expires.
  */
 export interface V2MoneyManagementReceivedDebitMandateExpiredEvent
@@ -14793,6 +14816,7 @@ export interface V2MoneyManagementReceivedDebitMandateExpiredEventNotification
 }
 
 /**
+ * Deprecated: Use v2.money_management.spending_mandate.pending_cancellation instead.
  * Occurs when a ReceivedDebitMandate transitions to pending_cancellation status.
  */
 export interface V2MoneyManagementReceivedDebitMandatePendingCancellationEvent
@@ -14816,6 +14840,7 @@ export interface V2MoneyManagementReceivedDebitMandatePendingCancellationEventNo
 }
 
 /**
+ * Deprecated: Use v2.money_management.spending_mandate.updated instead.
  * Occurs when a ReceivedDebitMandate is updated.
  */
 export interface V2MoneyManagementReceivedDebitMandateUpdatedEvent
@@ -15055,6 +15080,114 @@ export namespace V2MoneyManagementRewardProgramRewardReversedEvent {
       }
     }
   }
+}
+
+/**
+ * Occurs when a SpendingMandate is successfully canceled.
+ */
+export interface V2MoneyManagementSpendingMandateCanceledEvent
+  extends EventBase {
+  type: 'v2.money_management.spending_mandate.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.SpendingMandate>;
+}
+export interface V2MoneyManagementSpendingMandateCanceledEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.spending_mandate.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.SpendingMandate>;
+  fetchEvent(): Promise<V2MoneyManagementSpendingMandateCanceledEvent>;
+}
+
+/**
+ * Occurs when a SpendingMandate is created, either when a mandate is received from an external
+ * party or when a user authorizes a counterparty to pull money from a Financial Account.
+ */
+export interface V2MoneyManagementSpendingMandateCreatedEvent
+  extends EventBase {
+  type: 'v2.money_management.spending_mandate.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.SpendingMandate>;
+}
+export interface V2MoneyManagementSpendingMandateCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.spending_mandate.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.SpendingMandate>;
+  fetchEvent(): Promise<V2MoneyManagementSpendingMandateCreatedEvent>;
+}
+
+/**
+ * Occurs when a SpendingMandate expires.
+ */
+export interface V2MoneyManagementSpendingMandateExpiredEvent
+  extends EventBase {
+  type: 'v2.money_management.spending_mandate.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.SpendingMandate>;
+}
+export interface V2MoneyManagementSpendingMandateExpiredEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.spending_mandate.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.SpendingMandate>;
+  fetchEvent(): Promise<V2MoneyManagementSpendingMandateExpiredEvent>;
+}
+
+/**
+ * Occurs when a SpendingMandate transitions to pending_cancellation status.
+ */
+export interface V2MoneyManagementSpendingMandatePendingCancellationEvent
+  extends EventBase {
+  type: 'v2.money_management.spending_mandate.pending_cancellation';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.SpendingMandate>;
+}
+export interface V2MoneyManagementSpendingMandatePendingCancellationEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.spending_mandate.pending_cancellation';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.SpendingMandate>;
+  fetchEvent(): Promise<
+    V2MoneyManagementSpendingMandatePendingCancellationEvent
+  >;
+}
+
+/**
+ * Occurs when a SpendingMandate is updated.
+ */
+export interface V2MoneyManagementSpendingMandateUpdatedEvent
+  extends EventBase {
+  type: 'v2.money_management.spending_mandate.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.SpendingMandate>;
+}
+export interface V2MoneyManagementSpendingMandateUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.spending_mandate.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.SpendingMandate>;
+  fetchEvent(): Promise<V2MoneyManagementSpendingMandateUpdatedEvent>;
 }
 
 /**
@@ -16641,6 +16774,11 @@ export declare namespace Events {
     V2MoneyManagementRecipientVerificationUpdatedEvent,
     V2MoneyManagementRewardProgramRewardEarnedEvent,
     V2MoneyManagementRewardProgramRewardReversedEvent,
+    V2MoneyManagementSpendingMandateCanceledEvent,
+    V2MoneyManagementSpendingMandateCreatedEvent,
+    V2MoneyManagementSpendingMandateExpiredEvent,
+    V2MoneyManagementSpendingMandatePendingCancellationEvent,
+    V2MoneyManagementSpendingMandateUpdatedEvent,
     V2MoneyManagementTransactionCreatedEvent,
     V2MoneyManagementTransactionUpdatedEvent,
     V2OrchestratedCommerceAgreementConfirmedEvent,
@@ -17190,6 +17328,11 @@ export declare namespace Events {
     V2MoneyManagementRecipientVerificationUpdatedEventNotification,
     V2MoneyManagementRewardProgramRewardEarnedEventNotification,
     V2MoneyManagementRewardProgramRewardReversedEventNotification,
+    V2MoneyManagementSpendingMandateCanceledEventNotification,
+    V2MoneyManagementSpendingMandateCreatedEventNotification,
+    V2MoneyManagementSpendingMandateExpiredEventNotification,
+    V2MoneyManagementSpendingMandatePendingCancellationEventNotification,
+    V2MoneyManagementSpendingMandateUpdatedEventNotification,
     V2MoneyManagementTransactionCreatedEventNotification,
     V2MoneyManagementTransactionUpdatedEventNotification,
     V2OrchestratedCommerceAgreementConfirmedEventNotification,

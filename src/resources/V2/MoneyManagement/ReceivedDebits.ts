@@ -184,6 +184,11 @@ export namespace ReceivedDebit {
     payment_method_type: BankTransfer.PaymentMethodType;
 
     /**
+     * The ID of the SpendingMandate associated with this debit.
+     */
+    spending_mandate?: string;
+
+    /**
      * The statement descriptor set by the originator of the debit.
      */
     statement_descriptor?: string;
@@ -321,6 +326,7 @@ export namespace ReceivedDebit {
 
       /**
        * The ID of the mandate associated with this debit.
+       * Deprecated: use `bank_transfer.spending_mandate` instead.
        */
       received_debit_mandate?: string;
 
@@ -500,9 +506,14 @@ export namespace V2 {
       limit?: number;
 
       /**
-       * Filter by the received debit mandate ID.
+       * Filter by the received debit mandate ID. Deprecated: use `spending_mandate` instead.
        */
       received_debit_mandate?: string;
+
+      /**
+       * Filter by the SpendingMandate ID.
+       */
+      spending_mandate?: string;
     }
   }
 }

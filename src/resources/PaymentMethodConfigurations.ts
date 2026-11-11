@@ -228,6 +228,8 @@ export interface PaymentMethodConfiguration {
 
   swish?: PaymentMethodConfiguration.Swish;
 
+  toss_pay?: PaymentMethodConfiguration.TossPay;
+
   twint?: PaymentMethodConfiguration.Twint;
 
   upi?: PaymentMethodConfiguration.Upi;
@@ -779,6 +781,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: Swish.DisplayPreference;
+  }
+
+  export interface TossPay {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: TossPay.DisplayPreference;
   }
 
   export interface Twint {
@@ -2335,6 +2346,31 @@ export namespace PaymentMethodConfiguration {
     }
   }
 
+  export namespace TossPay {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace Twint {
     export interface DisplayPreference {
       /**
@@ -2812,6 +2848,11 @@ export interface PaymentMethodConfigurationCreateParams {
   swish?: PaymentMethodConfigurationCreateParams.Swish;
 
   /**
+   * Customers are redirected to Toss Pay to authenticate their payment, then return to your website or app. You receive immediate notification of whether the payment succeeded or failed. With recurring access, customers can authorize a reusable mandate for future off-session payments.
+   */
+  toss_pay?: PaymentMethodConfigurationCreateParams.TossPay;
+
+  /**
    * Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
    */
   twint?: PaymentMethodConfigurationCreateParams.Twint;
@@ -3274,6 +3315,13 @@ export namespace PaymentMethodConfigurationCreateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: Swish.DisplayPreference;
+  }
+
+  export interface TossPay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: TossPay.DisplayPreference;
   }
 
   export interface Twint {
@@ -4124,6 +4172,19 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
   }
 
+  export namespace TossPay {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace Twint {
     export interface DisplayPreference {
       /**
@@ -4533,6 +4594,11 @@ export interface PaymentMethodConfigurationUpdateParams {
    * Swish is a [real-time](https://docs.stripe.com/payments/real-time) payment method popular in Sweden. It allows customers to [authenticate and approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the Swish mobile app and the Swedish BankID mobile app. Check this [page](https://docs.stripe.com/payments/swish) for more details.
    */
   swish?: PaymentMethodConfigurationUpdateParams.Swish;
+
+  /**
+   * Customers are redirected to Toss Pay to authenticate their payment, then return to your website or app. You receive immediate notification of whether the payment succeeded or failed. With recurring access, customers can authorize a reusable mandate for future off-session payments.
+   */
+  toss_pay?: PaymentMethodConfigurationUpdateParams.TossPay;
 
   /**
    * Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
@@ -4999,6 +5065,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
     display_preference?: Swish.DisplayPreference;
   }
 
+  export interface TossPay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: TossPay.DisplayPreference;
+  }
+
   export interface Twint {
     /**
      * Whether or not the payment method should be displayed.
@@ -5835,6 +5908,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 
   export namespace Swish {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace TossPay {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.

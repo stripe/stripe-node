@@ -2419,12 +2419,12 @@ export namespace Charge {
 
       export interface Checks {
         /**
-         * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+         * If an address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
         address_line1_check: string | null;
 
         /**
-         * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+         * If an address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
         address_postal_code_check: string | null;
 
@@ -2903,12 +2903,12 @@ export namespace Charge {
             export namespace Card {
               export interface Checks {
                 /**
-                 * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+                 * If an address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
                  */
                 address_line1_check: string | null;
 
                 /**
-                 * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+                 * If an address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
                  */
                 address_postal_code_check: string | null;
 
@@ -3099,6 +3099,11 @@ export namespace Charge {
         authorization_response_code: string | null;
 
         /**
+         * A message from the card issuer to show to the cardholder, and where it must be shown.
+         */
+        cardholder_message?: Receipt.CardholderMessage | null;
+
+        /**
          * Describes the method used by the cardholder to verify ownership of the card. One of the following: `approval`, `failure`, `none`, `offline_pin`, `offline_pin_and_signature`, `online_pin`, or `signature`.
          */
         cardholder_verification_method: string | null;
@@ -3184,6 +3189,26 @@ export namespace Charge {
           | 'prepaid'
           | 'unknown'
           | OtherString;
+
+        export interface CardholderMessage {
+          /**
+           * Where the message must be printed or displayed. An empty list means the message must not be shown.
+           */
+          destinations: Array<CardholderMessage.Destination>;
+
+          /**
+           * The message from the card issuer, such as the remaining balance.
+           */
+          value: string;
+        }
+
+        export namespace CardholderMessage {
+          export type Destination =
+            | 'cardholder_receipt'
+            | 'merchant_receipt'
+            | 'point_of_sale'
+            | OtherString;
+        }
       }
 
       export namespace Wallet {
@@ -3606,12 +3631,12 @@ export namespace Charge {
         export namespace Card {
           export interface Checks {
             /**
-             * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+             * If an address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
              */
             address_line1_check: string | null;
 
             /**
-             * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+             * If an address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
              */
             address_postal_code_check: string | null;
 

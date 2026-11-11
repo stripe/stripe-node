@@ -1148,6 +1148,8 @@ export namespace SetupIntent {
     export interface AmazonPay {}
 
     export interface BacsDebit {
+      financial_connections?: BacsDebit.FinancialConnections;
+
       mandate_options?: BacsDebit.MandateOptions;
 
       verification_method?: BacsDebit.VerificationMethod;
@@ -1301,6 +1303,10 @@ export namespace SetupIntent {
     }
 
     export namespace BacsDebit {
+      export interface FinancialConnections {
+        return_url?: string;
+      }
+
       export interface MandateOptions {
         /**
          * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
@@ -3328,6 +3334,11 @@ export namespace SetupIntentCreateParams {
 
     export interface BacsDebit {
       /**
+       * Additional fields for Financial Connections session creation.
+       */
+      financial_connections?: BacsDebit.FinancialConnections;
+
+      /**
        * Additional fields for Mandate creation
        */
       mandate_options?: BacsDebit.MandateOptions;
@@ -3541,6 +3552,13 @@ export namespace SetupIntentCreateParams {
     }
 
     export namespace BacsDebit {
+      export interface FinancialConnections {
+        /**
+         * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+         */
+        return_url?: string;
+      }
+
       export interface MandateOptions {
         /**
          * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
@@ -5695,6 +5713,11 @@ export namespace SetupIntentUpdateParams {
 
     export interface BacsDebit {
       /**
+       * Additional fields for Financial Connections session creation.
+       */
+      financial_connections?: BacsDebit.FinancialConnections;
+
+      /**
        * Additional fields for Mandate creation
        */
       mandate_options?: BacsDebit.MandateOptions;
@@ -5908,6 +5931,13 @@ export namespace SetupIntentUpdateParams {
     }
 
     export namespace BacsDebit {
+      export interface FinancialConnections {
+        /**
+         * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+         */
+        return_url?: string;
+      }
+
       export interface MandateOptions {
         /**
          * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
@@ -8061,6 +8091,11 @@ export namespace SetupIntentConfirmParams {
 
     export interface BacsDebit {
       /**
+       * Additional fields for Financial Connections session creation.
+       */
+      financial_connections?: BacsDebit.FinancialConnections;
+
+      /**
        * Additional fields for Mandate creation
        */
       mandate_options?: BacsDebit.MandateOptions;
@@ -8274,6 +8309,13 @@ export namespace SetupIntentConfirmParams {
     }
 
     export namespace BacsDebit {
+      export interface FinancialConnections {
+        /**
+         * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+         */
+        return_url?: string;
+      }
+
       export interface MandateOptions {
         /**
          * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
