@@ -3,6 +3,7 @@ title: Update generated code
 pr_url: https://github.com/stripe/stripe-node/pull/2925
 semver_level: major
 is_stripe_api_change: true
+released_in_version: 23.2.0-alpha.3
 ---
 
 * Add support for new resource `V2.MoneyManagement.SpendingMandate`
