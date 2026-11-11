@@ -143,6 +143,8 @@ export namespace Mandate {
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
+    toss_pay?: PaymentMethodDetails.TossPay;
+
     twint?: PaymentMethodDetails.Twint;
 
     /**
@@ -387,6 +389,13 @@ export namespace Mandate {
        * The URL of the mandate. This URL generally contains sensitive information about the customer and should be shared with them exclusively.
        */
       url: string;
+    }
+
+    export interface TossPay {
+      /**
+       * The buyer identifier provided by NICE for this Toss Pay account, when available.
+       */
+      buyer_id: string | null;
     }
 
     export interface Twint {}

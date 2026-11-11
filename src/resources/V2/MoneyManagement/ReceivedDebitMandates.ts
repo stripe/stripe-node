@@ -6,6 +6,7 @@ import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ReceivedDebitMandateResource extends StripeResource {
   /**
+   * Deprecated: Use ListSpendingMandates instead.
    * Returns a list of ReceivedDebitMandates.
    */
   list(
@@ -23,6 +24,7 @@ export class ReceivedDebitMandateResource extends StripeResource {
     ) as any;
   }
   /**
+   * Deprecated: Use RetrieveSpendingMandate instead.
    * Retrieves the details of an existing ReceivedDebitMandate.
    */
   retrieve(
@@ -38,6 +40,7 @@ export class ReceivedDebitMandateResource extends StripeResource {
     ) as any;
   }
   /**
+   * Deprecated: Use CancelSpendingMandate instead.
    * Cancels an active ReceivedDebitMandate.
    */
   cancel(

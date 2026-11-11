@@ -233,6 +233,11 @@ export namespace V2 {
         card?: PayoutMethodData.Card;
 
         /**
+         * The type specific details of the check send payout method.
+         */
+        check_send?: PayoutMethodData.CheckSend;
+
+        /**
          * The type specific details of the crypto wallet payout method.
          */
         crypto_wallet?: PayoutMethodData.CryptoWallet;
@@ -326,6 +331,18 @@ export namespace V2 {
           number: string;
         }
 
+        export interface CheckSend {
+          /**
+           * The US mailing address the check is sent to.
+           */
+          mailing_address: CheckSend.MailingAddress;
+
+          /**
+           * The name printed on the check's payee line.
+           */
+          payee_name: string;
+        }
+
         export interface CryptoWallet {
           /**
            * Crypto wallet address.
@@ -361,6 +378,7 @@ export namespace V2 {
           | 'apple_pay'
           | 'bank_account'
           | 'card'
+          | 'check_send'
           | 'crypto_wallet'
           | 'network_business_profile_wallet'
           | 'pix'
@@ -372,6 +390,40 @@ export namespace V2 {
             | 'futsu'
             | 'savings'
             | 'toza';
+        }
+
+        export namespace CheckSend {
+          export interface MailingAddress {
+            /**
+             * City.
+             */
+            city: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code: string;
+
+            /**
+             * State.
+             */
+            state: string;
+          }
         }
 
         export namespace CryptoWallet {
@@ -494,6 +546,7 @@ export namespace V2 {
           | 'apple_pay'
           | 'bank_account'
           | 'card'
+          | 'check_send'
           | 'crypto_wallet'
           | 'network_business_profile_wallet'
           | 'pix'

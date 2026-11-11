@@ -676,6 +676,16 @@ export namespace PaymentEvaluation {
          * Creditor identifier used for the intended debit.
          */
         creditor_id: string | null;
+
+        /**
+         * Describes the presence of the customer during the payment.
+         */
+        customer_presence: SepaDebit.CustomerPresence | null;
+
+        /**
+         * Describes whether this payment is one-off or recurring.
+         */
+        payment_type: SepaDebit.PaymentType | null;
       }
 
       export interface UsBankAccount {
@@ -702,6 +712,15 @@ export namespace PaymentEvaluation {
           | 'setup_one_off'
           | 'setup_recurring'
           | OtherString;
+      }
+
+      export namespace SepaDebit {
+        export type CustomerPresence =
+          | 'off_session'
+          | 'on_session'
+          | OtherString;
+
+        export type PaymentType = 'one_off' | 'recurring';
       }
 
       export namespace UsBankAccount {
@@ -1122,6 +1141,16 @@ export namespace Radar {
            * Supply the SEPA Creditor Identifier configured for the intended debit with your selected processor. Obtain it from your processor's SEPA configuration API or onboarding/support information. Do not supply a statement descriptor, IBAN, processor merchant-account ID, or mandate reference. If the creditor identifier is unknown, omit it.
            */
           creditor_id?: string;
+
+          /**
+           * Describes the presence of the customer during the payment.
+           */
+          customer_presence?: SepaDebit.CustomerPresence;
+
+          /**
+           * Describes whether this payment is one-off or recurring.
+           */
+          payment_type?: SepaDebit.PaymentType;
         }
 
         export interface UsBankAccount {
@@ -1148,6 +1177,15 @@ export namespace Radar {
             | 'setup_one_off'
             | 'setup_recurring'
             | OtherString;
+        }
+
+        export namespace SepaDebit {
+          export type CustomerPresence =
+            | 'off_session'
+            | 'on_session'
+            | OtherString;
+
+          export type PaymentType = 'one_off' | 'recurring';
         }
 
         export namespace UsBankAccount {

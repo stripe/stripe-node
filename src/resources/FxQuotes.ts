@@ -193,7 +193,7 @@ export namespace FxQuote {
 }
 export interface FxQuoteCreateParams {
   /**
-   * A list of three letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be [supported currencies](https://stripe.com/docs/currencies).
+   * A list of three letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be [supported currencies](https://stripe.com/docs/currencies). Payout-only currencies are also supported, but only for informational quotes (`lock_duration=none`).
    */
   from_currencies: Array<string>;
 
@@ -203,7 +203,7 @@ export interface FxQuoteCreateParams {
   lock_duration: FxQuoteCreateParams.LockDuration;
 
   /**
-   * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+   * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Payout-only currencies are also supported, but only for informational quotes (`lock_duration=none`).
    */
   to_currency: string;
 

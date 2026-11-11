@@ -26,6 +26,7 @@ export class NetworkTokenResource extends StripeResource {
    * Creates a Network Token from an existing card reference.
    * @throws Stripe.CannotProceedError
    * @throws Stripe.BlockedByStripeError
+   * @throws Stripe.MerchantNotGatedError
    */
   createFromCredential(
     params: V2.Core.Vault.NetworkTokenCreateFromCredentialParams,

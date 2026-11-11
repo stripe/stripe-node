@@ -340,6 +340,11 @@ export namespace OutboundPayment {
     card?: TrackingDetails.Card;
 
     /**
+     * Check send tracking details.
+     */
+    check_send?: TrackingDetails.CheckSend;
+
+    /**
      * Crypto wallet tracking details.
      */
     crypto_wallet?: TrackingDetails.CryptoWallet;
@@ -424,6 +429,9 @@ export namespace OutboundPayment {
 
     export namespace Failed {
       export type Reason =
+        | 'check_attachment_too_large'
+        | 'check_expired'
+        | 'check_undeliverable'
         | 'fx_rate_drift_exceeded_after_review'
         | 'paper_check_attachment_too_large'
         | 'paper_check_expired'
@@ -466,6 +474,11 @@ export namespace OutboundPayment {
        * Options for bank account payout methods.
        */
       bank_account?: PayoutMethodOptions.BankAccount;
+
+      /**
+       * Options for check send payout methods.
+       */
+      check_send?: PayoutMethodOptions.CheckSend;
     }
 
     export namespace PayoutMethodOptions {
@@ -479,6 +492,28 @@ export namespace OutboundPayment {
          * The preferred networks to use for this OutboundPayment.
          */
         preferred_networks?: Array<BankAccount.PreferredNetwork>;
+      }
+
+      export interface CheckSend {
+        /**
+         * The ID of a file to include as an attachment with the check.
+         */
+        attachment_file?: string;
+
+        /**
+         * Memo printed on the memo field of the check.
+         */
+        memo?: string;
+
+        /**
+         * Open Enum. Shipping speed of the check. Defaults to standard.
+         */
+        shipping_speed?: CheckSend.ShippingSpeed;
+
+        /**
+         * Signature printed on the check.
+         */
+        signature: string;
       }
 
       export namespace BankAccount {
@@ -528,6 +563,10 @@ export namespace OutboundPayment {
           }
         }
       }
+
+      export namespace CheckSend {
+        export type ShippingSpeed = 'priority' | 'standard' | OtherString;
+      }
     }
   }
 
@@ -548,6 +587,48 @@ export namespace OutboundPayment {
        * A unique identifier that can be used to track this OutboundPayment with the recipient card.
        */
       retrieval_reference?: string;
+    }
+
+    export interface CheckSend {
+      /**
+       * Open Enum. Carrier of the check.
+       */
+      carrier: CheckSend.Carrier;
+
+      /**
+       * Check number.
+       */
+      check_number: string;
+
+      /**
+       * Postal code of the latest tracking update.
+       */
+      current_postal_code: string;
+
+      /**
+       * The ID of a file containing a preview image of the mailed check.
+       */
+      mailed_check_preview_file?: string;
+
+      /**
+       * Mailing address of the check.
+       */
+      mailing_address: CheckSend.MailingAddress;
+
+      /**
+       * Tracking number for the check.
+       */
+      tracking_number: string;
+
+      /**
+       * Open Enum. Tracking status of the check.
+       */
+      tracking_status: CheckSend.TrackingStatus;
+
+      /**
+       * When the tracking details were last updated.
+       */
+      updated_at: string;
     }
 
     export interface CryptoWallet {
@@ -603,6 +684,48 @@ export namespace OutboundPayment {
       | 'crypto_wallet'
       | 'paper_check'
       | OtherString;
+
+    export namespace CheckSend {
+      export type Carrier = 'fedex' | 'usps' | OtherString;
+
+      export interface MailingAddress {
+        /**
+         * City, district, suburb, town, or village.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Address line 1 (e.g., street, PO Box, or company name).
+         */
+        line1?: string;
+
+        /**
+         * Address line 2 (e.g., apartment, suite, unit, or building).
+         */
+        line2?: string;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * State, county, province, or region.
+         */
+        state?: string;
+      }
+
+      export type TrackingStatus =
+        | 'delivered'
+        | 'in_transit'
+        | 'mailed'
+        | OtherString;
+    }
 
     export namespace PaperCheck {
       export type Carrier = 'fedex' | 'usps' | OtherString;
@@ -820,6 +943,11 @@ export namespace V2 {
            * Options for bank account payout methods.
            */
           bank_account?: PayoutMethodOptions.BankAccount;
+
+          /**
+           * Options for check send payout methods.
+           */
+          check_send?: PayoutMethodOptions.CheckSend;
         }
 
         export namespace PayoutMethodOptions {
@@ -833,6 +961,28 @@ export namespace V2 {
              * The preferred networks to use for this OutboundPayment.
              */
             preferred_networks?: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export interface CheckSend {
+            /**
+             * The ID of a file to include as an attachment with the check.
+             */
+            attachment_file?: string;
+
+            /**
+             * Memo printed on the memo field of the check.
+             */
+            memo?: string;
+
+            /**
+             * Open Enum. Shipping speed of the check. Defaults to standard.
+             */
+            shipping_speed?: CheckSend.ShippingSpeed;
+
+            /**
+             * Signature printed on the check.
+             */
+            signature: string;
           }
 
           export namespace BankAccount {
@@ -881,6 +1031,10 @@ export namespace V2 {
                 export type TransactionPurpose = 'payroll' | OtherString;
               }
             }
+          }
+
+          export namespace CheckSend {
+            export type ShippingSpeed = 'priority' | 'standard' | OtherString;
           }
         }
       }

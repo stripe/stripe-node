@@ -2368,7 +2368,7 @@ export namespace PaymentRecord {
         address_line1_check: Checks.AddressLine1Check | null;
 
         /**
-         * If you provide a address postal code, the check result is one of `pass`, `fail`, `unavailable`, or `unchecked`.
+         * If you provide an address postal code, the check result is one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
         address_postal_code_check: Checks.AddressPostalCodeCheck | null;
 
@@ -2655,6 +2655,11 @@ export namespace PaymentRecord {
         authorization_response_code: string | null;
 
         /**
+         * A message from the card issuer to show to the cardholder, and where it must be shown.
+         */
+        cardholder_message?: Receipt.CardholderMessage | null;
+
+        /**
          * Describes the method used by the cardholder to verify ownership of the card. One of the following: `approval`, `failure`, `none`, `offline_pin`, `offline_pin_and_signature`, `online_pin`, or `signature`.
          */
         cardholder_verification_method: string | null;
@@ -2740,6 +2745,26 @@ export namespace PaymentRecord {
           | 'prepaid'
           | 'unknown'
           | OtherString;
+
+        export interface CardholderMessage {
+          /**
+           * Where the message must be printed or displayed. An empty list means the message must not be shown.
+           */
+          destinations: Array<CardholderMessage.Destination>;
+
+          /**
+           * The message from the card issuer, such as the remaining balance.
+           */
+          value: string;
+        }
+
+        export namespace CardholderMessage {
+          export type Destination =
+            | 'cardholder_receipt'
+            | 'merchant_receipt'
+            | 'point_of_sale'
+            | OtherString;
+        }
       }
 
       export namespace Wallet {
@@ -3712,6 +3737,11 @@ export namespace PaymentRecordReportPaymentParams {
        * Verification checks performed on the card.
        */
       checks?: Card.Checks;
+
+      /**
+       * Populated if this transaction used 3D Secure authentication.
+       */
+      three_d_secure?: Card.ThreeDSecure;
     }
 
     export interface Custom {
@@ -3753,6 +3783,38 @@ export namespace PaymentRecordReportPaymentParams {
         cvc_check?: Checks.CvcCheck;
       }
 
+      export interface ThreeDSecure {
+        /**
+         * For authenticated transactions: Indicates how the issuing bank authenticated the customer.
+         */
+        authentication_flow?: ThreeDSecure.AuthenticationFlow;
+
+        /**
+         * The Electronic Commerce Indicator (ECI). A protocol-level field indicating what degree of authentication was performed.
+         */
+        electronic_commerce_indicator?: ThreeDSecure.ElectronicCommerceIndicator;
+
+        /**
+         * The exemption requested via 3DS and accepted by the issuer at authentication time.
+         */
+        exemption_indicator?: ThreeDSecure.ExemptionIndicator;
+
+        /**
+         * Indicates the outcome of 3D Secure authentication.
+         */
+        result: ThreeDSecure.Result;
+
+        /**
+         * Additional information about why 3D Secure succeeded or failed, based on the `result`.
+         */
+        result_reason?: ThreeDSecure.ResultReason;
+
+        /**
+         * The version of 3D Secure that was used.
+         */
+        version: ThreeDSecure.Version;
+      }
+
       export namespace Checks {
         export type AddressLine1Check =
           | 'fail'
@@ -3773,6 +3835,49 @@ export namespace PaymentRecordReportPaymentParams {
           | 'pass'
           | 'unavailable'
           | 'unchecked'
+          | OtherString;
+      }
+
+      export namespace ThreeDSecure {
+        export type AuthenticationFlow =
+          | 'challenge'
+          | 'frictionless'
+          | OtherString;
+
+        export type ElectronicCommerceIndicator =
+          | '01'
+          | '02'
+          | '05'
+          | '06'
+          | '07'
+          | OtherString;
+
+        export type ExemptionIndicator = 'low_risk' | 'none' | OtherString;
+
+        export type Result =
+          | 'attempt_acknowledged'
+          | 'authenticated'
+          | 'exempted'
+          | 'failed'
+          | 'not_supported'
+          | 'processing_error'
+          | OtherString;
+
+        export type ResultReason =
+          | 'abandoned'
+          | 'canceled'
+          | 'card_not_enrolled'
+          | 'network_not_supported'
+          | 'protocol_error'
+          | 'rejected'
+          | OtherString;
+
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
           | OtherString;
       }
     }
@@ -4041,6 +4146,11 @@ export namespace PaymentRecordReportPaymentAttemptParams {
        * Verification checks performed on the card.
        */
       checks?: Card.Checks;
+
+      /**
+       * Populated if this transaction used 3D Secure authentication.
+       */
+      three_d_secure?: Card.ThreeDSecure;
     }
 
     export interface Custom {
@@ -4082,6 +4192,38 @@ export namespace PaymentRecordReportPaymentAttemptParams {
         cvc_check?: Checks.CvcCheck;
       }
 
+      export interface ThreeDSecure {
+        /**
+         * For authenticated transactions: Indicates how the issuing bank authenticated the customer.
+         */
+        authentication_flow?: ThreeDSecure.AuthenticationFlow;
+
+        /**
+         * The Electronic Commerce Indicator (ECI). A protocol-level field indicating what degree of authentication was performed.
+         */
+        electronic_commerce_indicator?: ThreeDSecure.ElectronicCommerceIndicator;
+
+        /**
+         * The exemption requested via 3DS and accepted by the issuer at authentication time.
+         */
+        exemption_indicator?: ThreeDSecure.ExemptionIndicator;
+
+        /**
+         * Indicates the outcome of 3D Secure authentication.
+         */
+        result: ThreeDSecure.Result;
+
+        /**
+         * Additional information about why 3D Secure succeeded or failed, based on the `result`.
+         */
+        result_reason?: ThreeDSecure.ResultReason;
+
+        /**
+         * The version of 3D Secure that was used.
+         */
+        version: ThreeDSecure.Version;
+      }
+
       export namespace Checks {
         export type AddressLine1Check =
           | 'fail'
@@ -4102,6 +4244,49 @@ export namespace PaymentRecordReportPaymentAttemptParams {
           | 'pass'
           | 'unavailable'
           | 'unchecked'
+          | OtherString;
+      }
+
+      export namespace ThreeDSecure {
+        export type AuthenticationFlow =
+          | 'challenge'
+          | 'frictionless'
+          | OtherString;
+
+        export type ElectronicCommerceIndicator =
+          | '01'
+          | '02'
+          | '05'
+          | '06'
+          | '07'
+          | OtherString;
+
+        export type ExemptionIndicator = 'low_risk' | 'none' | OtherString;
+
+        export type Result =
+          | 'attempt_acknowledged'
+          | 'authenticated'
+          | 'exempted'
+          | 'failed'
+          | 'not_supported'
+          | 'processing_error'
+          | OtherString;
+
+        export type ResultReason =
+          | 'abandoned'
+          | 'canceled'
+          | 'card_not_enrolled'
+          | 'network_not_supported'
+          | 'protocol_error'
+          | 'rejected'
+          | OtherString;
+
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
           | OtherString;
       }
     }
@@ -4355,6 +4540,11 @@ export namespace PaymentRecordReportPaymentAttemptGuaranteedParams {
        * Verification checks performed on the card.
        */
       checks?: Card.Checks;
+
+      /**
+       * Populated if this transaction used 3D Secure authentication.
+       */
+      three_d_secure?: Card.ThreeDSecure;
     }
 
     export type Type = 'card' | 'us_bank_account' | OtherString;
@@ -4377,6 +4567,38 @@ export namespace PaymentRecordReportPaymentAttemptGuaranteedParams {
         cvc_check?: Checks.CvcCheck;
       }
 
+      export interface ThreeDSecure {
+        /**
+         * For authenticated transactions: Indicates how the issuing bank authenticated the customer.
+         */
+        authentication_flow?: ThreeDSecure.AuthenticationFlow;
+
+        /**
+         * The Electronic Commerce Indicator (ECI). A protocol-level field indicating what degree of authentication was performed.
+         */
+        electronic_commerce_indicator?: ThreeDSecure.ElectronicCommerceIndicator;
+
+        /**
+         * The exemption requested via 3DS and accepted by the issuer at authentication time.
+         */
+        exemption_indicator?: ThreeDSecure.ExemptionIndicator;
+
+        /**
+         * Indicates the outcome of 3D Secure authentication.
+         */
+        result: ThreeDSecure.Result;
+
+        /**
+         * Additional information about why 3D Secure succeeded or failed, based on the `result`.
+         */
+        result_reason?: ThreeDSecure.ResultReason;
+
+        /**
+         * The version of 3D Secure that was used.
+         */
+        version: ThreeDSecure.Version;
+      }
+
       export namespace Checks {
         export type AddressLine1Check =
           | 'fail'
@@ -4397,6 +4619,49 @@ export namespace PaymentRecordReportPaymentAttemptGuaranteedParams {
           | 'pass'
           | 'unavailable'
           | 'unchecked'
+          | OtherString;
+      }
+
+      export namespace ThreeDSecure {
+        export type AuthenticationFlow =
+          | 'challenge'
+          | 'frictionless'
+          | OtherString;
+
+        export type ElectronicCommerceIndicator =
+          | '01'
+          | '02'
+          | '05'
+          | '06'
+          | '07'
+          | OtherString;
+
+        export type ExemptionIndicator = 'low_risk' | 'none' | OtherString;
+
+        export type Result =
+          | 'attempt_acknowledged'
+          | 'authenticated'
+          | 'exempted'
+          | 'failed'
+          | 'not_supported'
+          | 'processing_error'
+          | OtherString;
+
+        export type ResultReason =
+          | 'abandoned'
+          | 'canceled'
+          | 'card_not_enrolled'
+          | 'network_not_supported'
+          | 'protocol_error'
+          | 'rejected'
+          | OtherString;
+
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
           | OtherString;
       }
     }

@@ -63,6 +63,11 @@ export interface GrantedToken {
   payment_method_details: GrantedToken.PaymentMethodDetails | null;
 
   /**
+   * Referral fees may be charged when a SharedPaymentGrantedToken is used. This behavior is controlled by the issuer of the token. This field provides details about the referral fee rate.
+   */
+  referral_fee_details?: GrantedToken.ReferralFeeDetails | null;
+
+  /**
    * Risk details of the SharedPaymentGrantedToken.
    */
   risk_details?: GrantedToken.RiskDetails | null;
@@ -117,6 +122,10 @@ export namespace GrantedToken {
      * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
      */
     type: PaymentMethodDetails.Type;
+  }
+
+  export interface ReferralFeeDetails {
+    rate: ReferralFeeDetails.Rate;
   }
 
   export interface RiskDetails {
@@ -289,12 +298,12 @@ export namespace GrantedToken {
     export namespace Card {
       export interface Checks {
         /**
-         * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+         * If an address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
         address_line1_check: string | null;
 
         /**
-         * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+         * If an address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
         address_postal_code_check: string | null;
 
@@ -426,6 +435,20 @@ export namespace GrantedToken {
          */
         year: number | null;
       }
+    }
+  }
+
+  export namespace ReferralFeeDetails {
+    export interface Rate {
+      /**
+       * The percentage of the payment amount which will be calculated as a fee.
+       */
+      percentage: number | null;
+
+      /**
+       * The type of fee rate.
+       */
+      type: 'percentage';
     }
   }
 

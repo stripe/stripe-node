@@ -196,6 +196,7 @@ import {SessionResource as CheckoutSessions} from './resources/Checkout/Sessions
 import {SessionResource as FinancialConnectionsSessions} from './resources/FinancialConnections/Sessions.js';
 import {SettingResource as TaxSettings} from './resources/Tax/Settings.js';
 import {SettlementAllocationIntentResource as V2PaymentsSettlementAllocationIntents} from './resources/V2/Payments/SettlementAllocationIntents.js';
+import {SpendingMandateResource as V2MoneyManagementSpendingMandates} from './resources/V2/MoneyManagement/SpendingMandates.js';
 import {SupplierResource as ClimateSuppliers} from './resources/Climate/Suppliers.js';
 import {TestClockResource as TestHelpersTestClocks} from './resources/TestHelpers/TestClocks.js';
 import {TestHelperResource as V2MoneyManagementTestHelpers} from './resources/V2/MoneyManagement/TestHelpers.js';
@@ -559,6 +560,7 @@ export const V2 = resourceNamespace('v2', {
     RecipientVerifications: V2MoneyManagementRecipientVerifications,
     RewardProgramEnrollments: V2MoneyManagementRewardProgramEnrollments,
     RewardPrograms: V2MoneyManagementRewardPrograms,
+    SpendingMandates: V2MoneyManagementSpendingMandates,
     TestHelpers: V2MoneyManagementTestHelpers,
     TransactionEntries: V2MoneyManagementTransactionEntries,
     Transactions: V2MoneyManagementTransactions,

@@ -369,6 +369,8 @@ export namespace VerificationReport {
     fraudulent_person?: Signals.FraudulentPerson;
 
     fraudulent_phone?: Signals.FraudulentPhone;
+
+    fraudulent_selfie?: Signals.FraudulentSelfie;
   }
 
   export type Type =
@@ -714,6 +716,18 @@ export namespace VerificationReport {
       risk_level: FraudulentPhone.RiskLevel;
     }
 
+    export interface FraudulentSelfie {
+      /**
+       * Array of objects representing individual factors that contributed to the calculated risk level.
+       */
+      indicators: Array<FraudulentSelfie.Indicator>;
+
+      /**
+       * Categorical assessment of the selfie risk.
+       */
+      risk_level: FraudulentSelfie.RiskLevel;
+    }
+
     export namespace FraudulentDocument {
       export interface Indicator {
         /**
@@ -896,6 +910,51 @@ export namespace VerificationReport {
           | 'phone_reputation'
           | 'phone_tenure'
           | 'phone_velocity'
+          | OtherString;
+      }
+    }
+
+    export namespace FraudulentSelfie {
+      export interface Indicator {
+        /**
+         * A brief explanation of how this indicator contributed to the risk level.
+         */
+        explanation: string;
+
+        /**
+         * The effect this indicator had on the overall risk level.
+         */
+        impact: Indicator.Impact;
+
+        /**
+         * The name of the specific indicator used in the risk assessment.
+         */
+        indicator: Indicator.Indicator;
+      }
+
+      export type RiskLevel =
+        | 'elevated'
+        | 'highest'
+        | 'low'
+        | 'normal'
+        | 'not_assessed'
+        | 'unknown'
+        | OtherString;
+
+      export namespace Indicator {
+        export type Impact =
+          | 'decrease'
+          | 'neutral'
+          | 'slight_increase'
+          | 'strong_increase'
+          | OtherString;
+
+        export type Indicator =
+          | 'duplicate_selfie'
+          | 'duplicate_selfie_mismatched_data'
+          | 'face_mismatch'
+          | 'other'
+          | 'static_selfie'
           | OtherString;
       }
     }

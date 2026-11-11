@@ -92,6 +92,11 @@ export interface IssuedToken {
   payment_method: string;
 
   /**
+   * Referral fee details of the SharedPaymentIssuedToken.
+   */
+  referral_fee_details?: IssuedToken.ReferralFeeDetails | null;
+
+  /**
    * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
    */
   return_url?: string | null;
@@ -161,6 +166,23 @@ export namespace IssuedToken {
      * Contains details for handling the next action using Stripe.js, iOS, or Android SDKs. Present when `next_action.type` is `use_stripe_sdk`.
      */
     use_stripe_sdk: NextAction.UseStripeSdk | null;
+  }
+
+  export interface ReferralFeeDetails {
+    /**
+     * The Customer to be invoiced for fees assessed.
+     */
+    customer: string;
+
+    /**
+     * The account to be invoiced for fees assessed.
+     */
+    customer_account: string | null;
+
+    /**
+     * The percentage of the payment charged as a referral fee.
+     */
+    referral_fee_percent: number;
   }
 
   export interface RiskDetails {
@@ -399,6 +421,11 @@ export namespace SharedPayment {
     expand?: Array<string>;
 
     /**
+     * Referral fee details for this SharedPaymentToken.
+     */
+    referral_fee_details?: IssuedTokenCreateParams.ReferralFeeDetails;
+
+    /**
      * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
      */
     return_url?: string;
@@ -459,6 +486,23 @@ export namespace SharedPayment {
        * The recurring interval at which the shared payment token's amount usage restrictions reset.
        */
       recurring_interval?: UsageLimits.RecurringInterval;
+    }
+
+    export interface ReferralFeeDetails {
+      /**
+       * The Customer to be invoiced for fees assessed.
+       */
+      customer?: string;
+
+      /**
+       * The account with a Customer configuration to be invoiced for fees assessed.
+       */
+      customer_account?: string;
+
+      /**
+       * The percentage of the payment to charge as a referral fee, from 0 through 50 with at most two decimal places.
+       */
+      referral_fee_percent: number;
     }
 
     export namespace UsageLimits {

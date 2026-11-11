@@ -121,14 +121,19 @@ import {
   RewardProgramEnrollment,
   RewardProgramEnrollmentResource,
 } from './RewardProgramEnrollments.js';
-import {V2 as V2Namespace24, TestHelperResource} from './TestHelpers.js';
 import {
-  V2 as V2Namespace25,
+  V2 as V2Namespace24,
+  SpendingMandate,
+  SpendingMandateResource,
+} from './SpendingMandates.js';
+import {V2 as V2Namespace25, TestHelperResource} from './TestHelpers.js';
+import {
+  V2 as V2Namespace26,
   Transaction,
   TransactionResource,
 } from './Transactions.js';
 import {
-  V2 as V2Namespace26,
+  V2 as V2Namespace27,
   TransactionEntry,
   TransactionEntryResource,
 } from './TransactionEntries.js';
@@ -165,6 +170,7 @@ export {ReceivedDebitMandate} from './ReceivedDebitMandates.js';
 export {RecipientVerification} from './RecipientVerifications.js';
 export {RewardProgram} from './RewardPrograms.js';
 export {RewardProgramEnrollment} from './RewardProgramEnrollments.js';
+export {SpendingMandate} from './SpendingMandates.js';
 export {Transaction} from './Transactions.js';
 export {TransactionEntry} from './TransactionEntries.js';
 export {EarnedCreditSimulation} from './EarnedCreditSimulations.js';
@@ -201,6 +207,7 @@ export class MoneyManagement {
   recipientVerifications: RecipientVerificationResource;
   rewardPrograms: RewardProgramResource;
   rewardProgramEnrollments: RewardProgramEnrollmentResource;
+  spendingMandates: SpendingMandateResource;
   testHelpers: TestHelperResource;
   transactions: TransactionResource;
   transactionEntries: TransactionEntryResource;
@@ -232,6 +239,7 @@ export class MoneyManagement {
     this.recipientVerifications = new RecipientVerificationResource(stripe);
     this.rewardPrograms = new RewardProgramResource(stripe);
     this.rewardProgramEnrollments = new RewardProgramEnrollmentResource(stripe);
+    this.spendingMandates = new SpendingMandateResource(stripe);
     this.testHelpers = new TestHelperResource(stripe);
     this.transactions = new TransactionResource(stripe);
     this.transactionEntries = new TransactionEntryResource(stripe);
@@ -347,13 +355,17 @@ export declare namespace MoneyManagement {
   export import RewardProgramEnrollmentActivateParams = V2Namespace23.MoneyManagement.RewardProgramEnrollmentActivateParams;
   export import RewardProgramEnrollmentDeactivateParams = V2Namespace23.MoneyManagement.RewardProgramEnrollmentDeactivateParams;
   export {RewardProgramEnrollment, RewardProgramEnrollmentResource};
-  export import TransactionListParams = V2Namespace25.MoneyManagement.TransactionListParams;
-  export import TransactionRetrieveParams = V2Namespace25.MoneyManagement.TransactionRetrieveParams;
-  export import TransactionUpdateParams = V2Namespace25.MoneyManagement.TransactionUpdateParams;
-  export import TransactionRefreshRegulatoryReceiptParams = V2Namespace25.MoneyManagement.TransactionRefreshRegulatoryReceiptParams;
+  export import SpendingMandateListParams = V2Namespace24.MoneyManagement.SpendingMandateListParams;
+  export import SpendingMandateRetrieveParams = V2Namespace24.MoneyManagement.SpendingMandateRetrieveParams;
+  export import SpendingMandateCancelParams = V2Namespace24.MoneyManagement.SpendingMandateCancelParams;
+  export {SpendingMandate, SpendingMandateResource};
+  export import TransactionListParams = V2Namespace26.MoneyManagement.TransactionListParams;
+  export import TransactionRetrieveParams = V2Namespace26.MoneyManagement.TransactionRetrieveParams;
+  export import TransactionUpdateParams = V2Namespace26.MoneyManagement.TransactionUpdateParams;
+  export import TransactionRefreshRegulatoryReceiptParams = V2Namespace26.MoneyManagement.TransactionRefreshRegulatoryReceiptParams;
   export {Transaction, TransactionResource};
-  export import TransactionEntryListParams = V2Namespace26.MoneyManagement.TransactionEntryListParams;
-  export import TransactionEntryRetrieveParams = V2Namespace26.MoneyManagement.TransactionEntryRetrieveParams;
+  export import TransactionEntryListParams = V2Namespace27.MoneyManagement.TransactionEntryListParams;
+  export import TransactionEntryRetrieveParams = V2Namespace27.MoneyManagement.TransactionEntryRetrieveParams;
   export {TransactionEntry, TransactionEntryResource};
   export {EarnedCreditSimulation};
   export {FinancialAccountWalletExportCredentials};
