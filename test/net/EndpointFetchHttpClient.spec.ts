@@ -15,6 +15,7 @@ type TestGlobal = typeof globalThis & {
     ok: true;
     status: number;
     body?: string;
+    headers?: Record<string, string>;
   }>;
 };
 type EndpointFetch = NonNullable<TestGlobal['endpointFetch']>;
@@ -22,6 +23,7 @@ type EndpointFetchRequest = Parameters<EndpointFetch>[0];
 type EndpointFetchError = Error & {
   status?: number;
   body?: string | null;
+  headers?: Record<string, string>;
 };
 type JsonParseError = Error & {
   rawBody?: string;
@@ -38,6 +40,15 @@ type MakeRequestOptions = {
 };
 
 describe('EndpointFetchHttpClient', () => {
+  const responseHeaders = {
+    'retry-after': '5',
+    'request-id': 'req_123',
+    'stripe-account': 'acct_123',
+    'stripe-version': '2025-01-01',
+    'idempotency-key': 'idempotency-key',
+    'stripe-notice': 'notice',
+    'stripe-should-retry': 'true',
+  };
   const testGlobal = globalThis as TestGlobal;
   let endpointFetch$: EndpointFetch | undefined;
   let capturedRequest: EndpointFetchRequest | null;
@@ -94,6 +105,22 @@ describe('EndpointFetchHttpClient', () => {
     expect(response.getStatusCode()).to.equal(200);
     expect(response.getHeaders()).to.deep.equal({});
     expect(await response.toJSON()).to.deep.equal({ok: true});
+  });
+
+  it('preserves response headers from endpointFetch', async () => {
+    testGlobal.endpointFetch = (request: EndpointFetchRequest) => {
+      capturedRequest = request;
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        body: '{"ok":true}',
+        headers: responseHeaders,
+      });
+    };
+
+    const response = await makeRequest();
+
+    expect(response.getHeaders()).to.deep.equal(responseHeaders);
   });
 
   it('uses an empty string body for payload methods without request data', async () => {
@@ -155,13 +182,14 @@ describe('EndpointFetchHttpClient', () => {
       error.status = 401;
       error.body =
         '{"error":{"message":"No API key provided","type":"authentication_error"}}';
+      error.headers = responseHeaders;
       return Promise.reject(error);
     };
 
     const response = await makeRequest();
 
     expect(response.getStatusCode()).to.equal(401);
-    expect(response.getHeaders()).to.deep.equal({});
+    expect(response.getHeaders()).to.deep.equal(responseHeaders);
     expect(await response.toJSON()).to.deep.equal({
       error: {
         message: 'No API key provided',

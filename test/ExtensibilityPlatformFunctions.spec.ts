@@ -13,17 +13,24 @@ type TestGlobal = typeof globalThis & {
     method: string;
     body?: string;
     headers?: Record<string, string>;
-  }) => Promise<{ok: true; status: number; body?: string}>;
+  }) => Promise<{
+    ok: true;
+    status: number;
+    body?: string;
+    headers?: Record<string, string>;
+  }>;
 };
 type EndpointFetch = NonNullable<TestGlobal['endpointFetch']>;
 type EndpointFetchRequest = Parameters<EndpointFetch>[0];
 type EndpointFetchError = Error & {
   status?: number;
   body?: string | null;
+  headers?: Record<string, string>;
 };
 type StripeError = Error & {
   type?: string;
   requestId?: string;
+  headers?: Record<string, string>;
 };
 type HookEvent =
   | ['request', RequestEvent['method'], RequestEvent['path']]
@@ -150,6 +157,7 @@ describe('ExtensibilityPlatformFunctions', () => {
           type: 'authentication_error',
         },
       });
+      error.headers = {'retry-after': '5'};
       return Promise.reject(error);
     };
 
@@ -161,6 +169,7 @@ describe('ExtensibilityPlatformFunctions', () => {
       expect(error.type).to.equal('StripeAuthenticationError');
       expect(error.message).to.equal('No API key provided');
       expect(error.requestId).to.be.undefined;
+      expect(error.headers?.['retry-after']).to.equal('5');
     }
   });
 
