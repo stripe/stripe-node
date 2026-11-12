@@ -65,6 +65,13 @@ export class SubtleCryptoProvider extends CryptoProvider {
   }
 
   /** @override */
+  computeSHA256(data: Uint8Array): Uint8Array {
+    throw new CryptoProviderOnlySupportsAsyncError(
+      'SubtleCryptoProvider cannot be used in a synchronous context.'
+    );
+  }
+
+  /** @override */
   async computeSHA256Async(data: Uint8Array): Promise<Uint8Array> {
     return new Uint8Array(await this.subtleCrypto.digest('SHA-256', data));
   }
