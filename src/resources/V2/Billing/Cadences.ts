@@ -293,6 +293,11 @@ export interface Cadence {
   status: Cadence.Status;
 
   /**
+   * Timestamps for billing cadence status transitions.
+   */
+  status_transitions?: Cadence.StatusTransitions;
+
+  /**
    * The ID of the Test Clock.
    */
   test_clock?: string;
@@ -303,6 +308,11 @@ export namespace Cadence {
      * Specific configuration for determining billing dates when type=day.
      */
     day?: BillingCycle.Day;
+
+    /**
+     * When the anchor for the cadence should be set. Defaults to `now`.
+     */
+    effective_at: BillingCycle.EffectiveAt;
 
     /**
      * The number of intervals (specified in the interval attribute) between cadence billings. For example, type=month and interval_count=3 bills every 3 months.
@@ -371,7 +381,19 @@ export namespace Cadence {
     collection: SettingsData.Collection;
   }
 
-  export type Status = 'active' | 'canceled' | OtherString;
+  export type Status = 'active' | 'canceled' | 'initializing' | OtherString;
+
+  export interface StatusTransitions {
+    /**
+     * When the billing cadence status transitioned to activated.
+     */
+    activated_at?: string;
+
+    /**
+     * When the billing cadence status transitioned to canceled.
+     */
+    canceled_at?: string;
+  }
 
   export namespace BillingCycle {
     export interface Day {
@@ -380,6 +402,8 @@ export namespace Cadence {
        */
       time: Day.Time;
     }
+
+    export type EffectiveAt = 'now' | 'on_activation' | OtherString;
 
     export interface Month {
       /**
@@ -973,6 +997,11 @@ export namespace V2 {
         day?: BillingCycle.Day;
 
         /**
+         * When the anchor for the cadence should be set. Defaults to `now`.
+         */
+        effective_at?: BillingCycle.EffectiveAt;
+
+        /**
          * The number of intervals (specified in the interval attribute) between
          * cadence billings. For example, type=month and interval_count=3 bills every
          * 3 months. If not provided, this defaults to 1.
@@ -1032,6 +1061,8 @@ export namespace V2 {
            */
           time?: Day.Time;
         }
+
+        export type EffectiveAt = 'now' | 'on_activation' | OtherString;
 
         export interface Month {
           /**

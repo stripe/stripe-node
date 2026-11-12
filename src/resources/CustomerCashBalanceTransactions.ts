@@ -5,7 +5,6 @@ import {BalanceTransaction} from './BalanceTransactions.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {Refund} from './Refunds.js';
 import {OtherString} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface CustomerCashBalanceTransaction {
   /**
    * Unique identifier for the object.

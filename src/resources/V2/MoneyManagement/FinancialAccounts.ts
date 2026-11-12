@@ -337,7 +337,7 @@ export namespace V2 {
       include?: Array<'storage.deposit_insurance_eligibility'>;
 
       /**
-       * The page limit.
+       * Maximum number of results to return. Default: 10. Valid range: 1-20.
        */
       limit?: number;
 

@@ -85,6 +85,9 @@ export interface FinancialAddress {
    */
   livemode: boolean;
 
+  /**
+   * Open Enum. The currency the FinancialAddress settles into the FinancialAccount.
+   */
   settlement_currency: string;
 
   /**
@@ -224,12 +227,12 @@ export namespace V2 {
 
       export interface BankAccount {
         /**
-         * The country for the bank account. Used to select the appropriate rails (e.g. for SEPA).
+         * The country where Stripe provisions the bank account. Each currency supports the country listed in its description. If omitted, Stripe selects that country.
          */
         country?: string;
 
         /**
-         * The currency of the bank account to provision. Available currencies depend on your account's enabled features and rollout access; `eur` requires the Financial Address Global Payouts EU preview.
+         * The currency of the bank account to provision. Some currencies require preview or rollout access, as configured for your account.
          */
         currency: BankAccount.Currency;
       }

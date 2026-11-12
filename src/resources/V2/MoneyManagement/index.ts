@@ -174,6 +174,7 @@ export declare namespace MoneyManagement {
   export {OutboundPaymentQuote, OutboundPaymentQuoteResource};
   export import OutboundSetupIntentListParams = V2Namespace6.MoneyManagement.OutboundSetupIntentListParams;
   export import OutboundSetupIntentCreateParams = V2Namespace6.MoneyManagement.OutboundSetupIntentCreateParams;
+  export import OutboundSetupIntentFromFinancialConnectionsParams = V2Namespace6.MoneyManagement.OutboundSetupIntentFromFinancialConnectionsParams;
   export import OutboundSetupIntentRetrieveParams = V2Namespace6.MoneyManagement.OutboundSetupIntentRetrieveParams;
   export import OutboundSetupIntentUpdateParams = V2Namespace6.MoneyManagement.OutboundSetupIntentUpdateParams;
   export import OutboundSetupIntentCancelParams = V2Namespace6.MoneyManagement.OutboundSetupIntentCancelParams;

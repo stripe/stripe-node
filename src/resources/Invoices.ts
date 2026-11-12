@@ -1253,6 +1253,11 @@ export interface Invoice {
   customer_address: Address | null;
 
   /**
+   * The customer balance amounts applied to this invoice.
+   */
+  customer_balance?: Invoice.CustomerBalance | null;
+
+  /**
    * The customer's email. Until the invoice is finalized, this field will equal `customer.email`. Once the invoice is finalized, this field will no longer be updated.
    */
   customer_email: string | null;
@@ -1647,6 +1652,23 @@ export namespace Invoice {
      * The value of the custom field.
      */
     value: string;
+  }
+
+  export interface CustomerBalance {
+    /**
+     * The total amount of customer balance applied to this invoice (automatically + manually).
+     */
+    applied_balance: number;
+
+    /**
+     * The amount of customer balance automatically applied during invoice finalization.
+     */
+    automatically_applied_balance: number;
+
+    /**
+     * The total amount of customer balance manually applied after finalization.
+     */
+    manually_applied_balance: number;
   }
 
   export interface CustomerShipping {
@@ -2317,6 +2339,7 @@ export namespace Invoice {
       | 'forwarding_api_upstream_connection_timeout'
       | 'forwarding_api_upstream_error'
       | 'idempotency_key_in_use'
+      | 'inactive_api_operation_confirmation_required'
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'

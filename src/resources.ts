@@ -28,6 +28,7 @@ import {CalculationResource as TaxCalculations} from './resources/Tax/Calculatio
 import {CardholderResource as IssuingCardholders} from './resources/Issuing/Cardholders.js';
 import {CardResource as IssuingCards} from './resources/Issuing/Cards.js';
 import {CardResource as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/Cards.js';
+import {ClaimableSandboxResource as V2CoreClaimableSandboxes} from './resources/V2/Core/ClaimableSandboxes.js';
 import {CollectionSettingResource as V2BillingCollectionSettings} from './resources/V2/Billing/CollectionSettings.js';
 import {ConfigurationResource as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {ConfigurationResource as TerminalConfigurations} from './resources/Terminal/Configurations.js';
@@ -52,6 +53,7 @@ import {FinancialAccountResource as V2MoneyManagementFinancialAccounts} from './
 import {FinancialAddressResource as V2MoneyManagementFinancialAddresses} from './resources/V2/MoneyManagement/FinancialAddresses.js';
 import {FinancialAddressResource as V2MoneyManagementTestHelpersFinancialAddresses} from './resources/V2/MoneyManagement/TestHelpers/FinancialAddresses.js';
 import {FinancingOfferResource as CapitalFinancingOffers} from './resources/Capital/FinancingOffers.js';
+import {FinancingOfferResource as TestHelpersCapitalFinancingOffers} from './resources/TestHelpers/Capital/FinancingOffers.js';
 import {FinancingSummaryResource as CapitalFinancingSummary} from './resources/Capital/FinancingSummary.js';
 import {FinancingTransactionResource as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions.js';
 import {FormResource as TaxForms} from './resources/Tax/Forms.js';
@@ -78,6 +80,7 @@ import {MeterEventResource as V2BillingMeterEvents} from './resources/V2/Billing
 import {MeterUsageResource as BillingAnalyticsMeterUsage} from './resources/Billing/Analytics/MeterUsage.js';
 import {MeterResource as BillingMeters} from './resources/Billing/Meters.js';
 import {MoneyManagementResource as V2TestHelpersMoneyManagement} from './resources/V2/TestHelpers/MoneyManagement.js';
+import {OffSessionPaymentResource as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {OnboardingLinkResource as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
 import {OrderResource as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPaymentQuoteResource as V2MoneyManagementOutboundPaymentQuotes} from './resources/V2/MoneyManagement/OutboundPaymentQuotes.js';
@@ -325,6 +328,9 @@ export const TestHelpers = resourceNamespace('testHelpers', {
   Customers: TestHelpersCustomers,
   Refunds: TestHelpersRefunds,
   TestClocks: TestHelpersTestClocks,
+  Capital: resourceNamespace('capital', {
+    FinancingOffers: TestHelpersCapitalFinancingOffers,
+  }),
   Issuing: resourceNamespace('issuing', {
     Authorizations: TestHelpersIssuingAuthorizations,
     Cards: TestHelpersIssuingCards,
@@ -382,6 +388,7 @@ export const V2 = resourceNamespace('v2', {
     Accounts: V2CoreAccounts,
     ApprovalRequests: V2CoreApprovalRequests,
     BatchJobs: V2CoreBatchJobs,
+    ClaimableSandboxes: V2CoreClaimableSandboxes,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
     Vault: resourceNamespace('vault', {
@@ -429,6 +436,9 @@ export const V2 = resourceNamespace('v2', {
   }),
   OrchestratedCommerce: resourceNamespace('orchestratedCommerce', {
     Agreements: V2OrchestratedCommerceAgreements,
+  }),
+  Payments: resourceNamespace('payments', {
+    OffSessionPayments: V2PaymentsOffSessionPayments,
   }),
   Signals: resourceNamespace('signals', {
     AccountActivities: V2SignalsAccountActivities,

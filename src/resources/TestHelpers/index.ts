@@ -19,6 +19,7 @@ import {
   DeletedTestClock,
   TestClockResource,
 } from './TestClocks.js';
+import {Capital} from './Capital/index.js';
 import {Issuing} from './Issuing/index.js';
 import {SharedPayment} from './SharedPayment/index.js';
 import {Terminal} from './Terminal/index.js';
@@ -31,6 +32,7 @@ export class TestHelpers {
   customers: CustomerResource;
   refunds: RefundResource;
   testClocks: TestClockResource;
+  capital: Capital;
   issuing: Issuing;
   sharedPayment: SharedPayment;
   terminal: Terminal;
@@ -41,6 +43,7 @@ export class TestHelpers {
     this.customers = new CustomerResource(stripe);
     this.refunds = new RefundResource(stripe);
     this.testClocks = new TestClockResource(stripe);
+    this.capital = new Capital(stripe);
     this.issuing = new Issuing(stripe);
     this.sharedPayment = new SharedPayment(stripe);
     this.terminal = new Terminal(stripe);
@@ -56,6 +59,7 @@ export declare namespace TestHelpers {
   export import TestClockAdvanceParams = TestHelpersNamespace3.TestClockAdvanceParams;
   export {DeletedTestClock};
   export {TestClock, TestClockResource};
+  export {Capital};
   export {Issuing};
   export {SharedPayment};
   export {Terminal};

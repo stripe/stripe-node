@@ -43,6 +43,21 @@ export class OutboundSetupIntentResource extends StripeResource {
     ) as any;
   }
   /**
+   * Create an OutboundSetupIntent object.
+   * @throws Stripe.QuotaExceededError
+   */
+  fromFinancialConnections(
+    params?: V2.MoneyManagement.OutboundSetupIntentFromFinancialConnectionsParams,
+    options?: RequestOptions
+  ): Promise<Response<OutboundSetupIntent>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/outbound_setup_intents/from_financial_connections',
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Retrieve an OutboundSetupIntent object.
    */
   retrieve(
@@ -201,6 +216,11 @@ export namespace V2 {
     export namespace OutboundSetupIntentCreateParams {
       export interface PayoutMethodData {
         /**
+         * The type specific details of the Apple Pay payout method.
+         */
+        apple_pay?: PayoutMethodData.ApplePay;
+
+        /**
          * The type specific details of the bank account payout method.
          */
         bank_account?: PayoutMethodData.BankAccount;
@@ -224,6 +244,18 @@ export namespace V2 {
       export type UsageIntent = 'payment' | 'transfer';
 
       export namespace PayoutMethodData {
+        export interface ApplePay {
+          /**
+           * The paymentData property of the Apple-provided PKPaymentToken (or ApplePayPaymentToken, for Apple Pay on the Web) as a UTF-8 encoded serialization of a JSON dictionary.
+           */
+          pk_token?: string;
+
+          /**
+           * The paymentMethod.displayName property of the Apple-provided PKPaymentToken (or ApplePayPaymentToken, for Apple Pay on the Web), e.g. "Visa 1234".
+           */
+          pk_token_display_name: string;
+        }
+
         export interface BankAccount {
           /**
            * The account number or IBAN of the bank account.
@@ -301,6 +333,7 @@ export namespace V2 {
         }
 
         export type Type =
+          | 'apple_pay'
           | 'bank_account'
           | 'card'
           | 'crypto_wallet'
@@ -431,6 +464,7 @@ export namespace V2 {
         }
 
         export type Type =
+          | 'apple_pay'
           | 'bank_account'
           | 'card'
           | 'crypto_wallet'
@@ -460,5 +494,31 @@ export namespace V2 {
 export namespace V2 {
   export namespace MoneyManagement {
     export interface OutboundSetupIntentCancelParams {}
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface OutboundSetupIntentFromFinancialConnectionsParams {
+      /**
+       * Used to create a US Bank Account directly from a Financial Connections Account.
+       */
+      financial_connections_account?: string;
+
+      /**
+       * Used to create a US Bank Account from the internal-only "payment account" associated with a Financial Connections
+       * Session. Only useful when the Session completed with manual entry (i.e. there is no Financial Connections Account).
+       */
+      financial_connections_session?: string;
+
+      /**
+       * Specify which type of outbound money movement this credential should be set up for (payment | transfer).
+       * If not provided, defaults to payment.
+       */
+      usage_intent?: OutboundSetupIntentFromFinancialConnectionsParams.UsageIntent;
+    }
+
+    export namespace OutboundSetupIntentFromFinancialConnectionsParams {
+      export type UsageIntent = 'payment' | 'transfer';
+    }
   }
 }

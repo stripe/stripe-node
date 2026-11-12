@@ -231,6 +231,16 @@ export interface Reader {
   deleted?: void;
 
   /**
+   * The overall device health of the reader. `needs_attention` means the reader failed a security requirement and can't accept payments until the issue is resolved.
+   */
+  device_health: Reader.DeviceHealth;
+
+  /**
+   * The set of conditions affecting the reader's device health. Empty when there are no conditions.
+   */
+  device_health_details: Array<Reader.DeviceHealthDetail>;
+
+  /**
    * The current software version of the reader.
    */
   device_sw_version: string | null;
@@ -397,6 +407,18 @@ export namespace Reader {
      * Type of action performed by the reader.
      */
     type: Action.Type;
+  }
+
+  export type DeviceHealth =
+    | 'needs_attention'
+    | 'no_issues_detected'
+    | OtherString;
+
+  export interface DeviceHealthDetail {
+    /**
+     * The type of condition affecting the reader's device health.
+     */
+    type: DeviceHealthDetail.Type;
   }
 
   export type DeviceType =
@@ -793,6 +815,7 @@ export namespace Reader {
         | 'forwarding_api_upstream_connection_timeout'
         | 'forwarding_api_upstream_error'
         | 'idempotency_key_in_use'
+        | 'inactive_api_operation_confirmation_required'
         | 'incorrect_address'
         | 'incorrect_cvc'
         | 'incorrect_number'
@@ -1298,6 +1321,10 @@ export namespace Reader {
         }
       }
     }
+  }
+
+  export namespace DeviceHealthDetail {
+    export type Type = 'unrecoverable_tamper' | OtherString;
   }
 }
 export namespace Terminal {

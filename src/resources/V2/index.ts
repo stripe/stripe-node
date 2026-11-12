@@ -11,6 +11,7 @@ import {Iam} from './Iam/index.js';
 import {MoneyManagement} from './MoneyManagement/index.js';
 import {Network} from './Network/index.js';
 import {OrchestratedCommerce} from './OrchestratedCommerce/index.js';
+import {Payments} from './Payments/index.js';
 import {Signals} from './Signals/index.js';
 import {TestHelpers} from './TestHelpers/index.js';
 
@@ -26,6 +27,7 @@ export class V2 {
   moneyManagement: MoneyManagement;
   network: Network;
   orchestratedCommerce: OrchestratedCommerce;
+  payments: Payments;
   signals: Signals;
   testHelpers: TestHelpers;
 
@@ -39,6 +41,7 @@ export class V2 {
     this.moneyManagement = new MoneyManagement(stripe);
     this.network = new Network(stripe);
     this.orchestratedCommerce = new OrchestratedCommerce(stripe);
+    this.payments = new Payments(stripe);
     this.signals = new Signals(stripe);
     this.testHelpers = new TestHelpers(stripe);
   }
@@ -55,6 +58,7 @@ export declare namespace V2 {
   export {MoneyManagement};
   export {Network};
   export {OrchestratedCommerce};
+  export {Payments};
   export {Signals};
   export {TestHelpers};
 }

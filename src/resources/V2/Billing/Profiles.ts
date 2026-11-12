@@ -83,7 +83,7 @@ export interface Profile {
   customer?: string;
 
   /**
-   * The ID of the payment method object.
+   * The ID of the payment method object. If set to nil, the customer payment method is used.
    */
   default_payment_method?: string;
 
@@ -126,7 +126,7 @@ export namespace V2 {
       customer: string;
 
       /**
-       * The ID of the payment method object.
+       * The ID of the payment method object. If set to nil, the customer payment method is used.
        */
       default_payment_method?: string;
 
@@ -158,7 +158,7 @@ export namespace V2 {
   export namespace Billing {
     export interface ProfileUpdateParams {
       /**
-       * The ID of the payment method object.
+       * The ID of the payment method object. If set to nil, the customer payment method is used.
        */
       default_payment_method?: string;
 

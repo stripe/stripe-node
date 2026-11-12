@@ -92,6 +92,8 @@ export const generateV2Error = (
       return new FinancialAccountNotOpenError(rawStripeError);
     case 'fx_quote_needs_refresh':
       return new FxQuoteNeedsRefreshError(rawStripeError);
+    case 'inactive_api_operation_confirmation_required':
+      return new InactiveApiOperationConfirmationRequiredError(rawStripeError);
     case 'insufficient_funds':
       return new InsufficientFundsError(rawStripeError);
     case 'invalid_payment_method':
@@ -470,6 +472,11 @@ export class FinancialAccountNotOpenError extends StripeError {
 export class FxQuoteNeedsRefreshError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'FxQuoteNeedsRefreshError');
+  }
+}
+export class InactiveApiOperationConfirmationRequiredError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'InactiveApiOperationConfirmationRequiredError');
   }
 }
 export class InsufficientFundsError extends StripeError {

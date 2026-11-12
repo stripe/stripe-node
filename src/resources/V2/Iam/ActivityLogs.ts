@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {OtherString} from '../../../shared.js';
+import {OtherString, Decimal} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ActivityLogResource extends StripeResource {
@@ -14,6 +14,47 @@ export class ActivityLogResource extends StripeResource {
   ): V2ListPromise<ActivityLog> {
     return this._makeRequest('GET', '/v2/iam/activity_logs', params, options, {
       methodType: 'list',
+      responseSchema: {
+        kind: 'object',
+        fields: {
+          data: {
+            kind: 'array',
+            element: {
+              kind: 'object',
+              fields: {
+                details: {
+                  kind: 'object',
+                  fields: {
+                    radar: {
+                      kind: 'object',
+                      fields: {
+                        new_rules: {
+                          kind: 'array',
+                          element: {
+                            kind: 'object',
+                            fields: {
+                              rollout_percentage: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                        old_rules: {
+                          kind: 'array',
+                          element: {
+                            kind: 'object',
+                            fields: {
+                              rollout_percentage: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     }) as any;
   }
   /**
@@ -28,7 +69,38 @@ export class ActivityLogResource extends StripeResource {
       'GET',
       `/v2/iam/activity_logs/${encodeURIComponent(id)}`,
       params,
-      options
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            details: {
+              kind: 'object',
+              fields: {
+                radar: {
+                  kind: 'object',
+                  fields: {
+                    new_rules: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {rollout_percentage: {kind: 'decimal_string'}},
+                      },
+                    },
+                    old_rules: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {rollout_percentage: {kind: 'decimal_string'}},
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
     ) as any;
   }
 }
@@ -91,6 +163,11 @@ export namespace ActivityLog {
     api_key?: Actor.ApiKey;
 
     /**
+     * Set when a display name is available for an action performed by Stripe.
+     */
+    stripe_action?: Actor.StripeAction;
+
+    /**
      * The type of actor.
      */
     type: Actor.Type;
@@ -118,6 +195,26 @@ export namespace ActivityLog {
     authentication?: Details.Authentication;
 
     /**
+     * Details of a Connect action.
+     */
+    connect?: Details.Connect;
+
+    /**
+     * Details of a data export action.
+     */
+    data_export?: Details.DataExport;
+
+    /**
+     * Details of an event destination action.
+     */
+    event_destination?: Details.EventDestination;
+
+    /**
+     * Details of a Radar action.
+     */
+    radar?: Details.Radar;
+
+    /**
      * Details of a SCIM action.
      */
     scim?: Details.Scim;
@@ -128,9 +225,19 @@ export namespace ActivityLog {
     sso?: Details.Sso;
 
     /**
+     * Details of a Stripe access action.
+     */
+    stripe_access?: Details.StripeAccess;
+
+    /**
      * The action group type of the activity log entry.
      */
     type: Details.Type;
+
+    /**
+     * Details of a user access action.
+     */
+    user_access?: Details.UserAccess;
 
     /**
      * Details of a user invite action.
@@ -173,6 +280,20 @@ export namespace ActivityLog {
     | 'api_key_deleted'
     | 'api_key_updated'
     | 'api_key_viewed'
+    | 'application_authorized'
+    | 'application_created'
+    | 'application_deauthorized'
+    | 'app_installed'
+    | 'app_uninstalled'
+    | 'connect_express_branding_updated'
+    | 'connect_oauth_disabled'
+    | 'connect_oauth_enabled'
+    | 'connect_settings_updated'
+    | 'connect_site_link_updated'
+    | 'data_export_requested'
+    | 'event_destination_added'
+    | 'event_destination_removed'
+    | 'event_destination_updated'
     | 'issuing_activated'
     | 'issuing_balance_transfer_created'
     | 'issuing_cardholder_created'
@@ -190,6 +311,17 @@ export namespace ActivityLog {
     | 'payout_destination_updated'
     | 'payout_schedule_edits_disabled'
     | 'payout_schedule_edits_enabled'
+    | 'payout_schedule_updated'
+    | 'radar_adaptive_3ds_disabled'
+    | 'radar_dynamic_risk_thresholds_disabled'
+    | 'radar_early_fraud_warning_disabled'
+    | 'radar_for_setup_intents_disabled'
+    | 'radar_fraud_dispute_protection_disabled'
+    | 'radar_rule_added'
+    | 'radar_rule_disabled'
+    | 'radar_rule_enabled'
+    | 'radar_rule_removed'
+    | 'radar_rule_updated'
     | 'scim_group_deleted'
     | 'scim_group_member_added'
     | 'scim_group_member_removed'
@@ -199,8 +331,10 @@ export namespace ActivityLog {
     | 'sso_settings_created'
     | 'sso_settings_deleted'
     | 'sso_settings_updated'
+    | 'stripe_access_started'
     | 'two_step_authentication_mandate_disabled'
     | 'two_step_authentication_mandate_enabled'
+    | 'user_access_started'
     | 'user_auth_challenge_failed'
     | 'user_email_changed'
     | 'user_email_verified'
@@ -235,6 +369,13 @@ export namespace ActivityLog {
        * Unique identifier of the API key.
        */
       id: string;
+    }
+
+    export interface StripeAction {
+      /**
+       * Public display name captured when the action occurs.
+       */
+      display_name: string;
     }
 
     export type Type = 'api_key' | 'stripe_action' | 'user';
@@ -329,6 +470,84 @@ export namespace ActivityLog {
       target_email?: string;
     }
 
+    export interface Connect {
+      /**
+       * The Connect application.
+       */
+      application?: Connect.Application;
+
+      /**
+       * Express Dashboard branding settings after the change. Set for the connect_express_branding_updated action.
+       */
+      new_express_branding_settings?: Connect.NewExpressBrandingSettings;
+
+      /**
+       * Connect settings after the change. Set for the connect_settings_updated action.
+       */
+      new_settings?: Connect.NewSettings;
+
+      /**
+       * Express Dashboard branding settings before the change. Set for the connect_express_branding_updated action.
+       */
+      old_express_branding_settings?: Connect.OldExpressBrandingSettings;
+
+      /**
+       * Connect settings before the change. Set for the connect_settings_updated action.
+       */
+      old_settings?: Connect.OldSettings;
+
+      /**
+       * The site link route. Set for the connect_site_link_updated action.
+       */
+      site_link_route?: Connect.SiteLinkRoute;
+    }
+
+    export interface DataExport {
+      /**
+       * Name of export type.
+       */
+      type: string;
+    }
+
+    export interface EventDestination {
+      /**
+       * Configuration after the change. Set for added and updated actions, absent for removed actions.
+       */
+      new_configuration?: EventDestination.NewConfiguration;
+
+      /**
+       * Configuration before the change. Set for updated and removed actions, absent for added actions.
+       */
+      old_configuration?: EventDestination.OldConfiguration;
+
+      /**
+       * Type of the event destination.
+       */
+      type: EventDestination.Type;
+    }
+
+    export interface Radar {
+      /**
+       * Risk preference after a preference switch carried by a protection-toggle action.
+       */
+      new_risk_preference?: Radar.NewRiskPreference;
+
+      /**
+       * Rules after the change. Set for add, update, enable, and disable actions; absent for remove actions.
+       */
+      new_rules?: Array<Radar.NewRule>;
+
+      /**
+       * Risk preference before a preference switch carried by a protection-toggle action.
+       */
+      old_risk_preference?: Radar.OldRiskPreference;
+
+      /**
+       * Rules before the change. Set for update, removal, enable, and disable actions; absent for add actions.
+       */
+      old_rules?: Array<Radar.OldRule>;
+    }
+
     export interface Scim {
       /**
        * Name of the SCIM group.
@@ -363,18 +582,69 @@ export namespace ActivityLog {
       mandate?: Sso.Mandate;
     }
 
+    export interface StripeAccess {
+      /**
+       * The level of Dashboard access granted.
+       */
+      access_type: StripeAccess.AccessType;
+
+      /**
+       * The reason for granting Stripe access.
+       */
+      reason: StripeAccess.Reason;
+    }
+
     export type Type =
       | 'account_security'
       | 'api_key'
+      | 'app'
       | 'authentication'
+      | 'connect'
+      | 'data_export'
+      | 'event_destination'
       | 'issuing'
       | 'payout'
+      | 'radar'
       | 'scim'
       | 'sso'
+      | 'stripe_access'
+      | 'user_access'
       | 'user_invite'
       | 'user_profile'
       | 'user_roles'
       | OtherString;
+
+    export interface UserAccess {
+      /**
+       * Dashboard client details for the user access action.
+       */
+      dashboard_client?: UserAccess.DashboardClient;
+
+      /**
+       * Timestamp when the user access expires.
+       */
+      expires_at: string;
+
+      /**
+       * Network details for the user access action.
+       */
+      network: UserAccess.Network;
+
+      /**
+       * Risk details for the user access action.
+       */
+      risk: UserAccess.Risk;
+
+      /**
+       * Roles associated with the user access action.
+       */
+      roles: Array<string>;
+
+      /**
+       * Surface where the user access action started.
+       */
+      surface: UserAccess.Surface;
+    }
 
     export interface UserInvite {
       /**
@@ -510,8 +780,596 @@ export namespace ActivityLog {
       export type Surface = 'dashboard' | 'express' | OtherString;
     }
 
+    export namespace Connect {
+      export interface Application {
+        /**
+         * Identifier of the application.
+         */
+        id: string;
+      }
+
+      export interface NewExpressBrandingSettings {
+        /**
+         * Border radius for the Express Dashboard.
+         */
+        border_radius?: string;
+
+        /**
+         * Primary button background color for the Express Dashboard.
+         */
+        primary_button_background_color?: string;
+
+        /**
+         * Primary color for the Express Dashboard.
+         */
+        primary_color?: string;
+
+        /**
+         * Secondary button background color for the Express Dashboard.
+         */
+        secondary_button_background_color?: string;
+      }
+
+      export interface NewSettings {
+        /**
+         * The display name shown on the onboarding experience and Dashboard. This is different from the business legal name.
+         */
+        business_name?: string;
+
+        /**
+         * Whether platform branding is copied to new connected accounts. These also appear on invoices, receipts, and other Stripe products.
+         */
+        copy_platform_branding_to_new_connected_accounts?: boolean;
+
+        /**
+         * Whether the support email is hidden on onboarding surfaces.
+         */
+        hide_onboarding_support_email?: boolean;
+
+        /**
+         * Whether the support phone number is hidden on onboarding surfaces.
+         */
+        hide_onboarding_support_phone?: boolean;
+
+        /**
+         * Whether the support URL is hidden on onboarding surfaces.
+         */
+        hide_onboarding_support_url?: boolean;
+
+        /**
+         * Identifier of the icon file (file_* ID).
+         */
+        icon?: string;
+
+        /**
+         * Identifier of the logo file (file_* ID).
+         */
+        logo?: string;
+
+        /**
+         * The platform's default payout statement descriptor. It appears on the bank statements of the platform's connected accounts for their payouts.
+         */
+        payout_statement_descriptor?: string;
+
+        /**
+         * A CSS hex color value representing the primary branding color, applied to the onboarding experience and the Stripe Dashboard.
+         */
+        primary_color?: string;
+
+        /**
+         * A CSS hex color value representing the secondary branding color, applied to the onboarding experience and the Stripe Dashboard.
+         */
+        secondary_color?: string;
+      }
+
+      export interface OldExpressBrandingSettings {
+        /**
+         * Border radius for the Express Dashboard.
+         */
+        border_radius?: string;
+
+        /**
+         * Primary button background color for the Express Dashboard.
+         */
+        primary_button_background_color?: string;
+
+        /**
+         * Primary color for the Express Dashboard.
+         */
+        primary_color?: string;
+
+        /**
+         * Secondary button background color for the Express Dashboard.
+         */
+        secondary_button_background_color?: string;
+      }
+
+      export interface OldSettings {
+        /**
+         * The display name shown on the onboarding experience and Dashboard. This is different from the business legal name.
+         */
+        business_name?: string;
+
+        /**
+         * Whether platform branding is copied to new connected accounts. These also appear on invoices, receipts, and other Stripe products.
+         */
+        copy_platform_branding_to_new_connected_accounts?: boolean;
+
+        /**
+         * Whether the support email is hidden on onboarding surfaces.
+         */
+        hide_onboarding_support_email?: boolean;
+
+        /**
+         * Whether the support phone number is hidden on onboarding surfaces.
+         */
+        hide_onboarding_support_phone?: boolean;
+
+        /**
+         * Whether the support URL is hidden on onboarding surfaces.
+         */
+        hide_onboarding_support_url?: boolean;
+
+        /**
+         * Identifier of the icon file (file_* ID).
+         */
+        icon?: string;
+
+        /**
+         * Identifier of the logo file (file_* ID).
+         */
+        logo?: string;
+
+        /**
+         * The platform's default payout statement descriptor. It appears on the bank statements of the platform's connected accounts for their payouts.
+         */
+        payout_statement_descriptor?: string;
+
+        /**
+         * A CSS hex color value representing the primary branding color, applied to the onboarding experience and the Stripe Dashboard.
+         */
+        primary_color?: string;
+
+        /**
+         * A CSS hex color value representing the secondary branding color, applied to the onboarding experience and the Stripe Dashboard.
+         */
+        secondary_color?: string;
+      }
+
+      export type SiteLinkRoute =
+        | 'account_management'
+        | 'balances'
+        | 'documents'
+        | 'financial_accounts'
+        | 'issuing_card_transactions'
+        | 'notification_banner'
+        | 'payments'
+        | 'payouts'
+        | OtherString;
+    }
+
+    export namespace EventDestination {
+      export interface NewConfiguration {
+        /**
+         * Amazon EventBridge configuration.
+         */
+        amazon_eventbridge?: NewConfiguration.AmazonEventbridge;
+
+        /**
+         * Azure Event Grid configuration.
+         */
+        azure_event_grid?: NewConfiguration.AzureEventGrid;
+
+        /**
+         * Event types subscribed to by the destination. ["*"] subscribes to all V1 webhook events.
+         */
+        enabled_events: Array<string>;
+
+        /**
+         * Event source selectors: @self, @accounts, @organization_members, or @organization_members/@accounts.
+         */
+        events_from: Array<string>;
+
+        /**
+         * Status of the event destination.
+         */
+        status: NewConfiguration.Status;
+
+        /**
+         * Webhook endpoint configuration.
+         */
+        webhook_endpoint?: NewConfiguration.WebhookEndpoint;
+      }
+
+      export interface OldConfiguration {
+        /**
+         * Amazon EventBridge configuration.
+         */
+        amazon_eventbridge?: OldConfiguration.AmazonEventbridge;
+
+        /**
+         * Azure Event Grid configuration.
+         */
+        azure_event_grid?: OldConfiguration.AzureEventGrid;
+
+        /**
+         * Event types subscribed to by the destination. ["*"] subscribes to all V1 webhook events.
+         */
+        enabled_events: Array<string>;
+
+        /**
+         * Event source selectors: @self, @accounts, @organization_members, or @organization_members/@accounts.
+         */
+        events_from: Array<string>;
+
+        /**
+         * Status of the event destination.
+         */
+        status: OldConfiguration.Status;
+
+        /**
+         * Webhook endpoint configuration.
+         */
+        webhook_endpoint?: OldConfiguration.WebhookEndpoint;
+      }
+
+      export type Type =
+        | 'amazon_eventbridge'
+        | 'azure_event_grid'
+        | 'webhook_endpoint'
+        | OtherString;
+
+      export namespace NewConfiguration {
+        export interface AmazonEventbridge {
+          /**
+           * AWS account ID configured for the event destination.
+           */
+          aws_account_id: string;
+
+          /**
+           * ARN of the AWS event source configured for the event destination.
+           */
+          aws_event_source_arn: string;
+
+          /**
+           * AWS region configured for the event destination.
+           */
+          aws_region: string;
+        }
+
+        export interface AzureEventGrid {
+          /**
+           * Azure partner topic name configured for the event destination.
+           */
+          azure_partner_topic_name: string;
+
+          /**
+           * Azure region configured for the event destination.
+           */
+          azure_region: string;
+
+          /**
+           * Azure resource group name configured for the event destination.
+           */
+          azure_resource_group_name: string;
+
+          /**
+           * Azure subscription ID configured for the event destination.
+           */
+          azure_subscription_id: string;
+        }
+
+        export type Status = 'disabled' | 'enabled' | OtherString;
+
+        export interface WebhookEndpoint {
+          /**
+           * URL configured for the webhook endpoint.
+           */
+          url: string;
+        }
+      }
+
+      export namespace OldConfiguration {
+        export interface AmazonEventbridge {
+          /**
+           * AWS account ID configured for the event destination.
+           */
+          aws_account_id: string;
+
+          /**
+           * ARN of the AWS event source configured for the event destination.
+           */
+          aws_event_source_arn: string;
+
+          /**
+           * AWS region configured for the event destination.
+           */
+          aws_region: string;
+        }
+
+        export interface AzureEventGrid {
+          /**
+           * Azure partner topic name configured for the event destination.
+           */
+          azure_partner_topic_name: string;
+
+          /**
+           * Azure region configured for the event destination.
+           */
+          azure_region: string;
+
+          /**
+           * Azure resource group name configured for the event destination.
+           */
+          azure_resource_group_name: string;
+
+          /**
+           * Azure subscription ID configured for the event destination.
+           */
+          azure_subscription_id: string;
+        }
+
+        export type Status = 'disabled' | 'enabled' | OtherString;
+
+        export interface WebhookEndpoint {
+          /**
+           * URL configured for the webhook endpoint.
+           */
+          url: string;
+        }
+      }
+    }
+
+    export namespace Radar {
+      export type NewRiskPreference =
+        | 'balanced'
+        | 'custom'
+        | 'high_growth'
+        | 'low_risk'
+        | OtherString;
+
+      export interface NewRule {
+        /**
+         * Action performed when the rule matches.
+         */
+        action: NewRule.Action;
+
+        /**
+         * Whether the rule is enabled.
+         */
+        enabled?: boolean;
+
+        /**
+         * Identifier of the rule.
+         */
+        id: string;
+
+        /**
+         * Objective of the rule.
+         */
+        objective?: string;
+
+        /**
+         * Rule expression evaluated to determine whether the rule matches.
+         */
+        predicate?: string;
+
+        /**
+         * Percentage of matching traffic to which the rule applies, between 0 and 100, serialized as a decimal string.
+         */
+        rollout_percentage?: Decimal;
+
+        /**
+         * Type of entity evaluated by the rule.
+         */
+        type?: NewRule.Type;
+      }
+
+      export type OldRiskPreference =
+        | 'balanced'
+        | 'custom'
+        | 'high_growth'
+        | 'low_risk'
+        | OtherString;
+
+      export interface OldRule {
+        /**
+         * Action performed when the rule matches.
+         */
+        action: OldRule.Action;
+
+        /**
+         * Whether the rule is enabled.
+         */
+        enabled?: boolean;
+
+        /**
+         * Identifier of the rule.
+         */
+        id: string;
+
+        /**
+         * Objective of the rule.
+         */
+        objective?: string;
+
+        /**
+         * Rule expression evaluated to determine whether the rule matches.
+         */
+        predicate?: string;
+
+        /**
+         * Percentage of matching traffic to which the rule applies, between 0 and 100, serialized as a decimal string.
+         */
+        rollout_percentage?: Decimal;
+
+        /**
+         * Type of entity evaluated by the rule.
+         */
+        type?: OldRule.Type;
+      }
+
+      export namespace NewRule {
+        export type Action =
+          | 'allow'
+          | 'block'
+          | 'block_fa_outbound'
+          | 'manual_review'
+          | 'payout_pause'
+          | 'raise_review'
+          | 'request_credentials'
+          | 'resolve_dispute'
+          | OtherString;
+
+        export type Type = 'account' | 'payment' | OtherString;
+      }
+
+      export namespace OldRule {
+        export type Action =
+          | 'allow'
+          | 'block'
+          | 'block_fa_outbound'
+          | 'manual_review'
+          | 'payout_pause'
+          | 'raise_review'
+          | 'request_credentials'
+          | 'resolve_dispute'
+          | OtherString;
+
+        export type Type = 'account' | 'payment' | OtherString;
+      }
+    }
+
     export namespace Sso {
       export type Mandate = 'off' | 'optional' | 'required';
+    }
+
+    export namespace StripeAccess {
+      export type AccessType =
+        | 'dashboard_read_only'
+        | 'dashboard_read_write'
+        | OtherString;
+
+      export interface Reason {
+        /**
+         * Set when access is granted through an access request.
+         */
+        access_request?: Reason.AccessRequest;
+
+        /**
+         * Set when access is granted through a support relationship.
+         */
+        support_relationship?: Reason.SupportRelationship;
+
+        /**
+         * Set when access is granted through a support ticket.
+         */
+        support_ticket?: Reason.SupportTicket;
+
+        /**
+         * The type of reason for granting access.
+         */
+        type: Reason.Type;
+      }
+
+      export namespace Reason {
+        export interface AccessRequest {
+          /**
+           * Identifier of the access request.
+           */
+          id: string;
+        }
+
+        export interface SupportRelationship {
+          /**
+           * Identifier of the support relationship.
+           */
+          id: string;
+
+          /**
+           * Name of the support contact, when available.
+           */
+          name?: string;
+
+          /**
+           * Role of the support contact, when available.
+           */
+          role?: string;
+        }
+
+        export interface SupportTicket {
+          /**
+           * Identifier of the support ticket.
+           */
+          id: string;
+        }
+
+        export type Type =
+          | 'access_request'
+          | 'support_relationship'
+          | 'support_ticket'
+          | OtherString;
+      }
+    }
+
+    export namespace UserAccess {
+      export interface DashboardClient {
+        /**
+         * User-Agent header for the user access action.
+         */
+        user_agent: string;
+      }
+
+      export interface Network {
+        /**
+         * City for the user access action.
+         */
+        city: string;
+
+        /**
+         * Country for the user access action.
+         */
+        country: string;
+
+        /**
+         * IP address for the user access action.
+         */
+        ip_address: string;
+
+        /**
+         * Region for the user access action.
+         */
+        region: string;
+      }
+
+      export interface Risk {
+        /**
+         * Risk signals for the user access action.
+         */
+        signals: Array<Risk.Signal>;
+      }
+
+      export type Surface = 'dashboard' | 'embedded' | 'express' | OtherString;
+
+      export namespace Risk {
+        export interface Signal {
+          /**
+           * The user access action used a novel device.
+           */
+          novel_device?: Signal.NovelDevice;
+
+          /**
+           * Type of risk signal.
+           */
+          type: Signal.Type;
+        }
+
+        export namespace Signal {
+          export interface NovelDevice {}
+
+          export type Type = 'novel_device' | OtherString;
+        }
+      }
     }
 
     export namespace UserRoles {
@@ -521,13 +1379,16 @@ export namespace ActivityLog {
 
   export namespace RelatedObject {
     export type Type =
+      | 'apps.install'
       | 'balance_transfer'
       | 'bank_account'
       | 'blockchain_address'
       | 'card'
+      | 'v2.core.event_destination'
       | 'issuing.card'
       | 'issuing.cardholder'
       | 'issuing.dispute'
+      | 'webhook_endpoint'
       | OtherString;
   }
 }
@@ -553,17 +1414,29 @@ export namespace V2 {
        * Maximum number of results to return per page.
        */
       limit?: number;
+
+      /**
+       * Controls which activity logs an organization-level request returns. Specify `@self` to return logs recorded in the organization context and `@organization_members` to return logs recorded in accounts that belong to the organization. Specify both values to return logs from both sources. Defaults to `["@self"]` when omitted. Cannot be empty.
+       */
+      logs_from?: Array<string>;
     }
 
     export namespace ActivityLogListParams {
       export type ActionGroup =
         | 'account_security'
         | 'api_key'
+        | 'app'
         | 'authentication'
+        | 'connect'
+        | 'data_export'
+        | 'event_destination'
         | 'issuing'
         | 'payout'
+        | 'radar'
         | 'scim'
         | 'sso'
+        | 'stripe_access'
+        | 'user_access'
         | 'user_invite'
         | 'user_profile'
         | 'user_roles'
@@ -575,6 +1448,20 @@ export namespace V2 {
         | 'api_key_deleted'
         | 'api_key_updated'
         | 'api_key_viewed'
+        | 'application_authorized'
+        | 'application_created'
+        | 'application_deauthorized'
+        | 'app_installed'
+        | 'app_uninstalled'
+        | 'connect_express_branding_updated'
+        | 'connect_oauth_disabled'
+        | 'connect_oauth_enabled'
+        | 'connect_settings_updated'
+        | 'connect_site_link_updated'
+        | 'data_export_requested'
+        | 'event_destination_added'
+        | 'event_destination_removed'
+        | 'event_destination_updated'
         | 'issuing_activated'
         | 'issuing_balance_transfer_created'
         | 'issuing_cardholder_created'
@@ -592,6 +1479,17 @@ export namespace V2 {
         | 'payout_destination_updated'
         | 'payout_schedule_edits_disabled'
         | 'payout_schedule_edits_enabled'
+        | 'payout_schedule_updated'
+        | 'radar_adaptive_3ds_disabled'
+        | 'radar_dynamic_risk_thresholds_disabled'
+        | 'radar_early_fraud_warning_disabled'
+        | 'radar_for_setup_intents_disabled'
+        | 'radar_fraud_dispute_protection_disabled'
+        | 'radar_rule_added'
+        | 'radar_rule_disabled'
+        | 'radar_rule_enabled'
+        | 'radar_rule_removed'
+        | 'radar_rule_updated'
         | 'scim_group_deleted'
         | 'scim_group_member_added'
         | 'scim_group_member_removed'
@@ -601,8 +1499,10 @@ export namespace V2 {
         | 'sso_settings_created'
         | 'sso_settings_deleted'
         | 'sso_settings_updated'
+        | 'stripe_access_started'
         | 'two_step_authentication_mandate_disabled'
         | 'two_step_authentication_mandate_enabled'
+        | 'user_access_started'
         | 'user_auth_challenge_failed'
         | 'user_email_changed'
         | 'user_email_verified'

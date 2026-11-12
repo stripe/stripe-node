@@ -6,7 +6,7 @@ import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class AccountSignalResource extends StripeResource {
   /**
-   * Lists AccountSignals whose created timestamps are no more than 90 days old for a given account or customer. Returns only the latest AccountSignal for each requested signal type.
+   * Lists AccountSignals for a given account or customer. Signals more than 90 days old are omitted. Returns only the latest AccountSignal for each requested signal type.
    */
   list(
     params: V2.Signals.AccountSignalListParams,
@@ -48,7 +48,7 @@ export class AccountSignalResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieves an AccountSignal by its ID when its created timestamp is no more than 90 days old.
+   * Retrieves an AccountSignal by its ID for up to 90 days after creation. Signals more than 90 days old are inaccessible.
    */
   retrieve(
     id: string,

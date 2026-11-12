@@ -2,12 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {
-  MetadataParam,
-  RangeQueryParam,
-  Metadata,
-  OtherString,
-} from '../../../shared.js';
+import {MetadataParam, Metadata, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class TransactionResource extends StripeResource {
@@ -183,6 +178,7 @@ export namespace Transaction {
   export type Category =
     | 'adjustment'
     | 'currency_conversion'
+    | 'hold'
     | 'inbound_transfer'
     | 'inbound_transfer_reversal'
     | 'outbound_payment'
@@ -219,6 +215,11 @@ export namespace Transaction {
      * If applicable, the ID of the FeeBatch that created this Transaction.
      */
     fee_batch?: string;
+
+    /**
+     * If applicable, the ID of the Hold that created this Transaction.
+     */
+    hold?: string;
 
     /**
      * If applicable, the ID of the InboundTransfer that created this Transaction.
@@ -287,6 +288,7 @@ export namespace Transaction {
       | 'adjustment'
       | 'currency_conversion'
       | 'fee_batch'
+      | 'hold'
       | 'inbound_transfer'
       | 'outbound_payment'
       | 'outbound_transfer'
@@ -331,7 +333,7 @@ export namespace V2 {
       /**
        * Filter for Transactions created within a specified time range.
        */
-      created?: RangeQueryParam;
+      created?: TransactionListParams.Created;
 
       /**
        * Filter for Transactions belonging to a specific FinancialAccount. This filter only supports filtering by the FinancialAccount's ID.
@@ -349,6 +351,38 @@ export namespace V2 {
        * The page limit.
        */
       limit?: number;
+    }
+
+    export namespace TransactionListParams {
+      export interface Created {
+        /**
+         * Filter for objects created after the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gt?: string | number;
+
+        /**
+         * Filter for objects created at or after the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gte?: string | number;
+
+        /**
+         * Filter for objects created before the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lt?: string | number;
+
+        /**
+         * Filter for objects created at or before the specified timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lte?: string | number;
+      }
     }
   }
 }

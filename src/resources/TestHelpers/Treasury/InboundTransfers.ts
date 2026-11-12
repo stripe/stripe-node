@@ -78,6 +78,11 @@ export namespace TestHelpers {
          * Reason for the failure.
          */
         code?: FailureDetails.Code;
+
+        /**
+         * Network specific details for the failure.
+         */
+        network_details?: FailureDetails.NetworkDetails;
       }
 
       export namespace FailureDetails {
@@ -96,6 +101,27 @@ export namespace TestHelpers {
           | 'no_account'
           | 'other'
           | OtherString;
+
+        export interface NetworkDetails {
+          /**
+           * ACH network failure details.
+           */
+          ach?: NetworkDetails.Ach;
+
+          /**
+           * The network used to transfer funds.
+           */
+          type: 'ach';
+        }
+
+        export namespace NetworkDetails {
+          export interface Ach {
+            /**
+             * NACHA ACH return code.
+             */
+            return_code: string;
+          }
+        }
       }
     }
   }
@@ -107,6 +133,64 @@ export namespace TestHelpers {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Details about a returned InboundTransfer.
+       */
+      failure_details?: InboundTransferReturnInboundTransferParams.FailureDetails;
+    }
+
+    export namespace InboundTransferReturnInboundTransferParams {
+      export interface FailureDetails {
+        /**
+         * Reason for the failure.
+         */
+        code?: FailureDetails.Code;
+
+        /**
+         * Network specific details for the failure.
+         */
+        network_details?: FailureDetails.NetworkDetails;
+      }
+
+      export namespace FailureDetails {
+        export type Code =
+          | 'account_closed'
+          | 'account_frozen'
+          | 'bank_account_restricted'
+          | 'bank_ownership_changed'
+          | 'debit_not_authorized'
+          | 'incorrect_account_holder_address'
+          | 'incorrect_account_holder_name'
+          | 'incorrect_account_holder_tax_id'
+          | 'insufficient_funds'
+          | 'invalid_account_number'
+          | 'invalid_currency'
+          | 'no_account'
+          | 'other'
+          | OtherString;
+
+        export interface NetworkDetails {
+          /**
+           * ACH network failure details.
+           */
+          ach?: NetworkDetails.Ach;
+
+          /**
+           * The network used to transfer funds.
+           */
+          type: 'ach';
+        }
+
+        export namespace NetworkDetails {
+          export interface Ach {
+            /**
+             * NACHA ACH return code.
+             */
+            return_code: string;
+          }
+        }
+      }
     }
   }
 }

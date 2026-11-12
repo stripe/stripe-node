@@ -184,7 +184,7 @@ export namespace Dispute {
     /**
      * Appeal evidence submitted during the appeal stage.
      */
-    appeal?: Evidence.Appeal | null;
+    appeal: Evidence.Appeal | null;
 
     /**
      * The billing address provided by the customer.

@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {RangeQueryParam, OtherString} from '../../../shared.js';
+import {MetadataParam, Metadata, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class InboundTransferResource extends StripeResource {
@@ -89,6 +89,11 @@ export interface InboundTransfer {
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
    */
   livemode: boolean;
+
+  /**
+   * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   */
+  metadata?: Metadata;
 
   /**
    * A hosted transaction receipt URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
@@ -263,6 +268,11 @@ export namespace V2 {
        * An optional, freeform description field intended to store metadata.
        */
       description?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: MetadataParam;
     }
 
     export namespace InboundTransferCreateParams {
@@ -304,12 +314,48 @@ export namespace V2 {
       /**
        * Hash of options for filtering on creation time.
        */
-      created?: RangeQueryParam;
+      created?: InboundTransferListParams.Created;
 
       /**
        * The page limit.
        */
       limit?: number;
+    }
+
+    export namespace InboundTransferListParams {
+      export interface Created {
+        /**
+         * Filter for objects created after the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gt?: string | number;
+
+        /**
+         * Filter for objects created on or after the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gte?: string | number;
+
+        /**
+         * Filter for objects created before the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lt?: string | number;
+
+        /**
+         * Filter for objects created on or before the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lte?: string | number;
+      }
     }
   }
 }

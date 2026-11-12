@@ -24,7 +24,9 @@ export class QueryRunResource extends StripeResource {
             result: {
               kind: 'object',
               fields: {
+                col_count: {kind: 'int64_string'},
                 file: {kind: 'object', fields: {size: {kind: 'int64_string'}}},
+                row_count: {kind: 'int64_string'},
               },
             },
           },
@@ -53,7 +55,9 @@ export class QueryRunResource extends StripeResource {
             result: {
               kind: 'object',
               fields: {
+                col_count: {kind: 'int64_string'},
                 file: {kind: 'object', fields: {size: {kind: 'int64_string'}}},
+                row_count: {kind: 'int64_string'},
               },
             },
           },
@@ -114,10 +118,20 @@ export interface QueryRun {
 export namespace QueryRun {
   export interface Result {
     /**
+     * The number of columns in the file.
+     */
+    col_count?: bigint;
+
+    /**
      * Contains metadata about the file produced by the `ReportRun` or `QueryRun`, including
      * its content type, size, and a URL to download its contents.
      */
     file?: Result.File;
+
+    /**
+     * The number of data rows in the file, excluding the column header row.
+     */
+    row_count?: bigint;
 
     /**
      * The type of the `ReportRun` or `QueryRun` result.

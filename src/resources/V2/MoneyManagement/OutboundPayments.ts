@@ -2,12 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {
-  MetadataParam,
-  OtherString,
-  RangeQueryParam,
-  Metadata,
-} from '../../../shared.js';
+import {MetadataParam, OtherString, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class OutboundPaymentResource extends StripeResource {
@@ -400,6 +395,7 @@ export namespace OutboundPayment {
 
     export namespace Returned {
       export type Reason =
+        | 'payout_method_account_type_incorrect'
         | 'payout_method_canceled_by_customer'
         | 'payout_method_closed'
         | 'payout_method_currency_unsupported'
@@ -531,7 +527,7 @@ export namespace V2 {
       delivery_options?: OutboundPaymentCreateParams.DeliveryOptions;
 
       /**
-       * An arbitrary string attached to the OutboundPayment. Often useful for displaying to users.
+       * An arbitrary string attached to the OutboundPayment. Often useful for displaying to users. The description can not be longer than 100 characters and can only contain basic Latin characters and spaces. The following special characters are not allowed: <>\'"* .
        */
       description?: string;
 
@@ -706,7 +702,7 @@ export namespace V2 {
       /**
        * Filter OutboundPayments by their creation time.
        */
-      created?: RangeQueryParam;
+      created?: OutboundPaymentListParams.Created;
 
       /**
        * The maximum number of results to return.
@@ -725,6 +721,40 @@ export namespace V2 {
     }
 
     export namespace OutboundPaymentListParams {
+      export interface Created {
+        /**
+         * Filter for objects created after the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gt?: string | number;
+
+        /**
+         * Filter for objects created on or after the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gte?: string | number;
+
+        /**
+         * Filter for objects created before the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lt?: string | number;
+
+        /**
+         * Filter for objects created on or before the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lte?: string | number;
+      }
+
       export type Status =
         | 'canceled'
         | 'failed'
