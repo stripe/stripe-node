@@ -1327,7 +1327,7 @@ describe('RequestSender', () => {
                   (err) => {
                     expect(err).to.be.an.instanceOf(StripeConnectionError);
                     expect(err.message).to.deep.equal(
-                      'An error occurred with our connection to Stripe.'
+                      '[req_test_response_body] An error occurred with our connection to Stripe.'
                     );
                     expect(err.requestId).to.equal('req_test_response_body');
                     expect(err.detail).to.be.an.instanceOf(
