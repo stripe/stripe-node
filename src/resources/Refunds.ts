@@ -229,6 +229,8 @@ export namespace Refund {
 
     au_bank_transfer?: DestinationDetails.AuBankTransfer;
 
+    bizum?: DestinationDetails.Bizum;
+
     blik?: DestinationDetails.Blik;
 
     br_bank_transfer?: DestinationDetails.BrBankTransfer;
@@ -287,6 +289,8 @@ export namespace Refund {
      * The type of transaction-specific details of the payment method used in the refund (e.g., `card`). An additional hash is included on `destination_details` with a name matching this value. It contains information specific to the refund transaction.
      */
     type: string;
+
+    upi?: DestinationDetails.Upi;
 
     us_bank_transfer?: DestinationDetails.UsBankTransfer;
 
@@ -351,6 +355,18 @@ export namespace Refund {
     export interface AmazonPay {}
 
     export interface AuBankTransfer {}
+
+    export interface Bizum {
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
+    }
 
     export interface Blik {
       /**
@@ -575,6 +591,18 @@ export namespace Refund {
     }
 
     export interface Twint {}
+
+    export interface Upi {
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
+    }
 
     export interface UsBankTransfer {
       /**

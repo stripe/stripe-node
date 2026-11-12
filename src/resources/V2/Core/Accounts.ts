@@ -64,6 +64,7 @@ export class AccountResource extends StripeResource {
   /**
    * Create an Account that represents a company, individual, or other entity that your business interacts with. Accounts contain identifying information about the entity, and configurations that store the features an account has access to. An account can be configured as any or all of the following configurations: Customer, Merchant and/or Recipient.
    * @throws Stripe.RateLimitError
+   * @throws Stripe.InactiveApiOperationConfirmationRequiredError
    */
   create(
     params?: V2.Core.AccountCreateParams,
@@ -150,6 +151,7 @@ export class AccountResource extends StripeResource {
   /**
    * Updates the details of an Account.
    * @throws Stripe.RateLimitError
+   * @throws Stripe.InactiveApiOperationConfirmationRequiredError
    */
   update(
     id: string,
@@ -283,7 +285,7 @@ export interface Account {
   created: string;
 
   /**
-   * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
+   * Specifies the account's Stripe-hosted Dashboard access. Available values depend on the configurations enabled for the account. Learn more about [configuring Dashboard access](https://docs.stripe.com/connect/accounts-v2/connected-account-configuration#set-dashboard-access).
    */
   dashboard?: Account.Dashboard;
 
@@ -337,7 +339,7 @@ export namespace Account {
     merchant?: Configuration.Merchant;
 
     /**
-     * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
+     * The Recipient Configuration allows the Account to receive funds from you.
      */
     recipient?: Configuration.Recipient;
   }
@@ -507,6 +509,11 @@ export namespace Account {
        * The Merchant Category Code (MCC) for the merchant. MCCs classify businesses based on the goods or services they provide.
        */
       mcc?: string;
+
+      /**
+       * Settings for PayPay payments.
+       */
+      paypay_payments?: Merchant.PaypayPayments;
 
       /**
        * Settings for the default text that appears on statements for language variations.
@@ -859,6 +866,11 @@ export namespace Account {
         bancontact_payments?: Capabilities.BancontactPayments;
 
         /**
+         * Allow the merchant to process Billie payments.
+         */
+        billie_payments?: Capabilities.BilliePayments;
+
+        /**
          * Allow the merchant to process BLIK payments.
          */
         blik_payments?: Capabilities.BlikPayments;
@@ -949,6 +961,11 @@ export namespace Account {
         link_payments?: Capabilities.LinkPayments;
 
         /**
+         * Allow the merchant to process MB WAY payments.
+         */
+        mb_way_payments?: Capabilities.MbWayPayments;
+
+        /**
          * Allow the merchant to process MobilePay payments.
          */
         mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -967,6 +984,11 @@ export namespace Account {
          * Allow the merchant to process Naver Pay payments.
          */
         naver_pay_payments?: Capabilities.NaverPayPayments;
+
+        /**
+         * Allow the merchant to process New Zealand BECS Direct Debit payments.
+         */
+        nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
 
         /**
          * Allow the merchant to process OXXO payments.
@@ -992,6 +1014,16 @@ export namespace Account {
          * Allow the merchant to process PayNow payments.
          */
         paynow_payments?: Capabilities.PaynowPayments;
+
+        /**
+         * Allow the merchant to process PayPay payments.
+         */
+        paypay_payments?: Capabilities.PaypayPayments;
+
+        /**
+         * Allow the merchant to process Pix payments.
+         */
+        pix_payments?: Capabilities.PixPayments;
 
         /**
          * Allow the merchant to process PromptPay payments.
@@ -1068,9 +1100,36 @@ export namespace Account {
 
       export interface KonbiniPayments {
         /**
+         * Information provided to support the onboarding process for Konbini payments.
+         */
+        additional_material?: string;
+
+        /**
          * Support for Konbini payments.
          */
         support?: KonbiniPayments.Support;
+      }
+
+      export interface PaypayPayments {
+        /**
+         * Additional files supporting PayPay payments configuration.
+         */
+        additional_files: Array<string>;
+
+        /**
+         * The type of goods sold by the merchant for PayPay payments.
+         */
+        goods_type?: PaypayPayments.GoodsType;
+
+        /**
+         * The business's website for PayPay payments.
+         */
+        site?: PaypayPayments.Site;
+
+        /**
+         * URL to the Specified Commercial Transactions Act page for PayPay payments.
+         */
+        specified_commercial_transactions_act_url?: string;
       }
 
       export interface ScriptStatementDescriptor {
@@ -1233,6 +1292,18 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<BancontactPayments.StatusDetail>;
+        }
+
+        export interface BilliePayments {
+          /**
+           * The status of the Capability.
+           */
+          status: BilliePayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<BilliePayments.StatusDetail>;
         }
 
         export interface BlikPayments {
@@ -1451,6 +1522,18 @@ export namespace Account {
           status_details: Array<LinkPayments.StatusDetail>;
         }
 
+        export interface MbWayPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: MbWayPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<MbWayPayments.StatusDetail>;
+        }
+
         export interface MobilepayPayments {
           /**
            * The status of the Capability.
@@ -1497,6 +1580,18 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<NaverPayPayments.StatusDetail>;
+        }
+
+        export interface NzBankAccountBecsDebitPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: NzBankAccountBecsDebitPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<NzBankAccountBecsDebitPayments.StatusDetail>;
         }
 
         export interface OxxoPayments {
@@ -1557,6 +1652,30 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<PaynowPayments.StatusDetail>;
+        }
+
+        export interface PaypayPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: PaypayPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<PaypayPayments.StatusDetail>;
+        }
+
+        export interface PixPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: PixPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<PixPayments.StatusDetail>;
         }
 
         export interface PromptpayPayments {
@@ -2071,6 +2190,51 @@ export namespace Account {
         }
 
         export namespace BancontactPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace BilliePayments {
           export type Status =
             | 'active'
             | 'pending'
@@ -2925,6 +3089,51 @@ export namespace Account {
           }
         }
 
+        export namespace MbWayPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
         export namespace MobilepayPayments {
           export type Status =
             | 'active'
@@ -3061,6 +3270,51 @@ export namespace Account {
         }
 
         export namespace NaverPayPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace NzBankAccountBecsDebitPayments {
           export type Status =
             | 'active'
             | 'pending'
@@ -3286,6 +3540,96 @@ export namespace Account {
         }
 
         export namespace PaynowPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace PaypayPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace PixPayments {
           export type Status =
             | 'active'
             | 'pending'
@@ -3977,6 +4321,57 @@ export namespace Account {
         }
       }
 
+      export namespace PaypayPayments {
+        export type GoodsType = 'digital_content' | 'other';
+
+        export interface Site {
+          /**
+           * Additional information about the business's website when it's accessible.
+           */
+          accessible?: Site.Accessible;
+
+          /**
+           * Additional information about the business's website when it's in development.
+           */
+          in_development?: Site.InDevelopment;
+
+          /**
+           * Additional information about the business's website when it has restricted access.
+           */
+          restricted?: Site.Restricted;
+
+          /**
+           * The status of the business's website.
+           */
+          type?: Site.Type;
+        }
+
+        export namespace Site {
+          export interface Accessible {}
+
+          export interface InDevelopment {
+            /**
+             * Whether a password needed to access the business's website has been provided.
+             */
+            password_provided: boolean;
+
+            /**
+             * The username needed to access the business's website.
+             */
+            username?: string;
+          }
+
+          export interface Restricted {
+            /**
+             * The file explaining the payment flow for the business.
+             */
+            payment_flow_file?: string;
+          }
+
+          export type Type = 'accessible' | 'in_development' | 'restricted';
+        }
+      }
+
       export namespace ScriptStatementDescriptor {
         export interface Kana {
           /**
@@ -4118,7 +4513,7 @@ export namespace Account {
           payouts?: StripeBalance.Payouts;
 
           /**
-           * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
+           * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance). Use this capability if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
            */
           stripe_transfers?: StripeBalance.StripeTransfers;
         }
@@ -4795,12 +5190,12 @@ export namespace Account {
 
     export interface Responsibilities {
       /**
-       * Indicates whether the platform or connected account is responsible for paying Stripe fees for pricing-control-eligible products.
+       * Controls who pays Stripe fees for direct charges and other pricing-control-eligible Stripe products. For new integrations, setting `losses_collector=application` requires `fees_collector=application`; legacy Custom and Express accounts can also use `application_custom` or `application_express`. For destination charges and separate charges and transfers, Stripe bills the platform regardless of this setting. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior), including application fees and pricing considerations.
        */
       fees_collector?: Responsibilities.FeesCollector;
 
       /**
-       * A value indicating the responsibility for losses on this account.
+       * Controls who is responsible for payment-related negative balances on this account. The platform remains liable for negative balances on its own account. To use Stripe negative balance liability, your integration must meet [Managed Risk requirements](https://docs.stripe.com/connect/risk-management/managed-risk).
        */
       losses_collector?: Responsibilities.LossesCollector;
 
@@ -4960,6 +5355,7 @@ export namespace Account {
             export type Code =
               | 'invalid_address_city_state_postal_code'
               | 'invalid_address_cmra_address'
+              | 'invalid_address_crypto_regulated_state'
               | 'invalid_address_highway_contract_box'
               | 'invalid_address_private_mailbox'
               | 'invalid_address_registered_agent_address'
@@ -5001,6 +5397,7 @@ export namespace Account {
               | 'invalid_value_other'
               | 'unresolvable_ip_address'
               | 'unresolvable_postal_code'
+              | 'verification_data_not_found'
               | 'verification_directors_mismatch'
               | 'verification_document_address_mismatch'
               | 'verification_document_address_missing'
@@ -5048,6 +5445,7 @@ export namespace Account {
               | 'verification_missing_directors'
               | 'verification_missing_executives'
               | 'verification_missing_owners'
+              | 'verification_relationships_not_found'
               | 'verification_requires_additional_memorandum_of_associations'
               | 'verification_requires_additional_proof_of_registration'
               | 'verification_selfie_document_missing_photo'
@@ -5156,6 +5554,7 @@ export namespace Account {
         export type Code =
           | 'invalid_address_city_state_postal_code'
           | 'invalid_address_cmra_address'
+          | 'invalid_address_crypto_regulated_state'
           | 'invalid_address_highway_contract_box'
           | 'invalid_address_private_mailbox'
           | 'invalid_address_registered_agent_address'
@@ -5197,6 +5596,7 @@ export namespace Account {
           | 'invalid_value_other'
           | 'unresolvable_ip_address'
           | 'unresolvable_postal_code'
+          | 'verification_data_not_found'
           | 'verification_directors_mismatch'
           | 'verification_document_address_mismatch'
           | 'verification_document_address_missing'
@@ -5244,6 +5644,7 @@ export namespace Account {
           | 'verification_missing_directors'
           | 'verification_missing_executives'
           | 'verification_missing_owners'
+          | 'verification_relationships_not_found'
           | 'verification_requires_additional_memorandum_of_associations'
           | 'verification_requires_additional_proof_of_registration'
           | 'verification_selfie_document_missing_photo'
@@ -5292,7 +5693,7 @@ export namespace Account {
             | 'bank_accounts.rtp'
             | 'bank_accounts.sepa'
             | 'bank_accounts.swift'
-            | 'bank_accounts.wire'
+            | 'billie_payments'
             | 'blik_payments'
             | 'blik_recurring_payments'
             | 'boleto_payments'
@@ -5312,15 +5713,19 @@ export namespace Account {
             | 'konbini_payments'
             | 'kr_card_payments'
             | 'link_payments'
+            | 'mb_way_payments'
             | 'mobilepay_payments'
             | 'multibanco_payments'
             | 'mx_bank_transfer_payments'
             | 'naver_pay_payments'
+            | 'nz_bank_account_becs_debit_payments'
             | 'oxxo_payments'
             | 'p24_payments'
             | 'payco_payments'
             | 'paynow_payments'
+            | 'paypay_payments'
             | 'pay_by_bank_payments'
+            | 'pix_payments'
             | 'promptpay_payments'
             | 'revolut_pay_payments'
             | 'samsung_pay_payments'
@@ -6159,6 +6564,7 @@ export namespace Account {
         export type Type =
           | 'ae_crn'
           | 'ae_vat'
+          | 'ag_tin'
           | 'ao_nif'
           | 'ar_cuit'
           | 'at_fn'
@@ -6167,25 +6573,31 @@ export namespace Account {
           | 'au_abn'
           | 'au_acn'
           | 'au_in'
+          | 'au_wpn'
           | 'az_tin'
+          | 'ba_pib'
           | 'bd_etin'
           | 'be_cbe'
           | 'be_vat'
           | 'bg_uic'
           | 'bg_vat'
+          | 'bj_ifu'
           | 'br_cnpj'
           | 'ca_cn'
           | 'ca_crarr'
           | 'ca_gst_hst'
           | 'ca_neq'
+          | 'ca_qst'
           | 'ca_rid'
           | 'ch_chid'
           | 'ch_uid'
+          | 'cl_rut'
           | 'cr_cpj'
           | 'cr_nite'
           | 'cy_he'
           | 'cy_tic'
           | 'cy_vat'
+          | 'cz_dic'
           | 'cz_ico'
           | 'cz_vat'
           | 'de_hrn'
@@ -6194,18 +6606,23 @@ export namespace Account {
           | 'dk_cvr'
           | 'dk_vat'
           | 'do_rcn'
+          | 'dz_nif'
           | 'ee_rk'
           | 'ee_vat'
           | 'es_cif'
           | 'es_vat'
+          | 'et_tin'
           | 'fi_vat'
           | 'fi_yt'
           | 'fr_rna'
           | 'fr_siren'
+          | 'fr_siret'
           | 'fr_vat'
           | 'gb_crn'
           | 'gb_vat'
+          | 'ge_tin'
           | 'gi_crn'
+          | 'gi_vat'
           | 'gr_afm'
           | 'gr_gemi'
           | 'gr_vat'
@@ -6218,14 +6635,25 @@ export namespace Account {
           | 'hu_cjs'
           | 'hu_tin'
           | 'hu_vat'
+          | 'id_npwp'
           | 'ie_crn'
           | 'ie_trn'
           | 'ie_vat'
+          | 'il_tin'
+          | 'il_vat'
+          | 'in_gst'
+          | 'in_pan'
+          | 'is_kt'
           | 'it_rea'
           | 'it_vat'
           | 'jp_cn'
+          | 'kh_tin'
+          | 'kr_brn'
           | 'kz_bin'
+          | 'la_tin'
+          | 'lc_tin'
           | 'li_uid'
+          | 'li_vat'
           | 'lt_ccrn'
           | 'lt_vat'
           | 'lu_nif'
@@ -6233,30 +6661,38 @@ export namespace Account {
           | 'lu_vat'
           | 'lv_urn'
           | 'lv_vat'
+          | 'md_cf'
+          | 'mg_nif'
+          | 'mk_edb'
           | 'mt_crn'
           | 'mt_tin'
           | 'mt_vat'
+          | 'mu_vat'
           | 'mx_rfc'
           | 'my_brn'
           | 'my_coid'
           | 'my_itn'
           | 'my_sst'
           | 'mz_nuit'
+          | 'ne_tin'
           | 'nl_kvk'
           | 'nl_rsin'
           | 'nl_vat'
           | 'no_orgnr'
           | 'nz_bn'
           | 'nz_ird'
+          | 'om_tin'
           | 'pe_ruc'
           | 'pk_ntn'
           | 'pl_nip'
           | 'pl_regon'
           | 'pl_vat'
           | 'pt_vat'
+          | 'qa_tin'
           | 'ro_cui'
           | 'ro_orc'
           | 'ro_vat'
+          | 'rw_tin'
           | 'sa_crn'
           | 'sa_tin'
           | 'se_orgnr'
@@ -6268,10 +6704,15 @@ export namespace Account {
           | 'sk_dic'
           | 'sk_ico'
           | 'sk_vat'
+          | 'sm_coe'
           | 'th_crn'
           | 'th_prn'
           | 'th_tin'
+          | 'tr_tin'
+          | 'tt_bir'
+          | 'tt_vat'
           | 'us_ein'
+          | 'vn_tin'
           | OtherString;
       }
 
@@ -6730,82 +7171,212 @@ export namespace Account {
       export namespace IdNumber {
         export type Type =
           | 'ae_eid'
+          | 'ae_pp'
+          | 'al_pp'
+          | 'am_pp'
           | 'ao_nif'
           | 'ar_cuil'
           | 'ar_dni'
+          | 'ar_pp'
+          | 'at_pp'
           | 'at_stn'
+          | 'au_pp'
+          | 'az_pin'
+          | 'az_pp'
           | 'az_tin'
           | 'bd_brc'
           | 'bd_etin'
           | 'bd_nid'
+          | 'bd_pp'
           | 'be_nrn'
+          | 'be_pp'
+          | 'bg_pp'
           | 'bg_ucn'
+          | 'bh_pp'
+          | 'bj_pp'
           | 'bn_nric'
+          | 'bo_pp'
           | 'br_cpf'
+          | 'br_pp'
+          | 'br_rg'
+          | 'bs_pp'
+          | 'bs_tin'
+          | 'by_pp'
+          | 'ca_pp'
           | 'ca_sin'
           | 'ch_oasi'
+          | 'ch_pp'
+          | 'ci_pp'
+          | 'cl_pp'
           | 'cl_rut'
+          | 'cm_pp'
           | 'cn_pp'
           | 'co_nuip'
+          | 'co_pp'
           | 'cr_ci'
           | 'cr_cpf'
           | 'cr_dimex'
           | 'cr_nite'
+          | 'cr_pp'
+          | 'cy_pp'
           | 'cy_tic'
+          | 'cz_dic'
+          | 'cz_pp'
           | 'cz_rc'
+          | 'de_pp'
           | 'de_stn'
           | 'dk_cpr'
+          | 'dk_pp'
           | 'do_cie'
+          | 'do_pp'
           | 'do_rcn'
+          | 'dz_pp'
           | 'ec_ci'
+          | 'ec_pp'
           | 'ee_ik'
+          | 'ee_pp'
+          | 'eg_pp'
           | 'es_nif'
+          | 'es_pp'
+          | 'et_tin'
           | 'fi_hetu'
+          | 'fi_pp'
           | 'fr_nir'
+          | 'fr_pp'
+          | 'fr_spi'
+          | 'ga_nif'
           | 'gb_nino'
+          | 'gb_pp'
+          | 'ge_pp'
+          | 'gh_pp'
           | 'gr_afm'
+          | 'gr_pp'
+          | 'gt_cui'
           | 'gt_nit'
+          | 'gt_pp'
           | 'hk_id'
+          | 'hk_pp'
+          | 'hn_dni'
+          | 'hn_pp'
           | 'hr_oib'
+          | 'hr_pp'
+          | 'ht_pp'
           | 'hu_ad'
+          | 'hu_pp'
           | 'id_nik'
+          | 'id_pp'
+          | 'ie_pp'
           | 'ie_ppsn'
+          | 'il_pp'
+          | 'in_pan'
+          | 'in_pp'
+          | 'iq_pp'
           | 'is_kt'
+          | 'is_pp'
           | 'it_cf'
+          | 'it_pp'
+          | 'je_pp'
+          | 'jm_pp'
+          | 'jo_pp'
           | 'jp_inc'
+          | 'jp_pp'
           | 'ke_pin'
+          | 'ke_pp'
+          | 'kr_pp'
+          | 'kw_pp'
           | 'kz_iin'
+          | 'kz_pp'
+          | 'lb_pp'
           | 'li_peid'
+          | 'li_pp'
+          | 'lk_pp'
           | 'lt_ak'
+          | 'lt_pp'
           | 'lu_nif'
+          | 'lu_pp'
           | 'lv_pk'
+          | 'lv_pp'
+          | 'ma_pp'
+          | 'md_cf'
+          | 'md_pp'
+          | 'mg_nif'
+          | 'mk_pin'
+          | 'mk_pp'
+          | 'mm_pp'
+          | 'mn_pp'
+          | 'mt_pp'
+          | 'mu_pp'
+          | 'mx_curp'
+          | 'mx_pp'
           | 'mx_rfc'
           | 'my_nric'
+          | 'my_pp'
           | 'mz_nuit'
           | 'ng_nin'
+          | 'ng_pp'
           | 'nl_bsn'
+          | 'nl_pp'
           | 'no_nin'
+          | 'no_pp'
+          | 'np_pp'
           | 'nz_ird'
+          | 'nz_pp'
+          | 'pa_pp'
           | 'pe_dni'
+          | 'pe_pp'
+          | 'ph_pp'
           | 'pk_cnic'
+          | 'pk_pp'
           | 'pk_snic'
           | 'pl_pesel'
+          | 'pl_pp'
+          | 'pr_pp'
+          | 'ps_pp'
           | 'pt_nif'
+          | 'pt_pp'
+          | 'py_ci'
+          | 'py_pp'
           | 'ro_cnp'
+          | 'ro_pp'
+          | 'rs_pp'
+          | 'ru_pp'
+          | 'rw_tin'
+          | 'sa_pp'
+          | 'sa_ptin'
           | 'sa_tin'
           | 'se_pin'
+          | 'se_pp'
           | 'sg_fin'
           | 'sg_nric'
+          | 'sg_pp'
+          | 'si_pp'
+          | 'si_ptin'
           | 'sk_dic'
+          | 'sk_pp'
+          | 'sv_pp'
           | 'th_lc'
           | 'th_pin'
+          | 'th_pp'
+          | 'tn_pp'
+          | 'tr_pp'
           | 'tr_tin'
+          | 'tt_bir'
+          | 'tw_pp'
+          | 'ua_pp'
+          | 'ug_pp'
           | 'us_itin'
           | 'us_itin_last_4'
+          | 'us_pp'
           | 'us_ssn'
           | 'us_ssn_last_4'
           | 'uy_dni'
+          | 'uy_pp'
+          | 'uz_pp'
+          | 'uz_tin'
+          | 've_pp'
+          | 'vn_pp'
           | 'za_id'
+          | 'za_pp'
           | OtherString;
       }
 
@@ -7050,6 +7621,7 @@ export namespace Account {
             export type Code =
               | 'invalid_address_city_state_postal_code'
               | 'invalid_address_cmra_address'
+              | 'invalid_address_crypto_regulated_state'
               | 'invalid_address_highway_contract_box'
               | 'invalid_address_private_mailbox'
               | 'invalid_address_registered_agent_address'
@@ -7091,6 +7663,7 @@ export namespace Account {
               | 'invalid_value_other'
               | 'unresolvable_ip_address'
               | 'unresolvable_postal_code'
+              | 'verification_data_not_found'
               | 'verification_directors_mismatch'
               | 'verification_document_address_mismatch'
               | 'verification_document_address_missing'
@@ -7138,6 +7711,7 @@ export namespace Account {
               | 'verification_missing_directors'
               | 'verification_missing_executives'
               | 'verification_missing_owners'
+              | 'verification_relationships_not_found'
               | 'verification_requires_additional_memorandum_of_associations'
               | 'verification_requires_additional_proof_of_registration'
               | 'verification_selfie_document_missing_photo'
@@ -7246,6 +7820,7 @@ export namespace Account {
         export type Code =
           | 'invalid_address_city_state_postal_code'
           | 'invalid_address_cmra_address'
+          | 'invalid_address_crypto_regulated_state'
           | 'invalid_address_highway_contract_box'
           | 'invalid_address_private_mailbox'
           | 'invalid_address_registered_agent_address'
@@ -7287,6 +7862,7 @@ export namespace Account {
           | 'invalid_value_other'
           | 'unresolvable_ip_address'
           | 'unresolvable_postal_code'
+          | 'verification_data_not_found'
           | 'verification_directors_mismatch'
           | 'verification_document_address_mismatch'
           | 'verification_document_address_missing'
@@ -7334,6 +7910,7 @@ export namespace Account {
           | 'verification_missing_directors'
           | 'verification_missing_executives'
           | 'verification_missing_owners'
+          | 'verification_relationships_not_found'
           | 'verification_requires_additional_memorandum_of_associations'
           | 'verification_requires_additional_proof_of_registration'
           | 'verification_selfie_document_missing_photo'
@@ -7382,7 +7959,7 @@ export namespace Account {
             | 'bank_accounts.rtp'
             | 'bank_accounts.sepa'
             | 'bank_accounts.swift'
-            | 'bank_accounts.wire'
+            | 'billie_payments'
             | 'blik_payments'
             | 'blik_recurring_payments'
             | 'boleto_payments'
@@ -7402,15 +7979,19 @@ export namespace Account {
             | 'konbini_payments'
             | 'kr_card_payments'
             | 'link_payments'
+            | 'mb_way_payments'
             | 'mobilepay_payments'
             | 'multibanco_payments'
             | 'mx_bank_transfer_payments'
             | 'naver_pay_payments'
+            | 'nz_bank_account_becs_debit_payments'
             | 'oxxo_payments'
             | 'p24_payments'
             | 'payco_payments'
             | 'paynow_payments'
+            | 'paypay_payments'
             | 'pay_by_bank_payments'
+            | 'pix_payments'
             | 'promptpay_payments'
             | 'revolut_pay_payments'
             | 'samsung_pay_payments'
@@ -7507,7 +8088,7 @@ export namespace V2 {
       contact_phone?: string;
 
       /**
-       * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
+       * Specifies the account's Stripe-hosted Dashboard access. Available values depend on the configurations enabled for the account. Learn more about [configuring Dashboard access](https://docs.stripe.com/connect/accounts-v2/connected-account-configuration#set-dashboard-access).
        */
       dashboard?: AccountCreateParams.Dashboard;
 
@@ -7550,7 +8131,7 @@ export namespace V2 {
         merchant?: Configuration.Merchant;
 
         /**
-         * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
+         * The Recipient Configuration allows the Account to receive funds from you.
          */
         recipient?: Configuration.Recipient;
       }
@@ -7673,6 +8254,11 @@ export namespace V2 {
            * The Merchant Category Code (MCC) for the Merchant Configuration. MCCs classify businesses based on the goods or services they provide.
            */
           mcc?: string;
+
+          /**
+           * Settings for PayPay payments.
+           */
+          paypay_payments?: Merchant.PaypayPayments;
 
           /**
            * Settings for the default text that appears on statements for language variations.
@@ -7932,6 +8518,11 @@ export namespace V2 {
             bancontact_payments?: Capabilities.BancontactPayments;
 
             /**
+             * Allow the merchant to process Billie payments.
+             */
+            billie_payments?: Capabilities.BilliePayments;
+
+            /**
              * Allow the merchant to process BLIK payments.
              */
             blik_payments?: Capabilities.BlikPayments;
@@ -8022,6 +8613,11 @@ export namespace V2 {
             link_payments?: Capabilities.LinkPayments;
 
             /**
+             * Allow the merchant to process MB WAY payments.
+             */
+            mb_way_payments?: Capabilities.MbWayPayments;
+
+            /**
              * Allow the merchant to process MobilePay payments.
              */
             mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -8040,6 +8636,11 @@ export namespace V2 {
              * Allow the merchant to process Naver Pay payments.
              */
             naver_pay_payments?: Capabilities.NaverPayPayments;
+
+            /**
+             * Allow the merchant to process New Zealand BECS Direct Debit payments.
+             */
+            nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
 
             /**
              * Allow the merchant to process OXXO payments.
@@ -8065,6 +8666,16 @@ export namespace V2 {
              * Allow the merchant to process PayNow payments.
              */
             paynow_payments?: Capabilities.PaynowPayments;
+
+            /**
+             * Allow the merchant to process PayPay payments.
+             */
+            paypay_payments?: Capabilities.PaypayPayments;
+
+            /**
+             * Allow the merchant to process Pix payments.
+             */
+            pix_payments?: Capabilities.PixPayments;
 
             /**
              * Allow the merchant to process PromptPay payments.
@@ -8136,9 +8747,36 @@ export namespace V2 {
 
           export interface KonbiniPayments {
             /**
+             * Information provided to support the onboarding process for Konbini payments.
+             */
+            additional_material?: string;
+
+            /**
              * Support for Konbini payments.
              */
             support?: KonbiniPayments.Support;
+          }
+
+          export interface PaypayPayments {
+            /**
+             * Additional files supporting PayPay payments configuration.
+             */
+            additional_files: Array<string>;
+
+            /**
+             * The type of goods sold by the merchant for PayPay payments.
+             */
+            goods_type?: PaypayPayments.GoodsType;
+
+            /**
+             * The business's website for PayPay payments.
+             */
+            site?: PaypayPayments.Site;
+
+            /**
+             * URL to the Specified Commercial Transactions Act page for PayPay payments.
+             */
+            specified_commercial_transactions_act_url?: string;
           }
 
           export interface ScriptStatementDescriptor {
@@ -8252,6 +8890,13 @@ export namespace V2 {
             }
 
             export interface BancontactPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface BilliePayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -8384,6 +9029,13 @@ export namespace V2 {
               requested: boolean;
             }
 
+            export interface MbWayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
             export interface MobilepayPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -8406,6 +9058,13 @@ export namespace V2 {
             }
 
             export interface NaverPayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface NzBankAccountBecsDebitPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -8441,6 +9100,20 @@ export namespace V2 {
             }
 
             export interface PaynowPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface PaypayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface PixPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -8579,6 +9252,57 @@ export namespace V2 {
             }
           }
 
+          export namespace PaypayPayments {
+            export type GoodsType = 'digital_content' | 'other';
+
+            export interface Site {
+              /**
+               * Additional information about the business's website when it's accessible.
+               */
+              accessible?: Site.Accessible;
+
+              /**
+               * Additional information about the business's website when it's in development.
+               */
+              in_development?: Site.InDevelopment;
+
+              /**
+               * Additional information about the business's website when it has restricted access.
+               */
+              restricted?: Site.Restricted;
+
+              /**
+               * The status of the business's website.
+               */
+              type?: Site.Type;
+            }
+
+            export namespace Site {
+              export interface Accessible {}
+
+              export interface InDevelopment {
+                /**
+                 * The password needed to access the business's website.
+                 */
+                password?: string;
+
+                /**
+                 * The username needed to access the business's website.
+                 */
+                username?: string;
+              }
+
+              export interface Restricted {
+                /**
+                 * The file explaining the payment flow for the business.
+                 */
+                payment_flow_file?: string;
+              }
+
+              export type Type = 'accessible' | 'in_development' | 'restricted';
+            }
+          }
+
           export namespace ScriptStatementDescriptor {
             export interface Kana {
               /**
@@ -8615,7 +9339,7 @@ export namespace V2 {
               /**
                * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                */
-              country: string;
+              country?: string;
 
               /**
                * Address line 1 (e.g., street, PO Box, or company name).
@@ -8710,7 +9434,7 @@ export namespace V2 {
 
             export interface StripeBalance {
               /**
-               * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
+               * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance). Use this capability if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
                */
               stripe_transfers?: StripeBalance.StripeTransfers;
             }
@@ -8885,12 +9609,12 @@ export namespace V2 {
 
         export interface Responsibilities {
           /**
-           * A value indicating the party responsible for collecting fees from this account.
+           * Controls who pays Stripe fees for direct charges and other pricing-control-eligible Stripe products. For new integrations, setting `losses_collector=application` requires `fees_collector=application`; legacy Custom and Express accounts can also use `application_custom` or `application_express`. For destination charges and separate charges and transfers, Stripe bills the platform regardless of this setting. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior), including application fees and pricing considerations.
            */
           fees_collector: Responsibilities.FeesCollector;
 
           /**
-           * A value indicating who is responsible for losses when this Account can't pay back negative balances from payments.
+           * Controls who is responsible for payment-related negative balances on this account. The platform remains liable for negative balances on its own account. To use Stripe negative balance liability, your integration must meet [Managed Risk requirements](https://docs.stripe.com/connect/risk-management/managed-risk).
            */
           losses_collector: Responsibilities.LossesCollector;
         }
@@ -9254,7 +9978,7 @@ export namespace V2 {
             /**
              * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
              */
-            country: string;
+            country?: string;
 
             /**
              * Address line 1 (e.g., street, PO Box, or company name).
@@ -9649,6 +10373,7 @@ export namespace V2 {
             export type Type =
               | 'ae_crn'
               | 'ae_vat'
+              | 'ag_tin'
               | 'ao_nif'
               | 'ar_cuit'
               | 'at_fn'
@@ -9657,25 +10382,31 @@ export namespace V2 {
               | 'au_abn'
               | 'au_acn'
               | 'au_in'
+              | 'au_wpn'
               | 'az_tin'
+              | 'ba_pib'
               | 'bd_etin'
               | 'be_cbe'
               | 'be_vat'
               | 'bg_uic'
               | 'bg_vat'
+              | 'bj_ifu'
               | 'br_cnpj'
               | 'ca_cn'
               | 'ca_crarr'
               | 'ca_gst_hst'
               | 'ca_neq'
+              | 'ca_qst'
               | 'ca_rid'
               | 'ch_chid'
               | 'ch_uid'
+              | 'cl_rut'
               | 'cr_cpj'
               | 'cr_nite'
               | 'cy_he'
               | 'cy_tic'
               | 'cy_vat'
+              | 'cz_dic'
               | 'cz_ico'
               | 'cz_vat'
               | 'de_hrn'
@@ -9684,18 +10415,23 @@ export namespace V2 {
               | 'dk_cvr'
               | 'dk_vat'
               | 'do_rcn'
+              | 'dz_nif'
               | 'ee_rk'
               | 'ee_vat'
               | 'es_cif'
               | 'es_vat'
+              | 'et_tin'
               | 'fi_vat'
               | 'fi_yt'
               | 'fr_rna'
               | 'fr_siren'
+              | 'fr_siret'
               | 'fr_vat'
               | 'gb_crn'
               | 'gb_vat'
+              | 'ge_tin'
               | 'gi_crn'
+              | 'gi_vat'
               | 'gr_afm'
               | 'gr_gemi'
               | 'gr_vat'
@@ -9708,14 +10444,25 @@ export namespace V2 {
               | 'hu_cjs'
               | 'hu_tin'
               | 'hu_vat'
+              | 'id_npwp'
               | 'ie_crn'
               | 'ie_trn'
               | 'ie_vat'
+              | 'il_tin'
+              | 'il_vat'
+              | 'in_gst'
+              | 'in_pan'
+              | 'is_kt'
               | 'it_rea'
               | 'it_vat'
               | 'jp_cn'
+              | 'kh_tin'
+              | 'kr_brn'
               | 'kz_bin'
+              | 'la_tin'
+              | 'lc_tin'
               | 'li_uid'
+              | 'li_vat'
               | 'lt_ccrn'
               | 'lt_vat'
               | 'lu_nif'
@@ -9723,30 +10470,38 @@ export namespace V2 {
               | 'lu_vat'
               | 'lv_urn'
               | 'lv_vat'
+              | 'md_cf'
+              | 'mg_nif'
+              | 'mk_edb'
               | 'mt_crn'
               | 'mt_tin'
               | 'mt_vat'
+              | 'mu_vat'
               | 'mx_rfc'
               | 'my_brn'
               | 'my_coid'
               | 'my_itn'
               | 'my_sst'
               | 'mz_nuit'
+              | 'ne_tin'
               | 'nl_kvk'
               | 'nl_rsin'
               | 'nl_vat'
               | 'no_orgnr'
               | 'nz_bn'
               | 'nz_ird'
+              | 'om_tin'
               | 'pe_ruc'
               | 'pk_ntn'
               | 'pl_nip'
               | 'pl_regon'
               | 'pl_vat'
               | 'pt_vat'
+              | 'qa_tin'
               | 'ro_cui'
               | 'ro_orc'
               | 'ro_vat'
+              | 'rw_tin'
               | 'sa_crn'
               | 'sa_tin'
               | 'se_orgnr'
@@ -9758,10 +10513,15 @@ export namespace V2 {
               | 'sk_dic'
               | 'sk_ico'
               | 'sk_vat'
+              | 'sm_coe'
               | 'th_crn'
               | 'th_prn'
               | 'th_tin'
+              | 'tr_tin'
+              | 'tt_bir'
+              | 'tt_vat'
               | 'us_ein'
+              | 'vn_tin'
               | OtherString;
           }
 
@@ -9775,7 +10535,7 @@ export namespace V2 {
               /**
                * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                */
-              country: string;
+              country?: string;
 
               /**
                * Address line 1 (e.g., street, PO Box, or company name).
@@ -9812,7 +10572,7 @@ export namespace V2 {
               /**
                * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                */
-              country: string;
+              country?: string;
 
               /**
                * Address line 1 (e.g., street, PO Box, or company name).
@@ -9868,7 +10628,7 @@ export namespace V2 {
             /**
              * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
              */
-            country: string;
+            country?: string;
 
             /**
              * Address line 1 (e.g., street, PO Box, or company name).
@@ -9932,7 +10692,7 @@ export namespace V2 {
             /**
              * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
              */
-            country: string;
+            country?: string;
 
             /**
              * Address line 1 (e.g., street, PO Box, or company name).
@@ -10184,82 +10944,212 @@ export namespace V2 {
           export namespace IdNumber {
             export type Type =
               | 'ae_eid'
+              | 'ae_pp'
+              | 'al_pp'
+              | 'am_pp'
               | 'ao_nif'
               | 'ar_cuil'
               | 'ar_dni'
+              | 'ar_pp'
+              | 'at_pp'
               | 'at_stn'
+              | 'au_pp'
+              | 'az_pin'
+              | 'az_pp'
               | 'az_tin'
               | 'bd_brc'
               | 'bd_etin'
               | 'bd_nid'
+              | 'bd_pp'
               | 'be_nrn'
+              | 'be_pp'
+              | 'bg_pp'
               | 'bg_ucn'
+              | 'bh_pp'
+              | 'bj_pp'
               | 'bn_nric'
+              | 'bo_pp'
               | 'br_cpf'
+              | 'br_pp'
+              | 'br_rg'
+              | 'bs_pp'
+              | 'bs_tin'
+              | 'by_pp'
+              | 'ca_pp'
               | 'ca_sin'
               | 'ch_oasi'
+              | 'ch_pp'
+              | 'ci_pp'
+              | 'cl_pp'
               | 'cl_rut'
+              | 'cm_pp'
               | 'cn_pp'
               | 'co_nuip'
+              | 'co_pp'
               | 'cr_ci'
               | 'cr_cpf'
               | 'cr_dimex'
               | 'cr_nite'
+              | 'cr_pp'
+              | 'cy_pp'
               | 'cy_tic'
+              | 'cz_dic'
+              | 'cz_pp'
               | 'cz_rc'
+              | 'de_pp'
               | 'de_stn'
               | 'dk_cpr'
+              | 'dk_pp'
               | 'do_cie'
+              | 'do_pp'
               | 'do_rcn'
+              | 'dz_pp'
               | 'ec_ci'
+              | 'ec_pp'
               | 'ee_ik'
+              | 'ee_pp'
+              | 'eg_pp'
               | 'es_nif'
+              | 'es_pp'
+              | 'et_tin'
               | 'fi_hetu'
+              | 'fi_pp'
               | 'fr_nir'
+              | 'fr_pp'
+              | 'fr_spi'
+              | 'ga_nif'
               | 'gb_nino'
+              | 'gb_pp'
+              | 'ge_pp'
+              | 'gh_pp'
               | 'gr_afm'
+              | 'gr_pp'
+              | 'gt_cui'
               | 'gt_nit'
+              | 'gt_pp'
               | 'hk_id'
+              | 'hk_pp'
+              | 'hn_dni'
+              | 'hn_pp'
               | 'hr_oib'
+              | 'hr_pp'
+              | 'ht_pp'
               | 'hu_ad'
+              | 'hu_pp'
               | 'id_nik'
+              | 'id_pp'
+              | 'ie_pp'
               | 'ie_ppsn'
+              | 'il_pp'
+              | 'in_pan'
+              | 'in_pp'
+              | 'iq_pp'
               | 'is_kt'
+              | 'is_pp'
               | 'it_cf'
+              | 'it_pp'
+              | 'je_pp'
+              | 'jm_pp'
+              | 'jo_pp'
               | 'jp_inc'
+              | 'jp_pp'
               | 'ke_pin'
+              | 'ke_pp'
+              | 'kr_pp'
+              | 'kw_pp'
               | 'kz_iin'
+              | 'kz_pp'
+              | 'lb_pp'
               | 'li_peid'
+              | 'li_pp'
+              | 'lk_pp'
               | 'lt_ak'
+              | 'lt_pp'
               | 'lu_nif'
+              | 'lu_pp'
               | 'lv_pk'
+              | 'lv_pp'
+              | 'ma_pp'
+              | 'md_cf'
+              | 'md_pp'
+              | 'mg_nif'
+              | 'mk_pin'
+              | 'mk_pp'
+              | 'mm_pp'
+              | 'mn_pp'
+              | 'mt_pp'
+              | 'mu_pp'
+              | 'mx_curp'
+              | 'mx_pp'
               | 'mx_rfc'
               | 'my_nric'
+              | 'my_pp'
               | 'mz_nuit'
               | 'ng_nin'
+              | 'ng_pp'
               | 'nl_bsn'
+              | 'nl_pp'
               | 'no_nin'
+              | 'no_pp'
+              | 'np_pp'
               | 'nz_ird'
+              | 'nz_pp'
+              | 'pa_pp'
               | 'pe_dni'
+              | 'pe_pp'
+              | 'ph_pp'
               | 'pk_cnic'
+              | 'pk_pp'
               | 'pk_snic'
               | 'pl_pesel'
+              | 'pl_pp'
+              | 'pr_pp'
+              | 'ps_pp'
               | 'pt_nif'
+              | 'pt_pp'
+              | 'py_ci'
+              | 'py_pp'
               | 'ro_cnp'
+              | 'ro_pp'
+              | 'rs_pp'
+              | 'ru_pp'
+              | 'rw_tin'
+              | 'sa_pp'
+              | 'sa_ptin'
               | 'sa_tin'
               | 'se_pin'
+              | 'se_pp'
               | 'sg_fin'
               | 'sg_nric'
+              | 'sg_pp'
+              | 'si_pp'
+              | 'si_ptin'
               | 'sk_dic'
+              | 'sk_pp'
+              | 'sv_pp'
               | 'th_lc'
               | 'th_pin'
+              | 'th_pp'
+              | 'tn_pp'
+              | 'tr_pp'
               | 'tr_tin'
+              | 'tt_bir'
+              | 'tw_pp'
+              | 'ua_pp'
+              | 'ug_pp'
               | 'us_itin'
               | 'us_itin_last_4'
+              | 'us_pp'
               | 'us_ssn'
               | 'us_ssn_last_4'
               | 'uy_dni'
+              | 'uy_pp'
+              | 'uz_pp'
+              | 'uz_tin'
+              | 've_pp'
+              | 'vn_pp'
               | 'za_id'
+              | 'za_pp'
               | OtherString;
           }
 
@@ -10273,7 +11163,7 @@ export namespace V2 {
               /**
                * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                */
-              country: string;
+              country?: string;
 
               /**
                * Address line 1 (e.g., street, PO Box, or company name).
@@ -10310,7 +11200,7 @@ export namespace V2 {
               /**
                * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                */
-              country: string;
+              country?: string;
 
               /**
                * Address line 1 (e.g., street, PO Box, or company name).
@@ -10414,7 +11304,7 @@ export namespace V2 {
       contact_phone?: string;
 
       /**
-       * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
+       * Specifies the account's Stripe-hosted Dashboard access. Available values depend on the configurations enabled for the account. Learn more about [configuring Dashboard access](https://docs.stripe.com/connect/accounts-v2/connected-account-configuration#set-dashboard-access).
        */
       dashboard?: AccountUpdateParams.Dashboard;
 
@@ -10457,7 +11347,7 @@ export namespace V2 {
         merchant?: Configuration.Merchant;
 
         /**
-         * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
+         * The Recipient Configuration allows the Account to receive funds from you.
          */
         recipient?: Configuration.Recipient;
       }
@@ -10597,6 +11487,11 @@ export namespace V2 {
            * The Merchant Category Code (MCC) for the merchant. MCCs classify businesses based on the goods or services they provide.
            */
           mcc?: string;
+
+          /**
+           * Settings for PayPay payments.
+           */
+          paypay_payments?: Merchant.PaypayPayments;
 
           /**
            * Settings for the default text that appears on statements for language variations.
@@ -10873,6 +11768,11 @@ export namespace V2 {
             bancontact_payments?: Capabilities.BancontactPayments;
 
             /**
+             * Allow the merchant to process Billie payments.
+             */
+            billie_payments?: Capabilities.BilliePayments;
+
+            /**
              * Allow the merchant to process BLIK payments.
              */
             blik_payments?: Capabilities.BlikPayments;
@@ -10963,6 +11863,11 @@ export namespace V2 {
             link_payments?: Capabilities.LinkPayments;
 
             /**
+             * Allow the merchant to process MB WAY payments.
+             */
+            mb_way_payments?: Capabilities.MbWayPayments;
+
+            /**
              * Allow the merchant to process MobilePay payments.
              */
             mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -10981,6 +11886,11 @@ export namespace V2 {
              * Allow the merchant to process Naver Pay payments.
              */
             naver_pay_payments?: Capabilities.NaverPayPayments;
+
+            /**
+             * Allow the merchant to process New Zealand BECS Direct Debit payments.
+             */
+            nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
 
             /**
              * Allow the merchant to process OXXO payments.
@@ -11006,6 +11916,16 @@ export namespace V2 {
              * Allow the merchant to process PayNow payments.
              */
             paynow_payments?: Capabilities.PaynowPayments;
+
+            /**
+             * Allow the merchant to process PayPay payments.
+             */
+            paypay_payments?: Capabilities.PaypayPayments;
+
+            /**
+             * Allow the merchant to process Pix payments.
+             */
+            pix_payments?: Capabilities.PixPayments;
 
             /**
              * Allow the merchant to process PromptPay payments.
@@ -11077,9 +11997,36 @@ export namespace V2 {
 
           export interface KonbiniPayments {
             /**
+             * Information provided to support the onboarding process for Konbini payments.
+             */
+            additional_material?: string;
+
+            /**
              * Support for Konbini payments.
              */
             support?: KonbiniPayments.Support;
+          }
+
+          export interface PaypayPayments {
+            /**
+             * Additional files supporting PayPay payments configuration.
+             */
+            additional_files?: Array<string>;
+
+            /**
+             * The type of goods sold by the merchant for PayPay payments.
+             */
+            goods_type?: PaypayPayments.GoodsType;
+
+            /**
+             * The business's website for PayPay payments.
+             */
+            site?: PaypayPayments.Site;
+
+            /**
+             * URL to the Specified Commercial Transactions Act page for PayPay payments.
+             */
+            specified_commercial_transactions_act_url?: string;
           }
 
           export interface ScriptStatementDescriptor {
@@ -11193,6 +12140,13 @@ export namespace V2 {
             }
 
             export interface BancontactPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface BilliePayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -11325,6 +12279,13 @@ export namespace V2 {
               requested?: boolean;
             }
 
+            export interface MbWayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
             export interface MobilepayPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -11347,6 +12308,13 @@ export namespace V2 {
             }
 
             export interface NaverPayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface NzBankAccountBecsDebitPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -11382,6 +12350,20 @@ export namespace V2 {
             }
 
             export interface PaynowPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface PaypayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface PixPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -11520,6 +12502,57 @@ export namespace V2 {
             }
           }
 
+          export namespace PaypayPayments {
+            export type GoodsType = 'digital_content' | 'other';
+
+            export interface Site {
+              /**
+               * Additional information about the business's website when it's accessible.
+               */
+              accessible?: Site.Accessible;
+
+              /**
+               * Additional information about the business's website when it's in development.
+               */
+              in_development?: Site.InDevelopment;
+
+              /**
+               * Additional information about the business's website when it has restricted access.
+               */
+              restricted?: Site.Restricted;
+
+              /**
+               * The status of the business's website.
+               */
+              type?: Site.Type;
+            }
+
+            export namespace Site {
+              export interface Accessible {}
+
+              export interface InDevelopment {
+                /**
+                 * The password needed to access the business's website.
+                 */
+                password?: string;
+
+                /**
+                 * The username needed to access the business's website.
+                 */
+                username?: string;
+              }
+
+              export interface Restricted {
+                /**
+                 * The file explaining the payment flow for the business.
+                 */
+                payment_flow_file?: string;
+              }
+
+              export type Type = 'accessible' | 'in_development' | 'restricted';
+            }
+          }
+
           export namespace ScriptStatementDescriptor {
             export interface Kana {
               /**
@@ -11651,7 +12684,7 @@ export namespace V2 {
 
             export interface StripeBalance {
               /**
-               * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
+               * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance). Use this capability if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
                */
               stripe_transfers?: StripeBalance.StripeTransfers;
             }
@@ -11826,12 +12859,12 @@ export namespace V2 {
 
         export interface Responsibilities {
           /**
-           * A value indicating the party responsible for collecting fees from this account.
+           * Controls who pays Stripe fees for direct charges and other pricing-control-eligible Stripe products. For new integrations, setting `losses_collector=application` requires `fees_collector=application`; legacy Custom and Express accounts can also use `application_custom` or `application_express`. For destination charges and separate charges and transfers, Stripe bills the platform regardless of this setting. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior), including application fees and pricing considerations. Set this value when adding an applicable configuration to the account. You can't change it after it's set.
            */
           fees_collector: Responsibilities.FeesCollector;
 
           /**
-           * A value indicating who is responsible for losses when this Account can't pay back negative balances from payments.
+           * Controls who is responsible for payment-related negative balances on this account. The platform remains liable for negative balances on its own account. To use Stripe negative balance liability, your integration must meet [Managed Risk requirements](https://docs.stripe.com/connect/risk-management/managed-risk). Set this value when adding an applicable configuration to the account. You can't change it after it's set.
            */
           losses_collector: Responsibilities.LossesCollector;
         }
@@ -12122,6 +13155,11 @@ export namespace V2 {
             crypto_money_manager?: TermsOfService.CryptoMoneyManager;
 
             /**
+             * Details on the Account's acceptance of ZeroHash recipient-specific terms of service.
+             */
+            crypto_transfers_zerohash_recipient?: TermsOfService.CryptoTransfersZerohashRecipient;
+
+            /**
              * Details on the Account's acceptance of Treasury-specific terms of service.
              */
             money_manager?: TermsOfService.MoneyManager;
@@ -12152,6 +13190,23 @@ export namespace V2 {
             }
 
             export interface CryptoMoneyManager {
+              /**
+               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+               */
+              date?: string;
+
+              /**
+               * The IP address from which the Account's representative accepted the terms of service.
+               */
+              ip?: string;
+
+              /**
+               * The user agent of the browser from which the Account's representative accepted the terms of service.
+               */
+              user_agent?: string;
+            }
+
+            export interface CryptoTransfersZerohashRecipient {
               /**
                * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                */
@@ -12634,6 +13689,7 @@ export namespace V2 {
             export type Type =
               | 'ae_crn'
               | 'ae_vat'
+              | 'ag_tin'
               | 'ao_nif'
               | 'ar_cuit'
               | 'at_fn'
@@ -12642,25 +13698,31 @@ export namespace V2 {
               | 'au_abn'
               | 'au_acn'
               | 'au_in'
+              | 'au_wpn'
               | 'az_tin'
+              | 'ba_pib'
               | 'bd_etin'
               | 'be_cbe'
               | 'be_vat'
               | 'bg_uic'
               | 'bg_vat'
+              | 'bj_ifu'
               | 'br_cnpj'
               | 'ca_cn'
               | 'ca_crarr'
               | 'ca_gst_hst'
               | 'ca_neq'
+              | 'ca_qst'
               | 'ca_rid'
               | 'ch_chid'
               | 'ch_uid'
+              | 'cl_rut'
               | 'cr_cpj'
               | 'cr_nite'
               | 'cy_he'
               | 'cy_tic'
               | 'cy_vat'
+              | 'cz_dic'
               | 'cz_ico'
               | 'cz_vat'
               | 'de_hrn'
@@ -12669,18 +13731,23 @@ export namespace V2 {
               | 'dk_cvr'
               | 'dk_vat'
               | 'do_rcn'
+              | 'dz_nif'
               | 'ee_rk'
               | 'ee_vat'
               | 'es_cif'
               | 'es_vat'
+              | 'et_tin'
               | 'fi_vat'
               | 'fi_yt'
               | 'fr_rna'
               | 'fr_siren'
+              | 'fr_siret'
               | 'fr_vat'
               | 'gb_crn'
               | 'gb_vat'
+              | 'ge_tin'
               | 'gi_crn'
+              | 'gi_vat'
               | 'gr_afm'
               | 'gr_gemi'
               | 'gr_vat'
@@ -12693,14 +13760,25 @@ export namespace V2 {
               | 'hu_cjs'
               | 'hu_tin'
               | 'hu_vat'
+              | 'id_npwp'
               | 'ie_crn'
               | 'ie_trn'
               | 'ie_vat'
+              | 'il_tin'
+              | 'il_vat'
+              | 'in_gst'
+              | 'in_pan'
+              | 'is_kt'
               | 'it_rea'
               | 'it_vat'
               | 'jp_cn'
+              | 'kh_tin'
+              | 'kr_brn'
               | 'kz_bin'
+              | 'la_tin'
+              | 'lc_tin'
               | 'li_uid'
+              | 'li_vat'
               | 'lt_ccrn'
               | 'lt_vat'
               | 'lu_nif'
@@ -12708,30 +13786,38 @@ export namespace V2 {
               | 'lu_vat'
               | 'lv_urn'
               | 'lv_vat'
+              | 'md_cf'
+              | 'mg_nif'
+              | 'mk_edb'
               | 'mt_crn'
               | 'mt_tin'
               | 'mt_vat'
+              | 'mu_vat'
               | 'mx_rfc'
               | 'my_brn'
               | 'my_coid'
               | 'my_itn'
               | 'my_sst'
               | 'mz_nuit'
+              | 'ne_tin'
               | 'nl_kvk'
               | 'nl_rsin'
               | 'nl_vat'
               | 'no_orgnr'
               | 'nz_bn'
               | 'nz_ird'
+              | 'om_tin'
               | 'pe_ruc'
               | 'pk_ntn'
               | 'pl_nip'
               | 'pl_regon'
               | 'pl_vat'
               | 'pt_vat'
+              | 'qa_tin'
               | 'ro_cui'
               | 'ro_orc'
               | 'ro_vat'
+              | 'rw_tin'
               | 'sa_crn'
               | 'sa_tin'
               | 'se_orgnr'
@@ -12743,10 +13829,15 @@ export namespace V2 {
               | 'sk_dic'
               | 'sk_ico'
               | 'sk_vat'
+              | 'sm_coe'
               | 'th_crn'
               | 'th_prn'
               | 'th_tin'
+              | 'tr_tin'
+              | 'tt_bir'
+              | 'tt_vat'
               | 'us_ein'
+              | 'vn_tin'
               | OtherString;
           }
 
@@ -13169,82 +14260,212 @@ export namespace V2 {
           export namespace IdNumber {
             export type Type =
               | 'ae_eid'
+              | 'ae_pp'
+              | 'al_pp'
+              | 'am_pp'
               | 'ao_nif'
               | 'ar_cuil'
               | 'ar_dni'
+              | 'ar_pp'
+              | 'at_pp'
               | 'at_stn'
+              | 'au_pp'
+              | 'az_pin'
+              | 'az_pp'
               | 'az_tin'
               | 'bd_brc'
               | 'bd_etin'
               | 'bd_nid'
+              | 'bd_pp'
               | 'be_nrn'
+              | 'be_pp'
+              | 'bg_pp'
               | 'bg_ucn'
+              | 'bh_pp'
+              | 'bj_pp'
               | 'bn_nric'
+              | 'bo_pp'
               | 'br_cpf'
+              | 'br_pp'
+              | 'br_rg'
+              | 'bs_pp'
+              | 'bs_tin'
+              | 'by_pp'
+              | 'ca_pp'
               | 'ca_sin'
               | 'ch_oasi'
+              | 'ch_pp'
+              | 'ci_pp'
+              | 'cl_pp'
               | 'cl_rut'
+              | 'cm_pp'
               | 'cn_pp'
               | 'co_nuip'
+              | 'co_pp'
               | 'cr_ci'
               | 'cr_cpf'
               | 'cr_dimex'
               | 'cr_nite'
+              | 'cr_pp'
+              | 'cy_pp'
               | 'cy_tic'
+              | 'cz_dic'
+              | 'cz_pp'
               | 'cz_rc'
+              | 'de_pp'
               | 'de_stn'
               | 'dk_cpr'
+              | 'dk_pp'
               | 'do_cie'
+              | 'do_pp'
               | 'do_rcn'
+              | 'dz_pp'
               | 'ec_ci'
+              | 'ec_pp'
               | 'ee_ik'
+              | 'ee_pp'
+              | 'eg_pp'
               | 'es_nif'
+              | 'es_pp'
+              | 'et_tin'
               | 'fi_hetu'
+              | 'fi_pp'
               | 'fr_nir'
+              | 'fr_pp'
+              | 'fr_spi'
+              | 'ga_nif'
               | 'gb_nino'
+              | 'gb_pp'
+              | 'ge_pp'
+              | 'gh_pp'
               | 'gr_afm'
+              | 'gr_pp'
+              | 'gt_cui'
               | 'gt_nit'
+              | 'gt_pp'
               | 'hk_id'
+              | 'hk_pp'
+              | 'hn_dni'
+              | 'hn_pp'
               | 'hr_oib'
+              | 'hr_pp'
+              | 'ht_pp'
               | 'hu_ad'
+              | 'hu_pp'
               | 'id_nik'
+              | 'id_pp'
+              | 'ie_pp'
               | 'ie_ppsn'
+              | 'il_pp'
+              | 'in_pan'
+              | 'in_pp'
+              | 'iq_pp'
               | 'is_kt'
+              | 'is_pp'
               | 'it_cf'
+              | 'it_pp'
+              | 'je_pp'
+              | 'jm_pp'
+              | 'jo_pp'
               | 'jp_inc'
+              | 'jp_pp'
               | 'ke_pin'
+              | 'ke_pp'
+              | 'kr_pp'
+              | 'kw_pp'
               | 'kz_iin'
+              | 'kz_pp'
+              | 'lb_pp'
               | 'li_peid'
+              | 'li_pp'
+              | 'lk_pp'
               | 'lt_ak'
+              | 'lt_pp'
               | 'lu_nif'
+              | 'lu_pp'
               | 'lv_pk'
+              | 'lv_pp'
+              | 'ma_pp'
+              | 'md_cf'
+              | 'md_pp'
+              | 'mg_nif'
+              | 'mk_pin'
+              | 'mk_pp'
+              | 'mm_pp'
+              | 'mn_pp'
+              | 'mt_pp'
+              | 'mu_pp'
+              | 'mx_curp'
+              | 'mx_pp'
               | 'mx_rfc'
               | 'my_nric'
+              | 'my_pp'
               | 'mz_nuit'
               | 'ng_nin'
+              | 'ng_pp'
               | 'nl_bsn'
+              | 'nl_pp'
               | 'no_nin'
+              | 'no_pp'
+              | 'np_pp'
               | 'nz_ird'
+              | 'nz_pp'
+              | 'pa_pp'
               | 'pe_dni'
+              | 'pe_pp'
+              | 'ph_pp'
               | 'pk_cnic'
+              | 'pk_pp'
               | 'pk_snic'
               | 'pl_pesel'
+              | 'pl_pp'
+              | 'pr_pp'
+              | 'ps_pp'
               | 'pt_nif'
+              | 'pt_pp'
+              | 'py_ci'
+              | 'py_pp'
               | 'ro_cnp'
+              | 'ro_pp'
+              | 'rs_pp'
+              | 'ru_pp'
+              | 'rw_tin'
+              | 'sa_pp'
+              | 'sa_ptin'
               | 'sa_tin'
               | 'se_pin'
+              | 'se_pp'
               | 'sg_fin'
               | 'sg_nric'
+              | 'sg_pp'
+              | 'si_pp'
+              | 'si_ptin'
               | 'sk_dic'
+              | 'sk_pp'
+              | 'sv_pp'
               | 'th_lc'
               | 'th_pin'
+              | 'th_pp'
+              | 'tn_pp'
+              | 'tr_pp'
               | 'tr_tin'
+              | 'tt_bir'
+              | 'tw_pp'
+              | 'ua_pp'
+              | 'ug_pp'
               | 'us_itin'
               | 'us_itin_last_4'
+              | 'us_pp'
               | 'us_ssn'
               | 'us_ssn_last_4'
               | 'uy_dni'
+              | 'uy_pp'
+              | 'uz_pp'
+              | 'uz_tin'
+              | 've_pp'
+              | 'vn_pp'
               | 'za_id'
+              | 'za_pp'
               | OtherString;
           }
 

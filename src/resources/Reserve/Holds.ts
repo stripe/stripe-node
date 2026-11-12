@@ -3,7 +3,6 @@
 import {Plan} from './Plans.js';
 import {Charge} from './../Charges.js';
 import {Metadata, OtherString} from '../../shared.js';
-import {RequestOptions} from '../../lib.js';
 export interface Hold {
   /**
    * Unique identifier for the object.

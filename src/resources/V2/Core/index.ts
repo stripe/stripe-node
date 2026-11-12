@@ -13,6 +13,11 @@ import {
   AccountTokenResource,
 } from './AccountTokens.js';
 import {
+  V2 as V2Namespace3,
+  ClaimableSandbox,
+  ClaimableSandboxResource,
+} from './ClaimableSandboxes.js';
+import {
   EventBase,
   EventNotification,
   Event,
@@ -21,7 +26,7 @@ import {
   EventResource,
 } from './Events.js';
 import {
-  V2 as V2Namespace4,
+  V2 as V2Namespace5,
   EventDestination,
   EventDestinationResource,
 } from './EventDestinations.js';
@@ -32,6 +37,7 @@ import {Vault} from './Vault/index.js';
 export {Account} from './Accounts.js';
 export {AccountLink} from './AccountLinks.js';
 export {AccountToken} from './AccountTokens.js';
+export {ClaimableSandbox} from './ClaimableSandboxes.js';
 export {Event} from './Events.js';
 export {EventDestination} from './EventDestinations.js';
 export {AccountPersonToken} from './AccountPersonTokens.js';
@@ -41,6 +47,7 @@ export class Core {
   accounts: AccountResource;
   accountLinks: AccountLinkResource;
   accountTokens: AccountTokenResource;
+  claimableSandboxes: ClaimableSandboxResource;
   events: EventResource;
   eventDestinations: EventDestinationResource;
   vault: Vault;
@@ -49,6 +56,7 @@ export class Core {
     this.accounts = new AccountResource(stripe);
     this.accountLinks = new AccountLinkResource(stripe);
     this.accountTokens = new AccountTokenResource(stripe);
+    this.claimableSandboxes = new ClaimableSandboxResource(stripe);
     this.events = new EventResource(stripe);
     this.eventDestinations = new EventDestinationResource(stripe);
     this.vault = new Vault(stripe);
@@ -67,17 +75,21 @@ export declare namespace Core {
   export import AccountTokenCreateParams = V2Namespace2.Core.AccountTokenCreateParams;
   export import AccountTokenRetrieveParams = V2Namespace2.Core.AccountTokenRetrieveParams;
   export {AccountToken, AccountTokenResource};
+  export import ClaimableSandboxCreateParams = V2Namespace3.Core.ClaimableSandboxCreateParams;
+  export import ClaimableSandboxRetrieveParams = V2Namespace3.Core.ClaimableSandboxRetrieveParams;
+  export import ClaimableSandboxRenewOnboardingLinkParams = V2Namespace3.Core.ClaimableSandboxRenewOnboardingLinkParams;
+  export {ClaimableSandbox, ClaimableSandboxResource};
   export import EventListParams = V2EventsNamespace.Core.EventListParams;
   export import EventRetrieveParams = V2EventsNamespace.Core.EventRetrieveParams;
   export {EventBase, Event, EventNotification, Events, EventResource};
-  export import EventDestinationListParams = V2Namespace4.Core.EventDestinationListParams;
-  export import EventDestinationCreateParams = V2Namespace4.Core.EventDestinationCreateParams;
-  export import EventDestinationDeleteParams = V2Namespace4.Core.EventDestinationDeleteParams;
-  export import EventDestinationRetrieveParams = V2Namespace4.Core.EventDestinationRetrieveParams;
-  export import EventDestinationUpdateParams = V2Namespace4.Core.EventDestinationUpdateParams;
-  export import EventDestinationDisableParams = V2Namespace4.Core.EventDestinationDisableParams;
-  export import EventDestinationEnableParams = V2Namespace4.Core.EventDestinationEnableParams;
-  export import EventDestinationPingParams = V2Namespace4.Core.EventDestinationPingParams;
+  export import EventDestinationListParams = V2Namespace5.Core.EventDestinationListParams;
+  export import EventDestinationCreateParams = V2Namespace5.Core.EventDestinationCreateParams;
+  export import EventDestinationDeleteParams = V2Namespace5.Core.EventDestinationDeleteParams;
+  export import EventDestinationRetrieveParams = V2Namespace5.Core.EventDestinationRetrieveParams;
+  export import EventDestinationUpdateParams = V2Namespace5.Core.EventDestinationUpdateParams;
+  export import EventDestinationDisableParams = V2Namespace5.Core.EventDestinationDisableParams;
+  export import EventDestinationEnableParams = V2Namespace5.Core.EventDestinationEnableParams;
+  export import EventDestinationPingParams = V2Namespace5.Core.EventDestinationPingParams;
   export {EventDestination, EventDestinationResource};
   export {AccountPersonToken};
   export {AccountPerson};

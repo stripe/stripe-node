@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {OtherString} from '../../../shared.js';
+import {MetadataParam, Metadata, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class InboundTransferResource extends StripeResource {
@@ -89,6 +89,11 @@ export interface InboundTransfer {
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
    */
   livemode: boolean;
+
+  /**
+   * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   */
+  metadata?: Metadata;
 
   /**
    * A nested object containing information about the destination of the InboundTransfer.
@@ -258,6 +263,11 @@ export namespace V2 {
        * An optional, freeform description field intended to store metadata.
        */
       description?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: MetadataParam;
     }
 
     export namespace InboundTransferCreateParams {

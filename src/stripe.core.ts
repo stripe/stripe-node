@@ -2812,6 +2812,9 @@ export declare namespace Stripe {
     export type FxQuoteNeedsRefreshError = InstanceType<
       typeof _Error.FxQuoteNeedsRefreshError
     >;
+    export type InactiveApiOperationConfirmationRequiredError = InstanceType<
+      typeof _Error.InactiveApiOperationConfirmationRequiredError
+    >;
     export type InsufficientFundsError = InstanceType<
       typeof _Error.InsufficientFundsError
     >;

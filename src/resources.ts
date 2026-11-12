@@ -16,6 +16,7 @@ import {CalculationResource as TaxCalculations} from './resources/Tax/Calculatio
 import {CardholderResource as IssuingCardholders} from './resources/Issuing/Cardholders.js';
 import {CardResource as IssuingCards} from './resources/Issuing/Cards.js';
 import {CardResource as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/Cards.js';
+import {ClaimableSandboxResource as V2CoreClaimableSandboxes} from './resources/V2/Core/ClaimableSandboxes.js';
 import {ConfigurationResource as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {ConfigurationResource as TerminalConfigurations} from './resources/Terminal/Configurations.js';
 import {ConfirmationTokenResource as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
@@ -298,6 +299,7 @@ export const V2 = resourceNamespace('v2', {
     AccountLinks: V2CoreAccountLinks,
     AccountTokens: V2CoreAccountTokens,
     Accounts: V2CoreAccounts,
+    ClaimableSandboxes: V2CoreClaimableSandboxes,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
     Vault: resourceNamespace('vault', {

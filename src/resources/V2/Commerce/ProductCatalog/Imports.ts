@@ -192,14 +192,14 @@ export namespace V2 {
         feed_type: ImportCreateParams.FeedType;
 
         /**
-         * Additional information about the import in a structured format.
-         */
-        metadata: MetadataParam;
-
-        /**
          * The strategy for handling existing catalog data during import.
          */
         mode: ImportCreateParams.Mode;
+
+        /**
+         * Additional information about the import in a structured format.
+         */
+        metadata?: MetadataParam;
       }
 
       export namespace ImportCreateParams {

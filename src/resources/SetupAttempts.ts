@@ -563,12 +563,12 @@ export namespace SetupAttempt {
     export namespace Card {
       export interface Checks {
         /**
-         * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+         * If an address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
         address_line1_check: string | null;
 
         /**
-         * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+         * If an address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
         address_postal_code_check: string | null;
 
@@ -820,6 +820,7 @@ export namespace SetupAttempt {
       | 'forwarding_api_upstream_connection_timeout'
       | 'forwarding_api_upstream_error'
       | 'idempotency_key_in_use'
+      | 'inactive_api_operation_confirmation_required'
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'
