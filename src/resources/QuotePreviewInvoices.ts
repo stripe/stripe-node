@@ -759,6 +759,11 @@ export namespace QuotePreviewInvoice {
     billing_cadence_details?: Parent.BillingCadenceDetails | null;
 
     /**
+     * Details about the billing group that generated this invoice
+     */
+    billing_group_details?: Parent.BillingGroupDetails | null;
+
+    /**
      * Details about the quote that generated this invoice
      */
     quote_details: Parent.QuoteDetails | null;
@@ -1441,6 +1446,23 @@ export namespace QuotePreviewInvoice {
        * The billing cadence that generated this invoice
        */
       billing_cadence: string;
+
+      /**
+       * The billing group that generated this invoice
+       */
+      billing_group: string | null;
+    }
+
+    export interface BillingGroupDetails {
+      /**
+       * The billing cadence that generated this invoice
+       */
+      billing_cadence: string;
+
+      /**
+       * The billing group that generated this invoice
+       */
+      billing_group: string | null;
     }
 
     export interface QuoteDetails {

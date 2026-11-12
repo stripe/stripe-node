@@ -7,7 +7,7 @@ import {RequestOptions, Response} from '../../../lib.js';
 
 export class OutboundPaymentResource extends StripeResource {
   /**
-   * Updates a test mode created OutboundPayment with tracking details. The OutboundPayment must not be cancelable, and cannot be in the canceled or failed states.
+   * Updates a test OutboundPayment with tracking details. The OutboundPayment must not be cancelable, and can't be in the canceled or failed states.
    */
   update(
     id: string,
@@ -22,7 +22,7 @@ export class OutboundPaymentResource extends StripeResource {
     ) as any;
   }
   /**
-   * Transitions a test mode created OutboundPayment to the failed status. The OutboundPayment must already be in the processing state.
+   * Transitions a test OutboundPayment to the failed status. The OutboundPayment must already be in the processing state.
    */
   fail(
     id: string,
@@ -39,7 +39,7 @@ export class OutboundPaymentResource extends StripeResource {
     ) as any;
   }
   /**
-   * Transitions a test mode created OutboundPayment to the posted status. The OutboundPayment must already be in the processing state.
+   * Transitions a test OutboundPayment to the posted status. The OutboundPayment must already be in the processing state.
    */
   post(
     id: string,
@@ -56,7 +56,7 @@ export class OutboundPaymentResource extends StripeResource {
     ) as any;
   }
   /**
-   * Transitions a test mode created OutboundPayment to the returned status. The OutboundPayment must already be in the processing state.
+   * Transitions a test OutboundPayment to the returned status. The OutboundPayment must already be in the posted state.
    */
   returnOutboundPayment(
     id: string,

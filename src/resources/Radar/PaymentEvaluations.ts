@@ -85,6 +85,11 @@ export interface PaymentEvaluation {
   recommended_action: PaymentEvaluation.RecommendedAction;
 
   /**
+   * The signals requested for this payment evaluation. Only returned when creating a payment evaluation. Includes the default signal list when `requested_signals` is omitted from the request.
+   */
+  requested_signals?: Array<PaymentEvaluation.RequestedSignal>;
+
+  /**
    * Details about Radar Rules associated with the payment evaluation.
    */
   rules?: PaymentEvaluation.Rules | null;
@@ -241,6 +246,14 @@ export namespace PaymentEvaluation {
     | 'continue_with_manual_review'
     | 'request_three_d_secure'
     | 'reroute'
+    | OtherString;
+
+  export type RequestedSignal =
+    | 'bank_initiated_return'
+    | 'card_testing'
+    | 'early_fraud_warning'
+    | 'fraudulent_dispute'
+    | 'fraudulent_payment'
     | OtherString;
 
   export interface Rules {
@@ -948,6 +961,11 @@ export namespace Radar {
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
+
+    /**
+     * The signals to return in the Payment Evaluation response. Must include `fraudulent_payment`. If omitted, only `fraudulent_payment` is returned.
+     */
+    requested_signals?: Array<PaymentEvaluationCreateParams.RequestedSignal>;
   }
 
   export namespace PaymentEvaluationCreateParams {
@@ -1026,6 +1044,14 @@ export namespace Radar {
        */
       radar_session: string;
     }
+
+    export type RequestedSignal =
+      | 'bank_initiated_return'
+      | 'card_testing'
+      | 'early_fraud_warning'
+      | 'fraudulent_dispute'
+      | 'fraudulent_payment'
+      | OtherString;
 
     export namespace ClientDeviceMetadataDetails {
       export interface Data {

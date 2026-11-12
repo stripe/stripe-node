@@ -7,7 +7,7 @@ import {RequestOptions, Response} from '../../../lib.js';
 
 export class OutboundTransferResource extends StripeResource {
   /**
-   * Updates a test mode created OutboundTransfer with tracking details. The OutboundTransfer must not be cancelable, and cannot be in the canceled or failed states.
+   * Updates a test OutboundTransfer with tracking details. The OutboundTransfer must not be cancelable, and can't be in the canceled or failed states.
    */
   update(
     id: string,
@@ -22,7 +22,7 @@ export class OutboundTransferResource extends StripeResource {
     ) as any;
   }
   /**
-   * Transitions a test mode created OutboundTransfer to the failed status. The OutboundTransfer must already be in the processing state.
+   * Transitions a test OutboundTransfer to the failed status. The OutboundTransfer must already be in the processing state.
    */
   fail(
     id: string,
@@ -39,7 +39,7 @@ export class OutboundTransferResource extends StripeResource {
     ) as any;
   }
   /**
-   * Transitions a test mode created OutboundTransfer to the posted status. The OutboundTransfer must already be in the processing state.
+   * Transitions a test OutboundTransfer to the posted status. The OutboundTransfer must already be in the processing state.
    */
   post(
     id: string,
@@ -56,7 +56,7 @@ export class OutboundTransferResource extends StripeResource {
     ) as any;
   }
   /**
-   * Transitions a test mode created OutboundTransfer to the returned status. The OutboundTransfer must already be in the processing state.
+   * Transitions a test OutboundTransfer to the returned status. The OutboundTransfer must already be in the posted state.
    */
   returnOutboundTransfer(
     id: string,

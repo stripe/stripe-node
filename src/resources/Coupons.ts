@@ -416,7 +416,7 @@ export interface CouponCreateParams {
 export namespace CouponCreateParams {
   export interface AppliesTo {
     /**
-     * An array of Product IDs that this Coupon will apply to.
+     * An array of up to 100 Product IDs that this Coupon will apply to.
      */
     products?: Array<string>;
   }

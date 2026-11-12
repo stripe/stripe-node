@@ -266,6 +266,8 @@ export namespace Refund {
 
     alipay?: DestinationDetails.Alipay;
 
+    alipay_plus?: DestinationDetails.AlipayPlus;
+
     alma?: DestinationDetails.Alma;
 
     amazon_pay?: DestinationDetails.AmazonPay;
@@ -394,6 +396,8 @@ export namespace Refund {
     }
 
     export interface Alipay {}
+
+    export interface AlipayPlus {}
 
     export interface Alma {}
 

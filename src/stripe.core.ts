@@ -394,7 +394,9 @@ import {
 } from './resources/InvoicePayments.js';
 import {
   InvoiceRenderingTemplate,
+  InvoiceRenderingTemplateCreateParams,
   InvoiceRenderingTemplateRetrieveParams,
+  InvoiceRenderingTemplateUpdateParams,
   InvoiceRenderingTemplateListParams,
   InvoiceRenderingTemplateArchiveParams,
   InvoiceRenderingTemplateSerializeBatchArchiveParams,
@@ -2574,7 +2576,9 @@ export declare namespace Stripe {
   };
   export {
     InvoiceRenderingTemplate,
+    InvoiceRenderingTemplateCreateParams,
     InvoiceRenderingTemplateRetrieveParams,
+    InvoiceRenderingTemplateUpdateParams,
     InvoiceRenderingTemplateListParams,
     InvoiceRenderingTemplateArchiveParams,
     InvoiceRenderingTemplateSerializeBatchArchiveParams,

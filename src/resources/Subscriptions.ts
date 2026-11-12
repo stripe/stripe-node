@@ -4257,6 +4257,11 @@ export namespace SubscriptionCreateParams {
 
       export interface Upi {
         /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        debit_behavior?: string;
+
+        /**
          * Configuration options for setting up an eMandate
          */
         mandate_options?: Upi.MandateOptions;
@@ -6042,6 +6047,11 @@ export namespace SubscriptionUpdateParams {
       }
 
       export interface Upi {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        debit_behavior?: string;
+
         /**
          * Configuration options for setting up an eMandate
          */

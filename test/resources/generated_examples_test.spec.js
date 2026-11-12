@@ -6611,7 +6611,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/health/alerts',
         response:
-          '{"data":[{"object":"v2.core.health.alert","created":"1970-01-12T21:42:34.472Z","documentation_links":[{"label":"label","url":"url"}],"grouping_key":"grouping_key","grouping_type":"incident","id":"obj_123","livemode":true,"severity":"non_critical","started_at":"1970-01-19T03:34:50.959Z","status":"open","summary":"summary","type":"api_error"}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.core.health.alert","created":"1970-01-12T21:42:34.472Z","documentation_links":[{"label":"label","url":"url"}],"grouping_key":"grouping_key","grouping_type":"incident","id":"obj_123","livemode":true,"severity":"non_critical","started_at":"1970-01-19T03:34:50.959Z","status":"open","summary":"summary","type":"meter_event_summaries_delayed"}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const alerts = await stripe.v2.core.health.alerts.list();
@@ -6624,7 +6624,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/health/alerts/id_123',
         response:
-          '{"object":"v2.core.health.alert","created":"1970-01-12T21:42:34.472Z","documentation_links":[{"label":"label","url":"url"}],"grouping_key":"grouping_key","grouping_type":"incident","id":"obj_123","livemode":true,"severity":"non_critical","started_at":"1970-01-19T03:34:50.959Z","status":"open","summary":"summary","type":"api_error"}',
+          '{"object":"v2.core.health.alert","created":"1970-01-12T21:42:34.472Z","documentation_links":[{"label":"label","url":"url"}],"grouping_key":"grouping_key","grouping_type":"incident","id":"obj_123","livemode":true,"severity":"non_critical","started_at":"1970-01-19T03:34:50.959Z","status":"open","summary":"summary","type":"meter_event_summaries_delayed"}',
       },
     ]);
     const alert = await stripe.v2.core.health.alerts.retrieve('id_123');
@@ -6637,7 +6637,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/health/alerts/id_123/history',
         response:
-          '{"data":[{"object":"v2.core.health.alert_history_entry","at":"1970-01-01T00:00:03.123Z","id":"obj_123","livemode":true,"transition":"impact_updated","type":"api_error"}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.core.health.alert_history_entry","at":"1970-01-01T00:00:03.123Z","id":"obj_123","livemode":true,"transition":"impact_updated","type":"meter_event_summaries_delayed"}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const alertHistoryEntries = await stripe.v2.core.health.alerts.history.list(

@@ -1006,6 +1006,7 @@ export namespace PaymentLink {
 
     export type Provider =
       | 'daikin'
+      | 'dealerfx'
       | 'interpayments'
       | 'proserv'
       | 'yeeld'

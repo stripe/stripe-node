@@ -137,7 +137,7 @@ export interface Card {
   last4: string;
 
   /**
-   * Stripe's assessment of whether this card's details have been compromised. If this property isn't null, cancel and reissue the card to prevent fraudulent activity risk.
+   * Stripe's assessment of whether this card's details have been compromised. If this property isn't null, cancel and reissue the card to reduce the risk of fraudulent activity. Stripe may remove a fraud warning if the cardholder confirms that the activity on the card is legitimate.
    */
   latest_fraud_warning: Card.LatestFraudWarning | null;
 

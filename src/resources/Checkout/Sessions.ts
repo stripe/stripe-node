@@ -1561,6 +1561,8 @@ export interface Session {
    */
   origin_context: Session.OriginContext | null;
 
+  pass_through_fee_cost?: Session.PassThroughFeeCost;
+
   /**
    * The ID of the PaymentIntent for Checkout Sessions in `payment` mode. You can't confirm or cancel the PaymentIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://docs.stripe.com/api/checkout/sessions/expire) instead.
    */
@@ -2225,6 +2227,28 @@ export namespace Session {
 
   export type OriginContext = 'mobile_app' | 'web' | OtherString;
 
+  export interface PassThroughFeeCost {
+    /**
+     * The pass-through fee before tax.
+     */
+    amount_subtotal: number;
+
+    /**
+     * The tax on the pass-through fee. Pass-through fees aren't taxed, so this is always 0.
+     */
+    amount_tax: number;
+
+    /**
+     * The pass-through fee after tax.
+     */
+    amount_total: number;
+
+    /**
+     * The amount the provider calculated the fee on.
+     */
+    calculation_basis_amount: number;
+  }
+
   export type PaymentMethodCollection =
     | 'always'
     | 'auto'
@@ -2572,6 +2596,11 @@ export namespace Session {
     amount_discount: number;
 
     /**
+     * The pass-through fee added to the Checkout Session, before tax.
+     */
+    amount_pass_through_fee?: number;
+
+    /**
      * This is the sum of all the shipping amounts.
      */
     amount_shipping: number | null;
@@ -2649,6 +2678,7 @@ export namespace Session {
 
     export type Provider =
       | 'daikin'
+      | 'dealerfx'
       | 'interpayments'
       | 'proserv'
       | 'yeeld'
@@ -6248,11 +6278,6 @@ export namespace Checkout {
      * before using this feature. Learn more about [collecting phone numbers with Checkout](https://docs.stripe.com/payments/checkout/phone-numbers).
      */
     phone_number_collection?: SessionCreateParams.PhoneNumberCollection;
-
-    /**
-     * Token used to resolve the presentment currency for this Checkout Session.
-     */
-    pricing_token?: string;
 
     /**
      * This parameter applies to `ui_mode: embedded_page`. Learn more about the [redirect behavior](https://docs.stripe.com/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.

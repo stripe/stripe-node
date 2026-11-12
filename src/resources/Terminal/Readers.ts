@@ -293,16 +293,6 @@ export interface Reader {
   deleted?: void;
 
   /**
-   * The overall device health of the reader: `healthy` or `unhealthy`. Renamed to `no_issues_detected` and `needs_attention` respectively; see `device_health_details` for the specific conditions.
-   */
-  device_health: Reader.DeviceHealth | null;
-
-  /**
-   * The set of conditions affecting the reader's device health. Empty when there are no conditions.
-   */
-  device_health_details: Array<Reader.DeviceHealthDetail> | null;
-
-  /**
    * The current software version of the reader.
    */
   device_sw_version: string | null;
@@ -499,15 +489,6 @@ export namespace Reader {
      * Type of action performed by the reader.
      */
     type: Action.Type;
-  }
-
-  export type DeviceHealth = 'healthy' | 'unhealthy' | OtherString;
-
-  export interface DeviceHealthDetail {
-    /**
-     * The type of condition affecting the reader's device health.
-     */
-    type: DeviceHealthDetail.Type;
   }
 
   export type DeviceType =
@@ -1480,10 +1461,6 @@ export namespace Reader {
         }
       }
     }
-  }
-
-  export namespace DeviceHealthDetail {
-    export type Type = 'unrecoverable_tamper' | OtherString;
   }
 }
 export namespace Terminal {

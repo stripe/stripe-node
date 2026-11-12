@@ -126,6 +126,8 @@ export interface PaymentMethodConfiguration {
 
   customer_balance?: PaymentMethodConfiguration.CustomerBalance;
 
+  dbarai?: PaymentMethodConfiguration.Dbarai;
+
   eps?: PaymentMethodConfiguration.Eps;
 
   fpx?: PaymentMethodConfiguration.Fpx;
@@ -412,6 +414,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: CustomerBalance.DisplayPreference;
+  }
+
+  export interface Dbarai {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Dbarai.DisplayPreference;
   }
 
   export interface Eps {
@@ -1297,6 +1308,31 @@ export namespace PaymentMethodConfiguration {
   }
 
   export namespace CustomerBalance {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Dbarai {
     export interface DisplayPreference {
       /**
        * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
@@ -2623,6 +2659,11 @@ export interface PaymentMethodConfigurationCreateParams {
   customer_balance?: PaymentMethodConfigurationCreateParams.CustomerBalance;
 
   /**
+   * d-Barai is a single-use payment method that requires customers to authenticate their payment. Customers pay by being redirected from your website or app, authorizing the payment with d-Barai, then returning to your website or app. You get immediate notification of whether the payment succeeded or failed.
+   */
+  dbarai?: PaymentMethodConfigurationCreateParams.Dbarai;
+
+  /**
    * EPS is an Austria-based payment method that allows customers to complete transactions online using their bank credentials. EPS is supported by all Austrian banks and is accepted by over 80% of Austrian online retailers. Check this [page](https://docs.stripe.com/payments/eps) for more details.
    */
   eps?: PaymentMethodConfigurationCreateParams.Eps;
@@ -3021,6 +3062,13 @@ export namespace PaymentMethodConfigurationCreateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: CustomerBalance.DisplayPreference;
+  }
+
+  export interface Dbarai {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Dbarai.DisplayPreference;
   }
 
   export interface Eps {
@@ -3614,6 +3662,19 @@ export namespace PaymentMethodConfigurationCreateParams {
   }
 
   export namespace CustomerBalance {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Dbarai {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
@@ -4376,6 +4437,11 @@ export interface PaymentMethodConfigurationUpdateParams {
   customer_balance?: PaymentMethodConfigurationUpdateParams.CustomerBalance;
 
   /**
+   * d-Barai is a single-use payment method that requires customers to authenticate their payment. Customers pay by being redirected from your website or app, authorizing the payment with d-Barai, then returning to your website or app. You get immediate notification of whether the payment succeeded or failed.
+   */
+  dbarai?: PaymentMethodConfigurationUpdateParams.Dbarai;
+
+  /**
    * EPS is an Austria-based payment method that allows customers to complete transactions online using their bank credentials. EPS is supported by all Austrian banks and is accepted by over 80% of Austrian online retailers. Check this [page](https://docs.stripe.com/payments/eps) for more details.
    */
   eps?: PaymentMethodConfigurationUpdateParams.Eps;
@@ -4769,6 +4835,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: CustomerBalance.DisplayPreference;
+  }
+
+  export interface Dbarai {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Dbarai.DisplayPreference;
   }
 
   export interface Eps {
@@ -5362,6 +5435,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 
   export namespace CustomerBalance {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Dbarai {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.

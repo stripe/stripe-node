@@ -6,7 +6,7 @@ import {RequestOptions, Response} from '../../../lib.js';
 
 export class ReceivedDebitResource extends StripeResource {
   /**
-   * Use this endpoint to simulate a test mode ReceivedDebit initiated by a third party. In live mode, you can't directly create ReceivedDebits initiated by third parties.
+   * Simulates a test ReceivedDebit initiated by a third party. In live mode, you can't directly create ReceivedDebit objects initiated by third parties.
    */
   create(
     params: TestHelpers.Treasury.ReceivedDebitCreateParams,

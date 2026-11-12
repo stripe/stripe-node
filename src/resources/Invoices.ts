@@ -2131,6 +2131,11 @@ export namespace Invoice {
     billing_cadence_details?: Parent.BillingCadenceDetails | null;
 
     /**
+     * Details about the billing group that generated this invoice
+     */
+    billing_group_details?: Parent.BillingGroupDetails | null;
+
+    /**
      * Details about the quote that generated this invoice
      */
     quote_details: Parent.QuoteDetails | null;
@@ -2809,6 +2814,23 @@ export namespace Invoice {
        * The billing cadence that generated this invoice
        */
       billing_cadence: string;
+
+      /**
+       * The billing group that generated this invoice
+       */
+      billing_group: string | null;
+    }
+
+    export interface BillingGroupDetails {
+      /**
+       * The billing cadence that generated this invoice
+       */
+      billing_cadence: string;
+
+      /**
+       * The billing group that generated this invoice
+       */
+      billing_group: string | null;
     }
 
     export interface QuoteDetails {
@@ -5813,9 +5835,14 @@ export namespace InvoiceUpdateParams {
 }
 export interface InvoiceListParams extends PaginationParams {
   /**
-   * Only return invoices for the cadence specified by this billing cadence ID.
+   * Only return invoices for the billing cadence specified by this billing cadence ID.
    */
   billing_cadence?: string;
+
+  /**
+   * Only return invoices for the billing group specified by this billing group ID.
+   */
+  billing_group?: string;
 
   /**
    * The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
@@ -6340,6 +6367,11 @@ export interface InvoiceCreatePreviewParams {
    * The identifier of the billing cadence for which you'd like to retrieve the upcoming invoice. Cannot be provided when `subscription`, `schedule`, `subscription_details` or `schedule_details` are provided.
    */
   billing_cadence?: string;
+
+  /**
+   * The identifier of the billing group for which you'd like to retrieve the upcoming invoice. Cannot be provided when `subscription`, `schedule`, `subscription_details` or `schedule_details` are provided.
+   */
+  billing_group?: string;
 
   /**
    * The currency to preview this invoice in. Defaults to that of `customer` if not specified.

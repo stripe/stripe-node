@@ -7,7 +7,7 @@ import {RequestOptions, Response} from '../../../lib.js';
 
 export class ReceivedCreditResource extends StripeResource {
   /**
-   * Use this endpoint to simulate a test mode ReceivedCredit initiated by a third party. In live mode, you can't directly create ReceivedCredits initiated by third parties.
+   * Simulates a test ReceivedCredit initiated by a third party. In live mode, you can't directly create ReceivedCredit objects initiated by third parties.
    */
   create(
     params: TestHelpers.Treasury.ReceivedCreditCreateParams,

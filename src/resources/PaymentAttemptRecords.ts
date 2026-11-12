@@ -2756,6 +2756,7 @@ export namespace PaymentAttemptRecord {
         | 'solana'
         | 'sui'
         | 'tempo'
+        | 'tron'
         | OtherString;
 
       export type TokenCurrency =
@@ -3716,6 +3717,11 @@ export namespace PaymentAttemptRecordReportFailedParams {
        * Decline code from the card network for the failed payment.
        */
       network_decline_code?: string;
+
+      /**
+       * Populated if this transaction used 3D Secure authentication.
+       */
+      three_d_secure?: Card.ThreeDSecure;
     }
 
     export type Type = 'card' | 'us_bank_account' | OtherString;
@@ -3745,6 +3751,38 @@ export namespace PaymentAttemptRecordReportFailedParams {
         cvc_check?: Checks.CvcCheck;
       }
 
+      export interface ThreeDSecure {
+        /**
+         * For authenticated transactions: Indicates how the issuing bank authenticated the customer.
+         */
+        authentication_flow?: ThreeDSecure.AuthenticationFlow;
+
+        /**
+         * The Electronic Commerce Indicator (ECI). A protocol-level field indicating what degree of authentication was performed.
+         */
+        electronic_commerce_indicator?: ThreeDSecure.ElectronicCommerceIndicator;
+
+        /**
+         * The exemption requested via 3DS and accepted by the issuer at authentication time.
+         */
+        exemption_indicator?: ThreeDSecure.ExemptionIndicator;
+
+        /**
+         * Indicates the outcome of 3D Secure authentication.
+         */
+        result: ThreeDSecure.Result;
+
+        /**
+         * Additional information about why 3D Secure succeeded or failed, based on the `result`.
+         */
+        result_reason?: ThreeDSecure.ResultReason;
+
+        /**
+         * The version of 3D Secure that was used.
+         */
+        version: ThreeDSecure.Version;
+      }
+
       export namespace Checks {
         export type AddressLine1Check =
           | 'fail'
@@ -3765,6 +3803,49 @@ export namespace PaymentAttemptRecordReportFailedParams {
           | 'pass'
           | 'unavailable'
           | 'unchecked'
+          | OtherString;
+      }
+
+      export namespace ThreeDSecure {
+        export type AuthenticationFlow =
+          | 'challenge'
+          | 'frictionless'
+          | OtherString;
+
+        export type ElectronicCommerceIndicator =
+          | '01'
+          | '02'
+          | '05'
+          | '06'
+          | '07'
+          | OtherString;
+
+        export type ExemptionIndicator = 'low_risk' | 'none' | OtherString;
+
+        export type Result =
+          | 'attempt_acknowledged'
+          | 'authenticated'
+          | 'exempted'
+          | 'failed'
+          | 'not_supported'
+          | 'processing_error'
+          | OtherString;
+
+        export type ResultReason =
+          | 'abandoned'
+          | 'canceled'
+          | 'card_not_enrolled'
+          | 'network_not_supported'
+          | 'protocol_error'
+          | 'rejected'
+          | OtherString;
+
+        export type Version =
+          | '1.0.2'
+          | '2.1.0'
+          | '2.2.0'
+          | '2.3.0'
+          | '2.3.1'
           | OtherString;
       }
     }

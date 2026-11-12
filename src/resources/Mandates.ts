@@ -461,12 +461,59 @@ export namespace Mandate {
     export namespace Card {
       export interface India {
         /**
+         * The registered amount in the smallest currency unit. For a maximum amount mandate, this is the authorized ceiling.
+         */
+        amount?: number;
+
+        /**
+         * Whether the registered amount is fixed or a maximum.
+         */
+        amount_type?: India.AmountType;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency?: string;
+
+        /**
+         * The stored mandate description, before SIHub registration removes non-alphanumeric characters.
+         */
+        description?: string | null;
+
+        /**
+         * The registered end date, represented as midnight in India Standard Time, if specified.
+         */
+        end_date?: number | null;
+
+        /**
          * The reason why the mandate has an `inactive` status. This field is only populated if the mandate is inactive.
          */
         inactive_reason: India.InactiveReason | null;
+
+        /**
+         * The registered payment interval. This can differ from the interval originally requested.
+         */
+        interval?: India.Interval;
+
+        /**
+         * The number of intervals between registered payments. Null for sporadic mandates.
+         */
+        interval_count?: number | null;
+
+        /**
+         * The reference registered for this mandate.
+         */
+        reference?: string;
+
+        /**
+         * The registered start date, represented as midnight in India Standard Time.
+         */
+        start_date?: number;
       }
 
       export namespace India {
+        export type AmountType = 'fixed' | 'maximum' | OtherString;
+
         export type InactiveReason =
           | 'canceled'
           | 'card_not_supported'
@@ -475,6 +522,14 @@ export namespace Mandate {
           | 'issuer_not_supported'
           | 'processing_error'
           | 'undetermined'
+          | OtherString;
+
+        export type Interval =
+          | 'day'
+          | 'month'
+          | 'sporadic'
+          | 'week'
+          | 'year'
           | OtherString;
       }
     }

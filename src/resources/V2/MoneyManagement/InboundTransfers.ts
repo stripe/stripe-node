@@ -197,6 +197,11 @@ export namespace InboundTransfer {
   export namespace From {
     export interface PaymentMethod {
       /**
+       * The Australian bank account credential used for AU BECS Direct Debit.
+       */
+      au_becs_debit?: string;
+
+      /**
        * The Bacs Direct Debit PaymentMethod identifier.
        */
       bacs_debit?: string;
