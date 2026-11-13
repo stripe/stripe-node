@@ -206,7 +206,10 @@ export class StripeError extends Error {
   // errorProperties: The end of the section generated from our OpenAPI spec
 
   constructor(raw: StripeRawError = {}, type: string | null = null) {
-    super(raw.message);
+    const message = raw.requestId
+      ? `[${raw.requestId}] ${raw.message ?? ''}`
+      : raw.message;
+    super(message);
     this.type = type || this.constructor.name;
     this.raw = raw;
     this.rawType = raw.type;
@@ -214,7 +217,7 @@ export class StripeError extends Error {
     this.headers = raw.headers;
     this.requestId = raw.requestId;
     this.statusCode = raw.statusCode;
-    this.message = raw.message ?? '';
+    this.message = message ?? '';
     this.userMessage = raw.user_message;
     // errorAssignments: The beginning of the section generated from our OpenAPI spec
     this.advice_code = raw.advice_code;

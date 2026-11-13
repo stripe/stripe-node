@@ -135,6 +135,21 @@ describe('Error', () => {
       expect(err).to.have.property('type', 'Foo');
     });
 
+    it('prefixes the message with the request ID when available', () => {
+      const err = new Error.StripeError({
+        message: 'card declined',
+        requestId: 'req_123',
+      });
+      expect(err.message).to.equal('[req_123] card declined');
+      expect(err.stack).to.include('[req_123] card declined');
+      expect(err.raw).to.have.property('message', 'card declined');
+    });
+
+    it('leaves the message unchanged without a request ID', () => {
+      const err = new Error.StripeError({message: 'card declined'});
+      expect(err.message).to.equal('card declined');
+    });
+
     it('defaults setting `.type` to subclass name', () => {
       class Foo extends Error.StripeError {}
       const err = new Foo({message: 'hi'});
