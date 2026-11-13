@@ -4,7 +4,6 @@ import {BalanceTransaction} from './BalanceTransactions.js';
 import {Refund} from './Refunds.js';
 import {Transfer} from './Transfers.js';
 import {Metadata} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface TransferReversal {
   /**
    * Unique identifier for the object.

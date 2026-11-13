@@ -2,7 +2,6 @@
 
 import {Account} from './Accounts.js';
 import {OtherString} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface Capability {
   /**
    * The identifier for the capability.
