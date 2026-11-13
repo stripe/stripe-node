@@ -5,7 +5,6 @@ import {Price} from './Prices.js';
 import {Product, DeletedProduct} from './Products.js';
 import {TaxRate} from './TaxRates.js';
 import {Metadata, OtherString} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface LineItem {
   /**
    * Unique identifier for the object.
