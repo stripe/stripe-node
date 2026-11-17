@@ -1,0 +1,78 @@
+name: Canary CI
+
+# Runs the same checks as CI against code generated from the canary specs.
+# sdk-codegen force-pushes these branches; they are never released, so there is
+# no publish job.
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - canary-ga
+      - canary-beta
+      - canary-private-preview
+
+permissions: {}
+
+concurrency:
+  # Each push replaces the branch, so an older run's result is stale.
+  group: canary-ci-${{ github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  # Map each canary branch to the channel stripe-mock serves.
+  CANARY_CHANNEL: >-
+    ${{
+      github.ref_name == 'canary-ga' && 'ga' ||
+      github.ref_name == 'canary-beta' && 'beta' ||
+      github.ref_name == 'canary-private-preview' && 'private-preview' ||
+      'unsupported'
+    }}
+
+jobs:
+  build:
+    name: 'Static Checks'
+    runs-on: 'ubuntu-24.04'
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/static-checks
+
+  test:
+    name: Test (${{ matrix.node }}, ${{ matrix.os }})
+    needs: [build]
+    strategy:
+      fail-fast: false
+      matrix:
+        # Keep in sync with the test matrix in main.yml.
+        os:
+          - 'ubuntu-24.04'
+        node:
+          # should include even numbers >= 20
+          # see: https://docs.stripe.com/sdks/versioning?lang=node#stripe-sdk-language-version-support-policy
+          # https://endoflife.date/nodejs
+
+          # note that starting in Oct 2026, every version will be LTS, so it's not just even numbers anymore
+          # see: https://nodejs.org/en/blog/announcements/evolving-the-nodejs-release-schedule
+          # - '26' # not yet compatible with mocha's yargs dependency
+          - '24'
+          - '22'
+          - '20'
+        include:
+          - os: windows-latest
+            # use any modern-ish version
+            node: '24'
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/test
+        with:
+          node-version: ${{ matrix.node }}
+          canary_channel: ${{ env.CANARY_CHANNEL }}

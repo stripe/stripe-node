@@ -356,6 +356,13 @@ export namespace Account {
     locales?: Array<Defaults.Locale>;
 
     /**
+     * Default payout methods per currency. Keys are three-letter [ISO currency codes](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Values are v2 Payout Method IDs.
+     */
+    payout_methods?: {
+      [key: string]: string;
+    };
+
+    /**
      * Account profile information.
      */
     profile?: Defaults.Profile;
@@ -367,6 +374,11 @@ export namespace Account {
   }
 
   export interface FutureRequirements {
+    /**
+     * A list of alternative sets of requirements that can be provided in lieu of requirements in `entries`.
+     */
+    alternatives?: Array<FutureRequirements.Alternative>;
+
     /**
      * A list of requirements for the Account.
      */
@@ -411,6 +423,11 @@ export namespace Account {
   }
 
   export interface Requirements {
+    /**
+     * A list of alternative sets of requirements that can be provided in lieu of requirements in `entries`.
+     */
+    alternatives?: Array<Requirements.Alternative>;
+
     /**
      * A list of requirements for the Account.
      */
@@ -775,12 +792,12 @@ export namespace Account {
 
       export interface Branding {
         /**
-         * ID of a [file upload](https://docs.stripe.com/api/persons/update#create_file): An icon for the merchant. Must be square and at least 128px x 128px.
+         * ID of a [file upload](https://docs.stripe.com/api/files/create): An icon for the merchant. Must be square and at least 128px x 128px.
          */
         icon?: string;
 
         /**
-         * ID of a [file upload](https://docs.stripe.com/api/persons/update#create_file): A logo for the merchant that will be used in Checkout instead of the icon and without the merchant's name next to it if provided. Must be at least 128px x 128px.
+         * ID of a [file upload](https://docs.stripe.com/api/files/create): A logo for the merchant that will be used in Checkout instead of the icon and without the merchant's name next to it if provided. Must be at least 128px x 128px.
          */
         logo?: string;
 
@@ -4029,12 +4046,71 @@ export namespace Account {
     export namespace Recipient {
       export interface Capabilities {
         /**
+         * Capabilities that enable OutboundPayments to a bank account linked to this Account.
+         */
+        bank_accounts?: Capabilities.BankAccounts;
+
+        /**
+         * Enables this Account to receive OutboundPayments to a linked debit card.
+         */
+        cards?: Capabilities.Cards;
+
+        /**
          * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
          */
         stripe_balance?: Capabilities.StripeBalance;
       }
 
       export namespace Capabilities {
+        export interface BankAccounts {
+          /**
+           * Enables this Account to receive OutboundPayments to linked bank accounts over ACH rails.
+           */
+          ach?: BankAccounts.Ach;
+
+          /**
+           * Enables this Account to receive OutboundPayments to linked bank accounts over Fedwire or CHIPS.
+           */
+          fedwire?: BankAccounts.Fedwire;
+
+          /**
+           * Enables this Account to receive OutboundPayments to linked bank accounts over FPS rails.
+           */
+          fps?: BankAccounts.Fps;
+
+          /**
+           * Enables this Account to receive OutboundPayments to linked bank accounts over local networks.
+           */
+          local?: BankAccounts.Local;
+
+          /**
+           * Enables this Account to receive OutboundPayments to linked bank accounts over RTP rails.
+           */
+          rtp?: BankAccounts.Rtp;
+
+          /**
+           * Enables this Account to receive OutboundPayments to linked bank accounts over SEPA rails.
+           */
+          sepa?: BankAccounts.Sepa;
+
+          /**
+           * Enables this Account to receive OutboundPayments to linked bank accounts over SWIFT.
+           */
+          swift?: BankAccounts.Swift;
+        }
+
+        export interface Cards {
+          /**
+           * The status of the Capability.
+           */
+          status: Cards.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<Cards.StatusDetail>;
+        }
+
         export interface StripeBalance {
           /**
            * Enables this Account to complete payouts from their Stripe Balance (/v1/balance).
@@ -4045,6 +4121,452 @@ export namespace Account {
            * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
            */
           stripe_transfers?: StripeBalance.StripeTransfers;
+        }
+
+        export namespace BankAccounts {
+          export interface Ach {
+            /**
+             * The status of the Capability.
+             */
+            status: Ach.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Ach.StatusDetail>;
+          }
+
+          export interface Fedwire {
+            /**
+             * The status of the Capability.
+             */
+            status: Fedwire.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Fedwire.StatusDetail>;
+          }
+
+          export interface Fps {
+            /**
+             * The status of the Capability.
+             */
+            status: Fps.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Fps.StatusDetail>;
+          }
+
+          export interface Local {
+            /**
+             * The status of the Capability.
+             */
+            status: Local.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Local.StatusDetail>;
+          }
+
+          export interface Rtp {
+            /**
+             * The status of the Capability.
+             */
+            status: Rtp.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Rtp.StatusDetail>;
+          }
+
+          export interface Sepa {
+            /**
+             * The status of the Capability.
+             */
+            status: Sepa.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Sepa.StatusDetail>;
+          }
+
+          export interface Swift {
+            /**
+             * The status of the Capability.
+             */
+            status: Swift.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Swift.StatusDetail>;
+          }
+
+          export namespace Ach {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'rejected'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Fedwire {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'rejected'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Fps {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'rejected'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Local {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'rejected'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Rtp {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'rejected'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Sepa {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'rejected'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Swift {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'rejected'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+        }
+
+        export namespace Cards {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
         }
 
         export namespace StripeBalance {
@@ -4302,9 +4824,21 @@ export namespace Account {
   }
 
   export namespace FutureRequirements {
+    export interface Alternative {
+      /**
+       * The alternative sets of requirements that can be provided. Providing every entry in any one of these options resolves all of the requirements in `original_entries`.
+       */
+      options: Array<Alternative.Option>;
+
+      /**
+       * The requirements that can be satisfied either directly, or by providing every entry in any one of `options`.
+       */
+      original_entries: Array<Alternative.OriginalEntry>;
+    }
+
     export interface Entry {
       /**
-       * Indicates whether the platform or Stripe is currently responsible for taking action on the requirement. Value can be `user` or `stripe`.
+       * Indicates whether the user or Stripe is currently responsible for taking action on the requirement. Value can be `user` or `stripe`.
        */
       awaiting_action_from: Entry.AwaitingActionFrom;
 
@@ -4344,6 +4878,224 @@ export namespace Account {
        * The soonest date and time a requirement on the Account will become `past due`. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
        */
       minimum_deadline?: Summary.MinimumDeadline;
+    }
+
+    export namespace Alternative {
+      export interface Option {
+        /**
+         * The requirements that must all be provided to satisfy this option.
+         */
+        entries: Array<Option.Entry>;
+      }
+
+      export interface OriginalEntry {
+        /**
+         * Machine-readable string describing the requirement.
+         */
+        description: string;
+
+        /**
+         * A reference to the location of the requirement.
+         */
+        reference?: OriginalEntry.Reference;
+      }
+
+      export namespace Option {
+        export interface Entry {
+          /**
+           * Indicates whether the user or Stripe is currently responsible for taking action on the requirement. Value can be `user` or `stripe`.
+           */
+          awaiting_action_from: Entry.AwaitingActionFrom;
+
+          /**
+           * Machine-readable string describing the requirement.
+           */
+          description: string;
+
+          /**
+           * Descriptions of why the requirement must be collected, or why the collected information isn't satisfactory to Stripe.
+           */
+          errors: Array<Entry.Error>;
+
+          /**
+           * A reference to the location of the requirement.
+           */
+          reference?: Entry.Reference;
+        }
+
+        export namespace Entry {
+          export type AwaitingActionFrom = 'stripe' | 'user';
+
+          export interface Error {
+            /**
+             * Machine-readable code describing the error.
+             */
+            code: Error.Code;
+
+            /**
+             * Human-readable description of the error.
+             */
+            description: string;
+          }
+
+          export interface Reference {
+            /**
+             * If `inquiry` is the type, the inquiry token.
+             */
+            inquiry?: string;
+
+            /**
+             * If `resource` is the type, the resource token.
+             */
+            resource?: string;
+
+            /**
+             * The type of the reference. If the type is "inquiry", the inquiry token can be found in the "inquiry" field.
+             * Otherwise the type is an API resource, the token for which can be found in the "resource" field.
+             */
+            type: Reference.Type;
+          }
+
+          export namespace Error {
+            export type Code =
+              | 'invalid_address_city_state_postal_code'
+              | 'invalid_address_cmra_address'
+              | 'invalid_address_highway_contract_box'
+              | 'invalid_address_private_mailbox'
+              | 'invalid_address_registered_agent_address'
+              | 'invalid_business_profile_name'
+              | 'invalid_business_profile_name_denylisted'
+              | 'invalid_company_name_denylisted'
+              | 'invalid_dob_age_over_maximum'
+              | 'invalid_dob_age_under_18'
+              | 'invalid_dob_age_under_minimum'
+              | 'invalid_product_description_length'
+              | 'invalid_product_description_url_match'
+              | 'invalid_representative_country'
+              | 'invalid_statement_descriptor_business_mismatch'
+              | 'invalid_statement_descriptor_denylisted'
+              | 'invalid_statement_descriptor_length'
+              | 'invalid_statement_descriptor_prefix_denylisted'
+              | 'invalid_statement_descriptor_prefix_mismatch'
+              | 'invalid_street_address'
+              | 'invalid_tax_id'
+              | 'invalid_tax_id_format'
+              | 'invalid_tos_acceptance'
+              | 'invalid_url_denylisted'
+              | 'invalid_url_format'
+              | 'invalid_url_website_business_information_mismatch'
+              | 'invalid_url_website_empty'
+              | 'invalid_url_website_inaccessible'
+              | 'invalid_url_website_inaccessible_geoblocked'
+              | 'invalid_url_website_inaccessible_password_protected'
+              | 'invalid_url_website_incomplete'
+              | 'invalid_url_website_incomplete_cancellation_policy'
+              | 'invalid_url_website_incomplete_customer_service_details'
+              | 'invalid_url_website_incomplete_legal_restrictions'
+              | 'invalid_url_website_incomplete_refund_policy'
+              | 'invalid_url_website_incomplete_return_policy'
+              | 'invalid_url_website_incomplete_terms_and_conditions'
+              | 'invalid_url_website_incomplete_under_construction'
+              | 'invalid_url_website_other'
+              | 'invalid_url_web_presence_detected'
+              | 'invalid_value_other'
+              | 'unresolvable_ip_address'
+              | 'unresolvable_postal_code'
+              | 'verification_directors_mismatch'
+              | 'verification_document_address_mismatch'
+              | 'verification_document_address_missing'
+              | 'verification_document_corrupt'
+              | 'verification_document_country_not_supported'
+              | 'verification_document_directors_mismatch'
+              | 'verification_document_dob_mismatch'
+              | 'verification_document_duplicate_type'
+              | 'verification_document_expired'
+              | 'verification_document_failed_copy'
+              | 'verification_document_failed_greyscale'
+              | 'verification_document_failed_other'
+              | 'verification_document_failed_test_mode'
+              | 'verification_document_fraudulent'
+              | 'verification_document_id_number_mismatch'
+              | 'verification_document_id_number_missing'
+              | 'verification_document_incomplete'
+              | 'verification_document_invalid'
+              | 'verification_document_issue_or_expiry_date_missing'
+              | 'verification_document_manipulated'
+              | 'verification_document_missing_back'
+              | 'verification_document_missing_front'
+              | 'verification_document_name_mismatch'
+              | 'verification_document_name_missing'
+              | 'verification_document_nationality_mismatch'
+              | 'verification_document_not_readable'
+              | 'verification_document_not_signed'
+              | 'verification_document_not_uploaded'
+              | 'verification_document_photo_mismatch'
+              | 'verification_document_too_large'
+              | 'verification_document_type_not_supported'
+              | 'verification_extraneous_directors'
+              | 'verification_failed_address_match'
+              | 'verification_failed_business_iec_number'
+              | 'verification_failed_document_match'
+              | 'verification_failed_id_number_match'
+              | 'verification_failed_keyed_identity'
+              | 'verification_failed_keyed_match'
+              | 'verification_failed_name_match'
+              | 'verification_failed_other'
+              | 'verification_failed_representative_authority'
+              | 'verification_failed_residential_address'
+              | 'verification_failed_tax_id_match'
+              | 'verification_failed_tax_id_not_issued'
+              | 'verification_missing_directors'
+              | 'verification_missing_executives'
+              | 'verification_missing_owners'
+              | 'verification_requires_additional_memorandum_of_associations'
+              | 'verification_requires_additional_proof_of_registration'
+              | 'verification_selfie_document_missing_photo'
+              | 'verification_selfie_face_mismatch'
+              | 'verification_selfie_manipulated'
+              | 'verification_selfie_unverified_other'
+              | 'verification_supportability'
+              | 'verification_token_stale'
+              | OtherString;
+          }
+
+          export namespace Reference {
+            export type Type =
+              | 'inquiry'
+              | 'payment_method'
+              | 'person'
+              | OtherString;
+          }
+        }
+      }
+
+      export namespace OriginalEntry {
+        export interface Reference {
+          /**
+           * If `inquiry` is the type, the inquiry token.
+           */
+          inquiry?: string;
+
+          /**
+           * If `resource` is the type, the resource token.
+           */
+          resource?: string;
+
+          /**
+           * The type of the reference. If the type is "inquiry", the inquiry token can be found in the "inquiry" field.
+           * Otherwise the type is an API resource, the token for which can be found in the "resource" field.
+           */
+          type: Reference.Type;
+        }
+
+        export namespace Reference {
+          export type Type =
+            | 'inquiry'
+            | 'payment_method'
+            | 'person'
+            | OtherString;
+        }
+      }
     }
 
     export namespace Entry {
@@ -4533,7 +5285,13 @@ export namespace Account {
             | 'au_becs_debit_payments'
             | 'bacs_debit_payments'
             | 'bancontact_payments'
+            | 'bank_accounts.ach'
+            | 'bank_accounts.fedwire'
+            | 'bank_accounts.fps'
             | 'bank_accounts.local'
+            | 'bank_accounts.rtp'
+            | 'bank_accounts.sepa'
+            | 'bank_accounts.swift'
             | 'bank_accounts.wire'
             | 'blik_payments'
             | 'blik_recurring_payments'
@@ -4930,7 +5688,7 @@ export namespace Account {
 
       export interface TermsOfService {
         /**
-         * Details on the Account's acceptance of the [Stripe Services Agreement](https://docs.stripe.com/connect/updating-accounts#tos-acceptance).
+         * Details on the Account's acceptance of the Stripe Services Agreement.
          */
         account?: TermsOfService.Account;
       }
@@ -5202,7 +5960,7 @@ export namespace Account {
       export namespace Documents {
         export interface BankAccountOwnershipVerification {
           /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
            */
           files: Array<string>;
 
@@ -5214,7 +5972,7 @@ export namespace Account {
 
         export interface CompanyLicense {
           /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
            */
           files: Array<string>;
 
@@ -5226,7 +5984,7 @@ export namespace Account {
 
         export interface CompanyMemorandumOfAssociation {
           /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
            */
           files: Array<string>;
 
@@ -5238,7 +5996,7 @@ export namespace Account {
 
         export interface CompanyMinisterialDecree {
           /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
            */
           files: Array<string>;
 
@@ -5250,7 +6008,7 @@ export namespace Account {
 
         export interface CompanyRegistrationVerification {
           /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
            */
           files: Array<string>;
 
@@ -5262,7 +6020,7 @@ export namespace Account {
 
         export interface CompanyTaxIdVerification {
           /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
            */
           files: Array<string>;
 
@@ -5274,7 +6032,7 @@ export namespace Account {
 
         export interface PrimaryVerification {
           /**
-           * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens for the front and back of the verification document.
+           * The [file upload](https://docs.stripe.com/api/files/create) tokens for the front and back of the verification document.
            */
           front_back: PrimaryVerification.FrontBack;
 
@@ -5286,7 +6044,7 @@ export namespace Account {
 
         export interface ProofOfAddress {
           /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
            */
           files: Array<string>;
 
@@ -5298,7 +6056,7 @@ export namespace Account {
 
         export interface ProofOfRegistration {
           /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
            */
           files: Array<string>;
 
@@ -5315,7 +6073,7 @@ export namespace Account {
 
         export interface ProofOfUltimateBeneficialOwnership {
           /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
            */
           files: Array<string>;
 
@@ -5357,12 +6115,12 @@ export namespace Account {
         export namespace PrimaryVerification {
           export interface FrontBack {
             /**
-             * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+             * A [file upload](https://docs.stripe.com/api/files/create) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             back?: string;
 
             /**
-             * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+             * A [file upload](https://docs.stripe.com/api/files/create) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             front: string;
           }
@@ -5866,7 +6624,7 @@ export namespace Account {
       export namespace Documents {
         export interface CompanyAuthorization {
           /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
            */
           files: Array<string>;
 
@@ -5878,7 +6636,7 @@ export namespace Account {
 
         export interface Passport {
           /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
            */
           files: Array<string>;
 
@@ -5890,7 +6648,7 @@ export namespace Account {
 
         export interface PrimaryVerification {
           /**
-           * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens for the front and back of the verification document.
+           * The [file upload](https://docs.stripe.com/api/files/create) tokens for the front and back of the verification document.
            */
           front_back: PrimaryVerification.FrontBack;
 
@@ -5902,7 +6660,7 @@ export namespace Account {
 
         export interface SecondaryVerification {
           /**
-           * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens for the front and back of the verification document.
+           * The [file upload](https://docs.stripe.com/api/files/create) tokens for the front and back of the verification document.
            */
           front_back: SecondaryVerification.FrontBack;
 
@@ -5914,7 +6672,7 @@ export namespace Account {
 
         export interface Visa {
           /**
-           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+           * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
            */
           files: Array<string>;
 
@@ -5935,12 +6693,12 @@ export namespace Account {
         export namespace PrimaryVerification {
           export interface FrontBack {
             /**
-             * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+             * A [file upload](https://docs.stripe.com/api/files/create) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             back?: string;
 
             /**
-             * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+             * A [file upload](https://docs.stripe.com/api/files/create) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             front: string;
           }
@@ -5951,12 +6709,12 @@ export namespace Account {
         export namespace SecondaryVerification {
           export interface FrontBack {
             /**
-             * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+             * A [file upload](https://docs.stripe.com/api/files/create) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             back?: string;
 
             /**
-             * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+             * A [file upload](https://docs.stripe.com/api/files/create) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             front: string;
           }
@@ -6156,9 +6914,21 @@ export namespace Account {
   }
 
   export namespace Requirements {
+    export interface Alternative {
+      /**
+       * The alternative sets of requirements that can be provided. Providing every entry in any one of these options resolves all of the requirements in `original_entries`.
+       */
+      options: Array<Alternative.Option>;
+
+      /**
+       * The requirements that can be satisfied either directly, or by providing every entry in any one of `options`.
+       */
+      original_entries: Array<Alternative.OriginalEntry>;
+    }
+
     export interface Entry {
       /**
-       * Indicates whether the platform or Stripe is currently responsible for taking action on the requirement. Value can be `user` or `stripe`.
+       * Indicates whether the user or Stripe is currently responsible for taking action on the requirement. Value can be `user` or `stripe`.
        */
       awaiting_action_from: Entry.AwaitingActionFrom;
 
@@ -6198,6 +6968,224 @@ export namespace Account {
        * The soonest date and time a requirement on the Account will become `past due`. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
        */
       minimum_deadline?: Summary.MinimumDeadline;
+    }
+
+    export namespace Alternative {
+      export interface Option {
+        /**
+         * The requirements that must all be provided to satisfy this option.
+         */
+        entries: Array<Option.Entry>;
+      }
+
+      export interface OriginalEntry {
+        /**
+         * Machine-readable string describing the requirement.
+         */
+        description: string;
+
+        /**
+         * A reference to the location of the requirement.
+         */
+        reference?: OriginalEntry.Reference;
+      }
+
+      export namespace Option {
+        export interface Entry {
+          /**
+           * Indicates whether the user or Stripe is currently responsible for taking action on the requirement. Value can be `user` or `stripe`.
+           */
+          awaiting_action_from: Entry.AwaitingActionFrom;
+
+          /**
+           * Machine-readable string describing the requirement.
+           */
+          description: string;
+
+          /**
+           * Descriptions of why the requirement must be collected, or why the collected information isn't satisfactory to Stripe.
+           */
+          errors: Array<Entry.Error>;
+
+          /**
+           * A reference to the location of the requirement.
+           */
+          reference?: Entry.Reference;
+        }
+
+        export namespace Entry {
+          export type AwaitingActionFrom = 'stripe' | 'user';
+
+          export interface Error {
+            /**
+             * Machine-readable code describing the error.
+             */
+            code: Error.Code;
+
+            /**
+             * Human-readable description of the error.
+             */
+            description: string;
+          }
+
+          export interface Reference {
+            /**
+             * If `inquiry` is the type, the inquiry token.
+             */
+            inquiry?: string;
+
+            /**
+             * If `resource` is the type, the resource token.
+             */
+            resource?: string;
+
+            /**
+             * The type of the reference. If the type is "inquiry", the inquiry token can be found in the "inquiry" field.
+             * Otherwise the type is an API resource, the token for which can be found in the "resource" field.
+             */
+            type: Reference.Type;
+          }
+
+          export namespace Error {
+            export type Code =
+              | 'invalid_address_city_state_postal_code'
+              | 'invalid_address_cmra_address'
+              | 'invalid_address_highway_contract_box'
+              | 'invalid_address_private_mailbox'
+              | 'invalid_address_registered_agent_address'
+              | 'invalid_business_profile_name'
+              | 'invalid_business_profile_name_denylisted'
+              | 'invalid_company_name_denylisted'
+              | 'invalid_dob_age_over_maximum'
+              | 'invalid_dob_age_under_18'
+              | 'invalid_dob_age_under_minimum'
+              | 'invalid_product_description_length'
+              | 'invalid_product_description_url_match'
+              | 'invalid_representative_country'
+              | 'invalid_statement_descriptor_business_mismatch'
+              | 'invalid_statement_descriptor_denylisted'
+              | 'invalid_statement_descriptor_length'
+              | 'invalid_statement_descriptor_prefix_denylisted'
+              | 'invalid_statement_descriptor_prefix_mismatch'
+              | 'invalid_street_address'
+              | 'invalid_tax_id'
+              | 'invalid_tax_id_format'
+              | 'invalid_tos_acceptance'
+              | 'invalid_url_denylisted'
+              | 'invalid_url_format'
+              | 'invalid_url_website_business_information_mismatch'
+              | 'invalid_url_website_empty'
+              | 'invalid_url_website_inaccessible'
+              | 'invalid_url_website_inaccessible_geoblocked'
+              | 'invalid_url_website_inaccessible_password_protected'
+              | 'invalid_url_website_incomplete'
+              | 'invalid_url_website_incomplete_cancellation_policy'
+              | 'invalid_url_website_incomplete_customer_service_details'
+              | 'invalid_url_website_incomplete_legal_restrictions'
+              | 'invalid_url_website_incomplete_refund_policy'
+              | 'invalid_url_website_incomplete_return_policy'
+              | 'invalid_url_website_incomplete_terms_and_conditions'
+              | 'invalid_url_website_incomplete_under_construction'
+              | 'invalid_url_website_other'
+              | 'invalid_url_web_presence_detected'
+              | 'invalid_value_other'
+              | 'unresolvable_ip_address'
+              | 'unresolvable_postal_code'
+              | 'verification_directors_mismatch'
+              | 'verification_document_address_mismatch'
+              | 'verification_document_address_missing'
+              | 'verification_document_corrupt'
+              | 'verification_document_country_not_supported'
+              | 'verification_document_directors_mismatch'
+              | 'verification_document_dob_mismatch'
+              | 'verification_document_duplicate_type'
+              | 'verification_document_expired'
+              | 'verification_document_failed_copy'
+              | 'verification_document_failed_greyscale'
+              | 'verification_document_failed_other'
+              | 'verification_document_failed_test_mode'
+              | 'verification_document_fraudulent'
+              | 'verification_document_id_number_mismatch'
+              | 'verification_document_id_number_missing'
+              | 'verification_document_incomplete'
+              | 'verification_document_invalid'
+              | 'verification_document_issue_or_expiry_date_missing'
+              | 'verification_document_manipulated'
+              | 'verification_document_missing_back'
+              | 'verification_document_missing_front'
+              | 'verification_document_name_mismatch'
+              | 'verification_document_name_missing'
+              | 'verification_document_nationality_mismatch'
+              | 'verification_document_not_readable'
+              | 'verification_document_not_signed'
+              | 'verification_document_not_uploaded'
+              | 'verification_document_photo_mismatch'
+              | 'verification_document_too_large'
+              | 'verification_document_type_not_supported'
+              | 'verification_extraneous_directors'
+              | 'verification_failed_address_match'
+              | 'verification_failed_business_iec_number'
+              | 'verification_failed_document_match'
+              | 'verification_failed_id_number_match'
+              | 'verification_failed_keyed_identity'
+              | 'verification_failed_keyed_match'
+              | 'verification_failed_name_match'
+              | 'verification_failed_other'
+              | 'verification_failed_representative_authority'
+              | 'verification_failed_residential_address'
+              | 'verification_failed_tax_id_match'
+              | 'verification_failed_tax_id_not_issued'
+              | 'verification_missing_directors'
+              | 'verification_missing_executives'
+              | 'verification_missing_owners'
+              | 'verification_requires_additional_memorandum_of_associations'
+              | 'verification_requires_additional_proof_of_registration'
+              | 'verification_selfie_document_missing_photo'
+              | 'verification_selfie_face_mismatch'
+              | 'verification_selfie_manipulated'
+              | 'verification_selfie_unverified_other'
+              | 'verification_supportability'
+              | 'verification_token_stale'
+              | OtherString;
+          }
+
+          export namespace Reference {
+            export type Type =
+              | 'inquiry'
+              | 'payment_method'
+              | 'person'
+              | OtherString;
+          }
+        }
+      }
+
+      export namespace OriginalEntry {
+        export interface Reference {
+          /**
+           * If `inquiry` is the type, the inquiry token.
+           */
+          inquiry?: string;
+
+          /**
+           * If `resource` is the type, the resource token.
+           */
+          resource?: string;
+
+          /**
+           * The type of the reference. If the type is "inquiry", the inquiry token can be found in the "inquiry" field.
+           * Otherwise the type is an API resource, the token for which can be found in the "resource" field.
+           */
+          type: Reference.Type;
+        }
+
+        export namespace Reference {
+          export type Type =
+            | 'inquiry'
+            | 'payment_method'
+            | 'person'
+            | OtherString;
+        }
+      }
     }
 
     export namespace Entry {
@@ -6387,7 +7375,13 @@ export namespace Account {
             | 'au_becs_debit_payments'
             | 'bacs_debit_payments'
             | 'bancontact_payments'
+            | 'bank_accounts.ach'
+            | 'bank_accounts.fedwire'
+            | 'bank_accounts.fps'
             | 'bank_accounts.local'
+            | 'bank_accounts.rtp'
+            | 'bank_accounts.sepa'
+            | 'bank_accounts.swift'
             | 'bank_accounts.wire'
             | 'blik_payments'
             | 'blik_recurring_payments'
@@ -6871,12 +7865,12 @@ export namespace V2 {
 
           export interface Branding {
             /**
-             * ID of a [file upload](https://docs.stripe.com/api/persons/update#create_file): An icon for the merchant. Must be square and at least 128px x 128px.
+             * ID of a [file upload](https://docs.stripe.com/api/files/create): An icon for the merchant. Must be square and at least 128px x 128px.
              */
             icon?: string;
 
             /**
-             * ID of a [file upload](https://docs.stripe.com/api/persons/update#create_file): A logo for the merchant that will be used in Checkout instead of the icon and without the merchant's name next to it if provided. Must be at least 128px x 128px.
+             * ID of a [file upload](https://docs.stripe.com/api/files/create): A logo for the merchant that will be used in Checkout instead of the icon and without the merchant's name next to it if provided. Must be at least 128px x 128px.
              */
             logo?: string;
 
@@ -7654,17 +8648,122 @@ export namespace V2 {
         export namespace Recipient {
           export interface Capabilities {
             /**
+             * Capabilities that enable OutboundPayments to a bank account linked to this Account.
+             */
+            bank_accounts?: Capabilities.BankAccounts;
+
+            /**
+             * Capabilities that enable OutboundPayments to a card linked to this Account.
+             */
+            cards?: Capabilities.Cards;
+
+            /**
              * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
              */
             stripe_balance?: Capabilities.StripeBalance;
           }
 
           export namespace Capabilities {
+            export interface BankAccounts {
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over ACH rails.
+               */
+              ach?: BankAccounts.Ach;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over Fedwire or CHIPS.
+               */
+              fedwire?: BankAccounts.Fedwire;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over FPS rails.
+               */
+              fps?: BankAccounts.Fps;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over local networks.
+               */
+              local?: BankAccounts.Local;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over RTP rails.
+               */
+              rtp?: BankAccounts.Rtp;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over SEPA rails.
+               */
+              sepa?: BankAccounts.Sepa;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over SWIFT.
+               */
+              swift?: BankAccounts.Swift;
+            }
+
+            export interface Cards {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
             export interface StripeBalance {
               /**
                * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
                */
               stripe_transfers?: StripeBalance.StripeTransfers;
+            }
+
+            export namespace BankAccounts {
+              export interface Ach {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+
+              export interface Fedwire {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+
+              export interface Fps {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+
+              export interface Local {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+
+              export interface Rtp {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+
+              export interface Sepa {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+
+              export interface Swift {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
             }
 
             export namespace StripeBalance {
@@ -8072,7 +9171,7 @@ export namespace V2 {
 
           export interface TermsOfService {
             /**
-             * Details on the Account's acceptance of the [Stripe Services Agreement](https://docs.stripe.com/connect/updating-accounts#tos-acceptance).
+             * Details on the Account's acceptance of the Stripe Services Agreement.
              */
             account?: TermsOfService.Account;
           }
@@ -8351,7 +9450,7 @@ export namespace V2 {
           export namespace Documents {
             export interface BankAccountOwnershipVerification {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -8363,7 +9462,7 @@ export namespace V2 {
 
             export interface CompanyLicense {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -8375,7 +9474,7 @@ export namespace V2 {
 
             export interface CompanyMemorandumOfAssociation {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -8387,7 +9486,7 @@ export namespace V2 {
 
             export interface CompanyMinisterialDecree {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -8399,7 +9498,7 @@ export namespace V2 {
 
             export interface CompanyRegistrationVerification {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -8411,7 +9510,7 @@ export namespace V2 {
 
             export interface CompanyTaxIdVerification {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -8423,7 +9522,7 @@ export namespace V2 {
 
             export interface PrimaryVerification {
               /**
-               * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+               * The [file upload](https://docs.stripe.com/api/files/create) tokens referring to each side of the document.
                */
               front_back: PrimaryVerification.FrontBack;
 
@@ -8435,7 +9534,7 @@ export namespace V2 {
 
             export interface ProofOfAddress {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -8447,7 +9546,7 @@ export namespace V2 {
 
             export interface ProofOfRegistration {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -8464,7 +9563,7 @@ export namespace V2 {
 
             export interface ProofOfUltimateBeneficialOwnership {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -8506,12 +9605,12 @@ export namespace V2 {
             export namespace PrimaryVerification {
               export interface FrontBack {
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 back?: string;
 
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front: string;
               }
@@ -8979,7 +10078,7 @@ export namespace V2 {
           export namespace Documents {
             export interface CompanyAuthorization {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -8991,7 +10090,7 @@ export namespace V2 {
 
             export interface Passport {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -9003,7 +10102,7 @@ export namespace V2 {
 
             export interface PrimaryVerification {
               /**
-               * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+               * The [file upload](https://docs.stripe.com/api/files/create) tokens referring to each side of the document.
                */
               front_back: PrimaryVerification.FrontBack;
 
@@ -9015,7 +10114,7 @@ export namespace V2 {
 
             export interface SecondaryVerification {
               /**
-               * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+               * The [file upload](https://docs.stripe.com/api/files/create) tokens referring to each side of the document.
                */
               front_back: SecondaryVerification.FrontBack;
 
@@ -9027,7 +10126,7 @@ export namespace V2 {
 
             export interface Visa {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -9048,12 +10147,12 @@ export namespace V2 {
             export namespace PrimaryVerification {
               export interface FrontBack {
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 back?: string;
 
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front: string;
               }
@@ -9064,12 +10163,12 @@ export namespace V2 {
             export namespace SecondaryVerification {
               export interface FrontBack {
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 back?: string;
 
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front: string;
               }
@@ -9377,6 +10476,13 @@ export namespace V2 {
         locales?: Array<Defaults.Locale>;
 
         /**
+         * Default payout methods per currency. Keys are three-letter [ISO currency codes](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Values are v2 Payout Method IDs.
+         */
+        payout_methods?: {
+          [key: string]: string;
+        };
+
+        /**
          * Account profile information.
          */
         profile?: Defaults.Profile;
@@ -9503,7 +10609,7 @@ export namespace V2 {
           sepa_debit_payments?: Merchant.SepaDebitPayments;
 
           /**
-           * Settings for the default [statement descriptor](https://docs.stripe.com/connect/statement-descriptors) text.
+           * Settings for the default statement descriptor text.
            */
           statement_descriptor?: Merchant.StatementDescriptor;
 
@@ -9700,12 +10806,12 @@ export namespace V2 {
 
           export interface Branding {
             /**
-             * ID of a [file upload](https://docs.stripe.com/api/persons/update#create_file): An icon for the merchant. Must be square and at least 128px x 128px.
+             * ID of a [file upload](https://docs.stripe.com/api/files/create): An icon for the merchant. Must be square and at least 128px x 128px.
              */
             icon?: string;
 
             /**
-             * ID of a [file upload](https://docs.stripe.com/api/persons/update#create_file): A logo for the merchant that will be used in Checkout instead of the icon and without the merchant's name next to it if provided. Must be at least 128px x 128px.
+             * ID of a [file upload](https://docs.stripe.com/api/files/create): A logo for the merchant that will be used in Checkout instead of the icon and without the merchant's name next to it if provided. Must be at least 128px x 128px.
              */
             logo?: string;
 
@@ -10483,17 +11589,122 @@ export namespace V2 {
         export namespace Recipient {
           export interface Capabilities {
             /**
+             * Capabilities that enable OutboundPayments to a bank account linked to this Account.
+             */
+            bank_accounts?: Capabilities.BankAccounts;
+
+            /**
+             * Capability that enable OutboundPayments to a debit card linked to this Account.
+             */
+            cards?: Capabilities.Cards;
+
+            /**
              * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
              */
             stripe_balance?: Capabilities.StripeBalance;
           }
 
           export namespace Capabilities {
+            export interface BankAccounts {
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over ACH rails.
+               */
+              ach?: BankAccounts.Ach;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over Fedwire or CHIPS.
+               */
+              fedwire?: BankAccounts.Fedwire;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over FPS rails.
+               */
+              fps?: BankAccounts.Fps;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over local networks.
+               */
+              local?: BankAccounts.Local;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over RTP rails.
+               */
+              rtp?: BankAccounts.Rtp;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over SEPA rails.
+               */
+              sepa?: BankAccounts.Sepa;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over SWIFT.
+               */
+              swift?: BankAccounts.Swift;
+            }
+
+            export interface Cards {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
             export interface StripeBalance {
               /**
                * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
                */
               stripe_transfers?: StripeBalance.StripeTransfers;
+            }
+
+            export namespace BankAccounts {
+              export interface Ach {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+
+              export interface Fedwire {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+
+              export interface Fps {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+
+              export interface Local {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+
+              export interface Rtp {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+
+              export interface Sepa {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+
+              export interface Swift {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
             }
 
             export namespace StripeBalance {
@@ -10901,7 +12112,7 @@ export namespace V2 {
 
           export interface TermsOfService {
             /**
-             * Details on the Account's acceptance of the [Stripe Services Agreement](https://docs.stripe.com/connect/updating-accounts#tos-acceptance).
+             * Details on the Account's acceptance of the Stripe Services Agreement.
              */
             account?: TermsOfService.Account;
 
@@ -11224,7 +12435,7 @@ export namespace V2 {
           export namespace Documents {
             export interface BankAccountOwnershipVerification {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -11236,7 +12447,7 @@ export namespace V2 {
 
             export interface CompanyLicense {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -11248,7 +12459,7 @@ export namespace V2 {
 
             export interface CompanyMemorandumOfAssociation {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -11260,7 +12471,7 @@ export namespace V2 {
 
             export interface CompanyMinisterialDecree {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -11272,7 +12483,7 @@ export namespace V2 {
 
             export interface CompanyRegistrationVerification {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -11284,7 +12495,7 @@ export namespace V2 {
 
             export interface CompanyTaxIdVerification {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -11296,7 +12507,7 @@ export namespace V2 {
 
             export interface PrimaryVerification {
               /**
-               * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+               * The [file upload](https://docs.stripe.com/api/files/create) tokens referring to each side of the document.
                */
               front_back: PrimaryVerification.FrontBack;
 
@@ -11308,7 +12519,7 @@ export namespace V2 {
 
             export interface ProofOfAddress {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -11320,7 +12531,7 @@ export namespace V2 {
 
             export interface ProofOfRegistration {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -11337,7 +12548,7 @@ export namespace V2 {
 
             export interface ProofOfUltimateBeneficialOwnership {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -11379,12 +12590,12 @@ export namespace V2 {
             export namespace PrimaryVerification {
               export interface FrontBack {
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 back?: string;
 
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front?: string;
               }
@@ -11852,7 +13063,7 @@ export namespace V2 {
           export namespace Documents {
             export interface CompanyAuthorization {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -11864,7 +13075,7 @@ export namespace V2 {
 
             export interface Passport {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -11876,7 +13087,7 @@ export namespace V2 {
 
             export interface PrimaryVerification {
               /**
-               * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+               * The [file upload](https://docs.stripe.com/api/files/create) tokens referring to each side of the document.
                */
               front_back: PrimaryVerification.FrontBack;
 
@@ -11888,7 +13099,7 @@ export namespace V2 {
 
             export interface SecondaryVerification {
               /**
-               * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+               * The [file upload](https://docs.stripe.com/api/files/create) tokens referring to each side of the document.
                */
               front_back: SecondaryVerification.FrontBack;
 
@@ -11900,7 +13111,7 @@ export namespace V2 {
 
             export interface Visa {
               /**
-               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+               * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/files/create) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
 
@@ -11921,12 +13132,12 @@ export namespace V2 {
             export namespace PrimaryVerification {
               export interface FrontBack {
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 back?: string;
 
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front?: string;
               }
@@ -11937,12 +13148,12 @@ export namespace V2 {
             export namespace SecondaryVerification {
               export interface FrontBack {
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 back?: string;
 
                 /**
-                 * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+                 * A [file upload](https://docs.stripe.com/api/files/create) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front?: string;
               }
@@ -12157,7 +13368,7 @@ export namespace V2 {
       closed?: boolean;
 
       /**
-       * The upper limit on the number of accounts returned by the List Account request.
+       * The maximum number of items returned by the list request.
        */
       limit?: number;
     }

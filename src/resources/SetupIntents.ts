@@ -871,11 +871,13 @@ export namespace SetupIntent {
       | 'shipping_calculation_failed'
       | 'siret_invalid'
       | 'sku_inactive'
+      | 'smart_disputes_not_available'
       | 'state_unsupported'
       | 'status_transition_invalid'
       | 'storer_capability_missing'
       | 'storer_capability_not_active'
       | 'stripe_tax_inactive'
+      | 'subscription_update_trial_after_billing_cycle_anchor'
       | 'tax_id_invalid'
       | 'tax_id_prohibited'
       | 'taxes_calculation_failed'
@@ -887,6 +889,8 @@ export namespace SetupIntent {
       | 'terminal_reader_offline'
       | 'terminal_reader_timeout'
       | 'testmode_charges_only'
+      | 'three_d_secure_authentication_not_supported'
+      | 'three_d_secure_authentication_upstream_error'
       | 'tls_version_unsupported'
       | 'token_already_used'
       | 'token_card_network_invalid'
@@ -1078,6 +1082,11 @@ export namespace SetupIntent {
        * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
        */
       request_three_d_secure: Card.RequestThreeDSecure | null;
+
+      /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
     }
 
     export interface CardPresent {}
@@ -1281,6 +1290,12 @@ export namespace SetupIntent {
         | 'any'
         | 'automatic'
         | 'challenge'
+        | OtherString;
+
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
         | OtherString;
 
       export namespace MandateOptions {
@@ -1606,7 +1621,7 @@ export interface SetupIntentCreateParams {
   on_behalf_of?: string;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
+   * The ID of a PaymentMethod to attach to this SetupIntent.
    */
   payment_method?: string;
 
@@ -2899,6 +2914,11 @@ export namespace SetupIntentCreateParams {
       request_three_d_secure?: Card.RequestThreeDSecure;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * If 3D Secure authentication was performed with a third-party provider,
        * the authentication details to use for this setup.
        */
@@ -3138,6 +3158,12 @@ export namespace SetupIntentCreateParams {
         | 'any'
         | 'automatic'
         | 'challenge'
+        | OtherString;
+
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
         | OtherString;
 
       export interface ThreeDSecure {
@@ -3713,7 +3739,7 @@ export interface SetupIntentUpdateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent. To unset this field to null, pass in an empty string.
+   * The ID of a PaymentMethod to attach to this SetupIntent. To unset this field to null, pass in an empty string.
    */
   payment_method?: string;
 
@@ -4903,6 +4929,11 @@ export namespace SetupIntentUpdateParams {
       request_three_d_secure?: Card.RequestThreeDSecure;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * If 3D Secure authentication was performed with a third-party provider,
        * the authentication details to use for this setup.
        */
@@ -5142,6 +5173,12 @@ export namespace SetupIntentUpdateParams {
         | 'any'
         | 'automatic'
         | 'challenge'
+        | OtherString;
+
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
         | OtherString;
 
       export interface ThreeDSecure {
@@ -5721,7 +5758,7 @@ export interface SetupIntentConfirmParams {
   mandate_data?: Emptyable<SetupIntentConfirmParams.MandateData>;
 
   /**
-   * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
+   * The ID of a PaymentMethod to attach to this SetupIntent.
    */
   payment_method?: string;
 
@@ -6907,6 +6944,11 @@ export namespace SetupIntentConfirmParams {
       request_three_d_secure?: Card.RequestThreeDSecure;
 
       /**
+       * Set to indicate the future transaction type usage for the card being set up.
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
        * If 3D Secure authentication was performed with a third-party provider,
        * the authentication details to use for this setup.
        */
@@ -7146,6 +7188,12 @@ export namespace SetupIntentConfirmParams {
         | 'any'
         | 'automatic'
         | 'challenge'
+        | OtherString;
+
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
         | OtherString;
 
       export interface ThreeDSecure {

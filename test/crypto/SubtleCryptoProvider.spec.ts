@@ -23,6 +23,11 @@ if (!webcrypto || !webcrypto.subtle) {
       }).to.throw(
         /SubtleCryptoProvider cannot be used in a synchronous context/
       );
+      expect(() => {
+        provider.computeSHA256(new Uint8Array([1, 2, 3, 4, 5]));
+      }).to.throw(
+        /SubtleCryptoProvider cannot be used in a synchronous context/
+      );
     });
 
     it('handles hex conversion properly (test boundaries + middle values)', async () => {

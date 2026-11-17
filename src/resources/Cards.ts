@@ -15,6 +15,9 @@ export interface Card {
    */
   object: 'card';
 
+  /**
+   * The account this card belongs to. Only applicable on Accounts (not customers or recipients) This property is only available when returned as an [External Account](https://docs.stripe.com/api/external_account_cards/object) where [controller.is_controller](https://docs.stripe.com/api/accounts/object#account_object-controller-is_controller) is `true`.
+   */
   account?: string | Account | null;
 
   /**

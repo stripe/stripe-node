@@ -37,6 +37,13 @@ export class CryptoProvider {
   /**
    * Computes a SHA-256 hash of the data.
    */
+  computeSHA256(data: Uint8Array): Uint8Array {
+    throw new Error('computeSHA256 not implemented.');
+  }
+
+  /**
+   * Asynchronous version of `computeSHA256`.
+   */
   computeSHA256Async(data: Uint8Array): Promise<Uint8Array> {
     throw new Error('computeSHA256 not implemented.');
   }

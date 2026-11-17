@@ -6,7 +6,7 @@ import {RequestOptions, Response} from '../../lib.js';
 
 export class CustomerResource extends StripeResource {
   /**
-   * Create an incoming testmode bank transfer
+   * Create a test incoming bank transfer
    */
   fundCashBalance(
     id: string,

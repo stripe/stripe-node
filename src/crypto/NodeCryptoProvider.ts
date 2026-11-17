@@ -23,12 +23,19 @@ export class NodeCryptoProvider extends CryptoProvider {
   }
 
   /** @override */
-  async computeSHA256Async(data: Uint8Array): Promise<Uint8Array> {
+  computeSHA256(data: Uint8Array): Uint8Array {
     return new Uint8Array(
-      await crypto
+      crypto
         .createHash('sha256')
         .update(data)
         .digest()
+    );
+  }
+
+  /** @override */
+  async computeSHA256Async(data: Uint8Array): Promise<Uint8Array> {
+    return new Uint8Array(
+      await crypto.webcrypto.subtle.digest('SHA-256', data)
     );
   }
 }

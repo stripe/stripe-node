@@ -861,7 +861,7 @@ export interface Session {
   payment_link: string | PaymentLink | null;
 
   /**
-   * Configure whether a Checkout Session should collect a payment method for sessions with mode `payment`. Defaults to `always`.
+   * Configure whether a Checkout Session should collect a payment method. Can only be set in `subscription` mode. Defaults to `always`.
    */
   payment_method_collection: Session.PaymentMethodCollection | null;
 
@@ -1260,6 +1260,7 @@ export namespace Session {
     | 'fil'
     | 'fr'
     | 'fr-CA'
+    | 'hi-IN'
     | 'hr'
     | 'hu'
     | 'id'
@@ -1718,7 +1719,7 @@ export namespace Session {
 
     export interface TaxId {
       /**
-       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, or `unknown`
+       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `au_acn`, `nz_bn`, `pt_nif`, `cz_dic`, `fr_siret`, `fr_siren`, `fr_spi`, `sm_coe`, `tt_vat`, `tt_bir`, `mu_vat`, `mz_nuit`, `au_wpn`, `md_cf`, `is_kt`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, `ic_nif`, `gh_tin`, `bw_vat`, `ci_vat`, or `unknown`
        */
       type: TaxId.Type;
 
@@ -1737,7 +1738,9 @@ export namespace Session {
         | 'ao_tin'
         | 'ar_cuit'
         | 'au_abn'
+        | 'au_acn'
         | 'au_arn'
+        | 'au_wpn'
         | 'aw_tin'
         | 'az_tin'
         | 'ba_tin'
@@ -1751,6 +1754,7 @@ export namespace Session {
         | 'br_cnpj'
         | 'br_cpf'
         | 'bs_tin'
+        | 'bw_vat'
         | 'by_tin'
         | 'ca_bn'
         | 'ca_gst_hst'
@@ -1761,12 +1765,14 @@ export namespace Session {
         | 'cd_nif'
         | 'ch_uid'
         | 'ch_vat'
+        | 'ci_vat'
         | 'cl_tin'
         | 'cm_niu'
         | 'cn_tin'
         | 'co_nit'
         | 'cr_tin'
         | 'cv_nif'
+        | 'cz_dic'
         | 'de_stn'
         | 'do_rcn'
         | 'ec_ruc'
@@ -1776,8 +1782,12 @@ export namespace Session {
         | 'eu_oss_vat'
         | 'eu_vat'
         | 'fo_vat'
+        | 'fr_siren'
+        | 'fr_siret'
+        | 'fr_spi'
         | 'gb_vat'
         | 'ge_vat'
+        | 'gh_tin'
         | 'gi_tin'
         | 'gn_nif'
         | 'hk_br'
@@ -1787,6 +1797,7 @@ export namespace Session {
         | 'id_npwp'
         | 'il_vat'
         | 'in_gst'
+        | 'is_kt'
         | 'is_vat'
         | 'it_cf'
         | 'jp_cn'
@@ -1802,23 +1813,28 @@ export namespace Session {
         | 'li_vat'
         | 'lk_vat'
         | 'ma_vat'
+        | 'md_cf'
         | 'md_vat'
         | 'me_pib'
         | 'mk_vat'
         | 'mr_nif'
+        | 'mu_vat'
         | 'mx_rfc'
         | 'my_frp'
         | 'my_itn'
         | 'my_sst'
+        | 'mz_nuit'
         | 'ng_tin'
         | 'no_vat'
         | 'no_voec'
         | 'np_pan'
+        | 'nz_bn'
         | 'nz_gst'
         | 'om_vat'
         | 'pe_ruc'
         | 'ph_tin'
         | 'pl_nip'
+        | 'pt_nif'
         | 'py_ruc'
         | 'ro_tin'
         | 'rs_pib'
@@ -1828,12 +1844,15 @@ export namespace Session {
         | 'sg_gst'
         | 'sg_uen'
         | 'si_tin'
+        | 'sm_coe'
         | 'sn_ninea'
         | 'sr_fin'
         | 'sv_nit'
         | 'th_vat'
         | 'tj_tin'
         | 'tr_tin'
+        | 'tt_bir'
+        | 'tt_vat'
         | 'tw_vat'
         | 'tz_vat'
         | 'ua_vat'
@@ -3848,7 +3867,7 @@ export namespace Checkout {
     consent_collection?: SessionCreateParams.ConsentCollection;
 
     /**
-     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Required in `setup` mode when `payment_method_types` is not set.
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Required in `setup` mode when `allowed_payment_method_types` is not set.
      */
     currency?: string;
 
@@ -4441,7 +4460,7 @@ export namespace Checkout {
       price?: string;
 
       /**
-       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
+       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline, for [dynamic pricing](https://docs.stripe.com/products-prices/how-products-and-prices-work#inline-pricing) when the amount isn't known ahead of time. One of `price` or `price_data` is required when creating a new line item.
        */
       price_data?: LineItem.PriceData;
 
@@ -4472,6 +4491,7 @@ export namespace Checkout {
       | 'fil'
       | 'fr'
       | 'fr-CA'
+      | 'hi-IN'
       | 'hr'
       | 'hu'
       | 'id'
@@ -6321,7 +6341,7 @@ export namespace Checkout {
         amount_includes_iof?: Pix.AmountIncludesIof;
 
         /**
-         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
 
@@ -7538,6 +7558,26 @@ export namespace Checkout {
 
       export interface InvoiceSettings {
         /**
+         * The account tax IDs associated with the subscription. Will be set on invoices generated by the subscription.
+         */
+        account_tax_ids?: Emptyable<Array<string>>;
+
+        /**
+         * A list of up to 4 custom fields to be displayed on the invoice.
+         */
+        custom_fields?: Emptyable<Array<InvoiceSettings.CustomField>>;
+
+        /**
+         * An arbitrary string attached to the object. Often useful for displaying to users.
+         */
+        description?: string;
+
+        /**
+         * Footer to be displayed on the invoice.
+         */
+        footer?: string;
+
+        /**
          * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
          */
         issuer?: InvoiceSettings.Issuer;
@@ -7598,6 +7638,18 @@ export namespace Checkout {
       }
 
       export namespace InvoiceSettings {
+        export interface CustomField {
+          /**
+           * The name of the custom field. This may be up to 40 characters.
+           */
+          name: string;
+
+          /**
+           * The value of the custom field. This may be up to 140 characters.
+           */
+          value: string;
+        }
+
         export interface Issuer {
           /**
            * The connected account being referenced when `type` is `account`.
@@ -7698,6 +7750,13 @@ export namespace Checkout {
     metadata?: Emptyable<MetadataParam>;
 
     /**
+     * A subset of parameters to apply to the PaymentIntent for Checkout Sessions in `payment` mode.
+     *
+     * You can only update these parameters when `ui_mode` is `elements` and while the session is active. If the PaymentIntent requires customer action or confirmation, updating these parameters abandons the current payment attempt and returns the PaymentIntent to `requires_payment_method`. You can't update these parameters after the PaymentIntent begins processing, requires capture, succeeds, or is canceled.
+     */
+    payment_intent_data?: SessionUpdateParams.PaymentIntentData;
+
+    /**
      * The shipping rate options to apply to this Session. Up to a maximum of 5.
      */
     shipping_options?: Emptyable<Array<SessionUpdateParams.ShippingOption>>;
@@ -7733,7 +7792,7 @@ export namespace Checkout {
       price?: string;
 
       /**
-       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required when creating a new line item.
+       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline, for [dynamic pricing](https://docs.stripe.com/products-prices/how-products-and-prices-work#inline-pricing) when the amount isn't known ahead of time. One of `price` or `price_data` is required when creating a new line item.
        */
       price_data?: LineItem.PriceData;
 
@@ -7746,6 +7805,50 @@ export namespace Checkout {
        * The [tax rates](https://docs.stripe.com/api/tax_rates) which apply to this line item.
        */
       tax_rates?: Emptyable<Array<string>>;
+    }
+
+    export interface PaymentIntentData {
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users. Pass an empty string to clear a previously configured value.
+       */
+      description?: Emptyable<string>;
+
+      /**
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Emptyable<MetadataParam>;
+
+      /**
+       * Indicates that you intend to [make future payments](https://docs.stripe.com/payments/payment-intents#future-usage) with the payment method collected by this Checkout Session.
+       *
+       * When setting this to `on_session`, Checkout will show a notice to the customer that their payment details will be saved.
+       *
+       * When setting this to `off_session`, Checkout will show a notice to the customer that their payment details will be saved and used for future payments.
+       *
+       * If a Customer has been provided or Checkout creates a new Customer, Checkout will attach the payment method to the Customer.
+       *
+       * If Checkout does not create a Customer, the payment method is not attached to a Customer. To reuse the payment method, you can retrieve it from the Checkout Session's PaymentIntent.
+       *
+       * When processing card payments, Checkout also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as SCA.
+       *
+       * You must wrap any Checkout Session update that mutates `setup_future_usage` in [`runServerUpdate`](https://docs.stripe.com/js/custom_checkout/run_server_update) and await it before continuing with the payment.
+       * Pass an empty string to remove a previously supplied configuration.
+       */
+      setup_future_usage?: Emptyable<PaymentIntentData.SetupFutureUsage>;
+
+      /**
+       * Text that appears on the customer's statement as the statement descriptor for a non-card charge. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
+       *
+       * Setting this value for a card charge returns an error. For card charges, set the [statement_descriptor_suffix](https://docs.stripe.com/get-started/account/statement-descriptors#dynamic) instead.
+       *  Pass an empty string to clear a previously configured value.
+       */
+      statement_descriptor?: Emptyable<string>;
+
+      /**
+       * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
+       *  Pass an empty string to clear a previously configured value.
+       */
+      statement_descriptor_suffix?: Emptyable<string>;
     }
 
     export interface ShippingOption {
@@ -7942,6 +8045,10 @@ export namespace Checkout {
             | OtherString;
         }
       }
+    }
+
+    export namespace PaymentIntentData {
+      export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
     }
 
     export namespace ShippingOption {

@@ -1096,6 +1096,16 @@ export namespace Charge {
       regulated_status: Card.RegulatedStatus | null;
 
       /**
+       * The payment_method_options.card.setup_credential_usage value that was passed when setup_future_usage was present at confirmation, one of `recurring`, `unscheduled`, or `installment`
+       */
+      setup_credential_usage?: Card.SetupCredentialUsage;
+
+      /**
+       * The payment_method_options.card.stored_credential_usage value that was passed for an off session, merchant-initiated transaction.
+       */
+      stored_credential_usage?: Card.StoredCredentialUsage;
+
+      /**
        * Populated if this transaction used 3D Secure authentication.
        */
       three_d_secure: Card.ThreeDSecure | null;
@@ -2171,6 +2181,18 @@ export namespace Charge {
 
       export type RegulatedStatus = 'regulated' | 'unregulated' | OtherString;
 
+      export type SetupCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
+      export type StoredCredentialUsage =
+        | 'installment'
+        | 'recurring'
+        | 'unscheduled'
+        | OtherString;
+
       export interface ThreeDSecure {
         /**
          * For authenticated transactions: how the customer was authenticated by
@@ -2510,6 +2532,7 @@ export namespace Charge {
         | OtherString;
 
       export type TokenCurrency =
+        | 'ousd'
         | 'phantom_cash'
         | 'usdc'
         | 'usdg'
@@ -2968,7 +2991,7 @@ export interface ChargeCreateParams {
   radar_options?: ChargeCreateParams.RadarOptions;
 
   /**
-   * The email address to which this charge's [receipt](https://docs.stripe.com/dashboard/receipts) will be sent. The receipt will not be sent until the charge is paid, and no receipts will be sent for test mode charges. If this charge is for a [Customer](https://docs.stripe.com/api/customers/object), the email address specified here will override the customer's email address. If `receipt_email` is specified for a charge in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
+   * The email address to which this charge's [receipt](https://docs.stripe.com/dashboard/receipts) will be sent. The receipt will not be sent until the charge is paid, and receipts are only sent for payments in live mode. If this charge is for a [Customer](https://docs.stripe.com/api/customers/object), the email address specified here will override the customer's email address. If `receipt_email` is specified for a charge in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
    */
   receipt_email?: string;
 
@@ -3202,7 +3225,7 @@ export interface ChargeCaptureParams {
   expand?: Array<string>;
 
   /**
-   * The email address to send this charge's receipt to. This will override the previously-specified email address for this charge, if one was set. Receipts will not be sent in test mode.
+   * The email address to send this charge's receipt to. This will override the previously-specified email address for this charge, if one was set. Receipts are only sent for payments in live mode.
    */
   receipt_email?: string;
 

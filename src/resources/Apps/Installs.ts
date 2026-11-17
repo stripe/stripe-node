@@ -6,7 +6,7 @@ import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class InstallResource extends StripeResource {
   /**
-   * Returns a list of app installs. An app developer or embedding platform filtering by its own app sees the installs across the accounts that installed it; other callers see the installs on their own account. The key selects the environment: a live key lists live installs, a sandbox API key lists the installs on that sandbox, and the key of an app's managed sandbox filtering by app lists that app's installs across every sandbox. For existing accounts that still use legacy test mode, a test mode key lists legacy test mode installs.
+   * Returns a list of app installs. An app developer filtering by its own app with its own key sees that app's installs across the accounts that installed it. An app developer acting on a connected account through Stripe-Account and filtering by its app sees that account's installs of the app, and an embedding platform acting on a connected account sees only the installs it created there. Other callers see the installs on their own account. A live key lists live installs and a test key lists test installs; the key of an app's managed sandbox filtering by app lists that app's installs across every sandbox.
    */
   list(
     params?: Apps.InstallListParams,
@@ -17,7 +17,7 @@ export class InstallResource extends StripeResource {
     }) as any;
   }
   /**
-   * Creates an app install. An account installs its own private app with its own key; public and testing installs are made from the Dashboard. An app developer or embedding platform acting on a connected account through Stripe-Account installs or reinstalls its app there. For a private app, creating an install installs the newest completed upload; when that version is already installed with nothing pending, the existing install is returned.
+   * Creates an app install. An account installs its own private app with its own key; public and testing installs are made from the Dashboard. An app developer acting on a connected account through Stripe-Account installs or reinstalls its app there, and an embedding platform can do the same once the app's developer approves its request to embed the app. For a private app, creating an install installs the newest completed upload; when that version is already installed with nothing pending, the existing install is returned.
    */
   create(
     params: Apps.InstallCreateParams,
@@ -46,7 +46,7 @@ export class InstallResource extends StripeResource {
     ) as any;
   }
   /**
-   * Reauthorizes an app install. The installer grants the permissions, content security policy entries, and endpoints that the version being installed requests. An account reauthorizes its own installs on any channel with its own key; app developers and embedding platforms reauthorize installs on connected accounts through Stripe-Account. For private apps, the version being installed is the newest completed upload.
+   * Reauthorizes an app install. The installer grants the permissions, content security policy entries, and endpoints that the version being installed requests. An account reauthorizes its own installs on any channel with its own key, which grants all of that access, so only give app_install_write to keys that may approve an app's access. App developers and embedding platforms reauthorize installs on connected accounts through Stripe-Account. An app developer can't grant new access. An embedding platform can grant new access only once the app's developer approves its request to embed the app. For private apps, the version being installed is the newest completed upload.
    */
   update(
     id: string,
@@ -205,7 +205,7 @@ export namespace Apps {
     app: string;
 
     /**
-     * The distribution channel to install from. Defaults to `public`. A private app must be installed on `private_test` or `private_live`, matching the mode of the API key.
+     * The distribution channel to install from. Defaults to `public`, which only app developers and embedding platforms can use. An account installing its own private app must pass `private_test` or `private_live`, matching the mode of the API key.
      */
     channel?: InstallCreateParams.Channel;
 
@@ -253,7 +253,7 @@ export namespace Apps {
 export namespace Apps {
   export interface InstallListParams extends PaginationParams {
     /**
-     * Only return installs made by this account. Only useful to app developers and embedding platforms, whose lists span the accounts that installed their app.
+     * Only return installs made by this account. Only useful to an app developer filtering by its own app with its own key, whose list spans the accounts that installed the app; other lists only accept the authenticated account.
      */
     account?: string;
 
@@ -288,7 +288,7 @@ export namespace Apps {
     expand?: Array<string>;
 
     /**
-     * Only return installs with the given status.
+     * Only return installs with the given status: `installed`, `installing`, `install_failed`, `uninstalling`, or `uninstall_failed`.
      */
     status?: InstallListParams.Status;
   }
