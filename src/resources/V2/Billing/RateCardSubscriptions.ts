@@ -23,7 +23,7 @@ export class RateCardSubscriptionResource extends StripeResource {
     ) as any;
   }
   /**
-   * Create a Rate Card Subscription to bill a Rate Card on a specified Billing Cadence.
+   * Create a Rate Card Subscription to bill a Rate Card on a specified Billing Group.
    */
   create(
     params: V2.Billing.RateCardSubscriptionCreateParams,
@@ -94,9 +94,9 @@ export interface RateCardSubscription {
   object: 'v2.billing.rate_card_subscription';
 
   /**
-   * The ID of the Billing Cadence.
+   * The ID of the Billing Group.
    */
-  billing_cadence: string;
+  billing_group: string;
 
   /**
    * The payment status of a Rate Card Subscription.
@@ -216,9 +216,9 @@ export namespace V2 {
   export namespace Billing {
     export interface RateCardSubscriptionCreateParams {
       /**
-       * The ID of the Billing Cadence.
+       * The ID of the Billing Group.
        */
-      billing_cadence: string;
+      billing_group: string;
 
       /**
        * The ID of the Rate Card.
@@ -256,9 +256,9 @@ export namespace V2 {
   export namespace Billing {
     export interface RateCardSubscriptionListParams {
       /**
-       * Optionally filter by a BillingCadence. Mutually exclusive with `payers`, `rate_card`, and `rate_card_version`.
+       * Optionally filter by a BillingGroup. Mutually exclusive with `payers`, `rate_card`, and `rate_card_version`.
        */
-      billing_cadence?: string;
+      billing_group?: string;
 
       /**
        * The page size limit. Defaults to 20.
@@ -266,18 +266,18 @@ export namespace V2 {
       limit?: number;
 
       /**
-       * Optionally filter by the payer associated with Billing Cadences which the Rate Card Subscriptions are subscribed to.
-       * Mutually exclusive with `billing_cadence`, `rate_card`, and `rate_card_version`.
+       * Optionally filter by the payer associated with Billing Groups which the Rate Card Subscriptions are subscribed to.
+       * Mutually exclusive with `billing_group`, `rate_card`, and `rate_card_version`.
        */
       payer?: RateCardSubscriptionListParams.Payer;
 
       /**
-       * Optionally filter by a RateCard. Mutually exclusive with `billing_cadence`, `payers`, and `rate_card_version`.
+       * Optionally filter by a RateCard. Mutually exclusive with `billing_group`, `payers`, and `rate_card_version`.
        */
       rate_card?: string;
 
       /**
-       * Optionally filter by a RateCard version. Mutually exclusive with `billing_cadence`, `payers`, and `rate_card`.
+       * Optionally filter by a RateCard version. Mutually exclusive with `billing_group`, `payers`, and `rate_card`.
        */
       rate_card_version?: string;
 
@@ -290,7 +290,7 @@ export namespace V2 {
     export namespace RateCardSubscriptionListParams {
       export interface Payer {
         /**
-         * The ID of the Customer object. If provided, only the Rate Card Subscriptions that are subscribed on the Billing Cadences with the specified payer will be returned.
+         * The ID of the Customer object. If provided, only the Rate Card Subscriptions that are subscribed on the Billing Groups with the specified payer will be returned.
          */
         customer?: string;
 

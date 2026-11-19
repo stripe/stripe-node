@@ -29,7 +29,6 @@ import {BillSettingResource as V2BillingBillSettings} from './resources/V2/Billi
 import {BillingEvaluationResource as RadarBillingEvaluations} from './resources/Radar/BillingEvaluations.js';
 import {BlocklistEntryResource as IdentityBlocklistEntries} from './resources/Identity/BlocklistEntries.js';
 import {BusinessProfileResource as V2NetworkBusinessProfiles} from './resources/V2/Network/BusinessProfiles.js';
-import {CadenceResource as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
 import {CalculationResource as TaxCalculations} from './resources/Tax/Calculations.js';
 import {CardholderResource as IssuingCardholders} from './resources/Issuing/Cardholders.js';
 import {CardResource as IssuingCards} from './resources/Issuing/Cards.js';
@@ -85,6 +84,7 @@ import {FundingSessionResource as V2MoneyManagementFundingSessions} from './reso
 import {GbBankAccountResource as V2CoreVaultGbBankAccounts} from './resources/V2/Core/Vault/GbBankAccounts.js';
 import {GrantedTokenResource as SharedPaymentGrantedTokens} from './resources/SharedPayment/GrantedTokens.js';
 import {GrantedTokenResource as TestHelpersSharedPaymentGrantedTokens} from './resources/TestHelpers/SharedPayment/GrantedTokens.js';
+import {GroupResource as V2BillingGroups} from './resources/V2/Billing/Groups.js';
 import {HoldResource as ReserveHolds} from './resources/Reserve/Holds.js';
 import {ImportResource as V2CommerceProductCatalogImports} from './resources/V2/Commerce/ProductCatalog/Imports.js';
 import {InboundFundingResource as V2MoneyManagementInboundFundings} from './resources/V2/MoneyManagement/InboundFundings.js';
@@ -467,10 +467,10 @@ export const Treasury = resourceNamespace('treasury', {
 export const V2 = resourceNamespace('v2', {
   Billing: resourceNamespace('billing', {
     BillSettings: V2BillingBillSettings,
-    Cadences: V2BillingCadences,
     CollectionSettings: V2BillingCollectionSettings,
     Contracts: V2BillingContracts,
     CustomPricingUnits: V2BillingCustomPricingUnits,
+    Groups: V2BillingGroups,
     Intents: V2BillingIntents,
     LicenseFees: V2BillingLicenseFees,
     LicensedItems: V2BillingLicensedItems,

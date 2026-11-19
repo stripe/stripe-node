@@ -380,6 +380,7 @@ export namespace OutboundTransfer {
           | 'sepa_credit'
           | 'sepa_instant'
           | 'swift'
+          | 'tips'
           | OtherString;
 
         export namespace PreferredNetworkOptions {
@@ -530,6 +531,7 @@ export namespace V2 {
               | 'sepa_credit'
               | 'sepa_instant'
               | 'swift'
+              | 'tips'
               | OtherString;
 
             export namespace PreferredNetworkOptions {

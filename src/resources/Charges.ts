@@ -3229,6 +3229,7 @@ export namespace Charge {
         | 'solana'
         | 'sui'
         | 'tempo'
+        | 'tron'
         | OtherString;
 
       export type TokenCurrency =

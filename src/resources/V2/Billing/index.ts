@@ -6,18 +6,18 @@ import {
   BillSetting,
   BillSettingResource,
 } from './BillSettings.js';
-import {V2 as V2Namespace1, Cadence, CadenceResource} from './Cadences.js';
 import {
-  V2 as V2Namespace2,
+  V2 as V2Namespace1,
   CollectionSetting,
   CollectionSettingResource,
 } from './CollectionSettings.js';
-import {V2 as V2Namespace3, Contract, ContractResource} from './Contracts.js';
+import {V2 as V2Namespace2, Contract, ContractResource} from './Contracts.js';
 import {
-  V2 as V2Namespace4,
+  V2 as V2Namespace3,
   CustomPricingUnit,
   CustomPricingUnitResource,
 } from './CustomPricingUnits.js';
+import {V2 as V2Namespace4, Group, GroupResource} from './Groups.js';
 import {V2 as V2Namespace5, Intent, IntentResource} from './Intents.js';
 import {
   V2 as V2Namespace6,
@@ -80,12 +80,12 @@ import {
   ServiceAction,
   ServiceActionResource,
 } from './ServiceActions.js';
-import {ContractPricingLineQuantityChange} from './ContractPricingLineQuantityChanges.js';
 import {ContractTerm} from './ContractTerms.js';
 import {ContractTermQuantityChange} from './ContractTermQuantityChanges.js';
 import {BillSettingVersion} from './BillSettingVersions.js';
-import {CadenceSpendModifier} from './CadenceSpendModifiers.js';
 import {CollectionSettingVersion} from './CollectionSettingVersions.js';
+import {GroupSpendModifier} from './GroupSpendModifiers.js';
+import {GroupInvoice} from './GroupInvoices.js';
 import {IntentAction} from './IntentActions.js';
 import {LicenseFeeVersion} from './LicenseFeeVersions.js';
 import {PricingPlanComponent} from './PricingPlanComponents.js';
@@ -95,10 +95,10 @@ import {RateCardRate} from './RateCardRates.js';
 import {RateCardVersion} from './RateCardVersions.js';
 
 export {BillSetting} from './BillSettings.js';
-export {Cadence} from './Cadences.js';
 export {CollectionSetting} from './CollectionSettings.js';
 export {Contract} from './Contracts.js';
 export {CustomPricingUnit} from './CustomPricingUnits.js';
+export {Group} from './Groups.js';
 export {Intent} from './Intents.js';
 export {LicenseFee} from './LicenseFees.js';
 export {LicensedItem} from './LicensedItems.js';
@@ -113,12 +113,12 @@ export {Profile} from './Profiles.js';
 export {RateCard} from './RateCards.js';
 export {RateCardSubscription} from './RateCardSubscriptions.js';
 export {ServiceAction} from './ServiceActions.js';
-export {ContractPricingLineQuantityChange} from './ContractPricingLineQuantityChanges.js';
 export {ContractTerm} from './ContractTerms.js';
 export {ContractTermQuantityChange} from './ContractTermQuantityChanges.js';
 export {BillSettingVersion} from './BillSettingVersions.js';
-export {CadenceSpendModifier} from './CadenceSpendModifiers.js';
 export {CollectionSettingVersion} from './CollectionSettingVersions.js';
+export {GroupSpendModifier} from './GroupSpendModifiers.js';
+export {GroupInvoice} from './GroupInvoices.js';
 export {IntentAction} from './IntentActions.js';
 export {LicenseFeeVersion} from './LicenseFeeVersions.js';
 export {PricingPlanComponent} from './PricingPlanComponents.js';
@@ -129,10 +129,10 @@ export {RateCardVersion} from './RateCardVersions.js';
 
 export class Billing {
   billSettings: BillSettingResource;
-  cadences: CadenceResource;
   collectionSettings: CollectionSettingResource;
   contracts: ContractResource;
   customPricingUnits: CustomPricingUnitResource;
+  groups: GroupResource;
   intents: IntentResource;
   licenseFees: LicenseFeeResource;
   licensedItems: LicensedItemResource;
@@ -151,10 +151,10 @@ export class Billing {
 
   constructor(private readonly stripe: Stripe) {
     this.billSettings = new BillSettingResource(stripe);
-    this.cadences = new CadenceResource(stripe);
     this.collectionSettings = new CollectionSettingResource(stripe);
     this.contracts = new ContractResource(stripe);
     this.customPricingUnits = new CustomPricingUnitResource(stripe);
+    this.groups = new GroupResource(stripe);
     this.intents = new IntentResource(stripe);
     this.licenseFees = new LicenseFeeResource(stripe);
     this.licensedItems = new LicensedItemResource(stripe);
@@ -179,30 +179,30 @@ export declare namespace Billing {
   export import BillSettingRetrieveParams = V2Namespace0.Billing.BillSettingRetrieveParams;
   export import BillSettingUpdateParams = V2Namespace0.Billing.BillSettingUpdateParams;
   export {BillSetting, BillSettingResource};
-  export import CadenceListParams = V2Namespace1.Billing.CadenceListParams;
-  export import CadenceCreateParams = V2Namespace1.Billing.CadenceCreateParams;
-  export import CadenceRetrieveParams = V2Namespace1.Billing.CadenceRetrieveParams;
-  export import CadenceUpdateParams = V2Namespace1.Billing.CadenceUpdateParams;
-  export import CadenceCancelParams = V2Namespace1.Billing.CadenceCancelParams;
-  export {Cadence, CadenceResource};
-  export import CollectionSettingListParams = V2Namespace2.Billing.CollectionSettingListParams;
-  export import CollectionSettingCreateParams = V2Namespace2.Billing.CollectionSettingCreateParams;
-  export import CollectionSettingRetrieveParams = V2Namespace2.Billing.CollectionSettingRetrieveParams;
-  export import CollectionSettingUpdateParams = V2Namespace2.Billing.CollectionSettingUpdateParams;
+  export import CollectionSettingListParams = V2Namespace1.Billing.CollectionSettingListParams;
+  export import CollectionSettingCreateParams = V2Namespace1.Billing.CollectionSettingCreateParams;
+  export import CollectionSettingRetrieveParams = V2Namespace1.Billing.CollectionSettingRetrieveParams;
+  export import CollectionSettingUpdateParams = V2Namespace1.Billing.CollectionSettingUpdateParams;
   export {CollectionSetting, CollectionSettingResource};
-  export import ContractListParams = V2Namespace3.Billing.ContractListParams;
-  export import ContractCreateParams = V2Namespace3.Billing.ContractCreateParams;
-  export import ContractDeleteParams = V2Namespace3.Billing.ContractDeleteParams;
-  export import ContractRetrieveParams = V2Namespace3.Billing.ContractRetrieveParams;
-  export import ContractUpdateParams = V2Namespace3.Billing.ContractUpdateParams;
-  export import ContractActivateParams = V2Namespace3.Billing.ContractActivateParams;
-  export import ContractCancelParams = V2Namespace3.Billing.ContractCancelParams;
+  export import ContractListParams = V2Namespace2.Billing.ContractListParams;
+  export import ContractCreateParams = V2Namespace2.Billing.ContractCreateParams;
+  export import ContractDeleteParams = V2Namespace2.Billing.ContractDeleteParams;
+  export import ContractRetrieveParams = V2Namespace2.Billing.ContractRetrieveParams;
+  export import ContractUpdateParams = V2Namespace2.Billing.ContractUpdateParams;
+  export import ContractActivateParams = V2Namespace2.Billing.ContractActivateParams;
+  export import ContractCancelParams = V2Namespace2.Billing.ContractCancelParams;
   export {Contract, ContractResource};
-  export import CustomPricingUnitListParams = V2Namespace4.Billing.CustomPricingUnitListParams;
-  export import CustomPricingUnitCreateParams = V2Namespace4.Billing.CustomPricingUnitCreateParams;
-  export import CustomPricingUnitRetrieveParams = V2Namespace4.Billing.CustomPricingUnitRetrieveParams;
-  export import CustomPricingUnitUpdateParams = V2Namespace4.Billing.CustomPricingUnitUpdateParams;
+  export import CustomPricingUnitListParams = V2Namespace3.Billing.CustomPricingUnitListParams;
+  export import CustomPricingUnitCreateParams = V2Namespace3.Billing.CustomPricingUnitCreateParams;
+  export import CustomPricingUnitRetrieveParams = V2Namespace3.Billing.CustomPricingUnitRetrieveParams;
+  export import CustomPricingUnitUpdateParams = V2Namespace3.Billing.CustomPricingUnitUpdateParams;
   export {CustomPricingUnit, CustomPricingUnitResource};
+  export import GroupListParams = V2Namespace4.Billing.GroupListParams;
+  export import GroupCreateParams = V2Namespace4.Billing.GroupCreateParams;
+  export import GroupRetrieveParams = V2Namespace4.Billing.GroupRetrieveParams;
+  export import GroupUpdateParams = V2Namespace4.Billing.GroupUpdateParams;
+  export import GroupCancelParams = V2Namespace4.Billing.GroupCancelParams;
+  export {Group, GroupResource};
   export import IntentListParams = V2Namespace5.Billing.IntentListParams;
   export import IntentCreateParams = V2Namespace5.Billing.IntentCreateParams;
   export import IntentRetrieveParams = V2Namespace5.Billing.IntentRetrieveParams;
@@ -268,12 +268,12 @@ export declare namespace Billing {
   export import ServiceActionRetrieveParams = V2Namespace19.Billing.ServiceActionRetrieveParams;
   export import ServiceActionUpdateParams = V2Namespace19.Billing.ServiceActionUpdateParams;
   export {ServiceAction, ServiceActionResource};
-  export {ContractPricingLineQuantityChange};
   export {ContractTerm};
   export {ContractTermQuantityChange};
   export {BillSettingVersion};
-  export {CadenceSpendModifier};
   export {CollectionSettingVersion};
+  export {GroupSpendModifier};
+  export {GroupInvoice};
   export {IntentAction};
   export {LicenseFeeVersion};
   export {PricingPlanComponent};

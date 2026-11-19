@@ -1,7 +1,13 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {PaginationParams, OtherString, Metadata} from '../shared.js';
+import {
+  MetadataParam,
+  Emptyable,
+  OtherString,
+  PaginationParams,
+  Metadata,
+} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class InvoiceRenderingTemplateResource extends StripeResource {
@@ -23,6 +29,20 @@ export class InvoiceRenderingTemplateResource extends StripeResource {
     ) as any;
   }
   /**
+   * Creates an invoice rendering template.
+   */
+  create(
+    params?: InvoiceRenderingTemplateCreateParams,
+    options?: RequestOptions
+  ): Promise<Response<InvoiceRenderingTemplate>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/invoice_rendering_templates',
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Retrieves an invoice rendering template with the given ID. It by default returns the latest version of the template. Optionally, specify a version to see previous versions.
    */
   retrieve(
@@ -32,6 +52,21 @@ export class InvoiceRenderingTemplateResource extends StripeResource {
   ): Promise<Response<InvoiceRenderingTemplate>> {
     return this._makeRequest(
       'GET',
+      `/v1/invoice_rendering_templates/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Updates an existing invoice rendering template.
+   */
+  update(
+    id: string,
+    params?: InvoiceRenderingTemplateUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<InvoiceRenderingTemplate>> {
+    return this._makeRequest(
+      'POST',
       `/v1/invoice_rendering_templates/${encodeURIComponent(id)}`,
       params,
       options
@@ -125,6 +160,11 @@ export interface InvoiceRenderingTemplate {
   created: number;
 
   /**
+   * The policy that controls how individual line items are rendered
+   */
+  line_item_policy?: InvoiceRenderingTemplate.LineItemPolicy | null;
+
+  /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
@@ -139,10 +179,19 @@ export interface InvoiceRenderingTemplate {
    */
   nickname: string | null;
 
+  rendering_settings?: InvoiceRenderingTemplate.RenderingSettings;
+
   /**
    * The status of the template, one of `active` or `archived`.
    */
   status: InvoiceRenderingTemplate.Status;
+
+  /**
+   * The policies that control how line items are grouped into summary items
+   */
+  summary_item_policies?: Array<
+    InvoiceRenderingTemplate.SummaryItemPolicy
+  > | null;
 
   /**
    * Version of this template; version increases by one when an update on the template changes any field that controls invoice rendering
@@ -150,7 +199,201 @@ export interface InvoiceRenderingTemplate {
   version: number;
 }
 export namespace InvoiceRenderingTemplate {
+  export interface LineItemPolicy {
+    /**
+     * A CEL expression that takes in a line item and returns a string indicating whether the line item should be 'hidden_if_zero' or 'visible'.
+     *  If 'hidden_if_zero', the line item will be hidden if the line item's amount is zero on the invoice.
+     *  If 'visible', the line item will be shown regardless of the line item's amount.
+     */
+    display: string | null;
+  }
+
+  export interface RenderingSettings {
+    invoice_pdf: RenderingSettings.InvoicePdf;
+  }
+
   export type Status = 'active' | 'archived' | OtherString;
+
+  export interface SummaryItemPolicy {
+    /**
+     * Either `all` or `none`. For all summary items created from this policy, if `all`, every line item will be shown under the summary item header. If `none`, the line items will be hidden and only the summary item header will be shown.
+     */
+    display_items: string | null;
+
+    /**
+     * A CEL expression that takes in a line item and returns a boolean indicating whether the line item should be considered when grouping.
+     */
+    filter: string | null;
+
+    /**
+     * A CEL expression that takes in a line item and returns a string. Line items with the same string results are put in the same summary items. The string result will become the description of the summary item.
+     */
+    group_by: string | null;
+  }
+
+  export namespace RenderingSettings {
+    export interface InvoicePdf {
+      /**
+       * The ordered invoice PDF blocks.
+       */
+      blocks: Array<InvoicePdf.Block>;
+    }
+
+    export namespace InvoicePdf {
+      export interface Block {
+        custom_plain_text_cel?: Block.CustomPlainTextCel;
+
+        /**
+         * The key of this block in the template.
+         */
+        key: string;
+
+        /**
+         * The type of content block
+         */
+        type: Block.Type;
+      }
+
+      export namespace Block {
+        export interface CustomPlainTextCel {
+          /**
+           * A CEL expression that returns text using the invoice context.
+           */
+          cel_expression: string;
+        }
+
+        export type Type =
+          | 'custom_plain_text_cel'
+          | 'footer_content'
+          | 'invoice_details'
+          | 'line_items'
+          | 'parties'
+          | 'payment_remittance_instructions'
+          | 'status_and_memo'
+          | 'tax_footnotes'
+          | 'title_and_logo'
+          | OtherString;
+      }
+    }
+  }
+}
+export interface InvoiceRenderingTemplateCreateParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * Controls how individual line items are displayed on the invoice, visible to customers.
+   */
+  line_item_policy?: InvoiceRenderingTemplateCreateParams.LineItemPolicy;
+
+  /**
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   */
+  metadata?: MetadataParam;
+
+  /**
+   * Nickname for the template that is hidden from customers
+   */
+  nickname?: string;
+
+  /**
+   * Rendering settings for invoices using this template.
+   */
+  rendering_settings?: InvoiceRenderingTemplateCreateParams.RenderingSettings;
+
+  /**
+   * Controls the grouping of line items into summary items which are displayed on the invoice, visible to customers. The policies are applied in order - only ungrouped line items from the previous policy are considered by the following policies.
+   */
+  summary_item_policies?: Array<
+    InvoiceRenderingTemplateCreateParams.SummaryItemPolicy
+  >;
+}
+export namespace InvoiceRenderingTemplateCreateParams {
+  export interface LineItemPolicy {
+    /**
+     * A CEL expression that takes a line item and returns a boolean indicating whether to display it on the invoice.
+     */
+    display?: string;
+  }
+
+  export interface RenderingSettings {
+    /**
+     * Rendering settings for the invoice PDF.
+     */
+    invoice_pdf?: RenderingSettings.InvoicePdf;
+  }
+
+  export interface SummaryItemPolicy {
+    /**
+     * Controls how each summary group is rendered on the invoice. `all` displays the summary line item, its constituent line items, and a group subtotal. `none` displays only the summary line item. Defaults to `all`.
+     */
+    display_items?: SummaryItemPolicy.DisplayItems;
+
+    /**
+     * A CEL expression that takes a line item and returns a boolean indicating whether to include it in this grouping policy. If omitted, includes all ungrouped line items.
+     */
+    filter?: string;
+
+    /**
+     * A CEL expression that takes a line item and returns a string. Line items with the same result are grouped into a summary item, using that result as its group title.
+     */
+    group_by?: string;
+  }
+
+  export namespace RenderingSettings {
+    export interface InvoicePdf {
+      /**
+       * Ordered invoice PDF blocks. A maximum of 20 blocks is allowed.
+       */
+      blocks?: Emptyable<Array<InvoicePdf.Block>>;
+    }
+
+    export namespace InvoicePdf {
+      export interface Block {
+        /**
+         * Configuration for a custom CEL text block.
+         */
+        custom_plain_text_cel?: Block.CustomPlainTextCel;
+
+        /**
+         * A unique key within this template's blocks. Generated when omitted.
+         */
+        key?: string;
+
+        /**
+         * The type of content block.
+         */
+        type: Block.Type;
+      }
+
+      export namespace Block {
+        export interface CustomPlainTextCel {
+          /**
+           * A CEL expression that returns text using the invoice context.
+           */
+          cel_expression: string;
+        }
+
+        export type Type =
+          | 'custom_plain_text_cel'
+          | 'footer_content'
+          | 'invoice_details'
+          | 'line_items'
+          | 'parties'
+          | 'payment_remittance_instructions'
+          | 'status_and_memo'
+          | 'tax_footnotes'
+          | 'title_and_logo'
+          | OtherString;
+      }
+    }
+  }
+
+  export namespace SummaryItemPolicy {
+    export type DisplayItems = 'all' | 'none' | OtherString;
+  }
 }
 export interface InvoiceRenderingTemplateRetrieveParams {
   /**
@@ -159,6 +402,126 @@ export interface InvoiceRenderingTemplateRetrieveParams {
   expand?: Array<string>;
 
   version?: number;
+}
+export interface InvoiceRenderingTemplateUpdateParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * Controls how individual line items are displayed on the invoice, visible to customers.
+   */
+  line_item_policy?: Emptyable<
+    InvoiceRenderingTemplateUpdateParams.LineItemPolicy
+  >;
+
+  /**
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   */
+  metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * Nickname for the template that is hidden from customers
+   */
+  nickname?: string;
+
+  /**
+   * Rendering settings for invoices using this template.
+   */
+  rendering_settings?: InvoiceRenderingTemplateUpdateParams.RenderingSettings;
+
+  /**
+   * Controls the grouping of line items into summary items which are displayed on the invoice, visible to customers. The policies are applied in order - only ungrouped line items from the previous policy are considered by the following policies.
+   */
+  summary_item_policies?: Emptyable<
+    Array<InvoiceRenderingTemplateUpdateParams.SummaryItemPolicy>
+  >;
+}
+export namespace InvoiceRenderingTemplateUpdateParams {
+  export interface LineItemPolicy {
+    /**
+     * A CEL expression that takes a line item and returns a boolean indicating whether to display it on the invoice.
+     */
+    display?: string;
+  }
+
+  export interface RenderingSettings {
+    /**
+     * Rendering settings for the invoice PDF.
+     */
+    invoice_pdf?: RenderingSettings.InvoicePdf;
+  }
+
+  export interface SummaryItemPolicy {
+    /**
+     * Controls how each summary group is rendered on the invoice. `all` displays the summary line item, its constituent line items, and a group subtotal. `none` displays only the summary line item. Defaults to `all`.
+     */
+    display_items?: SummaryItemPolicy.DisplayItems;
+
+    /**
+     * A CEL expression that takes a line item and returns a boolean indicating whether to include it in this grouping policy. If omitted, includes all ungrouped line items.
+     */
+    filter?: string;
+
+    /**
+     * A CEL expression that takes a line item and returns a string. Line items with the same result are grouped into a summary item, using that result as its group title.
+     */
+    group_by?: string;
+  }
+
+  export namespace RenderingSettings {
+    export interface InvoicePdf {
+      /**
+       * Ordered invoice PDF blocks. A maximum of 20 blocks is allowed.
+       */
+      blocks?: Emptyable<Array<InvoicePdf.Block>>;
+    }
+
+    export namespace InvoicePdf {
+      export interface Block {
+        /**
+         * Configuration for a custom CEL text block.
+         */
+        custom_plain_text_cel?: Block.CustomPlainTextCel;
+
+        /**
+         * A unique key within this template's blocks. Generated when omitted.
+         */
+        key?: string;
+
+        /**
+         * The type of content block. Required when updating a block without a key matching an existing block in the current template version. For a matching key, omit type to retain the existing type; if supplied, it must match.
+         */
+        type?: Block.Type;
+      }
+
+      export namespace Block {
+        export interface CustomPlainTextCel {
+          /**
+           * A CEL expression that returns text using the invoice context.
+           */
+          cel_expression: string;
+        }
+
+        export type Type =
+          | 'custom_plain_text_cel'
+          | 'footer_content'
+          | 'invoice_details'
+          | 'line_items'
+          | 'parties'
+          | 'payment_remittance_instructions'
+          | 'status_and_memo'
+          | 'tax_footnotes'
+          | 'title_and_logo'
+          | OtherString;
+      }
+    }
+  }
+
+  export namespace SummaryItemPolicy {
+    export type DisplayItems = 'all' | 'none' | OtherString;
+  }
 }
 export interface InvoiceRenderingTemplateListParams extends PaginationParams {
   /**

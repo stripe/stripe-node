@@ -293,16 +293,6 @@ export interface Reader {
   deleted?: void;
 
   /**
-   * The overall device health of the reader: `healthy` or `unhealthy`. Renamed to `no_issues_detected` and `needs_attention` respectively; see `device_health_details` for the specific conditions.
-   */
-  device_health: Reader.DeviceHealth | null;
-
-  /**
-   * The set of conditions affecting the reader's device health. Empty when there are no conditions.
-   */
-  device_health_details: Array<Reader.DeviceHealthDetail> | null;
-
-  /**
    * The current software version of the reader.
    */
   device_sw_version: string | null;
@@ -501,15 +491,6 @@ export namespace Reader {
     type: Action.Type;
   }
 
-  export type DeviceHealth = 'healthy' | 'unhealthy' | OtherString;
-
-  export interface DeviceHealthDetail {
-    /**
-     * The type of condition affecting the reader's device health.
-     */
-    type: DeviceHealthDetail.Type;
-  }
-
   export type DeviceType =
     | 'bbpos_chipper2x'
     | 'bbpos_wisepad3'
@@ -525,13 +506,18 @@ export namespace Reader {
     | 'simulated_wisepos_e'
     | 'stripe_m2'
     | 'stripe_s700'
+    | 'stripe_s700_devkit'
     | 'stripe_s710'
+    | 'stripe_s710_devkit'
     | 'stripe_t600'
+    | 'stripe_t600_devkit'
     | 'verifone_P400'
     | 'verifone_m425'
     | 'verifone_p630'
     | 'verifone_ux700'
+    | 'verifone_ux700_devkit'
     | 'verifone_v660p'
+    | 'verifone_v660p_devkit'
     | OtherString;
 
   export type Status = 'offline' | 'online' | OtherString;
@@ -975,6 +961,7 @@ export namespace Reader {
         | 'forwarding_api_upstream_connection_timeout'
         | 'forwarding_api_upstream_error'
         | 'idempotency_key_in_use'
+        | 'inactive_api_operation_confirmation_required'
         | 'incorrect_address'
         | 'incorrect_cvc'
         | 'incorrect_number'
@@ -1480,10 +1467,6 @@ export namespace Reader {
         }
       }
     }
-  }
-
-  export namespace DeviceHealthDetail {
-    export type Type = 'unrecoverable_tamper' | OtherString;
   }
 }
 export namespace Terminal {

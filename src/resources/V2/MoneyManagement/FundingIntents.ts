@@ -757,6 +757,11 @@ export namespace V2 {
        * Updates to the key-value pairs attached to the FundingIntent.
        */
       metadata?: MetadataParam;
+
+      /**
+       * The updated settlement timing. Omit to retain the existing timing.
+       */
+      settlement_timing?: FundingIntentUpdateParams.SettlementTiming;
     }
 
     export namespace FundingIntentUpdateParams {
@@ -773,6 +778,13 @@ export namespace V2 {
       }
 
       export type ConfirmationMethod = 'automatic' | 'manual' | OtherString;
+
+      export interface SettlementTiming {
+        /**
+         * The number of days to delay the availability of funds after processing completes.
+         */
+        delay_days_override?: number;
+      }
     }
   }
 }

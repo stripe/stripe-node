@@ -121,9 +121,9 @@ export namespace V2 {
 
       export namespace TermListContractTermsParams {
         export type Type =
-          | 'ad_hoc_product'
           | 'pricing_override'
           | 'recurring_price'
+          | 'scheduled_fee'
           | OtherString;
       }
     }

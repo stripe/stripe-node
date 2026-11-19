@@ -43,11 +43,6 @@ export interface AlertNotification {
   billing_group: string | null;
 
   /**
-   * The cadence associated with this notification. Only present for spend threshold alerts grouped by cadence.
-   */
-  cadence: string | null;
-
-  /**
    * Three-letter ISO currency code for the value, in lowercase. Only present for spend and credit balance threshold alerts.
    */
   currency: string | null;

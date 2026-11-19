@@ -78,11 +78,6 @@ export namespace AlertTriggered {
 
   export interface GroupBy {
     /**
-     * The billing cadence ID, populated when type is `billing_cadence`
-     */
-    billing_cadence: string | null;
-
-    /**
      * The billing group ID, populated when type is `billing_group`
      */
     billing_group: string | null;
@@ -100,7 +95,7 @@ export namespace AlertTriggered {
 
   export namespace GroupBy {
     export type Type =
-      | 'billing_cadence'
+      | 'billing_group'
       | 'pricing_plan_subscription'
       | OtherString;
   }

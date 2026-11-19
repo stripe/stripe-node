@@ -419,7 +419,7 @@ export namespace FinancialConnections {
       account_subcategories?: Array<Filters.AccountSubcategory>;
 
       /**
-       * Country from which to collect accounts.
+       * Country from which to collect accounts. Supported values are `US` and `CA`.
        */
       country?: string;
 

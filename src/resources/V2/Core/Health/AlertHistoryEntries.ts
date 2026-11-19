@@ -34,6 +34,11 @@ export interface AlertHistoryEntry {
   authorization_rate_drop?: AlertHistoryEntry.AuthorizationRateDrop;
 
   /**
+   * Populated when type is custom_payment_method_adapter_degraded.
+   */
+  custom_payment_method_adapter_degraded?: AlertHistoryEntry.CustomPaymentMethodAdapterDegraded;
+
+  /**
    * Populated when type is elements_error.
    */
   elements_error?: AlertHistoryEntry.ElementsError;
@@ -203,6 +208,23 @@ export namespace AlertHistoryEntry {
      * The previous authorization rate percentage.
      */
     previous_percentage: Decimal;
+  }
+
+  export interface CustomPaymentMethodAdapterDegraded {
+    /**
+     * Whether the custom payment method was disabled in Checkout as a result of the degradation. True while the alert is open and false when it is resolved.
+     */
+    custom_payment_method_disabled_from_checkout: boolean;
+
+    /**
+     * The custom payment method type whose adapter is unhealthy.
+     */
+    custom_payment_method_type_details: CustomPaymentMethodAdapterDegraded.CustomPaymentMethodTypeDetails;
+
+    /**
+     * The reason the adapter's health is degraded.
+     */
+    degraded_health_reason: string;
   }
 
   export interface ElementsError {
@@ -397,6 +419,7 @@ export namespace AlertHistoryEntry {
     | 'api_error'
     | 'api_latency'
     | 'authorization_rate_drop'
+    | 'custom_payment_method_adapter_degraded'
     | 'elements_error'
     | 'event_generation_failure'
     | 'fraud_rate'
@@ -554,6 +577,30 @@ export namespace AlertHistoryEntry {
 
     export namespace Dimension {
       export type Type = 'acquirer' | 'issuer' | OtherString;
+    }
+  }
+
+  export namespace CustomPaymentMethodAdapterDegraded {
+    export interface CustomPaymentMethodTypeDetails {
+      /**
+       * The time when the custom payment method was automatically disabled. Null when it is enabled.
+       */
+      auto_disabled_at?: string;
+
+      /**
+       * The display name of the custom payment method type.
+       */
+      display_name: string;
+
+      /**
+       * The URL of the user's self-hosted adapter endpoint.
+       */
+      reverse_api_url: string;
+
+      /**
+       * The identifier of the custom payment method type (e.g., "cpmt_...").
+       */
+      type: string;
     }
   }
 

@@ -173,6 +173,8 @@ export interface Coupon {
     [key: string]: Coupon.CurrencyOptions;
   };
 
+  custom?: Coupon.Custom;
+
   /**
    * Always true for a deleted object
    */
@@ -271,6 +273,15 @@ export namespace Coupon {
     amount_off: number;
   }
 
+  export interface Custom {
+    /**
+     * The configuration supplied to the extension.
+     */
+    configuration: Custom.Configuration;
+
+    extension: Custom.Extension;
+  }
+
   export type Duration =
     | 'forever'
     | 'once'
@@ -309,7 +320,30 @@ export namespace Coupon {
     iterations: ServicePeriod.Iterations;
   }
 
-  export type Type = 'amount_off' | 'percent_off' | 'script' | OtherString;
+  export type Type =
+    | 'amount_off'
+    | 'custom'
+    | 'percent_off'
+    | 'script'
+    | OtherString;
+
+  export namespace Custom {
+    export type Configuration = {
+      [key: string]: unknown;
+    };
+
+    export interface Extension {
+      /**
+       * The Extension Prototype ID.
+       */
+      id: string;
+
+      /**
+       * The semantic version of the extension.
+       */
+      version: string;
+    }
+  }
 
   export namespace Script {
     export type Configuration = {
@@ -357,6 +391,11 @@ export interface CouponCreateParams {
   currency_options?: {
     [key: string]: CouponCreateParams.CurrencyOptions;
   };
+
+  /**
+   * The custom coupon calculation configuration.
+   */
+  custom?: CouponCreateParams.Custom;
 
   /**
    * Specifies how long the discount will be in effect if used on a subscription. Defaults to `once`.
@@ -412,11 +451,16 @@ export interface CouponCreateParams {
    * A hash specifying the service period for the coupon.
    */
   service_period?: CouponCreateParams.ServicePeriod;
+
+  /**
+   * The coupon calculation type. Must be `custom` when `custom` is provided.
+   */
+  type?: 'custom';
 }
 export namespace CouponCreateParams {
   export interface AppliesTo {
     /**
-     * An array of Product IDs that this Coupon will apply to.
+     * An array of up to 100 Product IDs that this Coupon will apply to.
      */
     products?: Array<string>;
   }
@@ -426,6 +470,18 @@ export namespace CouponCreateParams {
      * A positive integer representing the amount to subtract from an invoice total.
      */
     amount_off: number;
+  }
+
+  export interface Custom {
+    /**
+     * The configuration values of the extension. The keys and values are specific to the extension implementation. May be omitted for extensions that have no configuration schema, in which case an empty configuration is used.
+     */
+    configuration?: Custom.Configuration;
+
+    /**
+     * The extension used to calculate the coupon.
+     */
+    extension: Custom.Extension;
   }
 
   export type Duration =
@@ -462,6 +518,24 @@ export namespace CouponCreateParams {
      * Specifies the number of times the coupon is contiguously applied.
      */
     iterations?: ServicePeriod.Iterations;
+  }
+
+  export namespace Custom {
+    export type Configuration = {
+      [key: string]: unknown;
+    };
+
+    export interface Extension {
+      /**
+       * The Extension Prototype ID.
+       */
+      id: string;
+
+      /**
+       * The semantic version of the extension.
+       */
+      version?: string;
+    }
   }
 
   export namespace Script {

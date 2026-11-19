@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
+import {Application} from './Applications.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {Charge} from './Charges.js';
 import {Customer, DeletedCustomer} from './Customers.js';
@@ -153,6 +154,11 @@ export interface Refund {
   amount: number;
 
   /**
+   * ID of the Connect application that created the refund. This can differ from the application on the associated Charge or PaymentIntent. A null value does not necessarily mean the refund was created without a Connect application.
+   */
+  application: string | Application | null;
+
+  /**
    * Balance transaction that describes the impact on your account balance.
    */
   balance_transaction: string | BalanceTransaction | null;
@@ -291,6 +297,8 @@ export namespace Refund {
     eu_bank_transfer?: DestinationDetails.EuBankTransfer;
 
     gb_bank_transfer?: DestinationDetails.GbBankTransfer;
+
+    gift_card?: DestinationDetails.GiftCard;
 
     giropay?: DestinationDetails.Giropay;
 
@@ -499,6 +507,13 @@ export namespace Refund {
        * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
        */
       reference_status: string | null;
+    }
+
+    export interface GiftCard {
+      /**
+       * ID of the reload or activation GiftCardOperation created for this refund.
+       */
+      gift_card_operation: string | null;
     }
 
     export interface Giropay {}

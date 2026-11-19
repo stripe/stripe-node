@@ -86,6 +86,8 @@ export interface QuotePreviewInvoice {
    */
   application: string | Application | DeletedApplication | null;
 
+  applied_credit_memos?: QuotePreviewInvoice.AppliedCreditMemos;
+
   applies_to: QuotePreviewInvoice.AppliesTo;
 
   /**
@@ -457,6 +459,13 @@ export namespace QuotePreviewInvoice {
     status: AmountsDue.Status;
   }
 
+  export interface AppliedCreditMemos {
+    /**
+     * The Credit Memos with credit currently applied to this invoice, with one entry per Credit Memo. An invoice can have credit applied from at most 10 Credit Memos, so the list is returned in full.
+     */
+    data: Array<AppliedCreditMemos.Data>;
+  }
+
   export interface AppliesTo {
     /**
      * A custom string that identifies a new subscription schedule being created upon quote acceptance. All quote lines with the same `new_reference` field will be applied to the creation of a new subscription schedule.
@@ -754,9 +763,9 @@ export namespace QuotePreviewInvoice {
 
   export interface Parent {
     /**
-     * Details about the billing cadence that generated this invoice
+     * Details about the billing group that generated this invoice
      */
-    billing_cadence_details?: Parent.BillingCadenceDetails | null;
+    billing_group_details?: Parent.BillingGroupDetails | null;
 
     /**
      * Details about the quote that generated this invoice
@@ -1003,6 +1012,20 @@ export namespace QuotePreviewInvoice {
 
   export namespace AmountsDue {
     export type Status = 'open' | 'paid' | 'past_due' | OtherString;
+  }
+
+  export namespace AppliedCreditMemos {
+    export interface Data {
+      /**
+       * The credit currently applied to this invoice from the Credit Memo, in cents (or local equivalent). Applying credit reduces `amount_due` and `amount_remaining` without changing `amount_paid`.
+       */
+      applied_amount: number;
+
+      /**
+       * The ID of the Credit Memo whose credit is applied to this invoice.
+       */
+      credit_memo: string;
+    }
   }
 
   export namespace AppliesTo {
@@ -1285,6 +1308,7 @@ export namespace QuotePreviewInvoice {
       | 'forwarding_api_upstream_connection_timeout'
       | 'forwarding_api_upstream_error'
       | 'idempotency_key_in_use'
+      | 'inactive_api_operation_confirmation_required'
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'
@@ -1436,11 +1460,11 @@ export namespace QuotePreviewInvoice {
   }
 
   export namespace Parent {
-    export interface BillingCadenceDetails {
+    export interface BillingGroupDetails {
       /**
-       * The billing cadence that generated this invoice
+       * The billing group that generated this invoice
        */
-      billing_cadence: string;
+      billing_group: string;
     }
 
     export interface QuoteDetails {
@@ -1486,7 +1510,7 @@ export namespace QuotePreviewInvoice {
     }
 
     export type Type =
-      | 'billing_cadence_details'
+      | 'billing_group_details'
       | 'quote_details'
       | 'schedule_details'
       | 'subscription_details'

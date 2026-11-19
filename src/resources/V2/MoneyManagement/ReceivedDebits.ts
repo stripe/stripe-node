@@ -163,10 +163,16 @@ export namespace ReceivedDebit {
     financial_address: string;
 
     /**
+     * Deprecated: Use `bank_transfer.originating_bank_account.sort_code` instead.
      * Object containing details of the GB Bank Account that originated the debit.
      * Present when the debit was originated via BACS.
      */
     gb_bank_account?: BankTransfer.GbBankAccount;
+
+    /**
+     * The bank network the debit was originated on.
+     */
+    network: BankTransfer.Network;
 
     /**
      * Network-specific details about the bank transfer.
@@ -174,11 +180,18 @@ export namespace ReceivedDebit {
     network_details?: BankTransfer.NetworkDetails;
 
     /**
+     * Deprecated: Use `bank_transfer.originating_bank_account.type` instead.
      * Open Enum. Indicates the origin type through which this debit was initiated.
      */
     origin_type: BankTransfer.OriginType;
 
     /**
+     * The originating bank account's credential details.
+     */
+    originating_bank_account: BankTransfer.OriginatingBankAccount;
+
+    /**
+     * Deprecated: Use `bank_transfer.originating_bank_account.type` instead.
      * Open Enum. The type of the payment method used to originate the debit.
      */
     payment_method_type: BankTransfer.PaymentMethodType;
@@ -194,6 +207,7 @@ export namespace ReceivedDebit {
     statement_descriptor?: string;
 
     /**
+     * Deprecated: Use `bank_transfer.originating_bank_account.aba` instead.
      * Object containing details of the US Bank Account that originated the debit.
      * Present when the debit was originated via ACH.
      */
@@ -336,6 +350,8 @@ export namespace ReceivedDebit {
       sort_code?: string;
     }
 
+    export type Network = 'ach' | 'bacs' | OtherString;
+
     export interface NetworkDetails {
       /**
        * ACH-specific network details.
@@ -347,6 +363,23 @@ export namespace ReceivedDebit {
       | 'gb_bank_account'
       | 'us_bank_account'
       | OtherString;
+
+    export interface OriginatingBankAccount {
+      /**
+       * Details of the originating account. Present when type is `aba`.
+       */
+      aba?: OriginatingBankAccount.Aba;
+
+      /**
+       * Details of the originating account. Present when type is `sort_code`.
+       */
+      sort_code?: OriginatingBankAccount.SortCode;
+
+      /**
+       * The credential type identifying the originating bank account.
+       */
+      type: OriginatingBankAccount.Type;
+    }
 
     export type PaymentMethodType =
       | 'gb_bank_account'
@@ -431,6 +464,49 @@ export namespace ReceivedDebit {
       }
     }
 
+    export namespace OriginatingBankAccount {
+      export interface Aba {
+        /**
+         * The name of the account holder that originated the debit, as provided by the ACH network.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The name of the bank the debit originated from.
+         */
+        bank_name?: string;
+
+        /**
+         * The routing number of the bank that originated the debit.
+         */
+        routing_number?: string;
+      }
+
+      export interface SortCode {
+        /**
+         * The name of the account holder that originated the debit.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The name of the bank the debit originated from.
+         */
+        bank_name?: string;
+
+        /**
+         * Last 4 digits of the bank account number.
+         */
+        last4?: string;
+
+        /**
+         * The sort code of the bank that originated the debit.
+         */
+        sort_code?: string;
+      }
+
+      export type Type = 'aba' | 'sort_code' | OtherString;
+    }
+
     export namespace UsBankAccount {
       export type Network = 'ach' | OtherString;
     }
@@ -501,6 +577,11 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface ReceivedDebitListParams {
       /**
+       * Filter ReceivedDebits by their creation time.
+       */
+      created?: ReceivedDebitListParams.Created;
+
+      /**
        * The page limit.
        */
       limit?: number;
@@ -514,6 +595,38 @@ export namespace V2 {
        * Filter by the SpendingMandate ID.
        */
       spending_mandate?: string;
+    }
+
+    export namespace ReceivedDebitListParams {
+      export interface Created {
+        /**
+         * Return ReceivedDebits created after this timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gt?: string | number;
+
+        /**
+         * Return ReceivedDebits created on or after this timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gte?: string | number;
+
+        /**
+         * Return ReceivedDebits created before this timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lt?: string | number;
+
+        /**
+         * Return ReceivedDebits created on or before this timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lte?: string | number;
+      }
     }
   }
 }

@@ -1,23 +1,21 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../../StripeResource.js';
-import {CadenceSpendModifier} from './../../../V2/Billing/CadenceSpendModifiers.js';
+import {GroupSpendModifier} from './../../../V2/Billing/GroupSpendModifiers.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 
 export class SpendModifierRuleResource extends StripeResource {
   /**
-   * List all Spend Modifiers associated with a Billing Cadence.
+   * List spend modifiers associated with a billing group.
    */
   list(
-    cadenceId: string,
-    params?: V2.Billing.Cadences.SpendModifierRuleListParams,
+    groupId: string,
+    params?: V2.Billing.Groups.SpendModifierRuleListParams,
     options?: RequestOptions
-  ): V2ListPromise<CadenceSpendModifier> {
+  ): V2ListPromise<GroupSpendModifier> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/cadences/${encodeURIComponent(
-        cadenceId
-      )}/spend_modifier_rules`,
+      `/v2/billing/groups/${encodeURIComponent(groupId)}/spend_modifier_rules`,
       params,
       options,
       {
@@ -26,18 +24,18 @@ export class SpendModifierRuleResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieve a Spend Modifier associated with a Billing Cadence.
+   * Retrieve a spend modifier associated with a billing group.
    */
   retrieve(
-    cadenceId: string,
+    groupId: string,
     id: string,
-    params?: V2.Billing.Cadences.SpendModifierRuleRetrieveParams,
+    params?: V2.Billing.Groups.SpendModifierRuleRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CadenceSpendModifier>> {
+  ): Promise<Response<GroupSpendModifier>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/cadences/${encodeURIComponent(
-        cadenceId
+      `/v2/billing/groups/${encodeURIComponent(
+        groupId
       )}/spend_modifier_rules/${encodeURIComponent(id)}`,
       params,
       options
@@ -46,14 +44,14 @@ export class SpendModifierRuleResource extends StripeResource {
 }
 export namespace V2 {
   export namespace Billing {
-    export namespace Cadences {
+    export namespace Groups {
       export interface SpendModifierRuleRetrieveParams {}
     }
   }
 }
 export namespace V2 {
   export namespace Billing {
-    export namespace Cadences {
+    export namespace Groups {
       export interface SpendModifierRuleListParams {
         /**
          * Return only spend modifiers that are effective at the specified timestamp.

@@ -11,16 +11,13 @@ import {
 } from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {DeletedObject} from './../../V2/DeletedObject.js';
-import {PricingLineResource} from './Contracts/PricingLines.js';
 import {TermResource} from './Contracts/Terms.js';
 import {Stripe} from '../../../stripe.core.js';
 export class ContractResource extends StripeResource {
-  pricingLines: PricingLineResource;
   terms: TermResource;
 
   constructor(private readonly stripe: Stripe) {
     super(stripe);
-    this.pricingLines = new PricingLineResource(stripe);
     this.terms = new TermResource(stripe);
   }
   /**
@@ -115,55 +112,6 @@ export class ContractResource extends StripeResource {
       requestSchema: {
         kind: 'object',
         fields: {
-          pricing_lines: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                pricing: {
-                  kind: 'object',
-                  fields: {
-                    price_details: {
-                      kind: 'object',
-                      fields: {
-                        pricing_overrides: {
-                          kind: 'array',
-                          element: {
-                            kind: 'object',
-                            fields: {
-                              overwrite_price: {
-                                kind: 'object',
-                                fields: {unit_amount: {kind: 'decimal_string'}},
-                              },
-                            },
-                          },
-                        },
-                        quantity_changes: {
-                          kind: 'array',
-                          element: {
-                            kind: 'object',
-                            fields: {set: {kind: 'decimal_string'}},
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-          pricing_overrides: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                multiply_pricing: {
-                  kind: 'object',
-                  fields: {factor: {kind: 'decimal_string'}},
-                },
-              },
-            },
-          },
           terms: {
             kind: 'array',
             element: {
@@ -401,93 +349,6 @@ export class ContractResource extends StripeResource {
                       recurring_price: {
                         kind: 'object',
                         fields: {quantity: {kind: 'decimal_string'}},
-                      },
-                    },
-                  },
-                },
-              },
-            },
-            pricing_line_actions: {
-              kind: 'array',
-              element: {
-                kind: 'object',
-                fields: {
-                  add: {
-                    kind: 'object',
-                    fields: {
-                      pricing: {
-                        kind: 'object',
-                        fields: {
-                          price_details: {
-                            kind: 'object',
-                            fields: {
-                              pricing_overrides: {
-                                kind: 'array',
-                                element: {
-                                  kind: 'object',
-                                  fields: {
-                                    overwrite_price: {
-                                      kind: 'object',
-                                      fields: {
-                                        unit_amount: {kind: 'decimal_string'},
-                                      },
-                                    },
-                                  },
-                                },
-                              },
-                              quantity_changes: {
-                                kind: 'array',
-                                element: {
-                                  kind: 'object',
-                                  fields: {set: {kind: 'decimal_string'}},
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                  update: {
-                    kind: 'object',
-                    fields: {
-                      pricing: {
-                        kind: 'object',
-                        fields: {
-                          price_details: {
-                            kind: 'object',
-                            fields: {
-                              pricing_override_actions: {
-                                kind: 'array',
-                                element: {
-                                  kind: 'object',
-                                  fields: {
-                                    add: {
-                                      kind: 'object',
-                                      fields: {
-                                        overwrite_price: {
-                                          kind: 'object',
-                                          fields: {
-                                            unit_amount: {
-                                              kind: 'decimal_string',
-                                            },
-                                          },
-                                        },
-                                      },
-                                    },
-                                  },
-                                },
-                              },
-                              quantity_changes: {
-                                kind: 'array',
-                                element: {
-                                  kind: 'object',
-                                  fields: {set: {kind: 'decimal_string'}},
-                                },
-                              },
-                            },
-                          },
-                        },
                       },
                     },
                   },
@@ -1337,22 +1198,7 @@ export namespace V2 {
       metadata?: MetadataParam;
 
       /**
-       * A list of one-time fees to create with the contract. Each fee is billed as individual invoice items per its bill_schedule.
-       */
-      one_time_fees?: Array<ContractCreateParams.OneTimeFee>;
-
-      /**
-       * A list of pricing lines to create with the contract.
-       */
-      pricing_lines?: Array<ContractCreateParams.PricingLine>;
-
-      /**
-       * A list of pricing overrides to create with the contract.
-       */
-      pricing_overrides?: Array<ContractCreateParams.PricingOverride>;
-
-      /**
-       * Terms to create. Cannot be combined with pricing_lines, pricing_overrides, or one_time_fees.
+       * Terms to create with the contract.
        */
       terms?: Array<ContractCreateParams.Term>;
     }
@@ -1400,103 +1246,7 @@ export namespace V2 {
         | 'terms'
         | OtherString;
 
-      export interface OneTimeFee {
-        /**
-         * The amount to bill.
-         */
-        amount: V2Amount;
-
-        /**
-         * When this fee should be billed.
-         */
-        bill_at: OneTimeFee.BillAt;
-
-        /**
-         * A user-provided lookup key.
-         */
-        lookup_key?: string;
-
-        /**
-         * Set of key-value pairs that you can attach to an object.
-         */
-        metadata?: MetadataParam;
-
-        /**
-         * The id of the product for this fee.
-         */
-        product: string;
-      }
-
-      export interface PricingLine {
-        /**
-         * When the pricing line ends.
-         */
-        ends_at?: PricingLine.EndsAt;
-
-        /**
-         * A user-provided lookup key to reference this pricing line.
-         */
-        lookup_key?: string;
-
-        /**
-         * Set of key-value pairs that you can attach to an object.
-         */
-        metadata?: MetadataParam;
-
-        /**
-         * The pricing configuration for the pricing line.
-         */
-        pricing: PricingLine.Pricing;
-
-        /**
-         * When the pricing line starts.
-         */
-        starts_at: PricingLine.StartsAt;
-      }
-
-      export interface PricingOverride {
-        /**
-         * When the pricing override ends.
-         */
-        ends_at?: PricingOverride.EndsAt;
-
-        /**
-         * A user-provided lookup key to reference this pricing override.
-         */
-        lookup_key?: string;
-
-        /**
-         * Set of key-value pairs.
-         */
-        metadata?: MetadataParam;
-
-        /**
-         * Parameters for a multiply_pricing override. Required if `type` is `multiply_pricing`.
-         */
-        multiply_pricing?: PricingOverride.MultiplyPricing;
-
-        /**
-         * The priority of this override relative to others. The highest priority is 0 and the lowest is 100.
-         */
-        priority?: number;
-
-        /**
-         * When the pricing override starts.
-         */
-        starts_at: PricingOverride.StartsAt;
-
-        /**
-         * The type of pricing override.
-         */
-        type: PricingOverride.Type;
-      }
-
       export interface Term {
-        /**
-         * Required when type is ad_hoc_product.
-         */
-        ad_hoc_product?: Term.AdHocProduct;
-
         /**
          * Lookup key unique across all term types on the contract.
          */
@@ -1516,6 +1266,11 @@ export namespace V2 {
          * Required when type is recurring_price.
          */
         recurring_price?: Term.RecurringPrice;
+
+        /**
+         * Required when type is scheduled_fee.
+         */
+        scheduled_fee?: Term.ScheduledFee;
 
         /**
          * The term type. Production types require exactly one matching payload.
@@ -1645,296 +1400,10 @@ export namespace V2 {
         }
       }
 
-      export namespace OneTimeFee {
-        export interface BillAt {
-          /**
-           * The timestamp at which the entry should be billed. Required if `type` is `timestamp`.
-           */
-          timestamp?: string;
-
-          /**
-           * The type of the bill_at.
-           */
-          type: BillAt.Type;
-        }
-
-        export namespace BillAt {
-          export type Type = 'now' | 'timestamp' | OtherString;
-        }
-      }
-
-      export namespace PricingLine {
-        export interface EndsAt {
-          /**
-           * The timestamp when the item ends. Required if `type` is `timestamp`.
-           */
-          timestamp?: string;
-
-          /**
-           * The type of the ends_at.
-           */
-          type: EndsAt.Type;
-        }
-
-        export interface Pricing {
-          /**
-           * V1 price details. Required if `type` is `price`.
-           */
-          price_details?: Pricing.PriceDetails;
-
-          /**
-           * The type of pricing.
-           */
-          type: Pricing.Type;
-        }
-
-        export interface StartsAt {
-          /**
-           * The timestamp when the item starts. Required if `type` is `timestamp`.
-           */
-          timestamp?: string;
-
-          /**
-           * The type of the starts_at.
-           */
-          type: StartsAt.Type;
-        }
-
-        export namespace EndsAt {
-          export type Type = 'never' | 'timestamp' | OtherString;
-        }
-
-        export namespace Pricing {
-          export interface PriceDetails {
-            /**
-             * The id of the price.
-             */
-            price: string;
-
-            /**
-             * Pricing overrides embedded directly on this pricing line.
-             */
-            pricing_overrides?: Array<PriceDetails.PricingOverride>;
-
-            /**
-             * Quantity changes for the pricing line. For now, at most one entry is allowed.
-             * A quantity change clears all future quantity changes on this pricing line. Defaults to 1.
-             */
-            quantity_changes?: Array<PriceDetails.QuantityChange>;
-          }
-
-          export type Type = 'price' | OtherString;
-
-          export namespace PriceDetails {
-            export interface PricingOverride {
-              /**
-               * When the override ends. Defaults to the pricing line's end if not specified.
-               */
-              ends_at?: PricingOverride.EndsAt;
-
-              /**
-               * A user-provided lookup key to reference this override.
-               */
-              lookup_key?: string;
-
-              /**
-               * Set of key-value pairs that you can attach to an object.
-               */
-              metadata?: MetadataParam;
-
-              /**
-               * Parameters for the overwrite_price override. Required if `type` is `overwrite_price`.
-               */
-              overwrite_price?: PricingOverride.OverwritePrice;
-
-              /**
-               * The priority of this override relative to others. 0 is highest, 100 is lowest. Defaults to 50.
-               */
-              priority?: number;
-
-              /**
-               * When the override starts. Defaults to the pricing line's start if not specified.
-               */
-              starts_at?: PricingOverride.StartsAt;
-
-              /**
-               * The type of override.
-               */
-              type: PricingOverride.Type;
-            }
-
-            export interface QuantityChange {
-              /**
-               * When this quantity change takes effect.
-               */
-              effective_at: QuantityChange.EffectiveAt;
-
-              /**
-               * The quantity to set.
-               */
-              set: Decimal;
-            }
-
-            export namespace PricingOverride {
-              export interface EndsAt {
-                /**
-                 * The timestamp when the item ends. Required if `type` is `timestamp`.
-                 */
-                timestamp?: string;
-
-                /**
-                 * The type of the ends_at.
-                 */
-                type: EndsAt.Type;
-              }
-
-              export interface OverwritePrice {
-                /**
-                 * The per-unit amount to be charged in minor currency units.
-                 */
-                unit_amount?: Decimal;
-              }
-
-              export interface StartsAt {
-                /**
-                 * The timestamp when the item starts. Required if `type` is `timestamp`.
-                 */
-                timestamp?: string;
-
-                /**
-                 * The type of the starts_at.
-                 */
-                type: StartsAt.Type;
-              }
-
-              export type Type = 'overwrite_price' | OtherString;
-
-              export namespace EndsAt {
-                export type Type = 'never' | 'timestamp' | OtherString;
-              }
-
-              export namespace StartsAt {
-                export type Type = 'timestamp' | OtherString;
-              }
-            }
-
-            export namespace QuantityChange {
-              export interface EffectiveAt {
-                /**
-                 * The timestamp for the effective at.
-                 */
-                timestamp?: string;
-
-                /**
-                 * The type of the effective at.
-                 */
-                type: EffectiveAt.Type;
-              }
-
-              export namespace EffectiveAt {
-                export type Type = 'timestamp' | OtherString;
-              }
-            }
-          }
-        }
-
-        export namespace StartsAt {
-          export type Type = 'timestamp' | OtherString;
-        }
-      }
-
-      export namespace PricingOverride {
-        export interface EndsAt {
-          /**
-           * The timestamp when the item ends. Required if `type` is `timestamp`.
-           */
-          timestamp?: string;
-
-          /**
-           * The type of the ends_at.
-           */
-          type: EndsAt.Type;
-        }
-
-        export interface MultiplyPricing {
-          /**
-           * Criteria determining which rates the multiply_pricing override applies to.
-           */
-          criteria?: Array<MultiplyPricing.Criterion>;
-
-          /**
-           * The multiply_pricing factor. e.g. "0.8" for a 20% reduction.
-           */
-          factor: Decimal;
-        }
-
-        export interface StartsAt {
-          /**
-           * The timestamp when the item starts. Required if `type` is `timestamp`.
-           */
-          timestamp?: string;
-
-          /**
-           * The type of the starts_at.
-           */
-          type: StartsAt.Type;
-        }
-
-        export type Type = 'multiply_pricing' | OtherString;
-
-        export namespace EndsAt {
-          export type Type = 'never' | 'timestamp' | OtherString;
-        }
-
-        export namespace MultiplyPricing {
-          export interface Criterion {
-            /**
-             * Filter by pricing line IDs.
-             */
-            pricing_line_ids?: Array<string>;
-
-            /**
-             * Filter by pricing line lookup keys.
-             */
-            pricing_line_lookup_keys?: Array<string>;
-
-            /**
-             * Whether to include or exclude items matching these criteria.
-             */
-            type: Criterion.Type;
-          }
-
-          export namespace Criterion {
-            export type Type = 'exclude' | 'include' | OtherString;
-          }
-        }
-
-        export namespace StartsAt {
-          export type Type = 'timestamp' | OtherString;
-        }
-      }
-
       export namespace Term {
-        export interface AdHocProduct {
-          /**
-           * Explicit bill dates and amounts.
-           */
-          bill_schedule: AdHocProduct.BillSchedule;
-
-          /**
-           * The V1 Product being billed.
-           */
-          product: string;
-
-          /**
-           * Informational service period, independent of bill dates.
-           */
-          service_period?: AdHocProduct.ServicePeriod;
-        }
-
         export interface PricingOverride {
           /**
-           * Optional criteria selecting recurring or ad_hoc_product terms. If omitted, the override applies to all recurring and ad_hoc_product terms.
+           * Optional criteria selecting recurring or scheduled_fee terms. If omitted, the override applies to all recurring and scheduled_fee terms.
            */
           criteria?: Array<PricingOverride.Criterion>;
 
@@ -1991,13 +1460,152 @@ export namespace V2 {
           starts_at: RecurringPrice.StartsAt;
         }
 
+        export interface ScheduledFee {
+          /**
+           * Explicit bill dates and amounts.
+           */
+          bill_schedule: ScheduledFee.BillSchedule;
+
+          /**
+           * The V1 Product being billed.
+           */
+          product: string;
+
+          /**
+           * Informational service period, independent of bill dates.
+           */
+          service_period?: ScheduledFee.ServicePeriod;
+        }
+
         export type Type =
-          | 'ad_hoc_product'
           | 'pricing_override'
           | 'recurring_price'
+          | 'scheduled_fee'
           | OtherString;
 
-        export namespace AdHocProduct {
+        export namespace PricingOverride {
+          export interface Criterion {
+            /**
+             * Term selectors. Each ID or lookup key resolves to one fixed term ID.
+             * Omitted or empty selects all charge-bearing terms. Override terms cannot be targets.
+             */
+            terms?: Array<Criterion.Term>;
+
+            /**
+             * Whether to include or exclude the selected recurring or scheduled_fee terms.
+             */
+            type: Criterion.Type;
+          }
+
+          export interface EndsAt {
+            /**
+             * The timestamp when the item ends. Required if `type` is `timestamp`.
+             */
+            timestamp?: string;
+
+            /**
+             * The type of the ends_at.
+             */
+            type: EndsAt.Type;
+          }
+
+          export interface Multiply {
+            /**
+             * The multiplier, for example 0.85 for a 15% discount.
+             */
+            factor: Decimal;
+          }
+
+          export interface Overwrite {
+            /**
+             * The replacement per-unit amount in minor currency units.
+             */
+            unit_amount_decimal?: Decimal;
+          }
+
+          export interface StartsAt {
+            /**
+             * The timestamp when the item starts. Required if `type` is `timestamp`.
+             */
+            timestamp?: string;
+
+            /**
+             * The type of the starts_at.
+             */
+            type: StartsAt.Type;
+          }
+
+          export type Type = 'multiply' | 'overwrite' | OtherString;
+
+          export namespace Criterion {
+            export interface Term {
+              /**
+               * Select this term by its stable ID.
+               */
+              id?: string;
+
+              /**
+               * Select this term by its unique lookup key.
+               */
+              lookup_key?: string;
+
+              /**
+               * Whether the selector uses a term ID or lookup key.
+               */
+              type: Term.Type;
+            }
+
+            export type Type = 'exclude' | 'include' | OtherString;
+
+            export namespace Term {
+              export type Type = 'id' | 'lookup_key';
+            }
+          }
+
+          export namespace EndsAt {
+            export type Type = 'never' | 'now' | 'timestamp' | OtherString;
+          }
+
+          export namespace StartsAt {
+            export type Type = 'now' | 'timestamp' | OtherString;
+          }
+        }
+
+        export namespace RecurringPrice {
+          export interface EndsAt {
+            /**
+             * The timestamp when the item ends. Required if `type` is `timestamp`.
+             */
+            timestamp?: string;
+
+            /**
+             * The type of the ends_at.
+             */
+            type: EndsAt.Type;
+          }
+
+          export interface StartsAt {
+            /**
+             * The timestamp when the item starts. Required if `type` is `timestamp`.
+             */
+            timestamp?: string;
+
+            /**
+             * The type of the starts_at.
+             */
+            type: StartsAt.Type;
+          }
+
+          export namespace EndsAt {
+            export type Type = 'never' | 'now' | 'timestamp' | OtherString;
+          }
+
+          export namespace StartsAt {
+            export type Type = 'now' | 'timestamp' | OtherString;
+          }
+        }
+
+        export namespace ScheduledFee {
           export interface BillSchedule {
             /**
              * Between one and ten installments. Empty schedules are allowed only on update.
@@ -2082,134 +1690,12 @@ export namespace V2 {
             }
 
             export namespace EndsAt {
-              export type Type = 'timestamp' | OtherString;
+              export type Type = 'now' | 'timestamp' | OtherString;
             }
 
             export namespace StartsAt {
-              export type Type = 'timestamp' | OtherString;
+              export type Type = 'now' | 'timestamp' | OtherString;
             }
-          }
-        }
-
-        export namespace PricingOverride {
-          export interface Criterion {
-            /**
-             * Term selectors. Each ID or lookup key resolves to one fixed term ID.
-             * Omitted or empty selects all charge-bearing terms. Override terms cannot be targets.
-             */
-            terms?: Array<Criterion.Term>;
-
-            /**
-             * Whether to include or exclude the selected recurring or ad_hoc_product terms.
-             */
-            type: Criterion.Type;
-          }
-
-          export interface EndsAt {
-            /**
-             * The timestamp when the item ends. Required if `type` is `timestamp`.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of the ends_at.
-             */
-            type: EndsAt.Type;
-          }
-
-          export interface Multiply {
-            /**
-             * The multiplier, for example 0.85 for a 15% discount.
-             */
-            factor: Decimal;
-          }
-
-          export interface Overwrite {
-            /**
-             * The replacement per-unit amount in minor currency units.
-             */
-            unit_amount_decimal?: Decimal;
-          }
-
-          export interface StartsAt {
-            /**
-             * The timestamp when the item starts. Required if `type` is `timestamp`.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of the starts_at.
-             */
-            type: StartsAt.Type;
-          }
-
-          export type Type = 'multiply' | 'overwrite' | OtherString;
-
-          export namespace Criterion {
-            export interface Term {
-              /**
-               * Select this term by its stable ID.
-               */
-              id?: string;
-
-              /**
-               * Select this term by its unique lookup key.
-               */
-              lookup_key?: string;
-
-              /**
-               * Whether the selector uses a term ID or lookup key.
-               */
-              type: Term.Type;
-            }
-
-            export type Type = 'exclude' | 'include' | OtherString;
-
-            export namespace Term {
-              export type Type = 'id' | 'lookup_key';
-            }
-          }
-
-          export namespace EndsAt {
-            export type Type = 'never' | 'timestamp' | OtherString;
-          }
-
-          export namespace StartsAt {
-            export type Type = 'timestamp' | OtherString;
-          }
-        }
-
-        export namespace RecurringPrice {
-          export interface EndsAt {
-            /**
-             * The timestamp when the item ends. Required if `type` is `timestamp`.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of the ends_at.
-             */
-            type: EndsAt.Type;
-          }
-
-          export interface StartsAt {
-            /**
-             * The timestamp when the item starts. Required if `type` is `timestamp`.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of the starts_at.
-             */
-            type: StartsAt.Type;
-          }
-
-          export namespace EndsAt {
-            export type Type = 'never' | 'timestamp' | OtherString;
-          }
-
-          export namespace StartsAt {
-            export type Type = 'timestamp' | OtherString;
           }
         }
       }
@@ -2240,7 +1726,7 @@ export namespace V2 {
   export namespace Billing {
     export interface ContractUpdateParams {
       /**
-       * Apply all actions atomically. Cannot be combined with the legacy child action arrays.
+       * Apply all term actions atomically.
        */
       actions?: Array<ContractUpdateParams.Action>;
 
@@ -2248,6 +1734,11 @@ export namespace V2 {
        * The billing settings to update on the contract.
        */
       billing_settings?: ContractUpdateParams.BillingSettings;
+
+      /**
+       * The unique user-provided contract number. This can only be changed while the contract is in draft.
+       */
+      contract_number?: string;
 
       /**
        * Additional fields to include in the response.
@@ -2258,23 +1749,6 @@ export namespace V2 {
        * Set of key-value pairs.
        */
       metadata?: MetadataParam;
-
-      /**
-       * One-time fee actions to apply.
-       */
-      one_time_fee_actions?: Array<ContractUpdateParams.OneTimeFeeAction>;
-
-      /**
-       * Pricing line actions to apply.
-       */
-      pricing_line_actions?: Array<ContractUpdateParams.PricingLineAction>;
-
-      /**
-       * Pricing override actions to apply.
-       */
-      pricing_override_actions?: Array<
-        ContractUpdateParams.PricingOverrideAction
-      >;
     }
 
     export namespace ContractUpdateParams {
@@ -2325,79 +1799,8 @@ export namespace V2 {
         | 'terms'
         | OtherString;
 
-      export interface OneTimeFeeAction {
-        /**
-         * Parameters for adding a one-time fee.
-         */
-        add?: OneTimeFeeAction.Add;
-
-        /**
-         * Parameters for removing a one-time fee.
-         */
-        remove?: OneTimeFeeAction.Remove;
-
-        /**
-         * The type of one-time fee action.
-         */
-        type: OneTimeFeeAction.Type;
-
-        /**
-         * Parameters for updating a one-time fee.
-         */
-        update?: OneTimeFeeAction.Update;
-      }
-
-      export interface PricingLineAction {
-        /**
-         * Add a pricing line.
-         */
-        add?: PricingLineAction.Add;
-
-        /**
-         * Remove a pricing line.
-         */
-        remove?: PricingLineAction.Remove;
-
-        /**
-         * The type of pricing line action.
-         */
-        type: PricingLineAction.Type;
-
-        /**
-         * Update a pricing line.
-         */
-        update?: PricingLineAction.Update;
-      }
-
-      export interface PricingOverrideAction {
-        /**
-         * Add a pricing override.
-         */
-        add?: PricingOverrideAction.Add;
-
-        /**
-         * Remove a pricing override.
-         */
-        remove?: PricingOverrideAction.Remove;
-
-        /**
-         * The type of pricing override action.
-         */
-        type: PricingOverrideAction.Type;
-
-        /**
-         * Update a pricing override.
-         */
-        update?: PricingOverrideAction.Update;
-      }
-
       export namespace Action {
         export interface AddTerm {
-          /**
-           * Required when type is ad_hoc_product.
-           */
-          ad_hoc_product?: AddTerm.AdHocProduct;
-
           /**
            * Lookup key unique across all term types on the contract.
            */
@@ -2417,6 +1820,11 @@ export namespace V2 {
            * Required when type is recurring_price.
            */
           recurring_price?: AddTerm.RecurringPrice;
+
+          /**
+           * Required when type is scheduled_fee.
+           */
+          scheduled_fee?: AddTerm.ScheduledFee;
 
           /**
            * The term type. Production types require exactly one matching payload.
@@ -2439,11 +1847,6 @@ export namespace V2 {
 
         export interface UpdateTerm {
           /**
-           * Must match the existing term's type.
-           */
-          ad_hoc_product?: UpdateTerm.AdHocProduct;
-
-          /**
            * Metadata changes to apply immediately.
            */
           metadata?: MetadataParam;
@@ -2459,32 +1862,20 @@ export namespace V2 {
           recurring_price?: UpdateTerm.RecurringPrice;
 
           /**
+           * Must match the existing term's type.
+           */
+          scheduled_fee?: UpdateTerm.ScheduledFee;
+
+          /**
            * Select a term by ID or its unique lookup key.
            */
           term: UpdateTerm.Term;
         }
 
         export namespace AddTerm {
-          export interface AdHocProduct {
-            /**
-             * Explicit bill dates and amounts.
-             */
-            bill_schedule: AdHocProduct.BillSchedule;
-
-            /**
-             * The V1 Product being billed.
-             */
-            product: string;
-
-            /**
-             * Informational service period, independent of bill dates.
-             */
-            service_period?: AdHocProduct.ServicePeriod;
-          }
-
           export interface PricingOverride {
             /**
-             * Optional criteria selecting recurring or ad_hoc_product terms. If omitted, the override applies to all recurring and ad_hoc_product terms.
+             * Optional criteria selecting recurring or scheduled_fee terms. If omitted, the override applies to all recurring and scheduled_fee terms.
              */
             criteria?: Array<PricingOverride.Criterion>;
 
@@ -2541,13 +1932,152 @@ export namespace V2 {
             starts_at: RecurringPrice.StartsAt;
           }
 
+          export interface ScheduledFee {
+            /**
+             * Explicit bill dates and amounts.
+             */
+            bill_schedule: ScheduledFee.BillSchedule;
+
+            /**
+             * The V1 Product being billed.
+             */
+            product: string;
+
+            /**
+             * Informational service period, independent of bill dates.
+             */
+            service_period?: ScheduledFee.ServicePeriod;
+          }
+
           export type Type =
-            | 'ad_hoc_product'
             | 'pricing_override'
             | 'recurring_price'
+            | 'scheduled_fee'
             | OtherString;
 
-          export namespace AdHocProduct {
+          export namespace PricingOverride {
+            export interface Criterion {
+              /**
+               * Term selectors. Each ID or lookup key resolves to one fixed term ID.
+               * Omitted or empty selects all charge-bearing terms. Override terms cannot be targets.
+               */
+              terms?: Array<Criterion.Term>;
+
+              /**
+               * Whether to include or exclude the selected recurring or scheduled_fee terms.
+               */
+              type: Criterion.Type;
+            }
+
+            export interface EndsAt {
+              /**
+               * The timestamp when the item ends. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the ends_at.
+               */
+              type: EndsAt.Type;
+            }
+
+            export interface Multiply {
+              /**
+               * The multiplier, for example 0.85 for a 15% discount.
+               */
+              factor: Decimal;
+            }
+
+            export interface Overwrite {
+              /**
+               * The replacement per-unit amount in minor currency units.
+               */
+              unit_amount_decimal?: Decimal;
+            }
+
+            export interface StartsAt {
+              /**
+               * The timestamp when the item starts. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the starts_at.
+               */
+              type: StartsAt.Type;
+            }
+
+            export type Type = 'multiply' | 'overwrite' | OtherString;
+
+            export namespace Criterion {
+              export interface Term {
+                /**
+                 * Select this term by its stable ID.
+                 */
+                id?: string;
+
+                /**
+                 * Select this term by its unique lookup key.
+                 */
+                lookup_key?: string;
+
+                /**
+                 * Whether the selector uses a term ID or lookup key.
+                 */
+                type: Term.Type;
+              }
+
+              export type Type = 'exclude' | 'include' | OtherString;
+
+              export namespace Term {
+                export type Type = 'id' | 'lookup_key';
+              }
+            }
+
+            export namespace EndsAt {
+              export type Type = 'never' | 'now' | 'timestamp' | OtherString;
+            }
+
+            export namespace StartsAt {
+              export type Type = 'now' | 'timestamp' | OtherString;
+            }
+          }
+
+          export namespace RecurringPrice {
+            export interface EndsAt {
+              /**
+               * The timestamp when the item ends. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the ends_at.
+               */
+              type: EndsAt.Type;
+            }
+
+            export interface StartsAt {
+              /**
+               * The timestamp when the item starts. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the starts_at.
+               */
+              type: StartsAt.Type;
+            }
+
+            export namespace EndsAt {
+              export type Type = 'never' | 'now' | 'timestamp' | OtherString;
+            }
+
+            export namespace StartsAt {
+              export type Type = 'now' | 'timestamp' | OtherString;
+            }
+          }
+
+          export namespace ScheduledFee {
             export interface BillSchedule {
               /**
                * Between one and ten installments. Empty schedules are allowed only on update.
@@ -2632,134 +2162,12 @@ export namespace V2 {
               }
 
               export namespace EndsAt {
-                export type Type = 'timestamp' | OtherString;
+                export type Type = 'now' | 'timestamp' | OtherString;
               }
 
               export namespace StartsAt {
-                export type Type = 'timestamp' | OtherString;
+                export type Type = 'now' | 'timestamp' | OtherString;
               }
-            }
-          }
-
-          export namespace PricingOverride {
-            export interface Criterion {
-              /**
-               * Term selectors. Each ID or lookup key resolves to one fixed term ID.
-               * Omitted or empty selects all charge-bearing terms. Override terms cannot be targets.
-               */
-              terms?: Array<Criterion.Term>;
-
-              /**
-               * Whether to include or exclude the selected recurring or ad_hoc_product terms.
-               */
-              type: Criterion.Type;
-            }
-
-            export interface EndsAt {
-              /**
-               * The timestamp when the item ends. Required if `type` is `timestamp`.
-               */
-              timestamp?: string;
-
-              /**
-               * The type of the ends_at.
-               */
-              type: EndsAt.Type;
-            }
-
-            export interface Multiply {
-              /**
-               * The multiplier, for example 0.85 for a 15% discount.
-               */
-              factor: Decimal;
-            }
-
-            export interface Overwrite {
-              /**
-               * The replacement per-unit amount in minor currency units.
-               */
-              unit_amount_decimal?: Decimal;
-            }
-
-            export interface StartsAt {
-              /**
-               * The timestamp when the item starts. Required if `type` is `timestamp`.
-               */
-              timestamp?: string;
-
-              /**
-               * The type of the starts_at.
-               */
-              type: StartsAt.Type;
-            }
-
-            export type Type = 'multiply' | 'overwrite' | OtherString;
-
-            export namespace Criterion {
-              export interface Term {
-                /**
-                 * Select this term by its stable ID.
-                 */
-                id?: string;
-
-                /**
-                 * Select this term by its unique lookup key.
-                 */
-                lookup_key?: string;
-
-                /**
-                 * Whether the selector uses a term ID or lookup key.
-                 */
-                type: Term.Type;
-              }
-
-              export type Type = 'exclude' | 'include' | OtherString;
-
-              export namespace Term {
-                export type Type = 'id' | 'lookup_key';
-              }
-            }
-
-            export namespace EndsAt {
-              export type Type = 'never' | 'timestamp' | OtherString;
-            }
-
-            export namespace StartsAt {
-              export type Type = 'timestamp' | OtherString;
-            }
-          }
-
-          export namespace RecurringPrice {
-            export interface EndsAt {
-              /**
-               * The timestamp when the item ends. Required if `type` is `timestamp`.
-               */
-              timestamp?: string;
-
-              /**
-               * The type of the ends_at.
-               */
-              type: EndsAt.Type;
-            }
-
-            export interface StartsAt {
-              /**
-               * The timestamp when the item starts. Required if `type` is `timestamp`.
-               */
-              timestamp?: string;
-
-              /**
-               * The type of the starts_at.
-               */
-              type: StartsAt.Type;
-            }
-
-            export namespace EndsAt {
-              export type Type = 'never' | 'timestamp' | OtherString;
-            }
-
-            export namespace StartsAt {
-              export type Type = 'timestamp' | OtherString;
             }
           }
         }
@@ -2788,18 +2196,6 @@ export namespace V2 {
         }
 
         export namespace UpdateTerm {
-          export interface AdHocProduct {
-            /**
-             * Replace remaining unbilled installments. Billed entries remain immutable.
-             */
-            bill_schedule?: AdHocProduct.BillSchedule;
-
-            /**
-             * Informational service period; cannot change historical billing.
-             */
-            service_period?: AdHocProduct.ServicePeriod;
-          }
-
           export interface PricingOverride {
             /**
              * Omission leaves the end unchanged; never requests an open end.
@@ -2830,6 +2226,18 @@ export namespace V2 {
             starts_at?: RecurringPrice.StartsAt;
           }
 
+          export interface ScheduledFee {
+            /**
+             * Replace remaining unbilled installments. Billed entries remain immutable.
+             */
+            bill_schedule?: ScheduledFee.BillSchedule;
+
+            /**
+             * Informational service period; cannot change historical billing.
+             */
+            service_period?: ScheduledFee.ServicePeriod;
+          }
+
           export interface Term {
             /**
              * Select this term by its stable ID.
@@ -2847,7 +2255,75 @@ export namespace V2 {
             type: Term.Type;
           }
 
-          export namespace AdHocProduct {
+          export namespace PricingOverride {
+            export interface EndsAt {
+              /**
+               * The timestamp when the item ends. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the ends_at.
+               */
+              type: EndsAt.Type;
+            }
+
+            export interface StartsAt {
+              /**
+               * The timestamp when the item starts. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the starts_at.
+               */
+              type: StartsAt.Type;
+            }
+
+            export namespace EndsAt {
+              export type Type = 'never' | 'now' | 'timestamp' | OtherString;
+            }
+
+            export namespace StartsAt {
+              export type Type = 'now' | 'timestamp' | OtherString;
+            }
+          }
+
+          export namespace RecurringPrice {
+            export interface EndsAt {
+              /**
+               * The timestamp when the item ends. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the ends_at.
+               */
+              type: EndsAt.Type;
+            }
+
+            export interface StartsAt {
+              /**
+               * The timestamp when the item starts. Required if `type` is `timestamp`.
+               */
+              timestamp?: string;
+
+              /**
+               * The type of the starts_at.
+               */
+              type: StartsAt.Type;
+            }
+
+            export namespace EndsAt {
+              export type Type = 'never' | 'now' | 'timestamp' | OtherString;
+            }
+
+            export namespace StartsAt {
+              export type Type = 'now' | 'timestamp' | OtherString;
+            }
+          }
+
+          export namespace ScheduledFee {
             export interface BillSchedule {
               /**
                * Full replacement of up to ten unbilled installments. An explicit empty array cancels all of them.
@@ -2932,80 +2408,12 @@ export namespace V2 {
               }
 
               export namespace EndsAt {
-                export type Type = 'timestamp' | OtherString;
+                export type Type = 'now' | 'timestamp' | OtherString;
               }
 
               export namespace StartsAt {
-                export type Type = 'timestamp' | OtherString;
+                export type Type = 'now' | 'timestamp' | OtherString;
               }
-            }
-          }
-
-          export namespace PricingOverride {
-            export interface EndsAt {
-              /**
-               * The timestamp when the item ends. Required if `type` is `timestamp`.
-               */
-              timestamp?: string;
-
-              /**
-               * The type of the ends_at.
-               */
-              type: EndsAt.Type;
-            }
-
-            export interface StartsAt {
-              /**
-               * The timestamp when the item starts. Required if `type` is `timestamp`.
-               */
-              timestamp?: string;
-
-              /**
-               * The type of the starts_at.
-               */
-              type: StartsAt.Type;
-            }
-
-            export namespace EndsAt {
-              export type Type = 'never' | 'timestamp' | OtherString;
-            }
-
-            export namespace StartsAt {
-              export type Type = 'timestamp' | OtherString;
-            }
-          }
-
-          export namespace RecurringPrice {
-            export interface EndsAt {
-              /**
-               * The timestamp when the item ends. Required if `type` is `timestamp`.
-               */
-              timestamp?: string;
-
-              /**
-               * The type of the ends_at.
-               */
-              type: EndsAt.Type;
-            }
-
-            export interface StartsAt {
-              /**
-               * The timestamp when the item starts. Required if `type` is `timestamp`.
-               */
-              timestamp?: string;
-
-              /**
-               * The type of the starts_at.
-               */
-              type: StartsAt.Type;
-            }
-
-            export namespace EndsAt {
-              export type Type = 'never' | 'timestamp' | OtherString;
-            }
-
-            export namespace StartsAt {
-              export type Type = 'timestamp' | OtherString;
             }
           }
 
@@ -3101,820 +2509,6 @@ export namespace V2 {
             | 'send_invoice';
         }
       }
-
-      export namespace OneTimeFeeAction {
-        export interface Add {
-          /**
-           * The amount to bill.
-           */
-          amount: V2Amount;
-
-          /**
-           * When this fee should be billed.
-           */
-          bill_at: Add.BillAt;
-
-          /**
-           * A user-provided lookup key.
-           */
-          lookup_key?: string;
-
-          /**
-           * Metadata for the one-time fee.
-           */
-          metadata?: MetadataParam;
-
-          /**
-           * The id of the product for this fee.
-           */
-          product: string;
-        }
-
-        export interface Remove {
-          /**
-           * The id of the one-time fee to remove.
-           */
-          id?: string;
-
-          /**
-           * The lookup key of the one-time fee to remove.
-           */
-          lookup_key?: string;
-        }
-
-        export type Type = 'add' | 'remove' | 'update';
-
-        export interface Update {
-          /**
-           * The updated amount to bill.
-           */
-          amount?: V2Amount;
-
-          /**
-           * The updated bill_at schedule.
-           */
-          bill_at?: Update.BillAt;
-
-          /**
-           * The id of the one-time fee to update.
-           */
-          id?: string;
-
-          /**
-           * The lookup key of the one-time fee to update.
-           */
-          lookup_key?: string;
-
-          /**
-           * Metadata mutations to apply to the one-time fee.
-           */
-          metadata?: MetadataParam;
-        }
-
-        export namespace Add {
-          export interface BillAt {
-            /**
-             * The timestamp at which the entry should be billed. Required if `type` is `timestamp`.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of the bill_at.
-             */
-            type: BillAt.Type;
-          }
-
-          export namespace BillAt {
-            export type Type = 'now' | 'timestamp' | OtherString;
-          }
-        }
-
-        export namespace Update {
-          export interface BillAt {
-            /**
-             * The timestamp at which the entry should be billed. Required if `type` is `timestamp`.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of the bill_at.
-             */
-            type: BillAt.Type;
-          }
-
-          export namespace BillAt {
-            export type Type = 'now' | 'timestamp' | OtherString;
-          }
-        }
-      }
-
-      export namespace PricingLineAction {
-        export interface Add {
-          /**
-           * The end time for the pricing line.
-           */
-          ends_at?: Add.EndsAt;
-
-          /**
-           * A lookup key for the pricing line.
-           */
-          lookup_key?: string;
-
-          /**
-           * Metadata for the pricing line.
-           */
-          metadata?: MetadataParam;
-
-          /**
-           * The pricing configuration for the pricing line.
-           */
-          pricing: Add.Pricing;
-
-          /**
-           * The start time for the pricing line.
-           */
-          starts_at: Add.StartsAt;
-        }
-
-        export interface Remove {
-          /**
-           * The id of the pricing line to remove.
-           */
-          id: string;
-        }
-
-        export type Type = 'add' | 'remove' | 'update' | OtherString;
-
-        export interface Update {
-          /**
-           * Updated end time.
-           */
-          ends_at?: Update.EndsAt;
-
-          /**
-           * The id of the pricing line.
-           */
-          id: string;
-
-          /**
-           * Metadata mutations to apply to the pricing line.
-           */
-          metadata?: MetadataParam;
-
-          /**
-           * Updated pricing configuration.
-           */
-          pricing?: Update.Pricing;
-
-          /**
-           * Updated start time.
-           */
-          starts_at?: Update.StartsAt;
-        }
-
-        export namespace Add {
-          export interface EndsAt {
-            /**
-             * The timestamp when the pricing ends.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of end time to apply.
-             */
-            type: EndsAt.Type;
-          }
-
-          export interface Pricing {
-            /**
-             * V1 price details. Required if `type` is `price`.
-             */
-            price_details?: Pricing.PriceDetails;
-
-            /**
-             * The type of pricing.
-             */
-            type: Pricing.Type;
-          }
-
-          export interface StartsAt {
-            /**
-             * The timestamp when the pricing starts.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of start time to apply.
-             */
-            type: StartsAt.Type;
-          }
-
-          export namespace EndsAt {
-            export type Type = 'never' | 'now' | 'timestamp' | OtherString;
-          }
-
-          export namespace Pricing {
-            export interface PriceDetails {
-              /**
-               * The id of the price.
-               */
-              price: string;
-
-              /**
-               * Pricing overrides embedded directly on this pricing line.
-               */
-              pricing_overrides?: Array<PriceDetails.PricingOverride>;
-
-              /**
-               * Quantity changes for the pricing line. For now, at most one entry is allowed.
-               * A quantity change clears all future quantity changes on this pricing line. Defaults to 1.
-               */
-              quantity_changes?: Array<PriceDetails.QuantityChange>;
-            }
-
-            export type Type = 'price' | OtherString;
-
-            export namespace PriceDetails {
-              export interface PricingOverride {
-                /**
-                 * When the override ends. Defaults to the pricing line's end if not specified.
-                 */
-                ends_at?: PricingOverride.EndsAt;
-
-                /**
-                 * A user-provided lookup key to reference this override.
-                 */
-                lookup_key?: string;
-
-                /**
-                 * Set of key-value pairs that you can attach to an object.
-                 */
-                metadata?: MetadataParam;
-
-                /**
-                 * Parameters for the overwrite_price override. Required if `type` is `overwrite_price`.
-                 */
-                overwrite_price?: PricingOverride.OverwritePrice;
-
-                /**
-                 * The priority of this override relative to others. 0 is highest, 100 is lowest. Defaults to 50.
-                 */
-                priority?: number;
-
-                /**
-                 * When the override starts. Defaults to the pricing line's start if not specified.
-                 */
-                starts_at?: PricingOverride.StartsAt;
-
-                /**
-                 * The type of override.
-                 */
-                type: PricingOverride.Type;
-              }
-
-              export interface QuantityChange {
-                /**
-                 * When this quantity change takes effect.
-                 */
-                effective_at: QuantityChange.EffectiveAt;
-
-                /**
-                 * The quantity to set.
-                 */
-                set: Decimal;
-              }
-
-              export namespace PricingOverride {
-                export interface EndsAt {
-                  /**
-                   * The timestamp when the item ends. Required if `type` is `timestamp`.
-                   */
-                  timestamp?: string;
-
-                  /**
-                   * The type of the ends_at.
-                   */
-                  type: EndsAt.Type;
-                }
-
-                export interface OverwritePrice {
-                  /**
-                   * The per-unit amount to be charged in minor currency units.
-                   */
-                  unit_amount?: Decimal;
-                }
-
-                export interface StartsAt {
-                  /**
-                   * The timestamp when the item starts. Required if `type` is `timestamp`.
-                   */
-                  timestamp?: string;
-
-                  /**
-                   * The type of the starts_at.
-                   */
-                  type: StartsAt.Type;
-                }
-
-                export type Type = 'overwrite_price' | OtherString;
-
-                export namespace EndsAt {
-                  export type Type = 'never' | 'timestamp' | OtherString;
-                }
-
-                export namespace StartsAt {
-                  export type Type = 'timestamp' | OtherString;
-                }
-              }
-
-              export namespace QuantityChange {
-                export interface EffectiveAt {
-                  /**
-                   * The timestamp for the effective at.
-                   */
-                  timestamp?: string;
-
-                  /**
-                   * The type of the effective at.
-                   */
-                  type: EffectiveAt.Type;
-                }
-
-                export namespace EffectiveAt {
-                  export type Type = 'timestamp' | OtherString;
-                }
-              }
-            }
-          }
-
-          export namespace StartsAt {
-            export type Type = 'timestamp' | OtherString;
-          }
-        }
-
-        export namespace Update {
-          export interface EndsAt {
-            /**
-             * The timestamp when the pricing ends.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of end time to apply.
-             */
-            type: EndsAt.Type;
-          }
-
-          export interface Pricing {
-            /**
-             * V1 price details. Present when the pricing line type is `price`.
-             */
-            price_details?: Pricing.PriceDetails;
-          }
-
-          export interface StartsAt {
-            /**
-             * The timestamp when the pricing starts.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of start time to apply.
-             */
-            type: StartsAt.Type;
-          }
-
-          export namespace EndsAt {
-            export type Type = 'never' | 'now' | 'timestamp' | OtherString;
-          }
-
-          export namespace Pricing {
-            export interface PriceDetails {
-              /**
-               * Pricing override actions to apply to the overrides embedded on this pricing line.
-               */
-              pricing_override_actions?: Array<
-                PriceDetails.PricingOverrideAction
-              >;
-
-              /**
-               * Quantity changes for the pricing line. Setting this clears all future quantity changes.
-               */
-              quantity_changes?: Array<PriceDetails.QuantityChange>;
-            }
-
-            export namespace PriceDetails {
-              export interface PricingOverrideAction {
-                /**
-                 * Add a pricing line override.
-                 */
-                add?: PricingOverrideAction.Add;
-
-                /**
-                 * Remove a pricing line override.
-                 */
-                remove?: PricingOverrideAction.Remove;
-
-                /**
-                 * The type of pricing line override action.
-                 */
-                type: PricingOverrideAction.Type;
-
-                /**
-                 * Update a pricing line override.
-                 */
-                update?: PricingOverrideAction.Update;
-              }
-
-              export interface QuantityChange {
-                /**
-                 * When this quantity change takes effect.
-                 */
-                effective_at: QuantityChange.EffectiveAt;
-
-                /**
-                 * The quantity to set.
-                 */
-                set: Decimal;
-              }
-
-              export namespace PricingOverrideAction {
-                export interface Add {
-                  /**
-                   * The end time for the override.
-                   */
-                  ends_at?: Add.EndsAt;
-
-                  /**
-                   * A lookup key for the override.
-                   */
-                  lookup_key?: string;
-
-                  /**
-                   * Metadata for the pricing override.
-                   */
-                  metadata?: MetadataParam;
-
-                  /**
-                   * Parameters for an overwrite_price override. Required if `type` is `overwrite_price`.
-                   */
-                  overwrite_price?: Add.OverwritePrice;
-
-                  /**
-                   * The priority of this override relative to others. 0 is highest, 100 is lowest. Defaults to 50.
-                   */
-                  priority?: number;
-
-                  /**
-                   * The start time for the override.
-                   */
-                  starts_at: Add.StartsAt;
-
-                  /**
-                   * The type of override to add.
-                   */
-                  type: Add.Type;
-                }
-
-                export interface Remove {
-                  /**
-                   * The id of the pricing override to remove.
-                   */
-                  id?: string;
-
-                  /**
-                   * Lookup key of the override to remove.
-                   */
-                  lookup_key?: string;
-                }
-
-                export type Type = 'add' | 'remove' | 'update' | OtherString;
-
-                export interface Update {
-                  /**
-                   * Updated end time.
-                   */
-                  ends_at?: Update.EndsAt;
-
-                  /**
-                   * The id of the pricing override to update.
-                   */
-                  id?: string;
-
-                  /**
-                   * Updated lookup key.
-                   */
-                  lookup_key?: string;
-
-                  /**
-                   * Metadata mutations to apply to the pricing override.
-                   */
-                  metadata?: MetadataParam;
-
-                  /**
-                   * Updated start time.
-                   */
-                  starts_at?: Update.StartsAt;
-                }
-
-                export namespace Add {
-                  export interface EndsAt {
-                    /**
-                     * The timestamp when the pricing ends.
-                     */
-                    timestamp?: string;
-
-                    /**
-                     * The type of end time to apply.
-                     */
-                    type: EndsAt.Type;
-                  }
-
-                  export interface OverwritePrice {
-                    /**
-                     * The per-unit amount to be charged in minor currency units.
-                     */
-                    unit_amount?: Decimal;
-                  }
-
-                  export interface StartsAt {
-                    /**
-                     * The timestamp when the pricing starts.
-                     */
-                    timestamp?: string;
-
-                    /**
-                     * The type of start time to apply.
-                     */
-                    type: StartsAt.Type;
-                  }
-
-                  export type Type = 'overwrite_price' | OtherString;
-
-                  export namespace EndsAt {
-                    export type Type =
-                      | 'never'
-                      | 'now'
-                      | 'timestamp'
-                      | OtherString;
-                  }
-
-                  export namespace StartsAt {
-                    export type Type = 'timestamp' | OtherString;
-                  }
-                }
-
-                export namespace Update {
-                  export interface EndsAt {
-                    /**
-                     * The timestamp when the pricing ends.
-                     */
-                    timestamp?: string;
-
-                    /**
-                     * The type of end time to apply.
-                     */
-                    type: EndsAt.Type;
-                  }
-
-                  export interface StartsAt {
-                    /**
-                     * The timestamp when the pricing starts.
-                     */
-                    timestamp?: string;
-
-                    /**
-                     * The type of start time to apply.
-                     */
-                    type: StartsAt.Type;
-                  }
-
-                  export namespace EndsAt {
-                    export type Type =
-                      | 'never'
-                      | 'now'
-                      | 'timestamp'
-                      | OtherString;
-                  }
-
-                  export namespace StartsAt {
-                    export type Type = 'timestamp' | OtherString;
-                  }
-                }
-              }
-
-              export namespace QuantityChange {
-                export interface EffectiveAt {
-                  /**
-                   * The timestamp for the effective at.
-                   */
-                  timestamp?: string;
-
-                  /**
-                   * The type of the effective at.
-                   */
-                  type: EffectiveAt.Type;
-                }
-
-                export namespace EffectiveAt {
-                  export type Type = 'timestamp' | OtherString;
-                }
-              }
-            }
-          }
-
-          export namespace StartsAt {
-            export type Type = 'timestamp' | OtherString;
-          }
-        }
-      }
-
-      export namespace PricingOverrideAction {
-        export interface Add {
-          /**
-           * The end time for the pricing override.
-           */
-          ends_at?: Add.EndsAt;
-
-          /**
-           * A lookup key for the pricing override.
-           */
-          lookup_key?: string;
-
-          /**
-           * Metadata for the pricing override.
-           */
-          metadata?: MetadataParam;
-
-          /**
-           * A multiply_pricing override to add.
-           */
-          multiply_pricing?: Add.MultiplyPricing;
-
-          /**
-           * An overwrite price override to add.
-           */
-          overwrite_price?: Add.OverwritePrice;
-
-          /**
-           * The priority for the pricing override. The highest priority is 0 and the lowest is 100.
-           */
-          priority?: number;
-
-          /**
-           * The start time for the pricing override.
-           */
-          starts_at: Add.StartsAt;
-
-          /**
-           * The type of pricing override to add.
-           */
-          type: Add.Type;
-        }
-
-        export interface Remove {
-          /**
-           * The id of the pricing override to remove.
-           */
-          id: string;
-        }
-
-        export type Type = 'add' | 'remove' | 'update' | OtherString;
-
-        export interface Update {
-          /**
-           * The updated end time for the pricing override.
-           */
-          ends_at?: Update.EndsAt;
-
-          /**
-           * The ID of the pricing override.
-           */
-          id: string;
-
-          /**
-           * Metadata mutations to apply to the pricing override.
-           */
-          metadata?: MetadataParam;
-
-          /**
-           * The updated start time for the pricing override.
-           */
-          starts_at?: Update.StartsAt;
-        }
-
-        export namespace Add {
-          export interface EndsAt {
-            /**
-             * The timestamp when the pricing ends.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of end time to apply.
-             */
-            type: EndsAt.Type;
-          }
-
-          export interface MultiplyPricing {
-            /**
-             * Criteria determining which rates the multiply_pricing override applies to.
-             */
-            criteria: Array<MultiplyPricing.Criterion>;
-
-            /**
-             * The multiply_pricing factor, represented as a decimal string. e.g. "0.8" for a 20% reduction.
-             */
-            factor: string;
-          }
-
-          export interface OverwritePrice {
-            /**
-             * The per-unit amount to be charged, represented as a decimal string in minor currency units.
-             */
-            unit_amount?: string;
-          }
-
-          export interface StartsAt {
-            /**
-             * The timestamp when the pricing starts.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of start time to apply.
-             */
-            type: StartsAt.Type;
-          }
-
-          export type Type = 'multiply_pricing' | OtherString;
-
-          export namespace EndsAt {
-            export type Type = 'never' | 'now' | 'timestamp' | OtherString;
-          }
-
-          export namespace MultiplyPricing {
-            export interface Criterion {
-              /**
-               * Filter by pricing line IDs.
-               */
-              pricing_line_ids?: Array<string>;
-
-              /**
-               * Filter by pricing line lookup keys.
-               */
-              pricing_line_lookup_keys?: Array<string>;
-
-              /**
-               * Whether to include or exclude items matching these criteria.
-               */
-              type: Criterion.Type;
-            }
-
-            export namespace Criterion {
-              export type Type = 'exclude' | 'include' | OtherString;
-            }
-          }
-
-          export namespace StartsAt {
-            export type Type = 'timestamp' | OtherString;
-          }
-        }
-
-        export namespace Update {
-          export interface EndsAt {
-            /**
-             * The timestamp when the pricing ends.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of end time to apply.
-             */
-            type: EndsAt.Type;
-          }
-
-          export interface StartsAt {
-            /**
-             * The timestamp when the pricing starts.
-             */
-            timestamp?: string;
-
-            /**
-             * The type of start time to apply.
-             */
-            type: StartsAt.Type;
-          }
-
-          export namespace EndsAt {
-            export type Type = 'never' | 'now' | 'timestamp' | OtherString;
-          }
-
-          export namespace StartsAt {
-            export type Type = 'timestamp' | OtherString;
-          }
-        }
-      }
     }
   }
 }
@@ -3977,12 +2571,6 @@ export namespace V2 {
   export namespace Billing {
     export interface ContractCancelParams {
       /**
-       * Per-pricing-line proration behavior overrides. Falls back to `proration_behavior` if
-       * not specified for a given line.
-       */
-      cancel_pricing_lines?: Array<ContractCancelParams.CancelPricingLine>;
-
-      /**
        * Additional fields to include in the response.
        */
       include?: Array<ContractCancelParams.Include>;
@@ -3993,30 +2581,12 @@ export namespace V2 {
       proration_behavior?: ContractCancelParams.ProrationBehavior;
 
       /**
-       * Per-term proration overrides. Cannot be combined with cancel_pricing_lines.
+       * Per-term proration overrides.
        */
       terms?: Array<ContractCancelParams.Term>;
     }
 
     export namespace ContractCancelParams {
-      export interface CancelPricingLine {
-        /**
-         * The id of the pricing line.
-         */
-        id?: string;
-
-        /**
-         * The lookup key of the pricing line.
-         */
-        lookup_key?: string;
-
-        /**
-         * Proration behavior scoped to this pricing line. If not provided, falls back to the
-         * top-level `proration_behavior` on the cancel request. Defaults to `prorated`.
-         */
-        proration_behavior?: CancelPricingLine.ProrationBehavior;
-      }
-
       export type Include =
         | 'billing_settings'
         | 'one_time_fees'
@@ -4037,10 +2607,6 @@ export namespace V2 {
          * Select a term by ID or its unique lookup key.
          */
         term: Term.Term;
-      }
-
-      export namespace CancelPricingLine {
-        export type ProrationBehavior = 'none' | 'prorated' | OtherString;
       }
 
       export namespace Term {
