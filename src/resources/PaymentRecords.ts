@@ -979,7 +979,7 @@ export namespace PaymentRecord {
       /**
        * The transaction type that was passed for an off-session, Merchant-Initiated transaction, one of `recurring` or `unscheduled`.
        */
-      stored_credential_usage?: Card.StoredCredentialUsage | null;
+      stored_credential_usage: Card.StoredCredentialUsage | null;
 
       /**
        * Populated if this transaction used 3D Secure authentication.
@@ -1631,7 +1631,12 @@ export namespace PaymentRecord {
       transaction_id: string | null;
     }
 
-    export interface Paypay {}
+    export interface Paypay {
+      /**
+       * Uniquely identifies this particular PayPay account. You can use this attribute to check whether two PayPay accounts are the same.
+       */
+      fingerprint?: string;
+    }
 
     export interface Payto {
       /**
@@ -2017,7 +2022,7 @@ export namespace PaymentRecord {
         address_line1_check: Checks.AddressLine1Check | null;
 
         /**
-         * If you provide a address postal code, the check result is one of `pass`, `fail`, `unavailable`, or `unchecked`.
+         * If you provide an address postal code, the check result is one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
         address_postal_code_check: Checks.AddressPostalCodeCheck | null;
 
@@ -2337,6 +2342,7 @@ export namespace PaymentRecord {
         | 'solana'
         | 'sui'
         | 'tempo'
+        | 'tron'
         | OtherString;
 
       export type TokenCurrency =

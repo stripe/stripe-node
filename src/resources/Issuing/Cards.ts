@@ -135,7 +135,7 @@ export interface Card {
   last4: string;
 
   /**
-   * Stripe's assessment of whether this card's details have been compromised. If this property isn't null, cancel and reissue the card to prevent fraudulent activity risk.
+   * Stripe's assessment of whether this card's details have been compromised. If this property isn't null, cancel and reissue the card to reduce the risk of fraudulent activity. Stripe may remove a fraud warning if the cardholder confirms that the activity on the card is legitimate.
    */
   latest_fraud_warning: Card.LatestFraudWarning | null;
 
@@ -262,7 +262,7 @@ export namespace Card {
     /**
      * The time the card was reported as delivered. Null for undelivered or untracked shipments, or if Stripe has not recorded a delivery time.
      */
-    delivered_at?: number | null;
+    delivered_at: number | null;
 
     /**
      * A unix timestamp representing a best estimate of when the card will be delivered.
@@ -292,7 +292,7 @@ export namespace Card {
     /**
      * The time the card was reported as shipped. Null if Stripe has not recorded a shipment time.
      */
-    shipped_at?: number | null;
+    shipped_at: number | null;
 
     /**
      * The delivery status of the card.

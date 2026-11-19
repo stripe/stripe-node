@@ -5,7 +5,6 @@ import {Plan} from './Plans.js';
 import {Dispute} from './../Disputes.js';
 import {Refund} from './../Refunds.js';
 import {Metadata, OtherString} from '../../shared.js';
-import {RequestOptions} from '../../lib.js';
 export interface Release {
   /**
    * Unique identifier for the object.
