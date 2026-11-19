@@ -3,6 +3,7 @@ title: Update generated code
 pr_url: https://github.com/stripe/stripe-node/pull/2932
 semver_level: major
 is_stripe_api_change: true
+released_in_version: 23.3.0-alpha.1
 ---
 
 * Add support for new resources `V2.Billing.GroupInvoice`, `V2.Billing.GroupSpendModifier`, and `V2.Billing.Group`
