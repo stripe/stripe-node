@@ -8,7 +8,7 @@ import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class HoldResource extends StripeResource {
   /**
-   * Returns a list of ReserveHolds previously created. The ReserveHolds are returned in sorted order, with the most recent ReserveHolds appearing first.
+   * Returns a list of ReserveHolds on your account or on one of your connected accounts. The ReserveHolds are returned in sorted order, with the most recent ReserveHolds appearing first.
    */
   list(
     params?: Reserve.HoldListParams,
@@ -19,7 +19,7 @@ export class HoldResource extends StripeResource {
     }) as any;
   }
   /**
-   * Retrieve a ReserveHold.
+   * Retrieve a ReserveHold on your account or on one of your connected accounts.
    */
   retrieve(
     id: string,

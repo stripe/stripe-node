@@ -19,6 +19,11 @@ import {
 } from './ApprovalRequests.js';
 import {V2 as V2Namespace4, BatchJob, BatchJobResource} from './BatchJobs.js';
 import {
+  V2 as V2Namespace5,
+  ClaimableSandbox,
+  ClaimableSandboxResource,
+} from './ClaimableSandboxes.js';
+import {
   EventBase,
   EventNotification,
   Event,
@@ -27,7 +32,7 @@ import {
   EventResource,
 } from './Events.js';
 import {
-  V2 as V2Namespace6,
+  V2 as V2Namespace7,
   EventDestination,
   EventDestinationResource,
 } from './EventDestinations.js';
@@ -40,6 +45,7 @@ export {AccountLink} from './AccountLinks.js';
 export {AccountToken} from './AccountTokens.js';
 export {ApprovalRequest} from './ApprovalRequests.js';
 export {BatchJob} from './BatchJobs.js';
+export {ClaimableSandbox} from './ClaimableSandboxes.js';
 export {Event} from './Events.js';
 export {EventDestination} from './EventDestinations.js';
 export {AccountPersonToken} from './AccountPersonTokens.js';
@@ -51,6 +57,7 @@ export class Core {
   accountTokens: AccountTokenResource;
   approvalRequests: ApprovalRequestResource;
   batchJobs: BatchJobResource;
+  claimableSandboxes: ClaimableSandboxResource;
   events: EventResource;
   eventDestinations: EventDestinationResource;
   vault: Vault;
@@ -61,6 +68,7 @@ export class Core {
     this.accountTokens = new AccountTokenResource(stripe);
     this.approvalRequests = new ApprovalRequestResource(stripe);
     this.batchJobs = new BatchJobResource(stripe);
+    this.claimableSandboxes = new ClaimableSandboxResource(stripe);
     this.events = new EventResource(stripe);
     this.eventDestinations = new EventDestinationResource(stripe);
     this.vault = new Vault(stripe);
@@ -88,17 +96,21 @@ export declare namespace Core {
   export import BatchJobRetrieveParams = V2Namespace4.Core.BatchJobRetrieveParams;
   export import BatchJobCancelParams = V2Namespace4.Core.BatchJobCancelParams;
   export {BatchJob, BatchJobResource};
+  export import ClaimableSandboxCreateParams = V2Namespace5.Core.ClaimableSandboxCreateParams;
+  export import ClaimableSandboxRetrieveParams = V2Namespace5.Core.ClaimableSandboxRetrieveParams;
+  export import ClaimableSandboxRenewOnboardingLinkParams = V2Namespace5.Core.ClaimableSandboxRenewOnboardingLinkParams;
+  export {ClaimableSandbox, ClaimableSandboxResource};
   export import EventListParams = V2EventsNamespace.Core.EventListParams;
   export import EventRetrieveParams = V2EventsNamespace.Core.EventRetrieveParams;
   export {EventBase, Event, EventNotification, Events, EventResource};
-  export import EventDestinationListParams = V2Namespace6.Core.EventDestinationListParams;
-  export import EventDestinationCreateParams = V2Namespace6.Core.EventDestinationCreateParams;
-  export import EventDestinationDeleteParams = V2Namespace6.Core.EventDestinationDeleteParams;
-  export import EventDestinationRetrieveParams = V2Namespace6.Core.EventDestinationRetrieveParams;
-  export import EventDestinationUpdateParams = V2Namespace6.Core.EventDestinationUpdateParams;
-  export import EventDestinationDisableParams = V2Namespace6.Core.EventDestinationDisableParams;
-  export import EventDestinationEnableParams = V2Namespace6.Core.EventDestinationEnableParams;
-  export import EventDestinationPingParams = V2Namespace6.Core.EventDestinationPingParams;
+  export import EventDestinationListParams = V2Namespace7.Core.EventDestinationListParams;
+  export import EventDestinationCreateParams = V2Namespace7.Core.EventDestinationCreateParams;
+  export import EventDestinationDeleteParams = V2Namespace7.Core.EventDestinationDeleteParams;
+  export import EventDestinationRetrieveParams = V2Namespace7.Core.EventDestinationRetrieveParams;
+  export import EventDestinationUpdateParams = V2Namespace7.Core.EventDestinationUpdateParams;
+  export import EventDestinationDisableParams = V2Namespace7.Core.EventDestinationDisableParams;
+  export import EventDestinationEnableParams = V2Namespace7.Core.EventDestinationEnableParams;
+  export import EventDestinationPingParams = V2Namespace7.Core.EventDestinationPingParams;
   export {EventDestination, EventDestinationResource};
   export {AccountPersonToken};
   export {AccountPerson};

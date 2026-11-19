@@ -7,7 +7,6 @@ import {Price} from './Prices.js';
 import {TaxRate} from './TaxRates.js';
 import * as Billing from './Billing/index.js';
 import {Metadata, Decimal, OtherString} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface InvoiceLineItem {
   /**
    * Unique identifier for the object.

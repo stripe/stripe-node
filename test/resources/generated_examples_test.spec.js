@@ -4017,112 +4017,6 @@ describe('Generated tests', function() {
     expect(billSettingVersion).not.to.be.null;
   });
 
-  it('test_v2_billing_cadence_get', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/billing/cadences',
-        response:
-          '{"data":[{"object":"v2.billing.cadence","billing_cycle":{"interval_count":797691627,"type":"week"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payer":{"billing_profile":"billing_profile","type":"customer"},"status":"active"}],"next_page_url":null,"previous_page_url":null}',
-      },
-    ]);
-    const cadences = await stripe.v2.billing.cadences.list();
-    expect(cadences).not.to.be.null;
-  });
-
-  it('test_v2_billing_cadence_post', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/billing/cadences',
-        response:
-          '{"object":"v2.billing.cadence","billing_cycle":{"interval_count":797691627,"type":"week"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payer":{"billing_profile":"billing_profile","type":"customer"},"status":"active"}',
-      },
-    ]);
-    const cadence = await stripe.v2.billing.cadences.create({
-      billing_cycle: {
-        day: {
-          time: {
-            hour: 3208676,
-            minute: 1074026988,
-            second: 906279820,
-          },
-        },
-        interval_count: 797691627,
-        month: {
-          day_of_month: 1361669285,
-          month_of_year: 82933018,
-          time: {
-            hour: 3208676,
-            minute: 1074026988,
-            second: 906279820,
-          },
-        },
-        type: 'week',
-        week: {
-          day_of_week: 43636807,
-          time: {
-            hour: 3208676,
-            minute: 1074026988,
-            second: 906279820,
-          },
-        },
-        year: {
-          day_of_month: 1361669285,
-          month_of_year: 82933018,
-          time: {
-            hour: 3208676,
-            minute: 1074026988,
-            second: 906279820,
-          },
-        },
-      },
-      payer: {
-        billing_profile: 'billing_profile',
-      },
-    });
-    expect(cadence).not.to.be.null;
-  });
-
-  it('test_v2_billing_cadence_get_2', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/billing/cadences/id_123',
-        response:
-          '{"object":"v2.billing.cadence","billing_cycle":{"interval_count":797691627,"type":"week"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payer":{"billing_profile":"billing_profile","type":"customer"},"status":"active"}',
-      },
-    ]);
-    const cadence = await stripe.v2.billing.cadences.retrieve('id_123');
-    expect(cadence).not.to.be.null;
-  });
-
-  it('test_v2_billing_cadence_post_2', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/billing/cadences/id_123',
-        response:
-          '{"object":"v2.billing.cadence","billing_cycle":{"interval_count":797691627,"type":"week"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payer":{"billing_profile":"billing_profile","type":"customer"},"status":"active"}',
-      },
-    ]);
-    const cadence = await stripe.v2.billing.cadences.update('id_123');
-    expect(cadence).not.to.be.null;
-  });
-
-  it('test_v2_billing_cadence_post_3', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/billing/cadences/id_123/cancel',
-        response:
-          '{"object":"v2.billing.cadence","billing_cycle":{"interval_count":797691627,"type":"week"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"payer":{"billing_profile":"billing_profile","type":"customer"},"status":"active"}',
-      },
-    ]);
-    const cadence = await stripe.v2.billing.cadences.cancel('id_123');
-    expect(cadence).not.to.be.null;
-  });
-
   it('test_v2_billing_collection_setting_get', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -4571,12 +4465,15 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/account_links',
         response:
-          '{"object":"v2.core.account_link","account":"account","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","livemode":true,"url":"url","use_case":{"type":"account_onboarding"}}',
+          '{"object":"v2.core.account_link","account":"account","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","livemode":true,"url":"url","use_case":{"type":"account_dashboard"}}',
       },
     ]);
     const accountLink = await stripe.v2.core.accountLinks.create({
       account: 'account',
       use_case: {
+        account_dashboard: {
+          refresh_url: 'refresh_url',
+        },
         account_onboarding: {
           collection_options: {
             fields: 'eventually_due',
@@ -4593,7 +4490,7 @@ describe('Generated tests', function() {
           refresh_url: 'refresh_url',
           return_url: 'return_url',
         },
-        type: 'account_onboarding',
+        type: 'account_dashboard',
       },
     });
     expect(accountLink).not.to.be.null;
@@ -4726,6 +4623,60 @@ describe('Generated tests', function() {
     ]);
     const batchJob = await stripe.v2.core.batchJobs.cancel('id_123');
     expect(batchJob).not.to.be.null;
+  });
+
+  it('test_v2_core_claimable_sandbox_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/claimable_sandboxes',
+        response:
+          '{"object":"v2.core.claimable_sandbox","channel":"testing","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"prefill":{"country":"country","email":"email","name":"name"},"sandbox_details":{"account":"account"},"status":"live"}',
+      },
+    ]);
+    const claimableSandbox = await stripe.v2.core.claimableSandboxes.create({
+      enable_mcp_access: true,
+      onboarding_link_details: {
+        refresh_url: 'refresh_url',
+        return_url: 'return_url',
+      },
+      prefill: {
+        country: 'country',
+        email: 'email',
+        name: 'name',
+      },
+    });
+    expect(claimableSandbox).not.to.be.null;
+  });
+
+  it('test_v2_core_claimable_sandbox_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/claimable_sandboxes/id_123',
+        response:
+          '{"object":"v2.core.claimable_sandbox","channel":"testing","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"prefill":{"country":"country","email":"email","name":"name"},"sandbox_details":{"account":"account"},"status":"live"}',
+      },
+    ]);
+    const claimableSandbox = await stripe.v2.core.claimableSandboxes.retrieve(
+      'id_123'
+    );
+    expect(claimableSandbox).not.to.be.null;
+  });
+
+  it('test_v2_core_claimable_sandbox_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/claimable_sandboxes/id_123/renew_onboarding_link',
+        response:
+          '{"object":"v2.core.claimable_sandbox","channel":"testing","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"prefill":{"country":"country","email":"email","name":"name"},"sandbox_details":{"account":"account"},"status":"live"}',
+      },
+    ]);
+    const claimableSandbox = await stripe.v2.core.claimableSandboxes.renewOnboardingLink(
+      'id_123'
+    );
+    expect(claimableSandbox).not.to.be.null;
   });
 
   it('test_v2_core_event_get', async function() {
@@ -5302,7 +5253,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/iam/activity_logs',
         response:
-          '{"data":[{"object":"v2.iam.activity_log","actor":{"type":"api_key"},"context":"context","created":"1970-01-12T21:42:34.472Z","details":{"type":"account_security"},"id":"obj_123","livemode":true,"type":"user_auth_challenge_failed"}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.iam.activity_log","actor":{"type":"api_key"},"context":"context","created":"1970-01-12T21:42:34.472Z","details":{"type":"scim"},"id":"obj_123","livemode":true,"type":"anomaly_detection_settings_updated"}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const activityLogs = await stripe.v2.iam.activityLogs.list();
@@ -5315,7 +5266,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/iam/activity_logs/id_123',
         response:
-          '{"object":"v2.iam.activity_log","actor":{"type":"api_key"},"context":"context","created":"1970-01-12T21:42:34.472Z","details":{"type":"account_security"},"id":"obj_123","livemode":true,"type":"user_auth_challenge_failed"}',
+          '{"object":"v2.iam.activity_log","actor":{"type":"api_key"},"context":"context","created":"1970-01-12T21:42:34.472Z","details":{"type":"scim"},"id":"obj_123","livemode":true,"type":"anomaly_detection_settings_updated"}',
       },
     ]);
     const activityLog = await stripe.v2.iam.activityLogs.retrieve('id_123');
@@ -5963,7 +5914,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/payout_methods',
         response:
-          '{"data":[{"object":"v2.money_management.payout_method","archived":true,"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"invalid","transfers":"invalid"}}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.money_management.payout_method","archived":true,"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"card","usage_status":{"payments":"invalid","transfers":"invalid"}}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const payoutMethods = await stripe.v2.moneyManagement.payoutMethods.list();
@@ -5976,7 +5927,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/payout_methods/id_123',
         response:
-          '{"object":"v2.money_management.payout_method","archived":true,"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"invalid","transfers":"invalid"}}',
+          '{"object":"v2.money_management.payout_method","archived":true,"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"card","usage_status":{"payments":"invalid","transfers":"invalid"}}',
       },
     ]);
     const payoutMethod = await stripe.v2.moneyManagement.payoutMethods.retrieve(
@@ -5991,7 +5942,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/payout_methods/id_123/archive',
         response:
-          '{"object":"v2.money_management.payout_method","archived":true,"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"invalid","transfers":"invalid"}}',
+          '{"object":"v2.money_management.payout_method","archived":true,"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"card","usage_status":{"payments":"invalid","transfers":"invalid"}}',
       },
     ]);
     const payoutMethod = await stripe.v2.moneyManagement.payoutMethods.archive(
@@ -6006,7 +5957,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/payout_methods/id_123/disable',
         response:
-          '{"object":"v2.money_management.payout_method","archived":true,"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"invalid","transfers":"invalid"}}',
+          '{"object":"v2.money_management.payout_method","archived":true,"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"card","usage_status":{"payments":"invalid","transfers":"invalid"}}',
       },
     ]);
     const payoutMethod = await stripe.v2.moneyManagement.payoutMethods.disable(
@@ -6021,7 +5972,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/payout_methods/id_123/unarchive',
         response:
-          '{"object":"v2.money_management.payout_method","archived":true,"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"bank_account","usage_status":{"payments":"invalid","transfers":"invalid"}}',
+          '{"object":"v2.money_management.payout_method","archived":true,"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"restricted":true,"type":"card","usage_status":{"payments":"invalid","transfers":"invalid"}}',
       },
     ]);
     const payoutMethod = await stripe.v2.moneyManagement.payoutMethods.unarchive(

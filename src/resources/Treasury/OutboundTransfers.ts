@@ -209,6 +209,11 @@ export namespace OutboundTransfer {
     code: ReturnedDetails.Code;
 
     /**
+     * Money movement network-specific details regarding the failure.
+     */
+    network_details: ReturnedDetails.NetworkDetails | null;
+
+    /**
      * The Transaction associated with this object.
      */
     transaction: string | Transaction;
@@ -357,6 +362,27 @@ export namespace OutboundTransfer {
       | 'no_account'
       | 'other'
       | OtherString;
+
+    export interface NetworkDetails {
+      /**
+       * ACH return details.
+       */
+      ach: NetworkDetails.Ach | null;
+    }
+
+    export namespace NetworkDetails {
+      export interface Ach {
+        /**
+         * NACHA ACH return code.
+         */
+        return_code: string | null;
+
+        /**
+         * NACHA ACH return reason.
+         */
+        return_reason: string | null;
+      }
+    }
   }
 
   export namespace TrackingDetails {

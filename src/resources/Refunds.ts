@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
+import {Application} from './Applications.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {Charge} from './Charges.js';
 import {Customer, DeletedCustomer} from './Customers.js';
@@ -113,6 +114,11 @@ export interface Refund {
    * Amount, in cents (or local equivalent).
    */
   amount: number;
+
+  /**
+   * ID of the Connect application that created the refund. This can differ from the application on the associated Charge or PaymentIntent. A null value does not necessarily mean the refund was created without a Connect application.
+   */
+  application: string | Application | null;
 
   /**
    * Balance transaction that describes the impact on your account balance.
@@ -229,6 +235,8 @@ export namespace Refund {
 
     au_bank_transfer?: DestinationDetails.AuBankTransfer;
 
+    bizum?: DestinationDetails.Bizum;
+
     blik?: DestinationDetails.Blik;
 
     br_bank_transfer?: DestinationDetails.BrBankTransfer;
@@ -289,6 +297,8 @@ export namespace Refund {
      * The type of transaction-specific details of the payment method used in the refund (e.g., `card`). An additional hash is included on `destination_details` with a name matching this value. It contains information specific to the refund transaction.
      */
     type: string;
+
+    upi?: DestinationDetails.Upi;
 
     us_bank_transfer?: DestinationDetails.UsBankTransfer;
 
@@ -353,6 +363,18 @@ export namespace Refund {
     export interface AmazonPay {}
 
     export interface AuBankTransfer {}
+
+    export interface Bizum {
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
+    }
 
     export interface Blik {
       /**
@@ -589,6 +611,18 @@ export namespace Refund {
     }
 
     export interface Twint {}
+
+    export interface Upi {
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
+    }
 
     export interface UsBankTransfer {
       /**

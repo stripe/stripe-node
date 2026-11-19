@@ -6,7 +6,7 @@ import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class PlanResource extends StripeResource {
   /**
-   * Returns a list of ReservePlans previously created. The ReservePlans are returned in sorted order, with the most recent ReservePlans appearing first.
+   * Returns a list of ReservePlans on your account or on one of your connected accounts. The ReservePlans are returned in sorted order, with the most recent ReservePlans appearing first.
    */
   list(
     params?: Reserve.PlanListParams,
@@ -17,7 +17,7 @@ export class PlanResource extends StripeResource {
     }) as any;
   }
   /**
-   * Retrieve a ReservePlan.
+   * Retrieve a ReservePlan on your account or on one of your connected accounts.
    */
   retrieve(
     id: string,

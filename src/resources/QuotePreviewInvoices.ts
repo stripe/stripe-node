@@ -18,7 +18,7 @@ import {ShippingRate} from './ShippingRates.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import * as Billing from './Billing/index.js';
 import {Address, Metadata, OtherString} from '../shared.js';
-import {RequestOptions, ApiList} from '../lib.js';
+import {ApiList} from '../lib.js';
 export interface QuotePreviewInvoice {
   /**
    * Unique identifier for the object. For preview invoices created using the [create preview](https://stripe.com/docs/api/invoices/create_preview) endpoint, this id will be prefixed with `upcoming_in`.
@@ -151,6 +151,11 @@ export interface QuotePreviewInvoice {
    * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
    */
   customer_address: Address | null;
+
+  /**
+   * The customer balance amounts applied to this invoice.
+   */
+  customer_balance?: QuotePreviewInvoice.CustomerBalance | null;
 
   /**
    * The customer's email. Until the invoice is finalized, this field will equal `customer.email`. Once the invoice is finalized, this field will no longer be updated.
@@ -532,6 +537,23 @@ export namespace QuotePreviewInvoice {
      * The value of the custom field.
      */
     value: string;
+  }
+
+  export interface CustomerBalance {
+    /**
+     * The total amount of customer balance applied to this invoice (automatically + manually).
+     */
+    applied_balance: number;
+
+    /**
+     * The amount of customer balance automatically applied during invoice finalization.
+     */
+    automatically_applied_balance: number;
+
+    /**
+     * The total amount of customer balance manually applied after finalization.
+     */
+    manually_applied_balance: number;
   }
 
   export interface CustomerShipping {
@@ -1206,6 +1228,7 @@ export namespace QuotePreviewInvoice {
       | 'forwarding_api_upstream_connection_timeout'
       | 'forwarding_api_upstream_error'
       | 'idempotency_key_in_use'
+      | 'inactive_api_operation_confirmation_required'
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'

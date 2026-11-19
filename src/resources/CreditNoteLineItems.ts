@@ -4,7 +4,6 @@ import {TaxRate} from './TaxRates.js';
 import {Discount, DeletedDiscount} from './Discounts.js';
 import * as Billing from './Billing/index.js';
 import {Metadata, Decimal, OtherString} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface CreditNoteLineItem {
   /**
    * Unique identifier for the object.

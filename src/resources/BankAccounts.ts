@@ -3,7 +3,6 @@
 import {Account} from './Accounts.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Metadata, OtherString} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface BankAccount {
   /**
    * Unique identifier for the object.

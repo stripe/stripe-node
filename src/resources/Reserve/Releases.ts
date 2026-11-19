@@ -10,7 +10,7 @@ import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class ReleaseResource extends StripeResource {
   /**
-   * Returns a list of ReserveReleases previously created. The ReserveReleases are returned in sorted order, with the most recent ReserveReleases appearing first.
+   * Returns a list of ReserveReleases on your account or on one of your connected accounts. The ReserveReleases are returned in sorted order, with the most recent ReserveReleases appearing first.
    */
   list(
     params?: Reserve.ReleaseListParams,
@@ -21,7 +21,7 @@ export class ReleaseResource extends StripeResource {
     }) as any;
   }
   /**
-   * Retrieve a ReserveRelease.
+   * Retrieve a ReserveRelease on your account or on one of your connected accounts.
    */
   retrieve(
     id: string,

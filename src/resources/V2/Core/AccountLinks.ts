@@ -6,7 +6,7 @@ import {RequestOptions, Response} from '../../../lib.js';
 
 export class AccountLinkResource extends StripeResource {
   /**
-   * Creates an AccountLink object that includes a single-use URL that an account can use to access a Stripe-hosted flow for collecting or updating required information.
+   * Creates an AccountLink object that includes a single-use URL that an account can use to access a Stripe-hosted flow for collecting or updating required information, or to access its Stripe-hosted Dashboard.
    * @throws Stripe.RateLimitError
    */
   create(
@@ -60,6 +60,11 @@ export interface AccountLink {
 export namespace AccountLink {
   export interface UseCase {
     /**
+     * Hash containing configuration options for an Account Link that provides access to the account's Stripe-hosted Dashboard.
+     */
+    account_dashboard?: UseCase.AccountDashboard;
+
+    /**
      * Hash containing configuration options for an Account Link object that onboards a new account.
      */
     account_onboarding?: UseCase.AccountOnboarding;
@@ -76,6 +81,14 @@ export namespace AccountLink {
   }
 
   export namespace UseCase {
+    export interface AccountDashboard {
+      /**
+       * The URL to redirect to if the Account Link has expired or has already
+       * been used. Authenticate the user before generating a replacement link.
+       */
+      refresh_url: string;
+    }
+
     export interface AccountOnboarding {
       /**
        * Specifies the requirements that Stripe collects from v2/core/accounts in the Onboarding flow.
@@ -110,7 +123,11 @@ export namespace AccountLink {
       return_url?: string;
     }
 
-    export type Type = 'account_onboarding' | 'account_update' | OtherString;
+    export type Type =
+      | 'account_dashboard'
+      | 'account_onboarding'
+      | 'account_update'
+      | OtherString;
 
     export namespace AccountOnboarding {
       export interface CollectionOptions {
@@ -172,6 +189,11 @@ export namespace V2 {
     export namespace AccountLinkCreateParams {
       export interface UseCase {
         /**
+         * Hash containing configuration options for an Account Link that provides access to the account's Stripe-hosted Dashboard.
+         */
+        account_dashboard?: UseCase.AccountDashboard;
+
+        /**
          * Hash containing configuration options for an Account Link object that onboards a new account.
          */
         account_onboarding?: UseCase.AccountOnboarding;
@@ -188,6 +210,14 @@ export namespace V2 {
       }
 
       export namespace UseCase {
+        export interface AccountDashboard {
+          /**
+           * The URL to redirect to if the Account Link has expired or has already
+           * been used. Authenticate the user before generating a replacement link.
+           */
+          refresh_url: string;
+        }
+
         export interface AccountOnboarding {
           /**
            * Specifies the requirements that Stripe collects from v2/core/accounts in the Onboarding flow.
@@ -223,6 +253,7 @@ export namespace V2 {
         }
 
         export type Type =
+          | 'account_dashboard'
           | 'account_onboarding'
           | 'account_update'
           | OtherString;

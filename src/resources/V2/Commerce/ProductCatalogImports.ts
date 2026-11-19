@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {Metadata, OtherString} from '../../../shared.js';
-import {RequestOptions} from '../../../lib.js';
 export interface ProductCatalogImport {
   /**
    * The unique identifier for this ProductCatalogImport.

@@ -3786,7 +3786,7 @@ export namespace QuoteCreateParams {
 
   export interface LineItem {
     /**
-     * The discounts applied to this line item.
+     * The discounts applied to this line item. Repeating coupons are only supported for recurring prices.
      */
     discounts?: Emptyable<Array<LineItem.Discount>>;
 
@@ -5320,7 +5320,7 @@ export namespace QuoteUpdateParams {
 
   export interface LineItem {
     /**
-     * The discounts applied to this line item.
+     * The discounts applied to this line item. Repeating coupons are only supported for recurring prices.
      */
     discounts?: Emptyable<Array<LineItem.Discount>>;
 

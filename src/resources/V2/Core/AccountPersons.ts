@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {Address, Metadata, OtherString, Decimal} from '../../../shared.js';
-import {RequestOptions} from '../../../lib.js';
 export interface AccountPerson {
   /**
    * Unique identifier for the Person.
