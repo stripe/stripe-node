@@ -1418,11 +1418,6 @@ export interface Subscription {
   automatic_tax: Subscription.AutomaticTax;
 
   /**
-   * The Billing Cadence which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
-   */
-  billing_cadence?: string;
-
-  /**
    * The reference point that aligns future [billing cycle](https://docs.stripe.com/subscriptions/billing-cycle) dates. It sets the day of week for `week` intervals, the day of month for `month` and `year` intervals, and the month of year for `year` intervals. The timestamp is in UTC format.
    */
   billing_cycle_anchor: number;
@@ -1914,6 +1909,8 @@ export namespace Subscription {
      */
     prebilling_iterations?: number | null;
 
+    presentment_details?: PendingUpdate.PresentmentDetails;
+
     /**
      * List of subscription items, each with an attached plan, that will be set if the update is applied.
      */
@@ -2378,6 +2375,11 @@ export namespace Subscription {
       }
 
       export interface Card {
+        /**
+         * Controls early collection for eligible recurring payments on India-issued cards. Target-date billing aims to debit on the billing-cycle date but does not guarantee that date.
+         */
+        debit_behavior?: string;
+
         mandate_options?: Card.MandateOptions;
 
         /**
@@ -2412,6 +2414,11 @@ export namespace Subscription {
 
       export interface Pix {
         /**
+         * Timing configuration for collecting funds from the customer's account.
+         */
+        debit_behavior?: string;
+
+        /**
          * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
@@ -2427,6 +2434,11 @@ export namespace Subscription {
       }
 
       export interface Upi {
+        /**
+         * Controls when the funds will be captured from the customer's account. Defaults to `not_specified`. Omitting this parameter on an update preserves the saved value; passing `not_specified` clears it. Early collection is best effort and doesn't guarantee an exact debit date.
+         */
+        debit_behavior?: string;
+
         mandate_options?: Upi.MandateOptions;
       }
 
@@ -2802,6 +2814,15 @@ export namespace Subscription {
     export type Interval = 'day' | 'month' | 'week' | 'year' | OtherString;
   }
 
+  export namespace PendingUpdate {
+    export interface PresentmentDetails {
+      /**
+       * Currency used for customer payments.
+       */
+      presentment_currency: string;
+    }
+  }
+
   export namespace Prebilling {
     export type UpdateBehavior = 'prebill' | 'reset' | OtherString;
   }
@@ -2890,11 +2911,6 @@ export interface SubscriptionCreateParams {
    * A past timestamp to backdate the subscription's start date to. If set, the first invoice will contain line items for the timespan between the start date and the current time. Can be combined with trials and the billing cycle anchor.
    */
   backdate_start_date?: number;
-
-  /**
-   * The Billing Cadence which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
-   */
-  billing_cadence?: string;
 
   /**
    * A future timestamp in UTC format to anchor the subscription's [billing cycle](https://docs.stripe.com/subscriptions/billing-cycle). The anchor is the reference point that aligns future billing cycle dates. It sets the day of week for `week` intervals, the day of month for `month` and `year` intervals, and the month of year for `year` intervals.
@@ -4196,6 +4212,11 @@ export namespace SubscriptionCreateParams {
 
       export interface Card {
         /**
+         * Controls early collection for eligible recurring payments on India-issued cards. Target-date billing aims to debit on the billing-cycle date but does not guarantee that date.
+         */
+        debit_behavior?: string;
+
+        /**
          * Configuration options for setting up an eMandate for cards issued in India.
          */
         mandate_options?: Card.MandateOptions;
@@ -4238,6 +4259,11 @@ export namespace SubscriptionCreateParams {
 
       export interface Pix {
         /**
+         * Timing configuration for collecting funds from the customer's account.
+         */
+        debit_behavior?: string;
+
+        /**
          * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
@@ -4256,6 +4282,11 @@ export namespace SubscriptionCreateParams {
       }
 
       export interface Upi {
+        /**
+         * Controls when the funds will be captured from the customer's account. Defaults to `not_specified`. Omit this parameter on an update to preserve the saved value; pass `not_specified` to clear it. Early collection is best effort and doesn't guarantee an exact debit date.
+         */
+        debit_behavior?: string;
+
         /**
          * Configuration options for setting up an eMandate
          */
@@ -4678,11 +4709,6 @@ export interface SubscriptionUpdateParams {
    * Automatic tax settings for this subscription. We recommend you only include this parameter when the existing value is being changed.
    */
   automatic_tax?: SubscriptionUpdateParams.AutomaticTax;
-
-  /**
-   * The Billing Cadence which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
-   */
-  billing_cadence?: string;
 
   /**
    * Controls how the subscription's billing cycle anchor changes. Set `type` to `now` to reset the billing cycle anchor to the current time (in UTC), or `unchanged` to preserve it. For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
@@ -5982,6 +6008,11 @@ export namespace SubscriptionUpdateParams {
 
       export interface Card {
         /**
+         * Controls early collection for eligible recurring payments on India-issued cards. Target-date billing aims to debit on the billing-cycle date but does not guarantee that date.
+         */
+        debit_behavior?: string;
+
+        /**
          * Configuration options for setting up an eMandate for cards issued in India.
          */
         mandate_options?: Card.MandateOptions;
@@ -6024,6 +6055,11 @@ export namespace SubscriptionUpdateParams {
 
       export interface Pix {
         /**
+         * Timing configuration for collecting funds from the customer's account.
+         */
+        debit_behavior?: string;
+
+        /**
          * The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600, inclusive). If unspecified, defaults to 14400 seconds (4 hours).
          */
         expires_after_seconds?: number;
@@ -6042,6 +6078,11 @@ export namespace SubscriptionUpdateParams {
       }
 
       export interface Upi {
+        /**
+         * Controls when the funds will be captured from the customer's account. Defaults to `not_specified`. Omit this parameter on an update to preserve the saved value; pass `not_specified` to clear it. Early collection is best effort and doesn't guarantee an exact debit date.
+         */
+        debit_behavior?: string;
+
         /**
          * Configuration options for setting up an eMandate
          */
@@ -6448,11 +6489,6 @@ export interface SubscriptionListParams extends PaginationParams {
    * Filter subscriptions by their automatic tax settings.
    */
   automatic_tax?: SubscriptionListParams.AutomaticTax;
-
-  /**
-   * The Billing Cadence which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
-   */
-  billing_cadence?: string;
 
   /**
    * Filter for subscriptions that have the specified billing group.

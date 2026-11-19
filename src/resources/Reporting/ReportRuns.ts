@@ -210,6 +210,11 @@ export namespace Reporting {
       reporting_category?: Parameters.ReportingCategory;
 
       /**
+       * The tax invoice month in YYYY-MM format.
+       */
+      tax_invoice_month?: string;
+
+      /**
        * Defaults to `Etc/UTC`. The output timezone for all timestamps in the report. A list of possible time zone values is maintained at the [IANA Time Zone Database](http://www.iana.org/time-zones). Has no effect on `interval_start` or `interval_end`.
        */
       timezone?: Parameters.Timezone;

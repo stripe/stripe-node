@@ -85,6 +85,8 @@ export interface PaymentMethodConfiguration {
    */
   active: boolean;
 
+  aeon_pay?: PaymentMethodConfiguration.AeonPay;
+
   affirm?: PaymentMethodConfiguration.Affirm;
 
   afterpay_clearpay?: PaymentMethodConfiguration.AfterpayClearpay;
@@ -103,6 +105,8 @@ export interface PaymentMethodConfiguration {
   application: string | null;
 
   au_becs_debit?: PaymentMethodConfiguration.AuBecsDebit;
+
+  au_pay?: PaymentMethodConfiguration.AuPay;
 
   bacs_debit?: PaymentMethodConfiguration.BacsDebit;
 
@@ -125,6 +129,8 @@ export interface PaymentMethodConfiguration {
   crypto?: PaymentMethodConfiguration.Crypto;
 
   customer_balance?: PaymentMethodConfiguration.CustomerBalance;
+
+  dbarai?: PaymentMethodConfiguration.Dbarai;
 
   eps?: PaymentMethodConfiguration.Eps;
 
@@ -165,6 +171,8 @@ export interface PaymentMethodConfiguration {
   livemode: boolean;
 
   mb_way?: PaymentMethodConfiguration.MbWay;
+
+  merpay?: PaymentMethodConfiguration.Merpay;
 
   mobilepay?: PaymentMethodConfiguration.Mobilepay;
 
@@ -252,6 +260,15 @@ export namespace PaymentMethodConfiguration {
     display_preference: AcssDebit.DisplayPreference;
   }
 
+  export interface AeonPay {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: AeonPay.DisplayPreference;
+  }
+
   export interface Affirm {
     /**
      * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
@@ -313,6 +330,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: AuBecsDebit.DisplayPreference;
+  }
+
+  export interface AuPay {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: AuPay.DisplayPreference;
   }
 
   export interface BacsDebit {
@@ -412,6 +438,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: CustomerBalance.DisplayPreference;
+  }
+
+  export interface Dbarai {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Dbarai.DisplayPreference;
   }
 
   export interface Eps {
@@ -547,6 +582,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: MbWay.DisplayPreference;
+  }
+
+  export interface Merpay {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Merpay.DisplayPreference;
   }
 
   export interface Mobilepay {
@@ -871,6 +915,31 @@ export namespace PaymentMethodConfiguration {
     }
   }
 
+  export namespace AeonPay {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace Affirm {
     export interface DisplayPreference {
       /**
@@ -1022,6 +1091,31 @@ export namespace PaymentMethodConfiguration {
   }
 
   export namespace AuBecsDebit {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace AuPay {
     export interface DisplayPreference {
       /**
        * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
@@ -1297,6 +1391,31 @@ export namespace PaymentMethodConfiguration {
   }
 
   export namespace CustomerBalance {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Dbarai {
     export interface DisplayPreference {
       /**
        * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
@@ -1672,6 +1791,31 @@ export namespace PaymentMethodConfiguration {
   }
 
   export namespace MbWay {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+
+      export type Value = 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Merpay {
     export interface DisplayPreference {
       /**
        * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
@@ -2528,6 +2672,11 @@ export interface PaymentMethodConfigurationCreateParams {
   acss_debit?: PaymentMethodConfigurationCreateParams.AcssDebit;
 
   /**
+   * AEON Pay is a single-use payment method that requires customers to authenticate their payment. Customers pay by being redirected from your website or app, authorizing the payment with AEON Pay, then returning to your website or app. You get immediate notification of whether the payment succeeded or failed.
+   */
+  aeon_pay?: PaymentMethodConfigurationCreateParams.AeonPay;
+
+  /**
    * [Affirm](https://www.affirm.com/) gives your customers a way to split purchases over a series of payments. Depending on the purchase, they can pay with four interest-free payments (Split Pay) or pay over a longer term (Installments), which might include interest. Check this [page](https://docs.stripe.com/payments/affirm) for more details like country availability.
    */
   affirm?: PaymentMethodConfigurationCreateParams.Affirm;
@@ -2566,6 +2715,11 @@ export interface PaymentMethodConfigurationCreateParams {
    * Stripe users in Australia can accept Bulk Electronic Clearing System (BECS) direct debit payments from customers with an Australian bank account. Check this [page](https://docs.stripe.com/payments/au-becs-debit) for more details.
    */
   au_becs_debit?: PaymentMethodConfigurationCreateParams.AuBecsDebit;
+
+  /**
+   * au PAY is a single-use payment method that requires customers to authenticate their payment. Customers pay by being redirected from your website or app, authorizing the payment with au PAY, then returning to your website or app. You get immediate notification of whether the payment succeeded or failed.
+   */
+  au_pay?: PaymentMethodConfigurationCreateParams.AuPay;
 
   /**
    * Stripe users in the UK can accept Bacs Direct Debit payments from customers with a UK bank account, check this [page](https://docs.stripe.com/payments/payment-methods/bacs-debit) for more details.
@@ -2621,6 +2775,11 @@ export interface PaymentMethodConfigurationCreateParams {
    * Uses a customer's [cash balance](https://docs.stripe.com/payments/customer-balance) for the payment. The cash balance can be funded via a bank transfer. Check this [page](https://docs.stripe.com/payments/bank-transfers) for more details.
    */
   customer_balance?: PaymentMethodConfigurationCreateParams.CustomerBalance;
+
+  /**
+   * d-Barai is a single-use payment method that requires customers to authenticate their payment. Customers pay by being redirected from your website or app, authorizing the payment with d-Barai, then returning to your website or app. You get immediate notification of whether the payment succeeded or failed.
+   */
+  dbarai?: PaymentMethodConfigurationCreateParams.Dbarai;
 
   /**
    * EPS is an Austria-based payment method that allows customers to complete transactions online using their bank credentials. EPS is supported by all Austrian banks and is accepted by over 80% of Austrian online retailers. Check this [page](https://docs.stripe.com/payments/eps) for more details.
@@ -2706,6 +2865,11 @@ export interface PaymentMethodConfigurationCreateParams {
    * MB WAY is the most popular wallet in Portugal. After entering their phone number in your checkout, customers approve the payment directly in their MB WAY app. Check this [page](https://docs.stripe.com/payments/mb-way) for more details.
    */
   mb_way?: PaymentMethodConfigurationCreateParams.MbWay;
+
+  /**
+   * Merpay is a single-use payment method that requires customers to authenticate their payment. Customers pay by being redirected from your website or app, authorizing the payment with Merpay, then returning to your website or app. You get immediate notification of whether the payment succeeded or failed.
+   */
+  merpay?: PaymentMethodConfigurationCreateParams.Merpay;
 
   /**
    * MobilePay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) card wallet payment method used in Denmark and Finland. It allows customers to [authenticate and approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the MobilePay app. Check this [page](https://docs.stripe.com/payments/mobilepay) for more details.
@@ -2890,6 +3054,13 @@ export namespace PaymentMethodConfigurationCreateParams {
     display_preference?: AcssDebit.DisplayPreference;
   }
 
+  export interface AeonPay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: AeonPay.DisplayPreference;
+  }
+
   export interface Affirm {
     /**
      * Whether or not the payment method should be displayed.
@@ -2944,6 +3115,13 @@ export namespace PaymentMethodConfigurationCreateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: AuBecsDebit.DisplayPreference;
+  }
+
+  export interface AuPay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: AuPay.DisplayPreference;
   }
 
   export interface BacsDebit {
@@ -3021,6 +3199,13 @@ export namespace PaymentMethodConfigurationCreateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: CustomerBalance.DisplayPreference;
+  }
+
+  export interface Dbarai {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Dbarai.DisplayPreference;
   }
 
   export interface Eps {
@@ -3133,6 +3318,13 @@ export namespace PaymentMethodConfigurationCreateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: MbWay.DisplayPreference;
+  }
+
+  export interface Merpay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Merpay.DisplayPreference;
   }
 
   export interface Mobilepay {
@@ -3379,6 +3571,19 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
   }
 
+  export namespace AeonPay {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace Affirm {
     export interface DisplayPreference {
       /**
@@ -3471,6 +3676,19 @@ export namespace PaymentMethodConfigurationCreateParams {
   }
 
   export namespace AuBecsDebit {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace AuPay {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
@@ -3614,6 +3832,19 @@ export namespace PaymentMethodConfigurationCreateParams {
   }
 
   export namespace CustomerBalance {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Dbarai {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
@@ -3822,6 +4053,19 @@ export namespace PaymentMethodConfigurationCreateParams {
   }
 
   export namespace MbWay {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Merpay {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
@@ -4281,6 +4525,11 @@ export interface PaymentMethodConfigurationUpdateParams {
   active?: boolean;
 
   /**
+   * AEON Pay is a single-use payment method that requires customers to authenticate their payment. Customers pay by being redirected from your website or app, authorizing the payment with AEON Pay, then returning to your website or app. You get immediate notification of whether the payment succeeded or failed.
+   */
+  aeon_pay?: PaymentMethodConfigurationUpdateParams.AeonPay;
+
+  /**
    * [Affirm](https://www.affirm.com/) gives your customers a way to split purchases over a series of payments. Depending on the purchase, they can pay with four interest-free payments (Split Pay) or pay over a longer term (Installments), which might include interest. Check this [page](https://docs.stripe.com/payments/affirm) for more details like country availability.
    */
   affirm?: PaymentMethodConfigurationUpdateParams.Affirm;
@@ -4319,6 +4568,11 @@ export interface PaymentMethodConfigurationUpdateParams {
    * Stripe users in Australia can accept Bulk Electronic Clearing System (BECS) direct debit payments from customers with an Australian bank account. Check this [page](https://docs.stripe.com/payments/au-becs-debit) for more details.
    */
   au_becs_debit?: PaymentMethodConfigurationUpdateParams.AuBecsDebit;
+
+  /**
+   * au PAY is a single-use payment method that requires customers to authenticate their payment. Customers pay by being redirected from your website or app, authorizing the payment with au PAY, then returning to your website or app. You get immediate notification of whether the payment succeeded or failed.
+   */
+  au_pay?: PaymentMethodConfigurationUpdateParams.AuPay;
 
   /**
    * Stripe users in the UK can accept Bacs Direct Debit payments from customers with a UK bank account, check this [page](https://docs.stripe.com/payments/payment-methods/bacs-debit) for more details.
@@ -4374,6 +4628,11 @@ export interface PaymentMethodConfigurationUpdateParams {
    * Uses a customer's [cash balance](https://docs.stripe.com/payments/customer-balance) for the payment. The cash balance can be funded via a bank transfer. Check this [page](https://docs.stripe.com/payments/bank-transfers) for more details.
    */
   customer_balance?: PaymentMethodConfigurationUpdateParams.CustomerBalance;
+
+  /**
+   * d-Barai is a single-use payment method that requires customers to authenticate their payment. Customers pay by being redirected from your website or app, authorizing the payment with d-Barai, then returning to your website or app. You get immediate notification of whether the payment succeeded or failed.
+   */
+  dbarai?: PaymentMethodConfigurationUpdateParams.Dbarai;
 
   /**
    * EPS is an Austria-based payment method that allows customers to complete transactions online using their bank credentials. EPS is supported by all Austrian banks and is accepted by over 80% of Austrian online retailers. Check this [page](https://docs.stripe.com/payments/eps) for more details.
@@ -4459,6 +4718,11 @@ export interface PaymentMethodConfigurationUpdateParams {
    * MB WAY is the most popular wallet in Portugal. After entering their phone number in your checkout, customers approve the payment directly in their MB WAY app. Check this [page](https://docs.stripe.com/payments/mb-way) for more details.
    */
   mb_way?: PaymentMethodConfigurationUpdateParams.MbWay;
+
+  /**
+   * Merpay is a single-use payment method that requires customers to authenticate their payment. Customers pay by being redirected from your website or app, authorizing the payment with Merpay, then returning to your website or app. You get immediate notification of whether the payment succeeded or failed.
+   */
+  merpay?: PaymentMethodConfigurationUpdateParams.Merpay;
 
   /**
    * MobilePay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) card wallet payment method used in Denmark and Finland. It allows customers to [authenticate and approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the MobilePay app. Check this [page](https://docs.stripe.com/payments/mobilepay) for more details.
@@ -4638,6 +4902,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
     display_preference?: AcssDebit.DisplayPreference;
   }
 
+  export interface AeonPay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: AeonPay.DisplayPreference;
+  }
+
   export interface Affirm {
     /**
      * Whether or not the payment method should be displayed.
@@ -4692,6 +4963,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: AuBecsDebit.DisplayPreference;
+  }
+
+  export interface AuPay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: AuPay.DisplayPreference;
   }
 
   export interface BacsDebit {
@@ -4769,6 +5047,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: CustomerBalance.DisplayPreference;
+  }
+
+  export interface Dbarai {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Dbarai.DisplayPreference;
   }
 
   export interface Eps {
@@ -4881,6 +5166,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: MbWay.DisplayPreference;
+  }
+
+  export interface Merpay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Merpay.DisplayPreference;
   }
 
   export interface Mobilepay {
@@ -5127,6 +5419,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
   }
 
+  export namespace AeonPay {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
   export namespace Affirm {
     export interface DisplayPreference {
       /**
@@ -5219,6 +5524,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 
   export namespace AuBecsDebit {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace AuPay {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
@@ -5362,6 +5680,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 
   export namespace CustomerBalance {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Dbarai {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
@@ -5570,6 +5901,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 
   export namespace MbWay {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on' | OtherString;
+    }
+  }
+
+  export namespace Merpay {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.

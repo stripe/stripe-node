@@ -841,6 +841,7 @@ export namespace SetupIntent {
       | 'forwarding_api_upstream_connection_timeout'
       | 'forwarding_api_upstream_error'
       | 'idempotency_key_in_use'
+      | 'inactive_api_operation_confirmation_required'
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'
@@ -1064,7 +1065,7 @@ export namespace SetupIntent {
       /**
        * The timestamp when the microdeposits are expected to land. Null for instant microdeposits.
        */
-      arrival_date: number;
+      arrival_date: number | null;
 
       /**
        * The URL for the hosted verification page, which allows customers to verify their bank account.

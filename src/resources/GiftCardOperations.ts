@@ -123,7 +123,7 @@ export namespace GiftCardOperation {
     /**
      * The balance amount of a gift card, including currency and amount.
      */
-    balance: Activation.Balance;
+    balance?: Activation.Balance;
   }
 
   export interface ActivationVoid {
@@ -193,7 +193,7 @@ export namespace GiftCardOperation {
     /**
      * The balance amount of a gift card, including currency and amount.
      */
-    balance: Reload.Balance;
+    balance?: Reload.Balance;
 
     /**
      * The balance before the operation.

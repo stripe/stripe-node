@@ -627,6 +627,23 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            billie_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                             blik_payments: {
                               kind: 'object',
                               fields: {
@@ -933,6 +950,23 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            mb_way_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                             mobilepay_payments: {
                               kind: 'object',
                               fields: {
@@ -985,6 +1019,23 @@ export class AccountResource extends StripeResource {
                               },
                             },
                             naver_pay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            nz_bank_account_becs_debit_payments: {
                               kind: 'object',
                               fields: {
                                 protections: {
@@ -1070,6 +1121,40 @@ export class AccountResource extends StripeResource {
                               },
                             },
                             paynow_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            paypay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            pix_payments: {
                               kind: 'object',
                               fields: {
                                 protections: {
@@ -1280,6 +1365,40 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            touch_n_go_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            truemoney_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                             twint_payments: {
                               kind: 'object',
                               fields: {
@@ -1332,6 +1451,57 @@ export class AccountResource extends StripeResource {
                               },
                             },
                             vipps_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            wechat_pay_mobile_web_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            wechat_pay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            wero_payments: {
                               kind: 'object',
                               fields: {
                                 protections: {
@@ -1450,6 +1620,63 @@ export class AccountResource extends StripeResource {
                                       },
                                     },
                                     usdc: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            business_demand_deposit_account_fifth_third_storage: {
+                              kind: 'object',
+                              fields: {
+                                inbound: {
+                                  kind: 'object',
+                                  fields: {
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                outbound: {
+                                  kind: 'object',
+                                  fields: {
+                                    usd: {
                                       kind: 'object',
                                       fields: {
                                         protections: {
@@ -3365,6 +3592,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                tips: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                               },
                             },
                             cards: {
@@ -4086,6 +4332,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                       },
+                      billie_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
                       blik_payments: {
                         kind: 'object',
                         fields: {
@@ -4392,6 +4655,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                       },
+                      mb_way_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
                       mobilepay_payments: {
                         kind: 'object',
                         fields: {
@@ -4444,6 +4724,23 @@ export class AccountResource extends StripeResource {
                         },
                       },
                       naver_pay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      nz_bank_account_becs_debit_payments: {
                         kind: 'object',
                         fields: {
                           protections: {
@@ -4529,6 +4826,40 @@ export class AccountResource extends StripeResource {
                         },
                       },
                       paynow_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      paypay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      pix_payments: {
                         kind: 'object',
                         fields: {
                           protections: {
@@ -4737,6 +5068,40 @@ export class AccountResource extends StripeResource {
                           },
                         },
                       },
+                      touch_n_go_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      truemoney_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
                       twint_payments: {
                         kind: 'object',
                         fields: {
@@ -4789,6 +5154,57 @@ export class AccountResource extends StripeResource {
                         },
                       },
                       vipps_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      wechat_pay_mobile_web_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      wechat_pay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      wero_payments: {
                         kind: 'object',
                         fields: {
                           protections: {
@@ -4895,6 +5311,55 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                               usdc: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      business_demand_deposit_account_fifth_third_storage: {
+                        kind: 'object',
+                        fields: {
+                          inbound: {
+                            kind: 'object',
+                            fields: {
+                              usd: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          outbound: {
+                            kind: 'object',
+                            fields: {
+                              usd: {
                                 kind: 'object',
                                 fields: {
                                   protections: {
@@ -6654,6 +7119,23 @@ export class AccountResource extends StripeResource {
                               },
                             },
                           },
+                          tips: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
                         },
                       },
                       cards: {
@@ -7381,6 +7863,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        billie_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         blik_payments: {
                           kind: 'object',
                           fields: {
@@ -7687,6 +8186,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        mb_way_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         mobilepay_payments: {
                           kind: 'object',
                           fields: {
@@ -7739,6 +8255,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         naver_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        nz_bank_account_becs_debit_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -7824,6 +8357,40 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         paynow_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        paypay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        pix_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -8032,6 +8599,40 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        touch_n_go_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        truemoney_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         twint_payments: {
                           kind: 'object',
                           fields: {
@@ -8084,6 +8685,57 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         vipps_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wechat_pay_mobile_web_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wechat_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wero_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -8196,6 +8848,59 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        business_demand_deposit_account_fifth_third_storage: {
+                          kind: 'object',
+                          fields: {
+                            inbound: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            outbound: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -9993,6 +10698,23 @@ export class AccountResource extends StripeResource {
                               },
                             },
                             swift: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            tips: {
                               kind: 'object',
                               fields: {
                                 protections: {
@@ -10756,6 +11478,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        billie_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         blik_payments: {
                           kind: 'object',
                           fields: {
@@ -11062,6 +11801,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        mb_way_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         mobilepay_payments: {
                           kind: 'object',
                           fields: {
@@ -11114,6 +11870,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         naver_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        nz_bank_account_becs_debit_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -11199,6 +11972,40 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         paynow_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        paypay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        pix_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -11407,6 +12214,40 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        touch_n_go_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        truemoney_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         twint_payments: {
                           kind: 'object',
                           fields: {
@@ -11459,6 +12300,57 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         vipps_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wechat_pay_mobile_web_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wechat_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wero_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -11571,6 +12463,59 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        business_demand_deposit_account_fifth_third_storage: {
+                          kind: 'object',
+                          fields: {
+                            inbound: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            outbound: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -13368,6 +14313,23 @@ export class AccountResource extends StripeResource {
                               },
                             },
                             swift: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            tips: {
                               kind: 'object',
                               fields: {
                                 protections: {
@@ -14112,6 +15074,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        billie_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         blik_payments: {
                           kind: 'object',
                           fields: {
@@ -14418,6 +15397,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        mb_way_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         mobilepay_payments: {
                           kind: 'object',
                           fields: {
@@ -14470,6 +15466,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         naver_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        nz_bank_account_becs_debit_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -14555,6 +15568,40 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         paynow_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        paypay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        pix_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -14763,6 +15810,40 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        touch_n_go_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        truemoney_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         twint_payments: {
                           kind: 'object',
                           fields: {
@@ -14815,6 +15896,57 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         vipps_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wechat_pay_mobile_web_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wechat_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wero_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -14927,6 +16059,59 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        business_demand_deposit_account_fifth_third_storage: {
+                          kind: 'object',
+                          fields: {
+                            inbound: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            outbound: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -16724,6 +17909,23 @@ export class AccountResource extends StripeResource {
                               },
                             },
                             swift: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            tips: {
                               kind: 'object',
                               fields: {
                                 protections: {
@@ -17468,6 +18670,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        billie_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         blik_payments: {
                           kind: 'object',
                           fields: {
@@ -17774,6 +18993,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        mb_way_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         mobilepay_payments: {
                           kind: 'object',
                           fields: {
@@ -17826,6 +19062,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         naver_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        nz_bank_account_becs_debit_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -17911,6 +19164,40 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         paynow_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        paypay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        pix_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -18119,6 +19406,40 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        touch_n_go_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        truemoney_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         twint_payments: {
                           kind: 'object',
                           fields: {
@@ -18171,6 +19492,57 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         vipps_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wechat_pay_mobile_web_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wechat_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wero_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -18283,6 +19655,59 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        business_demand_deposit_account_fifth_third_storage: {
+                          kind: 'object',
+                          fields: {
+                            inbound: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            outbound: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -20080,6 +21505,23 @@ export class AccountResource extends StripeResource {
                               },
                             },
                             swift: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            tips: {
                               kind: 'object',
                               fields: {
                                 protections: {
@@ -20824,6 +22266,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        billie_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         blik_payments: {
                           kind: 'object',
                           fields: {
@@ -21130,6 +22589,23 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        mb_way_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         mobilepay_payments: {
                           kind: 'object',
                           fields: {
@@ -21182,6 +22658,23 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         naver_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        nz_bank_account_becs_debit_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -21267,6 +22760,40 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         paynow_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        paypay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        pix_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -21475,6 +23002,40 @@ export class AccountResource extends StripeResource {
                             },
                           },
                         },
+                        touch_n_go_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        truemoney_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                         twint_payments: {
                           kind: 'object',
                           fields: {
@@ -21527,6 +23088,57 @@ export class AccountResource extends StripeResource {
                           },
                         },
                         vipps_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wechat_pay_mobile_web_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wechat_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        wero_payments: {
                           kind: 'object',
                           fields: {
                             protections: {
@@ -21639,6 +23251,59 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        business_demand_deposit_account_fifth_third_storage: {
+                          kind: 'object',
+                          fields: {
+                            inbound: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            outbound: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -23452,6 +25117,23 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                             },
+                            tips: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                           },
                         },
                         cards: {
@@ -23646,7 +25328,7 @@ export interface Account {
   created: string;
 
   /**
-   * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
+   * Specifies the account's Stripe-hosted Dashboard access. Available values depend on the configurations enabled for the account. Learn more about [configuring Dashboard access](https://docs.stripe.com/connect/accounts-v2/connected-account-configuration#set-dashboard-access).
    */
   dashboard?: Account.Dashboard;
 
@@ -23954,6 +25636,11 @@ export namespace Account {
        * The Merchant Category Code (MCC) for the merchant. MCCs classify businesses based on the goods or services they provide.
        */
       mcc?: string;
+
+      /**
+       * Settings for PayPay payments.
+       */
+      paypay_payments?: Merchant.PaypayPayments;
 
       /**
        * Settings for the default text that appears on statements for language variations.
@@ -26034,6 +27721,11 @@ export namespace Account {
         bancontact_payments?: Capabilities.BancontactPayments;
 
         /**
+         * Allow the merchant to process Billie payments.
+         */
+        billie_payments?: Capabilities.BilliePayments;
+
+        /**
          * Allow the merchant to process BLIK payments.
          */
         blik_payments?: Capabilities.BlikPayments;
@@ -26124,6 +27816,11 @@ export namespace Account {
         link_payments?: Capabilities.LinkPayments;
 
         /**
+         * Allow the merchant to process MB WAY payments.
+         */
+        mb_way_payments?: Capabilities.MbWayPayments;
+
+        /**
          * Allow the merchant to process MobilePay payments.
          */
         mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -26142,6 +27839,11 @@ export namespace Account {
          * Allow the merchant to process Naver Pay payments.
          */
         naver_pay_payments?: Capabilities.NaverPayPayments;
+
+        /**
+         * Allow the merchant to process New Zealand BECS Direct Debit payments.
+         */
+        nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
 
         /**
          * Allow the merchant to process OXXO payments.
@@ -26167,6 +27869,16 @@ export namespace Account {
          * Allow the merchant to process PayNow payments.
          */
         paynow_payments?: Capabilities.PaynowPayments;
+
+        /**
+         * Allow the merchant to process PayPay payments.
+         */
+        paypay_payments?: Capabilities.PaypayPayments;
+
+        /**
+         * Allow the merchant to process Pix payments.
+         */
+        pix_payments?: Capabilities.PixPayments;
 
         /**
          * Allow the merchant to process PromptPay payments.
@@ -26224,6 +27936,16 @@ export namespace Account {
         swish_payments?: Capabilities.SwishPayments;
 
         /**
+         * Allow the merchant to process Touch 'n Go payments.
+         */
+        touch_n_go_payments?: Capabilities.TouchNGoPayments;
+
+        /**
+         * Allow the merchant to process TrueMoney payments.
+         */
+        truemoney_payments?: Capabilities.TruemoneyPayments;
+
+        /**
          * Allow the merchant to process TWINT payments.
          */
         twint_payments?: Capabilities.TwintPayments;
@@ -26242,6 +27964,21 @@ export namespace Account {
          * Allow the merchant to process Vipps payments.
          */
         vipps_payments?: Capabilities.VippsPayments;
+
+        /**
+         * Allow the merchant to process WeChat Pay mobile web payments. Requires the wechat_pay_payments capability.
+         */
+        wechat_pay_mobile_web_payments?: Capabilities.WechatPayMobileWebPayments;
+
+        /**
+         * Allow the merchant to process WeChat Pay payments.
+         */
+        wechat_pay_payments?: Capabilities.WechatPayPayments;
+
+        /**
+         * Allow the merchant to process Wero payments.
+         */
+        wero_payments?: Capabilities.WeroPayments;
 
         /**
          * Allow the merchant to process Zip payments.
@@ -26265,9 +28002,36 @@ export namespace Account {
 
       export interface KonbiniPayments {
         /**
+         * Information provided to support the onboarding process for Konbini payments.
+         */
+        additional_material?: string;
+
+        /**
          * Support for Konbini payments.
          */
         support?: KonbiniPayments.Support;
+      }
+
+      export interface PaypayPayments {
+        /**
+         * Additional files supporting PayPay payments configuration.
+         */
+        additional_files: Array<string>;
+
+        /**
+         * The type of goods sold by the merchant for PayPay payments.
+         */
+        goods_type?: PaypayPayments.GoodsType;
+
+        /**
+         * The business's website for PayPay payments.
+         */
+        site?: PaypayPayments.Site;
+
+        /**
+         * URL to the Specified Commercial Transactions Act page for PayPay payments.
+         */
+        specified_commercial_transactions_act_url?: string;
       }
 
       export interface ScriptStatementDescriptor {
@@ -26499,6 +28263,23 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<BancontactPayments.StatusDetail>;
+        }
+
+        export interface BilliePayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: BilliePayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: BilliePayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<BilliePayments.StatusDetail>;
         }
 
         export interface BlikPayments {
@@ -26807,6 +28588,23 @@ export namespace Account {
           status_details: Array<LinkPayments.StatusDetail>;
         }
 
+        export interface MbWayPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: MbWayPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: MbWayPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<MbWayPayments.StatusDetail>;
+        }
+
         export interface MobilepayPayments {
           /**
            * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
@@ -26873,6 +28671,23 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<NaverPayPayments.StatusDetail>;
+        }
+
+        export interface NzBankAccountBecsDebitPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: NzBankAccountBecsDebitPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: NzBankAccountBecsDebitPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<NzBankAccountBecsDebitPayments.StatusDetail>;
         }
 
         export interface OxxoPayments {
@@ -26958,6 +28773,40 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<PaynowPayments.StatusDetail>;
+        }
+
+        export interface PaypayPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: PaypayPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: PaypayPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<PaypayPayments.StatusDetail>;
+        }
+
+        export interface PixPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: PixPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: PixPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<PixPayments.StatusDetail>;
         }
 
         export interface PromptpayPayments {
@@ -27137,6 +28986,40 @@ export namespace Account {
           status_details: Array<SwishPayments.StatusDetail>;
         }
 
+        export interface TouchNGoPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: TouchNGoPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: TouchNGoPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<TouchNGoPayments.StatusDetail>;
+        }
+
+        export interface TruemoneyPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: TruemoneyPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: TruemoneyPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<TruemoneyPayments.StatusDetail>;
+        }
+
         export interface TwintPayments {
           /**
            * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
@@ -27203,6 +29086,57 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<VippsPayments.StatusDetail>;
+        }
+
+        export interface WechatPayMobileWebPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: WechatPayMobileWebPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: WechatPayMobileWebPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<WechatPayMobileWebPayments.StatusDetail>;
+        }
+
+        export interface WechatPayPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: WechatPayPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: WechatPayPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<WechatPayPayments.StatusDetail>;
+        }
+
+        export interface WeroPayments {
+          /**
+           * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+           */
+          protections: WeroPayments.Protections;
+
+          /**
+           * The status of the Capability.
+           */
+          status: WeroPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<WeroPayments.StatusDetail>;
         }
 
         export interface ZipPayments {
@@ -27934,6 +29868,85 @@ export namespace Account {
         }
 
         export namespace BancontactPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace BilliePayments {
           export interface Protections {
             /**
              * Protection details for PSP migration.
@@ -29434,6 +31447,85 @@ export namespace Account {
           }
         }
 
+        export namespace MbWayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
         export namespace MobilepayPayments {
           export interface Protections {
             /**
@@ -29672,6 +31764,85 @@ export namespace Account {
         }
 
         export namespace NaverPayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace NzBankAccountBecsDebitPayments {
           export interface Protections {
             /**
              * Protection details for PSP migration.
@@ -30067,6 +32238,164 @@ export namespace Account {
         }
 
         export namespace PaynowPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace PaypayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace PixPayments {
           export interface Protections {
             /**
              * Protection details for PSP migration.
@@ -31033,6 +33362,164 @@ export namespace Account {
           }
         }
 
+        export namespace TouchNGoPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace TruemoneyPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
         export namespace TwintPayments {
           export interface Protections {
             /**
@@ -31349,6 +33836,243 @@ export namespace Account {
           }
         }
 
+        export namespace WechatPayMobileWebPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace WechatPayPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace WeroPayments {
+          export interface Protections {
+            /**
+             * Protection details for PSP migration.
+             */
+            psp_migration: Protections.PspMigration;
+          }
+
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace Protections {
+            export interface PspMigration {
+              /**
+               * The time until which the protection will expire, as a Unix timestamp.
+               */
+              expires_at?: bigint;
+
+              /**
+               * The time at which the protection was requested, as a Unix timestamp.
+               */
+              requested_at: bigint;
+
+              /**
+               * The current status of the protection.
+               */
+              status: PspMigration.Status;
+            }
+
+            export namespace PspMigration {
+              export type Status =
+                | 'active'
+                | 'disrupted'
+                | 'expired'
+                | 'inactive';
+            }
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
         export namespace ZipPayments {
           export interface Protections {
             /**
@@ -31476,6 +34200,57 @@ export namespace Account {
         }
       }
 
+      export namespace PaypayPayments {
+        export type GoodsType = 'digital_content' | 'other';
+
+        export interface Site {
+          /**
+           * Additional information about the business's website when it's accessible.
+           */
+          accessible?: Site.Accessible;
+
+          /**
+           * Additional information about the business's website when it's in development.
+           */
+          in_development?: Site.InDevelopment;
+
+          /**
+           * Additional information about the business's website when it has restricted access.
+           */
+          restricted?: Site.Restricted;
+
+          /**
+           * The status of the business's website.
+           */
+          type?: Site.Type;
+        }
+
+        export namespace Site {
+          export interface Accessible {}
+
+          export interface InDevelopment {
+            /**
+             * Whether a password needed to access the business's website has been provided.
+             */
+            password_provided: boolean;
+
+            /**
+             * The username needed to access the business's website.
+             */
+            username?: string;
+          }
+
+          export interface Restricted {
+            /**
+             * The file explaining the payment flow for the business.
+             */
+            payment_flow_file?: string;
+          }
+
+          export type Type = 'accessible' | 'in_development' | 'restricted';
+        }
+      }
+
       export namespace ScriptStatementDescriptor {
         export interface Kana {
           /**
@@ -31568,6 +34343,11 @@ export namespace Account {
          * Can send or receive business custodial storage-type funds on Stripe.
          */
         business_custodial_storage?: Capabilities.BusinessCustodialStorage;
+
+        /**
+         * Capabilities related to business storage FinancialAccounts backed by Fifth Third demand deposit accounts.
+         */
+        business_demand_deposit_account_fifth_third_storage?: Capabilities.BusinessDemandDepositAccountFifthThirdStorage;
 
         /**
          * Can send or receive business storage-type funds on Stripe.
@@ -31692,6 +34472,18 @@ export namespace Account {
            * Can send business custodial storage-type funds on Stripe.
            */
           outbound?: BusinessCustodialStorage.Outbound;
+        }
+
+        export interface BusinessDemandDepositAccountFifthThirdStorage {
+          /**
+           * Can receive funds in business storage FinancialAccounts backed by Fifth Third demand deposit accounts.
+           */
+          inbound?: BusinessDemandDepositAccountFifthThirdStorage.Inbound;
+
+          /**
+           * Can send funds from business storage FinancialAccounts backed by Fifth Third demand deposit accounts.
+           */
+          outbound?: BusinessDemandDepositAccountFifthThirdStorage.Outbound;
         }
 
         export interface BusinessStorage {
@@ -32159,6 +34951,218 @@ export namespace Account {
             }
 
             export namespace Usdc {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+        }
+
+        export namespace BusinessDemandDepositAccountFifthThirdStorage {
+          export interface Inbound {
+            /**
+             * Can receive funds in business storage FinancialAccounts backed by Fifth Third demand deposit accounts in USD.
+             */
+            usd?: Inbound.Usd;
+          }
+
+          export interface Outbound {
+            /**
+             * Can send funds from business storage FinancialAccounts backed by Fifth Third demand deposit accounts in USD.
+             */
+            usd?: Outbound.Usd;
+          }
+
+          export namespace Inbound {
+            export interface Usd {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Usd.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Usd.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Usd.StatusDetail>;
+            }
+
+            export namespace Usd {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+
+          export namespace Outbound {
+            export interface Usd {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Usd.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Usd.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Usd.StatusDetail>;
+            }
+
+            export namespace Usd {
               export interface Protections {
                 /**
                  * Protection details for PSP migration.
@@ -39950,6 +42954,11 @@ export namespace Account {
            * Enables this Account to receive OutboundPayments to linked bank accounts over SWIFT.
            */
           swift?: BankAccounts.Swift;
+
+          /**
+           * Enables this Account to receive OutboundPayments to linked bank accounts over TIPS rails.
+           */
+          tips?: BankAccounts.Tips;
         }
 
         export interface Cards {
@@ -40223,6 +43232,23 @@ export namespace Account {
              * Additional details about the capability's status. This value is empty when `status` is `active`.
              */
             status_details: Array<Swift.StatusDetail>;
+          }
+
+          export interface Tips {
+            /**
+             * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+             */
+            protections: Tips.Protections;
+
+            /**
+             * The status of the Capability.
+             */
+            status: Tips.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Tips.StatusDetail>;
           }
 
           export namespace Ach {
@@ -41093,6 +44119,85 @@ export namespace Account {
                 | 'provide_info';
             }
           }
+
+          export namespace Tips {
+            export interface Protections {
+              /**
+               * Protection details for PSP migration.
+               */
+              psp_migration: Protections.PspMigration;
+            }
+
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'rejected'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace Protections {
+              export interface PspMigration {
+                /**
+                 * The time until which the protection will expire, as a Unix timestamp.
+                 */
+                expires_at?: bigint;
+
+                /**
+                 * The time at which the protection was requested, as a Unix timestamp.
+                 */
+                requested_at: bigint;
+
+                /**
+                 * The current status of the protection.
+                 */
+                status: PspMigration.Status;
+              }
+
+              export namespace PspMigration {
+                export type Status =
+                  | 'active'
+                  | 'disrupted'
+                  | 'expired'
+                  | 'inactive';
+              }
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'rejected_fraud'
+                | 'rejected_incomplete_verification'
+                | 'rejected_listed'
+                | 'rejected_other'
+                | 'rejected_platform_fraud'
+                | 'rejected_platform_other'
+                | 'rejected_platform_terms_of_service'
+                | 'rejected_terms_of_service'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
         }
 
         export namespace Cards {
@@ -41811,12 +44916,12 @@ export namespace Account {
 
     export interface Responsibilities {
       /**
-       * Indicates whether the platform or connected account is responsible for paying Stripe fees for pricing-control-eligible products.
+       * Controls who pays Stripe fees for direct charges and other pricing-control-eligible Stripe products. For new integrations, setting `losses_collector=application` requires `fees_collector=application`; legacy Custom and Express accounts can also use `application_custom` or `application_express`. For destination charges and separate charges and transfers, Stripe bills the platform regardless of this setting. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior), including application fees and pricing considerations.
        */
       fees_collector?: Responsibilities.FeesCollector;
 
       /**
-       * A value indicating the responsibility for losses on this account.
+       * Controls who is responsible for payment-related negative balances on this account. The platform remains liable for negative balances on its own account. To use Stripe negative balance liability, your integration must meet [Managed Risk requirements](https://docs.stripe.com/connect/risk-management/managed-risk).
        */
       losses_collector?: Responsibilities.LossesCollector;
 
@@ -42315,10 +45420,14 @@ export namespace Account {
             | 'bank_accounts.sepa_credit'
             | 'bank_accounts.sepa_instant'
             | 'bank_accounts.swift'
+            | 'bank_accounts.tips'
             | 'bank_accounts.wire'
+            | 'billie_payments'
             | 'blik_payments'
             | 'blik_recurring_payments'
             | 'boleto_payments'
+            | 'business_demand_deposit_account_fifth_third_storage.inbound.usd'
+            | 'business_demand_deposit_account_fifth_third_storage.outbound.usd'
             | 'business_storage.inbound.eur'
             | 'business_storage.inbound.gbp'
             | 'business_storage.inbound.usd'
@@ -42365,10 +45474,12 @@ export namespace Account {
             | 'konbini_payments'
             | 'kr_card_payments'
             | 'link_payments'
+            | 'mb_way_payments'
             | 'mobilepay_payments'
             | 'multibanco_payments'
             | 'mx_bank_transfer_payments'
             | 'naver_pay_payments'
+            | 'nz_bank_account_becs_debit_payments'
             | 'outbound_payments.bank_accounts'
             | 'outbound_payments.cards'
             | 'outbound_payments.financial_accounts'
@@ -42380,8 +45491,10 @@ export namespace Account {
             | 'paper_checks'
             | 'payco_payments'
             | 'paynow_payments'
+            | 'paypay_payments'
             | 'pay_by_bank_payments'
             | 'pix'
+            | 'pix_payments'
             | 'projects'
             | 'promptpay_payments'
             | 'received_credits.bank_accounts'
@@ -42396,10 +45509,15 @@ export namespace Account {
             | 'stripe_balance.stablecoin_custodial'
             | 'stripe_balance.stripe_transfers'
             | 'swish_payments'
+            | 'touch_n_go_payments'
+            | 'truemoney_payments'
             | 'twint_payments'
             | 'upi_payments'
             | 'us_bank_transfer_payments'
             | 'vipps_payments'
+            | 'wechat_pay_mobile_web_payments'
+            | 'wechat_pay_payments'
+            | 'wero_payments'
             | 'zip_payments'
             | OtherString;
 
@@ -42770,6 +45888,11 @@ export namespace Account {
         account?: TermsOfService.Account;
 
         /**
+         * Terms of service acceptances for financial accounts backed by Fifth Third demand deposit accounts.
+         */
+        business_demand_deposit_account_fifth_third?: TermsOfService.BusinessDemandDepositAccountFifthThird;
+
+        /**
          * Details on the Account's acceptance of Issuing-specific terms of service.
          */
         card_creator?: TermsOfService.CardCreator;
@@ -42803,6 +45926,23 @@ export namespace Account {
 
       export namespace TermsOfService {
         export interface Account {
+          /**
+           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+           */
+          date?: string;
+
+          /**
+           * The IP address from which the Account's representative accepted the terms of service.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the Account's representative accepted the terms of service.
+           */
+          user_agent?: string;
+        }
+
+        export interface BusinessDemandDepositAccountFifthThird {
           /**
            * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
            */
@@ -45832,10 +48972,14 @@ export namespace Account {
             | 'bank_accounts.sepa_credit'
             | 'bank_accounts.sepa_instant'
             | 'bank_accounts.swift'
+            | 'bank_accounts.tips'
             | 'bank_accounts.wire'
+            | 'billie_payments'
             | 'blik_payments'
             | 'blik_recurring_payments'
             | 'boleto_payments'
+            | 'business_demand_deposit_account_fifth_third_storage.inbound.usd'
+            | 'business_demand_deposit_account_fifth_third_storage.outbound.usd'
             | 'business_storage.inbound.eur'
             | 'business_storage.inbound.gbp'
             | 'business_storage.inbound.usd'
@@ -45882,10 +49026,12 @@ export namespace Account {
             | 'konbini_payments'
             | 'kr_card_payments'
             | 'link_payments'
+            | 'mb_way_payments'
             | 'mobilepay_payments'
             | 'multibanco_payments'
             | 'mx_bank_transfer_payments'
             | 'naver_pay_payments'
+            | 'nz_bank_account_becs_debit_payments'
             | 'outbound_payments.bank_accounts'
             | 'outbound_payments.cards'
             | 'outbound_payments.financial_accounts'
@@ -45897,8 +49043,10 @@ export namespace Account {
             | 'paper_checks'
             | 'payco_payments'
             | 'paynow_payments'
+            | 'paypay_payments'
             | 'pay_by_bank_payments'
             | 'pix'
+            | 'pix_payments'
             | 'projects'
             | 'promptpay_payments'
             | 'received_credits.bank_accounts'
@@ -45913,10 +49061,15 @@ export namespace Account {
             | 'stripe_balance.stablecoin_custodial'
             | 'stripe_balance.stripe_transfers'
             | 'swish_payments'
+            | 'touch_n_go_payments'
+            | 'truemoney_payments'
             | 'twint_payments'
             | 'upi_payments'
             | 'us_bank_transfer_payments'
             | 'vipps_payments'
+            | 'wechat_pay_mobile_web_payments'
+            | 'wechat_pay_payments'
+            | 'wero_payments'
             | 'zip_payments'
             | OtherString;
 
@@ -46006,7 +49159,7 @@ export namespace V2 {
       contact_phone?: string;
 
       /**
-       * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
+       * Specifies the account's Stripe-hosted Dashboard access. Available values depend on the configurations enabled for the account. Learn more about [configuring Dashboard access](https://docs.stripe.com/connect/accounts-v2/connected-account-configuration#set-dashboard-access).
        */
       dashboard?: AccountCreateParams.Dashboard;
 
@@ -46214,6 +49367,11 @@ export namespace V2 {
            * The Merchant Category Code (MCC) for the Merchant Configuration. MCCs classify businesses based on the goods or services they provide.
            */
           mcc?: string;
+
+          /**
+           * Settings for PayPay payments.
+           */
+          paypay_payments?: Merchant.PaypayPayments;
 
           /**
            * Settings for the default text that appears on statements for language variations.
@@ -47201,6 +50359,11 @@ export namespace V2 {
             bancontact_payments?: Capabilities.BancontactPayments;
 
             /**
+             * Allow the merchant to process Billie payments.
+             */
+            billie_payments?: Capabilities.BilliePayments;
+
+            /**
              * Allow the merchant to process BLIK payments.
              */
             blik_payments?: Capabilities.BlikPayments;
@@ -47291,6 +50454,11 @@ export namespace V2 {
             link_payments?: Capabilities.LinkPayments;
 
             /**
+             * Allow the merchant to process MB WAY payments.
+             */
+            mb_way_payments?: Capabilities.MbWayPayments;
+
+            /**
              * Allow the merchant to process MobilePay payments.
              */
             mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -47309,6 +50477,11 @@ export namespace V2 {
              * Allow the merchant to process Naver Pay payments.
              */
             naver_pay_payments?: Capabilities.NaverPayPayments;
+
+            /**
+             * Allow the merchant to process New Zealand BECS Direct Debit payments.
+             */
+            nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
 
             /**
              * Allow the merchant to process OXXO payments.
@@ -47334,6 +50507,16 @@ export namespace V2 {
              * Allow the merchant to process PayNow payments.
              */
             paynow_payments?: Capabilities.PaynowPayments;
+
+            /**
+             * Allow the merchant to process PayPay payments.
+             */
+            paypay_payments?: Capabilities.PaypayPayments;
+
+            /**
+             * Allow the merchant to process Pix payments.
+             */
+            pix_payments?: Capabilities.PixPayments;
 
             /**
              * Allow the merchant to process PromptPay payments.
@@ -47386,6 +50569,16 @@ export namespace V2 {
             swish_payments?: Capabilities.SwishPayments;
 
             /**
+             * Allow the merchant to process Touch 'n Go payments.
+             */
+            touch_n_go_payments?: Capabilities.TouchNGoPayments;
+
+            /**
+             * Allow the merchant to process TrueMoney payments.
+             */
+            truemoney_payments?: Capabilities.TruemoneyPayments;
+
+            /**
              * Allow the merchant to process TWINT payments.
              */
             twint_payments?: Capabilities.TwintPayments;
@@ -47404,6 +50597,21 @@ export namespace V2 {
              * Allow the merchant to process Vipps payments.
              */
             vipps_payments?: Capabilities.VippsPayments;
+
+            /**
+             * Allow the merchant to process WeChat Pay mobile web payments. Requires the wechat_pay_payments capability.
+             */
+            wechat_pay_mobile_web_payments?: Capabilities.WechatPayMobileWebPayments;
+
+            /**
+             * Allow the merchant to process WeChat Pay payments.
+             */
+            wechat_pay_payments?: Capabilities.WechatPayPayments;
+
+            /**
+             * Allow the merchant to process Wero payments.
+             */
+            wero_payments?: Capabilities.WeroPayments;
 
             /**
              * Allow the merchant to process Zip payments.
@@ -47427,9 +50635,36 @@ export namespace V2 {
 
           export interface KonbiniPayments {
             /**
+             * Information provided to support the onboarding process for Konbini payments.
+             */
+            additional_material?: string;
+
+            /**
              * Support for Konbini payments.
              */
             support?: KonbiniPayments.Support;
+          }
+
+          export interface PaypayPayments {
+            /**
+             * Additional files supporting PayPay payments configuration.
+             */
+            additional_files: Array<string>;
+
+            /**
+             * The type of goods sold by the merchant for PayPay payments.
+             */
+            goods_type?: PaypayPayments.GoodsType;
+
+            /**
+             * The business's website for PayPay payments.
+             */
+            site?: PaypayPayments.Site;
+
+            /**
+             * URL to the Specified Commercial Transactions Act page for PayPay payments.
+             */
+            specified_commercial_transactions_act_url?: string;
           }
 
           export interface ScriptStatementDescriptor {
@@ -47606,6 +50841,18 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: BancontactPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface BilliePayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: BilliePayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -47829,6 +51076,18 @@ export namespace V2 {
               requested: boolean;
             }
 
+            export interface MbWayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: MbWayPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
             export interface MobilepayPayments {
               /**
                * Protection types to request for this capability (e.g. "psp_migration").
@@ -47870,6 +51129,18 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: NaverPayPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface NzBankAccountBecsDebitPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: NzBankAccountBecsDebitPayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -47930,6 +51201,30 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: PaynowPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface PaypayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PaypayPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface PixPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PixPayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -48057,6 +51352,30 @@ export namespace V2 {
               requested: boolean;
             }
 
+            export interface TouchNGoPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: TouchNGoPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface TruemoneyPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: TruemoneyPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
             export interface TwintPayments {
               /**
                * Protection types to request for this capability (e.g. "psp_migration").
@@ -48098,6 +51417,42 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: VippsPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface WechatPayMobileWebPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: WechatPayMobileWebPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface WechatPayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: WechatPayPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface WeroPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: WeroPayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -48280,6 +51635,24 @@ export namespace V2 {
             }
 
             export namespace BancontactPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace BilliePayments {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -48621,6 +51994,24 @@ export namespace V2 {
               }
             }
 
+            export namespace MbWayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
             export namespace MobilepayPayments {
               export interface Protections {
                 /**
@@ -48676,6 +52067,24 @@ export namespace V2 {
             }
 
             export namespace NaverPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace NzBankAccountBecsDebitPayments {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -48766,6 +52175,42 @@ export namespace V2 {
             }
 
             export namespace PaynowPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PaypayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PixPayments {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -48963,6 +52408,42 @@ export namespace V2 {
               }
             }
 
+            export namespace TouchNGoPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace TruemoneyPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
             export namespace TwintPayments {
               export interface Protections {
                 /**
@@ -49018,6 +52499,60 @@ export namespace V2 {
             }
 
             export namespace VippsPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace WechatPayMobileWebPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace WechatPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace WeroPayments {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -49098,6 +52633,57 @@ export namespace V2 {
                  */
                 start_time?: string;
               }
+            }
+          }
+
+          export namespace PaypayPayments {
+            export type GoodsType = 'digital_content' | 'other';
+
+            export interface Site {
+              /**
+               * Additional information about the business's website when it's accessible.
+               */
+              accessible?: Site.Accessible;
+
+              /**
+               * Additional information about the business's website when it's in development.
+               */
+              in_development?: Site.InDevelopment;
+
+              /**
+               * Additional information about the business's website when it has restricted access.
+               */
+              restricted?: Site.Restricted;
+
+              /**
+               * The status of the business's website.
+               */
+              type?: Site.Type;
+            }
+
+            export namespace Site {
+              export interface Accessible {}
+
+              export interface InDevelopment {
+                /**
+                 * The password needed to access the business's website.
+                 */
+                password?: string;
+
+                /**
+                 * The username needed to access the business's website.
+                 */
+                username?: string;
+              }
+
+              export interface Restricted {
+                /**
+                 * The file explaining the payment flow for the business.
+                 */
+                payment_flow_file?: string;
+              }
+
+              export type Type = 'accessible' | 'in_development' | 'restricted';
             }
           }
 
@@ -49186,6 +52772,11 @@ export namespace V2 {
              * Can send or receive business custodial storage-type funds on Stripe.
              */
             business_custodial_storage?: Capabilities.BusinessCustodialStorage;
+
+            /**
+             * Capabilities related to business storage FinancialAccounts backed by Fifth Third demand deposit accounts.
+             */
+            business_demand_deposit_account_fifth_third_storage?: Capabilities.BusinessDemandDepositAccountFifthThirdStorage;
 
             /**
              * Can send or receive business storage-type funds on Stripe.
@@ -49310,6 +52901,18 @@ export namespace V2 {
                * Can send business custodial storage-type funds on Stripe.
                */
               outbound?: BusinessCustodialStorage.Outbound;
+            }
+
+            export interface BusinessDemandDepositAccountFifthThirdStorage {
+              /**
+               * Can receive funds in business storage FinancialAccounts backed by Fifth Third demand deposit accounts.
+               */
+              inbound?: BusinessDemandDepositAccountFifthThirdStorage.Inbound;
+
+              /**
+               * Can send funds from business storage FinancialAccounts backed by Fifth Third demand deposit accounts.
+               */
+              outbound?: BusinessDemandDepositAccountFifthThirdStorage.Outbound;
             }
 
             export interface BusinessStorage {
@@ -49574,6 +53177,86 @@ export namespace V2 {
                 }
 
                 export namespace Usdc {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+              }
+            }
+
+            export namespace BusinessDemandDepositAccountFifthThirdStorage {
+              export interface Inbound {
+                /**
+                 * Can receive funds in business storage FinancialAccounts backed by Fifth Third demand deposit accounts in USD.
+                 */
+                usd?: Inbound.Usd;
+              }
+
+              export interface Outbound {
+                /**
+                 * Can send funds from business storage FinancialAccounts backed by Fifth Third demand deposit accounts in USD.
+                 */
+                usd?: Outbound.Usd;
+              }
+
+              export namespace Inbound {
+                export interface Usd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Usd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export namespace Usd {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+              }
+
+              export namespace Outbound {
+                export interface Usd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Usd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export namespace Usd {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -52354,6 +56037,11 @@ export namespace V2 {
                * Enables this Account to receive OutboundPayments to linked bank accounts over SWIFT.
                */
               swift?: BankAccounts.Swift;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over TIPS rails.
+               */
+              tips?: BankAccounts.Tips;
             }
 
             export interface Cards {
@@ -52549,6 +56237,18 @@ export namespace V2 {
                 requested: boolean;
               }
 
+              export interface Tips {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Tips.Protections;
+
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+
               export namespace Ach {
                 export interface Protections {
                   /**
@@ -52730,6 +56430,24 @@ export namespace V2 {
               }
 
               export namespace Swift {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Tips {
                 export interface Protections {
                   /**
                    * Parameter to request psp_migration protection.
@@ -52992,12 +56710,12 @@ export namespace V2 {
 
         export interface Responsibilities {
           /**
-           * A value indicating the party responsible for collecting fees from this account.
+           * Controls who pays Stripe fees for direct charges and other pricing-control-eligible Stripe products. For new integrations, setting `losses_collector=application` requires `fees_collector=application`; legacy Custom and Express accounts can also use `application_custom` or `application_express`. For destination charges and separate charges and transfers, Stripe bills the platform regardless of this setting. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior), including application fees and pricing considerations.
            */
           fees_collector: Responsibilities.FeesCollector;
 
           /**
-           * A value indicating who is responsible for losses when this Account can't pay back negative balances from payments.
+           * Controls who is responsible for payment-related negative balances on this account. The platform remains liable for negative balances on its own account. To use Stripe negative balance liability, your integration must meet [Managed Risk requirements](https://docs.stripe.com/connect/risk-management/managed-risk).
            */
           losses_collector: Responsibilities.LossesCollector;
 
@@ -53295,6 +57013,11 @@ export namespace V2 {
             account?: TermsOfService.Account;
 
             /**
+             * Terms of service acceptances for financial accounts backed by Fifth Third demand deposit accounts.
+             */
+            business_demand_deposit_account_fifth_third?: TermsOfService.BusinessDemandDepositAccountFifthThird;
+
+            /**
              * Details on the Account's acceptance of Issuing-specific terms of service.
              */
             card_creator?: TermsOfService.CardCreator;
@@ -53328,6 +57051,23 @@ export namespace V2 {
 
           export namespace TermsOfService {
             export interface Account {
+              /**
+               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+               */
+              date: string;
+
+              /**
+               * The IP address from which the Account's representative accepted the terms of service.
+               */
+              ip: string;
+
+              /**
+               * The user agent of the browser from which the Account's representative accepted the terms of service.
+               */
+              user_agent?: string;
+            }
+
+            export interface BusinessDemandDepositAccountFifthThird {
               /**
                * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                */
@@ -55720,7 +59460,7 @@ export namespace V2 {
       contact_phone?: string;
 
       /**
-       * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
+       * Specifies the account's Stripe-hosted Dashboard access. Available values depend on the configurations enabled for the account. Learn more about [configuring Dashboard access](https://docs.stripe.com/connect/accounts-v2/connected-account-configuration#set-dashboard-access).
        */
       dashboard?: AccountUpdateParams.Dashboard;
 
@@ -55955,6 +59695,11 @@ export namespace V2 {
            * The Merchant Category Code (MCC) for the merchant. MCCs classify businesses based on the goods or services they provide.
            */
           mcc?: string;
+
+          /**
+           * Settings for PayPay payments.
+           */
+          paypay_payments?: Merchant.PaypayPayments;
 
           /**
            * Settings for the default text that appears on statements for language variations.
@@ -56964,6 +60709,11 @@ export namespace V2 {
             bancontact_payments?: Capabilities.BancontactPayments;
 
             /**
+             * Allow the merchant to process Billie payments.
+             */
+            billie_payments?: Capabilities.BilliePayments;
+
+            /**
              * Allow the merchant to process BLIK payments.
              */
             blik_payments?: Capabilities.BlikPayments;
@@ -57054,6 +60804,11 @@ export namespace V2 {
             link_payments?: Capabilities.LinkPayments;
 
             /**
+             * Allow the merchant to process MB WAY payments.
+             */
+            mb_way_payments?: Capabilities.MbWayPayments;
+
+            /**
              * Allow the merchant to process MobilePay payments.
              */
             mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -57072,6 +60827,11 @@ export namespace V2 {
              * Allow the merchant to process Naver Pay payments.
              */
             naver_pay_payments?: Capabilities.NaverPayPayments;
+
+            /**
+             * Allow the merchant to process New Zealand BECS Direct Debit payments.
+             */
+            nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
 
             /**
              * Allow the merchant to process OXXO payments.
@@ -57097,6 +60857,16 @@ export namespace V2 {
              * Allow the merchant to process PayNow payments.
              */
             paynow_payments?: Capabilities.PaynowPayments;
+
+            /**
+             * Allow the merchant to process PayPay payments.
+             */
+            paypay_payments?: Capabilities.PaypayPayments;
+
+            /**
+             * Allow the merchant to process Pix payments.
+             */
+            pix_payments?: Capabilities.PixPayments;
 
             /**
              * Allow the merchant to process PromptPay payments.
@@ -57149,6 +60919,16 @@ export namespace V2 {
             swish_payments?: Capabilities.SwishPayments;
 
             /**
+             * Allow the merchant to process Touch 'n Go payments.
+             */
+            touch_n_go_payments?: Capabilities.TouchNGoPayments;
+
+            /**
+             * Allow the merchant to process TrueMoney payments.
+             */
+            truemoney_payments?: Capabilities.TruemoneyPayments;
+
+            /**
              * Allow the merchant to process TWINT payments.
              */
             twint_payments?: Capabilities.TwintPayments;
@@ -57167,6 +60947,21 @@ export namespace V2 {
              * Allow the merchant to process Vipps payments.
              */
             vipps_payments?: Capabilities.VippsPayments;
+
+            /**
+             * Allow the merchant to process WeChat Pay mobile web payments. Requires the wechat_pay_payments capability.
+             */
+            wechat_pay_mobile_web_payments?: Capabilities.WechatPayMobileWebPayments;
+
+            /**
+             * Allow the merchant to process WeChat Pay payments.
+             */
+            wechat_pay_payments?: Capabilities.WechatPayPayments;
+
+            /**
+             * Allow the merchant to process Wero payments.
+             */
+            wero_payments?: Capabilities.WeroPayments;
 
             /**
              * Allow the merchant to process Zip payments.
@@ -57190,9 +60985,36 @@ export namespace V2 {
 
           export interface KonbiniPayments {
             /**
+             * Information provided to support the onboarding process for Konbini payments.
+             */
+            additional_material?: string;
+
+            /**
              * Support for Konbini payments.
              */
             support?: KonbiniPayments.Support;
+          }
+
+          export interface PaypayPayments {
+            /**
+             * Additional files supporting PayPay payments configuration.
+             */
+            additional_files?: Array<string>;
+
+            /**
+             * The type of goods sold by the merchant for PayPay payments.
+             */
+            goods_type?: PaypayPayments.GoodsType;
+
+            /**
+             * The business's website for PayPay payments.
+             */
+            site?: PaypayPayments.Site;
+
+            /**
+             * URL to the Specified Commercial Transactions Act page for PayPay payments.
+             */
+            specified_commercial_transactions_act_url?: string;
           }
 
           export interface ScriptStatementDescriptor {
@@ -57369,6 +61191,18 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: BancontactPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface BilliePayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: BilliePayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -57592,6 +61426,18 @@ export namespace V2 {
               requested?: boolean;
             }
 
+            export interface MbWayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: MbWayPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
             export interface MobilepayPayments {
               /**
                * Protection types to request for this capability (e.g. "psp_migration").
@@ -57633,6 +61479,18 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: NaverPayPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface NzBankAccountBecsDebitPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: NzBankAccountBecsDebitPayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -57693,6 +61551,30 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: PaynowPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface PaypayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PaypayPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface PixPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PixPayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -57820,6 +61702,30 @@ export namespace V2 {
               requested?: boolean;
             }
 
+            export interface TouchNGoPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: TouchNGoPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface TruemoneyPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: TruemoneyPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
             export interface TwintPayments {
               /**
                * Protection types to request for this capability (e.g. "psp_migration").
@@ -57861,6 +61767,42 @@ export namespace V2 {
                * Protection types to request for this capability (e.g. "psp_migration").
                */
               protections?: VippsPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface WechatPayMobileWebPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: WechatPayMobileWebPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface WechatPayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: WechatPayPayments.Protections;
+
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface WeroPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: WeroPayments.Protections;
 
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -58043,6 +61985,24 @@ export namespace V2 {
             }
 
             export namespace BancontactPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace BilliePayments {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -58384,6 +62344,24 @@ export namespace V2 {
               }
             }
 
+            export namespace MbWayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
             export namespace MobilepayPayments {
               export interface Protections {
                 /**
@@ -58439,6 +62417,24 @@ export namespace V2 {
             }
 
             export namespace NaverPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace NzBankAccountBecsDebitPayments {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -58529,6 +62525,42 @@ export namespace V2 {
             }
 
             export namespace PaynowPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PaypayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PixPayments {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -58726,6 +62758,42 @@ export namespace V2 {
               }
             }
 
+            export namespace TouchNGoPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace TruemoneyPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
             export namespace TwintPayments {
               export interface Protections {
                 /**
@@ -58781,6 +62849,60 @@ export namespace V2 {
             }
 
             export namespace VippsPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace WechatPayMobileWebPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace WechatPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace WeroPayments {
               export interface Protections {
                 /**
                  * Parameter to request psp_migration protection.
@@ -58861,6 +62983,57 @@ export namespace V2 {
                  */
                 start_time?: string;
               }
+            }
+          }
+
+          export namespace PaypayPayments {
+            export type GoodsType = 'digital_content' | 'other';
+
+            export interface Site {
+              /**
+               * Additional information about the business's website when it's accessible.
+               */
+              accessible?: Site.Accessible;
+
+              /**
+               * Additional information about the business's website when it's in development.
+               */
+              in_development?: Site.InDevelopment;
+
+              /**
+               * Additional information about the business's website when it has restricted access.
+               */
+              restricted?: Site.Restricted;
+
+              /**
+               * The status of the business's website.
+               */
+              type?: Site.Type;
+            }
+
+            export namespace Site {
+              export interface Accessible {}
+
+              export interface InDevelopment {
+                /**
+                 * The password needed to access the business's website.
+                 */
+                password?: string;
+
+                /**
+                 * The username needed to access the business's website.
+                 */
+                username?: string;
+              }
+
+              export interface Restricted {
+                /**
+                 * The file explaining the payment flow for the business.
+                 */
+                payment_flow_file?: string;
+              }
+
+              export type Type = 'accessible' | 'in_development' | 'restricted';
             }
           }
 
@@ -58949,6 +63122,11 @@ export namespace V2 {
              * Can send or receive business custodial storage-type funds on Stripe.
              */
             business_custodial_storage?: Capabilities.BusinessCustodialStorage;
+
+            /**
+             * Capabilities related to business storage FinancialAccounts backed by Fifth Third demand deposit accounts.
+             */
+            business_demand_deposit_account_fifth_third_storage?: Capabilities.BusinessDemandDepositAccountFifthThirdStorage;
 
             /**
              * Can send or receive business storage-type funds on Stripe.
@@ -59073,6 +63251,18 @@ export namespace V2 {
                * Can send business custodial storage-type funds on Stripe.
                */
               outbound?: BusinessCustodialStorage.Outbound;
+            }
+
+            export interface BusinessDemandDepositAccountFifthThirdStorage {
+              /**
+               * Can receive funds in business storage FinancialAccounts backed by Fifth Third demand deposit accounts.
+               */
+              inbound?: BusinessDemandDepositAccountFifthThirdStorage.Inbound;
+
+              /**
+               * Can send funds from business storage FinancialAccounts backed by Fifth Third demand deposit accounts.
+               */
+              outbound?: BusinessDemandDepositAccountFifthThirdStorage.Outbound;
             }
 
             export interface BusinessStorage {
@@ -59337,6 +63527,86 @@ export namespace V2 {
                 }
 
                 export namespace Usdc {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+              }
+            }
+
+            export namespace BusinessDemandDepositAccountFifthThirdStorage {
+              export interface Inbound {
+                /**
+                 * Can receive funds in business storage FinancialAccounts backed by Fifth Third demand deposit accounts in USD.
+                 */
+                usd?: Inbound.Usd;
+              }
+
+              export interface Outbound {
+                /**
+                 * Can send funds from business storage FinancialAccounts backed by Fifth Third demand deposit accounts in USD.
+                 */
+                usd?: Outbound.Usd;
+              }
+
+              export namespace Inbound {
+                export interface Usd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Usd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export namespace Usd {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+              }
+
+              export namespace Outbound {
+                export interface Usd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Usd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export namespace Usd {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -62117,6 +66387,11 @@ export namespace V2 {
                * Enables this Account to receive OutboundPayments to linked bank accounts over SWIFT.
                */
               swift?: BankAccounts.Swift;
+
+              /**
+               * Enables this Account to receive OutboundPayments to linked bank accounts over TIPS rails.
+               */
+              tips?: BankAccounts.Tips;
             }
 
             export interface Cards {
@@ -62312,6 +66587,18 @@ export namespace V2 {
                 requested?: boolean;
               }
 
+              export interface Tips {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Tips.Protections;
+
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+
               export namespace Ach {
                 export interface Protections {
                   /**
@@ -62493,6 +66780,24 @@ export namespace V2 {
               }
 
               export namespace Swift {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Tips {
                 export interface Protections {
                   /**
                    * Parameter to request psp_migration protection.
@@ -62755,12 +67060,12 @@ export namespace V2 {
 
         export interface Responsibilities {
           /**
-           * A value indicating the party responsible for collecting fees from this account.
+           * Controls who pays Stripe fees for direct charges and other pricing-control-eligible Stripe products. For new integrations, setting `losses_collector=application` requires `fees_collector=application`; legacy Custom and Express accounts can also use `application_custom` or `application_express`. For destination charges and separate charges and transfers, Stripe bills the platform regardless of this setting. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior), including application fees and pricing considerations. Set this value when adding an applicable configuration to the account. You can't change it after it's set.
            */
           fees_collector: Responsibilities.FeesCollector;
 
           /**
-           * A value indicating who is responsible for losses when this Account can't pay back negative balances from payments.
+           * Controls who is responsible for payment-related negative balances on this account. The platform remains liable for negative balances on its own account. To use Stripe negative balance liability, your integration must meet [Managed Risk requirements](https://docs.stripe.com/connect/risk-management/managed-risk). Set this value when adding an applicable configuration to the account. You can't change it after it's set.
            */
           losses_collector: Responsibilities.LossesCollector;
 
@@ -63058,6 +67363,11 @@ export namespace V2 {
             account?: TermsOfService.Account;
 
             /**
+             * Terms of service acceptances for financial accounts backed by Fifth Third demand deposit accounts.
+             */
+            business_demand_deposit_account_fifth_third?: TermsOfService.BusinessDemandDepositAccountFifthThird;
+
+            /**
              * Details on the Account's acceptance of Issuing-specific terms of service.
              */
             card_creator?: TermsOfService.CardCreator;
@@ -63091,6 +67401,23 @@ export namespace V2 {
 
           export namespace TermsOfService {
             export interface Account {
+              /**
+               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+               */
+              date?: string;
+
+              /**
+               * The IP address from which the Account's representative accepted the terms of service.
+               */
+              ip?: string;
+
+              /**
+               * The user agent of the browser from which the Account's representative accepted the terms of service.
+               */
+              user_agent?: string;
+            }
+
+            export interface BusinessDemandDepositAccountFifthThird {
               /**
                * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                */

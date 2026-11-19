@@ -125,6 +125,11 @@ export namespace Plan {
     days_after_charge: number;
 
     /**
+     * The number of days after the PaymentIntent's `fulfillment_date` to reserve funds before releasing. Charges without a `fulfillment_date` use `days_after_charge`.
+     */
+    days_after_fulfillment?: number | null;
+
+    /**
      * The time at which the ReservePlan expires.
      */
     expires_on: number | null;

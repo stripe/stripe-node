@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {OtherString} from '../../../shared.js';
-export interface CadenceSpendModifier {
+export interface GroupSpendModifier {
   /**
    * Unique identifier for the object.
    */
@@ -10,12 +10,12 @@ export interface CadenceSpendModifier {
   /**
    * String representing the object's type. Objects of the same type share the same value of the object field.
    */
-  object: 'v2.billing.cadence_spend_modifier';
+  object: 'v2.billing.group_spend_modifier';
 
   /**
-   * The ID of the Billing Cadence this spend modifier is associated with.
+   * The ID of the billing group this spend modifier is associated with.
    */
-  billing_cadence: string;
+  billing_group: string;
 
   /**
    * Timestamp of when the object was created.
@@ -30,14 +30,14 @@ export interface CadenceSpendModifier {
   /**
    * Max invoice spend details. Present if type is `max_billing_period_spend`.
    */
-  max_billing_period_spend?: CadenceSpendModifier.MaxBillingPeriodSpend;
+  max_billing_period_spend?: GroupSpendModifier.MaxBillingPeriodSpend;
 
   /**
    * The type of the spend modifier.
    */
-  type: CadenceSpendModifier.Type;
+  type: GroupSpendModifier.Type;
 }
-export namespace CadenceSpendModifier {
+export namespace GroupSpendModifier {
   export interface MaxBillingPeriodSpend {
     /**
      * The billing alert associated with the maximum spend threshold.
@@ -45,14 +45,9 @@ export namespace CadenceSpendModifier {
     alert: string;
 
     /**
-     * The maximum amount of invoice spend.
+     * The maximum invoice spend, measured in custom pricing units.
      */
     amount: MaxBillingPeriodSpend.Amount;
-
-    /**
-     * The configuration for the overage rate for the custom pricing unit.
-     */
-    custom_pricing_unit_overage_rate: MaxBillingPeriodSpend.CustomPricingUnitOverageRate;
 
     /**
      * The timestamp from which this spend modifier is effective.
@@ -80,19 +75,12 @@ export namespace CadenceSpendModifier {
       type: Amount.Type;
     }
 
-    export interface CustomPricingUnitOverageRate {
-      /**
-       * ID of the custom pricing unit overage rate.
-       */
-      id: string;
-    }
-
     export namespace Amount {
       export interface CustomPricingUnit {
         /**
-         * The id of the custom pricing unit.
+         * The ID of the custom pricing unit.
          */
-        id?: string;
+        id: string;
 
         /**
          * The decimal value of custom pricing units, represented as a string.

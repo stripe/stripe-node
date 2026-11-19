@@ -628,9 +628,6 @@ export type Event =
   | V1TransferCreatedEvent
   | V1TransferReversedEvent
   | V1TransferUpdatedEvent
-  | V2BillingCadenceBilledEvent
-  | V2BillingCadenceCanceledEvent
-  | V2BillingCadenceCreatedEvent
   | V2BillingContractActivatedEvent
   | V2BillingContractCanceledEvent
   | V2BillingContractCollectionBlockedEvent
@@ -642,6 +639,12 @@ export type Event =
   | V2BillingContractUpdatedEvent
   | V2BillingContractTermCreatedEvent
   | V2BillingContractTermDeletedEvent
+  | V2BillingContractTermPricingOverrideEndedEvent
+  | V2BillingContractTermPricingOverrideStartedEvent
+  | V2BillingContractTermRecurringPriceEndedEvent
+  | V2BillingContractTermRecurringPriceStartedEvent
+  | V2BillingContractTermScheduledFeeServicePeriodEndedEvent
+  | V2BillingContractTermScheduledFeeServicePeriodStartedEvent
   | V2BillingContractTermUpdatedEvent
   | V2BillingLicenseFeeCreatedEvent
   | V2BillingLicenseFeeUpdatedEvent
@@ -733,6 +736,8 @@ export type Event =
   | V2CoreHealthApiLatencyResolvedEvent
   | V2CoreHealthAuthorizationRateDropFiringEvent
   | V2CoreHealthAuthorizationRateDropResolvedEvent
+  | V2CoreHealthCustomPaymentMethodAdapterDegradedFiringEvent
+  | V2CoreHealthCustomPaymentMethodAdapterDegradedResolvedEvent
   | V2CoreHealthElementsErrorFiringEvent
   | V2CoreHealthElementsErrorResolvedEvent
   | V2CoreHealthEventGenerationFailureResolvedEvent
@@ -914,6 +919,11 @@ export type Event =
   | V2SignalsAccountSignalFraudulentWebsiteReadyEvent
   | V2SignalsAccountSignalMerchantDelinquencyReadyEvent
   | V2SignalsAccountSignalPaymentDelinquencyExposureReadyEvent
+  | V2SignalsPaymentRetryEvaluationCanceledEvent
+  | V2SignalsPaymentRetryEvaluationCompletedEvent
+  | V2SignalsPaymentRetryEvaluationCreatedEvent
+  | V2SignalsPaymentRetryEvaluationExpiredEvent
+  | V2SignalsPaymentRetryEvaluationUpdatedEvent
   | V2SignalsPaymentRetryEvaluationsRetryRecommendedEvent;
 
 export type EventNotification =
@@ -1184,9 +1194,6 @@ export type EventNotification =
   | V1TransferCreatedEventNotification
   | V1TransferReversedEventNotification
   | V1TransferUpdatedEventNotification
-  | V2BillingCadenceBilledEventNotification
-  | V2BillingCadenceCanceledEventNotification
-  | V2BillingCadenceCreatedEventNotification
   | V2BillingContractActivatedEventNotification
   | V2BillingContractCanceledEventNotification
   | V2BillingContractCollectionBlockedEventNotification
@@ -1198,6 +1205,12 @@ export type EventNotification =
   | V2BillingContractUpdatedEventNotification
   | V2BillingContractTermCreatedEventNotification
   | V2BillingContractTermDeletedEventNotification
+  | V2BillingContractTermPricingOverrideEndedEventNotification
+  | V2BillingContractTermPricingOverrideStartedEventNotification
+  | V2BillingContractTermRecurringPriceEndedEventNotification
+  | V2BillingContractTermRecurringPriceStartedEventNotification
+  | V2BillingContractTermScheduledFeeServicePeriodEndedEventNotification
+  | V2BillingContractTermScheduledFeeServicePeriodStartedEventNotification
   | V2BillingContractTermUpdatedEventNotification
   | V2BillingLicenseFeeCreatedEventNotification
   | V2BillingLicenseFeeUpdatedEventNotification
@@ -1289,6 +1302,8 @@ export type EventNotification =
   | V2CoreHealthApiLatencyResolvedEventNotification
   | V2CoreHealthAuthorizationRateDropFiringEventNotification
   | V2CoreHealthAuthorizationRateDropResolvedEventNotification
+  | V2CoreHealthCustomPaymentMethodAdapterDegradedFiringEventNotification
+  | V2CoreHealthCustomPaymentMethodAdapterDegradedResolvedEventNotification
   | V2CoreHealthElementsErrorFiringEventNotification
   | V2CoreHealthElementsErrorResolvedEventNotification
   | V2CoreHealthEventGenerationFailureResolvedEventNotification
@@ -1470,6 +1485,11 @@ export type EventNotification =
   | V2SignalsAccountSignalFraudulentWebsiteReadyEventNotification
   | V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification
   | V2SignalsAccountSignalPaymentDelinquencyExposureReadyEventNotification
+  | V2SignalsPaymentRetryEvaluationCanceledEventNotification
+  | V2SignalsPaymentRetryEvaluationCompletedEventNotification
+  | V2SignalsPaymentRetryEvaluationCreatedEventNotification
+  | V2SignalsPaymentRetryEvaluationExpiredEventNotification
+  | V2SignalsPaymentRetryEvaluationUpdatedEventNotification
   | V2SignalsPaymentRetryEvaluationsRetryRecommendedEventNotification;
 
 import {StripeContext} from '../../../StripeContext.js';
@@ -7117,88 +7137,6 @@ export interface V1TransferUpdatedEventNotification
 }
 
 /**
- * Occurs when a billing Cadence generates an invoice.
- */
-export interface V2BillingCadenceBilledEvent extends EventBase {
-  type: 'v2.billing.cadence.billed';
-  // Retrieves data specific to this event.
-  data: V2BillingCadenceBilledEvent.Data;
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Billing.Cadence>;
-}
-export interface V2BillingCadenceBilledEventNotification
-  extends EventNotificationBase {
-  type: 'v2.billing.cadence.billed';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Billing.Cadence>;
-  fetchEvent(): Promise<V2BillingCadenceBilledEvent>;
-}
-
-export namespace V2BillingCadenceBilledEvent {
-  export interface Data {
-    /**
-     * The IDs of the invoices that were generated by the tick for this Cadence.
-     */
-    invoices: Array<string>;
-  }
-}
-
-/**
- * Occurs when a billing Cadence is canceled.
- */
-export interface V2BillingCadenceCanceledEvent extends EventBase {
-  type: 'v2.billing.cadence.canceled';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Billing.Cadence>;
-}
-export interface V2BillingCadenceCanceledEventNotification
-  extends EventNotificationBase {
-  type: 'v2.billing.cadence.canceled';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Billing.Cadence>;
-  fetchEvent(): Promise<V2BillingCadenceCanceledEvent>;
-}
-
-/**
- * Occurs when a billing Cadence is created.
- */
-export interface V2BillingCadenceCreatedEvent extends EventBase {
-  type: 'v2.billing.cadence.created';
-  // Retrieves data specific to this event.
-  data: V2BillingCadenceCreatedEvent.Data;
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Billing.Cadence>;
-}
-export interface V2BillingCadenceCreatedEventNotification
-  extends EventNotificationBase {
-  type: 'v2.billing.cadence.created';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Billing.Cadence>;
-  fetchEvent(): Promise<V2BillingCadenceCreatedEvent>;
-}
-
-export namespace V2BillingCadenceCreatedEvent {
-  export interface Data {
-    /**
-     * Timestamp of when the object was created.
-     */
-    created: string;
-  }
-}
-
-/**
  * Occurs when a Contract transitions from Draft to Active.
  */
 export interface V2BillingContractActivatedEvent extends EventBase {
@@ -7432,6 +7370,202 @@ export interface V2BillingContractTermDeletedEventNotification
 }
 
 export namespace V2BillingContractTermDeletedEvent {
+  export interface Data {
+    /**
+     * The Contract containing this term.
+     */
+    contract: string;
+  }
+}
+
+/**
+ * Occurs when a Contract Term's pricing override period ends.
+ */
+export interface V2BillingContractTermPricingOverrideEndedEvent
+  extends EventBase {
+  type: 'v2.billing.contract_term.pricing_override_ended';
+  // Retrieves data specific to this event.
+  data: V2BillingContractTermPricingOverrideEndedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+}
+export interface V2BillingContractTermPricingOverrideEndedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract_term.pricing_override_ended';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+  fetchEvent(): Promise<V2BillingContractTermPricingOverrideEndedEvent>;
+}
+
+export namespace V2BillingContractTermPricingOverrideEndedEvent {
+  export interface Data {
+    /**
+     * The Contract containing this term.
+     */
+    contract: string;
+  }
+}
+
+/**
+ * Occurs when a Contract Term's pricing override period starts.
+ */
+export interface V2BillingContractTermPricingOverrideStartedEvent
+  extends EventBase {
+  type: 'v2.billing.contract_term.pricing_override_started';
+  // Retrieves data specific to this event.
+  data: V2BillingContractTermPricingOverrideStartedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+}
+export interface V2BillingContractTermPricingOverrideStartedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract_term.pricing_override_started';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+  fetchEvent(): Promise<V2BillingContractTermPricingOverrideStartedEvent>;
+}
+
+export namespace V2BillingContractTermPricingOverrideStartedEvent {
+  export interface Data {
+    /**
+     * The Contract containing this term.
+     */
+    contract: string;
+  }
+}
+
+/**
+ * Occurs when a Contract Term's recurring-price period ends.
+ */
+export interface V2BillingContractTermRecurringPriceEndedEvent
+  extends EventBase {
+  type: 'v2.billing.contract_term.recurring_price_ended';
+  // Retrieves data specific to this event.
+  data: V2BillingContractTermRecurringPriceEndedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+}
+export interface V2BillingContractTermRecurringPriceEndedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract_term.recurring_price_ended';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+  fetchEvent(): Promise<V2BillingContractTermRecurringPriceEndedEvent>;
+}
+
+export namespace V2BillingContractTermRecurringPriceEndedEvent {
+  export interface Data {
+    /**
+     * The Contract containing this term.
+     */
+    contract: string;
+  }
+}
+
+/**
+ * Occurs when a Contract Term's recurring-price period starts.
+ */
+export interface V2BillingContractTermRecurringPriceStartedEvent
+  extends EventBase {
+  type: 'v2.billing.contract_term.recurring_price_started';
+  // Retrieves data specific to this event.
+  data: V2BillingContractTermRecurringPriceStartedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+}
+export interface V2BillingContractTermRecurringPriceStartedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract_term.recurring_price_started';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+  fetchEvent(): Promise<V2BillingContractTermRecurringPriceStartedEvent>;
+}
+
+export namespace V2BillingContractTermRecurringPriceStartedEvent {
+  export interface Data {
+    /**
+     * The Contract containing this term.
+     */
+    contract: string;
+  }
+}
+
+/**
+ * Occurs when a Contract Term's scheduled-fee service period ends.
+ */
+export interface V2BillingContractTermScheduledFeeServicePeriodEndedEvent
+  extends EventBase {
+  type: 'v2.billing.contract_term.scheduled_fee_service_period_ended';
+  // Retrieves data specific to this event.
+  data: V2BillingContractTermScheduledFeeServicePeriodEndedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+}
+export interface V2BillingContractTermScheduledFeeServicePeriodEndedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract_term.scheduled_fee_service_period_ended';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+  fetchEvent(): Promise<
+    V2BillingContractTermScheduledFeeServicePeriodEndedEvent
+  >;
+}
+
+export namespace V2BillingContractTermScheduledFeeServicePeriodEndedEvent {
+  export interface Data {
+    /**
+     * The Contract containing this term.
+     */
+    contract: string;
+  }
+}
+
+/**
+ * Occurs when a Contract Term's scheduled-fee service period starts.
+ */
+export interface V2BillingContractTermScheduledFeeServicePeriodStartedEvent
+  extends EventBase {
+  type: 'v2.billing.contract_term.scheduled_fee_service_period_started';
+  // Retrieves data specific to this event.
+  data: V2BillingContractTermScheduledFeeServicePeriodStartedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+}
+export interface V2BillingContractTermScheduledFeeServicePeriodStartedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.billing.contract_term.scheduled_fee_service_period_started';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Billing.ContractTerm>;
+  fetchEvent(): Promise<
+    V2BillingContractTermScheduledFeeServicePeriodStartedEvent
+  >;
+}
+
+export namespace V2BillingContractTermScheduledFeeServicePeriodStartedEvent {
   export interface Data {
     /**
      * The Contract containing this term.
@@ -8641,6 +8775,7 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'au_becs_debit_payments'
       | 'bacs_debit_payments'
       | 'bancontact_payments'
+      | 'billie_payments'
       | 'blik_payments'
       | 'blik_recurring_payments'
       | 'boleto_payments'
@@ -8659,16 +8794,20 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'konbini_payments'
       | 'kr_card_payments'
       | 'link_payments'
+      | 'mb_way_payments'
       | 'mobilepay_payments'
       | 'multibanco_payments'
       | 'mx_bank_transfer_payments'
       | 'naver_pay_payments'
+      | 'nz_bank_account_becs_debit_payments'
       | 'oxxo_payments'
       | 'p24_payments'
       | 'payco_payments'
       | 'paynow_payments'
       | 'stripe_balance.payouts'
+      | 'paypay_payments'
       | 'pay_by_bank_payments'
+      | 'pix_payments'
       | 'promptpay_payments'
       | 'revolut_pay_payments'
       | 'samsung_pay_payments'
@@ -8679,10 +8818,15 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'sequra_payments'
       | 'sunbit_payments'
       | 'swish_payments'
+      | 'touch_n_go_payments'
+      | 'truemoney_payments'
       | 'twint_payments'
       | 'upi_payments'
       | 'us_bank_transfer_payments'
       | 'vipps_payments'
+      | 'wechat_pay_mobile_web_payments'
+      | 'wechat_pay_payments'
+      | 'wero_payments'
       | 'zip_payments'
       | OtherString;
   }
@@ -8750,6 +8894,8 @@ export namespace V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatus
       | 'business_custodial_storage.inbound.usdc'
       | 'business_custodial_storage.outbound.ousd'
       | 'business_custodial_storage.outbound.usdc'
+      | 'business_demand_deposit_account_fifth_third_storage.inbound.usd'
+      | 'business_demand_deposit_account_fifth_third_storage.outbound.usd'
       | 'business_storage.inbound.cad'
       | 'business_storage.inbound.czk'
       | 'business_storage.inbound.eur'
@@ -8898,6 +9044,7 @@ export namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpd
       | 'bank_accounts.sepa_credit'
       | 'bank_accounts.sepa_instant'
       | 'bank_accounts.swift'
+      | 'bank_accounts.tips'
       | 'bank_accounts.wire'
       | 'cards'
       | 'crypto_wallets_v2'
@@ -10475,6 +10622,203 @@ export namespace V2CoreHealthAuthorizationRateDropResolvedEvent {
 }
 
 /**
+ * Occurs when a custom payment method adapter degraded alert is firing.
+ */
+export interface V2CoreHealthCustomPaymentMethodAdapterDegradedFiringEvent
+  extends EventBase {
+  type: 'v2.core.health.custom_payment_method_adapter_degraded.firing';
+  // Retrieves data specific to this event.
+  data: V2CoreHealthCustomPaymentMethodAdapterDegradedFiringEvent.Data;
+}
+export interface V2CoreHealthCustomPaymentMethodAdapterDegradedFiringEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.health.custom_payment_method_adapter_degraded.firing';
+  fetchEvent(): Promise<
+    V2CoreHealthCustomPaymentMethodAdapterDegradedFiringEvent
+  >;
+}
+
+export namespace V2CoreHealthCustomPaymentMethodAdapterDegradedFiringEvent {
+  export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
+     * The grouping key for the alert.
+     */
+    grouping_key: string;
+
+    /**
+     * The user impact.
+     */
+    impact: Data.Impact;
+
+    /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
+     * The time when impact on the user experience was first detected.
+     */
+    started_at: string;
+
+    /**
+     * A short description of the alert.
+     */
+    summary: string;
+  }
+
+  export namespace Data {
+    export interface Impact {
+      /**
+       * Whether the custom payment method was disabled in Checkout as a result of the degradation. True while the alert is open and false when it is resolved.
+       */
+      custom_payment_method_disabled_from_checkout: boolean;
+
+      /**
+       * The custom payment method type whose adapter is unhealthy.
+       */
+      custom_payment_method_type_details: Impact.CustomPaymentMethodTypeDetails;
+
+      /**
+       * The reason the adapter's health is degraded.
+       */
+      degraded_health_reason: string;
+    }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
+
+    export namespace Impact {
+      export interface CustomPaymentMethodTypeDetails {
+        /**
+         * The time when the custom payment method was automatically disabled. Null when it is enabled.
+         */
+        auto_disabled_at?: string;
+
+        /**
+         * The display name of the custom payment method type.
+         */
+        display_name: string;
+
+        /**
+         * The URL of the user's self-hosted adapter endpoint.
+         */
+        reverse_api_url: string;
+
+        /**
+         * The identifier of the custom payment method type (e.g., "cpmt_...").
+         */
+        type: string;
+      }
+    }
+  }
+}
+
+/**
+ * Occurs when a custom payment method adapter degraded alert is resolved.
+ */
+export interface V2CoreHealthCustomPaymentMethodAdapterDegradedResolvedEvent
+  extends EventBase {
+  type: 'v2.core.health.custom_payment_method_adapter_degraded.resolved';
+  // Retrieves data specific to this event.
+  data: V2CoreHealthCustomPaymentMethodAdapterDegradedResolvedEvent.Data;
+}
+export interface V2CoreHealthCustomPaymentMethodAdapterDegradedResolvedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.health.custom_payment_method_adapter_degraded.resolved';
+  fetchEvent(): Promise<
+    V2CoreHealthCustomPaymentMethodAdapterDegradedResolvedEvent
+  >;
+}
+
+export namespace V2CoreHealthCustomPaymentMethodAdapterDegradedResolvedEvent {
+  export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
+     * The grouping key for the alert.
+     */
+    grouping_key: string;
+
+    /**
+     * The user impact.
+     */
+    impact: Data.Impact;
+
+    /**
+     * The time when the user experience has returned to expected levels.
+     */
+    resolved_at: string;
+
+    /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
+     * The time when impact on the user experience was first detected.
+     */
+    started_at: string;
+
+    /**
+     * A short description of the alert.
+     */
+    summary: string;
+  }
+
+  export namespace Data {
+    export interface Impact {
+      /**
+       * Whether the custom payment method was disabled in Checkout as a result of the degradation. True while the alert is open and false when it is resolved.
+       */
+      custom_payment_method_disabled_from_checkout: boolean;
+
+      /**
+       * The custom payment method type whose adapter is unhealthy.
+       */
+      custom_payment_method_type_details: Impact.CustomPaymentMethodTypeDetails;
+
+      /**
+       * The reason the adapter's health is degraded.
+       */
+      degraded_health_reason: string;
+    }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
+
+    export namespace Impact {
+      export interface CustomPaymentMethodTypeDetails {
+        /**
+         * The time when the custom payment method was automatically disabled. Null when it is enabled.
+         */
+        auto_disabled_at?: string;
+
+        /**
+         * The display name of the custom payment method type.
+         */
+        display_name: string;
+
+        /**
+         * The URL of the user's self-hosted adapter endpoint.
+         */
+        reverse_api_url: string;
+
+        /**
+         * The identifier of the custom payment method type (e.g., "cpmt_...").
+         */
+        type: string;
+      }
+    }
+  }
+}
+
+/**
  * Occurs when an elements error alert is firing.
  */
 export interface V2CoreHealthElementsErrorFiringEvent extends EventBase {
@@ -10653,6 +10997,11 @@ export namespace V2CoreHealthEventGenerationFailureResolvedEvent {
     resolved_at: string;
 
     /**
+     * The severity of the alert.
+     */
+    severity: Data.Severity;
+
+    /**
      * A short description of the alert.
      */
     summary: string;
@@ -10675,6 +11024,8 @@ export namespace V2CoreHealthEventGenerationFailureResolvedEvent {
        */
       related_object: Impact.RelatedObject;
     }
+
+    export type Severity = 'critical' | 'non_critical' | OtherString;
 
     export namespace Impact {
       export interface RelatedObject {
@@ -15558,6 +15909,16 @@ export interface V2PaymentsOffSessionPaymentAttemptFailedEventNotification
 export namespace V2PaymentsOffSessionPaymentAttemptFailedEvent {
   export interface Data {
     /**
+     * The ID of the Charge associated with this attempt.
+     */
+    charge?: string;
+
+    /**
+     * The payment error from the failed attempt.
+     */
+    last_attempt_error: string;
+
+    /**
      * The ID of the payment attempt record associated with this failed attempt.
      */
     payment_attempt_record: string;
@@ -15651,6 +16012,16 @@ export interface V2PaymentsOffSessionPaymentFailedEventNotification
 export namespace V2PaymentsOffSessionPaymentFailedEvent {
   export interface Data {
     /**
+     * The ID of the Charge associated with this attempt.
+     */
+    charge?: string;
+
+    /**
+     * The payment error from the failed attempt.
+     */
+    last_attempt_error: string;
+
+    /**
      * The ID of the payment attempt record associated with this terminal failure. Equal to the `latest_payment_attempt_record` on the Off-Session Payment object.
      */
     payment_attempt_record: string;
@@ -15702,6 +16073,8 @@ export interface V2PaymentsOffSessionPaymentResumedEventNotification
  */
 export interface V2PaymentsOffSessionPaymentSucceededEvent extends EventBase {
   type: 'v2.payments.off_session_payment.succeeded';
+  // Retrieves data specific to this event.
+  data: V2PaymentsOffSessionPaymentSucceededEvent.Data;
   // Object containing the reference to API resource relevant to the event.
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
@@ -15715,6 +16088,20 @@ export interface V2PaymentsOffSessionPaymentSucceededEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
   fetchEvent(): Promise<V2PaymentsOffSessionPaymentSucceededEvent>;
+}
+
+export namespace V2PaymentsOffSessionPaymentSucceededEvent {
+  export interface Data {
+    /**
+     * The ID of the Charge associated with this attempt.
+     */
+    charge?: string;
+
+    /**
+     * The ID of the payment attempt record associated with this successful attempt.
+     */
+    payment_attempt_record: string;
+  }
 }
 
 /**
@@ -16219,6 +16606,108 @@ export interface V2SignalsAccountSignalPaymentDelinquencyExposureReadyEventNotif
 }
 
 /**
+ * Occurs when a payment retry evaluation is canceled.
+ */
+export interface V2SignalsPaymentRetryEvaluationCanceledEvent
+  extends EventBase {
+  type: 'v2.signals.payment_retry_evaluation.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.PaymentRetryEvaluation>;
+}
+export interface V2SignalsPaymentRetryEvaluationCanceledEventNotification
+  extends EventNotificationBase {
+  type: 'v2.signals.payment_retry_evaluation.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.PaymentRetryEvaluation>;
+  fetchEvent(): Promise<V2SignalsPaymentRetryEvaluationCanceledEvent>;
+}
+
+/**
+ * Occurs when retry monitoring completes because the underlying payment succeeds.
+ */
+export interface V2SignalsPaymentRetryEvaluationCompletedEvent
+  extends EventBase {
+  type: 'v2.signals.payment_retry_evaluation.completed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.PaymentRetryEvaluation>;
+}
+export interface V2SignalsPaymentRetryEvaluationCompletedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.signals.payment_retry_evaluation.completed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.PaymentRetryEvaluation>;
+  fetchEvent(): Promise<V2SignalsPaymentRetryEvaluationCompletedEvent>;
+}
+
+/**
+ * Occurs when a payment retry evaluation is created and begins monitoring a failed payment.
+ */
+export interface V2SignalsPaymentRetryEvaluationCreatedEvent extends EventBase {
+  type: 'v2.signals.payment_retry_evaluation.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.PaymentRetryEvaluation>;
+}
+export interface V2SignalsPaymentRetryEvaluationCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.signals.payment_retry_evaluation.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.PaymentRetryEvaluation>;
+  fetchEvent(): Promise<V2SignalsPaymentRetryEvaluationCreatedEvent>;
+}
+
+/**
+ * Occurs when a payment retry evaluation expires after retry scoring gives up.
+ */
+export interface V2SignalsPaymentRetryEvaluationExpiredEvent extends EventBase {
+  type: 'v2.signals.payment_retry_evaluation.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.PaymentRetryEvaluation>;
+}
+export interface V2SignalsPaymentRetryEvaluationExpiredEventNotification
+  extends EventNotificationBase {
+  type: 'v2.signals.payment_retry_evaluation.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.PaymentRetryEvaluation>;
+  fetchEvent(): Promise<V2SignalsPaymentRetryEvaluationExpiredEvent>;
+}
+
+/**
+ * Occurs when a payment retry evaluation changes.
+ */
+export interface V2SignalsPaymentRetryEvaluationUpdatedEvent extends EventBase {
+  type: 'v2.signals.payment_retry_evaluation.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.PaymentRetryEvaluation>;
+}
+export interface V2SignalsPaymentRetryEvaluationUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.signals.payment_retry_evaluation.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.PaymentRetryEvaluation>;
+  fetchEvent(): Promise<V2SignalsPaymentRetryEvaluationUpdatedEvent>;
+}
+
+/**
  * Occurs when the ML scoring model determines it's a good time to retry a failed payment.
  * This is a thin event — the merchant must call GET to retrieve the full evaluation.
  */
@@ -16528,9 +17017,6 @@ export declare namespace Events {
     V1TransferCreatedEvent,
     V1TransferReversedEvent,
     V1TransferUpdatedEvent,
-    V2BillingCadenceBilledEvent,
-    V2BillingCadenceCanceledEvent,
-    V2BillingCadenceCreatedEvent,
     V2BillingContractActivatedEvent,
     V2BillingContractCanceledEvent,
     V2BillingContractCollectionBlockedEvent,
@@ -16542,6 +17028,12 @@ export declare namespace Events {
     V2BillingContractUpdatedEvent,
     V2BillingContractTermCreatedEvent,
     V2BillingContractTermDeletedEvent,
+    V2BillingContractTermPricingOverrideEndedEvent,
+    V2BillingContractTermPricingOverrideStartedEvent,
+    V2BillingContractTermRecurringPriceEndedEvent,
+    V2BillingContractTermRecurringPriceStartedEvent,
+    V2BillingContractTermScheduledFeeServicePeriodEndedEvent,
+    V2BillingContractTermScheduledFeeServicePeriodStartedEvent,
     V2BillingContractTermUpdatedEvent,
     V2BillingLicenseFeeCreatedEvent,
     V2BillingLicenseFeeUpdatedEvent,
@@ -16633,6 +17125,8 @@ export declare namespace Events {
     V2CoreHealthApiLatencyResolvedEvent,
     V2CoreHealthAuthorizationRateDropFiringEvent,
     V2CoreHealthAuthorizationRateDropResolvedEvent,
+    V2CoreHealthCustomPaymentMethodAdapterDegradedFiringEvent,
+    V2CoreHealthCustomPaymentMethodAdapterDegradedResolvedEvent,
     V2CoreHealthElementsErrorFiringEvent,
     V2CoreHealthElementsErrorResolvedEvent,
     V2CoreHealthEventGenerationFailureResolvedEvent,
@@ -16814,6 +17308,11 @@ export declare namespace Events {
     V2SignalsAccountSignalFraudulentWebsiteReadyEvent,
     V2SignalsAccountSignalMerchantDelinquencyReadyEvent,
     V2SignalsAccountSignalPaymentDelinquencyExposureReadyEvent,
+    V2SignalsPaymentRetryEvaluationCanceledEvent,
+    V2SignalsPaymentRetryEvaluationCompletedEvent,
+    V2SignalsPaymentRetryEvaluationCreatedEvent,
+    V2SignalsPaymentRetryEvaluationExpiredEvent,
+    V2SignalsPaymentRetryEvaluationUpdatedEvent,
     V2SignalsPaymentRetryEvaluationsRetryRecommendedEvent,
     V1AccountApplicationAuthorizedEventNotification,
     V1AccountApplicationDeauthorizedEventNotification,
@@ -17082,9 +17581,6 @@ export declare namespace Events {
     V1TransferCreatedEventNotification,
     V1TransferReversedEventNotification,
     V1TransferUpdatedEventNotification,
-    V2BillingCadenceBilledEventNotification,
-    V2BillingCadenceCanceledEventNotification,
-    V2BillingCadenceCreatedEventNotification,
     V2BillingContractActivatedEventNotification,
     V2BillingContractCanceledEventNotification,
     V2BillingContractCollectionBlockedEventNotification,
@@ -17096,6 +17592,12 @@ export declare namespace Events {
     V2BillingContractUpdatedEventNotification,
     V2BillingContractTermCreatedEventNotification,
     V2BillingContractTermDeletedEventNotification,
+    V2BillingContractTermPricingOverrideEndedEventNotification,
+    V2BillingContractTermPricingOverrideStartedEventNotification,
+    V2BillingContractTermRecurringPriceEndedEventNotification,
+    V2BillingContractTermRecurringPriceStartedEventNotification,
+    V2BillingContractTermScheduledFeeServicePeriodEndedEventNotification,
+    V2BillingContractTermScheduledFeeServicePeriodStartedEventNotification,
     V2BillingContractTermUpdatedEventNotification,
     V2BillingLicenseFeeCreatedEventNotification,
     V2BillingLicenseFeeUpdatedEventNotification,
@@ -17187,6 +17689,8 @@ export declare namespace Events {
     V2CoreHealthApiLatencyResolvedEventNotification,
     V2CoreHealthAuthorizationRateDropFiringEventNotification,
     V2CoreHealthAuthorizationRateDropResolvedEventNotification,
+    V2CoreHealthCustomPaymentMethodAdapterDegradedFiringEventNotification,
+    V2CoreHealthCustomPaymentMethodAdapterDegradedResolvedEventNotification,
     V2CoreHealthElementsErrorFiringEventNotification,
     V2CoreHealthElementsErrorResolvedEventNotification,
     V2CoreHealthEventGenerationFailureResolvedEventNotification,
@@ -17368,6 +17872,11 @@ export declare namespace Events {
     V2SignalsAccountSignalFraudulentWebsiteReadyEventNotification,
     V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification,
     V2SignalsAccountSignalPaymentDelinquencyExposureReadyEventNotification,
+    V2SignalsPaymentRetryEvaluationCanceledEventNotification,
+    V2SignalsPaymentRetryEvaluationCompletedEventNotification,
+    V2SignalsPaymentRetryEvaluationCreatedEventNotification,
+    V2SignalsPaymentRetryEvaluationExpiredEventNotification,
+    V2SignalsPaymentRetryEvaluationUpdatedEventNotification,
     V2SignalsPaymentRetryEvaluationsRetryRecommendedEventNotification,
   };
   export type RelatedObject = V2.Core.Events.RelatedObject;

@@ -1435,6 +1435,8 @@ export interface Invoice {
    */
   application: string | Application | DeletedApplication | null;
 
+  applied_credit_memos?: Invoice.AppliedCreditMemos;
+
   /**
    * Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule. If a failure is returned with a non-retryable return code, the invoice can no longer be retried unless a new payment method is obtained. Retries will continue to be scheduled, and attempt_count will continue to increment, but retries will only be executed if a new payment method is obtained.
    */
@@ -1846,6 +1848,13 @@ export namespace Invoice {
     status: AmountsDue.Status;
   }
 
+  export interface AppliedCreditMemos {
+    /**
+     * The Credit Memos with credit currently applied to this invoice, with one entry per Credit Memo. An invoice can have credit applied from at most 10 Credit Memos, so the list is returned in full.
+     */
+    data: Array<AppliedCreditMemos.Data>;
+  }
+
   export interface AutomaticTax {
     /**
      * If Stripe disabled automatic tax, this enum describes why.
@@ -2126,9 +2135,9 @@ export namespace Invoice {
 
   export interface Parent {
     /**
-     * Details about the billing cadence that generated this invoice
+     * Details about the billing group that generated this invoice
      */
-    billing_cadence_details?: Parent.BillingCadenceDetails | null;
+    billing_group_details?: Parent.BillingGroupDetails | null;
 
     /**
      * Details about the quote that generated this invoice
@@ -2375,6 +2384,20 @@ export namespace Invoice {
 
   export namespace AmountsDue {
     export type Status = 'open' | 'paid' | 'past_due' | OtherString;
+  }
+
+  export namespace AppliedCreditMemos {
+    export interface Data {
+      /**
+       * The credit currently applied to this invoice from the Credit Memo, in cents (or local equivalent). Applying credit reduces `amount_due` and `amount_remaining` without changing `amount_paid`.
+       */
+      applied_amount: number;
+
+      /**
+       * The ID of the Credit Memo whose credit is applied to this invoice.
+       */
+      credit_memo: string;
+    }
   }
 
   export namespace AutomaticTax {
@@ -2653,6 +2676,7 @@ export namespace Invoice {
       | 'forwarding_api_upstream_connection_timeout'
       | 'forwarding_api_upstream_error'
       | 'idempotency_key_in_use'
+      | 'inactive_api_operation_confirmation_required'
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'
@@ -2804,11 +2828,11 @@ export namespace Invoice {
   }
 
   export namespace Parent {
-    export interface BillingCadenceDetails {
+    export interface BillingGroupDetails {
       /**
-       * The billing cadence that generated this invoice
+       * The billing group that generated this invoice
        */
-      billing_cadence: string;
+      billing_group: string;
     }
 
     export interface QuoteDetails {
@@ -2854,7 +2878,7 @@ export namespace Invoice {
     }
 
     export type Type =
-      | 'billing_cadence_details'
+      | 'billing_group_details'
       | 'quote_details'
       | 'schedule_details'
       | 'subscription_details'
@@ -5813,9 +5837,9 @@ export namespace InvoiceUpdateParams {
 }
 export interface InvoiceListParams extends PaginationParams {
   /**
-   * Only return invoices for the cadence specified by this billing cadence ID.
+   * Only return invoices for the billing group specified by this billing group ID.
    */
-  billing_cadence?: string;
+  billing_group?: string;
 
   /**
    * The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
@@ -6337,9 +6361,9 @@ export interface InvoiceCreatePreviewParams {
   automatic_tax?: InvoiceCreatePreviewParams.AutomaticTax;
 
   /**
-   * The identifier of the billing cadence for which you'd like to retrieve the upcoming invoice. Cannot be provided when `subscription`, `schedule`, `subscription_details` or `schedule_details` are provided.
+   * The identifier of the billing group for which you'd like to retrieve the upcoming invoice. Cannot be provided when `subscription`, `schedule`, `subscription_details` or `schedule_details` are provided.
    */
-  billing_cadence?: string;
+  billing_group?: string;
 
   /**
    * The currency to preview this invoice in. Defaults to that of `customer` if not specified.

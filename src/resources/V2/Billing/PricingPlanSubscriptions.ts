@@ -353,9 +353,9 @@ export interface PricingPlanSubscription {
   object: 'v2.billing.pricing_plan_subscription';
 
   /**
-   * The ID of the Billing Cadence this subscription is billed on.
+   * The ID of the Billing Group this subscription is billed on.
    */
-  billing_cadence: string;
+  billing_group: string;
 
   /**
    * Details about why the subscription was canceled, if applicable. Includes system-generated reason.
@@ -420,7 +420,7 @@ export interface PricingPlanSubscription {
   servicing_status_transitions: PricingPlanSubscription.ServicingStatusTransitions;
 
   /**
-   * The ID of the Test Clock of the associated Billing Cadence, if any.
+   * The ID of the Test Clock of the associated Billing Group, if any.
    */
   test_clock?: string;
 }
@@ -1039,12 +1039,12 @@ export namespace V2 {
   export namespace Billing {
     export interface PricingPlanSubscriptionListParams {
       /**
-       * Filter by Billing Cadence ID. Mutually exclusive with `payer`, `pricing_plan`, and `pricing_plan_version`.
+       * Filter by Billing Group ID. Mutually exclusive with `payer`, `pricing_plan`, and `pricing_plan_version`.
        */
-      billing_cadence?: string;
+      billing_group?: string;
 
       /**
-       * Expand to include additional data such as discount_details, billing_cadence_details, or pricing_plan_component_details.
+       * Expand to include additional data such as discount_details or pricing_plan_component_details.
        */
       include?: Array<PricingPlanSubscriptionListParams.Include>;
 
@@ -1054,17 +1054,17 @@ export namespace V2 {
       limit?: number;
 
       /**
-       * Filter by payer. Mutually exclusive with `billing_cadence`, `pricing_plan`, and `pricing_plan_version`.
+       * Filter by payer. Mutually exclusive with `billing_group`, `pricing_plan`, and `pricing_plan_version`.
        */
       payer?: PricingPlanSubscriptionListParams.Payer;
 
       /**
-       * Filter by PricingPlan ID. Mutually exclusive with `billing_cadence`, `payer`, and `pricing_plan_version`.
+       * Filter by PricingPlan ID. Mutually exclusive with `billing_group`, `payer`, and `pricing_plan_version`.
        */
       pricing_plan?: string;
 
       /**
-       * Filter by Pricing Plan Version ID. Mutually exclusive with `billing_cadence`, `payer`, and `pricing_plan`.
+       * Filter by Pricing Plan Version ID. Mutually exclusive with `billing_group`, `payer`, and `pricing_plan`.
        */
       pricing_plan_version?: string;
 
@@ -1082,7 +1082,7 @@ export namespace V2 {
 
       export interface Payer {
         /**
-         * The ID of the Customer object. If provided, only Pricing Plan Subscriptions that are subscribed on the cadences with the specified payer will be returned.
+         * The ID of the Customer object. If provided, only Pricing Plan Subscriptions that are subscribed on the Billing Groups with the specified payer will be returned.
          */
         customer?: string;
 

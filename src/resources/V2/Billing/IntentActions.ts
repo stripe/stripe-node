@@ -223,7 +223,7 @@ export namespace IntentAction {
 
     export interface InvoiceDiscountRule {
       /**
-       * The entity that the discount rule applies to, for example, the Billing Cadence.
+       * The entity that the discount rule applies to, for example, the Billing Group.
        */
       applies_to: InvoiceDiscountRule.AppliesTo;
 
@@ -285,11 +285,11 @@ export namespace IntentAction {
     }
 
     export namespace InvoiceDiscountRule {
-      export type AppliesTo = 'cadence' | OtherString;
+      export type AppliesTo = 'cadence' | 'group' | OtherString;
 
       export interface PercentOff {
         /**
-         * The maximum number of times this discount can be applied for this Billing Cadence.
+         * The maximum number of times this discount can be applied for this billing group.
          */
         maximum_applications: PercentOff.MaximumApplications;
 

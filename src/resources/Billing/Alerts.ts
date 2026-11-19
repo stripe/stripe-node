@@ -648,11 +648,6 @@ export namespace Alert {
 
     export interface Filters {
       /**
-       * Filter by billing cadence ID.
-       */
-      billing_cadence: string | null;
-
-      /**
        * Filter by billing group ID.
        */
       billing_group: string | null;
@@ -669,7 +664,7 @@ export namespace Alert {
     }
 
     export type GroupBy =
-      | 'billing_cadence'
+      | 'billing_group'
       | 'pricing_plan_subscription'
       | OtherString;
 
@@ -997,11 +992,6 @@ export namespace Billing {
         billable_items?: Array<string>;
 
         /**
-         * Filter by billing cadence ID.
-         */
-        billing_cadence?: string;
-
-        /**
          * Filter by billing group ID.
          */
         billing_group?: string;
@@ -1018,7 +1008,7 @@ export namespace Billing {
       }
 
       export type GroupBy =
-        | 'billing_cadence'
+        | 'billing_group'
         | 'pricing_plan_subscription'
         | OtherString;
 
@@ -1162,11 +1152,6 @@ export namespace Billing {
      * Filter results to only include notifications for the given billing group.
      */
     billing_group?: string;
-
-    /**
-     * Filter results to only include notifications for the given cadence.
-     */
-    cadence?: string;
 
     /**
      * Specifies which fields in the response should be expanded.

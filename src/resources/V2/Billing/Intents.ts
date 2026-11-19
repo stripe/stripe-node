@@ -21,6 +21,43 @@ export class IntentResource extends StripeResource {
   ): V2ListPromise<Intent> {
     return this._makeRequest('GET', '/v2/billing/intents', params, options, {
       methodType: 'list',
+      responseSchema: {
+        kind: 'object',
+        fields: {
+          data: {
+            kind: 'array',
+            element: {
+              kind: 'object',
+              fields: {
+                billing_group_data: {
+                  kind: 'object',
+                  fields: {
+                    billing_settings: {
+                      kind: 'object',
+                      fields: {
+                        payment_method_options: {
+                          kind: 'object',
+                          fields: {
+                            card: {
+                              kind: 'object',
+                              fields: {
+                                mandate_options: {
+                                  kind: 'object',
+                                  fields: {amount: {kind: 'int64_string'}},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     }) as any;
   }
   /**
@@ -56,6 +93,59 @@ export class IntentResource extends StripeResource {
               },
             },
           },
+          billing_group_data: {
+            kind: 'object',
+            fields: {
+              billing_settings: {
+                kind: 'object',
+                fields: {
+                  payment_method_options: {
+                    kind: 'object',
+                    fields: {
+                      card: {
+                        kind: 'object',
+                        fields: {
+                          mandate_options: {
+                            kind: 'object',
+                            fields: {amount: {kind: 'int64_string'}},
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      responseSchema: {
+        kind: 'object',
+        fields: {
+          billing_group_data: {
+            kind: 'object',
+            fields: {
+              billing_settings: {
+                kind: 'object',
+                fields: {
+                  payment_method_options: {
+                    kind: 'object',
+                    fields: {
+                      card: {
+                        kind: 'object',
+                        fields: {
+                          mandate_options: {
+                            kind: 'object',
+                            fields: {amount: {kind: 'int64_string'}},
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       },
     }) as any;
@@ -72,7 +162,38 @@ export class IntentResource extends StripeResource {
       'GET',
       `/v2/billing/intents/${encodeURIComponent(id)}`,
       params,
-      options
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            billing_group_data: {
+              kind: 'object',
+              fields: {
+                billing_settings: {
+                  kind: 'object',
+                  fields: {
+                    payment_method_options: {
+                      kind: 'object',
+                      fields: {
+                        card: {
+                          kind: 'object',
+                          fields: {
+                            mandate_options: {
+                              kind: 'object',
+                              fields: {amount: {kind: 'int64_string'}},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
     ) as any;
   }
   /**
@@ -87,7 +208,38 @@ export class IntentResource extends StripeResource {
       'POST',
       `/v2/billing/intents/${encodeURIComponent(id)}/cancel`,
       params,
-      options
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            billing_group_data: {
+              kind: 'object',
+              fields: {
+                billing_settings: {
+                  kind: 'object',
+                  fields: {
+                    payment_method_options: {
+                      kind: 'object',
+                      fields: {
+                        card: {
+                          kind: 'object',
+                          fields: {
+                            mandate_options: {
+                              kind: 'object',
+                              fields: {amount: {kind: 'int64_string'}},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
     ) as any;
   }
   /**
@@ -102,7 +254,38 @@ export class IntentResource extends StripeResource {
       'POST',
       `/v2/billing/intents/${encodeURIComponent(id)}/commit`,
       params,
-      options
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            billing_group_data: {
+              kind: 'object',
+              fields: {
+                billing_settings: {
+                  kind: 'object',
+                  fields: {
+                    payment_method_options: {
+                      kind: 'object',
+                      fields: {
+                        card: {
+                          kind: 'object',
+                          fields: {
+                            mandate_options: {
+                              kind: 'object',
+                              fields: {amount: {kind: 'int64_string'}},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
     ) as any;
   }
   /**
@@ -117,7 +300,38 @@ export class IntentResource extends StripeResource {
       'POST',
       `/v2/billing/intents/${encodeURIComponent(id)}/release_reservation`,
       params,
-      options
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            billing_group_data: {
+              kind: 'object',
+              fields: {
+                billing_settings: {
+                  kind: 'object',
+                  fields: {
+                    payment_method_options: {
+                      kind: 'object',
+                      fields: {
+                        card: {
+                          kind: 'object',
+                          fields: {
+                            mandate_options: {
+                              kind: 'object',
+                              fields: {amount: {kind: 'int64_string'}},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
     ) as any;
   }
   /**
@@ -132,7 +346,38 @@ export class IntentResource extends StripeResource {
       'POST',
       `/v2/billing/intents/${encodeURIComponent(id)}/reserve`,
       params,
-      options
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            billing_group_data: {
+              kind: 'object',
+              fields: {
+                billing_settings: {
+                  kind: 'object',
+                  fields: {
+                    payment_method_options: {
+                      kind: 'object',
+                      fields: {
+                        card: {
+                          kind: 'object',
+                          fields: {
+                            mandate_options: {
+                              kind: 'object',
+                              fields: {amount: {kind: 'int64_string'}},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
     ) as any;
   }
 }
@@ -153,14 +398,14 @@ export interface Intent {
   amount_details: Intent.AmountDetails;
 
   /**
-   * ID of an existing Cadence to use.
+   * ID of an existing Billing Group to use.
    */
-  cadence?: string;
+  billing_group?: string;
 
   /**
-   * Data for creating a new Cadence.
+   * Data for creating a new Billing Group.
    */
-  cadence_data?: Intent.CadenceData;
+  billing_group_data?: Intent.BillingGroupData;
 
   /**
    * Time at which the object was created.
@@ -230,21 +475,31 @@ export namespace Intent {
     total: string;
   }
 
-  export interface CadenceData {
+  export interface BillingGroupData {
     /**
-     * The billing cycle configuration for this Cadence.
+     * Billing setting overrides for the group. If omitted, the applicable defaults are used.
      */
-    billing_cycle: CadenceData.BillingCycle;
+    billing_settings?: BillingGroupData.BillingSettings;
 
     /**
-     * Information about the payer for this Cadence.
+     * The ID of the Customer object whose invoices are grouped.
      */
-    payer: CadenceData.Payer;
+    customer: string;
 
     /**
-     * Settings for creating the Cadence.
+     * The ID of the PaymentMethod object used by default. If unset, the customer's default payment method is used.
      */
-    settings?: CadenceData.Settings;
+    default_payment_method?: string;
+
+    /**
+     * The strategy used to group member invoices.
+     */
+    grouping_behavior?: BillingGroupData.GroupingBehavior;
+
+    /**
+     * An internal key you can use to find a particular billing group. Maximum length of 200 characters.
+     */
+    lookup_key?: string;
   }
 
   export type Status = 'canceled' | 'committed' | 'draft' | 'reserved';
@@ -276,256 +531,547 @@ export namespace Intent {
     reserved_at?: string;
   }
 
-  export namespace CadenceData {
-    export interface BillingCycle {
+  export namespace BillingGroupData {
+    export interface BillingSettings {
       /**
-       * Specific configuration for determining billing dates when type=day.
+       * How Stripe collects payment.
        */
-      day?: BillingCycle.Day;
+      collection_method: BillingSettings.CollectionMethod;
 
       /**
-       * The number of intervals (specified in the interval attribute) between cadence billings. For example, type=month and interval_count=3 bills every 3 months.
+       * Email delivery setting.
        */
-      interval_count: number;
+      email_delivery: BillingSettings.EmailDelivery;
 
       /**
-       * Specific configuration for determining billing dates when type=month.
+       * Settings for invoice presentation.
        */
-      month?: BillingCycle.Month;
+      invoice_presentation?: BillingSettings.InvoicePresentation;
 
       /**
-       * The frequency at which a cadence bills.
+       * The amount of time until the invoice is overdue for payment.
        */
-      type: BillingCycle.Type;
+      invoice_time_until_due: BillingSettings.InvoiceTimeUntilDue;
 
       /**
-       * Specific configuration for determining billing dates when type=week.
+       * The ID of the payment method configuration, which controls which payment methods are displayed to your customers.
        */
-      week?: BillingCycle.Week;
+      payment_method_configuration?: string;
 
       /**
-       * Specific configuration for determining billing dates when type=year.
+       * Payment Method specific configuration to be stored on the object.
        */
-      year?: BillingCycle.Year;
+      payment_method_options?: BillingSettings.PaymentMethodOptions;
+
+      /**
+       * Settings for calculating tax.
+       */
+      tax: BillingSettings.Tax;
     }
 
-    export interface Payer {
+    export interface GroupingBehavior {
       /**
-       * The ID of the Billing Profile object which determines how a bill is paid.
+       * The cadence configuration when type is `by_cadence`.
        */
-      billing_profile?: string;
+      by_cadence?: GroupingBehavior.ByCadence;
 
       /**
-       * Data for creating a new profile.
+       * The grouping strategy.
        */
-      billing_profile_data?: Payer.BillingProfileData;
+      type: GroupingBehavior.Type;
     }
 
-    export interface Settings {
-      /**
-       * Settings that configure bills generation, which includes calculating totals, tax, and presenting invoices.
-       */
-      bill?: Settings.Bill;
+    export namespace BillingSettings {
+      export type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
-      /**
-       * Settings that configure and manage the behavior of collecting payments.
-       */
-      collection?: Settings.Collection;
-    }
-
-    export namespace BillingCycle {
-      export interface Day {
+      export interface EmailDelivery {
         /**
-         * The time at which the billing cycle ends.
+         * Controls emails for when the payment is due.
          */
-        time: Day.Time;
+        payment_due: EmailDelivery.PaymentDue;
       }
 
-      export interface Month {
+      export interface InvoicePresentation {
         /**
-         * The day to anchor the billing on for a type="month" billing cycle from 1-31.
-         * If this number is greater than the number of days in the month being billed,
-         * this anchors to the last day of the month.
+         * The ID of the invoice rendering template to be used when generating invoices.
          */
-        day_of_month: number;
-
-        /**
-         * The month to anchor the billing on for a type="month" billing cycle from
-         * 1-12. Occurrences are calculated from the month anchor.
-         */
-        month_of_year?: number;
-
-        /**
-         * The time at which the billing cycle ends.
-         */
-        time: Month.Time;
+        invoice_rendering_template?: string;
       }
 
-      export type Type = 'day' | 'month' | 'week' | 'year' | OtherString;
-
-      export interface Week {
+      export interface InvoiceTimeUntilDue {
         /**
-         * The day of the week to bill the type=week billing cycle on.
-         * Numbered from 1-7 for Monday to Sunday respectively, based on the ISO-8601 week day numbering.
+         * The interval unit for the time until due.
          */
-        day_of_week: number;
+        interval: InvoiceTimeUntilDue.Interval;
 
         /**
-         * The time at which the billing cycle ends.
+         * The number of interval units. For example, if interval=day and interval_count=30, the invoice is due in 30 days.
          */
-        time: Week.Time;
+        interval_count: number;
       }
 
-      export interface Year {
+      export interface PaymentMethodOptions {
         /**
-         * The day to anchor the billing on for a type="month" billing cycle from 1-31.
-         * If this number is greater than the number of days in the month being billed,
-         * this anchors to the last day of the month.
+         * This sub-hash contains details about the Canadian pre-authorized debit payment method options.
          */
-        day_of_month: number;
+        acss_debit?: PaymentMethodOptions.AcssDebit;
 
         /**
-         * The month to bill on from 1-12. If not provided, this defaults to the month the cadence was created.
+         * This sub-hash contains details about the Bancontact payment method.
          */
-        month_of_year: number;
+        bancontact?: PaymentMethodOptions.Bancontact;
 
         /**
-         * The time at which the billing cycle ends.
+         * This sub-hash contains details about the Card payment method options.
          */
-        time: Year.Time;
+        card?: PaymentMethodOptions.Card;
+
+        /**
+         * This sub-hash contains details about the Bank transfer payment method options.
+         */
+        customer_balance?: PaymentMethodOptions.CustomerBalance;
+
+        /**
+         * This sub-hash contains details about the Konbini payment method options.
+         */
+        konbini?: PaymentMethodOptions.Konbini;
+
+        /**
+         * This sub-hash contains details about the SEPA Direct Debit payment method options.
+         */
+        sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+        /**
+         * This sub-hash contains details about the ACH direct debit payment method options.
+         */
+        us_bank_account?: PaymentMethodOptions.UsBankAccount;
       }
 
-      export namespace Day {
-        export interface Time {
+      export interface Tax {
+        /**
+         * Determines if tax is calculated automatically based on a product tax code or manually based on rules defined by the business.
+         */
+        type: Tax.Type;
+      }
+
+      export namespace EmailDelivery {
+        export interface PaymentDue {
           /**
-           * The hour at which the billing cycle ends.
-           * This must be an integer between 0 and 23, inclusive.
-           * 0 represents midnight, and 23 represents 11 PM.
+           * If true an email for the invoice would be generated and sent out.
            */
-          hour: number;
+          enabled: boolean;
 
           /**
-           * The minute at which the billing cycle ends.
-           * Must be an integer between 0 and 59, inclusive.
+           * If true the payment link to hosted invoice page would be included in email and PDF of the invoice.
            */
-          minute: number;
-
-          /**
-           * The second at which the billing cycle ends.
-           * Must be an integer between 0 and 59, inclusive.
-           */
-          second?: number;
+          include_payment_link: boolean;
         }
       }
 
-      export namespace Month {
-        export interface Time {
+      export namespace InvoiceTimeUntilDue {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+
+      export namespace PaymentMethodOptions {
+        export interface AcssDebit {
           /**
-           * The hour at which the billing cycle ends.
-           * This must be an integer between 0 and 23, inclusive.
-           * 0 represents midnight, and 23 represents 11 PM.
+           * Additional fields for Mandate creation.
            */
-          hour: number;
+          mandate_options?: AcssDebit.MandateOptions;
 
           /**
-           * The minute at which the billing cycle ends.
-           * Must be an integer between 0 and 59, inclusive.
+           * Verification method.
            */
-          minute: number;
+          verification_method?: AcssDebit.VerificationMethod;
+        }
+
+        export interface Bancontact {
+          /**
+           * Preferred language of the Bancontact authorization page that the customer is redirected to.
+           */
+          preferred_language?: Bancontact.PreferredLanguage;
+        }
+
+        export interface Card {
+          /**
+           * Configuration options for setting up an eMandate for cards issued in India.
+           */
+          mandate_options?: Card.MandateOptions;
 
           /**
-           * The second at which the billing cycle ends.
-           * Must be an integer between 0 and 59, inclusive.
+           * Selected network to process the payment on. Depends on the available networks of the card.
            */
-          second?: number;
+          network?: string;
+
+          /**
+           * An advanced option 3D Secure. We strongly recommend that you rely on our SCA Engine to automatically prompt your customers
+           * for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication).
+           * However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option.
+           * Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+           */
+          request_three_d_secure?: Card.RequestThreeDSecure;
+        }
+
+        export interface CustomerBalance {
+          /**
+           * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+           */
+          bank_transfer?: CustomerBalance.BankTransfer;
+
+          /**
+           * The funding method type to be used when there are not enough funds in the customer balance. Currently the only supported value is `bank_transfer`.
+           */
+          funding_type?: CustomerBalance.FundingType;
+        }
+
+        export interface Konbini {}
+
+        export interface SepaDebit {}
+
+        export interface UsBankAccount {
+          /**
+           * Additional fields for Financial Connections Session creation.
+           */
+          financial_connections: UsBankAccount.FinancialConnections;
+
+          /**
+           * Verification method.
+           */
+          verification_method: UsBankAccount.VerificationMethod;
+        }
+
+        export namespace AcssDebit {
+          export interface MandateOptions {
+            /**
+             * Transaction type of the mandate.
+             */
+            transaction_type?: MandateOptions.TransactionType;
+          }
+
+          export type VerificationMethod =
+            | 'automatic'
+            | 'instant'
+            | 'microdeposits'
+            | OtherString;
+
+          export namespace MandateOptions {
+            export type TransactionType = 'business' | 'personal' | OtherString;
+          }
+        }
+
+        export namespace Bancontact {
+          export type PreferredLanguage =
+            | 'de'
+            | 'en'
+            | 'fr'
+            | 'nl'
+            | OtherString;
+        }
+
+        export namespace Card {
+          export interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount?: bigint;
+
+            /**
+             * The AmountType for the mandate. One of `fixed` or `maximum`.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * A description of the mandate that is meant to be displayed to the customer.
+             */
+            description?: string;
+          }
+
+          export type RequestThreeDSecure =
+            | 'any'
+            | 'automatic'
+            | 'challenge'
+            | OtherString;
+
+          export namespace MandateOptions {
+            export type AmountType = 'fixed' | 'maximum' | OtherString;
+          }
+        }
+
+        export namespace CustomerBalance {
+          export interface BankTransfer {
+            /**
+             * Configuration for `eu_bank_transfer` funding type. Required if `type` is `eu_bank_transfer`.
+             */
+            eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+            /**
+             * The bank transfer type that can be used for funding.
+             */
+            type?: BankTransfer.Type;
+          }
+
+          export type FundingType = 'bank_transfer' | OtherString;
+
+          export namespace BankTransfer {
+            export interface EuBankTransfer {
+              /**
+               * The desired country code of the bank account information.
+               */
+              country: EuBankTransfer.Country;
+            }
+
+            export type Type =
+              | 'eu_bank_transfer'
+              | 'gb_bank_transfer'
+              | 'jp_bank_transfer'
+              | 'mx_bank_transfer'
+              | 'us_bank_transfer'
+              | OtherString;
+
+            export namespace EuBankTransfer {
+              export type Country =
+                | 'BE'
+                | 'DE'
+                | 'ES'
+                | 'FR'
+                | 'IE'
+                | 'NL'
+                | OtherString;
+            }
+          }
+        }
+
+        export namespace UsBankAccount {
+          export interface FinancialConnections {
+            /**
+             * Provide filters for the linked accounts that the customer can select for the payment method.
+             */
+            filters?: FinancialConnections.Filters;
+
+            /**
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included.
+             */
+            permissions: Array<FinancialConnections.Permission>;
+
+            /**
+             * List of data features that you would like to retrieve upon account creation.
+             */
+            prefetch: Array<FinancialConnections.Prefetch>;
+          }
+
+          export type VerificationMethod =
+            | 'automatic'
+            | 'instant'
+            | 'microdeposits'
+            | OtherString;
+
+          export namespace FinancialConnections {
+            export interface Filters {
+              /**
+               * The account subcategories to use to filter for selectable accounts.
+               */
+              account_subcategories: Array<Filters.AccountSubcategory>;
+            }
+
+            export type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions'
+              | OtherString;
+
+            export type Prefetch =
+              | 'balances'
+              | 'ownership'
+              | 'transactions'
+              | OtherString;
+
+            export namespace Filters {
+              export type AccountSubcategory =
+                | 'checking'
+                | 'savings'
+                | OtherString;
+            }
+          }
         }
       }
 
-      export namespace Week {
-        export interface Time {
-          /**
-           * The hour at which the billing cycle ends.
-           * This must be an integer between 0 and 23, inclusive.
-           * 0 represents midnight, and 23 represents 11 PM.
-           */
-          hour: number;
-
-          /**
-           * The minute at which the billing cycle ends.
-           * Must be an integer between 0 and 59, inclusive.
-           */
-          minute: number;
-
-          /**
-           * The second at which the billing cycle ends.
-           * Must be an integer between 0 and 59, inclusive.
-           */
-          second?: number;
-        }
-      }
-
-      export namespace Year {
-        export interface Time {
-          /**
-           * The hour at which the billing cycle ends.
-           * This must be an integer between 0 and 23, inclusive.
-           * 0 represents midnight, and 23 represents 11 PM.
-           */
-          hour: number;
-
-          /**
-           * The minute at which the billing cycle ends.
-           * Must be an integer between 0 and 59, inclusive.
-           */
-          minute: number;
-
-          /**
-           * The second at which the billing cycle ends.
-           * Must be an integer between 0 and 59, inclusive.
-           */
-          second?: number;
-        }
+      export namespace Tax {
+        export type Type = 'automatic' | 'manual' | OtherString;
       }
     }
 
-    export namespace Payer {
-      export interface BillingProfileData {
+    export namespace GroupingBehavior {
+      export interface ByCadence {
         /**
-         * The customer to associate with the profile.
+         * Timestamp that anchors the recurring grouping cadence.
          */
-        customer: string;
+        billing_cycle_anchor?: string;
 
         /**
-         * The default payment method to use when billing this profile.
-         * If none is provided, the customer `default_payment_method` is used.
+         * Daily cadence details.
          */
-        default_payment_method?: string;
+        day?: ByCadence.Day;
+
+        /**
+         * The number of interval units between groups.
+         */
+        interval_count: number;
+
+        /**
+         * Monthly cadence details.
+         */
+        month?: ByCadence.Month;
+
+        /**
+         * The interval unit for the cadence.
+         */
+        type: ByCadence.Type;
+
+        /**
+         * Weekly cadence details.
+         */
+        week?: ByCadence.Week;
+
+        /**
+         * Yearly cadence details.
+         */
+        year?: ByCadence.Year;
       }
-    }
 
-    export namespace Settings {
-      export interface Bill {
-        /**
-         * The ID of the referenced settings object.
-         */
-        id: string;
+      export type Type = 'by_cadence' | OtherString;
 
-        /**
-         * Returns the Settings Version when the cadence is pinned to a specific version.
-         */
-        version?: string;
-      }
+      export namespace ByCadence {
+        export interface Day {
+          /**
+           * The time at which the daily grouping interval begins.
+           */
+          time: Day.Time;
+        }
 
-      export interface Collection {
-        /**
-         * The ID of the referenced settings object.
-         */
-        id: string;
+        export interface Month {
+          /**
+           * The day of month, from 1 through 31. For shorter months, the cadence anchors to the month's last day.
+           */
+          day_of_month?: number;
 
-        /**
-         * Returns the Settings Version when the cadence is pinned to a specific version.
-         */
-        version?: string;
+          /**
+           * The month of year, from 1 through 12, from which occurrences are calculated.
+           */
+          month_of_year?: number;
+
+          /**
+           * The time at which the monthly grouping interval begins. Defaults to the time the billing group was created, in UTC.
+           */
+          time: Month.Time;
+        }
+
+        export type Type = 'day' | 'month' | 'week' | 'year' | OtherString;
+
+        export interface Week {
+          /**
+           * The ISO-8601 day of week, from 1 for Monday through 7 for Sunday.
+           */
+          day_of_week?: number;
+
+          /**
+           * The time at which the weekly grouping interval begins.
+           */
+          time: Week.Time;
+        }
+
+        export interface Year {
+          /**
+           * The day of month, from 1 through 31. For shorter months, the cadence anchors to the month's last day.
+           */
+          day_of_month?: number;
+
+          /**
+           * The month of year, from 1 through 12.
+           */
+          month_of_year?: number;
+
+          /**
+           * The time at which the yearly grouping interval begins. Defaults to the time the billing group was created, in UTC.
+           */
+          time: Year.Time;
+        }
+
+        export namespace Day {
+          export interface Time {
+            /**
+             * The hour, from 0 through 23.
+             */
+            hour: number;
+
+            /**
+             * The minute, from 0 through 59.
+             */
+            minute: number;
+
+            /**
+             * The second, from 0 through 59. Defaults to 0.
+             */
+            second?: number;
+          }
+        }
+
+        export namespace Month {
+          export interface Time {
+            /**
+             * The hour, from 0 through 23.
+             */
+            hour: number;
+
+            /**
+             * The minute, from 0 through 59.
+             */
+            minute: number;
+
+            /**
+             * The second, from 0 through 59. Defaults to 0.
+             */
+            second?: number;
+          }
+        }
+
+        export namespace Week {
+          export interface Time {
+            /**
+             * The hour, from 0 through 23.
+             */
+            hour: number;
+
+            /**
+             * The minute, from 0 through 59.
+             */
+            minute: number;
+
+            /**
+             * The second, from 0 through 59. Defaults to 0.
+             */
+            second?: number;
+          }
+        }
+
+        export namespace Year {
+          export interface Time {
+            /**
+             * The hour, from 0 through 23.
+             */
+            hour: number;
+
+            /**
+             * The minute, from 0 through 59.
+             */
+            minute: number;
+
+            /**
+             * The second, from 0 through 59. Defaults to 0.
+             */
+            second?: number;
+          }
+        }
       }
     }
   }
@@ -544,14 +1090,14 @@ export namespace V2 {
       currency: string;
 
       /**
-       * ID of an existing Cadence to use.
+       * ID of an existing Billing Group to use.
        */
-      cadence?: string;
+      billing_group?: string;
 
       /**
-       * Data for creating a new Cadence.
+       * Data for creating a new Billing Group.
        */
-      cadence_data?: IntentCreateParams.CadenceData;
+      billing_group_data?: IntentCreateParams.BillingGroupData;
     }
 
     export namespace IntentCreateParams {
@@ -587,21 +1133,31 @@ export namespace V2 {
         type: Action.Type;
       }
 
-      export interface CadenceData {
+      export interface BillingGroupData {
         /**
-         * The billing cycle configuration for this Cadence.
+         * Billing setting overrides for the group. If omitted, the applicable defaults are used.
          */
-        billing_cycle: CadenceData.BillingCycle;
+        billing_settings?: BillingGroupData.BillingSettings;
 
         /**
-         * Information about the payer for this Cadence.
+         * The ID of the Customer object whose invoices are grouped.
          */
-        payer: CadenceData.Payer;
+        customer: string;
 
         /**
-         * Settings for creating the Cadence.
+         * The ID of the PaymentMethod object used by default. If unset, the customer's default payment method is used.
          */
-        settings?: CadenceData.Settings;
+        default_payment_method?: string;
+
+        /**
+         * The strategy used to group member invoices.
+         */
+        grouping_behavior?: BillingGroupData.GroupingBehavior;
+
+        /**
+         * An internal key you can use to find a particular billing group. Maximum length of 200 characters.
+         */
+        lookup_key?: string;
       }
 
       export namespace Action {
@@ -770,7 +1326,7 @@ export namespace V2 {
 
           export interface InvoiceDiscountRule {
             /**
-             * The entity that the discount rule applies to, for example, the cadence.
+             * The entity that the discount rule applies to, for example, the billing group.
              */
             applies_to: InvoiceDiscountRule.AppliesTo;
 
@@ -822,11 +1378,11 @@ export namespace V2 {
           }
 
           export namespace InvoiceDiscountRule {
-            export type AppliesTo = 'cadence' | OtherString;
+            export type AppliesTo = 'cadence' | 'group' | OtherString;
 
             export interface PercentOff {
               /**
-               * The maximum number of times this discount can be applied for this cadence.
+               * The maximum number of times this discount can be applied for this billing group.
                */
               maximum_applications: PercentOff.MaximumApplications;
 
@@ -1366,280 +1922,552 @@ export namespace V2 {
         }
       }
 
-      export namespace CadenceData {
-        export interface BillingCycle {
+      export namespace BillingGroupData {
+        export interface BillingSettings {
           /**
-           * Specific configuration for determining billing dates when type=day.
+           * How Stripe collects payment.
            */
-          day?: BillingCycle.Day;
+          collection_method?: BillingSettings.CollectionMethod;
 
           /**
-           * The number of intervals (specified in the interval attribute) between
-           * cadence billings. For example, type=month and interval_count=3 bills every
-           * 3 months. If not provided, this defaults to 1.
+           * Email delivery setting.
            */
-          interval_count?: number;
+          email_delivery?: BillingSettings.EmailDelivery;
 
           /**
-           * Specific configuration for determining billing dates when type=month.
+           * Settings for invoice presentation.
            */
-          month?: BillingCycle.Month;
+          invoice_presentation?: BillingSettings.InvoicePresentation;
 
           /**
-           * The frequency at which a cadence bills.
+           * The amount of time until the invoice is overdue for payment.
            */
-          type: BillingCycle.Type;
+          invoice_time_until_due?: BillingSettings.InvoiceTimeUntilDue;
 
           /**
-           * Specific configuration for determining billing dates when type=week.
+           * The ID of the payment method configuration, which controls which payment methods are displayed to your customers.
            */
-          week?: BillingCycle.Week;
+          payment_method_configuration?: string;
 
           /**
-           * Specific configuration for determining billing dates when type=year.
+           * Payment Method specific configuration to be stored on the object.
            */
-          year?: BillingCycle.Year;
+          payment_method_options?: BillingSettings.PaymentMethodOptions;
+
+          /**
+           * Settings for calculating tax.
+           */
+          tax?: BillingSettings.Tax;
         }
 
-        export interface Payer {
+        export interface GroupingBehavior {
           /**
-           * The ID of the Billing Profile object which determines how a bill is paid.
+           * The cadence configuration when type is `by_cadence`.
            */
-          billing_profile?: string;
+          by_cadence?: GroupingBehavior.ByCadence;
 
           /**
-           * Data for creating a new profile.
+           * The grouping strategy.
            */
-          billing_profile_data?: Payer.BillingProfileData;
+          type: GroupingBehavior.Type;
         }
 
-        export interface Settings {
-          /**
-           * Settings that configure bill generation, which includes calculating totals, tax, and presenting invoices.
-           * If no setting is provided here, the settings from the customer referenced on the payer will be used.
-           * If no customer settings are present, the merchant default settings will be used.
-           */
-          bill?: Settings.Bill;
+        export namespace BillingSettings {
+          export type CollectionMethod =
+            | 'charge_automatically'
+            | 'send_invoice';
 
-          /**
-           * Settings that configure and manage the behavior of collecting payments.
-           * If no setting is provided here, the settings from the customer referenced from the payer will be used if they exist.
-           * If no customer settings are present, the merchant default settings will be used.
-           */
-          collection?: Settings.Collection;
-        }
-
-        export namespace BillingCycle {
-          export interface Day {
+          export interface EmailDelivery {
             /**
-             * The time at which the billing cycle ends.
-             * This field is optional, and if not provided, it defaults to
-             * the time at which the cadence was created in UTC timezone.
+             * Controls emails for when the payment is due. Omit to use the applicable default.
              */
-            time?: Day.Time;
+            payment_due?: EmailDelivery.PaymentDue;
           }
 
-          export interface Month {
+          export interface InvoicePresentation {
             /**
-             * The day to anchor the billing on for a type="month" billing cycle from
-             * 1-31. If this number is greater than the number of days in the month being
-             * billed, this anchors to the last day of the month. If not provided,
-             * this defaults to the day the cadence was created.
+             * The ID of the invoice rendering template to be used when generating invoices. Omit to use the applicable default.
              */
-            day_of_month: number;
-
-            /**
-             * The month to anchor the billing on for a type="month" billing cycle from
-             * 1-12. If not provided, this defaults to the month the cadence was created.
-             * This setting can only be used for monthly billing cycles with `interval_count` of 2, 3, 4 or 6.
-             * All occurrences are calculated from the month provided.
-             */
-            month_of_year?: number;
-
-            /**
-             * The time at which the billing cycle ends.
-             * This field is optional, and if not provided, it defaults to
-             * the time at which the cadence was created in UTC timezone.
-             */
-            time?: Month.Time;
+            invoice_rendering_template?: string;
           }
 
-          export type Type = 'day' | 'month' | 'week' | 'year' | OtherString;
-
-          export interface Week {
+          export interface InvoiceTimeUntilDue {
             /**
-             * The day of the week to bill the type=week billing cycle on.
-             * Numbered from 1-7 for Monday to Sunday respectively, based on the ISO-8601
-             * week day numbering. If not provided, this defaults to the day the
-             * cadence was created.
+             * The interval unit for the time until due.
              */
-            day_of_week: number;
+            interval: InvoiceTimeUntilDue.Interval;
 
             /**
-             * The time at which the billing cycle ends.
-             * This field is optional, and if not provided, it defaults to
-             * the time at which the cadence was created in UTC timezone.
+             * The number of interval units. For example, if interval=day and interval_count=30, the invoice is due in 30 days.
              */
-            time?: Week.Time;
+            interval_count: number;
           }
 
-          export interface Year {
+          export interface PaymentMethodOptions {
             /**
-             * The day to anchor the billing on for a type="month" billing cycle from
-             * 1-31. If this number is greater than the number of days in the month being
-             * billed, this anchors to the last day of the month. If not provided,
-             * this defaults to the day the cadence was created.
+             * This sub-hash contains details about the Canadian pre-authorized debit payment method options.
              */
-            day_of_month?: number;
+            acss_debit?: PaymentMethodOptions.AcssDebit;
 
             /**
-             * The month to bill on from 1-12. If not provided, this defaults to the
-             * month the cadence was created.
+             * This sub-hash contains details about the Bancontact payment method.
              */
-            month_of_year?: number;
+            bancontact?: PaymentMethodOptions.Bancontact;
 
             /**
-             * The time at which the billing cycle ends.
-             * This field is optional, and if not provided, it defaults to
-             * the time at which the cadence was created in UTC timezone.
+             * This sub-hash contains details about the Card payment method options.
              */
-            time?: Year.Time;
+            card?: PaymentMethodOptions.Card;
+
+            /**
+             * This sub-hash contains details about the Bank transfer payment method options.
+             */
+            customer_balance?: PaymentMethodOptions.CustomerBalance;
+
+            /**
+             * This sub-hash contains details about the Konbini payment method options.
+             */
+            konbini?: PaymentMethodOptions.Konbini;
+
+            /**
+             * This sub-hash contains details about the SEPA Direct Debit payment method options.
+             */
+            sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+            /**
+             * This sub-hash contains details about the ACH direct debit payment method options.
+             */
+            us_bank_account?: PaymentMethodOptions.UsBankAccount;
           }
 
-          export namespace Day {
-            export interface Time {
+          export interface Tax {
+            /**
+             * Determines if tax is calculated automatically based on a product tax code or manually based on rules defined by the business. Omit to use the applicable default.
+             */
+            type?: Tax.Type;
+          }
+
+          export namespace EmailDelivery {
+            export interface PaymentDue {
               /**
-               * The hour at which the billing cycle ends.
-               * This must be an integer between 0 and 23, inclusive.
-               * 0 represents midnight, and 23 represents 11 PM.
+               * If true an email for the invoice would be generated and sent out.
                */
-              hour: number;
+              enabled?: boolean;
 
               /**
-               * The minute at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
+               * If true the payment link to hosted invoice page would be included in email and PDF of the invoice.
                */
-              minute: number;
-
-              /**
-               * The second at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              second: number;
+              include_payment_link?: boolean;
             }
           }
 
-          export namespace Month {
-            export interface Time {
+          export namespace InvoiceTimeUntilDue {
+            export type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          export namespace PaymentMethodOptions {
+            export interface AcssDebit {
               /**
-               * The hour at which the billing cycle ends.
-               * This must be an integer between 0 and 23, inclusive.
-               * 0 represents midnight, and 23 represents 11 PM.
+               * Additional fields for Mandate creation.
                */
-              hour: number;
+              mandate_options?: AcssDebit.MandateOptions;
 
               /**
-               * The minute at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
+               * Verification method.
                */
-              minute: number;
+              verification_method?: AcssDebit.VerificationMethod;
+            }
+
+            export interface Bancontact {
+              /**
+               * Preferred language of the Bancontact authorization page that the customer is redirected to.
+               */
+              preferred_language?: Bancontact.PreferredLanguage;
+            }
+
+            export interface Card {
+              /**
+               * Configuration options for setting up an eMandate for cards issued in India.
+               */
+              mandate_options?: Card.MandateOptions;
 
               /**
-               * The second at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
+               * Selected network to process the payment on. Depends on the available networks of the card.
                */
-              second: number;
+              network?: string;
+
+              /**
+               * An advanced option 3D Secure. We strongly recommend that you rely on our SCA Engine to automatically prompt your customers
+               * for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication).
+               * However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option.
+               * Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+               */
+              request_three_d_secure?: Card.RequestThreeDSecure;
+            }
+
+            export interface CustomerBalance {
+              /**
+               * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+               */
+              bank_transfer?: CustomerBalance.BankTransfer;
+
+              /**
+               * The funding method type to be used when there are not enough funds in the customer balance. Currently the only supported value is `bank_transfer`.
+               */
+              funding_type?: CustomerBalance.FundingType;
+            }
+
+            export interface Konbini {}
+
+            export interface SepaDebit {}
+
+            export interface UsBankAccount {
+              /**
+               * Additional fields for Financial Connections Session creation.
+               */
+              financial_connections: UsBankAccount.FinancialConnections;
+
+              /**
+               * Verification method.
+               */
+              verification_method: UsBankAccount.VerificationMethod;
+            }
+
+            export namespace AcssDebit {
+              export interface MandateOptions {
+                /**
+                 * Transaction type of the mandate.
+                 */
+                transaction_type?: MandateOptions.TransactionType;
+              }
+
+              export type VerificationMethod =
+                | 'automatic'
+                | 'instant'
+                | 'microdeposits'
+                | OtherString;
+
+              export namespace MandateOptions {
+                export type TransactionType =
+                  | 'business'
+                  | 'personal'
+                  | OtherString;
+              }
+            }
+
+            export namespace Bancontact {
+              export type PreferredLanguage =
+                | 'de'
+                | 'en'
+                | 'fr'
+                | 'nl'
+                | OtherString;
+            }
+
+            export namespace Card {
+              export interface MandateOptions {
+                /**
+                 * Amount to be charged for future payments.
+                 */
+                amount?: bigint;
+
+                /**
+                 * The AmountType for the mandate. One of `fixed` or `maximum`.
+                 */
+                amount_type?: MandateOptions.AmountType;
+
+                /**
+                 * A description of the mandate that is meant to be displayed to the customer.
+                 */
+                description?: string;
+              }
+
+              export type RequestThreeDSecure =
+                | 'any'
+                | 'automatic'
+                | 'challenge'
+                | OtherString;
+
+              export namespace MandateOptions {
+                export type AmountType = 'fixed' | 'maximum' | OtherString;
+              }
+            }
+
+            export namespace CustomerBalance {
+              export interface BankTransfer {
+                /**
+                 * Configuration for `eu_bank_transfer` funding type. Required if `type` is `eu_bank_transfer`.
+                 */
+                eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+                /**
+                 * The bank transfer type that can be used for funding.
+                 */
+                type?: BankTransfer.Type;
+              }
+
+              export type FundingType = 'bank_transfer' | OtherString;
+
+              export namespace BankTransfer {
+                export interface EuBankTransfer {
+                  /**
+                   * The desired country code of the bank account information.
+                   */
+                  country: EuBankTransfer.Country;
+                }
+
+                export type Type =
+                  | 'eu_bank_transfer'
+                  | 'gb_bank_transfer'
+                  | 'jp_bank_transfer'
+                  | 'mx_bank_transfer'
+                  | 'us_bank_transfer'
+                  | OtherString;
+
+                export namespace EuBankTransfer {
+                  export type Country =
+                    | 'BE'
+                    | 'DE'
+                    | 'ES'
+                    | 'FR'
+                    | 'IE'
+                    | 'NL'
+                    | OtherString;
+                }
+              }
+            }
+
+            export namespace UsBankAccount {
+              export interface FinancialConnections {
+                /**
+                 * Provide filters for the linked accounts that the customer can select for the payment method.
+                 */
+                filters?: FinancialConnections.Filters;
+
+                /**
+                 * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included.
+                 */
+                permissions?: Array<FinancialConnections.Permission>;
+
+                /**
+                 * List of data features that you would like to retrieve upon account creation.
+                 */
+                prefetch?: Array<FinancialConnections.Prefetch>;
+              }
+
+              export type VerificationMethod =
+                | 'automatic'
+                | 'instant'
+                | 'microdeposits'
+                | OtherString;
+
+              export namespace FinancialConnections {
+                export interface Filters {
+                  /**
+                   * The account subcategories to use to filter for selectable accounts.
+                   */
+                  account_subcategories?: Array<Filters.AccountSubcategory>;
+                }
+
+                export type Permission =
+                  | 'balances'
+                  | 'ownership'
+                  | 'payment_method'
+                  | 'transactions'
+                  | OtherString;
+
+                export type Prefetch =
+                  | 'balances'
+                  | 'ownership'
+                  | 'transactions'
+                  | OtherString;
+
+                export namespace Filters {
+                  export type AccountSubcategory =
+                    | 'checking'
+                    | 'savings'
+                    | OtherString;
+                }
+              }
             }
           }
 
-          export namespace Week {
-            export interface Time {
-              /**
-               * The hour at which the billing cycle ends.
-               * This must be an integer between 0 and 23, inclusive.
-               * 0 represents midnight, and 23 represents 11 PM.
-               */
-              hour: number;
-
-              /**
-               * The minute at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              minute: number;
-
-              /**
-               * The second at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              second: number;
-            }
-          }
-
-          export namespace Year {
-            export interface Time {
-              /**
-               * The hour at which the billing cycle ends.
-               * This must be an integer between 0 and 23, inclusive.
-               * 0 represents midnight, and 23 represents 11 PM.
-               */
-              hour: number;
-
-              /**
-               * The minute at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              minute: number;
-
-              /**
-               * The second at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              second: number;
-            }
+          export namespace Tax {
+            export type Type = 'automatic' | 'manual' | OtherString;
           }
         }
 
-        export namespace Payer {
-          export interface BillingProfileData {
+        export namespace GroupingBehavior {
+          export interface ByCadence {
             /**
-             * The customer to associate with the profile.
+             * Timestamp that anchors the recurring grouping cadence.
              */
-            customer: string;
+            billing_cycle_anchor?: string;
 
             /**
-             * The default payment method to use when billing this profile.
-             * If left blank, the `PaymentMethod` from the `PaymentIntent` provided
-             * on commit is used to create the profile.
+             * Daily cadence details.
              */
-            default_payment_method?: string;
+            day?: ByCadence.Day;
+
+            /**
+             * The number of interval units between groups. Defaults to 1.
+             */
+            interval_count?: number;
+
+            /**
+             * Monthly cadence details.
+             */
+            month?: ByCadence.Month;
+
+            /**
+             * The interval unit for the cadence.
+             */
+            type: ByCadence.Type;
+
+            /**
+             * Weekly cadence details.
+             */
+            week?: ByCadence.Week;
+
+            /**
+             * Yearly cadence details.
+             */
+            year?: ByCadence.Year;
           }
-        }
 
-        export namespace Settings {
-          export interface Bill {
-            /**
-             * The ID of the referenced settings object.
-             */
-            id: string;
+          export type Type = 'by_cadence' | OtherString;
 
-            /**
-             * An optional field to specify the version of the Settings to use.
-             * If not provided, this defaults to the live version any time the settings are used.
-             */
-            version?: string;
-          }
+          export namespace ByCadence {
+            export interface Day {
+              /**
+               * The time at which the daily grouping interval begins.
+               */
+              time: Day.Time;
+            }
 
-          export interface Collection {
-            /**
-             * The ID of the referenced settings object.
-             */
-            id: string;
+            export interface Month {
+              /**
+               * The day of month, from 1 through 31. For shorter months, the cadence anchors to the month's last day.
+               */
+              day_of_month: number;
 
-            /**
-             * An optional field to specify the version of the Settings to use.
-             * If not provided, this defaults to the live version any time the settings are used.
-             */
-            version?: string;
+              /**
+               * The month of year, from 1 through 12, from which occurrences are calculated. Defaults to the month when the billing group was created.
+               */
+              month_of_year?: number;
+
+              /**
+               * The time at which the monthly grouping interval begins. Defaults to the time the billing group is created, in UTC.
+               */
+              time?: Month.Time;
+            }
+
+            export type Type = 'day' | 'month' | 'week' | 'year' | OtherString;
+
+            export interface Week {
+              /**
+               * The ISO-8601 day of week, from 1 for Monday through 7 for Sunday.
+               */
+              day_of_week: number;
+
+              /**
+               * The time at which the weekly grouping interval begins. Defaults to the time the billing group is created, in UTC.
+               */
+              time?: Week.Time;
+            }
+
+            export interface Year {
+              /**
+               * The day of month, from 1 through 31. For shorter months, the cadence anchors to the month's last day.
+               */
+              day_of_month: number;
+
+              /**
+               * The month of year, from 1 through 12.
+               */
+              month_of_year: number;
+
+              /**
+               * The time at which the yearly grouping interval begins. Defaults to the time the billing group is created, in UTC.
+               */
+              time?: Year.Time;
+            }
+
+            export namespace Day {
+              export interface Time {
+                /**
+                 * The hour, from 0 through 23.
+                 */
+                hour: number;
+
+                /**
+                 * The minute, from 0 through 59.
+                 */
+                minute: number;
+
+                /**
+                 * The second, from 0 through 59.
+                 */
+                second: number;
+              }
+            }
+
+            export namespace Month {
+              export interface Time {
+                /**
+                 * The hour, from 0 through 23.
+                 */
+                hour: number;
+
+                /**
+                 * The minute, from 0 through 59.
+                 */
+                minute: number;
+
+                /**
+                 * The second, from 0 through 59.
+                 */
+                second: number;
+              }
+            }
+
+            export namespace Week {
+              export interface Time {
+                /**
+                 * The hour, from 0 through 23.
+                 */
+                hour: number;
+
+                /**
+                 * The minute, from 0 through 59.
+                 */
+                minute: number;
+
+                /**
+                 * The second, from 0 through 59.
+                 */
+                second: number;
+              }
+            }
+
+            export namespace Year {
+              export interface Time {
+                /**
+                 * The hour, from 0 through 23.
+                 */
+                hour: number;
+
+                /**
+                 * The minute, from 0 through 59.
+                 */
+                minute: number;
+
+                /**
+                 * The second, from 0 through 59.
+                 */
+                second: number;
+              }
+            }
           }
         }
       }

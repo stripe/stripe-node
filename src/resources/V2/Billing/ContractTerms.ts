@@ -14,11 +14,6 @@ export interface ContractTerm {
   object: 'v2.billing.contract_term';
 
   /**
-   * Present when type is ad_hoc_product.
-   */
-  ad_hoc_product?: ContractTerm.AdHocProduct;
-
-  /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
    */
   livemode: boolean;
@@ -44,31 +39,19 @@ export interface ContractTerm {
   recurring_price?: ContractTerm.RecurringPrice;
 
   /**
+   * Present when type is scheduled_fee.
+   */
+  scheduled_fee?: ContractTerm.ScheduledFee;
+
+  /**
    * The type of this term.
    */
   type: ContractTerm.Type;
 }
 export namespace ContractTerm {
-  export interface AdHocProduct {
-    /**
-     * Explicit bill dates and amounts, including billed history.
-     */
-    bill_schedule: AdHocProduct.BillSchedule;
-
-    /**
-     * The V1 Product being billed.
-     */
-    product: string;
-
-    /**
-     * Informational invoice and revenue-recognition period with timestamp objects; does not affect billing or proration.
-     */
-    service_period?: AdHocProduct.ServicePeriod;
-  }
-
   export interface PricingOverride {
     /**
-     * Recurring or ad_hoc_product terms selected by this override. An override without criteria applies to all recurring and ad_hoc_product terms.
+     * Recurring or scheduled_fee terms selected by this override. An override without criteria applies to all recurring and scheduled_fee terms.
      */
     criteria: Array<PricingOverride.Criterion>;
 
@@ -125,13 +108,94 @@ export namespace ContractTerm {
     starts_at: RecurringPrice.StartsAt;
   }
 
+  export interface ScheduledFee {
+    /**
+     * Explicit bill dates and amounts, including billed history.
+     */
+    bill_schedule: ScheduledFee.BillSchedule;
+
+    /**
+     * The V1 Product being billed.
+     */
+    product: string;
+
+    /**
+     * Informational invoice and revenue-recognition period with timestamp objects; does not affect billing or proration.
+     */
+    service_period?: ScheduledFee.ServicePeriod;
+  }
+
   export type Type =
-    | 'ad_hoc_product'
     | 'pricing_override'
     | 'recurring_price'
+    | 'scheduled_fee'
     | OtherString;
 
-  export namespace AdHocProduct {
+  export namespace PricingOverride {
+    export interface Criterion {
+      /**
+       * Resolved IDs of recurring or scheduled_fee terms. Override terms are not valid targets.
+       */
+      terms?: Array<string>;
+
+      /**
+       * Whether to include or exclude the selected recurring or scheduled_fee terms.
+       */
+      type: Criterion.Type;
+    }
+
+    export interface EndsAt {
+      /**
+       * The timestamp when the item ends.
+       */
+      timestamp: string;
+    }
+
+    export interface Multiply {
+      /**
+       * The multiplier, for example 0.85 for a 15% discount.
+       */
+      factor: Decimal;
+    }
+
+    export interface Overwrite {
+      /**
+       * The replacement per-unit amount in minor currency units.
+       */
+      unit_amount_decimal?: Decimal;
+    }
+
+    export interface StartsAt {
+      /**
+       * The timestamp when the item starts.
+       */
+      timestamp: string;
+    }
+
+    export type Type = 'multiply' | 'overwrite' | OtherString;
+
+    export namespace Criterion {
+      export type Type = 'exclude' | 'include' | OtherString;
+    }
+  }
+
+  export namespace RecurringPrice {
+    export interface EndsAt {
+      /**
+       * The timestamp when the item ends.
+       */
+      timestamp: string;
+    }
+
+    export interface StartsAt {
+      /**
+       * The timestamp when the item starts.
+       */
+      timestamp: string;
+    }
+  }
+
+  export namespace ScheduledFee {
     export interface BillSchedule {
       /**
        * Scheduled installments and billed history.
@@ -195,70 +259,6 @@ export namespace ContractTerm {
          */
         timestamp: string;
       }
-    }
-  }
-
-  export namespace PricingOverride {
-    export interface Criterion {
-      /**
-       * Resolved IDs of recurring or ad_hoc_product terms. Override terms are not valid targets.
-       */
-      terms?: Array<string>;
-
-      /**
-       * Whether to include or exclude the selected recurring or ad_hoc_product terms.
-       */
-      type: Criterion.Type;
-    }
-
-    export interface EndsAt {
-      /**
-       * The timestamp when the item ends.
-       */
-      timestamp: string;
-    }
-
-    export interface Multiply {
-      /**
-       * The multiplier, for example 0.85 for a 15% discount.
-       */
-      factor: Decimal;
-    }
-
-    export interface Overwrite {
-      /**
-       * The replacement per-unit amount in minor currency units.
-       */
-      unit_amount_decimal?: Decimal;
-    }
-
-    export interface StartsAt {
-      /**
-       * The timestamp when the item starts.
-       */
-      timestamp: string;
-    }
-
-    export type Type = 'multiply' | 'overwrite' | OtherString;
-
-    export namespace Criterion {
-      export type Type = 'exclude' | 'include' | OtherString;
-    }
-  }
-
-  export namespace RecurringPrice {
-    export interface EndsAt {
-      /**
-       * The timestamp when the item ends.
-       */
-      timestamp: string;
-    }
-
-    export interface StartsAt {
-      /**
-       * The timestamp when the item starts.
-       */
-      timestamp: string;
     }
   }
 }

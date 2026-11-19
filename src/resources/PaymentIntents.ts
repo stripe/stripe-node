@@ -603,6 +603,11 @@ export interface PaymentIntent {
   processing: PaymentIntent.Processing | null;
 
   /**
+   * Options to configure Radar.
+   */
+  radar_options?: PaymentIntent.RadarOptions;
+
+  /**
    * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
    */
   receipt_email: string | null;
@@ -1367,6 +1372,13 @@ export namespace PaymentIntent {
     type: 'card';
   }
 
+  export interface RadarOptions {
+    /**
+     * The value you provided for whether this transaction starts a free trial. This is null if you haven't explicitly set it.
+     */
+    is_free_trial_transaction?: boolean | null;
+  }
+
   export interface Redaction {
     /**
      * Indicates whether this object and its related objects have been redacted or not.
@@ -1701,6 +1713,7 @@ export namespace PaymentIntent {
       | 'forwarding_api_upstream_connection_timeout'
       | 'forwarding_api_upstream_error'
       | 'idempotency_key_in_use'
+      | 'inactive_api_operation_confirmation_required'
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'
@@ -2151,7 +2164,7 @@ export namespace PaymentIntent {
       /**
        * The timestamp when the microdeposits are expected to land. Null for instant microdeposits.
        */
-      arrival_date: number;
+      arrival_date: number | null;
 
       /**
        * The URL for the hosted verification page, which allows customers to verify their bank account.
@@ -5722,6 +5735,11 @@ export namespace PaymentIntent {
       payment_details?: Vipps.PaymentDetails;
 
       /**
+       * Request ability to make [multiple captures](https://docs.stripe.com/payments/multicapture) for this PaymentIntent.
+       */
+      request_multicapture?: Vipps.RequestMulticapture;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -6237,24 +6255,24 @@ export namespace PaymentIntent {
     export namespace CardPresent {
       export interface AadeData {
         /**
-         * The canonical string that was signed by the e-invoicing provider to produce `signed_mark`, formatted per Appendix A of A.1155/2023. Required when `mode` is `standard`.
-         */
-        mark_data?: string;
-
-        /**
-         * The e-invoicing mode under which the mark was generated.
+         * The e-invoicing mode under which the provider signature was generated.
          */
         mode: AadeData.Mode;
 
         /**
-         * The AADE-assigned approval number of the e-invoicing provider that generated the mark. Required when `mode` is `standard`.
+         * The AADE-assigned approval number of the e-invoicing provider that generated the provider signature. Required when `mode` is `standard`.
          */
         provider_id?: number;
 
         /**
          * The cryptographic signature returned by the e-invoicing provider for this transaction, hex-encoded. Required when `mode` is `standard`.
          */
-        signed_mark?: string;
+        provider_signature?: string;
+
+        /**
+         * The canonical string that was signed by the e-invoicing provider to produce `provider_signature`, formatted per Appendix A of A.1155/2023. Required when `mode` is `standard`.
+         */
+        provider_signature_data?: string;
 
         /**
          * The reason for entering autonomous mode. Required when `mode` is `autonomous`.
@@ -6939,6 +6957,8 @@ export namespace PaymentIntent {
         money_services?: PaymentDetails.MoneyServices;
       }
 
+      export type RequestMulticapture = 'if_available' | 'never' | OtherString;
+
       export namespace PaymentDetails {
         export interface MoneyServices {
           account_funding?: MoneyServices.AccountFunding;
@@ -7229,7 +7249,7 @@ export interface PaymentIntentCreateParams {
   statement_descriptor?: string;
 
   /**
-   * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
+   * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement. A suffix longer than 22 characters returns an error. If a valid suffix makes the complete statement descriptor longer than 22 characters, Stripe truncates the descriptor instead of returning an error. Learn how to [fit the suffix in the complete descriptor](https://docs.stripe.com/get-started/account/statement-descriptors#suffix-length).
    */
   statement_descriptor_suffix?: string;
 
@@ -8368,6 +8388,11 @@ export namespace PaymentIntentCreateParams {
   }
 
   export interface RadarOptions {
+    /**
+     * Whether this transaction starts a free trial. Set to `true` for a free trial or `false` otherwise. If omitted, retains the previously set value. If never set, Stripe uses Billing or metadata to determine trial status.
+     */
+    is_free_trial_transaction?: boolean;
+
     /**
      * The referrer URL of the current checkout session. You can use this to supply session-level referrer data when a Radar Session isn't available or doesn't contain a referrer.
      */
@@ -13741,6 +13766,11 @@ export namespace PaymentIntentCreateParams {
       payment_details?: Vipps.PaymentDetails;
 
       /**
+       * Request ability to make [multiple captures](https://docs.stripe.com/payments/multicapture) for this PaymentIntent.
+       */
+      request_multicapture?: Vipps.RequestMulticapture;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -14325,24 +14355,24 @@ export namespace PaymentIntentCreateParams {
     export namespace CardPresent {
       export interface AadeData {
         /**
-         * The canonical string that was signed by the e-invoicing provider to produce `signed_mark`, formatted per Appendix A of A.1155/2023. Required when `mode` is `standard`.
-         */
-        mark_data?: string;
-
-        /**
-         * The e-invoicing mode under which the mark was generated.
+         * The e-invoicing mode under which the provider signature was generated.
          */
         mode: AadeData.Mode;
 
         /**
-         * The AADE-assigned approval number of the e-invoicing provider that generated the mark. Required when `mode` is `standard`.
+         * The AADE-assigned approval number of the e-invoicing provider that generated the provider signature. Required when `mode` is `standard`.
          */
         provider_id?: number;
 
         /**
          * The cryptographic signature returned by the e-invoicing provider for this transaction, hex-encoded. Required when `mode` is `standard`.
          */
-        signed_mark?: string;
+        provider_signature?: string;
+
+        /**
+         * The canonical string that was signed by the e-invoicing provider to produce `provider_signature`, formatted per Appendix A of A.1155/2023. Required when `mode` is `standard`.
+         */
+        provider_signature_data?: string;
 
         /**
          * The reason for entering autonomous mode. Required when `mode` is `autonomous`.
@@ -16406,6 +16436,8 @@ export namespace PaymentIntentCreateParams {
         money_services?: PaymentDetails.MoneyServices;
       }
 
+      export type RequestMulticapture = 'if_available' | 'never' | OtherString;
+
       export namespace PaymentDetails {
         export interface MoneyServices {
           /**
@@ -16619,7 +16651,7 @@ export interface PaymentIntentUpdateParams {
   statement_descriptor?: string;
 
   /**
-   * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
+   * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement. A suffix longer than 22 characters returns an error. If a valid suffix makes the complete statement descriptor longer than 22 characters, Stripe truncates the descriptor instead of returning an error. Learn how to [fit the suffix in the complete descriptor](https://docs.stripe.com/get-started/account/statement-descriptors#suffix-length).
    */
   statement_descriptor_suffix?: string;
 
@@ -23049,6 +23081,11 @@ export namespace PaymentIntentUpdateParams {
       payment_details?: Vipps.PaymentDetails;
 
       /**
+       * Request ability to make [multiple captures](https://docs.stripe.com/payments/multicapture) for this PaymentIntent.
+       */
+      request_multicapture?: Vipps.RequestMulticapture;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -23633,24 +23670,24 @@ export namespace PaymentIntentUpdateParams {
     export namespace CardPresent {
       export interface AadeData {
         /**
-         * The canonical string that was signed by the e-invoicing provider to produce `signed_mark`, formatted per Appendix A of A.1155/2023. Required when `mode` is `standard`.
-         */
-        mark_data?: string;
-
-        /**
-         * The e-invoicing mode under which the mark was generated.
+         * The e-invoicing mode under which the provider signature was generated.
          */
         mode: AadeData.Mode;
 
         /**
-         * The AADE-assigned approval number of the e-invoicing provider that generated the mark. Required when `mode` is `standard`.
+         * The AADE-assigned approval number of the e-invoicing provider that generated the provider signature. Required when `mode` is `standard`.
          */
         provider_id?: number;
 
         /**
          * The cryptographic signature returned by the e-invoicing provider for this transaction, hex-encoded. Required when `mode` is `standard`.
          */
-        signed_mark?: string;
+        provider_signature?: string;
+
+        /**
+         * The canonical string that was signed by the e-invoicing provider to produce `provider_signature`, formatted per Appendix A of A.1155/2023. Required when `mode` is `standard`.
+         */
+        provider_signature_data?: string;
 
         /**
          * The reason for entering autonomous mode. Required when `mode` is `autonomous`.
@@ -25713,6 +25750,8 @@ export namespace PaymentIntentUpdateParams {
          */
         money_services?: PaymentDetails.MoneyServices;
       }
+
+      export type RequestMulticapture = 'if_available' | 'never' | OtherString;
 
       export namespace PaymentDetails {
         export interface MoneyServices {
@@ -30042,6 +30081,11 @@ export namespace PaymentIntentConfirmParams {
   }
 
   export interface RadarOptions {
+    /**
+     * Whether this transaction starts a free trial. Set to `true` for a free trial or `false` otherwise. If omitted, retains the previously set value. If never set, Stripe uses Billing or metadata to determine trial status.
+     */
+    is_free_trial_transaction?: boolean;
+
     /**
      * The referrer URL of the current checkout session. You can use this to supply session-level referrer data when a Radar Session isn't available or doesn't contain a referrer.
      */
@@ -35373,6 +35417,11 @@ export namespace PaymentIntentConfirmParams {
       payment_details?: Vipps.PaymentDetails;
 
       /**
+       * Request ability to make [multiple captures](https://docs.stripe.com/payments/multicapture) for this PaymentIntent.
+       */
+      request_multicapture?: Vipps.RequestMulticapture;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -35957,24 +36006,24 @@ export namespace PaymentIntentConfirmParams {
     export namespace CardPresent {
       export interface AadeData {
         /**
-         * The canonical string that was signed by the e-invoicing provider to produce `signed_mark`, formatted per Appendix A of A.1155/2023. Required when `mode` is `standard`.
-         */
-        mark_data?: string;
-
-        /**
-         * The e-invoicing mode under which the mark was generated.
+         * The e-invoicing mode under which the provider signature was generated.
          */
         mode: AadeData.Mode;
 
         /**
-         * The AADE-assigned approval number of the e-invoicing provider that generated the mark. Required when `mode` is `standard`.
+         * The AADE-assigned approval number of the e-invoicing provider that generated the provider signature. Required when `mode` is `standard`.
          */
         provider_id?: number;
 
         /**
          * The cryptographic signature returned by the e-invoicing provider for this transaction, hex-encoded. Required when `mode` is `standard`.
          */
-        signed_mark?: string;
+        provider_signature?: string;
+
+        /**
+         * The canonical string that was signed by the e-invoicing provider to produce `provider_signature`, formatted per Appendix A of A.1155/2023. Required when `mode` is `standard`.
+         */
+        provider_signature_data?: string;
 
         /**
          * The reason for entering autonomous mode. Required when `mode` is `autonomous`.
@@ -38038,6 +38087,8 @@ export namespace PaymentIntentConfirmParams {
         money_services?: PaymentDetails.MoneyServices;
       }
 
+      export type RequestMulticapture = 'if_available' | 'never' | OtherString;
+
       export namespace PaymentDetails {
         export interface MoneyServices {
           /**
@@ -39945,6 +39996,7 @@ export namespace PaymentIntentUpdateCryptoRefundAddressParams {
     | 'solana'
     | 'sui'
     | 'tempo'
+    | 'tron'
     | OtherString;
 }
 export interface PaymentIntentVerifyMicrodepositsParams {

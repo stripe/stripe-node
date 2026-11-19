@@ -127,8 +127,6 @@ export namespace FxQuote {
 
     /**
      * The transaction type for which the FX Quote will be used.
-     *
-     * Can be 'payment' or 'transfer'.
      */
     type: Usage.Type;
   }
@@ -238,8 +236,6 @@ export namespace FxQuoteCreateParams {
 
     /**
      * Which transaction the FX Quote will be used for
-     *
-     * Can be “payment” | “transfer”
      */
     type: Usage.Type;
   }

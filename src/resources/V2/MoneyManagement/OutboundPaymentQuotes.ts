@@ -247,6 +247,7 @@ export namespace OutboundPaymentQuote {
         | 'sepa'
         | 'sepa_instant'
         | 'swift'
+        | 'tips'
         | OtherString;
 
       export interface NetworkOptions {
@@ -325,6 +326,7 @@ export namespace OutboundPaymentQuote {
           | 'sepa_credit'
           | 'sepa_instant'
           | 'swift'
+          | 'tips'
           | OtherString;
 
         export namespace PreferredNetworkOptions {
@@ -483,6 +485,7 @@ export namespace V2 {
               | 'sepa_credit'
               | 'sepa_instant'
               | 'swift'
+              | 'tips'
               | OtherString;
 
             export namespace PreferredNetworkOptions {

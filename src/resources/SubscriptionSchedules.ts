@@ -2188,6 +2188,11 @@ export namespace SubscriptionScheduleCreateParams {
        * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
        */
       issuer?: InvoiceSettings.Issuer;
+
+      /**
+       * Settings that control how invoices render in customer-facing interfaces such as the PDF or hosted invoice page.
+       */
+      rendering?: Emptyable<InvoiceSettings.Rendering>;
     }
 
     export type PhaseEffectiveAt =
@@ -2248,6 +2253,18 @@ export namespace SubscriptionScheduleCreateParams {
          * Type of the account referenced in the request.
          */
         type: Issuer.Type;
+      }
+
+      export interface Rendering {
+        /**
+         * ID of the invoice rendering template to use for future invoices.
+         */
+        template?: string;
+
+        /**
+         * The specific version of invoice rendering template to use for future invoices. If set to null, the latest version of the template will be used.
+         */
+        template_version?: Emptyable<number>;
       }
 
       export namespace Issuer {
@@ -3662,6 +3679,11 @@ export namespace SubscriptionScheduleUpdateParams {
        * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
        */
       issuer?: InvoiceSettings.Issuer;
+
+      /**
+       * Settings that control how invoices render in customer-facing interfaces such as the PDF or hosted invoice page.
+       */
+      rendering?: Emptyable<InvoiceSettings.Rendering>;
     }
 
     export type PhaseEffectiveAt =
@@ -3722,6 +3744,18 @@ export namespace SubscriptionScheduleUpdateParams {
          * Type of the account referenced in the request.
          */
         type: Issuer.Type;
+      }
+
+      export interface Rendering {
+        /**
+         * ID of the invoice rendering template to use for future invoices.
+         */
+        template?: string;
+
+        /**
+         * The specific version of invoice rendering template to use for future invoices. If set to null, the latest version of the template will be used.
+         */
+        template_version?: Emptyable<number>;
       }
 
       export namespace Issuer {

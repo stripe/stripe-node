@@ -487,6 +487,7 @@ export namespace PayoutIntent {
         | 'sepa'
         | 'sepa_instant'
         | 'swift'
+        | 'tips'
         | OtherString;
 
       export interface NetworkOptions {
@@ -712,6 +713,7 @@ export namespace PayoutIntent {
           | 'sepa_credit'
           | 'sepa_instant'
           | 'swift'
+          | 'tips'
           | OtherString;
 
         export namespace PreferredNetworkOptions {
@@ -919,6 +921,7 @@ export namespace V2 {
               | 'sepa_credit'
               | 'sepa_instant'
               | 'swift'
+              | 'tips'
               | OtherString;
 
             export namespace PreferredNetworkOptions {
@@ -1104,6 +1107,7 @@ export namespace V2 {
               | 'sepa_credit'
               | 'sepa_instant'
               | 'swift'
+              | 'tips'
               | OtherString;
 
             export namespace PreferredNetworkOptions {

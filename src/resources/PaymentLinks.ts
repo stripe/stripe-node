@@ -1006,6 +1006,7 @@ export namespace PaymentLink {
 
     export type Provider =
       | 'daikin'
+      | 'dealerfx'
       | 'interpayments'
       | 'proserv'
       | 'yeeld'
@@ -2054,7 +2055,7 @@ export namespace PaymentLinkCreateParams {
     /**
      * Controls when the funds will be captured from the customer's account.
      */
-    capture_method?: PaymentIntentData.CaptureMethod;
+    capture_method?: Emptyable<PaymentIntentData.CaptureMethod>;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -3425,6 +3426,11 @@ export namespace PaymentLinkUpdateParams {
 
   export interface PaymentIntentData {
     /**
+     * Controls when the funds will be captured from the customer's account.
+     */
+    capture_method?: Emptyable<PaymentIntentData.CaptureMethod>;
+
+    /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
     description?: Emptyable<string>;
@@ -3928,6 +3934,12 @@ export namespace PaymentLinkUpdateParams {
   }
 
   export namespace PaymentIntentData {
+    export type CaptureMethod =
+      | 'automatic'
+      | 'automatic_async'
+      | 'manual'
+      | OtherString;
+
     export type SetupFutureUsage = 'off_session' | 'on_session' | OtherString;
   }
 

@@ -426,6 +426,11 @@ export namespace FinancialAccount {
     deposit_insurance_eligibility?: Array<Storage.DepositInsuranceEligibility>;
 
     /**
+     * How funds in this FinancialAccount are held. Defaults to `for_benefit_of` if not specified.
+     */
+    funds_holding_structure?: Storage.FundsHoldingStructure;
+
+    /**
      * The usage type for funds in this FinancialAccount. Can be used to specify that the funds are for Consumer activity.
      */
     funds_usage_type?: Storage.FundsUsageType;
@@ -645,6 +650,11 @@ export namespace FinancialAccount {
       type: DepositInsuranceEligibility.Type;
     }
 
+    export type FundsHoldingStructure =
+      | 'demand_deposit_account'
+      | 'for_benefit_of'
+      | OtherString;
+
     export type FundsUsageType = 'business' | 'consumer' | OtherString;
 
     export namespace Crypto {
@@ -706,6 +716,11 @@ export namespace V2 {
         crypto?: Storage.Crypto;
 
         /**
+         * How funds in this FinancialAccount are held. Defaults to `for_benefit_of` if not specified.
+         */
+        funds_holding_structure?: Storage.FundsHoldingStructure;
+
+        /**
          * The usage type for funds in this FinancialAccount. Defaults to BUSINESS if not specified.
          */
         funds_usage_type?: Storage.FundsUsageType;
@@ -731,6 +746,11 @@ export namespace V2 {
            */
           custody_model: Crypto.CustodyModel;
         }
+
+        export type FundsHoldingStructure =
+          | 'demand_deposit_account'
+          | 'for_benefit_of'
+          | OtherString;
 
         export type FundsUsageType = 'business' | 'consumer' | OtherString;
 
@@ -852,7 +872,7 @@ export namespace V2 {
       include?: Array<FinancialAccountListParams.Include>;
 
       /**
-       * The page limit.
+       * Maximum number of results to return. Default: 10. Valid range: 1-20.
        */
       limit?: number;
 

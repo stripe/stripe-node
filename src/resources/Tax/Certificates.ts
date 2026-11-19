@@ -11,7 +11,7 @@ import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 
 export class CertificateResource extends StripeResource {
   /**
-   * Delete a tax certificate associated with a tax exemption.
+   * Deletes a Tax Certificate without deleting its uploaded file. You can reuse the file to create another certificate, and you can still retrieve the deleted certificate.
    */
   del(
     id: string,
@@ -26,7 +26,7 @@ export class CertificateResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieve a tax certificate associated with a tax exemption.
+   * Retrieves a Tax Certificate. Deleted certificates remain retrievable with all their fields and deleted set to true.
    */
   retrieve(
     id: string,
@@ -41,7 +41,7 @@ export class CertificateResource extends StripeResource {
     ) as any;
   }
   /**
-   * List certificates for an existing tax exemption.
+   * Lists a tax exemption's certificates, ordered from newest to oldest. The list excludes deleted certificates.
    */
   list(
     params: Tax.CertificateListParams,
@@ -52,7 +52,7 @@ export class CertificateResource extends StripeResource {
     }) as any;
   }
   /**
-   * Create a tax certificate associated with a tax exemption.
+   * Creates a Tax Certificate associated with a tax exemption. Before creating the certificate, [upload a file](https://docs.stripe.com/api/files/create) with purpose tax_certificate.
    */
   create(
     params: Tax.CertificateCreateParams,
@@ -83,12 +83,12 @@ export interface Certificate {
   created: number;
 
   /**
-   * Whether the certificate has been deleted.
+   * If `true`, the certificate has been deleted. If `false`, it hasn't been deleted.
    */
   deleted: boolean;
 
   /**
-   * The uploaded certificate file.
+   * The ID of the uploaded certificate [file](https://docs.stripe.com/api/files/object).
    */
   file: string | File;
 
@@ -98,7 +98,7 @@ export interface Certificate {
   livemode: boolean;
 
   /**
-   * The tax exemption associated with this certificate.
+   * The ID of the [customer tax exemption](https://docs.stripe.com/api/tax/exemptions/object) associated with this certificate.
    */
   tax_exemption:
     | string
@@ -125,12 +125,12 @@ export interface DeletedCertificate {
 export namespace Tax {
   export interface CertificateCreateParams {
     /**
-     * The ID of a file uploaded with purpose `tax_certificate`.
+     * The ID of a [file](https://docs.stripe.com/api/files/object) uploaded with purpose `tax_certificate`. The file must belong to the same account and mode as the tax exemption. You can't use a deleted file or a file attached to another certificate that hasn't been deleted.
      */
     file: string;
 
     /**
-     * The ID of an existing tax exemption.
+     * The ID of an existing [customer tax exemption](https://docs.stripe.com/api/tax/exemptions/object) that hasn't been deleted.
      */
     tax_exemption: string;
 
@@ -151,7 +151,7 @@ export namespace Tax {
 export namespace Tax {
   export interface CertificateListParams extends PaginationParams {
     /**
-     * The ID of an existing tax exemption.
+     * The ID of the [customer tax exemption](https://docs.stripe.com/api/tax/exemptions/object) whose certificates to list. The tax exemption must not be deleted.
      */
     tax_exemption: string;
 

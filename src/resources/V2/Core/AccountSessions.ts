@@ -1177,7 +1177,7 @@ export namespace AccountSession {
     export namespace NotificationBanner {
       export interface Scopes {
         /**
-         * Whether to disable Stripe user authentication in the enabled components.
+         * Whether to disable Stripe user authentication in this component.
          */
         disable_stripe_user_authentication: Scopes.DisableStripeUserAuthentication;
 
