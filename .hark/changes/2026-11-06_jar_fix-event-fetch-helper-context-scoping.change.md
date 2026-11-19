@@ -2,6 +2,7 @@
 title: Fix Stripe-Context and Stripe-Account for event notification fetch helpers
 pr_url: https://github.com/stripe/stripe-node/pull/2924
 semver_level: patch
+released_in_version: 23.2.0
 ---
 
 - Updates `fetchEvent` to call `withStripeContext` before issuing API call to fetch the event.
