@@ -3,6 +3,7 @@ title: Update generated code
 pr_url: https://github.com/stripe/stripe-node/pull/2920
 semver_level: major
 is_stripe_api_change: true
+released_in_version: 23.3.0-beta.1
 ---
 
 * ⚠️ Remove support for resource `V2.Billing.Cadence`
