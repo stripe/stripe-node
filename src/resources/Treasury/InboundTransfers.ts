@@ -176,6 +176,11 @@ export namespace InboundTransfer {
      * Reason for the failure.
      */
     code: FailureDetails.Code;
+
+    /**
+     * Money movement network-specific details regarding the failure.
+     */
+    network_details: FailureDetails.NetworkDetails | null;
   }
 
   export interface LinkedFlows {
@@ -236,6 +241,27 @@ export namespace InboundTransfer {
       | 'no_account'
       | 'other'
       | OtherString;
+
+    export interface NetworkDetails {
+      /**
+       * ACH return details.
+       */
+      ach: NetworkDetails.Ach | null;
+    }
+
+    export namespace NetworkDetails {
+      export interface Ach {
+        /**
+         * NACHA ACH return code.
+         */
+        return_code: string | null;
+
+        /**
+         * NACHA ACH return reason.
+         */
+        return_reason: string | null;
+      }
+    }
   }
 
   export namespace OriginPaymentMethodDetails {

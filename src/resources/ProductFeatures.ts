@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import * as Entitlements from './Entitlements/index.js';
-import {RequestOptions} from '../lib.js';
 export interface ProductFeature {
   /**
    * Unique identifier for the object.

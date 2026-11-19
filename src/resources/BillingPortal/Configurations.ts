@@ -630,7 +630,7 @@ export namespace BillingPortal {
         products?: Emptyable<Array<SubscriptionUpdate.Product>>;
 
         /**
-         * Determines how to handle prorations resulting from subscription updates. Valid values are `none`, `create_prorations`, and `always_invoice`.
+         * Determines how to handle prorations resulting from subscription updates. Valid values are `none`, `create_prorations`, and `always_invoice`. Defaults to `none`.
          */
         proration_behavior?: SubscriptionUpdate.ProrationBehavior;
 
@@ -1017,7 +1017,7 @@ export namespace BillingPortal {
         products?: Emptyable<Array<SubscriptionUpdate.Product>>;
 
         /**
-         * Determines how to handle prorations resulting from subscription updates. Valid values are `none`, `create_prorations`, and `always_invoice`.
+         * Determines how to handle prorations resulting from subscription updates. Valid values are `none`, `create_prorations`, and `always_invoice`. If omitted, the proration behavior is unchanged.
          */
         proration_behavior?: SubscriptionUpdate.ProrationBehavior;
 

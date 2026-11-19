@@ -566,6 +566,11 @@ export type Event =
   | V2CoreAccountPersonCreatedEvent
   | V2CoreAccountPersonDeletedEvent
   | V2CoreAccountPersonUpdatedEvent
+  | V2CoreClaimableSandboxClaimedEvent
+  | V2CoreClaimableSandboxCreatedEvent
+  | V2CoreClaimableSandboxExpiredEvent
+  | V2CoreClaimableSandboxExpiringEvent
+  | V2CoreClaimableSandboxUpdatedEvent
   | V2CoreEventDestinationPingEvent
   | V2MoneyManagementAdjustmentCreatedEvent
   | V2MoneyManagementFinancialAccountCreatedEvent
@@ -894,6 +899,11 @@ export type EventNotification =
   | V2CoreAccountPersonCreatedEventNotification
   | V2CoreAccountPersonDeletedEventNotification
   | V2CoreAccountPersonUpdatedEventNotification
+  | V2CoreClaimableSandboxClaimedEventNotification
+  | V2CoreClaimableSandboxCreatedEventNotification
+  | V2CoreClaimableSandboxExpiredEventNotification
+  | V2CoreClaimableSandboxExpiringEventNotification
+  | V2CoreClaimableSandboxUpdatedEventNotification
   | V2CoreEventDestinationPingEventNotification
   | V2MoneyManagementAdjustmentCreatedEventNotification
   | V2MoneyManagementFinancialAccountCreatedEventNotification
@@ -6617,7 +6627,7 @@ export interface V2CommerceProductCatalogImportsSucceededWithErrorsEventNotifica
 }
 
 /**
- * This event occurs when an account is closed.
+ * Occurs when an Account is closed.
  */
 export interface V2CoreAccountClosedEvent extends EventBase {
   type: 'v2.core.account.closed';
@@ -6781,6 +6791,7 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'au_becs_debit_payments'
       | 'bacs_debit_payments'
       | 'bancontact_payments'
+      | 'billie_payments'
       | 'blik_payments'
       | 'blik_recurring_payments'
       | 'boleto_payments'
@@ -6799,16 +6810,20 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'konbini_payments'
       | 'kr_card_payments'
       | 'link_payments'
+      | 'mb_way_payments'
       | 'mobilepay_payments'
       | 'multibanco_payments'
       | 'mx_bank_transfer_payments'
       | 'naver_pay_payments'
+      | 'nz_bank_account_becs_debit_payments'
       | 'oxxo_payments'
       | 'p24_payments'
       | 'payco_payments'
       | 'paynow_payments'
       | 'stripe_balance.payouts'
+      | 'paypay_payments'
       | 'pay_by_bank_payments'
+      | 'pix_payments'
       | 'promptpay_payments'
       | 'revolut_pay_payments'
       | 'samsung_pay_payments'
@@ -6923,7 +6938,7 @@ export interface V2CoreAccountIncludingConfigurationRecipientUpdatedEventNotific
 }
 
 /**
- * This event occurs when account defaults are created or updated.
+ * Occurs when an Account's defaults are created or updated.
  */
 export interface V2CoreAccountIncludingDefaultsUpdatedEvent extends EventBase {
   type: 'v2.core.account[defaults].updated';
@@ -7138,6 +7153,106 @@ export namespace V2CoreAccountPersonUpdatedEvent {
      */
     account_id: string;
   }
+}
+
+/**
+ * Occurs when a claimable sandbox is claimed.
+ */
+export interface V2CoreClaimableSandboxClaimedEvent extends EventBase {
+  type: 'v2.core.claimable_sandbox.claimed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ClaimableSandbox>;
+}
+export interface V2CoreClaimableSandboxClaimedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.claimable_sandbox.claimed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ClaimableSandbox>;
+  fetchEvent(): Promise<V2CoreClaimableSandboxClaimedEvent>;
+}
+
+/**
+ * Occurs when a claimable sandbox is created.
+ */
+export interface V2CoreClaimableSandboxCreatedEvent extends EventBase {
+  type: 'v2.core.claimable_sandbox.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ClaimableSandbox>;
+}
+export interface V2CoreClaimableSandboxCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.claimable_sandbox.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ClaimableSandbox>;
+  fetchEvent(): Promise<V2CoreClaimableSandboxCreatedEvent>;
+}
+
+/**
+ * Occurs when a claimable sandbox expires.
+ */
+export interface V2CoreClaimableSandboxExpiredEvent extends EventBase {
+  type: 'v2.core.claimable_sandbox.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ClaimableSandbox>;
+}
+export interface V2CoreClaimableSandboxExpiredEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.claimable_sandbox.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ClaimableSandbox>;
+  fetchEvent(): Promise<V2CoreClaimableSandboxExpiredEvent>;
+}
+
+/**
+ * Occurs when a claimable sandbox is expiring in 7 days.
+ */
+export interface V2CoreClaimableSandboxExpiringEvent extends EventBase {
+  type: 'v2.core.claimable_sandbox.expiring';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ClaimableSandbox>;
+}
+export interface V2CoreClaimableSandboxExpiringEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.claimable_sandbox.expiring';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ClaimableSandbox>;
+  fetchEvent(): Promise<V2CoreClaimableSandboxExpiringEvent>;
+}
+
+/**
+ * Occurs when a claimable sandbox object is updated.
+ */
+export interface V2CoreClaimableSandboxUpdatedEvent extends EventBase {
+  type: 'v2.core.claimable_sandbox.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ClaimableSandbox>;
+}
+export interface V2CoreClaimableSandboxUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.claimable_sandbox.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ClaimableSandbox>;
+  fetchEvent(): Promise<V2CoreClaimableSandboxUpdatedEvent>;
 }
 
 /**
@@ -8228,6 +8343,11 @@ export declare namespace Events {
     V2CoreAccountPersonCreatedEvent,
     V2CoreAccountPersonDeletedEvent,
     V2CoreAccountPersonUpdatedEvent,
+    V2CoreClaimableSandboxClaimedEvent,
+    V2CoreClaimableSandboxCreatedEvent,
+    V2CoreClaimableSandboxExpiredEvent,
+    V2CoreClaimableSandboxExpiringEvent,
+    V2CoreClaimableSandboxUpdatedEvent,
     V2CoreEventDestinationPingEvent,
     V2MoneyManagementAdjustmentCreatedEvent,
     V2MoneyManagementFinancialAccountCreatedEvent,
@@ -8554,6 +8674,11 @@ export declare namespace Events {
     V2CoreAccountPersonCreatedEventNotification,
     V2CoreAccountPersonDeletedEventNotification,
     V2CoreAccountPersonUpdatedEventNotification,
+    V2CoreClaimableSandboxClaimedEventNotification,
+    V2CoreClaimableSandboxCreatedEventNotification,
+    V2CoreClaimableSandboxExpiredEventNotification,
+    V2CoreClaimableSandboxExpiringEventNotification,
+    V2CoreClaimableSandboxUpdatedEventNotification,
     V2CoreEventDestinationPingEventNotification,
     V2MoneyManagementAdjustmentCreatedEventNotification,
     V2MoneyManagementFinancialAccountCreatedEventNotification,

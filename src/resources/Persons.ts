@@ -2,7 +2,6 @@
 
 import {File} from './Files.js';
 import {Address, Metadata, OtherString} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface Person {
   /**
    * Unique identifier for the object.

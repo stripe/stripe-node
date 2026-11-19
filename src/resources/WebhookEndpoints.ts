@@ -607,7 +607,8 @@ export namespace WebhookEndpointCreateParams {
     | '2026-07-29.dahlia'
     | '2026-08-26.dahlia'
     | '2026-09-30.endive'
-    | '2026-10-28.endive';
+    | '2026-10-28.endive'
+    | '2026-11-18.endive';
 }
 export interface WebhookEndpointRetrieveParams {
   /**

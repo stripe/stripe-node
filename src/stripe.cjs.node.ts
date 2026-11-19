@@ -1602,6 +1602,27 @@ declare namespace StripeConstructor {
           export type SamsungPay = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.SamsungPay;
           export type Type = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Type;
           export type VisaCheckout = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.VisaCheckout;
+          export namespace Link {
+            export type FundingSource = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource;
+            export namespace FundingSource {
+              export type Card = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource.Card;
+              export type Type = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource.Type;
+              export namespace Card {
+                export type Checks = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource.Card.Checks;
+                export type NetworkToken = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource.Card.NetworkToken;
+                export type RegulatedStatus = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource.Card.RegulatedStatus;
+                export type ThreeDSecure = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource.Card.ThreeDSecure;
+                export namespace ThreeDSecure {
+                  export type AuthenticationFlow = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource.Card.ThreeDSecure.AuthenticationFlow;
+                  export type ElectronicCommerceIndicator = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource.Card.ThreeDSecure.ElectronicCommerceIndicator;
+                  export type ExemptionIndicator = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource.Card.ThreeDSecure.ExemptionIndicator;
+                  export type Result = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource.Card.ThreeDSecure.Result;
+                  export type ResultReason = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource.Card.ThreeDSecure.ResultReason;
+                  export type Version = Stripe_.Charge.PaymentMethodDetails.Card.Wallet.Link.FundingSource.Card.ThreeDSecure.Version;
+                }
+              }
+            }
+          }
         }
       }
       export namespace CardPresent {
@@ -1652,6 +1673,27 @@ declare namespace StripeConstructor {
       }
       export namespace KrCard {
         export type Brand = Stripe_.Charge.PaymentMethodDetails.KrCard.Brand;
+      }
+      export namespace Link {
+        export type FundingSource = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource;
+        export namespace FundingSource {
+          export type Card = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource.Card;
+          export type Type = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource.Type;
+          export namespace Card {
+            export type Checks = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource.Card.Checks;
+            export type NetworkToken = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource.Card.NetworkToken;
+            export type RegulatedStatus = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource.Card.RegulatedStatus;
+            export type ThreeDSecure = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource.Card.ThreeDSecure;
+            export namespace ThreeDSecure {
+              export type AuthenticationFlow = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource.Card.ThreeDSecure.AuthenticationFlow;
+              export type ElectronicCommerceIndicator = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource.Card.ThreeDSecure.ElectronicCommerceIndicator;
+              export type ExemptionIndicator = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource.Card.ThreeDSecure.ExemptionIndicator;
+              export type Result = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource.Card.ThreeDSecure.Result;
+              export type ResultReason = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource.Card.ThreeDSecure.ResultReason;
+              export type Version = Stripe_.Charge.PaymentMethodDetails.Link.FundingSource.Card.ThreeDSecure.Version;
+            }
+          }
+        }
       }
       export namespace Mobilepay {
         export type Card = Stripe_.Charge.PaymentMethodDetails.Mobilepay.Card;
@@ -3322,6 +3364,80 @@ declare namespace StripeConstructor {
         export type Type = Stripe_.PaymentIntentCreateParams.MandateData.CustomerAcceptance.Type;
       }
     }
+    export namespace PaymentDetails {
+      export type CarRentalDatum = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum;
+      export type LodgingDatum = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum;
+      export namespace CarRentalDatum {
+        export type Affiliate = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Affiliate;
+        export type Distance = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Distance;
+        export type Driver = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Driver;
+        export type DropOff = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.DropOff;
+        export type Insurance = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Insurance;
+        export type Pickup = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Pickup;
+        export type Total = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Total;
+        export type Vehicle = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Vehicle;
+        export namespace Distance {
+          export type Unit = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Distance.Unit;
+        }
+        export namespace Driver {
+          export type DateOfBirth = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Driver.DateOfBirth;
+        }
+        export namespace DropOff {
+          export type Address = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.DropOff.Address;
+        }
+        export namespace Insurance {
+          export type InsuranceType = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Insurance.InsuranceType;
+        }
+        export namespace Pickup {
+          export type Address = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Pickup.Address;
+        }
+        export namespace Total {
+          export type Discounts = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Total.Discounts;
+          export type ExtraCharge = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Total.ExtraCharge;
+          export type RateUnit = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Total.RateUnit;
+          export type Tax = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Total.Tax;
+          export namespace ExtraCharge {
+            export type Type = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Total.ExtraCharge.Type;
+          }
+          export namespace Tax {
+            export type TaxItem = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Total.Tax.TaxItem;
+          }
+        }
+        export namespace Vehicle {
+          export type Type = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Vehicle.Type;
+          export type VehicleClass = Stripe_.PaymentIntentCreateParams.PaymentDetails.CarRentalDatum.Vehicle.VehicleClass;
+        }
+      }
+      export namespace LodgingDatum {
+        export type Accommodation = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Accommodation;
+        export type Affiliate = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Affiliate;
+        export type Guest = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Guest;
+        export type Host = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Host;
+        export type Insurance = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Insurance;
+        export type Total = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Total;
+        export namespace Accommodation {
+          export type AccommodationType = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Accommodation.AccommodationType;
+        }
+        export namespace Host {
+          export type Address = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Host.Address;
+          export type HostType = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Host.HostType;
+        }
+        export namespace Insurance {
+          export type InsuranceType = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Insurance.InsuranceType;
+        }
+        export namespace Total {
+          export type Discounts = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Total.Discounts;
+          export type ExtraCharge = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Total.ExtraCharge;
+          export type Tax = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Total.Tax;
+          export namespace ExtraCharge {
+            export type Type = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Total.ExtraCharge.Type;
+          }
+          export namespace Tax {
+            export type TaxItem = Stripe_.PaymentIntentCreateParams.PaymentDetails.LodgingDatum.Total.Tax.TaxItem;
+          }
+        }
+      }
+    }
     export namespace PaymentMethodData {
       export type AcssDebit = Stripe_.PaymentIntentCreateParams.PaymentMethodData.AcssDebit;
       export type Affirm = Stripe_.PaymentIntentCreateParams.PaymentMethodData.Affirm;
@@ -3711,6 +3827,80 @@ declare namespace StripeConstructor {
         export type Tax = Stripe_.PaymentIntentUpdateParams.Hooks.Inputs.Tax;
       }
     }
+    export namespace PaymentDetails {
+      export type CarRentalDatum = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum;
+      export type LodgingDatum = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum;
+      export namespace CarRentalDatum {
+        export type Affiliate = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Affiliate;
+        export type Distance = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Distance;
+        export type Driver = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Driver;
+        export type DropOff = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.DropOff;
+        export type Insurance = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Insurance;
+        export type Pickup = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Pickup;
+        export type Total = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Total;
+        export type Vehicle = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Vehicle;
+        export namespace Distance {
+          export type Unit = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Distance.Unit;
+        }
+        export namespace Driver {
+          export type DateOfBirth = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Driver.DateOfBirth;
+        }
+        export namespace DropOff {
+          export type Address = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.DropOff.Address;
+        }
+        export namespace Insurance {
+          export type InsuranceType = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Insurance.InsuranceType;
+        }
+        export namespace Pickup {
+          export type Address = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Pickup.Address;
+        }
+        export namespace Total {
+          export type Discounts = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Total.Discounts;
+          export type ExtraCharge = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Total.ExtraCharge;
+          export type RateUnit = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Total.RateUnit;
+          export type Tax = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Total.Tax;
+          export namespace ExtraCharge {
+            export type Type = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Total.ExtraCharge.Type;
+          }
+          export namespace Tax {
+            export type TaxItem = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Total.Tax.TaxItem;
+          }
+        }
+        export namespace Vehicle {
+          export type Type = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Vehicle.Type;
+          export type VehicleClass = Stripe_.PaymentIntentUpdateParams.PaymentDetails.CarRentalDatum.Vehicle.VehicleClass;
+        }
+      }
+      export namespace LodgingDatum {
+        export type Accommodation = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Accommodation;
+        export type Affiliate = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Affiliate;
+        export type Guest = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Guest;
+        export type Host = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Host;
+        export type Insurance = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Insurance;
+        export type Total = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Total;
+        export namespace Accommodation {
+          export type AccommodationType = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Accommodation.AccommodationType;
+        }
+        export namespace Host {
+          export type Address = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Host.Address;
+          export type HostType = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Host.HostType;
+        }
+        export namespace Insurance {
+          export type InsuranceType = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Insurance.InsuranceType;
+        }
+        export namespace Total {
+          export type Discounts = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Total.Discounts;
+          export type ExtraCharge = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Total.ExtraCharge;
+          export type Tax = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Total.Tax;
+          export namespace ExtraCharge {
+            export type Type = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Total.ExtraCharge.Type;
+          }
+          export namespace Tax {
+            export type TaxItem = Stripe_.PaymentIntentUpdateParams.PaymentDetails.LodgingDatum.Total.Tax.TaxItem;
+          }
+        }
+      }
+    }
     export namespace PaymentMethodData {
       export type AcssDebit = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.AcssDebit;
       export type Affirm = Stripe_.PaymentIntentUpdateParams.PaymentMethodData.Affirm;
@@ -4096,6 +4286,80 @@ declare namespace StripeConstructor {
         export type Tax = Stripe_.PaymentIntentCaptureParams.Hooks.Inputs.Tax;
       }
     }
+    export namespace PaymentDetails {
+      export type CarRentalDatum = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum;
+      export type LodgingDatum = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum;
+      export namespace CarRentalDatum {
+        export type Affiliate = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Affiliate;
+        export type Distance = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Distance;
+        export type Driver = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Driver;
+        export type DropOff = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.DropOff;
+        export type Insurance = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Insurance;
+        export type Pickup = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Pickup;
+        export type Total = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Total;
+        export type Vehicle = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Vehicle;
+        export namespace Distance {
+          export type Unit = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Distance.Unit;
+        }
+        export namespace Driver {
+          export type DateOfBirth = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Driver.DateOfBirth;
+        }
+        export namespace DropOff {
+          export type Address = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.DropOff.Address;
+        }
+        export namespace Insurance {
+          export type InsuranceType = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Insurance.InsuranceType;
+        }
+        export namespace Pickup {
+          export type Address = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Pickup.Address;
+        }
+        export namespace Total {
+          export type Discounts = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Total.Discounts;
+          export type ExtraCharge = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Total.ExtraCharge;
+          export type RateUnit = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Total.RateUnit;
+          export type Tax = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Total.Tax;
+          export namespace ExtraCharge {
+            export type Type = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Total.ExtraCharge.Type;
+          }
+          export namespace Tax {
+            export type TaxItem = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Total.Tax.TaxItem;
+          }
+        }
+        export namespace Vehicle {
+          export type Type = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Vehicle.Type;
+          export type VehicleClass = Stripe_.PaymentIntentCaptureParams.PaymentDetails.CarRentalDatum.Vehicle.VehicleClass;
+        }
+      }
+      export namespace LodgingDatum {
+        export type Accommodation = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Accommodation;
+        export type Affiliate = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Affiliate;
+        export type Guest = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Guest;
+        export type Host = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Host;
+        export type Insurance = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Insurance;
+        export type Total = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Total;
+        export namespace Accommodation {
+          export type AccommodationType = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Accommodation.AccommodationType;
+        }
+        export namespace Host {
+          export type Address = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Host.Address;
+          export type HostType = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Host.HostType;
+        }
+        export namespace Insurance {
+          export type InsuranceType = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Insurance.InsuranceType;
+        }
+        export namespace Total {
+          export type Discounts = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Total.Discounts;
+          export type ExtraCharge = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Total.ExtraCharge;
+          export type Tax = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Total.Tax;
+          export namespace ExtraCharge {
+            export type Type = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Total.ExtraCharge.Type;
+          }
+          export namespace Tax {
+            export type TaxItem = Stripe_.PaymentIntentCaptureParams.PaymentDetails.LodgingDatum.Total.Tax.TaxItem;
+          }
+        }
+      }
+    }
   }
   export namespace PaymentIntentConfirmParams {
     export type AllowedPaymentMethodType = Stripe_.PaymentIntentConfirmParams.AllowedPaymentMethodType;
@@ -4141,6 +4405,80 @@ declare namespace StripeConstructor {
         export type Offline = Stripe_.PaymentIntentConfirmParams.MandateData.CustomerAcceptance.Offline;
         export type Online = Stripe_.PaymentIntentConfirmParams.MandateData.CustomerAcceptance.Online;
         export type Type = Stripe_.PaymentIntentConfirmParams.MandateData.CustomerAcceptance.Type;
+      }
+    }
+    export namespace PaymentDetails {
+      export type CarRentalDatum = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum;
+      export type LodgingDatum = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum;
+      export namespace CarRentalDatum {
+        export type Affiliate = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Affiliate;
+        export type Distance = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Distance;
+        export type Driver = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Driver;
+        export type DropOff = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.DropOff;
+        export type Insurance = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Insurance;
+        export type Pickup = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Pickup;
+        export type Total = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Total;
+        export type Vehicle = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Vehicle;
+        export namespace Distance {
+          export type Unit = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Distance.Unit;
+        }
+        export namespace Driver {
+          export type DateOfBirth = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Driver.DateOfBirth;
+        }
+        export namespace DropOff {
+          export type Address = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.DropOff.Address;
+        }
+        export namespace Insurance {
+          export type InsuranceType = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Insurance.InsuranceType;
+        }
+        export namespace Pickup {
+          export type Address = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Pickup.Address;
+        }
+        export namespace Total {
+          export type Discounts = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Total.Discounts;
+          export type ExtraCharge = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Total.ExtraCharge;
+          export type RateUnit = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Total.RateUnit;
+          export type Tax = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Total.Tax;
+          export namespace ExtraCharge {
+            export type Type = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Total.ExtraCharge.Type;
+          }
+          export namespace Tax {
+            export type TaxItem = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Total.Tax.TaxItem;
+          }
+        }
+        export namespace Vehicle {
+          export type Type = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Vehicle.Type;
+          export type VehicleClass = Stripe_.PaymentIntentConfirmParams.PaymentDetails.CarRentalDatum.Vehicle.VehicleClass;
+        }
+      }
+      export namespace LodgingDatum {
+        export type Accommodation = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Accommodation;
+        export type Affiliate = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Affiliate;
+        export type Guest = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Guest;
+        export type Host = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Host;
+        export type Insurance = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Insurance;
+        export type Total = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Total;
+        export namespace Accommodation {
+          export type AccommodationType = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Accommodation.AccommodationType;
+        }
+        export namespace Host {
+          export type Address = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Host.Address;
+          export type HostType = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Host.HostType;
+        }
+        export namespace Insurance {
+          export type InsuranceType = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Insurance.InsuranceType;
+        }
+        export namespace Total {
+          export type Discounts = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Total.Discounts;
+          export type ExtraCharge = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Total.ExtraCharge;
+          export type Tax = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Total.Tax;
+          export namespace ExtraCharge {
+            export type Type = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Total.ExtraCharge.Type;
+          }
+          export namespace Tax {
+            export type TaxItem = Stripe_.PaymentIntentConfirmParams.PaymentDetails.LodgingDatum.Total.Tax.TaxItem;
+          }
+        }
       }
     }
     export namespace PaymentMethodData {
@@ -4624,6 +4962,73 @@ declare namespace StripeConstructor {
         export type MicrodepositType = Stripe_.PaymentIntent.NextAction.VerifyWithMicrodeposits.MicrodepositType;
       }
     }
+    export namespace PaymentDetails {
+      export type CarRentalDatum = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum;
+      export type LodgingDatum = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum;
+      export namespace CarRentalDatum {
+        export type Affiliate = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Affiliate;
+        export type Distance = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Distance;
+        export type Driver = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Driver;
+        export type DropOff = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.DropOff;
+        export type Insurance = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Insurance;
+        export type Pickup = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Pickup;
+        export type Total = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Total;
+        export type Vehicle = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Vehicle;
+        export namespace Distance {
+          export type Unit = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Distance.Unit;
+        }
+        export namespace Driver {
+          export type DateOfBirth = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Driver.DateOfBirth;
+        }
+        export namespace Insurance {
+          export type InsuranceType = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Insurance.InsuranceType;
+        }
+        export namespace Total {
+          export type Discounts = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Total.Discounts;
+          export type ExtraCharge = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Total.ExtraCharge;
+          export type RateUnit = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Total.RateUnit;
+          export type Tax = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Total.Tax;
+          export namespace ExtraCharge {
+            export type Type = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Total.ExtraCharge.Type;
+          }
+          export namespace Tax {
+            export type TaxItem = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Total.Tax.TaxItem;
+          }
+        }
+        export namespace Vehicle {
+          export type Type = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Vehicle.Type;
+          export type VehicleClass = Stripe_.PaymentIntent.PaymentDetails.CarRentalDatum.Vehicle.VehicleClass;
+        }
+      }
+      export namespace LodgingDatum {
+        export type Accommodation = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Accommodation;
+        export type Affiliate = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Affiliate;
+        export type Guest = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Guest;
+        export type Host = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Host;
+        export type Insurance = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Insurance;
+        export type Total = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Total;
+        export namespace Accommodation {
+          export type AccommodationType = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Accommodation.AccommodationType;
+        }
+        export namespace Host {
+          export type HostType = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Host.HostType;
+        }
+        export namespace Insurance {
+          export type InsuranceType = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Insurance.InsuranceType;
+        }
+        export namespace Total {
+          export type Discounts = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Total.Discounts;
+          export type ExtraCharge = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Total.ExtraCharge;
+          export type Tax = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Total.Tax;
+          export namespace ExtraCharge {
+            export type Type = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Total.ExtraCharge.Type;
+          }
+          export namespace Tax {
+            export type TaxItem = Stripe_.PaymentIntent.PaymentDetails.LodgingDatum.Total.Tax.TaxItem;
+          }
+        }
+      }
+    }
     export namespace PaymentMethodOptions {
       export type AcssDebit = Stripe_.PaymentIntent.PaymentMethodOptions.AcssDebit;
       export type Affirm = Stripe_.PaymentIntent.PaymentMethodOptions.Affirm;
@@ -5083,6 +5488,7 @@ declare namespace StripeConstructor {
       export type AdjustableQuantity = Stripe_.PaymentLinkUpdateParams.OptionalItem.AdjustableQuantity;
     }
     export namespace PaymentIntentData {
+      export type CaptureMethod = Stripe_.PaymentLinkUpdateParams.PaymentIntentData.CaptureMethod;
       export type SetupFutureUsage = Stripe_.PaymentLinkUpdateParams.PaymentIntentData.SetupFutureUsage;
     }
     export namespace PaymentMethodOptions {
@@ -7490,6 +7896,7 @@ declare namespace StripeConstructor {
       export type Alma = Stripe_.Refund.DestinationDetails.Alma;
       export type AmazonPay = Stripe_.Refund.DestinationDetails.AmazonPay;
       export type AuBankTransfer = Stripe_.Refund.DestinationDetails.AuBankTransfer;
+      export type Bizum = Stripe_.Refund.DestinationDetails.Bizum;
       export type Blik = Stripe_.Refund.DestinationDetails.Blik;
       export type BrBankTransfer = Stripe_.Refund.DestinationDetails.BrBankTransfer;
       export type Card = Stripe_.Refund.DestinationDetails.Card;
@@ -7517,6 +7924,7 @@ declare namespace StripeConstructor {
       export type Swish = Stripe_.Refund.DestinationDetails.Swish;
       export type ThBankTransfer = Stripe_.Refund.DestinationDetails.ThBankTransfer;
       export type Twint = Stripe_.Refund.DestinationDetails.Twint;
+      export type Upi = Stripe_.Refund.DestinationDetails.Upi;
       export type UsBankTransfer = Stripe_.Refund.DestinationDetails.UsBankTransfer;
       export type WechatPay = Stripe_.Refund.DestinationDetails.WechatPay;
       export type Zip = Stripe_.Refund.DestinationDetails.Zip;
@@ -10331,6 +10739,7 @@ declare namespace StripeConstructor {
         export type Recovery = Stripe_.Checkout.SessionCreateParams.AfterExpiration.Recovery;
       }
       export namespace AutomaticTax {
+        export type AddressCollectionPrecision = Stripe_.Checkout.SessionCreateParams.AutomaticTax.AddressCollectionPrecision;
         export type Liability = Stripe_.Checkout.SessionCreateParams.AutomaticTax.Liability;
         export namespace Liability {
           export type Type = Stripe_.Checkout.SessionCreateParams.AutomaticTax.Liability.Type;
@@ -10727,6 +11136,7 @@ declare namespace StripeConstructor {
         export type Recovery = Stripe_.Checkout.Session.AfterExpiration.Recovery;
       }
       export namespace AutomaticTax {
+        export type AddressCollectionPrecision = Stripe_.Checkout.Session.AutomaticTax.AddressCollectionPrecision;
         export type Liability = Stripe_.Checkout.Session.AutomaticTax.Liability;
         export type Status = Stripe_.Checkout.Session.AutomaticTax.Status;
         export namespace Liability {
@@ -12264,8 +12674,12 @@ declare namespace StripeConstructor {
           }
         }
         export namespace Es {
+          export type Igic = Stripe_.Tax.RegistrationCreateParams.CountryOptions.Es.Igic;
           export type Standard = Stripe_.Tax.RegistrationCreateParams.CountryOptions.Es.Standard;
           export type Type = Stripe_.Tax.RegistrationCreateParams.CountryOptions.Es.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.RegistrationCreateParams.CountryOptions.Es.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.RegistrationCreateParams.CountryOptions.Es.Standard.PlaceOfSupplyScheme;
           }
@@ -12714,8 +13128,12 @@ declare namespace StripeConstructor {
           }
         }
         export namespace Es {
+          export type Igic = Stripe_.Tax.Registration.CountryOptions.Es.Igic;
           export type Standard = Stripe_.Tax.Registration.CountryOptions.Es.Standard;
           export type Type = Stripe_.Tax.Registration.CountryOptions.Es.Type;
+          export namespace Igic {
+            export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Es.Igic.PlaceOfSupplyScheme;
+          }
           export namespace Standard {
             export type PlaceOfSupplyScheme = Stripe_.Tax.Registration.CountryOptions.Es.Standard.PlaceOfSupplyScheme;
           }
@@ -13477,6 +13895,10 @@ declare namespace StripeConstructor {
       export type StatusTransitions = Stripe_.Treasury.InboundTransfer.StatusTransitions;
       export namespace FailureDetails {
         export type Code = Stripe_.Treasury.InboundTransfer.FailureDetails.Code;
+        export type NetworkDetails = Stripe_.Treasury.InboundTransfer.FailureDetails.NetworkDetails;
+        export namespace NetworkDetails {
+          export type Ach = Stripe_.Treasury.InboundTransfer.FailureDetails.NetworkDetails.Ach;
+        }
       }
       export namespace OriginPaymentMethodDetails {
         export type BillingDetails = Stripe_.Treasury.InboundTransfer.OriginPaymentMethodDetails.BillingDetails;
@@ -13527,6 +13949,10 @@ declare namespace StripeConstructor {
       }
       export namespace ReturnedDetails {
         export type Code = Stripe_.Treasury.OutboundPayment.ReturnedDetails.Code;
+        export type NetworkDetails = Stripe_.Treasury.OutboundPayment.ReturnedDetails.NetworkDetails;
+        export namespace NetworkDetails {
+          export type Ach = Stripe_.Treasury.OutboundPayment.ReturnedDetails.NetworkDetails.Ach;
+        }
       }
       export namespace TrackingDetails {
         export type Ach = Stripe_.Treasury.OutboundPayment.TrackingDetails.Ach;
@@ -13563,6 +13989,10 @@ declare namespace StripeConstructor {
       }
       export namespace ReturnedDetails {
         export type Code = Stripe_.Treasury.OutboundTransfer.ReturnedDetails.Code;
+        export type NetworkDetails = Stripe_.Treasury.OutboundTransfer.ReturnedDetails.NetworkDetails;
+        export namespace NetworkDetails {
+          export type Ach = Stripe_.Treasury.OutboundTransfer.ReturnedDetails.NetworkDetails.Ach;
+        }
       }
       export namespace TrackingDetails {
         export type Ach = Stripe_.Treasury.OutboundTransfer.TrackingDetails.Ach;
@@ -13771,6 +14201,11 @@ declare namespace StripeConstructor {
       export type AccountTokenCreateParams = Stripe_.V2.Core.AccountTokenCreateParams;
       export type AccountTokenRetrieveParams = Stripe_.V2.Core.AccountTokenRetrieveParams;
       export type AccountTokenResource = Stripe_.V2.Core.AccountTokenResource;
+      export type ClaimableSandbox = Stripe_.V2.Core.ClaimableSandbox;
+      export type ClaimableSandboxCreateParams = Stripe_.V2.Core.ClaimableSandboxCreateParams;
+      export type ClaimableSandboxRetrieveParams = Stripe_.V2.Core.ClaimableSandboxRetrieveParams;
+      export type ClaimableSandboxRenewOnboardingLinkParams = Stripe_.V2.Core.ClaimableSandboxRenewOnboardingLinkParams;
+      export type ClaimableSandboxResource = Stripe_.V2.Core.ClaimableSandboxResource;
       export type Event = Stripe_.V2.Core.Event;
       export type EventBase = Stripe_.V2.Core.EventBase;
       export type EventNotification = Stripe_.V2.Core.EventNotification;
@@ -13830,6 +14265,7 @@ declare namespace StripeConstructor {
             export type Capabilities = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities;
             export type CardPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.CardPayments;
             export type KonbiniPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.KonbiniPayments;
+            export type PaypayPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.PaypayPayments;
             export type ScriptStatementDescriptor = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.ScriptStatementDescriptor;
             export type SepaDebitPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.SepaDebitPayments;
             export type StatementDescriptor = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.StatementDescriptor;
@@ -13844,6 +14280,7 @@ declare namespace StripeConstructor {
               export type AuBecsDebitPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.AuBecsDebitPayments;
               export type BacsDebitPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.BacsDebitPayments;
               export type BancontactPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.BancontactPayments;
+              export type BilliePayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.BilliePayments;
               export type BlikPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.BlikPayments;
               export type BlikRecurringPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.BlikRecurringPayments;
               export type BoletoPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.BoletoPayments;
@@ -13862,15 +14299,19 @@ declare namespace StripeConstructor {
               export type KonbiniPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.KonbiniPayments;
               export type KrCardPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.KrCardPayments;
               export type LinkPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.LinkPayments;
+              export type MbWayPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.MbWayPayments;
               export type MobilepayPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.MobilepayPayments;
               export type MultibancoPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.MultibancoPayments;
               export type MxBankTransferPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.MxBankTransferPayments;
               export type NaverPayPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.NaverPayPayments;
+              export type NzBankAccountBecsDebitPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.NzBankAccountBecsDebitPayments;
               export type OxxoPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.OxxoPayments;
               export type P24Payments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.P24Payments;
               export type PayByBankPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.PayByBankPayments;
               export type PaycoPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.PaycoPayments;
               export type PaynowPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.PaynowPayments;
+              export type PaypayPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.PaypayPayments;
+              export type PixPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.PixPayments;
               export type PromptpayPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.PromptpayPayments;
               export type RevolutPayPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.RevolutPayPayments;
               export type SamsungPayPayments = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.Capabilities.SamsungPayPayments;
@@ -13891,6 +14332,16 @@ declare namespace StripeConstructor {
               export type Support = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.KonbiniPayments.Support;
               export namespace Support {
                 export type Hours = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.KonbiniPayments.Support.Hours;
+              }
+            }
+            export namespace PaypayPayments {
+              export type GoodsType = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.PaypayPayments.GoodsType;
+              export type Site = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.PaypayPayments.Site;
+              export namespace Site {
+                export type Accessible = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.PaypayPayments.Site.Accessible;
+                export type InDevelopment = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.PaypayPayments.Site.InDevelopment;
+                export type Restricted = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.PaypayPayments.Site.Restricted;
+                export type Type = Stripe_.V2.Core.AccountCreateParams.Configuration.Merchant.PaypayPayments.Site.Type;
               }
             }
             export namespace ScriptStatementDescriptor {
@@ -14126,6 +14577,7 @@ declare namespace StripeConstructor {
             export type Capabilities = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities;
             export type CardPayments = Stripe_.V2.Core.Account.Configuration.Merchant.CardPayments;
             export type KonbiniPayments = Stripe_.V2.Core.Account.Configuration.Merchant.KonbiniPayments;
+            export type PaypayPayments = Stripe_.V2.Core.Account.Configuration.Merchant.PaypayPayments;
             export type ScriptStatementDescriptor = Stripe_.V2.Core.Account.Configuration.Merchant.ScriptStatementDescriptor;
             export type SepaDebitPayments = Stripe_.V2.Core.Account.Configuration.Merchant.SepaDebitPayments;
             export type StatementDescriptor = Stripe_.V2.Core.Account.Configuration.Merchant.StatementDescriptor;
@@ -14140,6 +14592,7 @@ declare namespace StripeConstructor {
               export type AuBecsDebitPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.AuBecsDebitPayments;
               export type BacsDebitPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.BacsDebitPayments;
               export type BancontactPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.BancontactPayments;
+              export type BilliePayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.BilliePayments;
               export type BlikPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.BlikPayments;
               export type BlikRecurringPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.BlikRecurringPayments;
               export type BoletoPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.BoletoPayments;
@@ -14158,15 +14611,19 @@ declare namespace StripeConstructor {
               export type KonbiniPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.KonbiniPayments;
               export type KrCardPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.KrCardPayments;
               export type LinkPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.LinkPayments;
+              export type MbWayPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.MbWayPayments;
               export type MobilepayPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.MobilepayPayments;
               export type MultibancoPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.MultibancoPayments;
               export type MxBankTransferPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.MxBankTransferPayments;
               export type NaverPayPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.NaverPayPayments;
+              export type NzBankAccountBecsDebitPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.NzBankAccountBecsDebitPayments;
               export type OxxoPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.OxxoPayments;
               export type P24Payments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.P24Payments;
               export type PayByBankPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PayByBankPayments;
               export type PaycoPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PaycoPayments;
               export type PaynowPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PaynowPayments;
+              export type PaypayPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PaypayPayments;
+              export type PixPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PixPayments;
               export type PromptpayPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PromptpayPayments;
               export type RevolutPayPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.RevolutPayPayments;
               export type SamsungPayPayments = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.SamsungPayPayments;
@@ -14250,6 +14707,14 @@ declare namespace StripeConstructor {
                 export namespace StatusDetail {
                   export type Code = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.BancontactPayments.StatusDetail.Code;
                   export type Resolution = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.BancontactPayments.StatusDetail.Resolution;
+                }
+              }
+              export namespace BilliePayments {
+                export type Status = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.BilliePayments.Status;
+                export type StatusDetail = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.BilliePayments.StatusDetail;
+                export namespace StatusDetail {
+                  export type Code = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.BilliePayments.StatusDetail.Code;
+                  export type Resolution = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.BilliePayments.StatusDetail.Resolution;
                 }
               }
               export namespace BlikPayments {
@@ -14396,6 +14861,14 @@ declare namespace StripeConstructor {
                   export type Resolution = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.LinkPayments.StatusDetail.Resolution;
                 }
               }
+              export namespace MbWayPayments {
+                export type Status = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.MbWayPayments.Status;
+                export type StatusDetail = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.MbWayPayments.StatusDetail;
+                export namespace StatusDetail {
+                  export type Code = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.MbWayPayments.StatusDetail.Code;
+                  export type Resolution = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.MbWayPayments.StatusDetail.Resolution;
+                }
+              }
               export namespace MobilepayPayments {
                 export type Status = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.MobilepayPayments.Status;
                 export type StatusDetail = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.MobilepayPayments.StatusDetail;
@@ -14426,6 +14899,14 @@ declare namespace StripeConstructor {
                 export namespace StatusDetail {
                   export type Code = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.NaverPayPayments.StatusDetail.Code;
                   export type Resolution = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.NaverPayPayments.StatusDetail.Resolution;
+                }
+              }
+              export namespace NzBankAccountBecsDebitPayments {
+                export type Status = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.NzBankAccountBecsDebitPayments.Status;
+                export type StatusDetail = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.NzBankAccountBecsDebitPayments.StatusDetail;
+                export namespace StatusDetail {
+                  export type Code = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.NzBankAccountBecsDebitPayments.StatusDetail.Code;
+                  export type Resolution = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.NzBankAccountBecsDebitPayments.StatusDetail.Resolution;
                 }
               }
               export namespace OxxoPayments {
@@ -14466,6 +14947,22 @@ declare namespace StripeConstructor {
                 export namespace StatusDetail {
                   export type Code = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PaynowPayments.StatusDetail.Code;
                   export type Resolution = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PaynowPayments.StatusDetail.Resolution;
+                }
+              }
+              export namespace PaypayPayments {
+                export type Status = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PaypayPayments.Status;
+                export type StatusDetail = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PaypayPayments.StatusDetail;
+                export namespace StatusDetail {
+                  export type Code = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PaypayPayments.StatusDetail.Code;
+                  export type Resolution = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PaypayPayments.StatusDetail.Resolution;
+                }
+              }
+              export namespace PixPayments {
+                export type Status = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PixPayments.Status;
+                export type StatusDetail = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PixPayments.StatusDetail;
+                export namespace StatusDetail {
+                  export type Code = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PixPayments.StatusDetail.Code;
+                  export type Resolution = Stripe_.V2.Core.Account.Configuration.Merchant.Capabilities.PixPayments.StatusDetail.Resolution;
                 }
               }
               export namespace PromptpayPayments {
@@ -14583,6 +15080,16 @@ declare namespace StripeConstructor {
               export type Support = Stripe_.V2.Core.Account.Configuration.Merchant.KonbiniPayments.Support;
               export namespace Support {
                 export type Hours = Stripe_.V2.Core.Account.Configuration.Merchant.KonbiniPayments.Support.Hours;
+              }
+            }
+            export namespace PaypayPayments {
+              export type GoodsType = Stripe_.V2.Core.Account.Configuration.Merchant.PaypayPayments.GoodsType;
+              export type Site = Stripe_.V2.Core.Account.Configuration.Merchant.PaypayPayments.Site;
+              export namespace Site {
+                export type Accessible = Stripe_.V2.Core.Account.Configuration.Merchant.PaypayPayments.Site.Accessible;
+                export type InDevelopment = Stripe_.V2.Core.Account.Configuration.Merchant.PaypayPayments.Site.InDevelopment;
+                export type Restricted = Stripe_.V2.Core.Account.Configuration.Merchant.PaypayPayments.Site.Restricted;
+                export type Type = Stripe_.V2.Core.Account.Configuration.Merchant.PaypayPayments.Site.Type;
               }
             }
             export namespace ScriptStatementDescriptor {
@@ -14986,6 +15493,7 @@ declare namespace StripeConstructor {
       export namespace AccountLinkCreateParams {
         export type UseCase = Stripe_.V2.Core.AccountLinkCreateParams.UseCase;
         export namespace UseCase {
+          export type AccountDashboard = Stripe_.V2.Core.AccountLinkCreateParams.UseCase.AccountDashboard;
           export type AccountOnboarding = Stripe_.V2.Core.AccountLinkCreateParams.UseCase.AccountOnboarding;
           export type AccountUpdate = Stripe_.V2.Core.AccountLinkCreateParams.UseCase.AccountUpdate;
           export type Type = Stripe_.V2.Core.AccountLinkCreateParams.UseCase.Type;
@@ -15008,6 +15516,7 @@ declare namespace StripeConstructor {
       export namespace AccountLink {
         export type UseCase = Stripe_.V2.Core.AccountLink.UseCase;
         export namespace UseCase {
+          export type AccountDashboard = Stripe_.V2.Core.AccountLink.UseCase.AccountDashboard;
           export type AccountOnboarding = Stripe_.V2.Core.AccountLink.UseCase.AccountOnboarding;
           export type AccountUpdate = Stripe_.V2.Core.AccountLink.UseCase.AccountUpdate;
           export type Type = Stripe_.V2.Core.AccountLink.UseCase.Type;
@@ -15167,6 +15676,45 @@ declare namespace StripeConstructor {
             export namespace ScriptNames {
               export type Kana = Stripe_.V2.Core.AccountTokenCreateParams.Identity.Individual.ScriptNames.Kana;
               export type Kanji = Stripe_.V2.Core.AccountTokenCreateParams.Identity.Individual.ScriptNames.Kanji;
+            }
+          }
+        }
+      }
+      export namespace ClaimableSandboxCreateParams {
+        export type OnboardingLinkDetails = Stripe_.V2.Core.ClaimableSandboxCreateParams.OnboardingLinkDetails;
+        export type Prefill = Stripe_.V2.Core.ClaimableSandboxCreateParams.Prefill;
+        export type Channel = Stripe_.V2.Core.ClaimableSandboxCreateParams.Channel;
+      }
+      export namespace ClaimableSandbox {
+        export type Channel = Stripe_.V2.Core.ClaimableSandbox.Channel;
+        export type OnboardingLinkDetails = Stripe_.V2.Core.ClaimableSandbox.OnboardingLinkDetails;
+        export type OwnerDetails = Stripe_.V2.Core.ClaimableSandbox.OwnerDetails;
+        export type Prefill = Stripe_.V2.Core.ClaimableSandbox.Prefill;
+        export type SandboxDetails = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails;
+        export type Status = Stripe_.V2.Core.ClaimableSandbox.Status;
+        export namespace OwnerDetails {
+          export type AppInstallStatus = Stripe_.V2.Core.ClaimableSandbox.OwnerDetails.AppInstallStatus;
+        }
+        export namespace SandboxDetails {
+          export type ApiKeys = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys;
+          export namespace ApiKeys {
+            export type Mcp = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys.Mcp;
+            export type Publishable = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys.Publishable;
+            export type Secret = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys.Secret;
+            export namespace Mcp {
+              export type SecretKey = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys.Mcp.SecretKey;
+              export type Status = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys.Mcp.Status;
+              export type Type = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys.Mcp.Type;
+            }
+            export namespace Publishable {
+              export type PublishableKey = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys.Publishable.PublishableKey;
+              export type Status = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys.Publishable.Status;
+              export type Type = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys.Publishable.Type;
+            }
+            export namespace Secret {
+              export type SecretKey = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys.Secret.SecretKey;
+              export type Status = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys.Secret.Status;
+              export type Type = Stripe_.V2.Core.ClaimableSandbox.SandboxDetails.ApiKeys.Secret.Type;
             }
           }
         }
@@ -16373,6 +16921,16 @@ declare namespace StripeConstructor {
     export type V2CoreAccountPersonDeletedEventNotification = Stripe_.V2.Core.Events.V2CoreAccountPersonDeletedEventNotification;
     export type V2CoreAccountPersonUpdatedEvent = Stripe_.V2.Core.Events.V2CoreAccountPersonUpdatedEvent;
     export type V2CoreAccountPersonUpdatedEventNotification = Stripe_.V2.Core.Events.V2CoreAccountPersonUpdatedEventNotification;
+    export type V2CoreClaimableSandboxClaimedEvent = Stripe_.V2.Core.Events.V2CoreClaimableSandboxClaimedEvent;
+    export type V2CoreClaimableSandboxClaimedEventNotification = Stripe_.V2.Core.Events.V2CoreClaimableSandboxClaimedEventNotification;
+    export type V2CoreClaimableSandboxCreatedEvent = Stripe_.V2.Core.Events.V2CoreClaimableSandboxCreatedEvent;
+    export type V2CoreClaimableSandboxCreatedEventNotification = Stripe_.V2.Core.Events.V2CoreClaimableSandboxCreatedEventNotification;
+    export type V2CoreClaimableSandboxExpiredEvent = Stripe_.V2.Core.Events.V2CoreClaimableSandboxExpiredEvent;
+    export type V2CoreClaimableSandboxExpiredEventNotification = Stripe_.V2.Core.Events.V2CoreClaimableSandboxExpiredEventNotification;
+    export type V2CoreClaimableSandboxExpiringEvent = Stripe_.V2.Core.Events.V2CoreClaimableSandboxExpiringEvent;
+    export type V2CoreClaimableSandboxExpiringEventNotification = Stripe_.V2.Core.Events.V2CoreClaimableSandboxExpiringEventNotification;
+    export type V2CoreClaimableSandboxUpdatedEvent = Stripe_.V2.Core.Events.V2CoreClaimableSandboxUpdatedEvent;
+    export type V2CoreClaimableSandboxUpdatedEventNotification = Stripe_.V2.Core.Events.V2CoreClaimableSandboxUpdatedEventNotification;
     export type V2CoreEventDestinationPingEvent = Stripe_.V2.Core.Events.V2CoreEventDestinationPingEvent;
     export type V2CoreEventDestinationPingEventNotification = Stripe_.V2.Core.Events.V2CoreEventDestinationPingEventNotification;
     export type V2MoneyManagementAdjustmentCreatedEvent = Stripe_.V2.Core.Events.V2MoneyManagementAdjustmentCreatedEvent;

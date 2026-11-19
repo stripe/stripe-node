@@ -4,7 +4,6 @@ import {Customer, DeletedCustomer} from './Customers.js';
 import {PromotionCode} from './PromotionCodes.js';
 import {Coupon} from './Coupons.js';
 import {OtherString} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface Discount {
   /**
    * The ID of the discount object. Discounts can't be fetched by ID. Use `expand[]=discounts` in API calls to expand discount IDs in an array.

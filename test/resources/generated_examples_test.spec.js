@@ -4224,12 +4224,15 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/account_links',
         response:
-          '{"object":"v2.core.account_link","account":"account","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","livemode":true,"url":"url","use_case":{"type":"account_onboarding"}}',
+          '{"object":"v2.core.account_link","account":"account","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","livemode":true,"url":"url","use_case":{"type":"account_dashboard"}}',
       },
     ]);
     const accountLink = await stripe.v2.core.accountLinks.create({
       account: 'account',
       use_case: {
+        account_dashboard: {
+          refresh_url: 'refresh_url',
+        },
         account_onboarding: {
           collection_options: {
             fields: 'eventually_due',
@@ -4246,7 +4249,7 @@ describe('Generated tests', function() {
           refresh_url: 'refresh_url',
           return_url: 'return_url',
         },
-        type: 'account_onboarding',
+        type: 'account_dashboard',
       },
     });
     expect(accountLink).not.to.be.null;
@@ -4276,6 +4279,60 @@ describe('Generated tests', function() {
     ]);
     const accountToken = await stripe.v2.core.accountTokens.retrieve('id_123');
     expect(accountToken).not.to.be.null;
+  });
+
+  it('test_v2_core_claimable_sandbox_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/claimable_sandboxes',
+        response:
+          '{"object":"v2.core.claimable_sandbox","channel":"testing","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"prefill":{"country":"country","email":"email","name":"name"},"sandbox_details":{"account":"account"},"status":"live"}',
+      },
+    ]);
+    const claimableSandbox = await stripe.v2.core.claimableSandboxes.create({
+      enable_mcp_access: true,
+      onboarding_link_details: {
+        refresh_url: 'refresh_url',
+        return_url: 'return_url',
+      },
+      prefill: {
+        country: 'country',
+        email: 'email',
+        name: 'name',
+      },
+    });
+    expect(claimableSandbox).not.to.be.null;
+  });
+
+  it('test_v2_core_claimable_sandbox_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/claimable_sandboxes/id_123',
+        response:
+          '{"object":"v2.core.claimable_sandbox","channel":"testing","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"prefill":{"country":"country","email":"email","name":"name"},"sandbox_details":{"account":"account"},"status":"live"}',
+      },
+    ]);
+    const claimableSandbox = await stripe.v2.core.claimableSandboxes.retrieve(
+      'id_123'
+    );
+    expect(claimableSandbox).not.to.be.null;
+  });
+
+  it('test_v2_core_claimable_sandbox_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/claimable_sandboxes/id_123/renew_onboarding_link',
+        response:
+          '{"object":"v2.core.claimable_sandbox","channel":"testing","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"prefill":{"country":"country","email":"email","name":"name"},"sandbox_details":{"account":"account"},"status":"live"}',
+      },
+    ]);
+    const claimableSandbox = await stripe.v2.core.claimableSandboxes.renewOnboardingLink(
+      'id_123'
+    );
+    expect(claimableSandbox).not.to.be.null;
   });
 
   it('test_v2_core_event_get', async function() {

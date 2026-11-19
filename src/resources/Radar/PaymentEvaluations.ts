@@ -79,7 +79,7 @@ export interface PaymentEvaluation {
   payment_details?: PaymentEvaluation.PaymentDetails;
 
   /**
-   * Recommended action based on the score of the `fraudulent_payment` signal. Possible values are `block`, `continue` and `request_three_d_secure`.
+   * Recommended action for this payment based on its evaluated signals and rules.
    */
   recommended_action: PaymentEvaluation.RecommendedAction;
 

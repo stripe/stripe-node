@@ -592,6 +592,8 @@ export namespace Registration {
     }
 
     export interface Es {
+      igic?: Es.Igic;
+
       standard?: Es.Standard;
 
       /**
@@ -1418,6 +1420,13 @@ export namespace Registration {
     }
 
     export namespace Es {
+      export interface Igic {
+        /**
+         * Place of supply scheme used in an IGIC registration.
+         */
+        place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
+      }
+
       export interface Standard {
         /**
          * Place of supply scheme used in an EU standard registration.
@@ -1426,11 +1435,16 @@ export namespace Registration {
       }
 
       export type Type =
+        | 'igic'
         | 'ioss'
         | 'oss_non_union'
         | 'oss_union'
         | 'standard'
         | OtherString;
+
+      export namespace Igic {
+        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+      }
 
       export namespace Standard {
         export type PlaceOfSupplyScheme =
@@ -3014,6 +3028,11 @@ export namespace Tax {
 
       export interface Es {
         /**
+         * Options for the IGIC registration.
+         */
+        igic?: Es.Igic;
+
+        /**
          * Options for the standard registration.
          */
         standard?: Es.Standard;
@@ -4173,6 +4192,13 @@ export namespace Tax {
       }
 
       export namespace Es {
+        export interface Igic {
+          /**
+           * Place of supply scheme used in an IGIC registration.
+           */
+          place_of_supply_scheme: Igic.PlaceOfSupplyScheme;
+        }
+
         export interface Standard {
           /**
            * Place of supply scheme used in an EU standard registration.
@@ -4181,11 +4207,16 @@ export namespace Tax {
         }
 
         export type Type =
+          | 'igic'
           | 'ioss'
           | 'oss_non_union'
           | 'oss_union'
           | 'standard'
           | OtherString;
+
+        export namespace Igic {
+          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+        }
 
         export namespace Standard {
           export type PlaceOfSupplyScheme =

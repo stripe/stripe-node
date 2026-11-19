@@ -1101,12 +1101,12 @@ export namespace ConfirmationToken {
     export namespace Card {
       export interface Checks {
         /**
-         * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+         * If an address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
         address_line1_check: string | null;
 
         /**
-         * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+         * If an address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
         address_postal_code_check: string | null;
 
